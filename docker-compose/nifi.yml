@@ -1,0 +1,10 @@
+services:
+  nifi:
+    image: nifi-arm:latest
+    ports:
+      - 8443:8443
+    environment:
+      SINGLE_USER_CREDENTIALS_USERNAME: 'admin'
+      SINGLE_USER_CREDENTIALS_PASSWORD: 'admin1234567'
+    volumes:
+      - "./resources/postgresql-42.5.0.jar:/opt/nifi/nifi-1.16.1/lib/postgresql-42.5.0.jar"
