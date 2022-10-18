@@ -1,6 +1,7 @@
 services:
   nifi:
-    image: nifi-arm:latest
+    image: apache/nifi:latest
+    # image: nifi-arm:latest # for ARM processors, build an image locally from https://github.com/EfraimGENC/apache-nifi-docker-image-for-arm64
     ports:
       - 8443:8443
     environment:

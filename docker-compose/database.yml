@@ -1,6 +1,7 @@
 services:
   postgres:
-    image: timescale/timescaledb:latest-pg13
+    image: timescale/timescaledb-ha:pg14.5-ts2.8.1-latest
+    # image: timescale/timescaledb:latest-pg13 # for ARM processors
     ports:
       - 5432:5432
     environment:

@@ -1,4 +1,5 @@
 # Starting components with Docker-Compose
+*.yml* files are used to start the components through Docker/Podman-Compose. You may want to change the images defined within, as both Postgres and NiFi require different images when run on machines with ARM processors.
 
 Open a terminal, `cd` to this folder and run these commands to start each component.
 
