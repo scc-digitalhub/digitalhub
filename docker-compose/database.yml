@@ -1,7 +1,9 @@
 services:
   postgres:
-    image: timescale/timescaledb-ha:pg14.5-ts2.8.1-latest
-    # image: timescale/timescaledb:latest-pg13 # for ARM processors
+    # image: timescale/timescaledb-ha:pg14.5-ts2.8.1-latest # for AMD processors, does not work with ARM
+    image: timescale/timescaledb:latest-pg13 # for ARM processors, should work with AMD too
+    volumes:
+      - ./resources/db-init-scripts:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
     environment:
