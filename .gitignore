@@ -1,2 +1,3 @@
 .DS_STORE
 docker-compose/data/
+docker-compose/dagster_build_context/code/__pycache__/*

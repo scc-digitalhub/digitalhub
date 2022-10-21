@@ -1,0 +1,57 @@
+# Dagster instance configuration, see https://docs.dagster.io/deployment/dagster-instance
+run_coordinator:
+  module: dagster.core.run_coordinator
+  class: QueuedRunCoordinator
+
+scheduler:
+  module: dagster.core.scheduler
+  class: DagsterDaemonScheduler
+
+telemetry:
+  enabled: false
+
+# Postgres backend DB (https://docs.dagster.io/_apidocs/libraries/dagster-postgres)
+run_storage:
+  module: dagster_postgres.run_storage
+  class: PostgresRunStorage
+  config:
+    postgres_db:
+      hostname: dagster_postgresql
+      username:
+        env: DAGSTER_POSTGRES_USER
+      password:
+        env: DAGSTER_POSTGRES_PASSWORD
+      db_name:
+        env: DAGSTER_POSTGRES_DB
+      port: 
+        env: DAGSTER_POSTGRES_PORT
+
+event_log_storage:
+  module: dagster_postgres.event_log
+  class: PostgresEventLogStorage
+  config:
+    postgres_db:
+      hostname: dagster_postgresql
+      username:
+        env: DAGSTER_POSTGRES_USER
+      password:
+        env: DAGSTER_POSTGRES_PASSWORD
+      db_name:
+        env: DAGSTER_POSTGRES_DB
+      port: 
+        env: DAGSTER_POSTGRES_PORT
+
+schedule_storage:
+  module: dagster_postgres.schedule_storage
+  class: PostgresScheduleStorage
+  config:
+    postgres_db:
+      hostname: dagster_postgresql
+      username:
+        env: DAGSTER_POSTGRES_USER
+      password:
+        env: DAGSTER_POSTGRES_PASSWORD
+      db_name:
+        env: DAGSTER_POSTGRES_DB
+      port: 
+        env: DAGSTER_POSTGRES_PORT

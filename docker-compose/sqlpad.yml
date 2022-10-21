@@ -1,0 +1,17 @@
+services:
+  sqlpad:
+    image: sqlpad/sqlpad:latest
+    ports:
+      - "4000:4000"
+    environment:
+      SQLPAD_PORT: 4000
+      SQLPAD_ADMIN: admin
+      SQLPAD_ADMIN_PASSWORD: admin
+      # optionally define your connections here, with the syntax SQLPAD_CONNECTIONS__<connectionId>__<fieldName>, e.g.:
+      # SQLPAD_CONNECTIONS__postgres1__name: "Digitalhub"
+      # SQLPAD_CONNECTIONS__postgres1__driver: postgres
+      # SQLPAD_CONNECTIONS__postgres1__host: 172.26.0.1
+      # SQLPAD_CONNECTIONS__postgres1__port: 5432
+      # SQLPAD_CONNECTIONS__postgres1__database: digitalhub
+      # SQLPAD_CONNECTIONS__postgres1__username: postgres
+      # SQLPAD_CONNECTIONS__postgres1__password: postgres

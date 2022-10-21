@@ -1,0 +1,54 @@
+services:
+  #service for Dagster Postgres storage DB
+  dagster_postgresql:
+    image: postgres:11
+    container_name: dagster_postgresql
+    expose:
+      - "5433"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "dagster_storage"
+      PGPORT: 5433
+
+  dagit:
+    build: ./dagster_build_context
+    entrypoint:
+      - dagit
+      - -h
+      - "0.0.0.0"
+      - -p
+      - "5000"
+      - -w
+      - workspace.yaml
+    container_name: dagit
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+    environment:
+      DAGSTER_POSTGRES_USER: "postgres"
+      DAGSTER_POSTGRES_PASSWORD: "postgres"
+      DAGSTER_POSTGRES_DB: "dagster_storage"
+      DAGSTER_POSTGRES_PORT: 5433
+    volumes:
+      - ./dagster_build_context/code:/opt/dagster/code
+    depends_on:
+      - dagster_postgresql
+
+  dagster_daemon:
+    build: ./dagster_build_context
+    entrypoint:
+      - dagster-daemon
+      - run
+    container_name: dagster_daemon
+    restart: on-failure
+    environment:
+      DAGSTER_POSTGRES_USER: "postgres"
+      DAGSTER_POSTGRES_PASSWORD: "postgres"
+      DAGSTER_POSTGRES_DB: "dagster_storage"
+      DAGSTER_POSTGRES_PORT: 5433
+    volumes:
+      - ./dagster_build_context/code:/opt/dagster/code
+    depends_on:
+      - dagster_postgresql

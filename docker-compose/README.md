@@ -9,6 +9,10 @@ podman-compose -p dh -f database.yml up -d
 podman-compose -p dh -f minio.yml up -d
 
 podman-compose -p dh -f nifi.yml up -d
+
+podman-compose -p dh -f dagster.yml up -d
+
+podman-compose -p dh -f sqlpad.yml up -d
 ```
 
 ## Postgres and MinIO
@@ -54,3 +58,40 @@ SELECT * FROM test_scenario.cities;
 ```
 
 You should now notice that the data is present.
+
+## Dagster use case
+
+Access MinIO at *http://localhost:9001* and create a new bucket named *testbucket*, then upload the *cities.CSV* file that comes with this repository.
+
+Navigate to the Dagit interface at *http://localhost:5000*. You should see `csv_pipeline` in the *Workspace*. Open its *Launchpad* and provide the run configuration, which includes the connection information for the Postgres and MinIO instances (change their IP address with that of your Docker network gateway; also update the credentials if you have changed them):
+
+```
+resources:
+  io_manager:
+    config:
+      database_name: "digitalhub"
+      host: "172.26.0.1"
+      password: "postgres"
+      port: 5432
+      table_name: "cities"
+      username: "postgres"
+  minio:
+    config:
+      endpoint: "172.26.0.1:9000"
+      access_key: "minioadmin"
+      secret_key: "minioadmin"
+      bucket: "testbucket"
+      file: "cities.csv"
+```
+
+*Launch a run*. Once the pipeline has successfully executed, you can use `psql` or SQLPad to verify that the table `cities` has been correctly generated.
+
+## SQLPad use case
+
+Once the table `cities` has been populated by either NiFi or Dagster, navigate to *http://localhost:4000*. If you didn't change the credentials in *sqlpad.yml*, log in with `admin`/`admin`.
+
+Configure a new *Connection* to the `digitalhub` database on the Postgres instance (as with Dagit, use the IP address of your Docker network gateway as *Host*). The schema `public` should now contain the table `cities`. You can verify that it has been correctly populated by running the query:
+
+```
+SELECT * FROM public.cities;
+```
