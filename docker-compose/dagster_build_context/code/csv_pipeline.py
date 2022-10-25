@@ -1,7 +1,7 @@
 import pandas as pd
 import psycopg2
 from minio import Minio
-from dagster import job, op, resource, get_dagster_logger, io_manager, IOManager
+from dagster import job, op, repository, get_dagster_logger, resource, io_manager, IOManager, StringSource
 
 ####################### IO Manager
 class PostgresIOManager(IOManager):
@@ -27,7 +27,7 @@ class PostgresIOManager(IOManager):
         self.cur.close()
         self.conn.close()
 
-@io_manager(config_schema={"host": str, "port": int, "database_name": str, "username": str, "password": str, "table_name": str})
+@io_manager(config_schema={"host": str, "port": int, "database_name": str, "username": StringSource, "password": StringSource, "table_name": str})
 def postgres_io_manager(init_context):
     host = init_context.resource_config["host"]
     port = init_context.resource_config["port"]
@@ -59,7 +59,7 @@ class MinioResource:
             response.close()
             response.release_conn()
 
-@resource(config_schema={"endpoint": str, "access_key": str, "secret_key": str, "bucket": str, "file": str})
+@resource(config_schema={"endpoint": str, "access_key": StringSource, "secret_key": StringSource, "bucket": str, "file": str})
 def minio_resource(init_context):
     endpoint = init_context.resource_config["endpoint"]
     access_key = init_context.resource_config["access_key"]
@@ -69,7 +69,7 @@ def minio_resource(init_context):
     client = MinioResource(endpoint, access_key, secret_key, bucket, file)
     yield client
 
-#######################
+####################### Repository
 @op(required_resource_keys={"minio"})
 def read_csv(context):
     tdf = context.resources.minio.get_object_as_dataframe()
@@ -84,6 +84,10 @@ def read_csv(context):
 def csv_pipeline():
     data = read_csv()
 
+@repository
+def csv_repository():
+    return [csv_pipeline]
+
 '''
 resources:
   io_manager:
@@ -92,13 +96,32 @@ resources:
       host: "172.26.0.1"
       password: "postgres"
       port: 5432
-      table_name: "cities"
+      table_name: "test_scenario.cities"
       username: "postgres"
   minio:
     config:
       endpoint: "172.26.0.1:9000"
       access_key: "minioadmin"
       secret_key: "minioadmin"
+      bucket: "testbucket"
+      file: "cities.csv"
+
+OR
+
+resources:
+  io_manager:
+    config:
+      database_name: "digitalhub"
+      host: "172.26.0.1"
+      password: {"env": "DH_DB_PWD"}
+      port: 5432
+      table_name: "test_scenario.cities"
+      username: {"env": "DH_DB_USERNAME"}
+  minio:
+    config:
+      endpoint: "172.26.0.1:9000"
+      access_key: {"env": "MINIO_ACCESS_KEY"}
+      secret_key: {"env": "MINIO_SECREY_KEY"}
       bucket: "testbucket"
       file: "cities.csv"
 '''

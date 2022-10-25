@@ -31,6 +31,10 @@ services:
       DAGSTER_POSTGRES_PASSWORD: "postgres"
       DAGSTER_POSTGRES_DB: "dagster_storage"
       DAGSTER_POSTGRES_PORT: 5433
+      DH_DB_USERNAME: "postgres"
+      DH_DB_PWD: "postgres"
+      MINIO_ACCESS_KEY: "minioadmin"
+      MINIO_SECREY_KEY: "minioadmin"
     volumes:
       - ./dagster_build_context/code:/opt/dagster/code
     depends_on:
@@ -48,6 +52,10 @@ services:
       DAGSTER_POSTGRES_PASSWORD: "postgres"
       DAGSTER_POSTGRES_DB: "dagster_storage"
       DAGSTER_POSTGRES_PORT: 5433
+      DH_DB_USERNAME: "postgres"
+      DH_DB_PWD: "postgres"
+      MINIO_ACCESS_KEY: "minioadmin"
+      MINIO_SECREY_KEY: "minioadmin"
     volumes:
       - ./dagster_build_context/code:/opt/dagster/code
     depends_on:

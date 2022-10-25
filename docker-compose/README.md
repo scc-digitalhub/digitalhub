@@ -63,7 +63,7 @@ You should now notice that the data is present.
 
 Access MinIO at *http://localhost:9001* and create a new bucket named *testbucket*, then upload the *cities.CSV* file that comes with this repository.
 
-Navigate to the Dagit interface at *http://localhost:5000*. You should see `csv_pipeline` in the *Workspace*. Open its *Launchpad* and provide the run configuration, which includes the connection information for the Postgres and MinIO instances (change their IP address with that of your Docker network gateway; also update the credentials if you have changed them):
+Navigate to the Dagit interface at *http://localhost:5000*. You should see the job `csv_pipeline` inside `csv_repository` in the *Workspace*. Open its *Launchpad* and provide the run configuration, which includes the connection information for the Postgres and MinIO instances (change their IP address with that of your Docker network gateway; note that credentials are provided via environment variables with this configuration, which is good practice, although plain strings are also supported):
 
 ```
 resources:
@@ -71,15 +71,15 @@ resources:
     config:
       database_name: "digitalhub"
       host: "172.26.0.1"
-      password: "postgres"
+      password: {"env": "DH_DB_PWD"}
       port: 5432
-      table_name: "cities"
-      username: "postgres"
+      table_name: "test_scenario.cities"
+      username: {"env": "DH_DB_USERNAME"}
   minio:
     config:
       endpoint: "172.26.0.1:9000"
-      access_key: "minioadmin"
-      secret_key: "minioadmin"
+      access_key: {"env": "MINIO_ACCESS_KEY"}
+      secret_key: {"env": "MINIO_SECREY_KEY"}
       bucket: "testbucket"
       file: "cities.csv"
 ```
@@ -90,8 +90,8 @@ resources:
 
 Once the table `cities` has been populated by either NiFi or Dagster, navigate to *http://localhost:4000*. If you didn't change the credentials in *sqlpad.yml*, log in with `admin`/`admin`.
 
-Configure a new *Connection* to the `digitalhub` database on the Postgres instance (as with Dagit, use the IP address of your Docker network gateway as *Host*). The schema `public` should now contain the table `cities`. You can verify that it has been correctly populated by running the query:
+Configure a new *Connection* to the `digitalhub` database on the Postgres instance (as with Dagit, use the IP address of your Docker network gateway as *Host*). The schema `test_scenario` should now contain the table `cities`. You can verify that it has been correctly populated by running the query:
 
 ```
-SELECT * FROM public.cities;
+SELECT * FROM test_scenario.cities;
 ```
