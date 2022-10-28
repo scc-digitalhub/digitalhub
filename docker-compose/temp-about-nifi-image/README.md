@@ -14,5 +14,5 @@ Then, `cd` to *nifi/nifi-docker/dockerhub*. Replace the *DockerImage.txt* and *D
 
 Build the image:
 ```shell
-podman build -t nifi-dh .
+podman build -t dh/nifi:0.1.0 .
 ```

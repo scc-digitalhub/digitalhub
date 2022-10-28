@@ -1,6 +1,6 @@
 services:
   nifi:
-    image: nifi-dh:latest # Built from https://github.com/apache/nifi, by adding oidc.sh, updating start.sh, and changing the nifi version to 1.18.0, as nifi-toolkit seems to not currently be available for version 1.19.0, which causes errors while building the image.
+    image: dh/nifi:0.1.0 # Built from https://github.com/apache/nifi, by adding oidc.sh, updating start.sh, and changing the nifi version to 1.18.0, as nifi-toolkit seems to not currently be available for version 1.19.0, which causes errors while building the image.
     ports:
       - 8443:8443
     extra_hosts:
