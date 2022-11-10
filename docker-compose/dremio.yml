@@ -1,0 +1,12 @@
+services:
+  dremio:
+    image: dh/dremio:0.1.0
+    platform: linux/amd64
+    ports:
+      - 9047:9047
+    entrypoint:
+      - "bin/dremio"
+      - "start-fg"
+    # volumes:
+      # - ./data/dremio/data:/opt/dremio/data #metadata storage
+      # - ./data/dremio/conf:/opt/dremio/conf #configuration files (dremio-env, dremio.conf, logback.xml)
