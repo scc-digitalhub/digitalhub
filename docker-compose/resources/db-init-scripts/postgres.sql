@@ -14,3 +14,5 @@ CREATE TABLE IF NOT EXISTS test_scenario.cities (
 CREATE ROLE test_scenario_user NOLOGIN;
 GRANT USAGE ON SCHEMA test_scenario TO test_scenario_user;
 GRANT ALL ON test_scenario.cities TO test_scenario_user;
+
+CREATE DATABASE dagster_storage;
