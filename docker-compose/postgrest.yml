@@ -1,9 +1,0 @@
-services:
-  postgrest:
-    image: postgrest/postgrest:latest
-    ports:
-      - 3000:3000
-    environment:
-      PGRST_DB_URI: 'postgres://postgres:postgres@192.168.123.123:5432/digitalhub'
-      PGRST_DB_SCHEMAS: 'test_scenario'
-      PGRST_JWT_SECRET: '12345678901234567890123456789012'

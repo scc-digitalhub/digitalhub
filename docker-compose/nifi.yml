@@ -1,6 +1,6 @@
 services:
   nifi:
-    image: dh/nifi:0.1.0 # Built from https://github.com/apache/nifi, by adding oidc.sh, updating start.sh, and changing the nifi version to 1.18.0, as nifi-toolkit seems to not currently be available for version 1.19.0, which causes errors while building the image.
+    image: nifi-oidc:0.1.0 # Built from https://github.com/apache/nifi, by adding oidc.sh, updating start.sh, and changing the nifi version to 1.18.0, as nifi-toolkit seems to not currently be available for version 1.19.0, which causes errors while building the image.
     ports:
       - 8443:8443
     extra_hosts:
@@ -11,10 +11,10 @@ services:
     environment:
       SINGLE_USER_CREDENTIALS_USERNAME: 'admin' # For use when OIDC is disabled. Ignored if OIDC is enabled.
       SINGLE_USER_CREDENTIALS_PASSWORD: 'admin1234567' # For use when OIDC is disabled. Ignored if OIDC is enabled.
-      # AUTH: 'oidc' # Uncomment to enable OpenID Connect authentication.
-      OIDC_CONFIGURATION: 'https://replace_with_AAC_instance/.well-known/openid-configuration'
-      NIFI_CLIENT_ID: 'replace_with_nifi_client_id'
-      NIFI_CLIENT_SECRET: 'replace_with_nifi_client_secret'
+      AUTH: 'oidc' # Uncomment to enable OpenID Connect authentication.
+      OIDC_CONFIGURATION: 'https://<your_aac_instance>/.well-known/openid-configuration'
+      NIFI_CLIENT_ID: '<your_aac_client_id>'
+      NIFI_CLIENT_SECRET: '<your_aac_client_secret>'
       KEYSTORE_PATH: './conf/certs/keystore.jks'
       KEYSTORE_TYPE: 'jks'
       KEYSTORE_PASSWORD: 'platform'
@@ -22,5 +22,5 @@ services:
       TRUSTSTORE_PATH: './conf/certs/truststore.jks'
       TRUSTSTORE_TYPE: 'jks'
       TRUSTSTORE_PASSWORD: 'platform'
-      INITIAL_ADMIN_IDENTITY: 'replace_with_your_AAC_account'
+      INITIAL_ADMIN_IDENTITY: '<your@aac.account>'
       

@@ -15,6 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
+
 ARG IMAGE_NAME=openjdk
 ARG IMAGE_TAG=8-jre
 FROM ${IMAGE_NAME}:${IMAGE_TAG}
@@ -38,11 +39,17 @@ ENV NIFI_TOOLKIT_HOME ${NIFI_BASE_DIR}/nifi-toolkit-current
 ENV NIFI_PID_DIR=${NIFI_HOME}/run
 ENV NIFI_LOG_DIR=${NIFI_HOME}/logs
 
-ADD sh/ ${NIFI_BASE_DIR}/scripts/
-RUN chmod -R +x ${NIFI_BASE_DIR}/scripts/*.sh
+RUN curl -L https://codeload.github.com/apache/nifi/tar.gz/refs/tags/rel/nifi-${NIFI_VERSION} \
+    | tar -xz \
+    && mkdir ${NIFI_BASE_DIR} \
+    && mv ./nifi-rel-nifi-${NIFI_VERSION}/nifi-docker/dockerhub/sh ${NIFI_BASE_DIR}/scripts \
+    && rm -r ./nifi-rel-nifi-${NIFI_VERSION}
+
+ADD ./scripts/* ${NIFI_BASE_DIR}/scripts/
 
 # Setup NiFi user and create necessary directories
-RUN groupadd -g ${GID} nifi || groupmod -n nifi `getent group ${GID} | cut -d: -f1` \
+RUN chmod -R +x ${NIFI_BASE_DIR}/scripts/*.sh \
+    && groupadd -g ${GID} nifi || groupmod -n nifi `getent group ${GID} | cut -d: -f1` \
     && useradd --shell /bin/bash -u ${UID} -g ${GID} -m nifi \
     && mkdir -p ${NIFI_BASE_DIR} \
     && chown -R nifi:nifi ${NIFI_BASE_DIR} \

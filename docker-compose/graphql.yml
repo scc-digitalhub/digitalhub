@@ -1,8 +1,8 @@
 services:
   postgres:
-    image: dh/postgres:0.1.0
+    image: postgres-graphql:0.1.0
     volumes:
-        - ./postgres.sql:/docker-entrypoint-initdb.d/postgres.sql
+        - ./resources/db-init-scripts/postgres-virtualization.sql:/docker-entrypoint-initdb.d/postgres.sql
     ports:
       - 5432:5432
     command:
@@ -34,8 +34,10 @@ services:
       PGRST_DB_ANON_ROLE: test_scenario_user # Comment to disable anonymous access
 
   graphiql:
-    image: dh/graphiql:0.1.0
+    image: nginx
+    volumes:
+      - ./resources/index.html:/usr/share/nginx/html/index.html
     ports:
-        - 4000:8000
+      - 4000:80
     depends_on:
       - postgrest

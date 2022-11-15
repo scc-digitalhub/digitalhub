@@ -4,7 +4,7 @@ services:
     # image: timescale/timescaledb-ha:pg14.5-ts2.8.1-latest # for AMD processors, does not work with ARM
     image: timescale/timescaledb:2.8.1-pg13 # for ARM processors, should work with AMD too
     volumes:
-      - ./resources/db-init-scripts:/docker-entrypoint-initdb.d
+      - ./resources/db-init-scripts/postgres-mini-etl.sql:/docker-entrypoint-initdb.d/postgres.sql
     ports:
       - 5432:5432
     environment:
@@ -25,7 +25,28 @@ services:
     command: server /data --console-address ":9001"
 
   # NiFi service
-  #TODO
+  nifi:
+    image: nifi-oidc:0.1.0
+    ports:
+      - 8443:8443
+    volumes:
+      - "./resources/postgresql-42.5.0.jar:/opt/nifi/nifi-current/lib/postgresql-42.5.0.jar"
+      - "./resources/certs:/opt/nifi/nifi-current/conf/certs"
+    environment:
+      SINGLE_USER_CREDENTIALS_USERNAME: 'admin' # For use when OIDC is disabled. Ignored if OIDC is enabled.
+      SINGLE_USER_CREDENTIALS_PASSWORD: 'admin1234567' # For use when OIDC is disabled. Ignored if OIDC is enabled.
+      AUTH: 'oidc' # Uncomment to enable OpenID Connect authentication.
+      OIDC_CONFIGURATION: 'https://<your_aac_instance>/.well-known/openid-configuration'
+      NIFI_CLIENT_ID: '<your_aac_client_id>'
+      NIFI_CLIENT_SECRET: '<your_aac_client_secret>'
+      KEYSTORE_PATH: './conf/certs/keystore.jks'
+      KEYSTORE_TYPE: 'jks'
+      KEYSTORE_PASSWORD: 'platform'
+      KEY_PASSWORD: 'platform'
+      TRUSTSTORE_PATH: './conf/certs/truststore.jks'
+      TRUSTSTORE_TYPE: 'jks'
+      TRUSTSTORE_PASSWORD: 'platform'
+      INITIAL_ADMIN_IDENTITY: '<your@aac.account>'
 
   # Dagster services (Dagit and Daemon)
   dagit:

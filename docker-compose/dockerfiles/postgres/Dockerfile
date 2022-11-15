@@ -1,17 +1,20 @@
 FROM postgis/postgis:14-master as build
 
+ARG GRAPHQL_VERSION=0.4.1
+ARG TIMESCALEDB_VERSION=2.8.1
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
       build-essential \
       ca-certificates \
       cmake \
       git \
+      curl \
       postgresql-server-dev-14 \
       python2 \
-      curl \
       libkrb5-dev \
     && rm -rf "/var/lib/apt/lists/*"
-
+    
 RUN export \
       VERSION="v0.7.0" \
       REPO_URL="https://github.com/graphql/libgraphqlparser" \
@@ -20,15 +23,16 @@ RUN export \
     && cmake . \
     && make install
 
-COPY . pg_graphql
-WORKDIR /pg_graphql
-RUN ./bin/pgc build
-RUN make install
+RUN curl -L https://codeload.github.com/supabase/pg_graphql/tar.gz/refs/tags/v${GRAPHQL_VERSION} \
+    | tar -xz \
+    && mv pg_graphql-${GRAPHQL_VERSION} pg_graphql \
+    && cd pg_graphql \
+    && ./bin/pgc build \
+    && make install
 
-RUN export TS_VERSION="2.8.1" \
-    && curl -SL https://codeload.github.com/timescale/timescaledb/tar.gz/refs/tags/${TS_VERSION} \
-    | tar -zx \
-    && cd timescaledb-${TS_VERSION} \
+RUN curl -L https://codeload.github.com/timescale/timescaledb/tar.gz/refs/tags/${TIMESCALEDB_VERSION} \
+    | tar -xz \
+    && cd timescaledb-${TIMESCALEDB_VERSION} \
     && ./bootstrap \
     && cd build && make \
     && make install
