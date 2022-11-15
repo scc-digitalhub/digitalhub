@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <template encoding-version="1.3">
     <description>Creates recipient table in a Postgres DB, downloads CSV file, stores records into the table.</description>
-    <groupId>fb02a7a1-0183-1000-bf86-1dd3d40b05e8</groupId>
+    <groupId>7c25c316-0184-1000-deda-abcb0403da63</groupId>
     <name>Process CSV</name>
     <snippet>
         <processGroups>
-            <id>a0410d46-3605-32df-0000-000000000000</id>
-            <parentGroupId>18f34a0c-af85-38a7-0000-000000000000</parentGroupId>
+            <id>eec5ad4d-7102-33a4-0000-000000000000</id>
+            <parentGroupId>f8298147-5ccc-3d3e-0000-000000000000</parentGroupId>
             <position>
                 <x>0.0</x>
                 <y>0.0</y>
@@ -14,13 +14,13 @@
             <comments></comments>
             <contents>
                 <connections>
-                    <id>749f6053-c099-3174-0000-000000000000</id>
-                    <parentGroupId>a0410d46-3605-32df-0000-000000000000</parentGroupId>
+                    <id>07b71d04-a9d8-3144-0000-000000000000</id>
+                    <parentGroupId>eec5ad4d-7102-33a4-0000-000000000000</parentGroupId>
                     <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
                     <backPressureObjectThreshold>10000</backPressureObjectThreshold>
                     <destination>
-                        <groupId>a0410d46-3605-32df-0000-000000000000</groupId>
-                        <id>f7c1a9b8-3321-347d-0000-000000000000</id>
+                        <groupId>eec5ad4d-7102-33a4-0000-000000000000</groupId>
+                        <id>7f36554f-695f-3d00-0000-000000000000</id>
                         <type>PROCESSOR</type>
                     </destination>
                     <flowFileExpiration>0 sec</flowFileExpiration>
@@ -32,20 +32,20 @@
                     <name></name>
                     <selectedRelationships>success</selectedRelationships>
                     <source>
-                        <groupId>a0410d46-3605-32df-0000-000000000000</groupId>
-                        <id>523048cb-e7c4-33a8-0000-000000000000</id>
+                        <groupId>eec5ad4d-7102-33a4-0000-000000000000</groupId>
+                        <id>d14027ca-23ba-3041-0000-000000000000</id>
                         <type>PROCESSOR</type>
                     </source>
                     <zIndex>0</zIndex>
                 </connections>
                 <connections>
-                    <id>d144b05d-f46b-39c6-0000-000000000000</id>
-                    <parentGroupId>a0410d46-3605-32df-0000-000000000000</parentGroupId>
+                    <id>8962e8e4-322b-30c6-0000-000000000000</id>
+                    <parentGroupId>eec5ad4d-7102-33a4-0000-000000000000</parentGroupId>
                     <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
                     <backPressureObjectThreshold>10000</backPressureObjectThreshold>
                     <destination>
-                        <groupId>a0410d46-3605-32df-0000-000000000000</groupId>
-                        <id>585c22df-962b-3c23-0000-000000000000</id>
+                        <groupId>eec5ad4d-7102-33a4-0000-000000000000</groupId>
+                        <id>d14027ca-23ba-3041-0000-000000000000</id>
                         <type>PROCESSOR</type>
                     </destination>
                     <flowFileExpiration>0 sec</flowFileExpiration>
@@ -57,15 +57,15 @@
                     <name></name>
                     <selectedRelationships>success</selectedRelationships>
                     <source>
-                        <groupId>a0410d46-3605-32df-0000-000000000000</groupId>
-                        <id>f7c1a9b8-3321-347d-0000-000000000000</id>
+                        <groupId>eec5ad4d-7102-33a4-0000-000000000000</groupId>
+                        <id>a90d3014-38b8-346d-0000-000000000000</id>
                         <type>PROCESSOR</type>
                     </source>
                     <zIndex>0</zIndex>
                 </connections>
                 <controllerServices>
-                    <id>5cd630ff-7df4-3c5a-0000-000000000000</id>
-                    <parentGroupId>a0410d46-3605-32df-0000-000000000000</parentGroupId>
+                    <id>2e66fe65-f402-3361-0000-000000000000</id>
+                    <parentGroupId>eec5ad4d-7102-33a4-0000-000000000000</parentGroupId>
                     <bulletinLevel>WARN</bulletinLevel>
                     <bundle>
                         <artifact>nifi-dbcp-service-nar</artifact>
@@ -190,7 +190,7 @@
                     <properties>
                         <entry>
                             <key>Database Connection URL</key>
-                            <value>jdbc:postgresql://host.docker.internal:5432/digitalhub</value>
+                            <value>jdbc:postgresql://172.28.0.1:5432/digitalhub</value>
                         </entry>
                         <entry>
                             <key>Database Driver Class Name</key>
@@ -258,8 +258,8 @@
                     <type>org.apache.nifi.dbcp.DBCPConnectionPool</type>
                 </controllerServices>
                 <controllerServices>
-                    <id>ebfe9bed-aa74-3657-0000-000000000000</id>
-                    <parentGroupId>a0410d46-3605-32df-0000-000000000000</parentGroupId>
+                    <id>89af1aed-2af5-3c67-0000-000000000000</id>
+                    <parentGroupId>eec5ad4d-7102-33a4-0000-000000000000</parentGroupId>
                     <bulletinLevel>WARN</bulletinLevel>
                     <bundle>
                         <artifact>nifi-record-serialization-services-nar</artifact>
@@ -559,200 +559,8 @@
                     <type>org.apache.nifi.csv.CSVReader</type>
                 </controllerServices>
                 <processors>
-                    <id>523048cb-e7c4-33a8-0000-000000000000</id>
-                    <parentGroupId>a0410d46-3605-32df-0000-000000000000</parentGroupId>
-                    <position>
-                        <x>-16.0</x>
-                        <y>-104.0</y>
-                    </position>
-                    <bundle>
-                        <artifact>nifi-standard-nar</artifact>
-                        <group>org.apache.nifi</group>
-                        <version>1.18.0</version>
-                    </bundle>
-                    <config>
-                        <backoffMechanism>PENALIZE_FLOWFILE</backoffMechanism>
-                        <bulletinLevel>WARN</bulletinLevel>
-                        <comments></comments>
-                        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
-                        <descriptors>
-                            <entry>
-<key>Database Connection Pooling Service</key>
-<value>
-    <identifiesControllerService>org.apache.nifi.dbcp.DBCPService</identifiesControllerService>
-    <name>Database Connection Pooling Service</name>
-</value>
-                            </entry>
-                            <entry>
-<key>sql-pre-query</key>
-<value>
-    <name>sql-pre-query</name>
-</value>
-                            </entry>
-                            <entry>
-<key>SQL select query</key>
-<value>
-    <name>SQL select query</name>
-</value>
-                            </entry>
-                            <entry>
-<key>sql-post-query</key>
-<value>
-    <name>sql-post-query</name>
-</value>
-                            </entry>
-                            <entry>
-<key>Max Wait Time</key>
-<value>
-    <name>Max Wait Time</name>
-</value>
-                            </entry>
-                            <entry>
-<key>dbf-normalize</key>
-<value>
-    <name>dbf-normalize</name>
-</value>
-                            </entry>
-                            <entry>
-<key>dbf-user-logical-types</key>
-<value>
-    <name>dbf-user-logical-types</name>
-</value>
-                            </entry>
-                            <entry>
-<key>compression-format</key>
-<value>
-    <name>compression-format</name>
-</value>
-                            </entry>
-                            <entry>
-<key>dbf-default-precision</key>
-<value>
-    <name>dbf-default-precision</name>
-</value>
-                            </entry>
-                            <entry>
-<key>dbf-default-scale</key>
-<value>
-    <name>dbf-default-scale</name>
-</value>
-                            </entry>
-                            <entry>
-<key>esql-max-rows</key>
-<value>
-    <name>esql-max-rows</name>
-</value>
-                            </entry>
-                            <entry>
-<key>esql-output-batch-size</key>
-<value>
-    <name>esql-output-batch-size</name>
-</value>
-                            </entry>
-                            <entry>
-<key>esql-fetch-size</key>
-<value>
-    <name>esql-fetch-size</name>
-</value>
-                            </entry>
-                            <entry>
-<key>esql-auto-commit</key>
-<value>
-    <name>esql-auto-commit</name>
-</value>
-                            </entry>
-                        </descriptors>
-                        <executionNode>ALL</executionNode>
-                        <lossTolerant>false</lossTolerant>
-                        <maxBackoffPeriod>10 mins</maxBackoffPeriod>
-                        <penaltyDuration>30 sec</penaltyDuration>
-                        <properties>
-                            <entry>
-<key>Database Connection Pooling Service</key>
-<value>5cd630ff-7df4-3c5a-0000-000000000000</value>
-                            </entry>
-                            <entry>
-<key>sql-pre-query</key>
-                            </entry>
-                            <entry>
-<key>SQL select query</key>
-<value>DROP TABLE IF EXISTS test_scenario.cities;
-
-CREATE TABLE test_scenario.cities (
-  id int,
-  name varchar,
-  country varchar
-);</value>
-                            </entry>
-                            <entry>
-<key>sql-post-query</key>
-                            </entry>
-                            <entry>
-<key>Max Wait Time</key>
-<value>0 seconds</value>
-                            </entry>
-                            <entry>
-<key>dbf-normalize</key>
-<value>false</value>
-                            </entry>
-                            <entry>
-<key>dbf-user-logical-types</key>
-<value>false</value>
-                            </entry>
-                            <entry>
-<key>compression-format</key>
-<value>NONE</value>
-                            </entry>
-                            <entry>
-<key>dbf-default-precision</key>
-<value>10</value>
-                            </entry>
-                            <entry>
-<key>dbf-default-scale</key>
-<value>0</value>
-                            </entry>
-                            <entry>
-<key>esql-max-rows</key>
-<value>0</value>
-                            </entry>
-                            <entry>
-<key>esql-output-batch-size</key>
-<value>0</value>
-                            </entry>
-                            <entry>
-<key>esql-fetch-size</key>
-<value>0</value>
-                            </entry>
-                            <entry>
-<key>esql-auto-commit</key>
-<value>true</value>
-                            </entry>
-                        </properties>
-                        <retryCount>10</retryCount>
-                        <runDurationMillis>0</runDurationMillis>
-                        <schedulingPeriod>1 day</schedulingPeriod>
-                        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
-                        <yieldDuration>1 sec</yieldDuration>
-                    </config>
-                    <executionNodeRestricted>false</executionNodeRestricted>
-                    <name>Create table</name>
-                    <relationships>
-                        <autoTerminate>true</autoTerminate>
-                        <name>failure</name>
-                        <retry>false</retry>
-                    </relationships>
-                    <relationships>
-                        <autoTerminate>false</autoTerminate>
-                        <name>success</name>
-                        <retry>false</retry>
-                    </relationships>
-                    <state>STOPPED</state>
-                    <style/>
-                    <type>org.apache.nifi.processors.standard.ExecuteSQL</type>
-                </processors>
-                <processors>
-                    <id>585c22df-962b-3c23-0000-000000000000</id>
-                    <parentGroupId>a0410d46-3605-32df-0000-000000000000</parentGroupId>
+                    <id>7f36554f-695f-3d00-0000-000000000000</id>
+                    <parentGroupId>eec5ad4d-7102-33a4-0000-000000000000</parentGroupId>
                     <position>
                         <x>-16.0</x>
                         <y>296.0</y>
@@ -933,7 +741,7 @@ CREATE TABLE test_scenario.cities (
                         <properties>
                             <entry>
 <key>put-db-record-record-reader</key>
-<value>ebfe9bed-aa74-3657-0000-000000000000</value>
+<value>89af1aed-2af5-3c67-0000-000000000000</value>
                             </entry>
                             <entry>
 <key>db-type</key>
@@ -951,7 +759,7 @@ CREATE TABLE test_scenario.cities (
                             </entry>
                             <entry>
 <key>put-db-record-dcbp-service</key>
-<value>5cd630ff-7df4-3c5a-0000-000000000000</value>
+<value>2e66fe65-f402-3361-0000-000000000000</value>
                             </entry>
                             <entry>
 <key>put-db-record-catalog-name</key>
@@ -1039,8 +847,200 @@ CREATE TABLE test_scenario.cities (
                     <type>org.apache.nifi.processors.standard.PutDatabaseRecord</type>
                 </processors>
                 <processors>
-                    <id>f7c1a9b8-3321-347d-0000-000000000000</id>
-                    <parentGroupId>a0410d46-3605-32df-0000-000000000000</parentGroupId>
+                    <id>a90d3014-38b8-346d-0000-000000000000</id>
+                    <parentGroupId>eec5ad4d-7102-33a4-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>-16.0</x>
+                        <y>-104.0</y>
+                    </position>
+                    <bundle>
+                        <artifact>nifi-standard-nar</artifact>
+                        <group>org.apache.nifi</group>
+                        <version>1.18.0</version>
+                    </bundle>
+                    <config>
+                        <backoffMechanism>PENALIZE_FLOWFILE</backoffMechanism>
+                        <bulletinLevel>WARN</bulletinLevel>
+                        <comments></comments>
+                        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                        <descriptors>
+                            <entry>
+<key>Database Connection Pooling Service</key>
+<value>
+    <identifiesControllerService>org.apache.nifi.dbcp.DBCPService</identifiesControllerService>
+    <name>Database Connection Pooling Service</name>
+</value>
+                            </entry>
+                            <entry>
+<key>sql-pre-query</key>
+<value>
+    <name>sql-pre-query</name>
+</value>
+                            </entry>
+                            <entry>
+<key>SQL select query</key>
+<value>
+    <name>SQL select query</name>
+</value>
+                            </entry>
+                            <entry>
+<key>sql-post-query</key>
+<value>
+    <name>sql-post-query</name>
+</value>
+                            </entry>
+                            <entry>
+<key>Max Wait Time</key>
+<value>
+    <name>Max Wait Time</name>
+</value>
+                            </entry>
+                            <entry>
+<key>dbf-normalize</key>
+<value>
+    <name>dbf-normalize</name>
+</value>
+                            </entry>
+                            <entry>
+<key>dbf-user-logical-types</key>
+<value>
+    <name>dbf-user-logical-types</name>
+</value>
+                            </entry>
+                            <entry>
+<key>compression-format</key>
+<value>
+    <name>compression-format</name>
+</value>
+                            </entry>
+                            <entry>
+<key>dbf-default-precision</key>
+<value>
+    <name>dbf-default-precision</name>
+</value>
+                            </entry>
+                            <entry>
+<key>dbf-default-scale</key>
+<value>
+    <name>dbf-default-scale</name>
+</value>
+                            </entry>
+                            <entry>
+<key>esql-max-rows</key>
+<value>
+    <name>esql-max-rows</name>
+</value>
+                            </entry>
+                            <entry>
+<key>esql-output-batch-size</key>
+<value>
+    <name>esql-output-batch-size</name>
+</value>
+                            </entry>
+                            <entry>
+<key>esql-fetch-size</key>
+<value>
+    <name>esql-fetch-size</name>
+</value>
+                            </entry>
+                            <entry>
+<key>esql-auto-commit</key>
+<value>
+    <name>esql-auto-commit</name>
+</value>
+                            </entry>
+                        </descriptors>
+                        <executionNode>ALL</executionNode>
+                        <lossTolerant>false</lossTolerant>
+                        <maxBackoffPeriod>10 mins</maxBackoffPeriod>
+                        <penaltyDuration>30 sec</penaltyDuration>
+                        <properties>
+                            <entry>
+<key>Database Connection Pooling Service</key>
+<value>2e66fe65-f402-3361-0000-000000000000</value>
+                            </entry>
+                            <entry>
+<key>sql-pre-query</key>
+                            </entry>
+                            <entry>
+<key>SQL select query</key>
+<value>DROP TABLE IF EXISTS test_scenario.cities;
+
+CREATE TABLE test_scenario.cities (
+  id int,
+  name varchar,
+  country varchar
+);</value>
+                            </entry>
+                            <entry>
+<key>sql-post-query</key>
+                            </entry>
+                            <entry>
+<key>Max Wait Time</key>
+<value>0 seconds</value>
+                            </entry>
+                            <entry>
+<key>dbf-normalize</key>
+<value>false</value>
+                            </entry>
+                            <entry>
+<key>dbf-user-logical-types</key>
+<value>false</value>
+                            </entry>
+                            <entry>
+<key>compression-format</key>
+<value>NONE</value>
+                            </entry>
+                            <entry>
+<key>dbf-default-precision</key>
+<value>10</value>
+                            </entry>
+                            <entry>
+<key>dbf-default-scale</key>
+<value>0</value>
+                            </entry>
+                            <entry>
+<key>esql-max-rows</key>
+<value>0</value>
+                            </entry>
+                            <entry>
+<key>esql-output-batch-size</key>
+<value>0</value>
+                            </entry>
+                            <entry>
+<key>esql-fetch-size</key>
+<value>0</value>
+                            </entry>
+                            <entry>
+<key>esql-auto-commit</key>
+<value>true</value>
+                            </entry>
+                        </properties>
+                        <retryCount>10</retryCount>
+                        <runDurationMillis>0</runDurationMillis>
+                        <schedulingPeriod>1 day</schedulingPeriod>
+                        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                        <yieldDuration>1 sec</yieldDuration>
+                    </config>
+                    <executionNodeRestricted>false</executionNodeRestricted>
+                    <name>Create table</name>
+                    <relationships>
+                        <autoTerminate>true</autoTerminate>
+                        <name>failure</name>
+                        <retry>false</retry>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>success</name>
+                        <retry>false</retry>
+                    </relationships>
+                    <state>STOPPED</state>
+                    <style/>
+                    <type>org.apache.nifi.processors.standard.ExecuteSQL</type>
+                </processors>
+                <processors>
+                    <id>d14027ca-23ba-3041-0000-000000000000</id>
+                    <parentGroupId>eec5ad4d-7102-33a4-0000-000000000000</parentGroupId>
                     <position>
                         <x>-16.0</x>
                         <y>96.0</y>
@@ -1228,7 +1228,7 @@ CREATE TABLE test_scenario.cities (
                             </entry>
                             <entry>
 <key>Endpoint Override URL</key>
-<value>http://host.docker.internal:9000</value>
+<value>http://172.28.0.1:9000</value>
                             </entry>
                             <entry>
 <key>Signer Override</key>
@@ -1295,5 +1295,5 @@ CREATE TABLE test_scenario.cities (
             <variables/>
         </processGroups>
     </snippet>
-    <timestamp>10/21/2022 14:51:09 UTC</timestamp>
+    <timestamp>11/15/2022 16:42:49 UTC</timestamp>
 </template>

@@ -42,7 +42,17 @@ Navigate to *http://localhost:9001* with your Internet browser of choice and log
 
 ### NiFi
 
-TODO
+Navigate to *https://localhost:8443*. If warned of a potential security risk, select *Accept the Risk and Continue*. Assuming you didn't change the credentials, log in with `admin` `admin1234567`. Alternatively, you can log in via OIDC, if you enabled and configured it in the *.yml* file, but you will have to create policies and assign your account permissions.
+
+Note that NiFi may randomize the credentials if the password is shorter than 12 characters, so if you changed it and didn't match this requirement, you may have to look through NiFi's logs to find the credentials.
+
+Upload the *Process_CSV.xml* template that comes with this repository into NiFi, and instantiate it.
+
+Access the generated process group, right-click in the empty area and select *Configure*. Under *Controller Services*, enable *CSVReader*. Configure *Postgres connection*'s properties, inserting the Postgres password (default `postgres`) under *Password*. Apply, enable and return to the flow.
+
+Configure *Retrieve CSV*'s properties, inserting the MinIO username and password (default `minioadmin` `minioadmin`) as *Access Key ID* and *Secret Access Key* respectively. Apply and return to the flow.
+
+*Start* the second and third processors, then *Run Once* the first processor. *Refresh* the flow and stop all processors. The data should now have been inserted into the database.
 
 ### Dagster
 
