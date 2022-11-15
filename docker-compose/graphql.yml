@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres-graphql:0.1.0
+    image: ghcr.io/scc-digitalhub/postgres-graphql:0.1.0
     volumes:
         - ./resources/db-init-scripts/postgres-virtualization.sql:/docker-entrypoint-initdb.d/postgres.sql
     ports:
