@@ -30,7 +30,7 @@ podman-compose -p dh -f expose_virtualize.yml up -d
 
 ### Postgres
 
-Postgres is preconfigured with the aforementioned extensions and the *docker-compose/resources/db-init-script/postgres-virtualization.sql* script automatically creates the `digitalhub` database. The `test_scenario` schema has a table named `cities`, which contains a list of cities and their geographical coordinates.
+Postgres is preconfigured with the aforementioned extensions and the *docker-compose/resources/db-init-script/postgres-expose-virtualize.sql* script automatically creates the `digitalhub` database. The `test_scenario` schema has a table named `cities`, which contains a list of cities and their geographical coordinates.
 
 ### PostgREST
 
@@ -43,6 +43,24 @@ Refer to the [PostgREST documentation](https://postgrest.org/en/stable/api.html)
 
 PostgREST also exposes a function that serves as GraphQL entrypoint (i.e., resolves GraphQL queries).
 
+#### Authenticated access
+You can disable anonymous access by commenting out the `PGRST_DB_ANON_ROLE` variable in the *.yml* file, so that users will need to be authenticated to use the API.
+
+Create a web client on AAC, enable *client-secret-basic* as authentication method and *client_credentials* as grant type. Add a custom claim mapping for the *test_scenario_user* role:
+```
+function claimMapping(claims) {
+    claims["role"] = "test_scenario_user";
+    return claims;
+}
+```
+
+Save the client and obtain a client credentials token. Then, configure the *.yml* file's `PGRST_JWT_SECRET` variable so that its `n` claim contains the value for the `n` claim presented at *https://<aac_instance>/jwk*. Start a PostgREST container.
+
+You can now call the PostgREST API by adding an `Authorization` header with value `Bearer <your_client_credentials_token>`:
+```
+curl -H "Authorization: Bearer <your_client_credentials_token>" http://localhost:3000/cities
+```
+
 ### GraphQL and GraphiQL
 
 The [pg_graphql extension](https://github.com/supabase/pg_graphql/tree/master) is used to provide GraphQL support to Postgres. GraphiQL is an interactive in-browser GraphQL IDE that can be used to query a GraphQL API, which in this scenario is the `test_scenario` schema.
@@ -51,7 +69,7 @@ Navigate to *http://localhost:4000* with your Internet browser of choice to acce
 
 Here are some example queries:
 
-- retrieve the `name` and `location` columns of each city:
+- Retrieve the `name` and `location` columns of each city:
 
 ```
 query {
@@ -63,6 +81,51 @@ query {
       }
     }
   }
+}
+```
+
+- Retrieve `id`, `name`, `country` and `location` where `name` has value `Paris`:
+```
+query cities {
+  citiesCollection(filter: { name: {eq: "Paris"}}) {
+    edges {
+      node {
+        id
+        name
+        country
+        location
+      }
+    }
+  }
+}
+```
+
+- You can also specify variables, for example, to limit the results to 2 records:
+```
+query cities($firstN: Int) {
+  citiesCollection(first: $firstN) {
+    edges {
+      node {
+        id
+        name
+        country
+        location
+      }
+    }
+  }
+}
+```
+In this case, you will need to specify the following under *Variables* (lower left):
+```
+{
+  "firstN": 2
+}
+```
+
+Note that, if you secured your PostgREST instance by disabling anonymous access, you will need to configure an appropriate header as well (switch to the *Headers* tab in the lower left):
+```
+{
+  "Authorization": "Bearer <your_client_credentials_token>"
 }
 ```
 
