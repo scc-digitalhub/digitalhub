@@ -42,7 +42,7 @@ services:
           }
         ]
       }'
-      PGRST_DB_ANON_ROLE: test_scenario_user # Comment to disable anonymous access
+      # PGRST_DB_ANON_ROLE: test_scenario_user # Comment to disable anonymous access
 
   # GraphiQL service
   graphiql:
@@ -77,6 +77,9 @@ services:
       - 8253:8253
       - 8290:8290
       - 9164:9164
+    volumes:
+      - "./resources/postgresql-42.5.0.jar:/home/wso2carbon/wso2mi-4.1.0/lib/postgresql-42.5.0.jar"
+      - "./resources/PostgresIntegration_1.0.0.car:/home/wso2carbon/wso2mi-4.1.0/repository/deployment/server/carbonapps/PostgresIntegration_1.0.0.car"
 
 # Default network with static subnet
 networks:
