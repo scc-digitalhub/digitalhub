@@ -137,6 +137,18 @@ Note that, if you secured your PostgREST instance by disabling anonymous access,
 
 **TODO** virtualize data from PostgreSQL and Minio
 
-### Micro Integrator
+### WSO2 Micro Integrator
 
-**TODO**
+WSO2 Micro Integrator allows integrating different services and exposing them as APIs. Adapting a service to be presented as an API involves making an integration project with [WSO2 Integration Studio](https://wso2.com/integration/integration-studio/).
+
+There are already tutorials on how to use Integration Studio, so this repository provides an integration project that's ready to use. If you didn't alter the *.yml* file, it should already be mounted into the WSO2MI container and ready for use, allowing the *cities* table to be queried.
+
+Run the following curl command to get a list of cities:
+```
+curl -H "accept:application/json" http://localhost:8290/services/CitiesService/cities
+```
+
+You can also filter by name:
+```
+curl -H "accept:application/json" http://localhost:8290/services/CitiesService/cities/Paris
+```
