@@ -40,6 +40,16 @@ INSERT INTO test_scenario.cities (id, name, country, location) VALUES (2, 'Paris
 
 INSERT INTO test_scenario.cities (id, name, country, location) VALUES (3, 'Rome', 'Italy', ST_SetSRID(ST_MakePoint(12.4829, 41.8932), 4326));
 
+CREATE TABLE test_scenario.paths (
+    id int NOT NULL,
+    path geometry(LineString, 4326),
+    PRIMARY KEY (id)
+);
+
+INSERT INTO test_scenario.paths VALUES (1, ST_MakeLine(ARRAY[ ST_SetSRID(ST_MakePoint(-0.1275, 51.5069), 4326), ST_SetSRID(ST_MakePoint(2.3473, 48.8540), 4326), ST_SetSRID(ST_MakePoint(12.4829, 41.8932), 4326) ]));
+
+INSERT INTO test_scenario.paths VALUES (2, ST_MakeLine(ARRAY[ ST_SetSRID(ST_MakePoint(13.4082, 52.5180), 4326), ST_SetSRID(ST_MakePoint(16.3750, 48.2061), 4326) ]));
+
 -- GraphQL Entrypoint
 CREATE FUNCTION test_scenario.graphql(
     "operationName" text default null,

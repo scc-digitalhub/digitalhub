@@ -3,7 +3,7 @@ services:
   postgres:
     image: ghcr.io/scc-digitalhub/postgres-graphql:0.1.0
     volumes:
-        - ./resources/db-init-scripts/postgres-virtualization.sql:/docker-entrypoint-initdb.d/postgres.sql
+        - ./resources/db-init-scripts/postgres-expose-virtualize.sql:/docker-entrypoint-initdb.d/postgres.sql
     ports:
       - 5432:5432
     command:
@@ -28,9 +28,20 @@ services:
     depends_on:
       - postgres
     environment:
-      PGRST_DB_URI: postgres://postgres:postgres@172.28.0.1:5432/digitalhub
+      PGRST_DB_URI: postgres://postgres:postgres@postgres:5432/digitalhub
       PGRST_DB_SCHEMA: test_scenario, graphql, public
-      PGRST_JWT_SECRET: '12345678901234567890123456789012'
+      PGRST_JWT_SECRET: '{
+        "keys": [
+          {
+            "kty": "RSA",
+            "e": "AQAB",
+            "use": "sig",
+            "kid": "rsa1",
+            "alg": "RS256",
+            "n": "n_claim_from_aac_jwk_endpoint"
+          }
+        ]
+      }'
       PGRST_DB_ANON_ROLE: test_scenario_user # Comment to disable anonymous access
 
   # GraphiQL service
@@ -60,7 +71,12 @@ services:
   #TODO
 
   # Micro Integrator service
-  #TODO
+  wso2mi:
+    image: wso2/wso2mi:4.1.0-multiarch
+    ports:
+      - 8253:8253
+      - 8290:8290
+      - 9164:9164
 
 # Default network with static subnet
 networks:
