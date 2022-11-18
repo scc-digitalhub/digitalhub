@@ -9,3 +9,5 @@ This folder is used by Docker/Podman-Compose to build a Dagster image. Its conte
 The "code" subfolder is the Dagster workspace, i.e., where all the pipeline-related code lives. It is mounted into the Dagster container and can be modified without rebuilding the image: while the container is up, you can add or modify your pipelines inside this folder (manually or pulling from a remote repository), then navigate to *Dagit* -> *Workspace* and *Reload* to load your updates.
 
 Note that Dagster relies on *workspace.yaml* to find your code, therefore you need to update that file accordingly.
+
+Also note that, if you reload a pipeline while it is running, the updates will take effect only on the next run, be it scheduled or manually triggered.

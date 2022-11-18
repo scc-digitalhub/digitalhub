@@ -32,7 +32,7 @@ Postgres is used both as Dagster metadata storage and for storing the CSV data a
 psql -h localhost -U postgres -W
 ```
 
-If you connect to the `digitalhub` database now, you will find that the `test_scenario` schema has a currently empty table named `cities`, which has been automatically created by the scripts in the *docker-compose/resources/db-init-script* folder when Postgres has been launched.
+If you connect to the `digitalhub` database now, you will find that the `test_scenario` schema has a currently empty table named `cities`, which has been automatically created by the *docker-compose/resources/db-init-scripts/postgres-mini-etl.sql* script when Postgres has been launched.
 
 ### MinIO
 

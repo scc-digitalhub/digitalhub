@@ -1,0 +1,71 @@
+services:
+  # Postgres service with TimescaleDB, PostGIS and GraphQL
+  postgres:
+    image: ghcr.io/scc-digitalhub/postgres-graphql:0.1.0
+    volumes:
+        - ./resources/db-init-scripts/postgres-virtualization.sql:/docker-entrypoint-initdb.d/postgres.sql
+    ports:
+      - 5432:5432
+    command:
+      - postgres
+      - -c
+      - wal_level=logical
+      - -c
+      - shared_preload_libraries=pg_stat_statements,timescaledb
+      - -c
+      - timescaledb.telemetry_level=off
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: digitalhub
+
+  # PostgREST service
+  postgrest:
+    image: postgrest/postgrest:v10.0.0
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    environment:
+      PGRST_DB_URI: postgres://postgres:postgres@172.28.0.1:5432/digitalhub
+      PGRST_DB_SCHEMA: test_scenario, graphql, public
+      PGRST_JWT_SECRET: '12345678901234567890123456789012'
+      PGRST_DB_ANON_ROLE: test_scenario_user # Comment to disable anonymous access
+
+  # GraphiQL service
+  graphiql:
+    image: nginx
+    volumes:
+      - ./resources/index.html:/usr/share/nginx/html/index.html
+    ports:
+      - 4000:80
+    depends_on:
+      - postgrest
+
+  # MinIO service
+  minio:
+    image: minio/minio:latest
+    ports:
+      - 9000:9000
+      - 9001:9001
+    volumes:
+      - ./data/minio:/data
+    environment:
+      MINIO_ACCESS_KEY: "minioadmin"
+      MINIO_SECRET_KEY: "minioadmin"
+    command: server /data --console-address ":9001"
+
+  # Dremio service
+  #TODO
+
+  # Micro Integrator service
+  #TODO
+
+# Default network with static subnet
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+          gateway: 172.28.0.1
