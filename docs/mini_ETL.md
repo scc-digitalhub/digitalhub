@@ -65,14 +65,14 @@ resources:
   io_manager:
     config:
       database_name: "digitalhub"
-      host: "172.28.0.1"
+      host: "postgres"
       password: {"env": "DH_DB_PWD"}
       port: 5432
       table_name: "test_scenario.cities"
       username: {"env": "DH_DB_USERNAME"}
   minio:
     config:
-      endpoint: "172.28.0.1:9000"
+      endpoint: "minio:9000"
       access_key: {"env": "MINIO_ACCESS_KEY"}
       secret_key: {"env": "MINIO_SECREY_KEY"}
       bucket: "testbucket"

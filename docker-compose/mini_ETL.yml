@@ -113,7 +113,7 @@ services:
       # Predefined connection to Postgres
       SQLPAD_CONNECTIONS__postgres1__name: "Digitalhub"
       SQLPAD_CONNECTIONS__postgres1__driver: "postgres"
-      SQLPAD_CONNECTIONS__postgres1__host: 172.28.0.1
+      SQLPAD_CONNECTIONS__postgres1__host: postgres
       SQLPAD_CONNECTIONS__postgres1__port: 5432
       SQLPAD_CONNECTIONS__postgres1__database: "digitalhub"
       SQLPAD_CONNECTIONS__postgres1__username: "postgres"
