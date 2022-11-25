@@ -3,7 +3,7 @@
 This example illustrates how the platform can be used to expose and virtualize data. More specifically, two use cases are proposed:
 
 1. Exposing data stored in PostgreSQL via REST and GraphQL
-2. Creating a virtual dataset by joining data from heterogeneous sources and exposing it
+2. Creating a virtual dataset by joining data from heterogeneous sources
 
 The following components are used:
 
@@ -131,11 +131,60 @@ Note that, if you secured your PostgREST instance by disabling anonymous access,
 
 ### MinIO
 
-**TODO**
+*docker-compose/resources/worldwide-pollution.csv* is a dataset published by the Environmental Protection Agency and provides geolocated information about air quality per country and city. The whole dataset is publicly available on [Opendatasoft](https://public.opendatasoft.com/explore/dataset/worldwide-pollution/information/?disjunctive.country&disjunctive.filename), while *worldwide-pollution.csv* only contains the subset related to France, Italy and the UK.
+
+Navigate to *http://localhost:9001* with your Internet browser of choice and log in with the credentials `minioadmin`/`minioadmin`. Create a new bucket named `testbucket`, then upload the *docker-compose/resources/worldwide-pollution.csv* file.
 
 ### Dremio
 
-**TODO** virtualize data from PostgreSQL and Minio
+Dremio is used to virtualize data from PostgreSQL and Minio, that is, to create a virtual dataset on top of both data sources by joining their data.
+
+Navigate to *http://localhost:9047* and log in, then proceed to configuring the data sources as illustrated in the following paragraphs.
+
+#### Connect to MinIO
+
+- Click on *Add Source* and select `Amazon S3`
+- On *General* configure the following:
+    - *Name*: `minio`
+    - *AWS Access Key*: `minioadmin`
+    - *AWS Access Secret*: `minioadmin`
+- On *Advanced Options* check `Enable compatibility mode` and add the following *Connection Properties*:
+    - `fs.s3a.path.style.access`: `true`
+    - `fs.s3a.endpoint`: `127.0.0.1:9000`
+
+Inside the newly created data source, open the *testbucket* folder and click on *worldwide-pollution.csv*. Change the *Field Delimiter* to `;` and ckeck *Extract Field Names*, then *Save* (this is to be done only once).
+
+#### Connect to Postgres
+
+- Click on *Add Source* and select `PostgreSQL`
+- On *General* configure the following:
+    - *Name*: `postgres`
+    - *Host*: `localhost`
+    - *Port*: `5432`
+    - *Database Name*: `digitalhub`
+    - *Username*: `postgres`
+    - *Password*: `postgres`
+
+Inside the newly created data source, you should see `test_scenario` and the table `cities` inside it.
+
+#### Create a virtual dataset
+
+Open the *SQL Runner* and run the following query, which joins the data sources to select London air quality data:
+
+```
+SELECT Pollution.city, Cities.country, Cities.location, Pollution.measurement, Pollution.CO, Pollution.O3, Pollution.PM5, Pollution.NO2
+FROM postgres_docker.test_scenario.cities Cities
+JOIN (
+    SELECT City AS city, "date" AS measurement, "Value CO" AS CO, "Value O3" AS O3, "Value PM5" AS PM5, "Value NO2" AS NO2
+    FROM minio.testbucket."worldwide-pollution.csv"
+    WHERE City = 'London'
+) Pollution
+ON Cities.name = Pollution.City
+```
+
+Click on *Save Script As*, then on *Save View as*, enter a name for the new dataset (e.g., `london_air_quality_data`) and save it on your home space.
+
+Now you can reopen the virtual dataset and query it either from the SQL Runner or the Dremio API.
 
 ### WSO2 Micro Integrator
 
