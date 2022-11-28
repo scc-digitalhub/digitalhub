@@ -1,6 +1,0 @@
-dagster
-dagit
-dagster-postgres
-psycopg2-binary
-pandas
-minio

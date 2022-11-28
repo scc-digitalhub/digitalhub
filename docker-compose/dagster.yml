@@ -12,7 +12,7 @@ services:
       PGPORT: 5433
 
   dagit:
-    build: ./dagster_build_context
+    image: ghcr.io/scc-digitalhub/dagster:0.1.0
     entrypoint:
       - dagit
       - -h
@@ -21,42 +21,44 @@ services:
       - "5000"
       - -w
       - workspace.yaml
-    container_name: dagit
     expose:
       - "5000"
     ports:
       - "5000:5000"
     environment:
+      # backend storage
       DAGSTER_POSTGRES_USER: "postgres"
       DAGSTER_POSTGRES_PASSWORD: "postgres"
       DAGSTER_POSTGRES_DB: "dagster_storage"
       DAGSTER_POSTGRES_PORT: 5433
+      # credentials for the pipeline
       DH_DB_USERNAME: "postgres"
       DH_DB_PWD: "postgres"
       MINIO_ACCESS_KEY: "minioadmin"
       MINIO_SECREY_KEY: "minioadmin"
     volumes:
-      - ./dagster_build_context/code:/opt/dagster/code
+      - ./resources/dagster-pipelines:/opt/dagster/code
     depends_on:
       - dagster_postgresql
 
   dagster_daemon:
-    build: ./dagster_build_context
+    image: ghcr.io/scc-digitalhub/dagster:0.1.0
     entrypoint:
       - dagster-daemon
       - run
-    container_name: dagster_daemon
     restart: on-failure
     environment:
+      # backend storage
       DAGSTER_POSTGRES_USER: "postgres"
       DAGSTER_POSTGRES_PASSWORD: "postgres"
       DAGSTER_POSTGRES_DB: "dagster_storage"
       DAGSTER_POSTGRES_PORT: 5433
+      # credentials for the pipeline
       DH_DB_USERNAME: "postgres"
       DH_DB_PWD: "postgres"
       MINIO_ACCESS_KEY: "minioadmin"
       MINIO_SECREY_KEY: "minioadmin"
     volumes:
-      - ./dagster_build_context/code:/opt/dagster/code
+      - ./resources/dagster-pipelines:/opt/dagster/code
     depends_on:
       - dagster_postgresql
