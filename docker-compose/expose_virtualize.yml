@@ -1,7 +1,7 @@
 services:
   # Postgres service with TimescaleDB, PostGIS and GraphQL
   postgres:
-    image: ghcr.io/scc-digitalhub/postgres-graphql:0.1.0
+    image: timescale/timescaledb-ha:pg14.6-ts2.8.1-latest
     volumes:
         - ./resources/db-init-scripts/postgres-expose-virtualize.sql:/docker-entrypoint-initdb.d/postgres.sql
     ports:
@@ -42,17 +42,27 @@ services:
           }
         ]
       }'
-      PGRST_DB_ANON_ROLE: test_scenario_user # Comment to disable anonymous access
+      # wrap image to retrieve jwk at container start
+      PGRST_DB_ANON_ROLE: test_scenario_user # Comment to require authentication
 
-  # GraphiQL service
-  graphiql:
-    image: nginx
-    volumes:
-      - ./resources/index.html:/usr/share/nginx/html/index.html
+  # Hasura service
+  hasura:
+    image: hasura/graphql-engine:v2.10.2.ubuntu
     ports:
-      - 4000:80
+      - 4000:8080
     depends_on:
-      - postgrest
+      - postgres
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@postgres:5432/digitalhub
+      HASURA_GRAPHQL_ENABLE_CONSOLE: true
+      HASURA_GRAPHQL_ENABLE_TELEMETRY: false
+      # Uncomment the following variable to require authentication
+      #HASURA_GRAPHQL_JWT_SECRET: '{
+      #  "jwk_url": "https://<aac_instance>/jwk",
+      #  "issuer": "https://<aac_instance>",
+      #  "audience": "hasura_client_id_in_aac"
+      #}'
+      #HASURA_GRAPHQL_ADMIN_SECRET: secret123 # Uncomment to require authentication
 
   # MinIO service
   minio:
@@ -69,22 +79,6 @@ services:
 
   # Dremio service
   #TODO
-
-  # Micro Integrator service
-  wso2mi:
-    image: wso2/wso2mi:4.1.0-multiarch
-    ports:
-      - 8253:8253
-      - 8290:8290
-      - 9164:9164
-    volumes:
-      - "./resources/postgresql-42.5.0.jar:/home/wso2carbon/wso2mi-4.1.0/lib/postgresql-42.5.0.jar"
-      - "./resources/PostgresIntegration_1.0.0.car:/home/wso2carbon/wso2mi-4.1.0/repository/deployment/server/carbonapps/PostgresIntegration_1.0.0.car"
-    environment:
-      DB_DRIVER_CLASS_NAME: org.postgresql.Driver
-      DB_CONNECTION_URL: jdbc:postgresql://postgres:5432/digitalhub
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
 
 # Default network with static subnet
 networks:

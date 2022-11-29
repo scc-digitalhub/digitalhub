@@ -1,21 +1,11 @@
 -- Install extensions
 
-CREATE SCHEMA IF NOT EXISTS extensions;
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE EXTENSION IF NOT EXISTS pg_graphql WITH SCHEMA extensions CASCADE;
 CREATE EXTENSION IF NOT EXISTS timescaledb;
+CREATE EXTENSION IF NOT EXISTS postgis;
 
 -- Setup role and permissions
 
 CREATE ROLE test_scenario_user NOLOGIN;
-
-GRANT USAGE ON SCHEMA graphql TO test_scenario_user;
-GRANT SELECT ON graphql.field, graphql.type, graphql.enum_value TO test_scenario_user;
-GRANT ALL ON FUNCTION graphql.resolve TO test_scenario_user;
-
-ALTER DEFAULT PRIVILEGES IN SCHEMA graphql GRANT ALL ON tables TO test_scenario_user;
-ALTER DEFAULT PRIVILEGES IN SCHEMA graphql GRANT ALL ON functions TO test_scenario_user;
-ALTER DEFAULT PRIVILEGES IN SCHEMA graphql GRANT ALL ON sequences TO test_scenario_user;
 
 CREATE SCHEMA IF NOT EXISTS test_scenario;
 
@@ -40,35 +30,10 @@ INSERT INTO test_scenario.cities (id, name, country, location) VALUES (2, 'Paris
 
 INSERT INTO test_scenario.cities (id, name, country, location) VALUES (3, 'Rome', 'Italy', ST_SetSRID(ST_MakePoint(12.4829, 41.8932), 4326));
 
-CREATE TABLE test_scenario.paths (
-    id int NOT NULL,
-    path geometry(LineString, 4326),
-    PRIMARY KEY (id)
-);
+INSERT INTO test_scenario.cities (id, name, country, location) VALUES (4, 'Cambridge', 'United Kingdom', ST_SetSRID(ST_MakePoint(0.1311, 52.1952), 4326));
 
-INSERT INTO test_scenario.paths VALUES (1, ST_MakeLine(ARRAY[ ST_SetSRID(ST_MakePoint(-0.1275, 51.5069), 4326), ST_SetSRID(ST_MakePoint(2.3473, 48.8540), 4326), ST_SetSRID(ST_MakePoint(12.4829, 41.8932), 4326) ]));
-
-INSERT INTO test_scenario.paths VALUES (2, ST_MakeLine(ARRAY[ ST_SetSRID(ST_MakePoint(13.4082, 52.5180), 4326), ST_SetSRID(ST_MakePoint(16.3750, 48.2061), 4326) ]));
-
--- GraphQL Entrypoint
-CREATE FUNCTION test_scenario.graphql(
-    "operationName" text default null,
-    query text default null,
-    variables jsonb default null,
-    extensions jsonb default null
-)
-    returns jsonb
-    language sql
-AS $$
-    select graphql.resolve(
-        query := query,
-        variables := coalesce(variables, '{}'),
-        "operationName" := "operationName",
-        extensions := extensions
-    );
-$$;
-
-COMMENT ON SCHEMA test_scenario IS '@graphql({"inflect_names": true})';
-
--- Sync the GraphQL schema
-SELECT graphql.rebuild_schema();
+CREATE OR REPLACE FUNCTION test_scenario.find_cities_in(area text) RETURNS setof test_scenario.cities AS $$
+    SELECT id, name, country, ST_AsText(location)
+    FROM test_scenario.cities
+    WHERE ST_Contains(ST_GeomFromText('POLYGON((' || area || '))', 4326), location);
+$$ LANGUAGE SQL;
