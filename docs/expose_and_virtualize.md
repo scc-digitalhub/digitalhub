@@ -41,9 +41,7 @@ PostgREST exposes the table `cities` as a REST API endpoint. You can query the t
 Refer to the [PostgREST documentation](https://postgrest.org/en/stable/api.html) for detailed information on the query syntax.
 
 #### Authenticated access
-You can disable anonymous access by commenting out the `PGRST_DB_ANON_ROLE` variable in the *.yml* file, so that users will need to be authenticated to use the API.
-
-Create a web client on AAC, enable *client-secret-basic* as authentication method and *client_credentials* as grant type. Add a custom claim mapping for the *test_scenario_user* role:
+To require authentication, create a web client on AAC, enable *client-secret-basic* as authentication method and *client_credentials* as grant type. Add a custom claim mapping for the *test_scenario_user* role:
 ```
 function claimMapping(claims) {
     claims["role"] = "test_scenario_user";
@@ -51,7 +49,7 @@ function claimMapping(claims) {
 }
 ```
 
-Save the client and obtain a client credentials token. Then, configure the *.yml* file's `PGRST_JWT_SECRET` variable so that its `n` claim contains the value for the `n` claim presented at *https://<aac_instance>/jwk*. Start a PostgREST container.
+Save the client and obtain a client credentials token. Open the *.yml* file: uncomment `PGRST_DB_ANON_ROLE` and edit `PGRST_JWT_SECRET` so that its `n` claim contains the value for the `n` claim presented at *https://<aac_instance>/jwk*. Start a PostgREST container.
 
 You can now call the PostgREST API by adding an `Authorization` header with value `Bearer <your_client_credentials_token>`:
 ```
@@ -95,10 +93,9 @@ query MyQuery {
 ```
 
 #### Authenticated access
+To require authentication, open the *.yml* file and uncomment `HASURA_GRAPHQL_ADMIN_SECRET`. Its value will be asked when accessing the UI, but can also be used when executing queries from tools like curl or Postman, by adding the header `x-hasura-admin-secret: <HASURA_GRAPHQL_ADMIN_SECRET>`.
 
-If you enabled authentication, and are executing these queries from a tool such as curl or Postman, you will need to authenticate, either by adding the header `x-hasura-admin-secret: <HASURA_GRAPHQL_ADMIN_SECRET>` (which is used by the UI) or by providing an AAC token.
-
-To use AAC, create a web client, enable *client-secret-basic* as authentication method and *client_credentials* as grant type. Add a custom claim mapping for the *test_scenario_user* role:
+To use AAC, create a web client, enable *client-secret-basic* as authentication method and *client_credentials* as grant type. Add a custom claim mapping for the *admin* role:
 ```
 function claimMapping(claims) {
     hasura_claims = {};
@@ -108,7 +105,7 @@ function claimMapping(claims) {
     return claims;
 }
 ```
-Save the client, put its ID as `audience` under `HASURA_GRAPHQL_JWT_SECRET` in the .yml file and restart Hasura.
+Save the client, open the *.yml* file, uncomment `HASURA_GRAPHQL_JWT_SECRET` and, within, specify the AAC instance and update `audience` with the client's ID. Start a Hasura container (you may need to track tables and functions again).
 
 Obtain a token and then try the following curl command, which will query the custom function:
 ```
@@ -117,11 +114,24 @@ curl --location --request POST 'http://localhost:4000/v1/graphql' \
 --data-raw '{"query":"query MyQuery {test_scenario_find_cities_in(args: {area:\"1.85 49.13, 2.96 49.11, 2.92 48.43, 1.82 48.53, 1.85 49.13\"}) {country name}}"}'
 ```
 
+Note that, even if you plan on using AAC, `HASURA_GRAPHQL_ADMIN_SECRET` still needs to be uncommented.
+
 ### MinIO
 
 *docker-compose/resources/worldwide-pollution.csv* is a dataset published by the Environmental Protection Agency and provides geolocated information about air quality per country and city. The whole dataset is publicly available on [Opendatasoft](https://public.opendatasoft.com/explore/dataset/worldwide-pollution/information/?disjunctive.country&disjunctive.filename), while *worldwide-pollution.csv* only contains the subset related to France, Italy and the UK.
 
 Go to *http://localhost:9001* and log in with `minioadmin`/`minioadmin`. Create a new bucket named `testbucket`, then upload the *docker-compose/resources/worldwide-pollution.csv* file.
+
+#### Authenticated access
+To require authentication for MinIO, create a web client on AAC, enable *client-secret-basic* as authentication method and *authorization_code* as grant type. Add `http://localhost:9001/oauth_callback` as redirect URI. Enable scope `openid` under *API Access*. Add a custom claim mapping:
+```
+function claimMapping(claims) {
+   claims["policy"] = ["consoleAdmin", "readwrite", "diagnostics"]
+   return claims;
+}
+```
+
+Save the client, open the *.yml* file, uncomment `MINIO_IDENTITY_OPENID_CONFIG_URL`, update the AAC instance and the client's ID and secret. Start a MinIO container and go to *http://localhost:9001*. You should now be asked to log in with AAC.
 
 ### Dremio
 
