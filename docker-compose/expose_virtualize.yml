@@ -48,8 +48,8 @@ services:
   # Hasura service
   hasura:
     image: hasura/graphql-engine:v2.10.2.ubuntu
-    ports:
-      - 4000:8080
+    #ports:
+    #  - 4000:8080
     depends_on:
       - postgres
     environment:
@@ -63,6 +63,58 @@ services:
       #  "audience": "hasura_client_id_in_aac"
       #}'
       #HASURA_GRAPHQL_ADMIN_SECRET: secret123 # Uncomment to require authentication
+      
+  # Hasura wrapped with OAuth2 Proxy
+  oauth2-proxy:
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.4.0
+    #ports:
+    #  - 4180:4180
+    #depends_on:
+    #  - hasura
+    command:
+      - --http-address
+      - 0.0.0.0:4180
+    environment:
+      OAUTH2_PROXY_UPSTREAMS: "http://hasura:8080/"
+    
+      OAUTH2_PROXY_EMAIL_DOMAINS: '*'
+      OAUTH2_PROXY_PROVIDER: "oidc"
+      OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: "AAC"
+      OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: true
+      OAUTH2_PROXY_REDIRECT_URL: "http://localhost:1200/oauth2/callback"
+      
+      OAUTH2_PROXY_OIDC_ISSUER_URL: "https://<aac_instance>"
+      OAUTH2_PROXY_CLIENT_ID: "client_id"
+      OAUTH2_PROXY_CLIENT_SECRET: "client_secret"
+      
+      OAUTH2_PROXY_SKIP_JWT_BEARER_TOKENS: true
+      OAUTH2_PROXY_OIDC_EXTRA_AUDIENCES: api://default
+      OAUTH2_PROXY_OIDC_EMAIL_CLAIM: "sub"
+      
+      OAUTH2_PROXY_SET_XAUTHREQUEST: true
+      OAUTH2_PROXY_PASS_ACCESS_TOKEN: true
+      
+      OAUTH2_PROXY_SESSION_STORE_TYPE: redis 
+      OAUTH2_PROXY_REDIS_CONNECTION_URL: redis://redis
+      
+      OAUTH2_PROXY_COOKIE_REFRESH: 30m
+      OAUTH2_PROXY_COOKIE_NAME: "SESSION"
+      OAUTH2_PROXY_COOKIE_SECRET: "secret1234567890"
+      
+  redis:
+    image: redis:7.0.2-alpine3.16
+    volumes:
+      - cache:/data
+
+  # Nginx
+  nginx:
+    image: nginx:1.22.1
+    #depends_on:
+    #  - oauth2-proxy
+    volumes:
+      - ./resources/nginx-default.conf.template:/etc/nginx/templates/default.conf.template
+    ports:
+      - 1200:80
 
   # MinIO service
   minio:
@@ -87,7 +139,9 @@ services:
 
   # Dremio service
   #TODO
-
+volumes:
+  cache:
+    driver: local
 # Default network with static subnet
 networks:
   default:
