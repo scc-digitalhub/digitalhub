@@ -1,15 +1,14 @@
 services:
   #service for Dagster Postgres storage DB
-  dagster_postgresql:
-    image: postgres:11
-    container_name: dagster_postgresql
-    expose:
-      - "5433"
+  postgres:
+    image: timescale/timescaledb:2.8.1-pg13
+    volumes:
+        - ./resources/db-init-scripts/postgres-mini-etl.sql:/docker-entrypoint-initdb.d/postgres.sql
+    ports:
+      - 5432:5432
     environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB: "dagster_storage"
-      PGPORT: 5433
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
 
   dagit:
     image: ghcr.io/scc-digitalhub/dagster:0.1.0
@@ -21,16 +20,14 @@ services:
       - "5000"
       - -w
       - workspace.yaml
-    expose:
-      - "5000"
-    ports:
-      - "5000:5000"
+    # ports:
+    #   - "5000:5000"
     environment:
       # backend storage
       DAGSTER_POSTGRES_USER: "postgres"
       DAGSTER_POSTGRES_PASSWORD: "postgres"
       DAGSTER_POSTGRES_DB: "dagster_storage"
-      DAGSTER_POSTGRES_PORT: 5433
+      DAGSTER_POSTGRES_PORT: 5432
       # credentials for the pipeline
       DH_DB_USERNAME: "postgres"
       DH_DB_PWD: "postgres"
@@ -39,7 +36,7 @@ services:
     volumes:
       - ./resources/dagster-pipelines:/opt/dagster/code
     depends_on:
-      - dagster_postgresql
+      - postgres
 
   dagster_daemon:
     image: ghcr.io/scc-digitalhub/dagster:0.1.0
@@ -52,7 +49,7 @@ services:
       DAGSTER_POSTGRES_USER: "postgres"
       DAGSTER_POSTGRES_PASSWORD: "postgres"
       DAGSTER_POSTGRES_DB: "dagster_storage"
-      DAGSTER_POSTGRES_PORT: 5433
+      DAGSTER_POSTGRES_PORT: 5432
       # credentials for the pipeline
       DH_DB_USERNAME: "postgres"
       DH_DB_PWD: "postgres"
@@ -61,4 +58,25 @@ services:
     volumes:
       - ./resources/dagster-pipelines:/opt/dagster/code
     depends_on:
-      - dagster_postgresql
+      - postgres
+
+  # Expose Dagit port and run without this service to avoid proxying
+  oauth2-proxy:
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.4.0
+    command:
+      - --http-address
+      - 0.0.0.0:4180
+    ports:
+      - "4180:4180"
+    environment:
+      OAUTH2_PROXY_UPSTREAMS: "http://dagit:5000/"
+      OAUTH2_PROXY_PROVIDER: "oidc"
+      OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: "AAC"
+      OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: "true" #skip default login page and redirect directly to IdP
+      OAUTH2_PROXY_OIDC_ISSUER_URL: "https://aac.platform.smartcommunitylab.it"
+      OAUTH2_PROXY_CLIENT_ID: "c_4ef57cb0cdf04c8786ade027d9a59023"
+      OAUTH2_PROXY_CLIENT_SECRET: "m6x6hUZWzbNRLG86Fnq27Wu5DEh_6pulAs9JODiCg0s="
+      OAUTH2_PROXY_REDIRECT_URL: "http://localhost:4180/oauth2/callback" #redirect URI for AAC
+      OAUTH2_PROXY_EMAIL_DOMAINS: "*"
+      OAUTH2_PROXY_PASS_ACCESS_TOKEN: "true"
+      OAUTH2_PROXY_COOKIE_SECRET: "3kMCyoJBertPknMF2fn8EQNFNITPW_IlCe9g7PTe0bw="

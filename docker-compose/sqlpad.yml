@@ -1,13 +1,13 @@
 services:
   sqlpad:
-    image: sqlpad/sqlpad:latest
+    image: sqlpad/sqlpad:6.11.2 #last stable multiplatform version
     ports:
       - "4000:4000"
     environment:
       SQLPAD_PORT: 4000
       SQLPAD_ADMIN: admin
       SQLPAD_ADMIN_PASSWORD: admin
-      # optionally define your connections here, with the syntax SQLPAD_CONNECTIONS__<connectionId>__<fieldName>, e.g.:
+      #optionally define your connections here, with the syntax SQLPAD_CONNECTIONS__<connectionId>__<fieldName>, e.g.:
       # SQLPAD_CONNECTIONS__postgres1__name: "Digitalhub"
       # SQLPAD_CONNECTIONS__postgres1__driver: postgres
       # SQLPAD_CONNECTIONS__postgres1__host: 172.26.0.1
@@ -15,3 +15,22 @@ services:
       # SQLPAD_CONNECTIONS__postgres1__database: digitalhub
       # SQLPAD_CONNECTIONS__postgres1__username: postgres
       # SQLPAD_CONNECTIONS__postgres1__password: postgres
+
+      #OIDC configuration
+      # NOTE: using passport-openidconnect as authentication strategy as openid-client is not compatible with AAC;
+      # passport-openidconnect support might be removed in future versions of SQLPad.
+      # With OIDC via passport-openidconnect, SQLPad assigns "editor" role to OIDC users.
+      # With OIDC via openid-client, SQLPad assigns the role specified in "roles" claim or defaults to "editor" role.
+      PUBLIC_URL: "http://localhost:4000" #public URL used for OAuth setup and email links
+      SQLPAD_OIDC_LINK_HTML: "Sign in with AAC"
+      SQLPAD_OIDC_CLIENT_ID: "c_3ff806854d684d99942f90d494fbf42b"
+      SQLPAD_OIDC_CLIENT_SECRET: "9TBBJmIb3njxlde7jyr3_wvhO4Bu97rvbtGQBbVoY6E="
+      SQLPAD_OIDC_SCOPE: "openid profile email" #default value is "openid profile email roles"
+      SQLPAD_OIDC_ISSUER: "https://aac.platform.smartcommunitylab.it"
+      SQLPAD_OIDC_AUTHORIZATION_URL: "https://aac.platform.smartcommunitylab.it/oauth/authorize"
+      SQLPAD_OIDC_TOKEN_URL: "https://aac.platform.smartcommunitylab.it/oauth/token"
+      SQLPAD_OIDC_USER_INFO_URL: "https://aac.platform.smartcommunitylab.it/userinfo"
+
+      SQLPAD_ALLOWED_DOMAINS: "fbk.eu gmail.com" #space delimited list of email domains to auto-add users after login
+      SQLPAD_USERPASS_AUTH_DISABLED: "true" #disable built-in authentication and restrict to OAuth only
+      SQLPAD_SESSION_COOKIE_SAME_SITE: "Lax" #default is 'strict' and that removes the session cookie on redirects
