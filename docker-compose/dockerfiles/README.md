@@ -9,12 +9,6 @@ Based on a release from [the official repository](https://github.com/apache/nifi
 podman build -t nifi-oidc:0.1.0 -f ./nifi/Dockerfile ./nifi
 ```
 
-## Postgres
-Based on [Supabase's repository](https://github.com/apache/nifi) for GraphQL support on Postgres, with the addition of PostGIS and [TimescaleDB](https://github.com/timescale/timescaledb). Build with:
-```shell
-podman build -t postgres-graphql:0.1.0 -f ./postgres/Dockerfile ./postgres
-```
-
 ## Dagster
 
 Based on a Python 3.7 image, with the addition of Dagster packages and the Dagster instance configuration file (see https://docs.dagster.io/deployment/dagster-instance). PostgreSQL is expected to be used as backend storage. Build with:
