@@ -26,7 +26,7 @@ services:
 
   # NiFi service
   nifi:
-    image: ghcr.io/scc-digitalhub/nifi-oidc:0.1.0
+    image: ghcr.io/scc-digitalhub/nifi-oidc:0.1.1
     ports:
       - 8443:8443
     volumes:
