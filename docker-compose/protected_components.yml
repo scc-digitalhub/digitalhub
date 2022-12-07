@@ -1,0 +1,257 @@
+services:
+  # Postgres service with TimescaleDB and PostGIS
+  postgres:
+    image: timescale/timescaledb-ha:pg14.6-ts2.8.1-latest
+    volumes:
+        - ./resources/db-init-scripts/postgres-protected-components.sql:/docker-entrypoint-initdb.d/postgres.sql
+    ports:
+      - "5432:5432"
+    command:
+      - postgres
+      - -c
+      - timescaledb.telemetry_level=off
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  # PostgREST service
+  postgrest:
+    image: postgrest/postgrest:v10.0.0
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      PGRST_DB_URI: postgres://postgres:postgres@postgres:5432/digitalhub
+      PGRST_DB_SCHEMA: test_scenario, graphql, public
+      #TODO move JWT secret to .env file and reference env var here?
+      PGRST_JWT_SECRET: '{
+        "keys": [
+          {
+            "kty": "RSA",
+            "e": "AQAB",
+            "use": "sig",
+            "kid": "rsa1",
+            "alg": "RS256",
+            "n": "n_claim_from_aac_jwk_endpoint"
+          }
+        ]
+      }'
+
+  # MinIO service
+  minio:
+    image: minio/minio:RELEASE.2022-11-26T22-43-32Z.fips
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./data/minio:/data
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_IDENTITY_OPENID_CONFIG_URL: "${AAC_INSTANCE}/.well-known/openid-configuration"
+      MINIO_IDENTITY_OPENID_CLIENT_ID: "${MINIO_CLIENT_ID}"
+      MINIO_IDENTITY_OPENID_CLIENT_SECRET: "${MINIO_CLIENT_SECRET}"
+      MINIO_IDENTITY_OPENID_CLAIM_NAME: policy
+      MINIO_IDENTITY_OPENID_SCOPES: openid
+      MINIO_IDENTITY_OPENID_REDIRECT_URI: http://localhost:9001/oauth_callback
+      MINIO_IDENTITY_OPENID_CLAIM_USERINFO: on
+
+    command: server /data --console-address ":9001"
+
+  # NiFi service
+  nifi:
+    image: ghcr.io/scc-digitalhub/nifi-oidc:0.1.1
+    ports:
+      - "8443:8443"
+    volumes:
+      - ./resources/postgresql-42.5.0.jar:/opt/nifi/nifi-current/lib/postgresql-42.5.0.jar
+      - ./resources/certs:/opt/nifi/nifi-current/conf/certs
+    environment:
+      SINGLE_USER_CREDENTIALS_USERNAME: admin # For use when OIDC is disabled. Ignored if OIDC is enabled.
+      SINGLE_USER_CREDENTIALS_PASSWORD: admin1234567 # For use when OIDC is disabled. Ignored if OIDC is enabled.
+      AUTH: oidc
+      OIDC_CONFIGURATION: "${AAC_INSTANCE}/.well-known/openid-configuration"
+      NIFI_CLIENT_ID: "${NIFI_CLIENT_ID}"
+      NIFI_CLIENT_SECRET: "${NIFI_CLIENT_SECRET}"
+      KEYSTORE_PATH: ./conf/certs/keystore.jks
+      KEYSTORE_TYPE: jks
+      KEYSTORE_PASSWORD: platform
+      KEY_PASSWORD: platform
+      TRUSTSTORE_PATH: ./conf/certs/truststore.jks
+      TRUSTSTORE_TYPE: jks
+      TRUSTSTORE_PASSWORD: platform
+      INITIAL_ADMIN_IDENTITY: "${NIFI_INITIAL_ADMIN_IDENTITY}"
+
+  # Dremio service
+  #
+  #
+  #TODO
+  #
+  #
+
+  # SQLPad service
+  sqlpad:
+    image: sqlpad/sqlpad:6.11.2 #last stable multiplatform version
+    ports:
+      - "4000:4000"
+    environment:
+      SQLPAD_PORT: 4000
+      SQLPAD_ADMIN: admin
+      SQLPAD_ADMIN_PASSWORD: admin
+      # Predefined connection to Postgres
+      SQLPAD_CONNECTIONS__postgres1__name: Digitalhub
+      SQLPAD_CONNECTIONS__postgres1__driver: postgres
+      SQLPAD_CONNECTIONS__postgres1__host: postgres
+      SQLPAD_CONNECTIONS__postgres1__port: 5432
+      SQLPAD_CONNECTIONS__postgres1__database: digitalhub
+      SQLPAD_CONNECTIONS__postgres1__username: postgres
+      SQLPAD_CONNECTIONS__postgres1__password: postgres
+      # OIDC configuration (OIDC users are assigned "editor" role)
+      PUBLIC_URL: http://localhost:4000
+      SQLPAD_OIDC_LINK_HTML: 'Sign in with AAC'
+      SQLPAD_OIDC_CLIENT_ID: "${SQLPAD_OIDC_CLIENT_ID}"
+      SQLPAD_OIDC_CLIENT_SECRET: "${SQLPAD_OIDC_CLIENT_SECRET}"
+      SQLPAD_OIDC_SCOPE: 'openid profile email'
+      SQLPAD_OIDC_ISSUER: "${SQLPAD_OIDC_ISSUER}"
+      SQLPAD_OIDC_AUTHORIZATION_URL: "${SQLPAD_OIDC_ISSUER}/oauth/authorize"
+      SQLPAD_OIDC_TOKEN_URL: "${SQLPAD_OIDC_ISSUER}/oauth/token"
+      SQLPAD_OIDC_USER_INFO_URL: "${SQLPAD_OIDC_ISSUER}/userinfo"
+
+      SQLPAD_ALLOWED_DOMAINS: "${SQLPAD_ALLOWED_DOMAINS}" #space delimited list of email domains to auto-add users after login
+      SQLPAD_USERPASS_AUTH_DISABLED: 'true'
+      SQLPAD_SESSION_COOKIE_SAME_SITE: Lax
+
+  # Dagster services (Dagit and Daemon)
+  # NOTE: these services are currently not protected
+  dagit:
+    image: ghcr.io/scc-digitalhub/dagster:0.1.0
+    entrypoint:
+      - dagit
+      - -h
+      - "0.0.0.0"
+      - -p
+      - "5000"
+      - -w
+      - workspace.yaml
+    ports:
+      - "5000:5000"
+    environment:
+      # backend storage
+      DAGSTER_POSTGRES_USER: postgres
+      DAGSTER_POSTGRES_PASSWORD: postgres
+      DAGSTER_POSTGRES_DB: dagster_storage
+      DAGSTER_POSTGRES_PORT: 5432
+      # credentials for the pipeline
+      DH_DB_USERNAME: postgres
+      DH_DB_PWD: postgres
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECREY_KEY: minioadmin
+    volumes:
+      - ./resources/dagster-pipelines:/opt/dagster/code
+    depends_on:
+      - postgres
+
+  dagster_daemon:
+    image: ghcr.io/scc-digitalhub/dagster:0.1.0
+    entrypoint:
+      - dagster-daemon
+      - run
+    restart: on-failure
+    environment:
+      # backend storage
+      DAGSTER_POSTGRES_USER: postgres
+      DAGSTER_POSTGRES_PASSWORD: postgres
+      DAGSTER_POSTGRES_DB: dagster_storage
+      DAGSTER_POSTGRES_PORT: 5432
+      # credentials for the pipeline
+      DH_DB_USERNAME: postgres
+      DH_DB_PWD: postgres
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECREY_KEY: minioadmin
+    volumes:
+      - ./resources/dagster-pipelines:/opt/dagster/code
+    depends_on:
+      - postgres
+
+  # Hasura services (Hasura itself, OAuth2-proxy, Redis and Nginx)
+  hasura:
+    image: hasura/graphql-engine:v2.10.2.ubuntu
+    #ports:
+    #  - "4000:8080"
+    depends_on:
+      - postgres
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@postgres:5432/digitalhub
+      HASURA_GRAPHQL_ENABLE_CONSOLE: 'true'
+      HASURA_GRAPHQL_ENABLE_TELEMETRY: 'false'
+      #TODO move JWT secret to .env file and reference env var here?
+      HASURA_GRAPHQL_JWT_SECRET: '{
+       "jwk_url": "https://<aac_instance>/jwk",
+       "issuer": "https://<aac_instance>",
+       "audience": "hasura_client_id_in_aac"
+      }'
+      HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET}"
+
+  oauth2-proxy:
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.4.0
+    #ports:
+    #  - "4180:4180"
+    #depends_on:
+    #  - hasura
+    command:
+      - --http-address
+      - 0.0.0.0:4180
+    environment:
+      OAUTH2_PROXY_UPSTREAMS: http://hasura:8080/
+    
+      OAUTH2_PROXY_EMAIL_DOMAINS: '*'
+      OAUTH2_PROXY_PROVIDER: oidc
+      OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: AAC
+      OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: 'true'
+      OAUTH2_PROXY_REDIRECT_URL: http://localhost:1200/oauth2/callback
+      
+      OAUTH2_PROXY_OIDC_ISSUER_URL: "${HASURA_PROXY_OIDC_ISSUER_URL}"
+      OAUTH2_PROXY_CLIENT_ID: "${HASURA_PROXY_CLIENT_ID}"
+      OAUTH2_PROXY_CLIENT_SECRET: "${HASURA_PROXY_CLIENT_SECRET}"
+      
+      OAUTH2_PROXY_SKIP_JWT_BEARER_TOKENS: 'true'
+      OAUTH2_PROXY_OIDC_EXTRA_AUDIENCES: api://default
+      OAUTH2_PROXY_OIDC_EMAIL_CLAIM: sub
+      
+      OAUTH2_PROXY_SET_XAUTHREQUEST: 'true'
+      OAUTH2_PROXY_PASS_ACCESS_TOKEN: 'true'
+      
+      OAUTH2_PROXY_SESSION_STORE_TYPE: redis 
+      OAUTH2_PROXY_REDIS_CONNECTION_URL: redis://redis
+      
+      OAUTH2_PROXY_COOKIE_REFRESH: 30m
+      OAUTH2_PROXY_COOKIE_NAME: SESSION
+      OAUTH2_PROXY_COOKIE_SECRET: "${HASURA_PROXY_COOKIE_SECRET}"
+
+  redis:
+    image: redis:7.0.2-alpine3.16
+    volumes:
+      - cache:/data
+
+  nginx:
+    image: nginx:1.22.1
+    #depends_on:
+    #  - oauth2-proxy
+    volumes:
+      - ./resources/nginx-default.conf.template:/etc/nginx/templates/default.conf.template
+    ports:
+      - "1200:80"
+
+volumes:
+  cache:
+    driver: local
+
+# Default network with static subnet
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+          gateway: 172.28.0.1
