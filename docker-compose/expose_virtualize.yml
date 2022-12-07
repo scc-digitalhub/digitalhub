@@ -9,15 +9,10 @@ services:
     command:
       - postgres
       - -c
-      - wal_level=logical
-      - -c
-      - shared_preload_libraries=pg_stat_statements,timescaledb
-      - -c
       - timescaledb.telemetry_level=off
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: digitalhub
 
   # PostgREST service
   postgrest:
