@@ -40,22 +40,6 @@ PostgREST exposes the table `cities` as a REST API endpoint. You can query the t
 
 Refer to the [PostgREST documentation](https://postgrest.org/en/stable/api.html) for detailed information on the query syntax.
 
-#### Authenticated access
-To require authentication, create a web client on AAC, enable *client-secret-basic* as authentication method and *client_credentials* as grant type. Add a custom claim mapping for the *test_scenario_user* role:
-```
-function claimMapping(claims) {
-    claims["role"] = "test_scenario_user";
-    return claims;
-}
-```
-
-Save the client and obtain a client credentials token. Open the *.yml* file: uncomment `PGRST_DB_ANON_ROLE` and edit `PGRST_JWT_SECRET` so that its `n` claim contains the value for the `n` claim presented at *https://<aac_instance>/jwk*. Start a PostgREST container.
-
-You can now call the PostgREST API by adding an `Authorization` header with value `Bearer <your_client_credentials_token>`:
-```
-curl -H "Authorization: Bearer <your_client_credentials_token>" http://localhost:3000/cities
-```
-
 ### Hasura
 
 [Hasura](https://github.com/hasura/graphql-engine) provides GraphQL support to Postgres.
@@ -121,17 +105,6 @@ Note that, even if you plan on using AAC, `HASURA_GRAPHQL_ADMIN_SECRET` still ne
 *docker-compose/resources/worldwide-pollution.csv* is a dataset published by the Environmental Protection Agency and provides geolocated information about air quality per country and city. The whole dataset is publicly available on [Opendatasoft](https://public.opendatasoft.com/explore/dataset/worldwide-pollution/information/?disjunctive.country&disjunctive.filename), while *worldwide-pollution.csv* only contains the subset related to France, Italy and the UK.
 
 Go to *http://localhost:9001* and log in with `minioadmin`/`minioadmin`. Create a new bucket named `testbucket`, then upload the *docker-compose/resources/worldwide-pollution.csv* file.
-
-#### Authenticated access
-To require authentication for MinIO, create a web client on AAC, enable *client-secret-basic* as authentication method and *authorization_code* as grant type. Add `http://localhost:9001/oauth_callback` as redirect URI. Enable scope `openid` under *API Access*. Add a custom claim mapping:
-```
-function claimMapping(claims) {
-   claims["policy"] = ["consoleAdmin", "readwrite", "diagnostics"]
-   return claims;
-}
-```
-
-Save the client, open the *.yml* file, uncomment `MINIO_IDENTITY_OPENID_CONFIG_URL`, update the AAC instance and the client's ID and secret. Start a MinIO container and go to *http://localhost:9001*. You should now be asked to log in with AAC.
 
 ### Dremio
 

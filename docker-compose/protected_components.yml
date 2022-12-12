@@ -11,8 +11,8 @@ services:
       - -c
       - timescaledb.telemetry_level=off
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
 
   # PostgREST service
   postgrest:
@@ -23,9 +23,8 @@ services:
     depends_on:
       - postgres
     environment:
-      PGRST_DB_URI: postgres://postgres:postgres@postgres:5432/digitalhub
+      PGRST_DB_URI: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/digitalhub"
       PGRST_DB_SCHEMA: test_scenario, graphql, public
-      #TODO move JWT secret to .env file and reference env var here?
       PGRST_JWT_SECRET: '{
         "keys": [
           {
@@ -34,7 +33,7 @@ services:
             "use": "sig",
             "kid": "rsa1",
             "alg": "RS256",
-            "n": "n_claim_from_aac_jwk_endpoint"
+            "n": "${POSTGREST_N_CLAIM_FROM_JWK_ENDPOINT}"
           }
         ]
       }'
@@ -48,8 +47,8 @@ services:
     volumes:
       - ./data/minio:/data
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
       MINIO_IDENTITY_OPENID_CONFIG_URL: "${AAC_INSTANCE}/.well-known/openid-configuration"
       MINIO_IDENTITY_OPENID_CLIENT_ID: "${MINIO_CLIENT_ID}"
       MINIO_IDENTITY_OPENID_CLIENT_SECRET: "${MINIO_CLIENT_SECRET}"
@@ -69,8 +68,6 @@ services:
       - ./resources/postgresql-42.5.0.jar:/opt/nifi/nifi-current/lib/postgresql-42.5.0.jar
       - ./resources/certs:/opt/nifi/nifi-current/conf/certs
     environment:
-      SINGLE_USER_CREDENTIALS_USERNAME: admin # For use when OIDC is disabled. Ignored if OIDC is enabled.
-      SINGLE_USER_CREDENTIALS_PASSWORD: admin1234567 # For use when OIDC is disabled. Ignored if OIDC is enabled.
       AUTH: oidc
       OIDC_CONFIGURATION: "${AAC_INSTANCE}/.well-known/openid-configuration"
       NIFI_CLIENT_ID: "${NIFI_CLIENT_ID}"
@@ -98,16 +95,16 @@ services:
       - "4000:4000"
     environment:
       SQLPAD_PORT: 4000
-      SQLPAD_ADMIN: admin
-      SQLPAD_ADMIN_PASSWORD: admin
+      SQLPAD_ADMIN: "${SQLPAD_ADMIN}"
+      SQLPAD_ADMIN_PASSWORD: "${SQLPAD_ADMIN_PASSWORD}"
       # Predefined connection to Postgres
       SQLPAD_CONNECTIONS__postgres1__name: Digitalhub
       SQLPAD_CONNECTIONS__postgres1__driver: postgres
       SQLPAD_CONNECTIONS__postgres1__host: postgres
       SQLPAD_CONNECTIONS__postgres1__port: 5432
       SQLPAD_CONNECTIONS__postgres1__database: digitalhub
-      SQLPAD_CONNECTIONS__postgres1__username: postgres
-      SQLPAD_CONNECTIONS__postgres1__password: postgres
+      SQLPAD_CONNECTIONS__postgres1__username: "${POSTGRES_USER}"
+      SQLPAD_CONNECTIONS__postgres1__password: "${POSTGRES_PASSWORD}"
       # OIDC configuration (OIDC users are assigned "editor" role)
       PUBLIC_URL: http://localhost:4000
       SQLPAD_OIDC_LINK_HTML: 'Sign in with AAC'
@@ -139,15 +136,15 @@ services:
       - "5000:5000"
     environment:
       # backend storage
-      DAGSTER_POSTGRES_USER: postgres
-      DAGSTER_POSTGRES_PASSWORD: postgres
+      DAGSTER_POSTGRES_USER: "${POSTGRES_USER}"
+      DAGSTER_POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       DAGSTER_POSTGRES_DB: dagster_storage
       DAGSTER_POSTGRES_PORT: 5432
       # credentials for the pipeline
-      DH_DB_USERNAME: postgres
-      DH_DB_PWD: postgres
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECREY_KEY: minioadmin
+      DH_DB_USERNAME: "${POSTGRES_USER}"
+      DH_DB_PWD: "${POSTGRES_PASSWORD}"
+      MINIO_ACCESS_KEY: "${MINIO_ROOT_USER}"
+      MINIO_SECREY_KEY: "${MINIO_ROOT_PASSWORD}"
     volumes:
       - ./resources/dagster-pipelines:/opt/dagster/code
     depends_on:
@@ -161,15 +158,15 @@ services:
     restart: on-failure
     environment:
       # backend storage
-      DAGSTER_POSTGRES_USER: postgres
-      DAGSTER_POSTGRES_PASSWORD: postgres
+      DAGSTER_POSTGRES_USER: "${POSTGRES_USER}"
+      DAGSTER_POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       DAGSTER_POSTGRES_DB: dagster_storage
       DAGSTER_POSTGRES_PORT: 5432
       # credentials for the pipeline
-      DH_DB_USERNAME: postgres
-      DH_DB_PWD: postgres
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECREY_KEY: minioadmin
+      DH_DB_USERNAME: "${POSTGRES_USER}"
+      DH_DB_PWD: "${POSTGRES_PASSWORD}"
+      MINIO_ACCESS_KEY: "${MINIO_ROOT_USER}"
+      MINIO_SECREY_KEY: "${MINIO_ROOT_PASSWORD}"
     volumes:
       - ./resources/dagster-pipelines:/opt/dagster/code
     depends_on:
@@ -183,14 +180,13 @@ services:
     depends_on:
       - postgres
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@postgres:5432/digitalhub
+      HASURA_GRAPHQL_DATABASE_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/digitalhub"
       HASURA_GRAPHQL_ENABLE_CONSOLE: 'true'
       HASURA_GRAPHQL_ENABLE_TELEMETRY: 'false'
-      #TODO move JWT secret to .env file and reference env var here?
       HASURA_GRAPHQL_JWT_SECRET: '{
-       "jwk_url": "https://<aac_instance>/jwk",
-       "issuer": "https://<aac_instance>",
-       "audience": "hasura_client_id_in_aac"
+       "jwk_url": "${AAC_INSTANCE}/jwk",
+       "issuer": "${HASURA_ISSUER}",
+       "audience": "${HASURA_AUDIENCE}"
       }'
       HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET}"
 
