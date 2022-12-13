@@ -13,7 +13,7 @@ The following components are used:
 - Dagster
 - Hasura
 
-With the provided setup, the MinIO UI, NiFi, Dremio, SQLPad, Dagit and the Hasura UI will have Single Sign-On via OAuth2/OIDC protocols, while PostgREST, Hasura and Dagster APIs will require a JSON Web Token.
+With the provided setup, the MinIO UI, NiFi, Dremio, SQLPad and Dagit will have Single Sign-On via OAuth2/OIDC protocols, while PostgREST, Dagster and Hasura-served GraphQL APIs will require a JSON Web Token.
 
 ## Configuration
 
@@ -31,7 +31,7 @@ Once your *.env* file is created, set the `AAC_INSTANCE` variable, which is shar
 
 ### Postgres
 
-In the *.env* file, set `POSTGRES_USER` and `POSTGRES_PASSWORD` variables to your preferred credentials.
+In the *.env* file, set `POSTGRES_USER` and `POSTGRES_PASSWORD` variables to your preferred credentials. Set `POSTGRES_DB` to the name you wish to use for the DigitalHub database.
 
 ### PostgREST
 
@@ -44,7 +44,7 @@ function claimMapping(claims) {
 }
 ```
 
-In the *.env* file, set `POSTGREST_N_CLAIM_FROM_JWK_ENDPOINT` variable with the value of the `n` claim presented at *https://<aac_instance>/jwk*.
+In the *.env* file, make sure `AAC_JWK_MODULUS_N_CLAIM` is set to the `n` claim presented at the */jwk* endpoint of your AAC instance.
 
 When the PostgREST container is up, you can obtain a client credentials token from AAC and call the PostgREST API by adding an `Authorization` header with value `Bearer <your_client_credentials_token>`, as in the following example:
 
@@ -74,21 +74,7 @@ When the MinIO container is up and you navigate to *http://localhost:9001*, you 
 
 ### NiFi
 
-Create a web client application on AAC, enable the following authentication methods:
-
-- `client_secret_basic`
-- `client_secret_post`
-- `none`
-
-And the following grant types:
-
-- `authorization_code`
-- `implicit`
-- `refresh_token`
-- `client_credentials`
-- `password`
-
-Add `https://localhost:8443/nifi-api/access/oidc/callback` and `https://localhost:8443/nifi` as redirect URIs. Enable scopes `openid` and `email` under *API Access* tab.
+Create a web client application on AAC, enable `client_secret_post` as authentication method and `authorization_code` as grant type. Add `https://localhost:8443/nifi-api/access/oidc/callback` as redirect URI. Enable scopes `openid` and `email` under *API Access* tab.
 
 In the *.env* file, set the following variables:
 
@@ -129,7 +115,16 @@ When the SQLPad container is up and you navigate to *http://localhost:4000*, you
 
 ### Hasura
 
-**TODO**
+Create a web client application on AAC, enable `client_secret_basic` as authentication method and `client_credentials` as grant type.
+
+In the *.env* file, set the following variables:
+
+- `HASURA_AUDIENCE`: audience for the JWT, use the client ID
+- `HASURA_GRAPHQL_ADMIN_SECRET`: an admin password, required by Hasura even if you wish to use JWTs. Since it may be used as an alternative to the JWT, make sure it's not trivial.
+
+Requests to the GraphQL API now need an `Authorization: Bearer <aac_token>` header.
+
+With this setup, the Hasura console is disabled. Tables and custom functions are already tracked because a SQL script that imports a dump of the Hasura schema (*hdb_catalog*) is run on the database.
 
 ## Deployment
 

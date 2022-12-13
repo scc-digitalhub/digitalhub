@@ -1,9 +1,3 @@
--- Create database
-
-CREATE DATABASE digitalhub;
-
-\c digitalhub
-
 -- Install extensions
 
 CREATE EXTENSION IF NOT EXISTS timescaledb;

@@ -4,6 +4,7 @@ services:
     image: timescale/timescaledb-ha:pg14.6-ts2.8.1-latest
     volumes:
         - ./resources/db-init-scripts/postgres-protected-components.sql:/docker-entrypoint-initdb.d/postgres.sql
+        - ./resources/db-init-scripts/hdb_catalog.sql:/docker-entrypoint-initdb.d/hdb_catalog.sql
     ports:
       - "5432:5432"
     command:
@@ -13,17 +14,17 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
 
   # PostgREST service
   postgrest:
     image: postgrest/postgrest:v10.0.0
-    restart: unless-stopped
     ports:
       - "3000:3000"
     depends_on:
       - postgres
     environment:
-      PGRST_DB_URI: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/digitalhub"
+      PGRST_DB_URI: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
       PGRST_DB_SCHEMA: test_scenario, graphql, public
       PGRST_JWT_SECRET: '{
         "keys": [
@@ -33,7 +34,7 @@ services:
             "use": "sig",
             "kid": "rsa1",
             "alg": "RS256",
-            "n": "${POSTGREST_N_CLAIM_FROM_JWK_ENDPOINT}"
+            "n": "${AAC_JWK_MODULUS_N_CLAIM}"
           }
         ]
       }'
@@ -55,8 +56,7 @@ services:
       MINIO_IDENTITY_OPENID_CLAIM_NAME: policy
       MINIO_IDENTITY_OPENID_SCOPES: openid
       MINIO_IDENTITY_OPENID_REDIRECT_URI: http://localhost:9001/oauth_callback
-      MINIO_IDENTITY_OPENID_CLAIM_USERINFO: on
-
+      MINIO_IDENTITY_OPENID_CLAIM_USERINFO: "on"
     command: server /data --console-address ":9001"
 
   # NiFi service
@@ -102,7 +102,7 @@ services:
       SQLPAD_CONNECTIONS__postgres1__driver: postgres
       SQLPAD_CONNECTIONS__postgres1__host: postgres
       SQLPAD_CONNECTIONS__postgres1__port: 5432
-      SQLPAD_CONNECTIONS__postgres1__database: digitalhub
+      SQLPAD_CONNECTIONS__postgres1__database: "${POSTGRES_DB}"
       SQLPAD_CONNECTIONS__postgres1__username: "${POSTGRES_USER}"
       SQLPAD_CONNECTIONS__postgres1__password: "${POSTGRES_PASSWORD}"
       # OIDC configuration (OIDC users are assigned "editor" role)
@@ -175,74 +175,21 @@ services:
   # Hasura services (Hasura itself, OAuth2-proxy, Redis and Nginx)
   hasura:
     image: hasura/graphql-engine:v2.10.2.ubuntu
-    #ports:
-    #  - "4000:8080"
+    restart: on-failure
+    ports:
+      - "3100:8080"
     depends_on:
       - postgres
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/digitalhub"
-      HASURA_GRAPHQL_ENABLE_CONSOLE: 'true'
+      HASURA_GRAPHQL_DATABASE_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: 'false'
       HASURA_GRAPHQL_ENABLE_TELEMETRY: 'false'
       HASURA_GRAPHQL_JWT_SECRET: '{
        "jwk_url": "${AAC_INSTANCE}/jwk",
-       "issuer": "${HASURA_ISSUER}",
+       "issuer": "${AAC_INSTANCE}",
        "audience": "${HASURA_AUDIENCE}"
       }'
       HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET}"
-
-  oauth2-proxy:
-    image: quay.io/oauth2-proxy/oauth2-proxy:v7.4.0
-    #ports:
-    #  - "4180:4180"
-    #depends_on:
-    #  - hasura
-    command:
-      - --http-address
-      - 0.0.0.0:4180
-    environment:
-      OAUTH2_PROXY_UPSTREAMS: http://hasura:8080/
-    
-      OAUTH2_PROXY_EMAIL_DOMAINS: '*'
-      OAUTH2_PROXY_PROVIDER: oidc
-      OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: AAC
-      OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: 'true'
-      OAUTH2_PROXY_REDIRECT_URL: http://localhost:1200/oauth2/callback
-      
-      OAUTH2_PROXY_OIDC_ISSUER_URL: "${HASURA_PROXY_OIDC_ISSUER_URL}"
-      OAUTH2_PROXY_CLIENT_ID: "${HASURA_PROXY_CLIENT_ID}"
-      OAUTH2_PROXY_CLIENT_SECRET: "${HASURA_PROXY_CLIENT_SECRET}"
-      
-      OAUTH2_PROXY_SKIP_JWT_BEARER_TOKENS: 'true'
-      OAUTH2_PROXY_OIDC_EXTRA_AUDIENCES: api://default
-      OAUTH2_PROXY_OIDC_EMAIL_CLAIM: sub
-      
-      OAUTH2_PROXY_SET_XAUTHREQUEST: 'true'
-      OAUTH2_PROXY_PASS_ACCESS_TOKEN: 'true'
-      
-      OAUTH2_PROXY_SESSION_STORE_TYPE: redis 
-      OAUTH2_PROXY_REDIS_CONNECTION_URL: redis://redis
-      
-      OAUTH2_PROXY_COOKIE_REFRESH: 30m
-      OAUTH2_PROXY_COOKIE_NAME: SESSION
-      OAUTH2_PROXY_COOKIE_SECRET: "${HASURA_PROXY_COOKIE_SECRET}"
-
-  redis:
-    image: redis:7.0.2-alpine3.16
-    volumes:
-      - cache:/data
-
-  nginx:
-    image: nginx:1.22.1
-    #depends_on:
-    #  - oauth2-proxy
-    volumes:
-      - ./resources/nginx-default.conf.template:/etc/nginx/templates/default.conf.template
-    ports:
-      - "1200:80"
-
-volumes:
-  cache:
-    driver: local
 
 # Default network with static subnet
 networks:
