@@ -124,7 +124,9 @@ In the *.env* file, set the following variables:
 
 Requests to the GraphQL API now need an `Authorization: Bearer <aac_token>` header.
 
-With this setup, the Hasura console is disabled. Tables and custom functions are already tracked because a SQL script that imports a dump of the Hasura schema (*hdb_catalog*) is run on the database.
+Hasura needs to track tables and custom functions before they are available on its GraphQL API. Normally, this is done by adding them manually on the Hasura console. However, the console has been disabled (via `HASURA_GRAPHQL_ENABLE_CONSOLE: 'false'` in the *.yml* file), as authenticating on it is done via admin secret, with no SSO alternative, and wrapping it with a proxy for OAuth2 authentication would present a double log-in process.
+
+As a result, currently, we opted to disable the console and bypass the tracking issue by running a SQL script on the database that imports a dump of the Hasura schema (*hdb_catalog*). This is done automatically by the configuration for the Postgres container.
 
 ## Deployment
 
