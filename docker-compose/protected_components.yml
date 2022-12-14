@@ -111,10 +111,10 @@ services:
       SQLPAD_OIDC_CLIENT_ID: "${SQLPAD_OIDC_CLIENT_ID}"
       SQLPAD_OIDC_CLIENT_SECRET: "${SQLPAD_OIDC_CLIENT_SECRET}"
       SQLPAD_OIDC_SCOPE: 'openid profile email'
-      SQLPAD_OIDC_ISSUER: "${SQLPAD_OIDC_ISSUER}"
-      SQLPAD_OIDC_AUTHORIZATION_URL: "${SQLPAD_OIDC_ISSUER}/oauth/authorize"
-      SQLPAD_OIDC_TOKEN_URL: "${SQLPAD_OIDC_ISSUER}/oauth/token"
-      SQLPAD_OIDC_USER_INFO_URL: "${SQLPAD_OIDC_ISSUER}/userinfo"
+      SQLPAD_OIDC_ISSUER: "${AAC_INSTANCE}"
+      SQLPAD_OIDC_AUTHORIZATION_URL: "${AAC_INSTANCE}/oauth/authorize"
+      SQLPAD_OIDC_TOKEN_URL: "${AAC_INSTANCE}/oauth/token"
+      SQLPAD_OIDC_USER_INFO_URL: "${AAC_INSTANCE}/userinfo"
 
       SQLPAD_ALLOWED_DOMAINS: "${SQLPAD_ALLOWED_DOMAINS}" #space delimited list of email domains to auto-add users after login
       SQLPAD_USERPASS_AUTH_DISABLED: 'true'
@@ -172,7 +172,7 @@ services:
     depends_on:
       - postgres
 
-  # Hasura services (Hasura itself, OAuth2-proxy, Redis and Nginx)
+  # Hasura service
   hasura:
     image: hasura/graphql-engine:v2.10.2.ubuntu
     restart: on-failure
