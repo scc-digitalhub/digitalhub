@@ -12,8 +12,10 @@ The following components are used:
 - SQLPad
 - Dagster
 - Hasura
+- Grafana
+- Superset
 
-With the provided setup, the MinIO UI, NiFi, Dremio, SQLPad and Dagit will have Single Sign-On via OAuth2/OIDC protocols, while PostgREST, Dagster and Hasura-served GraphQL APIs will require a JSON Web Token.
+With the provided setup, the MinIO UI, NiFi, Dremio, SQLPad, Dagit and Grafana will have Single Sign-On via OAuth2/OIDC protocols, while PostgREST, Dagster and Hasura-served GraphQL APIs will require a JSON Web Token.
 
 ## Configuration
 
@@ -127,6 +129,30 @@ Requests to the GraphQL API now need an `Authorization: Bearer <aac_token>` head
 Hasura needs to track tables and custom functions before they are available on its GraphQL API. Normally, this is done by adding them manually on the Hasura console. However, the console has been disabled (via `HASURA_GRAPHQL_ENABLE_CONSOLE: 'false'` in the *.yml* file), as authenticating on it is done via admin secret, with no SSO alternative, and wrapping it with a proxy for OAuth2 authentication would present a double log-in process.
 
 As a result, currently, we opted to disable the console and bypass the tracking issue by running a SQL script on the database that imports a dump of the Hasura schema (*hdb_catalog*). This is done automatically by the configuration for the Postgres container.
+
+### Grafana
+
+Create a web client application on AAC, enable `client_secret_post` as authentication method and `authorization_code` as grant type. Add `http://localhost:10000/login/generic_oauth` as redirect URI. Enable scopes `openid`, `email` and `user.roles.me` under *API Access* tab. Add the following custom claim mapping to assign a Grafana role to OAuth users:
+
+```
+function claimMapping(claims) {
+    claims['grafana_role'] = 'Admin'; //possible values are Admin, Editor, Viewer or GrafanaAdmin
+    return claims;
+}
+```
+
+In the *.env* file, set the following variables:
+
+- `GRAFANA_ADMIN_USER`: a username of your choice
+- `GRAFANA_ADMIN_PASSWORD`: a password of your choice
+- `GRAFANA_CLIENT_ID`: the client ID of the AAC client you created
+- `GRAFANA_CLIENT_SECRET`: the client secret of the AAC client you created
+
+When the Grafana container is up and you navigate to *http://localhost:10000*, you should be asked to log in via SSO.
+
+### Superset
+
+**TODO**
 
 ## Deployment
 
