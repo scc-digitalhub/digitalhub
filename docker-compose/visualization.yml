@@ -1,0 +1,49 @@
+services:
+  # Postgres service with TimescaleDB and PostGIS
+  postgres:
+    image: timescale/timescaledb-ha:pg14.6-ts2.8.1-latest
+    volumes:
+        - ./resources/db-init-scripts/postgres-visualization.sql:/docker-entrypoint-initdb.d/postgres.sql
+    ports:
+      - "5432:5432"
+    command:
+      - postgres
+      - -c
+      - timescaledb.telemetry_level=off
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  # MinIO service
+  minio:
+    image: minio/minio:RELEASE.2022-11-26T22-43-32Z.fips
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./data/minio:/data
+    environment:
+      MINIO_ACCESS_KEY: "minioadmin"
+      MINIO_SECRET_KEY: "minioadmin"
+    command: server /data --console-address ":9001"
+
+  # Dremio service
+  #
+  #
+  #TODO
+  #
+  #
+
+  # Grafana service
+  grafana:
+    image: grafana/grafana-oss #latest stable version
+    ports:
+      - "10000:10000"
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+    environment:
+      GF_SERVER_HTTP_PORT: 10000
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: "digital-hub-dremio"
+      GF_INSTALL_PLUGINS: https://github.com/scc-digitalhub/grafana-dremio-datasource-plugin/raw/master/releases/digital-hub-dremio-1.0.0.zip;digital-hub-dremio

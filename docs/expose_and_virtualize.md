@@ -116,7 +116,7 @@ Navigate to *http://localhost:9047* and log in, then proceed to configuring the 
 
 - Click on *Add Source* and select `Amazon S3`
 - On *General* configure the following:
-    - *Name*: `minio`
+    - *Name*: `Minio`
     - *AWS Access Key*: `minioadmin`
     - *AWS Access Secret*: `minioadmin`
 - On *Advanced Options* check `Enable compatibility mode` and add the following *Connection Properties*:
@@ -129,8 +129,8 @@ Inside the newly created data source, open the *testbucket* folder and click on 
 
 - Click on *Add Source* and select `PostgreSQL`
 - On *General* configure the following:
-    - *Name*: `postgres`
-    - *Host*: `localhost`
+    - *Name*: `Digitalhub`
+    - *Host*: `postgres`
     - *Port*: `5432`
     - *Database Name*: `digitalhub`
     - *Username*: `postgres`
@@ -144,10 +144,10 @@ Open the *SQL Runner* and run the following query, which joins the data sources 
 
 ```
 SELECT Pollution.city, Cities.country, Cities.location, Pollution.measurement, Pollution.CO, Pollution.O3, Pollution.PM5, Pollution.NO2
-FROM postgres_docker.test_scenario.cities Cities
+FROM Digitalhub.test_scenario.cities Cities
 JOIN (
     SELECT City AS city, "date" AS measurement, "Value CO" AS CO, "Value O3" AS O3, "Value PM5" AS PM5, "Value NO2" AS NO2
-    FROM minio.testbucket."worldwide-pollution.csv"
+    FROM Minio.testbucket."worldwide-pollution.csv"
     WHERE City = 'London'
 ) Pollution
 ON Cities.name = Pollution.City
