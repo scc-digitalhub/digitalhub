@@ -33,12 +33,8 @@ services:
       - "./resources/postgresql-42.5.0.jar:/opt/nifi/nifi-current/lib/postgresql-42.5.0.jar"
       - "./resources/certs:/opt/nifi/nifi-current/conf/certs"
     environment:
-      SINGLE_USER_CREDENTIALS_USERNAME: 'admin' # For use when OIDC is disabled. Ignored if OIDC is enabled.
-      SINGLE_USER_CREDENTIALS_PASSWORD: 'admin1234567' # For use when OIDC is disabled. Ignored if OIDC is enabled.
-      #AUTH: 'oidc' # Uncomment to enable OpenID Connect authentication.
-      OIDC_CONFIGURATION: 'https://<aac_instance>/.well-known/openid-configuration'
-      NIFI_CLIENT_ID: '<aac_client_id>'
-      NIFI_CLIENT_SECRET: '<aac_client_secret>'
+      SINGLE_USER_CREDENTIALS_USERNAME: 'admin'
+      SINGLE_USER_CREDENTIALS_PASSWORD: 'admin1234567'
       KEYSTORE_PATH: './conf/certs/keystore.jks'
       KEYSTORE_TYPE: 'jks'
       KEYSTORE_PASSWORD: 'platform'
@@ -46,7 +42,6 @@ services:
       TRUSTSTORE_PATH: './conf/certs/truststore.jks'
       TRUSTSTORE_TYPE: 'jks'
       TRUSTSTORE_PASSWORD: 'platform'
-      INITIAL_ADMIN_IDENTITY: '<your@aac.account>'
 
   # Dagster services (Dagit and Daemon)
   dagit:
@@ -103,7 +98,7 @@ services:
 
   # SQLPad service
   sqlpad:
-    image: sqlpad/sqlpad:latest
+    image: sqlpad/sqlpad:6.11.2 #last stable multiplatform version
     ports:
       - "4000:4000"
     environment:

@@ -42,7 +42,7 @@ Navigate to *http://localhost:9001* with your Internet browser of choice and log
 
 ### NiFi
 
-Navigate to *https://localhost:8443* and log in with `admin`/`admin1234567`. Alternatively, you can log in via OIDC, if you enabled and configured it in the *.yml* file, but you will have to create policies to assign permissions to your account.
+Navigate to *https://localhost:8443* and log in with `admin`/`admin1234567`.
 
 Note that NiFi may randomize the credentials if the password is shorter than 12 characters, so if you changed it and didn't match this requirement, you may have to look through NiFi's logs to find the credentials.
 
