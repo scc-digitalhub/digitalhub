@@ -26,3 +26,9 @@ The folder `/opt/dagster/code` inside the image is the Dagster workspace, i.e., 
 Note that Dagster relies on *workspace.yaml* to find your code, therefore that file must exist in your folder and you need to update it accordingly.
 
 Also note that, if you reload a pipeline while it is running, the updates will take effect only on the next run, be it scheduled or manually triggered.
+
+## Apache Superset
+Built from an [official image](https://hub.docker.com/r/apache/superset), by downloading an [official release](https://github.com/apache/superset) for its `docker` folder, then adding the files required for OIDC authentication. Build with:
+```shell
+podman build -t superset-oidc:0.1.0 -f ./superset/Dockerfile ./superset
+```

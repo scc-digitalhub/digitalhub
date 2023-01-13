@@ -220,12 +220,69 @@ services:
       GF_AUTH_GENERIC_OAUTH_TLS_SKIP_VERIFY_INSECURE: 'true'
       GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH: grafana_role
 
-  # Superset service
-  #
-  #
-  #TODO
-  #
-  #
+  superset:
+    image: ghcr.io/scc-digitalhub/superset-oidc:0.1.0
+    command: ["/app/docker/docker-bootstrap.sh", "app-gunicorn"]
+    user: "root"
+    ports:
+      - 8088:8088
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      DATABASE_DB: "${POSTGRES_DB}"
+      DATABASE_HOST: postgres
+      DATABASE_PASSWORD: "${POSTGRES_PASSWORD}"
+      DATABASE_USER: "${POSTGRES_USER}"
+      DATABASE_PORT: 5432
+      DATABASE_DIALECT: postgresql
+      PYTHONPATH: /app/pythonpath:/app/docker/pythonpath_dev
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      FLASK_ENV: production
+      SUPERSET_ENV: production
+      CYPRESS_CONFIG: "false"
+      AAC_INSTANCE: "${AAC_INSTANCE}"
+      AAC_OPENID_CONFIGURATION_ENDPOINT: "${AAC_OPENID_CONFIGURATION_ENDPOINT}"
+      AAC_USERINFO_ENDPOINT: "${AAC_USERINFO_ENDPOINT}"
+      SUPERSET_CLIENT_ID: "${SUPERSET_CLIENT_ID}"
+      SUPERSET_CLIENT_SECRET: "${SUPERSET_CLIENT_SECRET}"
+      SUPERSET_ROLE_ADMIN: "${SUPERSET_ROLE_ADMIN}"
+      SUPERSET_ROLE_ALPHA: "${SUPERSET_ROLE_ALPHA}"
+      SUPERSET_ROLE_GAMMA: "${SUPERSET_ROLE_GAMMA}"
+      SUPERSET_ROLE_GRANTER: "${SUPERSET_ROLE_GRANTER}"
+      SUPERSET_ROLE_SQL_LAB: "${SUPERSET_ROLE_SQL_LAB}"
+
+  superset-init:
+    image: ghcr.io/scc-digitalhub/superset-oidc:0.1.0
+    command: ["/app/docker/docker-init.sh"]
+    user: "root"
+    depends_on:
+      - redis
+      - postgres
+    healthcheck:
+      disable: true
+    environment:
+      DATABASE_DB: "${POSTGRES_DB}"
+      DATABASE_HOST: postgres
+      DATABASE_PASSWORD: "${POSTGRES_PASSWORD}"
+      DATABASE_USER: "${POSTGRES_USER}"
+      DATABASE_PORT: 5432
+      DATABASE_DIALECT: postgresql
+      PYTHONPATH: /app/pythonpath:/app/docker/pythonpath_dev
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      SUPERSET_LOAD_EXAMPLES: "${SUPERSET_LOAD_EXAMPLES}"
+      AAC_INSTANCE: "${AAC_INSTANCE}"
+      AAC_OPENID_CONFIGURATION_ENDPOINT: "${AAC_OPENID_CONFIGURATION_ENDPOINT}"
+      AAC_USERINFO_ENDPOINT: "${AAC_USERINFO_ENDPOINT}"
+      SUPERSET_CLIENT_ID: "${SUPERSET_CLIENT_ID}"
+      SUPERSET_CLIENT_SECRET: "${SUPERSET_CLIENT_SECRET}"
+      SUPERSET_ROLE_ADMIN: "${SUPERSET_ROLE_ADMIN}"
+      SUPERSET_ROLE_ALPHA: "${SUPERSET_ROLE_ALPHA}"
+      SUPERSET_ROLE_GAMMA: "${SUPERSET_ROLE_GAMMA}"
+      SUPERSET_ROLE_GRANTER: "${SUPERSET_ROLE_GRANTER}"
+      SUPERSET_ROLE_SQL_LAB: "${SUPERSET_ROLE_SQL_LAB}"
 
 volumes:
   grafana-storage:
