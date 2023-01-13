@@ -152,7 +152,18 @@ When the Grafana container is up and you navigate to *http://localhost:10000*, y
 
 ### Superset
 
-**TODO**
+Create a web client application on AAC, enable `client_secret_basic` as authentication method and `authorization_code` as grant type. Add `http://localhost/oauth-authorized/AAC` as redirect URI. Enable scopes `openid`, `email`, `profile` and `user.roles.me` under *API Access* tab.
+
+In the *.env* file, set the following variables:
+
+- `SUPERSET_CLIENT_ID`: the client ID of the AAC client you created
+- `SUPERSET_CLIENT_SECRET`: the client secret of the AAC client you created
+- `SUPERSET_ROLE_ADMIN`: the AAC role to map to the Superset *admin* role
+- `SUPERSET_ROLE_ALPHA`: the AAC role to map to the Superset *alpha* role
+- `SUPERSET_ROLE_GAMMA`: the AAC role to map to the Superset *gamma* role
+- `SUPERSET_ROLE_GRANTER`: the AAC role to map to the Superset *granter* role
+- `SUPERSET_ROLE_SQL_LAB`: the AAC role to map to the Superset *sql_lab* role
+- `SUPERSET_LOAD_EXAMPLES`: `yes` or `no`, whether you want some examples to be loaded into Superset.
 
 ## Deployment
 
