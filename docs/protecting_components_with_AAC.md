@@ -165,6 +165,8 @@ In the *.env* file, set the following variables:
 - `SUPERSET_ROLE_SQL_LAB`: the AAC role to map to the Superset *sql_lab* role
 - `SUPERSET_LOAD_EXAMPLES`: `yes` or `no`, whether you want some examples to be loaded into Superset.
 
+When the Superset container is up and you navigate to http://localhost:8088, you should be asked to log in via SSO.
+
 ## Deployment
 
 Once the platform is configured, open a terminal, `cd` to the *docker-compose* folder and run the following Docker/Podman command:

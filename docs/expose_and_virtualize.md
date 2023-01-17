@@ -105,7 +105,7 @@ Navigate to *http://localhost:9047* and log in, then proceed to configuring the 
     - `fs.s3a.path.style.access`: `true`
     - `fs.s3a.endpoint`: `127.0.0.1:9000`
 
-Inside the newly created data source, open the *testbucket* folder and click on *worldwide-pollution.csv*. Change the *Field Delimiter* to `;` and ckeck *Extract Field Names*, then *Save* (this is to be done only once).
+Inside the newly created data source, open the *testbucket* folder and click on *worldwide-pollution.csv*. Change the *Field Delimiter* to `;` and check *Extract Field Names*, then *Save* (this is to be done only once).
 
 #### Connect to Postgres
 
