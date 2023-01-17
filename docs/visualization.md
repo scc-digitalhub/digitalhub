@@ -76,4 +76,37 @@ SELECT measurement, CO, O3, PM5, NO2 FROM "@dremio".london_air_quality_data;
 
 ### Superset
 
-**TODO**
+As with Grafana, we will be using the data inserted into the Postgres database automatically by its start-up script; if you wish to inspect Dremio's data as well, we expect you to have set Dremio up as instructed in the [virtualization use case](https://github.com/scc-digitalhub/digitalhub/blob/main/docs/expose_and_virtualize.md).
+
+#### Connect to Postgres
+
+Navigate to *http://localhost:8088* and log in with the credentials `admin`/`admin`. Hover on the *+* sign in the top right corner and choose *Data > Connect database*. Select *PostgreSQL*, then configure as follows:
+
+- *Host*: `postgres`
+- *Port*: `5432`
+- *Database name*: `digitalhub`
+- *Username*: `postgres`
+- *Password*: `postgres`
+
+Click *Connect* and then *Finish*.
+```
+SELECT * FROM test_scenario.cities
+```
+
+#### Connect to Dremio
+Go to *Settings > Database Connections* (top-right) and click *+ DATABASE*. Expand the *Supported databases* list and pick *Other* at the bottom. Change its *Display name* to `Dremio` and input the following as *SQLAlchemy URI*:
+```
+dremio+flight://dremio:dremio123@dremio:32010/dremio?UseEncryption=false
+```
+Click *Test connection* if you wish to test it, then click *Connect*.
+
+#### Visualize the Data
+Both sources can now be included in dashboards. If you wish to test them quickly, access the SQL Lab (*SQL > SQL Lab*, top toolbar), and try the following queries (make sure you select *PostgreSQL* / *Dremio* respectively in the *Database* option on the left:
+
+```
+SELECT * FROM test_scenario.cities
+```
+
+```
+SELECT * FROM "@admin".london_air_quality_data
+```
