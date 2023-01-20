@@ -70,7 +70,7 @@ services:
       MINIO_ACCESS_KEY: "minioadmin"
       MINIO_SECREY_KEY: "minioadmin"
     volumes:
-      - ./resources/dagster-pipelines:/opt/dagster/code
+      - ./resources/dagster-pipelines/mini-ETL:/opt/dagster/code
     depends_on:
       - postgres
 
@@ -92,7 +92,7 @@ services:
       MINIO_ACCESS_KEY: "minioadmin"
       MINIO_SECREY_KEY: "minioadmin"
     volumes:
-      - ./resources/dagster-pipelines:/opt/dagster/code
+      - ./resources/dagster-pipelines/mini-ETL:/opt/dagster/code
     depends_on:
       - postgres
 

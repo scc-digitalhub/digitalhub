@@ -1,4 +1,4 @@
 .DS_STORE
 docker-compose/data/
-docker-compose/resources/dagster-pipelines/__pycache__*
+docker-compose/resources/dagster-pipelines/*/__pycache__*
 .env

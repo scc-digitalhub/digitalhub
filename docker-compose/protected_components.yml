@@ -146,7 +146,7 @@ services:
       MINIO_ACCESS_KEY: "${MINIO_ROOT_USER}"
       MINIO_SECREY_KEY: "${MINIO_ROOT_PASSWORD}"
     volumes:
-      - ./resources/dagster-pipelines:/opt/dagster/code
+      - ./resources/dagster-pipelines/mini-ETL:/opt/dagster/code
     depends_on:
       - postgres
 
@@ -168,7 +168,7 @@ services:
       MINIO_ACCESS_KEY: "${MINIO_ROOT_USER}"
       MINIO_SECREY_KEY: "${MINIO_ROOT_PASSWORD}"
     volumes:
-      - ./resources/dagster-pipelines:/opt/dagster/code
+      - ./resources/dagster-pipelines/mini-ETL:/opt/dagster/code
     depends_on:
       - postgres
 
