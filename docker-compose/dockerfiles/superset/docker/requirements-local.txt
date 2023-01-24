@@ -1,2 +1,2 @@
-Authlib
-sqlalchemy_dremio
+Authlib==1.2.0
+sqlalchemy_dremio==3.0.3
