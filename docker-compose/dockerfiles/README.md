@@ -17,7 +17,7 @@ Based on a Python 3.7 image, with the addition of Dagster packages and the Dagst
 podman build -t dagster:0.1.0 -f ./dagster/Dockerfile ./dagster
 ```
 
-If additional packages are required, they must be added to `requirements.txt` prior to rebuilding the image.
+If additional packages are required (e.g. `numpy` and `scikit-learn` for ML), they must be added to `requirements.txt` prior to rebuilding the image.
 
 ### Dagster Workspace
 
@@ -31,4 +31,12 @@ Also note that, if you reload a pipeline while it is running, the updates will t
 Built from an [official image](https://hub.docker.com/r/apache/superset), by downloading an [official release](https://github.com/apache/superset) for its `docker` folder, then adding the files required for OIDC authentication. Build with:
 ```shell
 podman build -t superset-oidc:0.1.0 -f ./superset/Dockerfile ./superset
+```
+
+## MLFlow
+
+Based on a Python 3.10 image, as the oldest official MLflow image is v1.30.0, and extended with MLFlow package, `psycopg2-binary` and `boto3` packages to use PostgreSQL as backend store and S3 as artifact store. For use with `dagster-mlflow` package, v1.26.0 is recommended due to compatibility issues as Dagster uses `mlflow<=1.26.0`. Build with:
+
+```shell
+podman build -t mlflow:0.1.0-mlf1.26.0-postgres-s3 -f ./mlflow/Dockerfile ./mlflow --build-arg VERSION=1.26.0
 ```
