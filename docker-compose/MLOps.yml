@@ -1,0 +1,95 @@
+services:
+  # Postgres service
+  postgres:
+    # image: timescale/timescaledb-ha:pg14.5-ts2.8.1-latest # for AMD processors, does not work with ARM
+    image: timescale/timescaledb:2.8.1-pg13 # for ARM processors, should work with AMD too
+    volumes:
+      - ./resources/db-init-scripts/postgres-mlops.sql:/docker-entrypoint-initdb.d/postgres.sql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  # MinIO service
+  minio:
+    image: minio/minio:RELEASE.2023-01-25T00-19-54Z #multiplatform
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./data/minio:/data
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+
+  # MinIO Client service to create bucket for MLFlow artifacts
+  mc:
+    image: minio/mc:RELEASE.2023-01-11T03-14-16Z #multiplatform
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set minio http://minio:9000 minioadmin minioadmin &&
+      /usr/bin/mc mb minio/mlflowbucket;
+      exit 0;
+      "
+
+  # MLFlow service
+  mlflow:
+    image: ghcr.io/scc-digitalhub/mlflow:0.1.0-mlf1.26.0-postgres-s3
+    ports:
+      - "5100:5100"
+    environment:
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+      AWS_ACCESS_KEY_ID: minioadmin
+      AWS_SECRET_ACCESS_KEY: minioadmin
+    #to debug, add: --gunicorn-opts "--log-level debug"
+    #with this args, Dagster (aka its MLFlow client) needs to know S3 url and credentials to store artifacts directly (scenario 4)
+    #command: mlflow server -h 0.0.0.0 -p 5100 --backend-store-uri postgresql+psycopg2://postgres:postgres@postgres:5432/mlflow_storage --default-artifact-root s3://mlflowbucket #start a tracking server
+    #with this args, MLFlow is the artifact proxy and the client does not interact with S3 (scenario 5)
+    command: mlflow server -h 0.0.0.0 -p 5100 --backend-store-uri postgresql+psycopg2://postgres:postgres@postgres:5432/mlflow_storage --serve-artifacts --artifacts-destination s3://mlflowbucket #start a tracking server
+
+  # Dagster services (Dagit and Daemon)
+  dagit:
+    image: ghcr.io/scc-digitalhub/dagster-ml:0.1.0-v1.1.13
+    entrypoint:
+      - dagit
+      - -h
+      - "0.0.0.0"
+      - -p
+      - "5000"
+      - -w
+      - workspace.yaml
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+    environment:
+      # backend storage
+      DAGSTER_POSTGRES_USER: postgres
+      DAGSTER_POSTGRES_PASSWORD: postgres
+      DAGSTER_POSTGRES_DB: dagster_storage
+      DAGSTER_POSTGRES_PORT: 5432
+    volumes:
+      - ./resources/dagster-pipelines/MLOps:/opt/dagster/code
+    depends_on:
+      - postgres
+
+  dagster_daemon:
+    image: ghcr.io/scc-digitalhub/dagster-ml:0.1.0-v1.1.13
+    entrypoint:
+      - dagster-daemon
+      - run
+    restart: on-failure
+    environment:
+      # backend storage
+      DAGSTER_POSTGRES_USER: postgres
+      DAGSTER_POSTGRES_PASSWORD: postgres
+      DAGSTER_POSTGRES_DB: dagster_storage
+      DAGSTER_POSTGRES_PORT: 5432
+    volumes:
+      - ./resources/dagster-pipelines/MLOps:/opt/dagster/code
+    depends_on:
+      - postgres

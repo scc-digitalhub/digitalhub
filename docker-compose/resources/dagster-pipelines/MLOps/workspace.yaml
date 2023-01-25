@@ -1,0 +1,3 @@
+# Workspace configuration, see https://docs.dagster.io/concepts/repositories-workspaces/workspaces
+load_from:
+  - python_file: wine_quality_model_pipeline.py
