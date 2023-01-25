@@ -14,7 +14,7 @@ podman build -t nifi-oidc:0.1.0 -f ./nifi/Dockerfile ./nifi
 Based on a Python 3.7 image, with the addition of Dagster packages and the Dagster instance configuration file (see https://docs.dagster.io/deployment/dagster-instance). PostgreSQL is expected to be used as backend storage. Build with:
 
 ```shell
-podman build -t dagster:0.1.0 -f ./dagster/Dockerfile ./dagster
+podman build -t dagster:0.1.0-v1.1.13 -f ./dagster/Dockerfile ./dagster --build-arg VERSION=1.1.13
 ```
 
 If additional packages are required (e.g. `numpy` and `scikit-learn` for ML), they must be added to `requirements.txt` prior to rebuilding the image.
