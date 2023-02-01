@@ -38,7 +38,8 @@ services:
 
   # MLFlow service
   mlflow:
-    image: ghcr.io/scc-digitalhub/mlflow:0.1.0-mlf1.26.0-postgres-s3
+    image: ghcr.io/scc-digitalhub/mlflow:0.1.0-mlf1.26.0-postgres-s3 #v1.26.0
+    #image: ghcr.io/scc-digitalhub/mlflow:0.1.0-mlf2.1.1-postgres-s3 #v2.1.1
     ports:
       - "5100:5100"
     environment:
@@ -53,7 +54,8 @@ services:
 
   # Dagster services (Dagit and Daemon)
   dagit:
-    image: ghcr.io/scc-digitalhub/dagster-ml:0.1.0-v1.1.13
+    image: ghcr.io/scc-digitalhub/dagster-ml:0.1.0-v1.1.13 #with dagster-mlflow
+    #image: ghcr.io/scc-digitalhub/dagster-ml:0.1.0-v1.1.13-mlflow2.1.1 #with mlflow
     entrypoint:
       - dagit
       - -h
@@ -78,7 +80,8 @@ services:
       - postgres
 
   dagster_daemon:
-    image: ghcr.io/scc-digitalhub/dagster-ml:0.1.0-v1.1.13
+    image: ghcr.io/scc-digitalhub/dagster-ml:0.1.0-v1.1.13 #with dagster-mlflow
+    #image: ghcr.io/scc-digitalhub/dagster-ml:0.1.0-v1.1.13-mlflow2.1.1 #with mlflow
     entrypoint:
       - dagster-daemon
       - run

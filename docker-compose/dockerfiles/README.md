@@ -40,3 +40,9 @@ Based on a Python 3.10 image, as the oldest official MLflow image is v1.30.0, an
 ```shell
 podman build -t mlflow:0.1.0-mlf1.26.0-postgres-s3 -f ./mlflow/Dockerfile ./mlflow --build-arg VERSION=1.26.0
 ```
+
+To extend the [official image](https://github.com/mlflow/mlflow/pkgs/container/mlflow) with `psycopg2-binary` and `boto3`, build with:
+
+```shell
+podman build -t mlflow:0.1.0-mlf2.1.1-postgres-s3 -f ./mlflow/Dockerfile_from_official ./mlflow --build-arg TAG=v2.1.1
+```
