@@ -73,8 +73,8 @@ resources:
   minio:
     config:
       endpoint: "minio:9000"
-      access_key: {"env": "MINIO_ACCESS_KEY"}
-      secret_key: {"env": "MINIO_SECREY_KEY"}
+      access_key: {"env": "MINIO_ROOT_USER"}
+      secret_key: {"env": "MINIO_ROOT_PASSWORD"}
       bucket: "testbucket"
       file: "cities.csv"
 ```

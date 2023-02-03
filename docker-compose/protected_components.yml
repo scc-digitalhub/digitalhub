@@ -143,8 +143,8 @@ services:
       # credentials for the pipeline
       DH_DB_USERNAME: "${POSTGRES_USER}"
       DH_DB_PWD: "${POSTGRES_PASSWORD}"
-      MINIO_ACCESS_KEY: "${MINIO_ROOT_USER}"
-      MINIO_SECREY_KEY: "${MINIO_ROOT_PASSWORD}"
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
     volumes:
       - ./resources/dagster-pipelines/mini-ETL:/opt/dagster/code
     depends_on:
@@ -165,8 +165,8 @@ services:
       # credentials for the pipeline
       DH_DB_USERNAME: "${POSTGRES_USER}"
       DH_DB_PWD: "${POSTGRES_PASSWORD}"
-      MINIO_ACCESS_KEY: "${MINIO_ROOT_USER}"
-      MINIO_SECREY_KEY: "${MINIO_ROOT_PASSWORD}"
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
     volumes:
       - ./resources/dagster-pipelines/mini-ETL:/opt/dagster/code
     depends_on:
