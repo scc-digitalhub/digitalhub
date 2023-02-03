@@ -13,7 +13,7 @@ Additionally, the usage of Seldon Core to deploy the model as a Docker image is 
 
 ## Deployment
 
-*MLOps.yml* file is used to start the components through Docker/Podman-Compose. You may want to update the services configured in the file if needed (e.g. to change the images).
+*MLOps.yml* file is used to start the components through Docker/Podman-Compose. You may want to update the services configured in the file if needed.
 
 Open a terminal, `cd` to the *docker-compose* folder and run the following Docker/Podman command:
 
@@ -23,7 +23,7 @@ podman-compose -p dh -f MLOps.yml up -d
 
 ## Usage
 
-**NOTE**: the following paragraphs assume you are using the default credentials configured in *visualization.yml*.
+**NOTE**: the following paragraphs assume you are using the default credentials configured in *MLOps.yml*.
 
 ### Dagster
 
@@ -70,10 +70,34 @@ model/
 
 If you navigate to the MinIO UI at *http://localhost:5100* and log in with the credentials `minioadmin`/`minioadmin`, you should find the same files stored inside *mlflowbucket/1/<RUN_ID>/artifacts/model*.
 
+## Note on MLFlow Versions
+
+Dagster provides `dagster-mlflow` [library](https://docs.dagster.io/_apidocs/libraries/dagster-mlflow) to integrate with MLFlow, however it currently requires `mlflow<=1.26.0` (see https://github.com/dagster-io/dagster/blob/master/python_modules/libraries/dagster-mlflow/setup.py). Since such library is used by default in this example, the same version is used in the MLFlow container to avoid any compatibility issues with the MLFlow REST API.
+
+If you would like to run this example with a more recent version, you can switch to MLFlow 2.1.1 as follows:
+
+- open *MLOps.yml* and replace the images currently used by the `mlflow`, `dagit` and `dagster_daemon` services with, respectively, `ghcr.io/scc-digitalhub/mlflow:0.1.0-mlf2.1.1-postgres-s3` and `ghcr.io/scc-digitalhub/dagster-ml:0.1.0-v1.1.13-mlflow2.1.1`
+
+- open *docker-compose/resources/dagster-pipelines/MLOps/workspace.yaml* and replace `wine_quality_model_pipeline.py` with `wine_quality_model_pipeline2.py`; this pipeline performs the same operations as the other one, however it handles MLFlow runs instead of relying on `dagster-mlflow`
+
+Now you can deploy the containers and run the `wine_quality_model` job in Dagster with the following configuration:
+
+```
+ops:
+  read_wine_quality_csv:
+    config:
+      csv_url: https://raw.githubusercontent.com/mlflow/mlflow/master/tests/data/winequality-red.csv
+  log_on_mlflow:
+    config:
+      tracking_server_uri: http://mlflow:5100
+      experiment_name: wine_quality_experiment2
+resources:
+  hyperparameters:
+    config:
+      alpha: 0.5
+      l1_ratio: 0.5
+```
+
 ## Deploying the Model with Seldon Core
 
 **TODO**
-
-## Note on Compatibility
-
-`dagster-mlflow` library uses `mlflow<=1.26.0` (see https://github.com/dagster-io/dagster/blob/master/python_modules/libraries/dagster-mlflow/setup.py), therefore the same version is used in the MLFlow container, as the REST API has been modified in more recent versions (e.g., "preview/" endpoint prefix has been removed starting from v2).
