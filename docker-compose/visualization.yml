@@ -36,7 +36,7 @@ services:
 
   # Grafana service
   grafana:
-    image: grafana/grafana-oss #latest stable version
+    image: grafana/grafana-oss:9.3.1 #multiplatform
     ports:
       - "10000:10000"
     volumes:

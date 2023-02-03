@@ -13,7 +13,7 @@ services:
 
   # MinIO service
   minio:
-    image: minio/minio:latest
+    image: minio/minio:RELEASE.2023-01-25T00-19-54Z #multiplatform
     ports:
       - 9000:9000
       - 9001:9001
