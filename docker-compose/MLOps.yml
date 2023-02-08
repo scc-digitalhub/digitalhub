@@ -69,6 +69,7 @@ services:
     ports:
       - "5000:5000"
     environment:
+      MLFLOW_TRACKING_URI: http://mlflow:5100
       # backend storage
       DAGSTER_POSTGRES_USER: postgres
       DAGSTER_POSTGRES_PASSWORD: postgres
@@ -87,6 +88,7 @@ services:
       - run
     restart: on-failure
     environment:
+      MLFLOW_TRACKING_URI: http://mlflow:5100
       # backend storage
       DAGSTER_POSTGRES_USER: postgres
       DAGSTER_POSTGRES_PASSWORD: postgres

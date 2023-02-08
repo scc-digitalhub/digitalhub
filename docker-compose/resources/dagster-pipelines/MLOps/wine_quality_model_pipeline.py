@@ -110,4 +110,3 @@ def ml_repository():
 #   mlflow:
 #     config:
 #       experiment_name: wine_quality_experiment1
-#       mlflow_tracking_uri: http://mlflow:5100

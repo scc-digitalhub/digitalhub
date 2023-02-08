@@ -46,7 +46,6 @@ resources:
   mlflow:
     config:
       experiment_name: wine_quality_experiment1
-      mlflow_tracking_uri: http://mlflow:5100
 ```
 
 *Launch a run*. Once the pipeline has successfully executed, you can view the tracking results on MLFlow.
@@ -87,9 +86,8 @@ ops:
   read_wine_quality_csv:
     config:
       csv_url: https://raw.githubusercontent.com/mlflow/mlflow/master/tests/data/winequality-red.csv
-  log_on_mlflow:
+  start_mlflow_run:
     config:
-      tracking_server_uri: http://mlflow:5100
       experiment_name: wine_quality_experiment2
 resources:
   hyperparameters:

@@ -64,31 +64,43 @@ def evaluate_model(linear_regr, test_x, test_y):
     logger.info(f"Metrics: {metrics}")
     return metrics
 
-@op(config_schema={"tracking_server_uri": str, "experiment_name": str}, required_resource_keys={"hyperparameters"})
-def log_on_mlflow(context, metrics, linear_regr):
-    remote_server_uri = context.op_config["tracking_server_uri"]
+@op(config_schema={"experiment_name": str})
+def start_mlflow_run(context):
+    logger = get_dagster_logger()
     experiment_name = context.op_config["experiment_name"]
-    alpha = context.resources.hyperparameters["alpha"]
-    l1_ratio = context.resources.hyperparameters["l1_ratio"]
-    (rmse, mae, r2) = metrics
-
-    #set remote tracking server URI
-    mlflow.set_tracking_uri(remote_server_uri)
 
     #get or create experiment for the run (optional, otherwise default is used)
     if experiment_name:
         mlflow.set_experiment(experiment_name) #set as active experiment (if non existing, it is created)
 
-    with mlflow.start_run(): #start a run under the active experiment
+    #start a run under the active experiment
+    run = mlflow.start_run()
+    logger.info("Started MLFlow run {}".format(run.info.run_id))
+    return run.info.run_id
+
+@op(required_resource_keys={"hyperparameters"})
+def log_params_and_metrics(context, metrics, run_id):
+    logger = get_dagster_logger()
+    (rmse, mae, r2) = metrics
+
+    with mlflow.start_run(run_id=run_id) as run: #resume run
+        logger.info("Current MLFlow run: {}".format(run.info.run_id))
         mlflow.log_params({
-            "alpha": alpha,
-            "l1_ratio": l1_ratio
+            "alpha": context.resources.hyperparameters["alpha"],
+            "l1_ratio": context.resources.hyperparameters["l1_ratio"]
         })
         mlflow.log_metrics({
             "rmse": rmse,
             "mae": mae,
             "r2": r2
         })
+
+@op
+def register_model(context, linear_regr, run_id):
+    logger = get_dagster_logger()
+
+    with mlflow.start_run(run_id=run_id) as run: #resume run
+        logger.info("Current MLFlow run: {}".format(run.info.run_id))
         mlflow.sklearn.log_model(linear_regr, "model", registered_model_name="ElasticnetWineModel")
 
 @job(
@@ -100,7 +112,9 @@ def wine_quality_model():
     train_x, test_x, train_y, test_y = split_into_training_and_test_sets(data)
     linear_regr = fit_model(train_x, train_y)
     metrics = evaluate_model(linear_regr, test_x, test_y)
-    log_on_mlflow(metrics, linear_regr)
+    run_id = start_mlflow_run()
+    log_params_and_metrics(metrics, run_id)
+    register_model(linear_regr, run_id)
 
 @repository
 def ml_repository():
@@ -111,9 +125,8 @@ def ml_repository():
 #   read_wine_quality_csv:
 #     config:
 #       csv_url: https://raw.githubusercontent.com/mlflow/mlflow/master/tests/data/winequality-red.csv
-#   log_on_mlflow:
+#   start_mlflow_run:
 #     config:
-#       tracking_server_uri: http://mlflow:5100
 #       experiment_name: wine_quality_experiment2
 # resources:
 #   hyperparameters:
