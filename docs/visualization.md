@@ -89,9 +89,6 @@ Navigate to *http://localhost:8088* and log in with the credentials `admin`/`adm
 - *Password*: `postgres`
 
 Click *Connect* and then *Finish*.
-```
-SELECT * FROM test_scenario.cities
-```
 
 #### Connect to Dremio
 Go to *Settings > Database Connections* (top-right) and click *+ DATABASE*. Expand the *Supported databases* list and pick *Other* at the bottom. Change its *Display name* to `Dremio` and input the following as *SQLAlchemy URI*:
