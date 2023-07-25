@@ -1,0 +1,43 @@
+site_name: Digital Hub
+
+markdown_extensions:
+  - admonition
+
+nav:
+  - 'introduction.md'
+  - 'architecture.md'
+  - 'core.md'
+  - Components:
+    - 'components/deploying-components.md'
+    - 'components/dashboard.md'
+    - 'components/jupyter.md'
+    - 'components/dremio.md'
+    - 'components/mlrun.md'
+    - 'components/sqlpad.md'
+    - 'components/grafana.md'
+    - 'components/vscode.md'
+  - Tasks:
+    - 'tasks/projects.md'
+    - 'tasks/workspaces.md'
+    - 'tasks/data-and-transformations.md'
+    - 'tasks/git.md'
+  - Scenarios:
+    - 'scenarios/etl.md'
+    
+theme:
+  name: material
+  features:
+    - navigation.expand
+    - navigation.path
+    - content.code.copy
+  palette: 
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
