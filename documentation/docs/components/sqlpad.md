@@ -15,7 +15,7 @@
 When SQLPad is opened, it will display schemas and their tables to the left, and an empty space to the right to write queries in.
 
 Even if freshly deployed, some system tables are already present, so let's run a simple query to test the tool. Copy and paste the following:
-```
+``` sql
 SELECT * FROM public.pg_stat_statements LIMIT 3;
 ```
 This query asks for all (`*`) fields of `3` records within the `pg_stat_statements` table of the `public` schema. Note that `public` is the default schema, so you could omit the `public.` part.
