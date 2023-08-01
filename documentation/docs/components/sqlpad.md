@@ -22,4 +22,6 @@ This query asks for all (`*`) fields of `3` records within the `pg_stat_statemen
 
 Click on *Run*, and you will notice some results appearing at the bottom.
 
-You can learn SQLPad more in detail by viewing its [official documentation](https://getsqlpad.com/en/introduction/).
+## Resources
+
+- [Official documentation](https://getsqlpad.com/en/introduction/)

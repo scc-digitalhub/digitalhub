@@ -11,7 +11,11 @@ The dashboard is a central access point to reach a number of tools that are auto
 
 **Monitoring**
 
-- TODO
+TODO
+
+- *K8S Infrastructure*: deployed components and services
+- *Resources*: CPU, traffic, memory usage...
+- *Application logs*: Log data of components and services
 
 !!! info "How to access"
 

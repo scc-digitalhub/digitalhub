@@ -10,4 +10,6 @@
 
     MLRun may be access from the [dashboard](/components/dashboard). From its interface, you will be able to monitor projects and workflows.
 
-More information on MLRun is available in its [official documentation](https://docs.mlrun.org/en/latest/index.html).
+## Resources
+
+- [Official documentation](https://docs.mlrun.org/en/latest/)

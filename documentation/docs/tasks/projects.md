@@ -23,15 +23,17 @@ import mlrun
 
 ## Create a project
 
-A new project is easily created as follows. The only required fields are `name` (`my-project`) and `context` (`./`), which is where project files will be stored; `user_project` indicates the project's name should be unique per user, while `init_git` initializes git in the context directory.
+A new project is created with [new_project](https://docs.mlrun.org/en/latest/api/mlrun.projects.html#mlrun.projects.new_project): the only required fields are `name` (`my-project`) and `context` (`./`), which is where project files will be stored; `user_project` indicates the project's name should be unique per user, while `init_git` initializes git in the context directory.
 ``` python
 project = mlrun.new_project("my-project", "./", user_project=True, 
                             init_git=True, description="my new project")
 ```
 
+You can check in the interface that the project has been created: go to Coder, access the *dashboard* and, from the *Components* section, open the *MLRun Dashboard*.
+
 ## Load a project
 
-You can load a project by indicating its `context`:
+You can load a project with [load_project](https://docs.mlrun.org/en/latest/api/mlrun.projects.html#mlrun.projects.load_project), by indicating its `context`:
 ``` python
 project = mlrun.load_project("./")
 ```
@@ -42,9 +44,11 @@ project = load_project(name="my-project",
                        url="git://github.com/mlrun/project-archive.git")
 ```
 
-The following will create a project or, if it already exists, load it into the `project` variable:
+With [get_or_create_project](https://docs.mlrun.org/en/latest/api/mlrun.projects.html#mlrun.projects.get_or_create_project) you can create a project or, if it already exists, load it into the `project` variable:
 ``` python
 project = mlrun.get_or_create_project("my-project", "./")
 ```
 
-Deeper information on MLRun projects can be found in the [official documentation](https://docs.mlrun.org/en/stable/projects/project.html).
+## Resources
+
+- [Official documentation](https://docs.mlrun.org/en/latest/projects/project.html) on MLRun projects

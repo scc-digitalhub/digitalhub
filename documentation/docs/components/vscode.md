@@ -11,4 +11,6 @@ It can be used to connect remotely to the environment of other tools, for exampl
 !!! note
     Although sometimes called *Code*, which may create confusion, it is a separate software from *Coder*.
 
-The [official documentation](https://code.visualstudio.com/docs) offers more insight on its capabilities.
+## Resources
+
+- [Official documentation](https://code.visualstudio.com/docs)

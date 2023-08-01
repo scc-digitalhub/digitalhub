@@ -20,4 +20,6 @@ Dremio will switch to to the *SQL Runner* and you can run queries against the fi
 
 Of course, you may also run queries against the Postgres database.
 
-The full extent of Dremio's capabilities is described in its [official documentation](https://docs.dremio.com/).
+## Resources
+
+- [Official documentation](https://docs.dremio.com/)

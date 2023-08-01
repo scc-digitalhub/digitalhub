@@ -19,5 +19,6 @@ Type some simple code, like `print('Hello world!')` and press *Shift+Enter*. Jup
 
 You can change the type of a cell by clicking on the drop-down button (*Code*) at the top of your notebook. By choosing *Markdown*, you can alternate code and its documentation.
 
-More information on Jupyter features can be found in the [official documentation](https://jupyterlab.readthedocs.io/en/latest/).
+## Resources
 
+- [Official documentation](https://jupyterlab.readthedocs.io/en/latest/)

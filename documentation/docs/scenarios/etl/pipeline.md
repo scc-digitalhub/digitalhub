@@ -13,13 +13,10 @@ URL = "https://opendata.comune.bologna.it/api/explore/v2.1/catalog/datasets/rile
 def pipeline():
     project = mlrun.get_current_project()
 
-    # run downloader
     downloader = project.run_function("download-data",inputs={'url':URL},outputs=["dataset"])
 
-    # process spire
     process_spire = project.run_function("process-spire",inputs={'di': downloader.outputs["dataset"]})
 
-    # process measures
     process_measures = project.run_function("process-measures",inputs={'di': downloader.outputs["dataset"]})
 ```
 

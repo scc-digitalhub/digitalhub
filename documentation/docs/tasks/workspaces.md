@@ -54,3 +54,7 @@ ssh -L 3000:localhost:3000 coder.jupyter.jupyter
 ```
 
 You will now be able to access the service in your browser, at `localhost:3000`.
+
+## Resources
+
+- [Official documentation](https://coder.com/docs/v1/latest/workspaces) on Coder workspaces

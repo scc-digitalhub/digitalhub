@@ -1,6 +1,8 @@
 # ML scenario introduction
 
-This is a scenario that comes as an official tutorial of MLRun. We will prepare data, train a model and expose it as a service. Access Jupyter from your Coder instance and create a new notebook.
+This is a scenario that comes as an official tutorial of MLRun. In fact, you can find the notebook in your Jupyter instance, in `/tutorial/01-mlrun-basics.ipynb`.
+
+We will prepare data, train a model and expose it as a service. Access Jupyter from your Coder instance and create a new notebook.
 
 Let's initialize our working environment. Import required libraries:
 ``` python
