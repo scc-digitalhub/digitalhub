@@ -2,9 +2,12 @@ site_name: Digital Hub
 
 markdown_extensions:
   - admonition
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true 
 
 nav:
-  - 'introduction.md'
+  - 'index.md'
   - 'architecture.md'
   - 'core.md'
   - Components:
@@ -19,10 +22,19 @@ nav:
   - Tasks:
     - 'tasks/projects.md'
     - 'tasks/workspaces.md'
-    - 'tasks/data-and-transformations.md'
+    - 'tasks/data.md'
     - 'tasks/git.md'
   - Scenarios:
-    - 'scenarios/etl.md'
+    - Extract-Transform-Load:
+      - 'scenarios/etl/intro.md'
+      - 'scenarios/etl/collect.md'
+      - 'scenarios/etl/process.md'
+      - 'scenarios/etl/pipeline.md'
+      - 'scenarios/etl/expose.md'
+    - ML model training:
+      - 'scenarios/ml/intro.md'
+      - 'scenarios/ml/training.md'
+      - 'scenarios/ml/deploy.md'
     
 theme:
   name: material

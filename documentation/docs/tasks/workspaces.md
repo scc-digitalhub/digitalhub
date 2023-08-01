@@ -10,12 +10,21 @@ If you click on *VS Code Desktop*, it will open a connection to the workspace in
 
 ## Access the workspace in a local terminal
 
-You can also connect your local terminal to the workspace via SSH. If you click on *SSH*, it will show some commands you need to run, but first you have to install the `coder` CLI and log into your Coder instance.
+You can also connect your local terminal to the workspace via SSH. If you click on *SSH*, it will show some commands you need to run in your terminal, but first you have to install the `coder` command and log into the Coder instance.
 
-Install `coder` CLI:
-``` shell
-brew install cdr/coder/coder-cli
-```
+Install `coder`:
+=== "Linux / macOS"
+
+    ``` shell
+    curl -fsSL https://coder.com/install.sh | sh
+    ```
+
+=== "From binaries (Windows)"
+
+    Download the [release](https://github.com/coder/coder/releases) for your OS (for example: `coder_0.27.2_windows_amd64.zip`), unzip it and move the `coder` executable to a location that's on your `PATH`. If you need to know how to add a directory to `PATH`, follow [this](https://answers.microsoft.com/en-us/windows/forum/all/adding-path-variable/97300613-20cb-4d85-8d0e-cc9d3549ba23).
+    
+    !!! info "Restart the command prompt"
+        If it is already running, you will need to restart the *Command Prompt* for this change to take into effect.
 
 Log in:
 ``` shell
@@ -38,7 +47,15 @@ Your terminal should now be connected to the workspace. When you want to termina
 
 ## Port-forwarding
 
-You can start a SSH port-forwarding session from your terminal. First, log in:
+Port-forwarding may be done on any port: there are no pre-configured ones and it will work as long as there is a service listening on that port. Ports may be forwarded to make a service public, or through a local session.
+
+### Public
+
+This can be done from Coder, directly from the workspace's page. Click on *Port forward*, enter the port number and click *Open URL*. Users will have to log in to access the service.
+
+### Local
+
+You can start a SSH port-forwarding session from your local terminal. First, log in:
 ``` shell
 coder login https://coder.my-digitalhub-instance.it
 ```
@@ -57,4 +74,5 @@ You will now be able to access the service in your browser, at `localhost:3000`.
 
 ## Resources
 
-- [Official documentation](https://coder.com/docs/v1/latest/workspaces) on Coder workspaces
+- [Official documentation](https://coder.com/docs/v2/latest/install) on installation
+- [Official documentation](https://coder.com/docs/v2/latest/workspaces) on Coder workspaces

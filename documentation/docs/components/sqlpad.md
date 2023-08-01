@@ -8,7 +8,9 @@
 
 !!! info "How to access"
 
-    SQLPad may be launched from [Coder, using its template](/components/deploying-components). It is already configured to connect to the platform's Postgres instance.
+    SQLPad may be launched from [Coder, using its template](/components/deploying-components).
+
+    The template automatically configures connection to Postgres, so you do not need to worry about setting it up.
 
 ## Running a simple query
 

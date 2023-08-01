@@ -1,9 +1,5 @@
 # Collect the data
 
-We can perform operations on data by defining them as stateless functions, which take *input* and return *output*, carrying out their computation in an idempotent way.
-
-The framework will ensure that every run will receive the latest version of any input dataset and correctly save its output. Connection to the data-lake, serialization of data items into storage files, packing the function into a runnable container, allocating resources, monitoring progress and cleaning up are all transparently handled.
-
 Create a new folder to store the function's code in:
 ``` python
 new_folder = 'src'

@@ -33,7 +33,11 @@ Once you have set these parameters, click *Save & test* at the bottom, and a gre
 
 ### Dremio
 
-Scroll to the bottom of the data sources list and pick *Dremio*. Note that you should have created a Dremio workspace in Coder to add it.
+!!! note "Dremio workspace"
+
+    You need a Dremio workspace in order to add it as a data source in Grafana. You can create one from Coder.
+
+Scroll to the bottom of the data sources list and pick *Dremio*.
 
 Aside from a `Name` for the data source, it will ask for the following fields:
 

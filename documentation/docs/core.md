@@ -26,4 +26,4 @@ Among its primary features are **templates**, which can be used to easily create
 
 ## Monitoring
 
-TODO
+TODO - Monitoring features are work-in-progress.

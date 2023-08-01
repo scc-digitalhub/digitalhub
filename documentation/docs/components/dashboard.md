@@ -11,7 +11,7 @@ The dashboard is a central access point to reach a number of tools that are auto
 
 **Monitoring**
 
-TODO
+TODO - Monitoring features are work-in-progress.
 
 - *K8S Infrastructure*: deployed components and services
 - *Resources*: CPU, traffic, memory usage...
