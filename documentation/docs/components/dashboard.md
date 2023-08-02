@@ -2,6 +2,8 @@
 
 The dashboard is a central access point to reach a number of tools that are automatically run when the platform is installed. There are two types of tools: components and monitoring.
 
+![Dashboard image](../images/dashboard.png)
+
 **Components**
 
 - *MLRun*, a framework for MLOps

@@ -12,7 +12,15 @@
 
 ## Add a data source
 
-Extend the sidebar by clicking on the three-lines icon in the upper left, then click *Administration* at the bottom. Click *Data sources* and then *Add new data source*.
+Extend the sidebar by clicking on the three-lines icon in the upper left.
+
+![Grafana left menu image](../images/grafana-left-menu.png)
+
+Click *Administration* at the bottom. Click *Data sources* and then *Add new data source*.
+
+!!! note "Adding data sources"
+
+    You may also add data sources from the *Connections* menu.
 
 A list of supported data sources will appear.
 
@@ -37,8 +45,6 @@ Once you have set these parameters, click *Save & test* at the bottom, and a gre
 
     You need a Dremio workspace in order to add it as a data source in Grafana. You can create one from Coder.
 
-Scroll to the bottom of the data sources list and pick *Dremio*.
-
 Aside from a `Name` for the data source, it will ask for the following fields:
 
 - `URL`: you can find this in Coder: go to your Dremio workspace and look for an *Entrypoint* value (next to *kubernetes_service*), which you can click to copy. It may look similar to: `http://dremio-digitalhub-dremio:9047`.
@@ -54,6 +60,8 @@ Let's add a simple panel. Click *Add visualization* and select one of the data s
 On the bottom left, you can enter a query for a table in the database. Once you do that and click *Run query* in the same section, the message *Data is missing a time field* will likely appear. This is because the table you chose does not have a field for time-series and, by default, new panels are assumed to be for *Time series*.
 
 If you simply click on the *Switch to table* button that appears, you will see the query's results. More interestingly, if you click *Open visualization suggesions*, or extend the visualization selection (in the upper right, where it says *Time series* or *Table*, depending on whether you clicked *Switch to table* or not), you will be able to explore a variety visualization options for your query.
+
+![Grafana dashboard image](../images/grafana-dashboard.png)
 
 ## Resources
 

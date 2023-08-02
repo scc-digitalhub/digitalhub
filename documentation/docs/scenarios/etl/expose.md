@@ -112,4 +112,6 @@ In the middle, set any *Name* you want. *Host* must use the same domain as the o
 
 On the right, under *Primary*, you must enter the name of the function, in this case `demo-etl-api`.
 
+![Nuclio APIGW image](../../images/nuclio-apigw.png)
+
 *Save* and, after a few moments, you will be able to call the API at the address you entered in *Host*! If you set *Authentication* to *Basic*, don't forget that you have to provide the credentials.

@@ -6,6 +6,8 @@
 - Connect to a remote or containerized environment
 - Many publicly-available extensions for code linting, formatting, connecting to additional services, etc.
 
+![VSCode interface image](../images/vscode.png)
+
 It can be used to connect remotely to the environment of other tools, for example Jupyter, and work on notebooks from VSCode.
 
 !!! note

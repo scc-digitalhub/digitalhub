@@ -6,6 +6,8 @@ We've already seen [how to create a workspace from a template](/components/deplo
 
 The easiest and fastest way is to simply click on the *Terminal* button above the logs, which will open a terminal in your browser that allows you to browse the workspace's environment.
 
+![Coder buttons image](../images/coder-buttons.png)
+
 If you click on *VS Code Desktop*, it will open a connection to the workspace in your local instance of *VSCode* and you can open a terminal by clicking *Terminal* > *New Terminal*.
 
 ## Access the workspace in a local terminal
@@ -31,6 +33,8 @@ Log in:
 coder login https://coder.my-digitalhub-instance.it
 ```
 A tab will open in your browser, ask you to log-in if you haven't already, then display a token that you're supposed to copy and paste in the terminal.
+
+![Coder token image](../images/coder-token.png)
 
 Now you can run the two commands you saw when you clicked on *SSH*. Configure SSH hosts (confirm with `yes` when asked):
 ``` shell

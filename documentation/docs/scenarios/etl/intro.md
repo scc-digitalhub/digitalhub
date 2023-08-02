@@ -59,4 +59,6 @@ df = pd.read_csv(filename, sep=";")
 
 You can now run `df.head()` to view the first few records of the dataset. They contain information about how many vehicles have passed a sensor (spire), located at specific coordinates, within different time slots. If you wish, use `df.dtypes` to list the columns and respective types of the data, or `df.size` to know the data's size in Bytes.
 
+![Jupyter head image](../../images/jupyter-head.png)
+
 In the next section, we will collect this data and save it to the object store.

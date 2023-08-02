@@ -17,6 +17,8 @@ Alternatively, you can also create a notebook by right-clicking within the *File
 
 Type some simple code, like `print('Hello world!')` and press *Shift+Enter*. Jupyter displays the result of the computation immediately under the code cell and creates a new one.
 
+![Jupyter image](../images/jupyter.png)
+
 You can change the type of a cell by clicking on the drop-down button (*Code*) at the top of your notebook. By choosing *Markdown*, you can alternate code and its documentation.
 
 ## Resources

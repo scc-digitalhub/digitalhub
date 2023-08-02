@@ -20,6 +20,8 @@ Click on *minio* and you may see a file listed to the right or, if you see a fol
 
 Dremio will switch to to the *SQL Runner* and you can run queries against the file you selected.
 
+![Dremio image](../images/dremio.png)
+
 Of course, you may also run queries against the Postgres database.
 
 ## Resources
