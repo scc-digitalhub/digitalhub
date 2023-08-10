@@ -15,11 +15,11 @@
         <link rel="next" href="../core/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.19">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.1.21">
     
     
       
-        <title>Architecture - Digital Hub</title>
+        <title>Overview and architecture - Digital Hub</title>
       
     
     
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#architecture" class="md-skip">
+        <a href="#overview-and-architecture" class="md-skip">
           Skip to content
         </a>
       
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Architecture
+              Overview and architecture
             
           </span>
         </div>
@@ -242,9 +242,238 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Overview and architecture
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
-        Architecture
+        Overview and architecture
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-and-design" class="md-nav__link">
+    Architecture and design
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture and design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#design-principles" class="md-nav__link">
+    Design principles
+  </a>
+  
+    <nav class="md-nav" aria-label="Design principles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gitops" class="md-nav__link">
+    GitOps
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops" class="md-nav__link">
+    DataOps
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mlops" class="md-nav__link">
+    MLOps
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resource-optimization" class="md-nav__link">
+    Resource optimization
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infrastructure-layer" class="md-nav__link">
+    Infrastructure layer
+  </a>
+  
+    <nav class="md-nav" aria-label="Infrastructure layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-compute" class="md-nav__link">
+    Infrastructure: Compute
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-data-stores" class="md-nav__link">
+    Infrastructure: Data stores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-workspaces" class="md-nav__link">
+    Infrastructure: Workspaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-api-gateway" class="md-nav__link">
+    Infrastructure: Api gateway
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-engineering" class="md-nav__link">
+    Data engineering
+  </a>
+  
+    <nav class="md-nav" aria-label="Data engineering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dataops-unified-data" class="md-nav__link">
+    DataOps: Unified data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops-query-access" class="md-nav__link">
+    DataOps: Query access
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops-interactive-workspaces" class="md-nav__link">
+    DataOps: Interactive workspaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops-serverless-computing" class="md-nav__link">
+    DataOps: Serverless computing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops-batch-jobs-and-workflows" class="md-nav__link">
+    DataOps: Batch jobs and workflows
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops-data-services" class="md-nav__link">
+    DataOps: Data services
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops-data-products" class="md-nav__link">
+    DataOps: Data products
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ml-engineering" class="md-nav__link">
+    ML engineering
+  </a>
+  
+    <nav class="md-nav" aria-label="ML engineering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mlops-interactive-workspaces" class="md-nav__link">
+    MLOps: Interactive workspaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mlops-data-and-features" class="md-nav__link">
+    MLOps: Data and features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mlops-model-training-and-automl" class="md-nav__link">
+    MLOps: Model training and AutoML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mlops-ml-services" class="md-nav__link">
+    MLOps: ML services
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ai-solutions" class="md-nav__link">
+    AI solutions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -748,6 +977,219 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-and-design" class="md-nav__link">
+    Architecture and design
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture and design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#design-principles" class="md-nav__link">
+    Design principles
+  </a>
+  
+    <nav class="md-nav" aria-label="Design principles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gitops" class="md-nav__link">
+    GitOps
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops" class="md-nav__link">
+    DataOps
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mlops" class="md-nav__link">
+    MLOps
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resource-optimization" class="md-nav__link">
+    Resource optimization
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infrastructure-layer" class="md-nav__link">
+    Infrastructure layer
+  </a>
+  
+    <nav class="md-nav" aria-label="Infrastructure layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-compute" class="md-nav__link">
+    Infrastructure: Compute
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-data-stores" class="md-nav__link">
+    Infrastructure: Data stores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-workspaces" class="md-nav__link">
+    Infrastructure: Workspaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-api-gateway" class="md-nav__link">
+    Infrastructure: Api gateway
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-engineering" class="md-nav__link">
+    Data engineering
+  </a>
+  
+    <nav class="md-nav" aria-label="Data engineering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dataops-unified-data" class="md-nav__link">
+    DataOps: Unified data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops-query-access" class="md-nav__link">
+    DataOps: Query access
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops-interactive-workspaces" class="md-nav__link">
+    DataOps: Interactive workspaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops-serverless-computing" class="md-nav__link">
+    DataOps: Serverless computing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops-batch-jobs-and-workflows" class="md-nav__link">
+    DataOps: Batch jobs and workflows
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops-data-services" class="md-nav__link">
+    DataOps: Data services
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dataops-data-products" class="md-nav__link">
+    DataOps: Data products
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ml-engineering" class="md-nav__link">
+    ML engineering
+  </a>
+  
+    <nav class="md-nav" aria-label="ML engineering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mlops-interactive-workspaces" class="md-nav__link">
+    MLOps: Interactive workspaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mlops-data-and-features" class="md-nav__link">
+    MLOps: Data and features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mlops-model-training-and-automl" class="md-nav__link">
+    MLOps: Model training and AutoML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mlops-ml-services" class="md-nav__link">
+    MLOps: ML services
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ai-solutions" class="md-nav__link">
+    AI solutions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -761,8 +1203,188 @@
                   
 
 
-<h1 id="architecture">Architecture</h1>
-<p>TODO</p>
+<h1 id="overview-and-architecture">Overview and architecture</h1>
+<p>The DigitalHub platform offers a flexible, fully integrated environment for the development and deployment of full-scale data- and ML- solutions, with unified management and security.</p>
+<p>The platform at its core is composed by:</p>
+<ul>
+<li>The base infrastructure, which offers flexible compute (w/GPU) and storage</li>
+<li>Dynamic workspaces (w/Jupyter/VSCode/Spark) for interactive computing</li>
+<li>Workflow and Job services for batch processing</li>
+<li>Data services to easily define ETL ops and expose data products</li>
+<li>ML services to train, deploy and monitor ML models</li>
+</ul>
+<p>Everything is accessible and usable within a single project.</p>
+<h2 id="architecture-and-design">Architecture and design</h2>
+<p>The platform adopts a layered design, where every layer adds functionalities and value on top of the lower layers. From top to bottom:</p>
+<ul>
+<li><em>AI Domain solutions</em> are complex AI applications which integrates different ML and Data products to deliver a full AI product</li>
+<li><em>ML Engineering</em> is dedicated to MLOps and the definition, training and usage of ML products</li>
+<li><em>Data Engineering</em> is devoted to DataOps, with full support for ETL, storage, schemas, transactions and full data management, with advanced capabilities for profiling, lineage, validation and versioning of datasets</li>
+<li><em>Execution infrastructure</em> serves as the base layer</li>
+</ul>
+<p><img alt="DH Layers" src="images/layers.png" /></p>
+<h3 id="design-principles">Design principles</h3>
+<p>The platform is designed from ground up following modern architectural and operational patterns, to promote consistency, efficiency and quality while preserving the speed and agility required during initial development stages.</p>
+<p>The principles adopted during the design can be grouped under the following categories.</p>
+<h4 id="gitops">GitOps</h4>
+<ul>
+<li>Everything is code: functions,  operations, configurations</li>
+<li>Code is versioned!</li>
+<li>Declarative state for deployments, services</li>
+</ul>
+<h4 id="dataops">DataOps</h4>
+<ul>
+<li>Datasets are immutable</li>
+<li>Datasets are versioned</li>
+<li>Use schemas</li>
+<li>Idempotent transformations only</li>
+</ul>
+<h4 id="mlops">MLOps</h4>
+<ul>
+<li>Automate processes</li>
+<li>Track experiments</li>
+<li>Ensure reproducibility</li>
+</ul>
+<h4 id="resource-optimization">Resource optimization</h4>
+<ul>
+<li>Reduce footprint</li>
+<li>Optimize interactive usage</li>
+<li>Maximize resource utilization</li>
+</ul>
+<h2 id="infrastructure-layer">Infrastructure layer</h2>
+<p>The infrastructure layer is the foundation of the platform, and offers a dynamic environment to run cpu (and GPU) workloads both as interactive and as scheduled jobs.</p>
+<p>Based on Kubernetes, the platform supports distributed computing, scheduling, dynamic scaling, monitoring and operation automation for every tool and component of the platform.</p>
+<p>Infrastructural components are the building blocks for the construction of workspaces used to develop, build and deploy complex solutions.</p>
+<p><img alt="Building blocks" src="images/building-blocks.png" /></p>
+<h3 id="infrastructure-compute">Infrastructure: Compute</h3>
+<p>Managing compute resources is the core task for the infrastructure layer.</p>
+<p>The DigitalHub adopts Kubernetes as the orchestration system for managing containerized applications: every workload is packaged into a container and executed in one or more pods, taking into account resource requests and constraints.</p>
+<p><img alt="Containerized app" src="images/container.png" /></p>
+<p>Developers can access and leverage hardware resources (e.g. GPU) by declaring the requirement for their workloads, both for interactive and batch computing.</p>
+<h3 id="infrastructure-data-stores">Infrastructure: Data stores</h3>
+<p>Data is the foundation of ML systems, and a key aspect of every analytical process.</p>
+<p>The platform adopts an unified approach, and integrates:</p>
+<ul>
+<li>
+<p>a <strong>data lake-house</strong> (<em>Minio</em>) as persistence store, for immutable data, both structured and unstructured, with high performance and scalability</p>
+</li>
+<li>
+<p>a <strong>database</strong> (<em>PostgreSQL</em>) as operational store, for high velocity and mutable data, with ACID transactions, geo-spatial and time-series extensions and horizontal scalability</p>
+</li>
+</ul>
+<h3 id="infrastructure-workspaces">Infrastructure: Workspaces</h3>
+<p>Workspaces serve as the interactive computing platform for Data- and ML-Ops, executed in the cloud infrastructure.
+By adopting a workspace manager (Coder), users are able to autonomously create, operate and manage dynamic workspaces based on templates, delivering:</p>
+<ul>
+<li>pre-configured working environments</li>
+<li>customizability</li>
+<li>resource usage optimization</li>
+<li>cost-effectiveness</li>
+</ul>
+<p><img alt="Workspaces" src="images/workspaces.png" /></p>
+<h3 id="infrastructure-api-gateway">Infrastructure: Api gateway</h3>
+<p>Data- and ML-services are defined and deployed within the perimeter of a given project, and by default are accessible only from the inside.</p>
+<p><img alt="ApiGW" src="images/apigw.png" style="max-height:350px;" /></p>
+<p>An Api Gateway lets users expose them to the outside world, via a simplified interface aimed at:</p>
+<ul>
+<li>minimizing the complexity of exposing services on the internet</li>
+<li>enforcing a minimal level of security</li>
+<li>automating routing and proxying of HTTP requests</li>
+</ul>
+<p>For complex use cases, a fully fledged api gateway should be used (outside the platform)</p>
+<h2 id="data-engineering">Data engineering</h2>
+<p>Data engineering is the core layer for the base platform, and covers all the operational aspects of data management, processing and delivery.</p>
+<p>By integrating modern ETL/ELT pipelines with serverless processing, on top of modern data stores, the DigitalHub delivers a flexible, adaptable and predictable platform for the construction of data products.</p>
+<p>The diagram represents the data products life-cycle within the DigitalHub.</p>
+<p><img alt="DataOps" src="images/dataops.png" /></p>
+<h3 id="dataops-unified-data">DataOps: Unified data</h3>
+<p>Both structured and unstructured datasets are first-class citizens in the DigitalHub: every data item persisted in the data stores  is registered in the catalogue and is fully addressable, with a unique, global identifier.</p>
+<p>The platform supports versioning and ACID transactions on datasets, regardlessly of the backing storage.</p>
+<h3 id="dataops-query-access">DataOps: Query access</h3>
+<p>The platform adopts Dremio as the (SQL) query engine, offering a unified interface to access structured and semi-structured data stored both in the data lake and the operational database.
+Dremio is a self-serve platform with web IDE, authentication and authorization, able to deliver data discoverability and dataset lineage.
+Also with native integration with external tools via ODBC, JDBC, Arrow Flight</p>
+<h3 id="dataops-interactive-workspaces">DataOps: Interactive workspaces</h3>
+<p>Every data engineering process starts from data exploration, a task executed interactively by connecting to data sources and performing exploratory analysis.</p>
+<p>The platform supports dynamic workspaces based on:</p>
+<ul>
+<li><strong>JupyterLab</strong>, for notebook based analysis</li>
+<li><strong>SQLPad</strong>, for SQL based data access</li>
+<li><strong>Dremio</strong>, for unified data access and analysis</li>
+<li><strong>VSCode</strong>, for a developer-centric, code-based approach</li>
+</ul>
+<h3 id="dataops-serverless-computing">DataOps: Serverless computing</h3>
+<p>Modern serverless platforms enable developers to fully focus on writing business code, by implementing functions which will eventually be executed by the compute layer.</p>
+<p>There is no need for “executable” code: the framework will provide the engine which will transform bare functions into applications.</p>
+<p><img alt="Faas" src="images/faas.png" /></p>
+<p>The platform adopts Nuclio as the serverless platform, and supports Python, Java and Go as programming languages.</p>
+<h3 id="dataops-batch-jobs-and-workflows">DataOps: Batch jobs and workflows</h3>
+<p>By registering functions as jobs we can easily execute them programmatically, based on triggers, or as batch operations dispatched to Kubernetes.</p>
+<p>We can thus define workflows as pipelines composing functions, by connecting inputs and outputs in a DAG:</p>
+<ul>
+<li>Promote re-use of functions</li>
+<li>Promote composition</li>
+<li>Promote reproducibility</li>
+<li>Reduce platform- specific expertise at minimum</li>
+</ul>
+<h3 id="dataops-data-services">DataOps: Data services</h3>
+<p>Datasets can be used to expose services which deliver value to consumers, such as:</p>
+<ul>
+<li>REST APIs for integration</li>
+<li>GraphQL APIs for frontend consumption</li>
+<li>User consoles for analytics</li>
+<li>Dashboards for data visualization</li>
+<li>Reports for evaluation</li>
+</ul>
+<p>The platform integrates dedicated, pre-configured tools for the most common use cases, as zero-configuration, one-click deployable services.</p>
+<h3 id="dataops-data-products">DataOps: Data products</h3>
+<p>A data product is an autonomous component that contains all data, code, and interfaces to serve the consumer needs.</p>
+<p>The platform aims at supporting the whole lifecycle of data products, by:</p>
+<ul>
+<li>letting developers define ETL processes to acquire and manage data</li>
+<li>offering stores to track and memorize datasets</li>
+<li>exposing services to publish data for consumption</li>
+<li>fully describing data products in metadata files, with versioning and tracking</li>
+</ul>
+<h2 id="ml-engineering">ML engineering</h2>
+<p>Adopting MLOps means embracing the complete lifecycle of ML models, from data preparation and training to experiments tracking and model serving.</p>
+<p>The platform integrates a suite of tools aimed at covering the full span of operations, enabling ML engineers to not only train and deploy models, but also manage complex pipelines, operations and services.</p>
+<p>The foundation for the ML layer is the open source MLRun framework, which offers an open MLOps environment for building  ML applications across their lifecycle (depicted in picture)</p>
+<p><img alt="MLRun" src="images/mlrun.png" /></p>
+<h3 id="mlops-interactive-workspaces">MLOps: Interactive workspaces</h3>
+<p>The job of a ML engineer is mostly carried out inside an interactive compute environment, where the user performs all the operations related to data preparation, feature extraction, model training and evaluation.
+The platform adopts JupyterLab, along with MLRun, as interactive compute environment, delivering a pre-configured, fully adaptable workspace for ML tasks.</p>
+<h3 id="mlops-data-and-features">MLOps: Data and features</h3>
+<p>Datasets are usually pre-processed by domain experts to define and extract features.</p>
+<p>By adopting a full-fledged feature store (via MLRun), the platform lets developers:</p>
+<ul>
+<li>easily define features during training</li>
+<li>re-use them during serving</li>
+<li>ensuring that the very same features are used during the whole ML life-cycle</li>
+</ul>
+<h3 id="mlops-model-training-and-automl">MLOps: Model training and AutoML</h3>
+<p>Model training is a complex task, which requires deep knowledge of the ML model, the underlying library and the execution environment.</p>
+<p>By integrating the most used ML frameworks, the platform lets developers focus on the actual training, with little to no effort dedicated towards:</p>
+<ul>
+<li>tracking experiments and runs</li>
+<li>collecting and evaluating metrics</li>
+<li>performing hyperparameter optimization (with distributed GridSearch)</li>
+</ul>
+<p>With AutoML, supported models are automatically trained and optimized based on data and features, and eventually deployed as services in a fully automated way.</p>
+<h3 id="mlops-ml-services">MLOps: ML services</h3>
+<p>Fine-tuned ML models are used to provide services for external applications, by exposing a dedicated API interface.</p>
+<p>The platform supports a unified Model Server, which can expose any model built upon a supported framework with a common interface, with optional:</p>
+<ul>
+<li>multi-step computation</li>
+<li>model composition</li>
+<li>feature access</li>
+<li>performance tracking</li>
+<li>drift tracking and analysis</li>
+</ul>
+<h3 id="ai-solutions">AI solutions</h3>
+<p>Building over the base layers, the platform aims at supporting full scale AI solutions, which encompass the full stack of tools and resources required to deliver a specific solution in the domain.</p>
+<p>Datasets, ML models, workflows, services all contribute to the construction of a fully integrated and replicable AI solution.</p>
+<p><strong>Note: the AI layer is still in early development phase.</strong></p>
 
 
 
