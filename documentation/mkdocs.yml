@@ -2,6 +2,7 @@ site_name: Digital Hub
 
 markdown_extensions:
   - admonition
+  - attr_list
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
