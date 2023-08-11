@@ -10,6 +10,7 @@ markdown_extensions:
 nav:
   - 'index.md'
   - 'architecture.md'
+  - 'installation.md'
   - 'core.md'
   - Components:
     - 'components/deploying-components.md'
