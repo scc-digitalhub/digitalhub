@@ -17,14 +17,14 @@ The platform deployment is managed via Docker Compose. Each documented use case 
 
 1. Start minikube (change 192.168.49.0 if your network setup is different):
 ```sh
-        minikube start --insecure-registry "192.168.49.0/24"
+    minikube start --insecure-registry "192.168.49.0/24"
 ```
 2. Get minikube external IP:
 ```sh
-        minikube ip
+    minikube ip
 ```
 3. Change the IP in  'global.registry.url' and 'global.externalHostAddress' properties in values file with the one obtained in the previous step.
 4. Install DigitalHub with Helm:
 ```sh
-        helm upgrade digitalhub helm/digitalhub/ -n digitalhub --install --create-namespace 
+    helm upgrade digitalhub helm/digitalhub/ -n digitalhub --install --create-namespace 
 ```
