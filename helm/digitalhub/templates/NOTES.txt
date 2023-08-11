@@ -1,0 +1,30 @@
+{{- $externalUrl := .Values.global.externalHostAddress -}}
+##########################################################
+#   _____   _       _           _ _     _       _        #
+#  (____ \ (_)     (_)_        | | |   | |     | |       #
+#   _   \ \ _  ____ _| |_  ____| | |__ | |_   _| | _     #
+#  | |   | | |/ _  | |  _)/ _  | |  __)| | | | | || \    #
+#  | |__/ /| ( ( | | | |_( ( | | | |   | | |_| | |_) )   #
+#  |_____/ |_|\_|| |_|\___)_||_|_|_|   |_|\____|____/    #
+#            (_____|                                     #
+#                                                        #
+##########################################################
+
+{{ $.Chart.Name | title }} has been installed. Check its status by running:
+  kubectl --namespace {{ .Release.Namespace }} get pods
+{{ if (eq .Values.global.service.type "NodePort") }}
+Digitalhub componet URLs:
+{{- range .Values.coder.customCoderTemplates }}
+  - {{ .name | title }}: http://{{ $externalUrl }}:{{ .nodePort }}  
+{{- end }}
+  - Docker Registry: http://{{ $externalUrl }}:{{ index .Values "docker-registry" "service" "nodePort" }}
+  - Nuclio: http://{{ $externalUrl }}:{{ index .Values "global" "nuclio" "dashboard" "nodePort" }}
+{{- with (index .Subcharts "mlrun-ce") }}
+  - MLRun API: http://{{ $externalUrl }}:{{ index .Values "mlrun" "api" "service" "nodePort" }}
+  - MLRun UI: http://{{ $externalUrl }}:{{ index .Values "mlrun" "ui" "service" "nodePort" }}
+  - Minio API: http://{{ $externalUrl }}:{{ index .Values "minio" "service" "nodePort" }}
+  - Minio UI: http://{{ $externalUrl }}:{{ index .Values "minio" "consoleService" "nodePort" }}
+{{- end }}
+  - KubeFlow: http://{{ $externalUrl }}:30100
+  - Coder: http://{{ $externalUrl }}:{{ .Values.coder.coder.service.httpNodePort }}
+{{ end }}

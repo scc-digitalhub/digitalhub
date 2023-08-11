@@ -1,0 +1,275 @@
+global:
+  service:
+    type: NodePort
+  registry:
+    url: 192.168.49.2:30050
+    secretName: ""
+  nuclio:
+    dashboard:
+      nodePort: 30050
+  externalHostAddress: &globalExternalUrl "192.168.49.2"
+
+docker-registry: 
+  enabled: true
+  fullnameOverride: digitalhub-docker-registry
+  className: nginx
+  service:
+    type: NodePort
+    nodePort: 30150
+  ingress:
+    enabled: false
+    path: /
+    hosts:
+      - registry.digitalhub.test
+    labels: 
+  persistence:
+    accessMode: 'ReadWriteOnce'
+    enabled: true
+    size: 128Gi
+  updateStrategy:
+    type: Recreate
+
+mlrun-ce: 
+  enabled: true
+  nuclio:
+    fullnameOverride: nuclio
+    controller:
+      enabled: true
+    dashboard:
+      enabled: true
+      containerBuilderKind: kaniko
+      kaniko:
+        insecurePushRegistry: true
+        insecurePullRegistry: true
+    rbac:
+      create: true
+      crdAccessMode: namespaced
+    crd:
+      create: true
+    platform:
+      logger:
+        sinks:
+          myStdoutLoggerSink:
+            kind: stdout
+            attributes:
+              encoding: console
+              timeFieldName: time
+              timeFieldEncoding: iso8601
+        system:
+        - level: debug
+          sink: myStdoutLoggerSink
+        functions:
+        - level: debug
+          sink: myStdoutLoggerSink
+  mlrun:
+    storage: filesystem
+    fullnameOverride: mlrun
+    nuclio:
+      mode: enabled
+    rbac:
+      create: true
+    v3io:
+      enabled: false
+    api:
+      fullnameOverride: mlrun-api
+      ingress:
+        enabled: false
+      volumes:
+        storageOverride:
+          persistentVolumeClaim:
+            claimName: mlrun-api-pvc
+      persistence:
+        enabled: true
+        existingClaim:
+        storageClass:
+        accessMode: "ReadWriteOnce"
+        size: "128Gi"
+        annotations:
+          helm.sh/resource-policy: "keep"
+      envFrom:
+        - configMapRef:
+            name: mlrun-common-env
+        - configMapRef:
+            name: mlrun-pipelines-config
+            optional: true
+        - configMapRef:
+            name: mlrun-spark-config
+            optional: true
+        - configMapRef:
+            name: mlrun-override-env
+            optional: true
+      extraPersistentVolumeMounts: ~
+    ui:
+      fullnameOverride: mlrun-ui
+      ingress:
+        enabled: false
+    db:
+      name: db
+      fullnameOverride: mlrun-db
+      securityContext: 
+        runAsUser: 999
+      podSecurityContext:
+        runAsUser: 999
+        fsGroup: 999    
+      volumes:
+        storageOverride:
+          persistentVolumeClaim:
+            claimName: mlrun-db-pvc
+      persistence:
+        enabled: true
+        existingClaim:
+        storageClass:
+        accessMode: "ReadWriteOnce"
+        size: "128Gi"
+        annotations:
+          helm.sh/resource-policy: "keep"
+    httpDB:
+      dbType: mysql
+      dirPath: "/mlrun/db"
+      dsn: mysql+pymysql://root@mlrun-db:3306/mlrun
+      oldDsn: sqlite:////mlrun/db/mlrun.db?check_same_thread=false
+    ce:
+      mode: full
+  jupyterNotebook:
+    enabled: false
+  mpi-operator:
+    fullnameOverride: mpi-operator
+    crd:
+      create: true
+    rbac:
+      clusterResources:
+        create: true
+      namespaced:
+        create: true
+    deployment:
+      create: true
+  minio:
+    enabled: true
+    rootUser: minio
+    rootPassword: minio123
+    mode: standalone
+    replicas: 1
+    resources:
+      requests:
+        memory: 0.5Gi
+    ingress:
+      enabled: false
+      ingressClassName: "nginx"
+      path: /
+      hosts:
+        - minio-api.digitalhub.test
+    consoleIngress:
+      enabled: false
+      ingressClassName: "nginx"
+      path: /
+      hosts:
+        - minio.digitalhub.test
+    persistence:
+      enabled: true
+      size: 128Gi
+    fullnameOverride: minio
+    buckets:
+      - name: mlrun
+        policy: none
+        purge: false
+  spark-operator:
+    enabled: true
+    fullnameOverride: spark-operator
+    webhook:
+      enable: true
+    serviceAccounts:
+      spark:
+        name: "sparkapp"
+  pipelines:
+    enabled: true
+    name: pipelines
+    persistence:
+      enabled: true
+      existingClaim:
+      storageClass:
+      accessMode: "ReadWriteOnce"
+      size: "128Gi"
+      annotations:
+        helm.sh/resource-policy: "keep"
+    db:
+      username: root
+    minio:
+      enabled: true
+      accessKey: "minio"
+      secretKey: "minio123"
+      endpoint: "minio"
+      endpointPort: "9000"
+      bucket: "mlrun"
+  kube-prometheus-stack:
+    enabled: false  
+
+postgresql: 
+  enabled: true
+  auth:
+    username: coder
+    password: coder
+    database: coder
+  persistence:
+    size: 10Gi
+  nameOverride: "coder-postgres"
+
+coder: 
+  enabled: true
+  username: test
+  password: Test12456@!
+  email: test@digitalhub.test
+  customCoderTemplates:
+    - name: jupyter
+      nodePort: "30040"
+      iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
+    - name: dremio
+      nodePort: "30120"
+      iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/dremio_logo_icon_168234.png
+    - name: sqlpad
+      nodePort: "30140"
+      iconUrl: https://i.ibb.co/TrBDsZM/sqlpad.png
+    - name: grafana
+      nodePort: "30130"
+      iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/grafana_logo_icon_171048.png
+    - name: dashboard
+      nodePort: "30110"
+      iconUrl: https://svgshare.com/i/u5R.svg
+  coder:
+    image:
+      tag: v2.0.0 
+    env:
+      # - name: CODER_ACCESS_URL
+      #   value: *globalExternalUrl
+      - name: CODER_PG_CONNECTION_URL
+        valueFrom:
+          secretKeyRef:
+            name: coder-postgresql-creds
+            key: uri
+    ingress:
+      enable: false
+    service:
+      type: NodePort
+      httpNodePort: "30140"
+
+postgres-operator: 
+  enabled: true
+
+ext-postgres-operator:
+  enabled: true
+  postgres:
+    host: mlrun-postgres-cluster
+    user: ""
+    password: ""
+    uri_args: " "
+    cloud_provider: " "
+    default_database: "postgres"
+  postgresCredsExistingSecrets:
+    username:
+      secretName: "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretKey: "username"
+    password:
+      secretName: "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretKey: "password"
+
+custom-resource-manager:
+  enabled: true

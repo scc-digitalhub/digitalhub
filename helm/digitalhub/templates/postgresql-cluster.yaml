@@ -1,0 +1,18 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: mlrun-postgres-cluster
+spec:
+  teamId: "mlrun"
+  volume:
+    size: 8Gi
+  numberOfInstances: 3
+  users:
+    digitalhub:
+    - superuser
+    - createdb
+    mlrun: []
+  databases:
+    mlrun: mlrun
+  postgresql:
+    version: "15"

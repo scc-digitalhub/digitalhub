@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: coder-deploy-template
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      containers:
+        - name: coder-deploy-template
+          image: ghcr.io/coder/coder
+          command: ["/bin/bash", "/home/coder/init-files/init.sh"]
+          env:
+            - name: CODER_ACCESS_URL
+              value: "http://coder"
+            - name: CODER_URL
+              value: "http://coder"
+            - name: CODER_PG_CONNECTION_URL
+              valueFrom:
+                secretKeyRef:
+                  name: coder-postgresql-creds
+                  key: uri
+            - name: CODER_FIRST_USER_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: coder-user
+                  key: username
+            - name: CODER_FIRST_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: coder-user
+                  key: password
+            - name: CODER_FIRST_USER_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: coder-user
+                  key: email
+            - name: CODER_FIRST_USER_TRIAL
+              value: "false"
+          volumeMounts:
+          - name: init-files
+            mountPath: "/home/coder/init-files"
+            readOnly: true
+          - name: custom-template
+            mountPath: "/home/coder/custom-template"
+            readOnly: true
+      restartPolicy: Never
+      volumes:
+        - name: init-files
+          configMap:
+            name: coder-init
+        - name: custom-template
+          configMap:
+            name: coder-custom-template
+
