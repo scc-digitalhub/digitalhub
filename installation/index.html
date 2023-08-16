@@ -9,24 +9,24 @@
       
       
       
-        <link rel="prev" href="../intro/">
+        <link rel="prev" href="../architecture/">
       
       
-        <link rel="next" href="../deploy/">
+        <link rel="next" href="../core/">
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.1.21">
     
     
       
-        <title>Training the model - Digital Hub</title>
+        <title>Installation - Digital Hub</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.eebd395e.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.eebd395e.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ecc896b0.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -42,7 +42,7 @@
       
     
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#training-the-model" class="md-skip">
+        <a href="#installation" class="md-skip">
           Skip to content
         </a>
       
@@ -87,7 +87,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Digital Hub" class="md-header__button md-logo" aria-label="Digital Hub" data-md-component="logo">
+    <a href=".." title="Digital Hub" class="md-header__button md-logo" aria-label="Digital Hub" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Training the model
+              Installation
             
           </span>
         </div>
@@ -199,7 +199,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Digital Hub" class="md-nav__button md-logo" aria-label="Digital Hub" data-md-component="logo">
+    <a href=".." title="Digital Hub" class="md-nav__button md-logo" aria-label="Digital Hub" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -218,7 +218,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -233,7 +233,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../architecture/" class="md-nav__link">
+      <a href="../architecture/" class="md-nav__link">
         Overview and architecture
       </a>
     </li>
@@ -246,11 +246,79 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../../installation/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Installation
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-with-minikube" class="md-nav__link">
+    Install with Minikube
+  </a>
+  
+    <nav class="md-nav" aria-label="Install with Minikube">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation_1" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-with-ms-azure" class="md-nav__link">
+    Install with MS Azure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-with-openstack" class="md-nav__link">
+    Install with OpenStack
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -263,7 +331,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../core/" class="md-nav__link">
+      <a href="../core/" class="md-nav__link">
         Core
       </a>
     </li>
@@ -307,7 +375,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/deploying-components/" class="md-nav__link">
+      <a href="../components/deploying-components/" class="md-nav__link">
         Deploying components
       </a>
     </li>
@@ -321,7 +389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/dashboard/" class="md-nav__link">
+      <a href="../components/dashboard/" class="md-nav__link">
         Dashboard
       </a>
     </li>
@@ -335,7 +403,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/jupyter/" class="md-nav__link">
+      <a href="../components/jupyter/" class="md-nav__link">
         Jupyter
       </a>
     </li>
@@ -349,7 +417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/dremio/" class="md-nav__link">
+      <a href="../components/dremio/" class="md-nav__link">
         Dremio
       </a>
     </li>
@@ -363,7 +431,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/mlrun/" class="md-nav__link">
+      <a href="../components/mlrun/" class="md-nav__link">
         MLRun
       </a>
     </li>
@@ -377,7 +445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/sqlpad/" class="md-nav__link">
+      <a href="../components/sqlpad/" class="md-nav__link">
         SQLPad
       </a>
     </li>
@@ -391,7 +459,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/grafana/" class="md-nav__link">
+      <a href="../components/grafana/" class="md-nav__link">
         Grafana
       </a>
     </li>
@@ -405,7 +473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/vscode/" class="md-nav__link">
+      <a href="../components/vscode/" class="md-nav__link">
         Visual Studio Code
       </a>
     </li>
@@ -456,7 +524,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tasks/projects/" class="md-nav__link">
+      <a href="../tasks/projects/" class="md-nav__link">
         Projects
       </a>
     </li>
@@ -470,7 +538,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tasks/workspaces/" class="md-nav__link">
+      <a href="../tasks/workspaces/" class="md-nav__link">
         Workspaces
       </a>
     </li>
@@ -484,7 +552,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tasks/data/" class="md-nav__link">
+      <a href="../tasks/data/" class="md-nav__link">
         Data and transformations
       </a>
     </li>
@@ -498,7 +566,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tasks/git/" class="md-nav__link">
+      <a href="../tasks/git/" class="md-nav__link">
         Git best practices
       </a>
     </li>
@@ -518,16 +586,16 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
       
       
       
@@ -536,7 +604,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_7">
           <span class="md-nav__icon md-icon"></span>
           Scenarios
@@ -578,7 +646,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../etl/intro/" class="md-nav__link">
+      <a href="../scenarios/etl/intro/" class="md-nav__link">
         ETL scenario introduction
       </a>
     </li>
@@ -592,7 +660,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../etl/collect/" class="md-nav__link">
+      <a href="../scenarios/etl/collect/" class="md-nav__link">
         Collect the data
       </a>
     </li>
@@ -606,7 +674,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../etl/process/" class="md-nav__link">
+      <a href="../scenarios/etl/process/" class="md-nav__link">
         Process the data
       </a>
     </li>
@@ -620,7 +688,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../etl/pipeline/" class="md-nav__link">
+      <a href="../scenarios/etl/pipeline/" class="md-nav__link">
         Workflow
       </a>
     </li>
@@ -634,7 +702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../etl/expose/" class="md-nav__link">
+      <a href="../scenarios/etl/expose/" class="md-nav__link">
         Expose datasets as API
       </a>
     </li>
@@ -653,16 +721,16 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_2" >
       
       
       
@@ -671,7 +739,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_7_2">
           <span class="md-nav__icon md-icon"></span>
           ML model training
@@ -684,7 +752,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../intro/" class="md-nav__link">
+      <a href="../scenarios/ml/intro/" class="md-nav__link">
         ML scenario introduction
       </a>
     </li>
@@ -696,21 +764,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../scenarios/ml/training/" class="md-nav__link">
         Training the model
       </a>
-      
     </li>
   
 
@@ -722,7 +780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../deploy/" class="md-nav__link">
+      <a href="../scenarios/ml/deploy/" class="md-nav__link">
         Deploy and expose the model
       </a>
     </li>
@@ -763,6 +821,48 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-with-minikube" class="md-nav__link">
+    Install with Minikube
+  </a>
+  
+    <nav class="md-nav" aria-label="Install with Minikube">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation_1" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-with-ms-azure" class="md-nav__link">
+    Install with MS Azure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-with-openstack" class="md-nav__link">
+    Install with OpenStack
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -776,33 +876,43 @@
                   
 
 
-<h1 id="training-the-model">Training the model</h1>
-<p>MLRun integrates a set of pre-configured, pre-made functions which support both training and evaluation phases for several frameworks:</p>
+<h1 id="installation">Installation</h1>
+<p>Installation of the DigitalHub platform relies on Kubernetes. To support the installation of the platform
+on top of the Kubernetes cluster, Helm charts are used. See below the instructions for the installation
+in different environments, such as Minikube (for local development), MS Azure, OpenStack, etc. To install
+the platform in a custom Kubernetes environment, refer to the <a href="https://github.com/scc-digitalhub/digitalhub/tree/main/helm/digitalhub">helm charts</a> provided.</p>
+<h2 id="install-with-minikube">Install with Minikube</h2>
+<p>To install DigitalHub locally, it is possible to use Minikube. To proceed, please install firts</p>
 <ul>
-<li><a href="https://docs.mlrun.org/en/latest/api/mlrun.frameworks/mlrun.frameworks.sklearn.html">SciKit-Learn</a></li>
-<li><a href="https://docs.mlrun.org/en/latest/api/mlrun.frameworks/mlrun.frameworks.tf_keras.html">TensorFlor (and Keras)</a></li>
-<li><a href="https://docs.mlrun.org/en/latest/api/mlrun.frameworks/mlrun.frameworks.pytorch.html">PyTorch</a></li>
-<li><a href="https://docs.mlrun.org/en/latest/api/mlrun.frameworks/mlrun.frameworks.xgboost.html">XGBoost</a></li>
-<li><a href="https://docs.mlrun.org/en/latest/api/mlrun.frameworks/mlrun.frameworks.lgbm.html">LightGBM</a></li>
-<li><a href="https://docs.mlrun.org/en/latest/api/mlrun.frameworks/mlrun.frameworks.onnx.html">ONNX</a></li>
+<li><a href="https://helm.sh/docs/intro/install/">Helm</a></li>
+<li><a href="https://kubernetes.io/docs/tasks/tools/">Kubectl</a></li>
+<li><a href="https://minikube.sigs.k8s.io/docs/">Minikube</a></li>
 </ul>
-<p>MLRun's auto-trainer can train and evaluate models for supported frameworks, in a fully autonomous and automated way.</p>
-<p>Import the auto-trainer:
-<div class="highlight"><pre><span></span><code><span class="n">trainer</span> <span class="o">=</span> <span class="n">mlrun</span><span class="o">.</span><span class="n">import_function</span><span class="p">(</span><span class="s1">&#39;hub://auto_trainer&#39;</span><span class="p">)</span>
+<h3 id="installation_1">Installation</h3>
+<ol>
+<li>
+<p>Clone the DigitalHub repository
+<div class="highlight"><pre><span></span><code><span class="w">   </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/scc-digitalhub/digitalhub.git
 </code></pre></div></p>
-<p>Run it on the cluster (it may take a few minutes):
-<div class="highlight"><pre><span></span><code><span class="n">trainer_run</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">run_function</span><span class="p">(</span><span class="n">trainer</span><span class="p">,</span>
-    <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="n">gen_data_run</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">]},</span>
-    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;model_class&quot;</span><span class="p">:</span> <span class="s2">&quot;sklearn.ensemble.RandomForestClassifier&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;train_test_split_size&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
-        <span class="s2">&quot;label_columns&quot;</span><span class="p">:</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;model_name&quot;</span><span class="p">:</span> <span class="s1">&#39;cancer&#39;</span><span class="p">,</span>
-    <span class="p">},</span> 
-    <span class="n">handler</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span>
-<span class="p">)</span>
+</li>
+<li>
+<p>Start minikube (change 192.168.49.0 if your network setup is different):
+<div class="highlight"><pre><span></span><code><span class="w">    </span>minikube<span class="w"> </span>start<span class="w"> </span>--insecure-registry<span class="w"> </span><span class="s2">&quot;192.168.49.0/24&quot;</span>
 </code></pre></div></p>
-<p>Lastly, we'll deploy and test the model.</p>
+</li>
+<li>Get minikube external IP:
+<div class="highlight"><pre><span></span><code><span class="w">    </span>minikube<span class="w"> </span>ip
+</code></pre></div></li>
+<li>Change the IP in  'global.registry.url' and 'global.externalHostAddress' properties in values file with the one obtained in the previous step.</li>
+<li>Install DigitalHub with Helm:
+<div class="highlight"><pre><span></span><code><span class="w">    </span>helm<span class="w"> </span>upgrade<span class="w"> </span>digitalhub<span class="w"> </span>helm/digitalhub/<span class="w"> </span>-n<span class="w"> </span>digitalhub<span class="w"> </span>--install<span class="w"> </span>--create-namespace<span class="w"> </span>
+</code></pre></div></li>
+</ol>
+<p>Once installed, you should see the references (URLs) for the different tools of the platform.</p>
+<h2 id="install-with-ms-azure">Install with MS Azure</h2>
+<p>TODO</p>
+<h2 id="install-with-openstack">Install with OpenStack</h2>
+<p>TODO</p>
 
 
 
@@ -840,10 +950,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "navigation.path", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.path", "content.code.copy"], "search": "../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.220ee61c.min.js"></script>
+      <script src="../assets/javascripts/bundle.220ee61c.min.js"></script>
       
     
   </body>
