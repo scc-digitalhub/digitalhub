@@ -52,6 +52,15 @@ variable "node_port" {
   default = "30140"
 }
 
+variable "https" {
+  type    = bool
+  default = false
+}
+
+variable "external_url" {
+  type = string
+}
+
 provider "kubernetes" {
   # Authenticate via ~/.kube/config or a Coder-specific ServiceAccount, depending on admin preferences
   #config_path = var.use_kubeconfig == true ? "~/.kube/config" : null
@@ -78,7 +87,7 @@ resource "coder_metadata" "sqlpad" {
   }
 }
 
-coder_app" "sqlpad" {
+resource "coder_app" "sqlpad" {
   agent_id     = coder_agent.sqlpad.id
   slug         = "sqlpad"
   display_name = "sqlpad"

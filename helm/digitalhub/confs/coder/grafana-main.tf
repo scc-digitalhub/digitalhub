@@ -34,6 +34,15 @@ variable "node_port" {
   default = "30130"
 }
 
+variable "https" {
+  type    = bool
+  default = false
+}
+
+variable "external_url" {
+  type = string
+}
+
 provider "kubernetes" {
   # Authenticate via ~/.kube/config or a Coder-specific ServiceAccount, depending on admin preferences
   #config_path = var.use_kubeconfig == true ? "~/.kube/config" : null

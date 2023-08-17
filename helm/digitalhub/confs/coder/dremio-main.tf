@@ -78,6 +78,15 @@ variable "node_port" {
   default = "30120"
 }
 
+variable "https" {
+  type    = bool
+  default = false
+}
+
+variable "external_url" {
+  type = string
+}
+
 data "coder_parameter" "admin_password" {
   name         = "admin_password"
   display_name = "Dremio Admin Password"

@@ -60,6 +60,15 @@ variable "node_port" {
   default = "30040"
 }
 
+variable "https" {
+  type    = bool
+  default = false
+}
+
+variable "external_url" {
+  type = string
+}
+
 data "coder_parameter" "cpu" {
   name         = "cpu"
   display_name = "CPU"
