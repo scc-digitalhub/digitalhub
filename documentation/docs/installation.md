@@ -30,7 +30,11 @@ To install DigitalHub locally, it is possible to use Minikube. To proceed, pleas
 3. Change the IP in  'global.registry.url' and 'global.externalHostAddress' properties in values file with the one obtained in the previous step.
 4. Install DigitalHub with Helm:
 ```sh
-    helm upgrade digitalhub helm/digitalhub/ -n digitalhub --install --create-namespace 
+    helm upgrade digitalhub helm/digitalhub/ -n digitalhub --install --create-namespace --timeout 15m0s
+```
+5. Wait until all pods are in Running state
+```sh
+    kubectl --namespace digitalhub get pods
 ```
 
 Once installed, you should see the references (URLs) for the different tools of the platform.
