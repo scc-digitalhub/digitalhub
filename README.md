@@ -9,9 +9,9 @@ The platform deployment is managed via Docker Compose. Each documented use case 
 ## Installation on minikube
 
 ### Prerequisites 
-- Helm
-- Kubectl
-- Minikube
+- [Helm](https://helm.sh/docs/intro/install/)
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 
 ### Installation
 
@@ -23,7 +23,7 @@ The platform deployment is managed via Docker Compose. Each documented use case 
 ```sh
     minikube ip
 ```
-3. Change the IP in  'global.registry.url' and 'global.externalHostAddress' properties in values file with the one obtained in the previous step.
+3. Change the IP in  'global.registry.url' and 'global.externalHostAddress' properties in values file (*helm/digitalhub/values.yaml*) with the one obtained in the previous step.
 4. Install DigitalHub with Helm:
 ```sh
     helm upgrade digitalhub helm/digitalhub/ -n digitalhub --install --create-namespace 

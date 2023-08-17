@@ -249,7 +249,7 @@ coder:
       enable: false
     service:
       type: NodePort
-      httpNodePort: "30140"
+      httpNodePort: "30170"
 
 postgres-operator: 
   enabled: true

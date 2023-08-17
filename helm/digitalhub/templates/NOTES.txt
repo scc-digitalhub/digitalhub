@@ -22,9 +22,9 @@ Digitalhub componet URLs:
 {{- with (index .Subcharts "mlrun-ce") }}
   - MLRun API: http://{{ $externalUrl }}:{{ index .Values "mlrun" "api" "service" "nodePort" }}
   - MLRun UI: http://{{ $externalUrl }}:{{ index .Values "mlrun" "ui" "service" "nodePort" }}
-  - Minio API: http://{{ $externalUrl }}:{{ index .Values "minio" "service" "nodePort" }}
-  - Minio UI: http://{{ $externalUrl }}:{{ index .Values "minio" "consoleService" "nodePort" }}
+  - Minio API: http://{{ $externalUrl }}:{{ index .Values "minio" "service" "nodePort" }} (Username: {{ index .Values "minio" "rootUser" }} Password: {{ index .Values "minio" "rootPassword" }})
+  - Minio UI: http://{{ $externalUrl }}:{{ index .Values "minio" "consoleService" "nodePort" }} (Username: {{ index .Values "minio" "rootUser" }} Password: {{ index .Values "minio" "rootPassword" }})
 {{- end }}
   - KubeFlow: http://{{ $externalUrl }}:30100
-  - Coder: http://{{ $externalUrl }}:{{ .Values.coder.coder.service.httpNodePort }}
+  - Coder: http://{{ $externalUrl }}:{{ .Values.coder.coder.service.httpNodePort }} (Username: {{ .Values.coder.email }} Password: {{ .Values.coder.password }})
 {{ end }}
