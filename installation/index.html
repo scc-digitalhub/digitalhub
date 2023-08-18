@@ -903,9 +903,12 @@ the platform in a custom Kubernetes environment, refer to the <a href="https://g
 <li>Get minikube external IP:
 <div class="highlight"><pre><span></span><code><span class="w">    </span>minikube<span class="w"> </span>ip
 </code></pre></div></li>
-<li>Change the IP in  'global.registry.url' and 'global.externalHostAddress' properties in values file with the one obtained in the previous step.</li>
+<li>Change the IP in  'global.registry.url' and 'global.externalHostAddress' properties in values file (<em>helm/digitalhub/values.yaml</em>) with the one obtained in the previous step.</li>
 <li>Install DigitalHub with Helm:
-<div class="highlight"><pre><span></span><code><span class="w">    </span>helm<span class="w"> </span>upgrade<span class="w"> </span>digitalhub<span class="w"> </span>helm/digitalhub/<span class="w"> </span>-n<span class="w"> </span>digitalhub<span class="w"> </span>--install<span class="w"> </span>--create-namespace<span class="w"> </span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>helm<span class="w"> </span>upgrade<span class="w"> </span>digitalhub<span class="w"> </span>helm/digitalhub/<span class="w"> </span>-n<span class="w"> </span>digitalhub<span class="w"> </span>--install<span class="w"> </span>--create-namespace<span class="w"> </span>--timeout<span class="w"> </span>15m0s
+</code></pre></div></li>
+<li>Wait until all pods are in Running state
+<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>--namespace<span class="w"> </span>digitalhub<span class="w"> </span>get<span class="w"> </span>pods
 </code></pre></div></li>
 </ol>
 <p>Once installed, you should see the references (URLs) for the different tools of the platform.</p>
