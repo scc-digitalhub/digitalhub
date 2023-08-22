@@ -6,7 +6,7 @@ in different environments, such as Minikube (for local development), MS Azure, O
 the platform in a custom Kubernetes environment, refer to the [helm charts](https://github.com/scc-digitalhub/digitalhub/tree/main/helm/digitalhub) provided.
 
 ## Install with Minikube
-To install DigitalHub locally, it is possible to use Minikube. To proceed, please install firts
+To install DigitalHub locally, it is possible to use Minikube. To proceed, please install first:
 
 - [Helm](https://helm.sh/docs/intro/install/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/)
