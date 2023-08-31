@@ -2,7 +2,7 @@
 
 Outside of test cases, projects should be backed by a Git repository, to keep track of their history.
 
-As we've seen in the *projects* section, projects may be [created](/tasks/projects#create) with Git initialized, or [loaded](/tasks/projects#load) by cloning a repository.
+As we've seen in the *projects* section, projects may be [created](/digitalhub/tasks/projects/#create) with Git initialized, or [loaded](/digitalhub/tasks/projects/#load) by cloning a repository.
 
 ## Resources
 

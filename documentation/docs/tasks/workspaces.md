@@ -2,7 +2,7 @@
 
 Workspaces in Coder contain dependencies and configuration required for applications to run.
 
-We've already seen [how to create a workspace from a template](/components/deploying-components) and how to access its applications once it's running, so let's take a look at how to access the workspace in a terminal.
+We've already seen [how to create a workspace from a template](/digitalhub/components/deploying-components) and how to access its applications once it's running, so let's take a look at how to access the workspace in a terminal.
 
 The easiest and fastest way is to simply click on the *Terminal* button above the logs, which will open a terminal in your browser that allows you to browse the workspace's environment.
 

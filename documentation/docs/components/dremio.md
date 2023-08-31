@@ -8,7 +8,7 @@
 
 !!! info "How to access"
 
-    Dremio may be launched from [Coder, using its template](/components/deploying-components). It will ask for a *Dremio Admin Password*. Access Dremio by logging in with username `admin` and this password.
+    Dremio may be launched from [Coder, using its template](/digitalhub/components/deploying-components). It will ask for a *Dremio Admin Password*. Access Dremio by logging in with username `admin` and this password.
 
     The template automatically configures connections to both MinIO (*Object Storage*) and Postgres (*Database*), so you do not need to worry about adding them.
 

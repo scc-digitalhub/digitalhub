@@ -8,7 +8,7 @@
 
 !!! info "How to access"
 
-    Grafana may be launched from [Coder, using its template](/components/deploying-components).
+    Grafana may be launched from [Coder, using its template](/digitalhub/components/deploying-components).
 
 ## Add a data source
 
