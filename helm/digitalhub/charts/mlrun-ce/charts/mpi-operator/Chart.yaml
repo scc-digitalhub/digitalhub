@@ -1,0 +1,14 @@
+apiVersion: v1
+appVersion: ==0.2.0
+description: Kubeflow MPI job operator
+home: https://www.kubeflow.org/
+icon: https://github.com/kubeflow/marketing-materials/blob/master/logos/Raster/Kubeflow-Logo-RGB.png
+maintainers:
+- email: odedm@iguazio.com
+  name: odedm
+- email: sahare@iguazio.com
+  name: sahare
+name: mpi-operator
+sources:
+- https://github.com/kubeflow/mpi-operator
+version: 0.6.0

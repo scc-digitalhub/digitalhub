@@ -1,5 +1,6 @@
 # coder -- Primary configuration for `coder server`.
 coder:
+  externalHostAddress: ""
   # coder.env -- The environment variables to set for Coder. These can be used
   # to configure all aspects of `coder server`. Please see `coder server --help`
   # for information about what environment variables can be set.

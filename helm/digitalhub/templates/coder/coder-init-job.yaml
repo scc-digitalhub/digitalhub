@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
         - name: coder-deploy-template
-          image: ghcr.io/coder/coder
+          image: {{ .Subcharts.coder.Values.coder.image.repo }}:{{ .Subcharts.coder.Values.coder.image.tag }}
           command: ["/bin/bash", "/home/coder/init-files/init.sh"]
           env:
             - name: CODER_ACCESS_URL

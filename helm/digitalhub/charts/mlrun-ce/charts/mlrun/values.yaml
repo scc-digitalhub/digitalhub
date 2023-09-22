@@ -1,0 +1,640 @@
+# possible release name overrides
+nameOverride:
+fullnameOverride:
+
+api:
+  name: api
+  fullnameOverride:
+
+  persistence:
+    enabled: false
+    existingClaim:
+    storageClass:
+    accessMode: "ReadWriteOnce"
+    size: "8Gi"
+    annotations: ~
+
+  logLevel: INFO
+
+  chief:
+    fullnameOverride:
+    # auto-scaling is currently not supported and the min value is treated as the fixed value
+    minReplicas: 1
+
+    service:
+      type: ClusterIP
+      port: 8080
+      targetPort: 8080
+
+    ingress:
+      enabled: false
+      ingressClassName: ""
+      annotations: { }
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+      hosts:
+        - host: chart-example.local
+          paths: 
+            - pathType: ImplementationSpecific
+              path: /
+      tls: [ ]
+      #  - secretName: chart-example-tls
+      #    hosts:
+      #      - chart-example.local
+
+    ## Affinity for pod assignment
+    ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+    ##
+    # Setting the affinity here has precedence over api.affinity
+    # Note that by default we're assigning affinity to make the chief/worker pods to run on different nodes, if you're
+    # overriding the affinity it's your responsibility to keep applying this behavior
+    affinity: { }
+
+  worker:
+    fullnameOverride:
+    # auto-scaling is currently not supported and the min value is treated as the fixed value
+    minReplicas: 0
+
+    ## Affinity for pod assignment
+    ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+    ##
+    # Setting the affinity here has precedence over api.affinity
+    # Note that by default we're assigning affinity to make the chief/worker pods to run on different nodes, if you're
+    # overriding the affinity it's your responsibility to keep applying this behavior
+    affinity: { }
+
+  image:
+    repository: mlrun/mlrun-api
+    tag: 1.4.0
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+
+  service:
+    type: ClusterIP
+    port: 8080
+    targetPort: 8080
+
+  ingress:
+    enabled: false
+    ingressClassName: ""
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: chart-example.local
+        paths: 
+          - pathType: ImplementationSpecific
+            path: /
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+  # Extra env variables - passed as is to the api pod env section therefore can be used to any kind of env var
+  extraEnv: []
+#    - name: simple_env_var
+#      value: env_var_value
+#    - name: env_var_from_secret
+#      valueFrom:
+#        secretKeyRef:
+#          name: some_secret_name
+#          key: secret_key
+
+  # Extra env variables - each key value is creating a simple env var in the pod - unlike extraEnv, here env var with
+  # numeric values can be passed
+  extraEnvKeyValue: {}
+#    env_var_key: env_var_value
+#    env_var_key_2: env_var_value_2
+
+  # envFrom can be used to pass configmaps or secrets as environment
+  envFrom: []
+
+  resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  ## Node labels for pod assignment
+  ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+  ##
+  nodeSelector: {}
+
+  ## Tolerations for pod assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  ##
+  tolerations: []
+
+  ## Affinity for pod assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ##
+  # Setting the affinity here will apply to both the chief and worker deployments, the specific affinity fields
+  # (api.chief/worker.affinity) has precedence over this on.
+  # Note that by default we're assigning affinity to make the chief/worker pods to run on different nodes, if you're
+  # overriding the affinity it's your responsibility to keep applying this behavior
+  affinity: {}
+
+  priorityClassName: ""
+
+  podSecurityContext: {}
+  # runAsUser: 1000
+
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+  readinessProbe:
+    httpGet:
+      path: /api/healthz
+      port: http
+    initialDelaySeconds: 10
+    timeoutSeconds: 10
+    periodSeconds: 15
+    failureThreshold: 4
+
+  livenessProbe:
+    httpGet:
+      path: /api/healthz
+      port: http
+    initialDelaySeconds: 1000
+    timeoutSeconds: 10
+    periodSeconds: 15
+    failureThreshold: 4
+
+  volumes:
+    storageOverride: {}
+  # define volume for nfs uc.
+  #volumes:
+  #  storageOverride:
+  #    persistentVolumeClaim:
+  #      claimName: mlrun-api-pvc
+
+
+  # Defines additional volume mounts from existing persistent volume claims.
+  extraPersistentVolumeMounts: []
+    # - name: extra-volume
+    #   mountPath: /mnt/volume
+    #   subPath: /sub/path
+    #   readOnly: true
+    #   existingClaim: volume-claim
+
+  # Define extra initContainers for the api deployment
+  extraInitContainers: []
+
+  function:
+    spec:
+      image_pull_secret:
+        default: ""
+
+  opa:
+    enabled: false
+    name: opa-server
+    fullnameOverride:
+
+    config: {}
+#      services:
+#        acmecorp:
+#          url: https://example.com/control-plane-api/v1
+#          response_header_timeout_seconds: 5
+#          credentials:
+#            bearer:
+#              token: "bGFza2RqZmxha3NkamZsa2Fqc2Rsa2ZqYWtsc2RqZmtramRmYWxkc2tm"
+#
+#      bundles:
+#        authz:
+#          service: acmecorp
+#          resource: bundles/http/example/authz.tar.gz
+#          persist: true
+#          polling:
+#            min_delay_seconds: 60
+#            max_delay_seconds: 120
+#          signing:
+#            keyid: global_key
+#            scope: write
+
+    logLevel: info
+    logFormat: json
+
+    image:
+      repository: openpolicyagent/opa
+      tag: 0.28.0
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+
+    resources:
+#     requests:
+#       cpu: 100m
+#       memory: 10Mi
+#     limits:
+#       cpu: 3
+#       memory: 200Mi
+
+    securityContext: {}
+      # capabilities:
+      #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+    readinessProbe:
+      httpGet:
+        path: /health?bundle=true
+        port: http
+      initialDelaySeconds: 10
+      timeoutSeconds: 10
+      periodSeconds: 15
+      failureThreshold: 4
+
+    livenessProbe:
+      httpGet:
+        port: http
+      initialDelaySeconds: 15
+      timeoutSeconds: 10
+      periodSeconds: 15
+      failureThreshold: 4
+
+  sidecars:
+    logCollector:
+      enabled: false
+      # log collection modes:
+      #   - "sidecar" - use the sidecar container to collect logs
+      #   - "best-effort" - use the sidecar container to collect logs if fails fallback to legacy method
+      #   - "legacy" - use the legacy method to collect logs
+      mode: "sidecar"
+
+      name: log-collector
+      fullnameOverride:
+
+      # 10MiB ( 10 * 1024 * 1024 = 10485760 )
+      logCollectionBufferSizeBytes: "10485760"
+      # 3.75MiB ( 3.75 * 1024 * 1024 = 3932160 )
+      getLogsBufferSizeBytes: "3932160"
+      logCollectionBufferPoolSize: 512
+      getLogsBufferPoolSize: 512
+
+      readLogWaitTime: "3s"
+      stateFileUpdateInterval: "10s"
+      monitoringInterval: "10s"
+
+
+      logLevel: debug
+      logFormat: text
+      listenPort: 8282
+
+      workDir: /var/mlrun/
+
+      image:
+        repository: mlrun/log-collector
+        tag: 1.4.0
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+
+      extraEnv: []
+
+      extraEnvKeyValue: {}
+
+      envFrom:
+      - configMapRef:
+          name: mlrun-log-collector-config
+
+      securityContext: {}
+
+      resources:
+
+      readinessProbe:
+        initialDelaySeconds: 10
+        timeoutSeconds: 10
+        periodSeconds: 15
+        failureThreshold: 4
+
+      livenessProbe:
+        initialDelaySeconds: 10
+        timeoutSeconds: 10
+        periodSeconds: 15
+        failureThreshold: 4
+
+db:
+  name: db
+  fullnameOverride:
+
+  persistence:
+    enabled: false
+    existingClaim:
+    storageClass:
+    accessMode: "ReadWriteOnce"
+    size: "8Gi"
+    annotations: ~
+
+  replicaCount: 1
+
+  image:
+    repository: mysql
+    tag: 8.0
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+
+  service:
+    type: ClusterIP
+    port: 3306
+
+  # Extra env variables
+  extraEnv: []
+
+  # envFrom can be used to pass configmaps or secrets as environment
+  envFrom: []
+
+  resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  ## Node labels for pod assignment
+  ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+  ##
+  nodeSelector: {}
+
+  ## Tolerations for pod assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  ##
+  tolerations: []
+
+  ## Affinity for pod assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ##
+  affinity: {}
+
+  priorityClassName: ""
+
+  podSecurityContext:
+    runAsUser: 1001
+
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+
+  readinessProbe:
+    exec:
+      command: ["/bin/bash", "/etc/config/mysql/health_check.sh"]
+    initialDelaySeconds: 10
+    timeoutSeconds: 1
+    periodSeconds: 10
+    failureThreshold: 3
+
+  livenessProbe:
+    exec:
+      command: ["/bin/bash", "/etc/config/mysql/health_check.sh"]
+    initialDelaySeconds: 30
+    timeoutSeconds: 5
+    periodSeconds: 10
+    failureThreshold: 3
+
+  volumes:
+    storageOverride: {}
+  # define volumes for nfs uc.
+  #volumes:
+  #  storageOverride:
+  #    persistentVolumeClaim:
+  #      claimName: mlrun-db-pvc
+
+  # Defines additional volume mounts from existing persistent volume claims.
+  extraPersistentVolumeMounts: []
+    # - name: extra-volume
+    #   mountPath: /mnt/volume
+    #   subPath: /sub/path
+    #   readOnly: true
+    #   existingClaim: volume-claim
+
+  exporter:
+
+    enabled: false
+
+    name: db-exporter
+    fullnameOverride:
+
+    # cannot use dsn, as we need this weird dsn syntax
+    dataSource: root@tcp(mlrun-db:3306)/mlrun
+
+    image:
+      repository: "prom/mysqld-exporter"
+      tag: "v0.11.0"
+      pullPolicy: "IfNotPresent"
+
+    service:
+      labels: {}
+      annotations: {}
+      name: mysql-exporter
+      type: ClusterIP
+      externalPort: 9104
+      internalPort: 9104
+
+    collectors: {}
+      # auto_increment.columns: false
+      # binlog_size: false
+      # engine_innodb_status: false
+      # engine_tokudb_status: false
+      # global_status: true
+      # global_variables: true
+      # info_schema.clientstats: false
+      # info_schema.innodb_metrics: false
+      # info_schema.innodb_tablespaces: false
+      # info_schema.innodb_cmp: false
+      # info_schema.innodb_cmpmem: false
+      # info_schema.processlist: false
+      # info_schema.processlist.min_time: 0
+      # info_schema.query_response_time: false
+      # info_schema.tables: true
+      # info_schema.tables.databases: '*'
+      # info_schema.tablestats: false
+      # info_schema.schemastats: false
+      # info_schema.userstats: false
+      # perf_schema.eventsstatements: false
+      # perf_schema.eventsstatements.digest_text_limit: 120
+      # perf_schema.eventsstatements.limit: false
+      # perf_schema.eventsstatements.timelimit: 86400
+      # perf_schema.eventswaits: false
+      # perf_schema.file_events: false
+      # perf_schema.file_instances: false
+      # perf_schema.indexiowaits: false
+      # perf_schema.tableiowaits: false
+      # perf_schema.tablelocks: false
+      # perf_schema.replication_group_member_stats: false
+      # slave_status: true
+      # slave_hosts: false
+      # heartbeat: false
+      # heartbeat.database: heartbeat
+      # heartbeat.table: heartbeat
+
+  # use this https://www.mysqlcalculator.com/ to evaluate the resource usage of the DB
+  dbConfiguration:
+    # mysql default is 151, we raised the connection number to handle the scale of MLRun multi instance architecture
+    # ideally should be calculated by : <number-of-mlrun-instances> * <max-workers> + 1 ( for SUPER account )
+    # SUPER is a MySQL privilege that grants admin rights to the user.
+    maxConnections: 512
+
+    innodb:
+      # refer to https://github.com/v3io/helm-charts/pull/674
+      adaptiveHashIndex: 0
+      readIOThreads: 32
+      writeIOThreads: 32
+      purgeThreads: 16
+
+      # refer to https://github.com/v3io/helm-charts/pull/671
+      bufferPoolSize: "1073741824"
+      bufferPoolInstances: 8
+
+      # refer to https://github.com/v3io/helm-charts/pull/680
+      pageCleaners: 8
+      IOCapacity: 10000
+      flushNeighbors: 0
+
+ui:
+  name: ui
+  fullnameOverride:
+
+  replicaCount: 1
+
+  image:
+    repository: mlrun/mlrun-ui
+    tag: 1.4.0
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: http
+
+  ingress:
+    enabled: false
+    ingressClassName: ""
+    annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: chart-example.local
+        paths: 
+          - pathType: ImplementationSpecific
+            path: /
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+  # Extra env variables
+  extraEnv: []
+
+  # envFrom can be used to pass configmaps or secrets as environment
+  envFrom: []
+
+  resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  ## Node labels for pod assignment
+  ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+  ##
+  nodeSelector: {}
+
+  ## Tolerations for pod assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  ##
+  tolerations: []
+
+  ## Affinity for pod assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ##
+  affinity: {}
+
+  priorityClassName: ""
+
+  podSecurityContext: {}
+  # default UID & GID of unprivileged nginx image
+  # https://github.com/nginxinc/docker-nginx-unprivileged/blob/main/Dockerfile-alpine.template
+  # runAsUser: 101
+  # runAsGroup: 101
+
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+  # Define extra initContainers to the ui deployment
+  extraInitContainers: []
+
+rbac:
+  create: true
+
+serviceAccounts:
+  api:
+    create: true
+    # If not set and create is true, a name is generated using the fullname template
+    name:
+
+v3io:
+  enabled: true
+  # in case of using nfs storage
+  #enabled: false
+
+httpDB:
+  dbType: "sqlite"
+  dirPath: "/mlrun/db"
+
+  dsn: "sqlite:////mlrun/db/mlrun.db?check_same_thread=false"
+
+  # sqlite database dsn from which to migrate if using mysql database
+  oldDsn: ""
+
+  # Values to insert if mysql database is needed
+  # dsn: "mysql+pymysql://root@mlrun-db:3306/mlrun"
+  # oldDsn: "sqlite:////mlrun/db/mlrun.db?check_same_thread=false"
+
+modelMonitoring:
+  # If no dsn has been provided, will initiate monitoring database under mlrun-db service:
+  # mysql+pymysql://root@mlrun-db:3306/mlrun_model_monitoring
+  dsn:
+
+defaultDockerRegistryURL: ""
+defaultDockerRegistrySecretName: ""
+
+# Fill these in order to enable working with Nuclio, by default integration is disabled
+nuclio:
+  mode: disabled
+  # Used by MLRun UI for showing links to Nuclio UI
+  # This is resolved automatically for mlrun-kit or can be overridden explicitly
+  # example: http://example-nuclio-ui:8070
+  uiURL:
+
+  # Used by MLRun API/UI to access nuclio API to manipulate nuclio resources
+  # This is resolved automatically for mlrun-kit or can be overridden explicitly
+  # Must be fully qualified domain name (FQDN) e.g. http://nuclio-dashboard.namespace.svc.cluster.local:8070
+  apiURL:
+
+# global is a stanza that is used if this is used as a subchart. Ignore otherwise
+global:
+  externalHostAddress:
+  registry:
+    url:
+    secretName:
+  nuclio:
+    dashboard:
+      nodePort:

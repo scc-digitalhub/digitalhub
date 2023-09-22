@@ -49,7 +49,7 @@ Coder Docker image URI
 Coder TLS enabled.
 */}}
 {{- define "coder.tlsEnabled" -}}
-{{- if .Values.coder.tls.secretNames -}}
+{{- if or .Values.coder.tls.secretNames .Values.coder.ingress.tls -}}
 true
 {{- else -}}
 false
@@ -60,7 +60,7 @@ false
 Coder TLS environment variables.
 */}}
 {{- define "coder.tlsEnv" }}
-{{- if eq (include "coder.tlsEnabled" .) "true" }}
+{{- if eq (include "coder.tlsEnabled" .) "true" -}}
 - name: CODER_TLS_ENABLE
   value: "true"
 - name: CODER_TLS_ADDRESS
@@ -69,6 +69,22 @@ Coder TLS environment variables.
   value: "{{ range $idx, $secretName := .Values.coder.tls.secretNames -}}{{ if $idx }},{{ end }}/etc/ssl/certs/coder/{{ $secretName }}/tls.crt{{- end }}"
 - name: CODER_TLS_KEY_FILE
   value: "{{ range $idx, $secretName := .Values.coder.tls.secretNames -}}{{ if $idx }},{{ end }}/etc/ssl/certs/coder/{{ $secretName }}/tls.key{{- end }}"
+{{- end }}
+{{- end }}
+
+{{/*
+Coder ingress environment variables.
+*/}}
+{{- define "coder.ingressEnv" }}
+{{- if .Values.coder.ingress.enable -}}
+{{- $proto := "http" -}}
+{{- if eq (include "coder.tlsEnabled" .) "true" -}}
+{{- $proto = "https" -}}
+{{- end -}}
+- name: CODER_WILDCARD_ACCESS_URL
+  value: {{ .Values.coder.ingress.wildcardHost | quote }}
+- name: CODER_ACCESS_URL
+  value: {{ printf "%s://%s" $proto .Values.coder.ingress.host | quote }}
 {{- end }}
 {{- end }}
 

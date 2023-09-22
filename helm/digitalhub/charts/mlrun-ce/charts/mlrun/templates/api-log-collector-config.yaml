@@ -1,0 +1,18 @@
+{{- if .Values.api.sidecars.logCollector.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mlrun-log-collector-config
+data:
+  MLRUN_LOG_COLLECTOR__LOG_LEVEL: "{{ .Values.api.sidecars.logCollector.logLevel }}"
+  MLRUN_LOG_COLLECTOR__LOG_FORMATTER: "{{ .Values.api.sidecars.logCollector.logFormat }}"
+  MLRUN_LOG_COLLECTOR__LISTEN_PORT: "{{ .Values.api.sidecars.logCollector.listenPort }}"
+  MLRUN_LOG_COLLECTOR__BASE_DIR: "{{ printf "%s" .Values.api.sidecars.logCollector.workDir | trimSuffix "/" }}/logs"
+  MLRUN_LOG_COLLECTOR__STATE_FILE_UPDATE_INTERVAL: "{{ .Values.api.sidecars.logCollector.stateFileUpdateInterval }}"
+  MLRUN_LOG_COLLECTOR__READ_LOG_WAIT_TIME: "{{ .Values.api.sidecars.logCollector.readLogWaitTime }}"
+  MLRUN_LOG_COLLECTOR__MONITORING_INTERVAL: "{{ .Values.api.sidecars.logCollector.monitoringInterval }}"
+  MLRUN_LOG_COLLECTOR__LOG_COLLECTION_BUFFER_POOL_SIZE: "{{ .Values.api.sidecars.logCollector.logCollectionBufferPoolSize }}"
+  MLRUN_LOG_COLLECTOR__GET_LOGS_BUFFER_POOL_SIZE: "{{ .Values.api.sidecars.logCollector.getLogsBufferPoolSize }}"
+  MLRUN_LOG_COLLECTOR__LOG_COLLECTION_BUFFER_SIZE_BYTES: "{{ .Values.api.sidecars.logCollector.logCollectionBufferSizeBytes }}"
+  MLRUN_LOG_COLLECTOR__GET_LOGS_BUFFER_SIZE_BYTES: "{{ .Values.api.sidecars.logCollector.getLogsBufferSizeBytes }}"
+{{- end }}

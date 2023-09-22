@@ -1,8 +1,16 @@
 global:
   service:
-    type: NodePort
+    type: &serviceType "NodePort"
   registry:
     url: 192.168.49.2:30050
+    username: ""
+    password: ""
+    email: ""
+    secretName: ""
+  basicAuth:
+    enabled: false
+    username: ""
+    password: ""
     secretName: ""
   nuclio:
     dashboard:
@@ -14,7 +22,7 @@ docker-registry:
   fullnameOverride: digitalhub-docker-registry
   className: nginx
   service:
-    type: NodePort
+    type: *serviceType
     nodePort: 30150
   ingress:
     enabled: false
@@ -83,7 +91,7 @@ mlrun-ce:
         existingClaim:
         storageClass:
         accessMode: "ReadWriteOnce"
-        size: "128Gi"
+        size: "8Gi"
         annotations:
           helm.sh/resource-policy: "keep"
       envFrom:
@@ -120,7 +128,7 @@ mlrun-ce:
         existingClaim:
         storageClass:
         accessMode: "ReadWriteOnce"
-        size: "128Gi"
+        size: "8Gi"
         annotations:
           helm.sh/resource-policy: "keep"
     httpDB:
@@ -238,8 +246,6 @@ coder:
     image:
       tag: v2.0.0 
     env:
-      # - name: CODER_ACCESS_URL
-      #   value: *globalExternalUrl
       - name: CODER_PG_CONNECTION_URL
         valueFrom:
           secretKeyRef:
@@ -248,7 +254,7 @@ coder:
     ingress:
       enable: false
     service:
-      type: NodePort
+      type: *serviceType
       httpNodePort: "30170"
 
 postgres-operator: 

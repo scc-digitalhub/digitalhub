@@ -60,3 +60,12 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create registry auth values 
+*/}}
+{{- define "digitalhub.registryAuth" -}}
+{{- if and .Values.global.registry.username .Values.global.registry.password }}
+{{- printf "%s:%s" .Values.global.registry.username .Values.global.registry.password | b64enc }}
+{{- end }}
+{{- end }}

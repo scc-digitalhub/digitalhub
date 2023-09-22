@@ -1,0 +1,520 @@
+# Copyright 2023 The Nuclio Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# possible release name overrides
+# nameOverride:
+# fullnameOverride:
+
+# if true, all components assume no internet connectivity
+offline: false
+
+# Controller settings
+controller:
+  enabled: true
+  image:
+    repository: quay.io/nuclio/controller
+    tag: 1.11.23-amd64
+    pullPolicy: IfNotPresent
+  resources: {}
+
+  # override the namespace in which the controller will be listening
+  # use this value to make the controller work in a different namespace than the one it's deployed in.
+  # in addition, you'll need to set the `rbac.crdAccessMode` to `cluster`
+  namespace: ""
+
+  ## Node labels for pod assignment
+  ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+  ##
+  nodeSelector: {}
+
+  ## Deployment security context
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  ##
+  securityContext: {}
+
+  ## List of node taints to tolerate (requires Kubernetes >= 1.6)
+  tolerations: []
+  #  - key: "key"
+  #    operator: "Equal|Exists"
+  #    value: "value"
+  #    effect: "NoSchedule|PreferNoSchedule|NoExecute"
+
+  ## Affinity
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  affinity: {}
+
+  ## Pod Priority
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#pod-priority
+  priorityClassName: ""
+
+  # Uncomment to have the controller to listen only the namespace's events,
+  # change to listen on other specific namespace
+  # namespace: "@nuclio.selfNamespace"
+
+  # Resync interval defines how often the Controller goes through all nuclio CRDs (functions, apigateways, etc)
+  #  in its cache and fires update again.
+  # Note: 0 means cancelling resync mechanism. any other value (e.g.: 10m) would turn it on.
+  resyncInterval: 0
+
+  # evicted pods cleanup interval defines how often the Controller goes through all evicted pods and deletes them
+  # Note: 0 means cancelling cleanup mechanism. any other value (e.g.: 10m) would turn it on.
+  evictedPodsCleanupInterval: 30m
+
+  operator:
+    function:
+      numWorkers: 4
+    functionEvent:
+      numWorkers: 2
+    project:
+      numWorkers: 2
+    apiGateway:
+      numWorkers: 2
+
+  monitoring:
+    function:
+      interval: 3m
+
+  # the image of the created k8s cron job for function cron triggers
+  cronTriggerCronJobImage:
+    repository: appropriate/curl
+    tag: latest
+    pullPolicy: IfNotPresent
+
+# Dashboard settings
+dashboard:
+  enabled: true
+  replicas: 1
+  image:
+    repository: quay.io/nuclio/dashboard
+    tag: 1.11.23-amd64
+    pullPolicy: IfNotPresent
+  resources: {}
+
+  ## Node labels for pod assignment
+  ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+  ##
+  nodeSelector: {}
+
+  ## Deployment security context
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  ##
+  securityContext: {}
+
+  ## List of node taints to tolerate (requires Kubernetes >= 1.6)
+  tolerations: []
+  #  - key: "key"
+  #    operator: "Equal|Exists"
+  #    value: "value"
+  #    effect: "NoSchedule|PreferNoSchedule|NoExecute"
+
+  ## Affinity
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  affinity: {}
+
+  ## Pod Priority
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#pod-priority
+  priorityClassName: ""
+
+  baseImagePullPolicy: IfNotPresent
+  externalIPAddresses: []
+  imageNamePrefixTemplate: ""
+
+  # Supported container builders: "kaniko", "docker"
+  containerBuilderKind: "docker"
+
+  # Monitor docker deamon connectivity, in conjunction with container builder kind "docker"
+  monitorDockerDeamon:
+    enabled: true
+    interval: 5s
+    maxConsecutiveErrors: 5
+
+  kaniko:
+
+    #  Set to a repository url for storing cached layers
+    cacheRepo: ""
+
+    # Set this flag to push images to a plain HTTP registry
+    insecurePushRegistry: false
+
+    # Set this flag to pull images from a plain HTTP registry
+    insecurePullRegistry: false
+
+    image:
+      repository: gcr.io/kaniko-project/executor
+      tag: v1.9.0
+      pullPolicy: IfNotPresent
+
+    initContainerImage:
+      busybox:
+        repository: busybox
+        tag: stable
+      awscli:
+        repository: amazon/aws-cli
+        tag: 2.7.10
+
+    # How long to wait before deleting the build job
+    jobDeletionTimeout: 30m
+
+    # How many times to retry pushing images to registry
+    pushImagesRetries: 3
+
+    # The number of retries that should happen for the extracting an image filesystem
+    imageFSExtractionRetries: 3
+
+    # auth secret to attach to kaniko pod for off cluster registries
+    # for example: aws-secret in https://github.com/GoogleContainerTools/kaniko#pushing-to-amazon-ecr
+    registryProviderSecretName: ""
+
+    # the default service account to use for kaniko pod, if not specified otherwise
+    defaultServiceAccount: ""
+
+  # use to configure node port
+  nodePort:
+
+  templates:
+    # Default behavior is to fetch the templates on build time to /tmp/templates.zip
+    # Set archiveAddress to 'nil' to pull the templates from Nuclio's git repository during runtime
+    archiveAddress: "file://tmp/templates.zip"
+    gitRepository: "https://github.com/nuclio/nuclio-templates.git"
+    gitRef: "refs/heads/master"
+
+  ingress:
+    enabled: false
+    ingressClassName: ""
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    path: /
+    hosts:
+      - nuclio.local
+    tls: []
+    #  - secretName: nuclio-tls
+    #    hosts:
+    #      - nuclio.local
+
+  authConfig:
+
+    # either one of "nop" or "iguazio"
+    kind: nop
+
+    iguazio:
+
+      # endpoint which verify incoming request session
+      sessionVerificationURL: "http://somewhere.com"
+
+      # endpoint with which to verify and enrich incoming request sessions with data plane permissions
+      sessionVerificationDataEnrichmentURL: "http://somewhereelse.com"
+
+      # session verification request timeout
+      timeout: 30s
+
+      # how many entries to cache
+      cacheSize: 100
+
+      # invalidate a cache entry after specific timeout
+      cacheExpirationTimeout: 60s
+
+  opa:
+    enabled: false
+    name: opa-server
+    fullnameOverride:
+
+    config: {}
+    # services:
+    #   acmecorp:
+    #     url: https://example.com/control-plane-api/v1
+    #     response_header_timeout_seconds: 5
+    #     credentials:
+    #       bearer:
+    #         token: "bGFza2RqZmxha3NkamZsa2Fqc2Rsa2ZqYWtsc2RqZmtramRmYWxkc2tm"
+
+    # bundles:
+    #   authz:
+    #     service: acmecorp
+    #     resource: bundles/http/example/authz.tar.gz
+    #     persist: true
+    #     polling:
+    #       min_delay_seconds: 60
+    #       max_delay_seconds: 120
+    #     signing:
+    #       keyid: global_key
+    #       scope: write
+
+    logLevel: info
+    logFormat: json
+
+    image:
+      repository: openpolicyagent/opa
+      tag: 0.30.1
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+    resources: {}
+    securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+    readinessProbe:
+      httpGet:
+        path: /health?bundle=true
+        port: http
+      initialDelaySeconds: 10
+      timeoutSeconds: 10
+      periodSeconds: 15
+      successThreshold: 3
+      failureThreshold: 4
+
+    livenessProbe:
+      httpGet:
+        port: http
+      initialDelaySeconds: 15
+      timeoutSeconds: 10
+      periodSeconds: 15
+      failureThreshold: 4
+
+  # Use to volumize pip ca cert
+  # Note: secret name must contain "pip-ca-certificates.crt" key
+  pipCACertSecretName: ""
+
+autoscaler:
+  enabled: false
+  replicas: 1
+  image:
+    repository: quay.io/nuclio/autoscaler
+    tag: 1.11.23-amd64
+    pullPolicy: IfNotPresent
+  resources: {}
+
+  ## Node labels for pod assignment
+  ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+  ##
+  nodeSelector: {}
+
+  ## Deployment security context
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  ##
+  securityContext: {}
+
+  ## List of node taints to tolerate (requires Kubernetes >= 1.6)
+  tolerations: []
+  #  - key: "key"
+  #    operator: "Equal|Exists"
+  #    value: "value"
+  #    effect: "NoSchedule|PreferNoSchedule|NoExecute"
+
+  ## Affinity
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  affinity: {}
+
+  ## Pod Priority
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#pod-priority
+  priorityClassName: ""
+
+dlx:
+  enabled: false
+  replicas: 1
+  image:
+    repository: quay.io/nuclio/dlx
+    tag: 1.11.23-amd64
+    pullPolicy: IfNotPresent
+  resources: {}
+
+  ## Node labels for pod assignment
+  ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+  ##
+  nodeSelector: {}
+
+  ## Deployment security context
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  ##
+  securityContext: {}
+
+  ## List of node taints to tolerate (requires Kubernetes >= 1.6)
+  tolerations: []
+  #  - key: "key"
+  #    operator: "Equal|Exists"
+  #    value: "value"
+  #    effect: "NoSchedule|PreferNoSchedule|NoExecute"
+
+  ## Affinity
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  affinity: {}
+
+  ## Pod Priority
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#pod-priority
+  priorityClassName: ""
+
+  # Whether to verify function readiness before redirecting incoming requests
+  functionReadinessVerificationEnabled: true
+
+registry:
+
+  # By default, the chart does not advocate using helm to manage registry credentials. You should create a secret
+  # manually as follows and specify secret name here:
+  #
+  # kubectl create secret docker-registry <name> --namespace <namespace> \
+  #     --docker-username <username> \
+  #     --docker-password <password> \
+  #     --docker-server <url> \
+  #     --docker-email ignored@nuclio.io
+  #
+  # IMPORTANT:
+  # K8S doesn't allow secret sharing between namespaces, so in order to deploy a nuclio function
+  # to namespace which differs from a namespace in which nuclio is running,
+  # secret must be copied to that namespace:
+  #
+  #  kubectl get secret <secret-name> -n <source-namespace> -o yaml \
+  #     | sed s/"namespace: <source-namespace>"/"namespace: <destination-namespace>"/ \
+  #     | kubectl apply -f -
+  #
+  #
+  # If you'd still like to have this managed as part of the helm chart, populate
+  # the credentials stanza below. The chart will create a secret for you (note: the credentials will be
+  # visible to anyone with access to helm).
+  # If secretName is commented out or empty (and credentials are given) then the
+  # chart will create a secret with default name `{releaseName}-registry-credentials`
+  #
+  # secretName: registry-credentials
+
+  # In some cases the docker server URL in the registry secrets isn't the same as the URL with which
+  # you push and pull. For example, in GKE you log into `gcr.io` (or some other regional URL) yet have
+  # to push/pull from `gcr.io/<project-name>. If this is the case, specify the URL here, and it will be
+  # used instead of the URL in the secrets
+  #
+  # pushPullUrl: gcr.io/<project-name>
+
+
+  # For cases where the deployed function container is pulled from a different registry than it was pushed to
+  # E.g.: when using `minikube` you push to `$(minikube ip):5000` but pull from `localhost:5000`
+  # > Then `pushPullUrl` is set to the value of `$(minikube ip):5000` and  runRegistryURL is set to `localhost:5000`
+  runRegistryURL: ""
+
+  # In case you'd like helm to generate the secret for you, `loginUrl` specifies
+  # the URL with which the components in nuclio will try to log into
+  #
+  # loginUrl: someurl
+
+  # See the note for `secretName`
+  # credentials:
+    # username: someuser
+    # password: somepass
+
+  #  Use a custom "base" images registry (pull registry). Default behavior will pull the default
+  #  base images from the web
+  #  Note: To override a pull registry for both "onbuild" and base images, use `dependantImageRegistryURL`.
+  defaultBaseRegistryURL: ""
+
+  #  Use a custom "onbuild" images registry (pull registry).
+  #  Note: To override a pull registry for both "onbuild" and base images, use `dependantImageRegistryURL`.
+  defaultOnbuildRegistryURL: "quay.io"
+
+  # Use this registry URL as an override for both base and "onbuild" images, so they'll be pulled from the
+  # specified registry URL and not from the default registries
+  dependantImageRegistryURL: ""
+
+rbac:
+
+  # If true, creates the necessary roles and role bindings for nuclio's service account
+  create: true
+
+  # serviceAccountName: service-account-name
+
+  # Allow / deny cluster-wide resource access. values: "cluster", "namespaced".
+  # If set to "namespaced" dashboard will not be able to create nuclio resources in any namespace other
+  # than the one in which it is installed
+  # Likewise, for "namespaced", the controller won't be able to act on these nuclio resources in any
+  # namespace other than the one in which it is installed
+  crdAccessMode: namespaced
+
+crd:
+
+  # If true, creates cluster wide custom resources definitions for nuclio's resources
+  create: true
+
+platform: {}
+#  runtime:
+#    python:
+#      pipCAPath: /path/to/pip-ca-file.crt
+#      buildArgs:
+#        PIP_INDEX_URL: "https://test.pypi.org/simple"
+#  logger:
+#    sinks:
+#      myHumanReadableStdout:
+#        kind: stdout
+#        format: humanReadable
+#    system:
+#    - level: debug
+#      sink: myHumanReadableStdout
+#    functions:
+#    - level: debug
+#      sink: myHumanReadableStdout
+#  metrics:
+#    sinks:
+#      myPrometheusPull:
+#        kind: prometheusPull
+#    system:
+#    - myPrometheusPull
+#    functions:
+#    - myPrometheusPull
+#  cronTriggerCreationMode: "kube"
+#  kube:
+#    defaultFunctionNodeSelector:
+#      nodeLabelKey: nodeLabelValue
+#    defaultServiceType: ClusterIP
+#    defaultHTTPIngressHostTemplate: ""
+#    defaultHTTPIngressAnnotations:
+#      ingressAnnotationKey: ingressAnnotationValue
+#  imageRegistryOverrides:
+#    baseImageRegistries:
+#      "python:3.9": "myregistry"
+#    onbuildImageRegistries:
+#      "golang": "myregistry"
+#  functionReadinessTimeout: 120s
+#  functionInvocationTimeout: 60s
+#  opa:
+#
+#    # set to 10 for extra verbosity on top of nuclio logger
+#    logLevel: 0
+#    address: http://1.11.23.0.1.11.231
+#    clientKind: nop
+#    requestTimeout: 10
+#    permissionQueryPath: /v1/data/somewhere/authz/allow
+#
+#  defaultUserFunctionPodResources:
+#     requests:
+#       cpu: 25m
+#       memory: 1Mi
+#     limits:
+#       cpu: 2
+#       memory: 20Mi
+#
+#  streamMonitoring:
+#    webapiURL: ""
+#    getStreamShardsConcurrentRequests: 64
+#
+#  sensitiveFields:
+#    maskSensitiveFields: true
+
+# global is a stanza that is used if this is used as a subchart. Ignore otherwise
+global:
+  externalHostAddress:
+  registry:
+    url:
+    secretName:
+  nuclio:
+    dashboard:
+      nodePort:

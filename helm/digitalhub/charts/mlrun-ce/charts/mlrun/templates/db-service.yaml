@@ -1,0 +1,40 @@
+{{- if eq .Values.httpDB.dbType "mysql" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mlrun.db.fullname" . }}
+  labels:
+    {{- include "mlrun.db.labels" . | nindent 4 }}
+spec:
+{{- if (or (eq .Values.db.service.type "ClusterIP") (empty .Values.db.service.type)) }}
+  type: ClusterIP
+  {{- if .Values.db.service.clusterIP }}
+  clusterIP: {{ .Values.db.service.clusterIP }}
+  {{end}}
+{{- else if eq .Values.db.service.type "LoadBalancer" }}
+  type: {{ .Values.db.service.type }}
+  {{- if .Values.db.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.db.service.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.db.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+{{ toYaml .Values.db.service.loadBalancerSourceRanges | indent 4 }}
+  {{- end -}}
+{{- else }}
+  type: {{ .Values.db.service.type }}
+{{- end }}
+{{- if .Values.db.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.db.service.externalIPs | indent 4 }}
+{{- end }}
+  ports:
+    - name: mysql
+      port: {{ .Values.db.service.port }}
+      protocol: TCP
+      targetPort: mysql
+{{ if (and (eq .Values.db.service.type "NodePort") (not (empty .Values.db.service.nodePort))) }}
+      nodePort: {{.Values.db.service.nodePort}}
+{{ end }}
+  selector:
+    {{- include "mlrun.db.selectorLabels" . | nindent 4 }}
+{{- end }}

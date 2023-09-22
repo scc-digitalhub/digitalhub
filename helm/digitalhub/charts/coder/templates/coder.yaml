@@ -84,7 +84,7 @@ spec:
             # See: https://github.com/coder/coder/issues/5024
             {{- $hasAccessURL := false }}
             {{- range .Values.coder.env }}
-              {{- if eq .name "CODER_ACCESS_URL" }}
+              {{- if or (eq .name "CODER_ACCESS_URL") ($.Values.coder.ingress.enable) }}
                 {{- $hasAccessURL = true }}
               {{- end }}
             {{- end }}
@@ -99,7 +99,8 @@ spec:
                   fieldPath: status.podIP
             - name: CODER_DERP_SERVER_RELAY_URL
               value: "http://$(KUBE_POD_IP):8080"
-            {{- include "coder.tlsEnv" . | nindent 12 }}
+            {{- include "coder.tlsEnv" . | nindent 12 -}}
+            {{- include "coder.ingressEnv" . | nindent 12 -}}
             {{- with .Values.coder.env -}}
             {{ toYaml . | nindent 12 }}
             {{- end }}
