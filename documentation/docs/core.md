@@ -9,7 +9,7 @@ The platform uses a unified store composed by two types of storage:
 - [MinIO](https://min.io/), a S3-compatible object store as *persistence* store for (un)structured, immutable data
 - [Postgres](https://www.postgresql.org/), a relational database as *operational* store for mutable data, rich with extensions, including ones for geospatial and time-series data.
 
-By using [Dremio](https://www.dremio.com/), data can be viewed, accessed and queried in a unified way. This component is described in higher detail [in its own section](/components/dremio).
+By using [Dremio](https://www.dremio.com/), data can be viewed, accessed and queried in a unified way. This component is described in higher detail [in its own section](/digitalhub/components/dremio).
 
 ## Function-as-a-Service
 

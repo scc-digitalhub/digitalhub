@@ -8,7 +8,7 @@
 
 !!! info "How to access"
 
-    Jupyter may be launched from [Coder, using its template](/components/deploying-components). It will ask for the *CPU cores*, *GB of memory* and *GB of disk space* you wish to dedicate to it. Depending on the computation you need, lower values may turn out to be insufficient, but cores and memory may be changed even while the workspace is running.
+    Jupyter may be launched from [Coder, using its template](/digitalhub/components/deploying-components). It will ask for the *CPU cores*, *GB of memory* and *GB of disk space* you wish to dedicate to it. Depending on the computation you need, lower values may turn out to be insufficient, but cores and memory may be changed even while the workspace is running.
 
 ## Writing a simple notebook
 

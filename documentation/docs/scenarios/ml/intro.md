@@ -1,6 +1,6 @@
 # ML scenario introduction
 
-This is a scenario that comes as an official tutorial of MLRun. In fact, you can find the notebook in your Jupyter instance, in `/tutorial/01-mlrun-basics.ipynb`.
+This is a scenario that comes as an official tutorial of MLRun. In fact, you can find the notebook in your Jupyter instance, in `/tutorial/01-mlrun-basics.ipynb`. For completeness' sake, you can also find a duplicate of it, and its related function files, in the `documentation/examples/ml` path within the repository of this documentation.
 
 We will prepare data, train a model and expose it as a service. Access Jupyter from your Coder instance and create a new notebook.
 

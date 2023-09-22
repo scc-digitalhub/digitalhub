@@ -6,6 +6,8 @@ Access Jupyter from your Coder instance and create a new notebook. If a Jupyter 
 
 We'll now start writing code. Copy the snippets of code from here and paste them in your notebook, then execute them with *Shift+Enter*. After running, Jupyter will create a new code cell.
 
+The notebook file covering this scenario, as well as files for individual functions, are available in the `documentation/examples/etl` path within the repository of this documentation.
+
 ## Set-up
 
 First, we initialize our environment and create a project.

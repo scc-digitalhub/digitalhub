@@ -8,7 +8,7 @@
 
 !!! info "How to access"
 
-    MLRun may be accessed from the [dashboard](/components/dashboard). From its interface, you will be able to monitor projects and workflows.
+    MLRun may be accessed from the [dashboard](/digitalhub/components/dashboard). From its interface, you will be able to monitor projects and workflows.
 
 ## Resources
 

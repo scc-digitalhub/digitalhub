@@ -6,7 +6,7 @@ in different environments, such as Minikube (for local development), MS Azure, O
 the platform in a custom Kubernetes environment, refer to the [helm charts](https://github.com/scc-digitalhub/digitalhub/tree/main/helm/digitalhub) provided.
 
 ## Install with Minikube
-To install DigitalHub locally, it is possible to use Minikube. To proceed, please install firts
+To install DigitalHub locally, it is possible to use Minikube. To proceed, please install first:
 
 - [Helm](https://helm.sh/docs/intro/install/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/)
@@ -27,7 +27,7 @@ To install DigitalHub locally, it is possible to use Minikube. To proceed, pleas
 ```sh
     minikube ip
 ```
-3. Change the IP in  'global.registry.url' and 'global.externalHostAddress' properties in values file with the one obtained in the previous step.
+3. Change the IP in  'global.registry.url' and 'global.externalHostAddress' properties in values file (*helm/digitalhub/values.yaml*) with the one obtained in the previous step.
 4. Install DigitalHub with Helm:
 ```sh
     helm upgrade digitalhub helm/digitalhub/ -n digitalhub --install --create-namespace --timeout 15m0s

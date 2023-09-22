@@ -8,7 +8,7 @@
 
 !!! info "How to access"
 
-    SQLPad may be launched from [Coder, using its template](/components/deploying-components).
+    SQLPad may be launched from [Coder, using its template](/digitalhub/components/deploying-components).
 
     The template automatically configures connection to Postgres, so you do not need to worry about setting it up.
 
