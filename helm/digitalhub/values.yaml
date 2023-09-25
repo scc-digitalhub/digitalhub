@@ -211,16 +211,6 @@ mlrun-ce:
   kube-prometheus-stack:
     enabled: false  
 
-postgresql: 
-  enabled: true
-  auth:
-    username: coder
-    password: coder
-    database: coder
-  persistence:
-    size: 10Gi
-  nameOverride: "coder-postgres"
-
 coder: 
   enabled: true
   username: test

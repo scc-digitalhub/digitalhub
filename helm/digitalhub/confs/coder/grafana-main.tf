@@ -58,6 +58,13 @@ resource "coder_agent" "grafana" {
     set -e
     /run.sh 2>&1 &
   EOT
+  display_apps {
+    vscode                 = false
+    vscode_insiders        = false
+    web_terminal           = false
+    port_forwarding_helper = false
+    ssh_helper             = false
+  }
 }
 
 # grafana
@@ -94,7 +101,7 @@ resource "kubernetes_service" "grafana-service" {
       "app.kubernetes.io/name"     = "grafana-workspace"
       "app.kubernetes.io/instance" = "grafana-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "workspace"
+      "app.kubernetes.io/type"     = "service"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id

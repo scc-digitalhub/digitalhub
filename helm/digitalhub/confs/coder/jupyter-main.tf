@@ -148,6 +148,13 @@ resource "coder_agent" "jupyter" {
     set -e
     jupyter lab --ServerApp.ip=0.0.0.0 --ServerApp.port=8888 --ServerApp.token="" --ServerApp.password=""
   EOT
+  display_apps {
+    vscode                 = false
+    vscode_insiders        = false
+    web_terminal           = false
+    port_forwarding_helper = false
+    ssh_helper             = false
+  }
 }
 
 resource "coder_app" "jupyter" {
@@ -183,7 +190,7 @@ resource "kubernetes_persistent_volume_claim" "home" {
       "app.kubernetes.io/name"     = "jupyter-pvc"
       "app.kubernetes.io/instance" = "jupyter-pvc-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "workspace"
+      "app.kubernetes.io/type"     = "pvc"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
@@ -214,7 +221,7 @@ resource "kubernetes_service" "jupyter-service" {
       "app.kubernetes.io/name"     = "jupyter-workspace"
       "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "workspace"
+      "app.kubernetes.io/type"     = "service"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id

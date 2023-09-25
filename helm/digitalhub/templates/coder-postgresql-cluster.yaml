@@ -1,0 +1,18 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: coder-postgres-cluster
+spec:
+  teamId: "coder"
+  volume:
+    size: 8Gi
+  numberOfInstances: 1
+  users:
+    coderadmin:
+    - superuser
+    - createdb
+    coder: []
+  databases:
+    coder: coder
+  postgresql:
+    version: "15"

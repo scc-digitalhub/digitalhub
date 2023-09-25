@@ -76,6 +76,13 @@ resource "coder_agent" "dashboard" {
     echo "start nginx"
     nginx -e /dev/stdout -g "daemon off;"
   EOT
+  display_apps {
+    vscode                 = false
+    vscode_insiders        = false
+    web_terminal           = false
+    port_forwarding_helper = true
+    ssh_helper             = false
+  }
 }
 
 resource "coder_app" "dashboard" {
@@ -161,6 +168,21 @@ resource "kubernetes_config_map" "components-json" {
   metadata {
     name      = "dashboard-components-json"
     namespace = var.namespace
+    labels = {
+      "app.kubernetes.io/name"     = "dashboard-workspace"
+      "app.kubernetes.io/instance" = "dashboard-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"  = "coder"
+      "app.kubernetes.io/type"     = "configmap"
+      // Coder specific labels.
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace.me.owner_id
+      "com.coder.user.username"  = data.coder_workspace.me.owner
+    }
+    annotations = {
+      "com.coder.user.email" = data.coder_workspace.me.owner_email
+    }
   }
   data = {
     "components.json" = <<EOT
@@ -206,6 +228,21 @@ resource "kubernetes_config_map" "nginx-config" {
   metadata {
     name      = "nginx-config"
     namespace = var.namespace
+    labels = {
+      "app.kubernetes.io/name"     = "dashboard-workspace"
+      "app.kubernetes.io/instance" = "dashboard-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"  = "coder"
+      "app.kubernetes.io/type"     = "configmap"
+      // Coder specific labels.
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace.me.owner_id
+      "com.coder.user.username"  = data.coder_workspace.me.owner
+    }
+    annotations = {
+      "com.coder.user.email" = data.coder_workspace.me.owner_email
+    }
   }
   data = {
     "nginx.conf" = <<EOF
@@ -285,7 +322,7 @@ resource "kubernetes_service" "dashboard-service" {
       "app.kubernetes.io/name"     = "dashboard-workspace"
       "app.kubernetes.io/instance" = "dashboard-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "workspace"
+      "app.kubernetes.io/type"     = "service"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
@@ -365,7 +402,7 @@ resource "kubernetes_deployment" "dashboard" {
         }
         container {
           name              = "dashboard"
-          image             = "smartcommunitylab/digitalhub-dashboard:with-coder-agent-v2.0.0"
+          image             = "smartcommunitylab/digitalhub-dashboard:with-coder-agent-v2.1.5"
           image_pull_policy = "IfNotPresent"
           command           = ["/bin/dash", "-c", "exec /bin/coder agent"]
           security_context {

@@ -76,6 +76,13 @@ resource "coder_agent" "sqlpad" {
     set -e
     node /usr/app/server.js 2>&1 &
   EOT
+  display_apps {
+    vscode                 = false
+    vscode_insiders        = false
+    web_terminal           = false
+    port_forwarding_helper = false
+    ssh_helper             = false
+  }
 }
 
 resource "coder_metadata" "sqlpad" {
@@ -111,7 +118,7 @@ resource "kubernetes_service" "sqlpad-service" {
       "app.kubernetes.io/name"     = "sqlpad-workspace"
       "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "workspace"
+      "app.kubernetes.io/type"     = "service"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id

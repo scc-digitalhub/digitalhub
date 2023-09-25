@@ -13,10 +13,6 @@ dependencies:
   version: "0.6.3-rc3"
   repository: "https://mlrun.github.io/ce"
   condition: mlrun-ce.enabled
-- name: postgresql
-  version: "12.8.0"
-  repository: "https://charts.bitnami.com/bitnami"
-  condition: postgresql.enabled
 - name: coder
   condition: coder.enabled
 - name: postgres-operator

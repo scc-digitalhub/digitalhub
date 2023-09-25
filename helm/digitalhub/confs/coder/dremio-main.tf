@@ -114,6 +114,13 @@ resource "coder_agent" "dremio" {
     set -e
     /opt/dremio/bin/dremio start
   EOT
+  display_apps {
+    vscode                 = false
+    vscode_insiders        = false
+    web_terminal           = false
+    port_forwarding_helper = true
+    ssh_helper             = false
+  }
 }
 
 resource "coder_app" "dremio" {
@@ -177,7 +184,7 @@ resource "kubernetes_service" "dremio-service" {
       "app.kubernetes.io/name"     = "dremio-workspace"
       "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "workspace"
+      "app.kubernetes.io/type"     = "service"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
@@ -217,7 +224,7 @@ resource "kubernetes_job" "source-init" {
       "app.kubernetes.io/name"     = "dremio-source-init"
       "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "workspace"
+      "app.kubernetes.io/type"     = "job"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
