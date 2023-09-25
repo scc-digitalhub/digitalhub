@@ -1,0 +1,20 @@
+apiVersion: addons.cluster.x-k8s.io/v1alpha1
+kind: HelmChartProxy
+metadata:
+  name: cloud-provider-azure
+spec:
+  clusterSelector:
+    matchLabels:
+      cloud-provider: azure
+  repoURL: https://raw.githubusercontent.com/kubernetes-sigs/cloud-provider-azure/master/helm/repo
+  chartName: cloud-provider-azure
+  namespace: kube-system
+  options:
+    waitForJobs: true
+    wait: true
+    timeout: 5m
+  valuesTemplate: |
+    infra:
+      clusterName: digitalhub-test
+    cloudControllerManager:
+      clusterCIDR: "192.168.0.0/16"

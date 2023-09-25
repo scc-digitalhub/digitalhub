@@ -1,0 +1,276 @@
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster
+metadata:
+  name: digitalhub-test
+  namespace: digitalhub-test
+  labels:
+    app: digitalhub
+    env: test
+    cni: cilium
+    cloud-provider: azure
+    csi: azure
+    ingress-controller: ingress-nginx
+    monitoring: enabled
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+  controlPlaneRef:
+    apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+    kind: KubeadmControlPlane
+    name: digitalhub-test-control-plane
+  infrastructureRef:
+    apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+    kind: AzureCluster
+    name: digitalhub-test
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+kind: AzureCluster
+metadata:
+  name: digitalhub-test
+  namespace: digitalhub-test
+spec:
+  identityRef:
+    apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+    kind: AzureClusterIdentity
+    name: cluster-identity
+  location: germanywestcentral
+  networkSpec:
+    subnets:
+    - name: control-plane-subnet
+      role: control-plane
+    - name: node-subnet
+      role: node
+    vnet:
+      name: digitalhub-test-vnet
+  resourceGroup: digitalhub-test
+  subscriptionID: ${SUBSCRIPTION_ID}
+---
+apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+kind: KubeadmControlPlane
+metadata:
+  name: digitalhub-test-control-plane
+  namespace: digitalhub-test
+spec:
+  kubeadmConfigSpec:
+    users:
+      - name: digitalhub
+        sshAuthorizedKeys:
+        - "${SSH_PUBLIC_KEY}"
+    clusterConfiguration:
+      apiServer:
+        extraArgs:
+          cloud-provider: external
+        timeoutForControlPlane: 20m
+      controllerManager:
+        extraArgs:
+          bind-address: "0.0.0.0"
+          allocate-node-cidrs: "false"
+          cloud-provider: external
+          cluster-name: digitalhub-test
+      etcd:
+        local:
+          dataDir: /var/lib/etcddisk/etcd
+          extraArgs:
+            quota-backend-bytes: "8589934592"
+            listen-metrics-urls: http://127.0.0.1:2381,https://0.0.0.0:2382
+      scheduler:
+        extraArgs:
+          bind-address: "0.0.0.0"
+    diskSetup:
+      filesystems:
+      - device: /dev/disk/azure/scsi1/lun0
+        extraOpts:
+        - -E
+        - lazy_itable_init=1,lazy_journal_init=1
+        filesystem: ext4
+        label: etcd_disk
+      - device: ephemeral0.1
+        filesystem: ext4
+        label: ephemeral0
+        replaceFS: ntfs
+      partitions:
+      - device: /dev/disk/azure/scsi1/lun0
+        layout: true
+        overwrite: false
+        tableType: gpt
+    files:
+    - path: /run/kubeadm/gs-kube-proxy-config.yaml
+      permissions: "0600"
+      content: |
+        ---
+        apiVersion: kubeproxy.config.k8s.io/v1alpha1
+        kind: KubeProxyConfiguration
+        metricsBindAddress: "0.0.0.0"
+    - path: /run/kubeadm/gs-kube-proxy-patch.sh
+      permissions: "0700"
+      content: |
+        #!/usr/bin/env bash
+        #
+        # (PK) I couldn't find a better/simpler way to conifgure it. See:
+        # https://github.com/kubernetes-sigs/cluster-api/issues/4512
+        #
+        set -o errexit
+        set -o nounset
+        set -o pipefail
+        readonly dir="/run/kubeadm"
+        # Run this script only if this is the init node.
+        if [[ ! -f ${dir}/kubeadm.yaml ]]; then
+            echo "1" > ${dir}/debug.txt
+            exit 0
+        fi
+        # Exit fast if already appended.
+        if [[ ! -f ${dir}/gs-kube-proxy-config.yaml ]]; then
+            echo "2" > ${dir}/debug.txt
+            exit 0
+        fi
+        echo "3" > ${dir}/debug.txt
+        cat ${dir}/gs-kube-proxy-config.yaml >> ${dir}/kubeadm.yaml
+        rm ${dir}/gs-kube-proxy-config.yaml
+    - contentFrom:
+        secret:
+          key: control-plane-azure.json
+          name: digitalhub-test-control-plane-azure-json
+      owner: root:root
+      path: /etc/kubernetes/azure.json
+      permissions: "0644"
+    initConfiguration:
+      nodeRegistration:
+        kubeletExtraArgs:
+          azure-container-registry-config: /etc/kubernetes/azure.json
+          cloud-provider: external
+        name: '{{ ds.meta_data["local_hostname"] }}'
+      skipPhases:
+        - addon/kube-proxy
+    joinConfiguration:
+      nodeRegistration:
+        kubeletExtraArgs:
+          azure-container-registry-config: /etc/kubernetes/azure.json
+          cloud-provider: external
+        name: '{{ ds.meta_data["local_hostname"] }}'
+    mounts:
+    - - LABEL=etcd_disk
+      - /var/lib/etcddisk
+    postKubeadmCommands: 
+      - kubectl --kubeconfig /etc/kubernetes/admin.conf create ns monitoring
+      - kubectl --kubeconfig /etc/kubernetes/admin.conf -n monitoring create secret generic etcd-client --from-file=/etc/kubernetes/pki/etcd/ca.crt --from-file=/etc/kubernetes/pki/etcd/healthcheck-client.crt --from-file=/etc/kubernetes/pki/etcd/healthcheck-client.key
+    preKubeadmCommands: 
+      - bash /run/kubeadm/gs-kube-proxy-patch.sh
+  machineTemplate:
+    infrastructureRef:
+      apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+      kind: AzureMachineTemplate
+      name: digitalhub-test-control-plane
+  replicas: 3
+  version: v1.28.2
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+kind: AzureMachineTemplate
+metadata:
+  name: digitalhub-test-control-plane
+  namespace: digitalhub-test
+spec:
+  template:
+    spec:
+      identity: UserAssigned
+      userAssignedIdentities:
+      - providerID: ${USER_ASSIGNED_IDENTITY_ID}
+      dataDisks:
+      - diskSizeGB: 256
+        lun: 0
+        nameSuffix: etcddisk
+      osDisk:
+        diskSizeGB: 128
+        osType: Linux
+      sshPublicKey: ""
+      vmSize: Standard_D4s_v5
+---
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: MachineDeployment
+metadata:
+  name: digitalhub-test-md-0
+  namespace: digitalhub-test
+spec:
+  clusterName: digitalhub-test
+  replicas: 3
+  selector:
+    matchLabels: null
+  template:
+    spec:
+      bootstrap:
+        configRef:
+          apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+          kind: KubeadmConfigTemplate
+          name: digitalhub-test-md-0
+      clusterName: digitalhub-test
+      infrastructureRef:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+        kind: AzureMachineTemplate
+        name: digitalhub-test-md-0
+      version: v1.28.2
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+kind: AzureMachineTemplate
+metadata:
+  name: digitalhub-test-md-0
+  namespace: digitalhub-test
+spec:
+  template:
+    spec:
+      identity: UserAssigned
+      userAssignedIdentities:
+      - providerID: ${USER_ASSIGNED_IDENTITY_ID}
+      osDisk:
+        diskSizeGB: 128
+        osType: Linux
+      sshPublicKey: ""
+      vmSize: Standard_D8s_v5
+---
+apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+kind: KubeadmConfigTemplate
+metadata:
+  name: digitalhub-test-md-0
+  namespace: digitalhub-test
+spec:
+  template:
+    spec:
+      users:
+        - name: digitalhub
+          sshAuthorizedKeys:
+          - "${SSH_PUBLIC_KEY}"
+      files:
+      - content: "digitalhub ALL = (ALL) NOPASSWD: ALL"
+        owner: root:root
+        path: /etc/sudoers.d/digitalhub
+        permissions: "0440"
+      - contentFrom:
+          secret:
+            key: worker-node-azure.json
+            name: digitalhub-test-md-0-azure-json
+        owner: root:root
+        path: /etc/kubernetes/azure.json
+        permissions: "0644"
+      joinConfiguration:
+        nodeRegistration:
+          kubeletExtraArgs:
+            azure-container-registry-config: /etc/kubernetes/azure.json
+            cloud-provider: external
+          name: '{{ ds.meta_data["local_hostname"] }}'
+      preKubeadmCommands: []
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+kind: AzureClusterIdentity
+metadata:
+  labels:
+    clusterctl.cluster.x-k8s.io/move-hierarchy: "true"
+  name: cluster-identity
+  namespace: digitalhub-test
+spec:
+  allowedNamespaces: {}
+  clientID: ${SERVICE_PRINCIPAL_ID}
+  clientSecret:
+    name: cluster-identity-secret
+    namespace: digitalhub-test
+  tenantID: ${TENANT_ID}
+  type: ServicePrincipal
