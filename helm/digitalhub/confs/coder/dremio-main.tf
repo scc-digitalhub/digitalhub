@@ -354,6 +354,9 @@ resource "kubernetes_deployment" "dremio" {
   }
   spec {
     replicas = 1
+    strategy {
+      type = "Recreate"
+    }
     selector {
       match_labels = {
         "app.kubernetes.io/name"     = "dremio-workspace"
