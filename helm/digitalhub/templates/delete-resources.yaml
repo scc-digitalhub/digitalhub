@@ -5,7 +5,7 @@ kind: ServiceAccount
 metadata:
   name: delete-resources
   annotations:
-    "helm.sh/hook": pre-delete
+    "helm.sh/hook": pre-delete,post-delete
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
     "helm.sh/hook-weight": "1"
   labels:
@@ -16,7 +16,7 @@ kind: ClusterRole
 metadata:
   name: delete-resources
   annotations:
-    "helm.sh/hook": pre-delete
+    "helm.sh/hook": pre-delete,post-delete
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
     "helm.sh/hook-weight": "1"
   labels:
@@ -40,7 +40,7 @@ kind: ClusterRoleBinding
 metadata:
   name: delete-resources
   annotations:
-    "helm.sh/hook": pre-delete
+    "helm.sh/hook": pre-delete,post-delete
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
     "helm.sh/hook-weight": "1"
   labels:
@@ -101,17 +101,18 @@ spec:
         - name: delete-coder
           image: "bitnami/kubectl:latest"
           command: ["/bin/sh"]
-          args: ["-c", "kubectl -n {{ .Release.Namespace }} delete statefulsets,deploy,svc,cm -l app.kubernetes.io/part-of=coder && kubectl -n {{ .Release.Namespace }} delete --all pvc,ingresses sleep 3m"]
+          args: ["-c", "kubectl -n {{ .Release.Namespace }} delete statefulsets,deploy,svc,cm -l app.kubernetes.io/part-of=coder && kubectl -n {{ .Release.Namespace }} delete --all pvc && kubectl -n {{ .Release.Namespace }} delete --all ingresses && sleep 1m"]
       restartPolicy: OnFailure
 ---
 {{- if or .Values.global.cleanup.ingress .Values.global.cleanup.persistentVolumeClaim }}
-{{- $resource := "" -}}
+{{- $resource := list -}}
 {{- if and .Values.global.cleanup.ingress .Values.global.cleanup.persistentVolumeClaim -}}
-{{- $resource = "pvc,ingresses" -}}
+{{- $resource = append $resource "pvc" -}}
+{{- $resource = append $resource "ingresses" -}}
 {{- else if  .Values.global.cleanup.ingress -}}
-{{- $resource = "ingresses" -}}
+{{- $resource = append $resource "ingresses" -}}
 {{- else -}}
-  {{- $resource = "pvc" -}}
+  {{- $resource = append $resource "pvc" -}}
 {{- end -}}
 apiVersion: batch/v1
 kind: Job
@@ -135,6 +136,6 @@ spec:
         - name: delete-pvc-ingress
           image: "bitnami/kubectl:latest"
           command: ["/bin/sh"]
-          args: ["-c", "kubectl -n {{ .Release.Namespace }} delete --all {{ $resource }} sleep 3m"]
+          args: ["-c", "{{ range $resource }}kubectl -n {{ $.Release.Namespace }} delete --all {{ . }} && {{ end }} sleep 1m"]
       restartPolicy: OnFailure
 {{- end }}
