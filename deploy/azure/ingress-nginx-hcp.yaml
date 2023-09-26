@@ -18,6 +18,7 @@ spec:
       createNamespace: true
   valuesTemplate: |
     controller:
+      allowSnippetAnnotations: true
       service:
         annotations:
           "service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path": /healthz
