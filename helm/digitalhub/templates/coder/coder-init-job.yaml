@@ -11,15 +11,13 @@ spec:
           image: {{ .Subcharts.coder.Values.coder.image.repo }}:{{ .Subcharts.coder.Values.coder.image.tag }}
           command: ["/bin/bash", "/home/coder/init-files/init.sh"]
           env:
+            {{- with .Subcharts.coder.Values.coder.env -}}
+            {{ toYaml . | nindent 12 }}
+            {{- end }}  
             - name: CODER_ACCESS_URL
               value: "http://coder"
             - name: CODER_URL
               value: "http://coder"
-            - name: CODER_PG_CONNECTION_URL
-              valueFrom:
-                secretKeyRef:
-                  name: coder-postgresql-creds
-                  key: uri
             - name: CODER_FIRST_USER_USERNAME
               valueFrom:
                 secretKeyRef:
