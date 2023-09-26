@@ -26,10 +26,13 @@ rules:
     resources: ["postgresqls"]
     verbs: ["get", "list", "watch", "delete"]
   - apiGroups: ["*"]
-    resources: ["services", "configmaps"]
+    resources: ["services", "configmaps", "persistentvolumeclaims"]
     verbs: ["get", "list", "watch", "delete"]
   - apiGroups: ["apps"]
     resources: ["statefulsets", "deployments" ]
+    verbs: ["get", "list", "watch", "delete"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
     verbs: ["get", "list", "watch", "delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -73,7 +76,7 @@ spec:
         - name: delete-databases
           image: "bitnami/kubectl:latest"
           command: ["/bin/sh"]
-          args: ["-c", "kubectl -n {{ .Release.Namespace }} delete postgresql --all && sleep 3m"]
+          args: ["-c", "kubectl -n {{ .Release.Namespace }} delete postgresql --all && sleep 1m"]
       restartPolicy: OnFailure
 ---
 apiVersion: batch/v1
@@ -81,7 +84,7 @@ kind: Job
 metadata:
   name: delete-coder
   annotations:
-    "helm.sh/hook": pre-delete
+    "helm.sh/hook": post-delete
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
     "helm.sh/hook-weight": "3"
   labels:
@@ -98,5 +101,40 @@ spec:
         - name: delete-coder
           image: "bitnami/kubectl:latest"
           command: ["/bin/sh"]
-          args: ["-c", "kubectl -n {{ .Release.Namespace }} delete statefulsets,deploy,svc,cm -l app.kubernetes.io/part-of=coder"]
+          args: ["-c", "kubectl -n {{ .Release.Namespace }} delete statefulsets,deploy,svc,cm -l app.kubernetes.io/part-of=coder && kubectl -n {{ .Release.Namespace }} delete --all pvc,ingresses sleep 3m"]
       restartPolicy: OnFailure
+---
+{{- if or .Values.global.cleanup.ingress .Values.global.cleanup.persistentVolumeClaim }}
+{{- $resource := "" -}}
+{{- if and .Values.global.cleanup.ingress .Values.global.cleanup.persistentVolumeClaim -}}
+{{- $resource = "pvc,ingresses" -}}
+{{- else if  .Values.global.cleanup.ingress -}}
+{{- $resource = "ingresses" -}}
+{{- else -}}
+  {{- $resource = "pvc" -}}
+{{- end -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: delete-pvc-ingress
+  annotations:
+    "helm.sh/hook": post-delete
+    "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
+    "helm.sh/hook-weight": "3"
+  labels:
+    {{- include "digitalhub.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      name: delete-pvc-ingress
+      labels:
+        {{- include "digitalhub.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: delete-resources
+      containers:
+        - name: delete-pvc-ingress
+          image: "bitnami/kubectl:latest"
+          command: ["/bin/sh"]
+          args: ["-c", "kubectl -n {{ .Release.Namespace }} delete --all {{ $resource }} sleep 3m"]
+      restartPolicy: OnFailure
+{{- end }}

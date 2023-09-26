@@ -1,4 +1,7 @@
 global:
+  cleanup:
+    persistentVolumeClaim: false
+    ingress: false
   service:
     type: &serviceType "ClusterIP"
   registry:
