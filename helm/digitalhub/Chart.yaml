@@ -13,6 +13,7 @@ dependencies:
   version: "0.6.3-rc3"
   condition: mlrun-ce.enabled
 - name: coder
+  version: "0.1.0"
   condition: coder.enabled
 - name: postgres-operator
   version: "1.10.0"
