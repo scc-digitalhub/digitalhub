@@ -79,6 +79,8 @@ mlrun-ce:
     crd:
       create: true
     platform:
+      ingressConfig:
+        tlsSecret: "digitalhub-test-wildcard"
       logger:
         sinks:
           myStdoutLoggerSink:
@@ -223,6 +225,10 @@ mlrun-ce:
       enabled: true
       ingressClassName: "nginx"
       path: /
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
       hosts:
         - minio-api.${DOMAIN}
       tls:
@@ -232,6 +238,10 @@ mlrun-ce:
     consoleIngress:
       enabled: true
       ingressClassName: "nginx"
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
       path: /
       hosts:
         - minio.${DOMAIN}
@@ -320,15 +330,13 @@ coder:
   coder:
     image:
       tag: v2.1.5
-    env:
-      - name: CODER_PG_CONNECTION_URL
-        valueFrom:
-          secretKeyRef:
-            name: coder-postgresql-creds
-            key: uri
     ingress:
       enable: true
       className: nginx
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
       host: coder.${DOMAIN}
       wildcardHost: "*.coder.${DOMAIN}"
       tls:
