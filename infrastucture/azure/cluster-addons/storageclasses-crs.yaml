@@ -1,12 +1,14 @@
 apiVersion: addons.cluster.x-k8s.io/v1beta1
 kind: ClusterResourceSet
 metadata:
- name: defaultstorageclass
+ name: storageclasses
 spec:
  strategy: "ApplyOnce"
  clusterSelector:
    matchLabels:
      cloud-provider: azure
  resources:
-   - name: default-storageclass
+   - name: disk-storageclass
+     kind: ConfigMap
+   - name: fileshare-storageclass
      kind: ConfigMap

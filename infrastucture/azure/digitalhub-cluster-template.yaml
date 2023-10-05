@@ -62,6 +62,7 @@ spec:
       apiServer:
         extraArgs:
           cloud-provider: external
+          anonymous-auth: "false"
         timeoutForControlPlane: 20m
       controllerManager:
         extraArgs:
@@ -96,38 +97,6 @@ spec:
         overwrite: false
         tableType: gpt
     files:
-    - path: /run/kubeadm/gs-kube-proxy-config.yaml
-      permissions: "0600"
-      content: |
-        ---
-        apiVersion: kubeproxy.config.k8s.io/v1alpha1
-        kind: KubeProxyConfiguration
-        metricsBindAddress: "0.0.0.0"
-    - path: /run/kubeadm/gs-kube-proxy-patch.sh
-      permissions: "0700"
-      content: |
-        #!/usr/bin/env bash
-        #
-        # (PK) I couldn't find a better/simpler way to conifgure it. See:
-        # https://github.com/kubernetes-sigs/cluster-api/issues/4512
-        #
-        set -o errexit
-        set -o nounset
-        set -o pipefail
-        readonly dir="/run/kubeadm"
-        # Run this script only if this is the init node.
-        if [[ ! -f ${dir}/kubeadm.yaml ]]; then
-            echo "1" > ${dir}/debug.txt
-            exit 0
-        fi
-        # Exit fast if already appended.
-        if [[ ! -f ${dir}/gs-kube-proxy-config.yaml ]]; then
-            echo "2" > ${dir}/debug.txt
-            exit 0
-        fi
-        echo "3" > ${dir}/debug.txt
-        cat ${dir}/gs-kube-proxy-config.yaml >> ${dir}/kubeadm.yaml
-        rm ${dir}/gs-kube-proxy-config.yaml
     - contentFrom:
         secret:
           key: control-plane-azure.json
@@ -155,8 +124,7 @@ spec:
     postKubeadmCommands: 
       - kubectl --kubeconfig /etc/kubernetes/admin.conf create ns monitoring
       - kubectl --kubeconfig /etc/kubernetes/admin.conf -n monitoring create secret generic etcd-client --from-file=/etc/kubernetes/pki/etcd/ca.crt --from-file=/etc/kubernetes/pki/etcd/healthcheck-client.crt --from-file=/etc/kubernetes/pki/etcd/healthcheck-client.key
-    preKubeadmCommands: 
-      - bash /run/kubeadm/gs-kube-proxy-patch.sh
+    preKubeadmCommands: []
   machineTemplate:
     infrastructureRef:
       apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
