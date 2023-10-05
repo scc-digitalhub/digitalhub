@@ -387,7 +387,7 @@ resource "kubernetes_deployment" "jupyter" {
             }
           }
           volume_mount {
-            mount_path = "/home/jovyan/data"
+            mount_path = "/home/jovyan/work"
             name       = "home"
             read_only  = false
           }

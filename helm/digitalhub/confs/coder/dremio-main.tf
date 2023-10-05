@@ -382,7 +382,7 @@ resource "kubernetes_deployment" "dremio" {
         }
         init_container {
           name              = "init-dremio-data"
-          image             = "dremio/dremio-oss"
+          image             = "dremio/dremio-oss:24.1.0"
           image_pull_policy = "IfNotPresent"
           command           = ["/bin/bash", "/tmp/init/init-data.sh"]
           env {
@@ -405,7 +405,7 @@ resource "kubernetes_deployment" "dremio" {
         }
         container {
           name              = "dremio"
-          image             = "dremio/dremio-oss"
+          image             = "dremio/dremio-oss:24.1.0"
           image_pull_policy = "IfNotPresent"
           command           = ["sh", "-c", coder_agent.dremio.init_script]
           security_context {

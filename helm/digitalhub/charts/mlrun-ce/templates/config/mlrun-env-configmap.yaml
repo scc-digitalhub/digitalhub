@@ -4,7 +4,7 @@ metadata:
   name: mlrun-common-env
 data:
   MLRUN_STORAGE__AUTO_MOUNT_TYPE: s3
-  MLRUN_STORAGE__AUTO_MOUNT_PARAMS: "aws_access_key=minio,aws_secret_key=minio123,endpoint_url={{ include "mlrun-ce.minio.service.url" . }}"
+  MLRUN_STORAGE__AUTO_MOUNT_PARAMS: "aws_access_key={{ .Values.minio.rootUser }},aws_secret_key={{ .Values.minio.rootPassword }},endpoint_url={{ include "mlrun-ce.minio.service.url" . }}"
   MLRUN_HTTPDB__PROJECTS__FOLLOWERS: nuclio
   S3_ENDPOINT_URL: {{ include "mlrun-ce.minio.service.url" . }}
   AWS_SECRET_ACCESS_KEY: {{ .Values.minio.rootPassword }}
