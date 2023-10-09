@@ -278,6 +278,9 @@ pipelines:
   db:
     username: root
   ui:
+    service:
+      type: NodePort
+      nodePort: 30100
     ingress:
       enabled: false
       ingressClassName: ""

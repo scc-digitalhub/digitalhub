@@ -279,6 +279,8 @@ mlrun-ce:
     db:
       username: root
     ui:
+      service:
+        type: ClusterIP
       ingress:
         enabled: true
         ingressClassName: "nginx"
