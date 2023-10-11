@@ -1,0 +1,161 @@
+# Default values for postgrest-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Values affecting the namespace
+namespaceValues:
+  namespaced: true
+  namespace: ""
+
+# Secret containing the postgrest url
+postgrestString:
+  existingSecret: ""
+  passwordKey: ""
+
+# Secret containing username and password of postgres
+postgresCredsExistingSecrets:
+  username:
+    secretName: ""
+    secretKey: ""
+  password:
+    secretName: ""
+    secretKey: ""
+
+# Credentials used for the postgres connection
+postgresCreds:
+  username: username
+  password: password
+
+# Values used for builnding the postgres uri
+postgres:
+  host: localhost
+  uri_args: sslmode=disable
+  port: 5432
+  default_database: postgres
+  postgrest_image: postgrest/postgrest
+  postgrest_image_tag: v11.1.0
+  postgrest_service_type: ClusterIP
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# Values for the deployment
+deployment:
+  replicaCount: 1
+  securityContext:
+    runAsNonRoot: true
+  image:
+    pullPolicy: IfNotPresent
+  kubeRbacProxy:
+    name: kube-rbac-proxy
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+    image:
+      repository: gcr.io/kubebuilder/kube-rbac-proxy
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: v0.13.1
+    ports:
+      containerPort: 8443
+    resources:
+      limits:
+        cpu: 500m
+        memory: 128Mi
+      requests:
+        cpu: 5m
+        memory: 64Mi
+    args:
+    - --secure-listen-address=0.0.0.0:8443
+    - --upstream=http://127.0.0.1:8080/
+    - --logtostderr=true
+    - --v=0
+  manager:
+    name: manager
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+    image:
+      repository: ghcr.io/scc-digitalhub/postgrest-operator
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: latest
+    resources:
+      limits:
+        cpu: 500m
+        memory: 128Mi
+      requests:
+        cpu: 10m
+        memory: 64Mi
+    args:
+    - --health-probe-bind-address=:8081
+    - --metrics-bind-address=127.0.0.1:8080
+    - --leader-elect
+    command:
+    - /manager
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "postgrest-operator-controller-manager"
+
+podAnnotations:
+  kubectl.kubernetes.io/default-container: manager
+podLabels:
+  control-plane: controller-manager
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+service:
+  port: 8443
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: 
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/arch
+          operator: In
+          values:
+          - amd64
+          - arm64
+          - ppc64le
+          - s390x
+        - key: kubernetes.io/os
+          operator: In
+          values:
+          - linux
