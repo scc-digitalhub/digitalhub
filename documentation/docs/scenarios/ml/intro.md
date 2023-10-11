@@ -1,8 +1,12 @@
 # ML scenario introduction
 
-This is a scenario that comes as an official tutorial of MLRun. In fact, you can find the notebook in your Jupyter instance, in `/tutorial/01-mlrun-basics.ipynb`. For completeness' sake, you can also find a duplicate of it, and its related function files, in the `documentation/examples/ml` path within the repository of this documentation.
+This is a scenario that comes as an official tutorial of MLRun. In fact, its related notebook can be found in your Jupyter instance: `/tutorial/01-mlrun-basics.ipynb`. However, we skip a number of cells to keep it concise and to the point, while preserving the same functionality.
+
+The resulting edited notebook, as well as a file for the function we will create, are available in the `documentation/examples/ml` path within the repository of this documentation.
 
 We will prepare data, train a model and expose it as a service. Access Jupyter from your Coder instance and create a new notebook.
+
+## Set-up
 
 Let's initialize our working environment. Import required libraries:
 ``` python
@@ -22,6 +26,8 @@ Create a MLRun project:
 PROJECT = "demo-ml"
 project = mlrun.get_or_create_project(PROJECT, "./")
 ```
+
+## Generate data
 
 Define the following function, which generates the dataset as required by the model:
 ``` python
