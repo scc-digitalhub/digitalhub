@@ -3,6 +3,41 @@ entries:
   digitalhub:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2023-10-11T08:17:21.529428738Z"
+    dependencies:
+    - condition: docker-registry.enabled
+      name: docker-registry
+      repository: https://helm.twun.io
+      version: 2.2.2
+    - condition: mlrun-ce.enabled
+      name: mlrun-ce
+      repository: ""
+      version: 0.6.3-rc3
+    - condition: coder.enabled
+      name: coder
+      repository: ""
+      version: 0.1.0
+    - condition: postgres-operator.enabled
+      name: postgres-operator
+      repository: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+      version: 1.10.0
+    - condition: ext-postgres-operator.enabled
+      name: ext-postgres-operator
+      repository: ""
+      version: 1.2.4
+    - condition: custom-resource-manager.enabled
+      name: custom-resource-manager
+      repository: ""
+      version: 0.1.0
+    description: A Helm chart for Kubernetes
+    digest: 62f33ac9571073716f481908368295bdd13de08e11abf3307f2545db285ac084
+    name: digitalhub
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-0.1.8/digitalhub-0.1.8.tgz
+    version: 0.1.8
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2023-10-09T08:00:32.046002243Z"
     dependencies:
     - condition: docker-registry.enabled
@@ -176,4 +211,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-0.1.3/digitalhub-0.1.3.tgz
     version: 0.1.3
-generated: "2023-10-09T08:00:32.046026446Z"
+generated: "2023-10-11T08:17:21.529457239Z"
