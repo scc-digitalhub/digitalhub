@@ -277,5 +277,21 @@ ext-postgres-operator:
       secretName: "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do" 
       secretKey: "password"
 
+postgrest-operator:
+  enabled: true
+  postgres:
+    host: mlrun-postgres-cluster
+    port: 5432
+    uri_args: "sslmode=disable"
+    default_database: "postgres"
+    postgrest_service_type: NodePort
+  postgresCredsExistingSecrets:
+    username:
+      secretName: "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretKey: "username"
+    password:
+      secretName: "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretKey: "password"
+
 custom-resource-manager:
   enabled: true
