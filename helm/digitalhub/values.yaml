@@ -5,7 +5,7 @@ global:
   service:
     type: &serviceType "NodePort"
   registry:
-    url: 192.168.49.2:30050
+    url: 192.168.49.2:30150
     username: ""
     password: ""
     email: ""
