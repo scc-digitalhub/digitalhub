@@ -47,6 +47,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            {{- if .Values.postgresCredsExistingSecrets }}
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -57,6 +58,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.postgresCredsExistingSecrets.password.secretName }}
                   key: {{ .Values.postgresCredsExistingSecrets.password.secretKey }}
+            {{- end }}
             - name: OPERATOR_NAME
               value: {{ include "chart.fullname" . }}
             {{- range $key, $value := .Values.env }}
