@@ -318,7 +318,7 @@ resource "kubernetes_deployment" "jupyter" {
         }
         container {
           name              = "jupyter"
-          image             = "quay.io/mlrun/jupyter:1.3.0"
+          image             = "quay.io/mlrun/jupyter:1.4.0"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.jupyter.init_script]
           security_context {
