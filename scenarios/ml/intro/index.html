@@ -693,9 +693,47 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          ML scenario introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         ML scenario introduction
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#set-up" class="md-nav__link">
+    Set-up
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generate-data" class="md-nav__link">
+    Generate data
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -763,6 +801,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#set-up" class="md-nav__link">
+    Set-up
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generate-data" class="md-nav__link">
+    Generate data
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -777,8 +837,10 @@
 
 
 <h1 id="ml-scenario-introduction">ML scenario introduction</h1>
-<p>This is a scenario that comes as an official tutorial of MLRun. In fact, you can find the notebook in your Jupyter instance, in <code>/tutorial/01-mlrun-basics.ipynb</code>. For completeness' sake, you can also find a duplicate of it, and its related function files, in the <code>documentation/examples/ml</code> path within the repository of this documentation.</p>
+<p>This is a scenario that comes as an official tutorial of MLRun. In fact, its related notebook can be found in your Jupyter instance: <code>/tutorial/01-mlrun-basics.ipynb</code>. However, we skip a number of cells to keep it concise and to the point, while preserving the same functionality.</p>
+<p>The resulting edited notebook, as well as a file for the function we will create, are available in the <code>documentation/examples/ml</code> path within the repository of this documentation.</p>
 <p>We will prepare data, train a model and expose it as a service. Access Jupyter from your Coder instance and create a new notebook.</p>
+<h2 id="set-up">Set-up</h2>
 <p>Let's initialize our working environment. Import required libraries:
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">mlrun</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -792,6 +854,7 @@
 <div class="highlight"><pre><span></span><code><span class="n">PROJECT</span> <span class="o">=</span> <span class="s2">&quot;demo-ml&quot;</span>
 <span class="n">project</span> <span class="o">=</span> <span class="n">mlrun</span><span class="o">.</span><span class="n">get_or_create_project</span><span class="p">(</span><span class="n">PROJECT</span><span class="p">,</span> <span class="s2">&quot;./&quot;</span><span class="p">)</span>
 </code></pre></div></p>
+<h2 id="generate-data">Generate data</h2>
 <p>Define the following function, which generates the dataset as required by the model:
 <div class="highlight"><pre><span></span><code><span class="o">%%</span><span class="n">writefile</span> <span class="n">data</span><span class="o">-</span><span class="n">prep</span><span class="o">.</span><span class="n">py</span>
 
