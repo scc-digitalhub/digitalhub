@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "postgrest-operator.fullname" . }}
+  labels:
+    {{- include "postgrest-operator.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.deployment.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "postgrest-operator.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "postgrest-operator.labels" . | nindent 8 }}
+	{{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "postgrest-operator.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.deployment.securityContext | nindent 8 }}
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: {{ .Values.deployment.kubeRbacProxy.name }}
+          securityContext:
+            {{- toYaml .Values.deployment.kubeRbacProxy.securityContext | nindent 12 }}
+          image: "{{ .Values.deployment.kubeRbacProxy.image.repository }}:{{ .Values.deployment.kubeRbacProxy.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          ports:
+            - name: https
+              containerPort: {{ .Values.deployment.kubeRbacProxy.ports.containerPort }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.deployment.kubeRbacProxy.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          args:
+            {{- toYaml .Values.deployment.kubeRbacProxy.args | nindent 12 }}
+        - name: {{ .Values.deployment.manager.name }}
+          securityContext:
+            {{- toYaml .Values.deployment.manager.securityContext | nindent 12 }}
+          image: "{{ .Values.deployment.manager.image.repository }}:{{ .Values.deployment.manager.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.deployment.manager.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          env:
+            - name: WATCH_NAMESPACE
+              value: {{ include "postgrest-operator.namespaceCheck" . | quote }}
+            {{- if not .Values.postgrestString.existingSecret }}
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                {{- if .Values.postgresCredsExistingSecrets.username.secretName }}
+                  name: {{ .Values.postgresCredsExistingSecrets.username.secretName }}
+                  key: {{ .Values.postgresCredsExistingSecrets.username.secretKey }}
+                {{- else }}
+                  name: {{ .Chart.Name }}-postgres-user
+                  key: username
+                {{- end }}
+            - name: POSTGRES_PASS
+              valueFrom:
+                secretKeyRef:
+                {{- if .Values.postgresCredsExistingSecrets.password.secretName }}
+                  name: {{ .Values.postgresCredsExistingSecrets.password.secretName }}
+                  key: {{ .Values.postgresCredsExistingSecrets.password.secretKey }}
+                {{- else }}
+                  name: {{ .Chart.Name }}-postgres-password
+                  key: password
+                {{- end }}
+            {{- end }}
+            - name: POSTGREST_DATABASE_URI
+              {{- if .Values.postgrestString.existingSecret }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgrestString.existingSecret }}
+                  key: {{ .Values.postgrestString.passwordKey }}
+              {{- else }}
+              value: postgresql://$(POSTGRES_USER):$(POSTGRES_PASS)@$(HOST):$(PORT)/$(DEFAULT_DATABASE)?$(URI_ARGS)
+              {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Chart.Name }}-configmap
+          args:
+            {{- toYaml .Values.deployment.manager.args | nindent 12 }}
+          command:
+            {{- toYaml .Values.deployment.manager.command | nindent 12 }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-configmap
+data:
+  HOST: {{ .Values.postgres.host }}
+  URI_ARGS: {{ .Values.postgres.uri_args }}
+  PORT: {{ .Values.postgres.port | quote }}
+  DEFAULT_DATABASE: {{ .Values.postgres.default_database }}
+  POSTGREST_IMAGE: {{ .Values.postgres.postgrest_image }}
+  POSTGREST_IMAGE_TAG: {{ .Values.postgres.postgrest_image_tag }}
+  POSTGREST_SERVICE_TYPE: {{ .Values.postgres.postgrest_service_type }}
