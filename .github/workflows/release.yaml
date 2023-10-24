@@ -1,12 +1,78 @@
 name: Release Charts
-
 on:
   push:
     branches:
       - main
-
 jobs:
+  changeCheck:
+    runs-on: ubuntu-latest
+    outputs:
+      output: ${{ steps.checkchange.outputs.chartChange }}
+    steps:
+      - name: checkout
+        id: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: checkChange
+        id: checkchange
+        run: |
+          changes=$(git diff --name-only -r HEAD^1 HEAD)
+          helmChanges=$(echo "$changes" | grep -Po '^(helm\/digitalhub.*)' | cat)
+          chartChange=$(echo "$helmChanges" | grep -Po '^(helm\/digitalhub\/Chart\.yaml)' | cat)
+          if [ -n "$chartChange" ]; then
+            content=`cat helm/digitalhub/Chart.yaml`
+            diff=$(git diff -r HEAD^1 HEAD | tr '\n' ' ')
+            chartDiff=$(echo "$diff" | grep -Po 'digitalhub\/Chart\.yaml.*' | cat)
+            chartVersions=$(echo "$chartDiff" | grep -Po '.version: \d\.\d\.\d' | cat)
+            chartOldVersion=$(echo "$chartVersions" | grep -Po '\-.*' | cat)
+            chartNewVersion=$(echo "$chartVersions" | grep -Po '\+.*' | cat)
+            if [[ -n "$chartOldVersion" ]]
+            then
+              chartOldNum=$(echo "$chartOldVersion" | grep -Po '\d' | tr '\n' ' ' | cat)
+              chartNewNum=$(echo "$chartNewVersion" | grep -Po '\d' | tr '\n' ' ' | cat)
+              firstOldNum=$(echo "${chartOldNum:0:1}")
+              secondOldNum=$(echo "${chartOldNum:2:2}")
+              thirdOldNum=$(echo "${chartOldNum:4:4}")
+              firstNewNum=$(echo "${chartNewNum:0:1}")
+              secondNewNum=$(echo "${chartNewNum:2:2}")
+              thirdNewNum=$(echo "${chartNewNum:4:4}")
+              if [[ $firstNewNum -lt $firstOldNum ]]
+              then
+                echo "chartChange=ERROR" >> "$GITHUB_OUTPUT"
+              else
+                if [[ $firstNewNum -gt $firstOldNum ]]
+                then
+                  echo "chartChange=changed" >> "$GITHUB_OUTPUT"
+                else
+                  if [[ $secondNewNum -lt $secondOldNum ]]
+                  then
+                    echo "chartChange=ERROR" >> "$GITHUB_OUTPUT"
+                  else
+                    if [[ $secondNewNum -gt $secondOldNum ]]
+                    then
+                      echo "chartChange=changed" >> "$GITHUB_OUTPUT"
+                    else
+                      if [[ $thirdNewNum -lt $thirdOldNum ]]
+                      then
+                        echo "chartChange=ERROR" >> "$GITHUB_OUTPUT"
+                      else
+                        if [[ $thirdNewNum -gt $thirdOldNum ]]
+                        then
+                          echo "chartChange=changed" >> "$GITHUB_OUTPUT"
+                        fi
+                      fi
+                    fi
+                  fi
+                fi  
+              fi
+            fi
+          else
+            echo "chartChange=unchanged" >> "$GITHUB_OUTPUT"
+          fi
   release:
+    needs: changeCheck
+    if: needs.changeCheck.outputs.output == 'changed'
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -15,15 +81,12 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
       - name: Install Helm
         uses: azure/setup-helm@v3
-
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.5.0
         with:
