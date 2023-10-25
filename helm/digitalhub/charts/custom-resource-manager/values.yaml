@@ -4,6 +4,11 @@
 
 replicaCount: 1
 
+namespaceValues:
+  namespaced: true
+  namespace: ""
+  defaultValue: "*"
+
 image:
   repository: smartcommunitylab/custom-resource-manager
   pullPolicy: IfNotPresent
@@ -39,6 +44,9 @@ crdAllowed:
   - apiGroup: "nuclio.io"
     resources:
     - nuclioapigateways
+  - apiGroup: "operator.postgrest.org"
+    resources:
+    - postgrests
 
 securityContext: {}
 

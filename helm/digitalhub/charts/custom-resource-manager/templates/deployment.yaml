@@ -47,7 +47,7 @@ spec:
               port: http
           env:
             - name: K8S_NAMESPACE
-              value: {{ .Release.Namespace }}
+              value: {{ include "custom-resource-manager.namespaceCheck" . | quote }}
             - name: K8S_CRD_ALLOWED
               value: {{ include "custom-resource-manager.allowedCrd" . }}
             - name: APPLICATION_URL
