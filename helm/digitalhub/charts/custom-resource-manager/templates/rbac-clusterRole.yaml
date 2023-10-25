@@ -1,0 +1,67 @@
+{{ if not .Values.namespaceValues.namespaced }}
+{{- $clusterRoleCrd := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "crd") -}}
+{{- $clusterRoleCr := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "cr") -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ $clusterRoleCrd }}
+  labels:
+    {{- include "custom-resource-manager.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - "apiextensions.k8s.io"
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - list
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ $clusterRoleCrd }}
+  labels:
+    {{- include "custom-resource-manager.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ $clusterRoleCrd }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "custom-resource-manager.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ $clusterRoleCr }}
+rules:
+{{- range .Values.crdAllowed }}
+- apiGroups: [{{ .apiGroup }}]
+  resources: [{{ join "," .resources }}]
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+{{- end }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ $clusterRoleCr }}
+  labels:
+    {{- include "custom-resource-manager.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ $clusterRoleCr }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "custom-resource-manager.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
+{{- end }}

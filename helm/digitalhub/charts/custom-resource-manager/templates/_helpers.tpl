@@ -107,3 +107,18 @@ Create default access URL
 {{- end }}
 {{- end }}
 {{- end -}}
+
+{{/*
+Namespace function
+*/}}
+{{- define "custom-resource-manager.namespaceCheck" -}}
+{{- if .Values.namespaceValues.namespaced }}
+{{- if .Values.namespaceValues.namespace }}
+{{- .Values.namespaceValues.namespace }}
+{{- else }}
+{{- .Release.Namespace}}
+{{- end }}
+{{- else }}
+{{- .Values.namespaceValues.defaultValue }}
+{{- end }}
+{{- end }}
