@@ -1,4 +1,3 @@
-{{ if not .Values.namespaceValues.namespaced }}
 {{- $clusterRoleCrd := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "crd") -}}
 {{- $clusterRoleCr := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "cr") -}}
 apiVersion: rbac.authorization.k8s.io/v1
@@ -31,6 +30,7 @@ subjects:
   name: {{ include "custom-resource-manager.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 ---
+{{ if not .Values.namespaceValues.namespaced }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
