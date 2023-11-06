@@ -48,7 +48,8 @@ crdAllowed:
     resources:
     - postgrests
 
-securityContext: {}
+securityContext:
+  allowPrivilegeEscalation: false
 
 service:
   type: NodePort

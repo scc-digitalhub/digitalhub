@@ -181,6 +181,7 @@ resource "kubernetes_deployment" "grafana" {
           command           = ["/bin/sh", "-c", coder_agent.grafana.init_script]
           security_context {
             run_as_user = "472"
+            allow_privilege_escalation = false
           }
           env {
             name  = "CODER_AGENT_TOKEN"

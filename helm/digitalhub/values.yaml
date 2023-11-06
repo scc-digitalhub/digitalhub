@@ -295,3 +295,7 @@ postgrest-operator:
 
 custom-resource-manager:
   enabled: true
+
+securityContext:
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false

@@ -77,6 +77,8 @@ spec:
           image: "bitnami/kubectl:latest"
           command: ["/bin/sh"]
           args: ["-c", "kubectl -n {{ .Release.Namespace }} delete postgresql --all && sleep 1m"]
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12}}
       restartPolicy: OnFailure
 ---
 apiVersion: batch/v1
@@ -102,6 +104,8 @@ spec:
           image: "bitnami/kubectl:latest"
           command: ["/bin/sh"]
           args: ["-c", "kubectl -n {{ .Release.Namespace }} delete statefulsets,deploy,svc,cm -l app.kubernetes.io/part-of=coder && kubectl -n {{ .Release.Namespace }} delete --all pvc && kubectl -n {{ .Release.Namespace }} delete --all ingresses && sleep 1m"]
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12}}
       restartPolicy: OnFailure
 ---
 {{- if or .Values.global.cleanup.ingress .Values.global.cleanup.persistentVolumeClaim -}}

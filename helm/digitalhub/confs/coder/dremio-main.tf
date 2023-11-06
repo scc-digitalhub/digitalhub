@@ -401,6 +401,7 @@ resource "kubernetes_deployment" "dremio" {
           }
           security_context {
             run_as_user = "999"
+            allow_privilege_escalation = false
           }
         }
         container {
@@ -411,6 +412,7 @@ resource "kubernetes_deployment" "dremio" {
           security_context {
             run_as_user  = "999"
             run_as_group = "999"
+            allow_privilege_escalation = false
           }
           env {
             name  = "CODER_AGENT_TOKEN"
