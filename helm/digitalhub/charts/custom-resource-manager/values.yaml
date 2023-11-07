@@ -49,6 +49,7 @@ crdAllowed:
     - postgrests
 
 securityContext:
+  runAsNonRoot: true
   allowPrivilegeEscalation: false
 
 service:
