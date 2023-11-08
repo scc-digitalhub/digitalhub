@@ -35,13 +35,6 @@ podSecurityContext:
 global:
   externalHostAddress: ""
 
-
-mlrun-ce:
-  pipelines:
-    minio:
-      endpoint: ""
-      endpointPort: ""
-
 securityContext:
   capabilities:
     drop:
@@ -49,14 +42,14 @@ securityContext:
   runAsNonRoot: true
   allowPrivilegeEscalation: false
   # runAsUser: 1000
-core:
-  minio:
-    endpoint: ""
-    endpointPort: ""
-  service:
-    port: 8080
-    type: ClusterIP
-    httpNodePort: ""
+
+minio:
+  endpoint: ""
+  endpointPort: ""
+service:
+  port: 8080
+  type: ClusterIP
+  httpNodePort: ""
 
 ingress:
   enabled: false

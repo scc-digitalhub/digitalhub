@@ -295,14 +295,14 @@ postgrest-operator:
     password:
       secretName: "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do" 
       secretKey: "password"
+
 core:
-  core:
-    minio:
-      endpoint: "minio"
-      endpointPort: "9000"
-    service:
-      type: *serviceType
-      httpNodePort: "30180"
+  minio:
+    endpoint: "minio"
+    endpointPort: "9000"
+  service:
+    type: *serviceType
+    httpNodePort: "30180"
 
 custom-resource-manager:
   enabled: true
