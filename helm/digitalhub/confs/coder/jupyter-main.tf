@@ -314,6 +314,7 @@ resource "kubernetes_deployment" "jupyter" {
           }
           security_context {
             run_as_user = "0"
+            allow_privilege_escalation = false
           }
         }
         container {
@@ -323,6 +324,7 @@ resource "kubernetes_deployment" "jupyter" {
           command           = ["sh", "-c", coder_agent.jupyter.init_script]
           security_context {
             run_as_user = "1000"
+            allow_privilege_escalation = false
           }
           env {
             name  = "CODER_AGENT_TOKEN"

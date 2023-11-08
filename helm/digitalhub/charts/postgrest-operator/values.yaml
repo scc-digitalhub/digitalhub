@@ -54,6 +54,7 @@ deployment:
       capabilities:
         drop:
         - ALL
+      readOnlyRootFilesystem: true
     image:
       repository: gcr.io/kubebuilder/kube-rbac-proxy
       # Overrides the image tag whose default is the chart appVersion.

@@ -19,6 +19,12 @@ global:
     dashboard:
       nodePort: 30050
   externalHostAddress: &globalExternalUrl "192.168.49.2"
+  securityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
 
 docker-registry: 
   enabled: true
@@ -295,3 +301,8 @@ postgrest-operator:
 
 custom-resource-manager:
   enabled: true
+
+jobs:
+  delete:
+    securityContext:
+      readOnlyRootFilesystem: true
