@@ -43,7 +43,7 @@ spec:
             mountPath: "/home/coder/custom-template"
             readOnly: true
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12}}
+            {{- toYaml .Values.global.securityContext | nindent 12}}
       restartPolicy: Never
       volumes:
         - name: init-files

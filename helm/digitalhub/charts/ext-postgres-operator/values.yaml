@@ -33,6 +33,10 @@ podSecurityContext: {}
 securityContext:
   runAsNonRoot: true
   allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
