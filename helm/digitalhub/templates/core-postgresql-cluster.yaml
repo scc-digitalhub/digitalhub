@@ -13,6 +13,6 @@ spec:
     - createdb
     coreuser: []
   databases:
-    dbt: coreuser
+    core: coreuser
   postgresql:
     version: "15"

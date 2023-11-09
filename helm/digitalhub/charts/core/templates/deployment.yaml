@@ -37,32 +37,42 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: DHCORE_S3_ACCESS_KEY_ID
+            - name: DH_S3_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
                   name: minio
                   key: rootUser
-            - name: DHCORE_S3_SECRET_ACCESS_KEY
+            - name: DH_S3_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
                   name: minio
                   key: rootPassword
-            - name: DHCORE_AWS_ACCESS_KEY_ID
+            - name: DH_AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
                   name: minio
                   key: rootUser
-            - name: DHCORE_AWS_SECRET_ACCESS_KEY
+            - name: DH_AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
                   name: minio
                   key: rootPassword
-            - name: DHCORE_POSTGRES_USER
+            - name: DH_POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do
+                  key: username
+            - name: DH_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do
+                  key: password
+            - name: JDBC_USER
               valueFrom:
                 secretKeyRef:
                   name: coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do
                   key: username
-            - name: DHCORE_POSTGRES_PASSWORD
+            - name: JDBC_PASS
               valueFrom:
                 secretKeyRef:
                   name: coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do

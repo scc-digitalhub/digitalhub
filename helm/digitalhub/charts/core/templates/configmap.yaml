@@ -3,11 +3,14 @@ kind: ConfigMap
 metadata:
   name: {{ include "core.fullname" . }}
 data:
-  DHCORE_ENDPOINT: "{{ include "core.fullname" . }}:{{ .Values.service.port }}"
-  DHCORE_S3_ENDPOINT_URL: "{{ .Values.minio.endpoint }}:{{ index .Values.minio.endpointPort }}"
-  DHCORE_S3_BUCKET_NAME: core
-  DHCORE_POSTGRES_HOST: "core-postgres-cluster:5432"
-  DHCORE_POSTGRES_PORT: "5432"
-  DHCORE_POSTGRES_DATABASE: dbt
-  DHCORE_POSTGRES_SCHEMA: public
+  DHCORE_ENDPOINT: "http://{{ include "core.fullname" . }}:{{ .Values.service.port }}"
+  DH_S3_ENDPOINT_URL: "{{ .Values.minio.endpoint }}:{{ index .Values.minio.endpointPort }}"
+  DH_S3_BUCKET_NAME: core
+  DH_POSTGRES_HOST: "mlrun-postgres-cluster"
+  DH_POSTGRES_PORT: "5432"
+  DH_POSTGRES_DATABASE: mlrun
+  DH_POSTGRES_SCHEMA: public
   K8S_NAMESPACE: {{ .Release.Namespace }}
+  JDBC_URL: "jdbc:postgresql://core-postgres-cluster:5432/core"
+  JDBC_DRIVER: org.postgresql.Driver
+  JDBC_DIALECT: org.hibernate.dialect.PostgreSQLDialect
