@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "core.fullname" . }}
 data:
-  DHCORE_ENDPOINT: "http://{{ include "core.fullname" . }}:{{ .Values.service.port }}"
+  DH_ENDPOINT: "http://{{ include "core.fullname" . }}:{{ .Values.service.port }}"
   DH_S3_ENDPOINT_URL: "{{ .Values.minio.endpoint }}:{{ index .Values.minio.endpointPort }}"
   DH_S3_BUCKET_NAME: core
   DH_POSTGRES_HOST: "mlrun-postgres-cluster"
