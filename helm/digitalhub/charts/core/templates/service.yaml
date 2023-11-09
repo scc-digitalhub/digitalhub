@@ -5,12 +5,12 @@ metadata:
   labels:
     {{- include "core.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.core.service.type }}
+  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.core.service.port }}
+    - port: {{ .Values.service.port }}
       targetPort: http
       protocol: TCP
       name: http
-      {{ if eq .Values.core.service.type "NodePort" }}nodePort: {{ .Values.core.service.httpNodePort }}{{ end }}
+      {{ if eq .Values.service.type "NodePort" }}nodePort: {{ .Values.service.httpNodePort }}{{ end }}
   selector:
     {{- include "core.selectorLabels" . | nindent 4 }}

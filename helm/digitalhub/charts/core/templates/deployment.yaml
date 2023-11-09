@@ -72,7 +72,7 @@ spec:
               name: {{ include "core.fullname" . }}
           ports:
             - name: http
-              containerPort: {{ .Values.core.service.port }}
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

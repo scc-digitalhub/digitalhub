@@ -47,7 +47,7 @@ minio:
   endpoint: ""
   endpointPort: ""
 service:
-  port: 8080
+  port: "8080"
   type: ClusterIP
   httpNodePort: ""
 
