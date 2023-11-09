@@ -3,10 +3,11 @@ kind: ConfigMap
 metadata:
   name: {{ include "core.fullname" . }}
 data:
-  DHUB_CORE_ENDPOINT: "{{ include "core.fullname" . }}:{{ .Values.service.port }}"
-  S3_ENDPOINT_URL: "{{ .Values.minio.endpoint }}:{{ index .Values.minio.endpointPort }}"
-  S3_BUCKET_NAME: core
-  POSTGRES_HOST: "core-postgres-cluster:5432"
-  POSTGRES_PORT: "5432"
-  POSTGRES_DATABASE: dbt
-  POSTGRES_SCHEMA: public
+  DHCORE_ENDPOINT: "{{ include "core.fullname" . }}:{{ .Values.service.port }}"
+  DHCORE_S3_ENDPOINT_URL: "{{ .Values.minio.endpoint }}:{{ index .Values.minio.endpointPort }}"
+  DHCORE_S3_BUCKET_NAME: core
+  DHCORE_POSTGRES_HOST: "core-postgres-cluster:5432"
+  DHCORE_POSTGRES_PORT: "5432"
+  DHCORE_POSTGRES_DATABASE: dbt
+  DHCORE_POSTGRES_SCHEMA: public
+  K8S_NAMESPACE: {{ .Release.Namespace }}
