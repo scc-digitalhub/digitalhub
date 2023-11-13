@@ -75,7 +75,7 @@ resource "coder_app" "grafana" {
   icon         = "https://cdn.icon-icons.com/icons2/2699/PNG/512/grafana_logo_icon_171048.png"
   url          = "http://localhost:3000"
   subdomain    = true
-  share        = "owner"
+  share        = "authenticated"
 
   healthcheck {
     url       = "http://localhost:3000/api/health"
@@ -181,6 +181,7 @@ resource "kubernetes_deployment" "grafana" {
           command           = ["/bin/sh", "-c", coder_agent.grafana.init_script]
           security_context {
             run_as_user = "472"
+            allow_privilege_escalation = false
           }
           env {
             name  = "CODER_AGENT_TOKEN"

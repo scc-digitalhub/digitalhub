@@ -27,7 +27,7 @@ variable "namespace" {
 variable "db_host" {
   description = "Provide the db host"
   type        = string
-  default     = "mlrun-postgres-cluster"
+  default     = "database-postgres-cluster"
 }
 
 variable "db_name" {
@@ -39,7 +39,7 @@ variable "db_name" {
 variable "db_secret" {
   description = "Provide the db secret name with username and password"
   type        = string
-  default     = "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do"
+  default     = "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
 }
 
 variable "service_type" {
@@ -199,6 +199,7 @@ resource "kubernetes_deployment" "sqlpad" {
           command           = ["sh", "-c", coder_agent.sqlpad.init_script]
           security_context {
             run_as_user = "1000"
+            allow_privilege_escalation = false
           }
           env {
             name  = "CODER_AGENT_TOKEN"

@@ -41,7 +41,7 @@ variable "namespace" {
 variable "postgresql_hostname" {
   type        = string
   description = "Postgresql hostname"
-  default     = "mlrun-postgres-cluster"
+  default     = "database-postgres-cluster"
 }
 
 variable "minio_endpoint" {
@@ -65,7 +65,7 @@ variable "postgresql_db_name" {
 variable "postgresql_creds_secret" {
   type        = string
   description = "Postgresql database credentials secret"
-  default     = "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do"
+  default     = "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
 }
 
 variable "service_type" {
@@ -76,6 +76,16 @@ variable "service_type" {
 variable "node_port" {
   type    = string
   default = "30120"
+}
+
+variable "arrow_flight_node_port" {
+  type    = string
+  default = "30190"
+}
+
+variable "odbc_jdbc_node_port" {
+  type    = string
+  default = "30200"
 }
 
 variable "https" {
@@ -130,7 +140,7 @@ resource "coder_app" "dremio" {
   icon         = "https://cdn.icon-icons.com/icons2/2699/PNG/512/dremio_logo_icon_168234.png"
   url          = "http://127.0.0.1:9047"
   subdomain    = true
-  share        = "owner"
+  share        = "authenticated"
 }
 
 resource "coder_metadata" "dremio" {
@@ -141,9 +151,41 @@ resource "coder_metadata" "dremio" {
     value = "http://dremio-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}:${kubernetes_service.dremio-service.spec[0].port[0].port}"
   }
   item {
+    key   = "Arrow Flight Endpoint"
+    value = "dremio-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}:${kubernetes_service.dremio-service.spec[0].port[1].port}"
+  }
+  item {
     key   = "URL"
     value = local.dremio_url
   }
+}
+
+resource "kubernetes_secret" "dremio-secrets" {
+  metadata {
+    name      = "dremio-shared-creds"
+    namespace = var.namespace
+    labels = {
+      "app.kubernetes.io/name"     = "dremio-secret"
+      "app.kubernetes.io/instance" = "dremio-secret-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"  = "coder"
+      // Coder specific labels.
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace.me.owner_id
+      "com.coder.user.username"  = data.coder_workspace.me.owner
+    }
+    annotations = {
+      "com.coder.user.email" = data.coder_workspace.me.owner_email
+    }
+  }
+  data = {
+    url      = "dremio-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}:${kubernetes_service.dremio-service.spec[0].port[1].port}"
+    username = "admin"
+    password = data.coder_parameter.admin_password.value
+  }
+
+  type = "Opaque"
 }
 
 resource "kubernetes_persistent_volume_claim" "dremio-data" {
@@ -204,9 +246,22 @@ resource "kubernetes_service" "dremio-service" {
       "app.kubernetes.io/type"     = "workspace"
     }
     port {
+      name        = "ui"
       port        = 9047
       target_port = 9047
       node_port   = var.service_type == "ClusterIP" ? null : var.node_port
+    }
+    port {
+      name        = "arrow-flight"
+      port        = 32010
+      target_port = 32010
+      node_port   = var.service_type == "ClusterIP" ? null : var.arrow_flight_node_port
+    }
+    port {
+      name        = "odbc-jdbc"
+      port        = 31010
+      target_port = 31010
+      node_port   = var.service_type == "ClusterIP" ? null : var.odbc_jdbc_node_port
     }
     type = var.service_type
   }
@@ -401,6 +456,7 @@ resource "kubernetes_deployment" "dremio" {
           }
           security_context {
             run_as_user = "999"
+            allow_privilege_escalation = false
           }
         }
         container {
@@ -411,6 +467,7 @@ resource "kubernetes_deployment" "dremio" {
           security_context {
             run_as_user  = "999"
             run_as_group = "999"
+            allow_privilege_escalation = false
           }
           env {
             name  = "CODER_AGENT_TOKEN"
@@ -419,11 +476,11 @@ resource "kubernetes_deployment" "dremio" {
           resources {
             requests = {
               "cpu"    = "2000m"
-              "memory" = "2048Mi"
+              "memory" = "2Gi"
             }
             limits = {
               "cpu"    = "4000m"
-              "memory" = "4096Gi"
+              "memory" = "4Gi"
             }
           }
           volume_mount {

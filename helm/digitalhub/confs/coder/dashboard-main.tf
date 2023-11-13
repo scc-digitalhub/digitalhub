@@ -407,6 +407,7 @@ resource "kubernetes_deployment" "dashboard" {
           command           = ["/bin/dash", "-c", "exec /bin/coder agent"]
           security_context {
             run_as_user = "65532"
+            allow_privilege_escalation = false
           }
           env {
             name  = "CODER_AGENT_URL"

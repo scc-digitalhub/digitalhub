@@ -19,6 +19,12 @@ global:
     dashboard:
       nodePort: 30050
   externalHostAddress: &globalExternalUrl "192.168.49.2"
+  securityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
 
 docker-registry: 
   enabled: true
@@ -266,7 +272,7 @@ postgres-operator:
 ext-postgres-operator:
   enabled: true
   postgres:
-    host: mlrun-postgres-cluster
+    host: database-postgres-cluster
     user: ""
     password: ""
     uri_args: " "
@@ -274,26 +280,26 @@ ext-postgres-operator:
     default_database: "postgres"
   postgresCredsExistingSecrets:
     username:
-      secretName: "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretName: "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
       secretKey: "username"
     password:
-      secretName: "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretName: "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
       secretKey: "password"
 
 postgrest-operator:
   enabled: true
   postgres:
-    host: mlrun-postgres-cluster
+    host: database-postgres-cluster
     port: 5432
     uri_args: "sslmode=disable"
     default_database: "postgres"
     postgrest_service_type: NodePort
   postgresCredsExistingSecrets:
     username:
-      secretName: "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretName: "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
       secretKey: "username"
     password:
-      secretName: "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretName: "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
       secretKey: "password"
 
 core:
@@ -306,3 +312,39 @@ core:
 
 custom-resource-manager:
   enabled: true
+
+grafana:
+  enabled: true
+  adminPassword: digitalhub-test
+  service:
+    type: NodePort
+    nodePort: 30210
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Postgres
+          type: postgres
+          url: database-postgres-cluster:5432
+          user: ${username}
+          secureJsonData:
+            password: ${password}
+          jsonData:
+            database: digitalhub
+            sslmode: 'require' # disable/require/verify-ca/verify-full
+            maxOpenConns: 100 # Grafana v5.4+
+            maxIdleConns: 100 # Grafana v5.4+
+            maxIdleConnsAuto: true # Grafana v9.5.1+
+            connMaxLifetime: 14400 # Grafana v5.4+
+            postgresVersion: 1500 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
+            timescaledb: false
+  plugins:
+    - https://github.com/scc-digitalhub/grafana-dremio-datasource-plugin/raw/master/releases/digital-hub-dremio-1.1.1.zip;digital-hub-dremio
+  envFromSecret: digitalhub-public-reader-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+  env:
+    GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: "digital-hub-dremio"
+
+jobs:
+  delete:
+    securityContext:
+      readOnlyRootFilesystem: true
