@@ -1,0 +1,18 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: core-postgres-cluster
+spec:
+  teamId: "core"
+  volume:
+    size: 8Gi
+  numberOfInstances: 1
+  users:
+    coreadmin:  # database owner
+    - superuser
+    - createdb
+    coreuser: []
+  databases:
+    core: coreuser
+  postgresql:
+    version: "15"

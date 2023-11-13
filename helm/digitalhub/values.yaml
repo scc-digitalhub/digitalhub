@@ -189,6 +189,9 @@ mlrun-ce:
       - name: mlrun
         policy: none
         purge: false
+      - name: core
+        policy: none
+        purge: false
   spark-operator:
     enabled: true
     fullnameOverride: spark-operator
@@ -298,6 +301,14 @@ postgrest-operator:
     password:
       secretName: "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
       secretKey: "password"
+
+core:
+  minio:
+    endpoint: "minio"
+    endpointPort: "9000"
+  service:
+    type: *serviceType
+    httpNodePort: "30180"
 
 custom-resource-manager:
   enabled: true
