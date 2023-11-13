@@ -455,7 +455,7 @@ resource "kubernetes_deployment" "dremio" {
             read_only  = false
           }
           security_context {
-            run_as_user = "999"
+            run_as_user                = "999"
             allow_privilege_escalation = false
           }
         }
@@ -465,8 +465,8 @@ resource "kubernetes_deployment" "dremio" {
           image_pull_policy = "IfNotPresent"
           command           = ["sh", "-c", coder_agent.dremio.init_script]
           security_context {
-            run_as_user  = "999"
-            run_as_group = "999"
+            run_as_user                = "999"
+            run_as_group               = "999"
             allow_privilege_escalation = false
           }
           env {

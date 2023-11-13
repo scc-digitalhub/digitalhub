@@ -313,7 +313,7 @@ resource "kubernetes_deployment" "jupyter" {
             read_only  = false
           }
           security_context {
-            run_as_user = "0"
+            run_as_user                = "0"
             allow_privilege_escalation = false
           }
         }
@@ -323,7 +323,7 @@ resource "kubernetes_deployment" "jupyter" {
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.jupyter.init_script]
           security_context {
-            run_as_user = "1000"
+            run_as_user                = "1000"
             allow_privilege_escalation = false
           }
           env {

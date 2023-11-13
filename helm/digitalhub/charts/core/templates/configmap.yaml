@@ -6,7 +6,7 @@ data:
   DH_ENDPOINT: "http://{{ include "core.fullname" . }}:{{ .Values.service.port }}"
   DH_S3_ENDPOINT_URL: "{{ .Values.minio.endpoint }}:{{ index .Values.minio.endpointPort }}"
   DH_S3_BUCKET_NAME: core
-  DH_POSTGRES_HOST: "mlrun-postgres-cluster"
+  DH_POSTGRES_HOST: "database-postgres-cluster"
   DH_POSTGRES_PORT: "5432"
   DH_POSTGRES_DATABASE: mlrun
   DH_POSTGRES_SCHEMA: public
