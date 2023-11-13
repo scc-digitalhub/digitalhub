@@ -1,0 +1,24 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: database-postgres-cluster
+spec:
+  teamId: "digitalhub"
+  volume:
+    size: 8Gi
+  numberOfInstances: 3
+  users:
+    admin:
+    - superuser
+    - createdb
+    digitalhub: []
+  databases:
+    digitalhub: digitalhub
+  postgresql:
+    version: "15"
+  preparedDatabases:
+    digitalhub:
+      defaultUsers: true
+      schemas:
+        public:
+          defaultUsers: true

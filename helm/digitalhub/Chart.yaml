@@ -28,3 +28,6 @@ dependencies:
 - name: postgrest-operator
   condition: postgrest-operator.enabled
   version: "0.1.0"
+- name: grafana
+  condition: grafana.enabled
+  version: "7.0.3"

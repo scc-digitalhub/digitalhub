@@ -47,7 +47,7 @@ variable "db_name" {
 variable "db_secret" {
   description = "Provide the db secret name with username and password"
   type        = string
-  default     = "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do"
+  default     = "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
 }
 
 variable "service_type" {
@@ -342,7 +342,7 @@ resource "kubernetes_deployment" "jupyter" {
           }
           env {
             name  = "MLRUN_POSTGRES_URI"
-            value = "mlrun-postgres-cluster:5432"
+            value = "database-postgres-cluster:5432"
           }
           env {
             name  = "MLRUN_POSTGRES_DB_NAME"

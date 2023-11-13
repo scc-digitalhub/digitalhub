@@ -27,7 +27,7 @@ variable "namespace" {
 variable "db_host" {
   description = "Provide the db host"
   type        = string
-  default     = "mlrun-postgres-cluster"
+  default     = "database-postgres-cluster"
 }
 
 variable "db_name" {
@@ -39,7 +39,7 @@ variable "db_name" {
 variable "db_secret" {
   description = "Provide the db secret name with username and password"
   type        = string
-  default     = "mlrun.mlrun-postgres-cluster.credentials.postgresql.acid.zalan.do"
+  default     = "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
 }
 
 variable "service_type" {

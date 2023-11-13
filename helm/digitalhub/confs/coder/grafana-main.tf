@@ -75,7 +75,7 @@ resource "coder_app" "grafana" {
   icon         = "https://cdn.icon-icons.com/icons2/2699/PNG/512/grafana_logo_icon_171048.png"
   url          = "http://localhost:3000"
   subdomain    = true
-  share        = "owner"
+  share        = "authenticated"
 
   healthcheck {
     url       = "http://localhost:3000/api/health"
