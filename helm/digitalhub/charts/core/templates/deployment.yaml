@@ -60,12 +60,12 @@ spec:
             - name: DH_POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: database.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+                  name: digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do
                   key: username
             - name: DH_POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: database.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+                  name: digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do
                   key: password
             - name: JDBC_USER
               valueFrom:
