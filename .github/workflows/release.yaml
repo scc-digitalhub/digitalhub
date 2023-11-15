@@ -2,7 +2,7 @@ name: Release Charts
 on:
   push:
     branches:
-      - main
+      - workflowfix
 jobs:
   changeCheck:
     runs-on: ubuntu-latest
