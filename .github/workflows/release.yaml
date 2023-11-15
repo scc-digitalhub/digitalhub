@@ -85,6 +85,8 @@ jobs:
             then
               chartOldNum=$(echo "$chartOldVersion" | grep -Po '\d' | tr '\n' ' ' | cat)
               chartNewNum=$(echo "$chartNewVersion" | grep -Po '\d' | tr '\n' ' ' | cat)
+              echo "$chartNewVersion"
+              echo "$chartNewNum"
               firstOldNum=$(echo "${chartOldNum:0:1}")
               secondOldNum=$(echo "${chartOldNum:2:2}")
               thirdOldNum=$(echo "${chartOldNum:4:4}")
@@ -147,3 +149,70 @@ jobs:
           charts_dir: helm/
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+
+
+          changes=$(git diff --name-only -r HEAD^1 HEAD)
+          helmChanges=$(echo "$changes" | grep -Po '^(helm\/digitalhub.*)' | cat)
+          chartChange=$(echo "$helmChanges" | grep -Po '^(helm\/digitalhub\/Chart\.yaml)' | cat)
+          if [ -n "$chartChange" ]; then
+            content=`cat helm/digitalhub/Chart.yaml`
+            diff=$(git diff -r HEAD^1 HEAD | tr '\n' ' ')
+            chartDiff=$(echo "$diff" | grep -Po 'digitalhub\/Chart\.yaml.*' | cat)
+            echo "$chartDiff"
+            chartVersions=$(echo "$chartDiff" | grep -Po '.version: \d\.\d\.\d.' | cat)
+            echo "$chartVersions"
+            chartOldVersion=$(echo "$chartVersions" | grep -Po '\-.*' | cat)
+            chartNewVersion=$(echo "$chartVersions" | grep -Po '\+.*' | cat)
+            if [[ -n "$chartOldVersion" ]]
+            then
+              chartOldNum=$(echo "$chartOldVersion" | grep -Po '(?<= )[\w+.-]+\d' | cat)
+              chartNewNum=$(echo "$chartNewVersion" | grep -Po '(?<= )[\w+.-]+\d' | cat)
+              echo "$chartOldNum"
+              echo "$chartNewNum"
+              firstOldNum=$(echo "$chartOldNum" | grep -Po '^([^\.]+)' | cat)
+              echo "$firstOldNum"
+              secondOldNum=$(echo "$chartOldNum" | grep -Po '(?<=\.)(.*)(?=\.)' | cat)
+              echo "$secondOldNum"
+              thirdOldNum=$(echo "$chartOldNum" | grep -Po '([^.]*$)' | cat)
+              echo "$chartOldNum"
+              echo "$thirdOldNum"
+              firstNewNum=$(echo "$chartNewNum" | grep -Po '^([^\.]+)' | cat)
+              secondNewNum=$(echo "$chartNewNum" | grep -Po '(?<=\.)(.*)(?=\.)' | cat)
+              thirdNewNum=$(echo "$chartNewNum" | grep -Po '([^.]*$)' | cat)
+              echo "$firstNewNum"
+              echo "$secondNewNum"
+              echo "$thirdNewNum"
+              if [[ $firstNewNum -lt $firstOldNum ]]
+              then
+                echo "chartChange=ERROR"
+              else
+                if [[ $firstNewNum -gt $firstOldNum ]]
+                then
+                  echo "chartChange=changed" 
+                else
+                  if [[ $secondNewNum -lt $secondOldNum ]]
+                  then
+                    echo "chartChange=ERROR" 
+                  else
+                    if [[ $secondNewNum -gt $secondOldNum ]]
+                    then
+                      echo "chartChange=changed" 
+                    else
+                      if [[ $thirdNewNum -lt $thirdOldNum ]]
+                      then
+                        echo "chartChange=ERROR" 
+                      else
+                        if [[ $thirdNewNum -gt $thirdOldNum ]]
+                        then
+                          echo "chartChange=changed" 
+                        fi
+                      fi
+                    fi
+                  fi
+                fi  
+              fi
+            fi
+          else
+            echo "chartChange=unchanged" 
+          fi
