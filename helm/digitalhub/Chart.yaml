@@ -33,4 +33,5 @@ dependencies:
   condition: grafana.enabled
   version: "7.0.3"
 - name: core
+  version: "0.1.0"
   condition: core.enabled
