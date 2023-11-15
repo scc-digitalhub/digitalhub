@@ -69,6 +69,12 @@ variable "external_url" {
   type = string
 }
 
+variable "dhcore_endpoint" {
+  type        = string
+  description = "DHCore endpoint"
+  default     = "digitalhub-core:8080"
+}
+
 data "coder_parameter" "cpu" {
   name         = "cpu"
   display_name = "CPU"
@@ -367,6 +373,10 @@ resource "kubernetes_deployment" "jupyter" {
                 key  = "password"
               }
             }
+          }
+          env {
+            name = "DHCORE_ENDPOINT"
+            value = var.dhcore_endpoint
           }
           env_from {
             config_map_ref {
