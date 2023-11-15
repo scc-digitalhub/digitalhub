@@ -71,8 +71,8 @@ jobs:
             echo "chartChange=unchanged" >> "$GITHUB_OUTPUT"
           fi
   release:
-    needs: changeCheck
-    if: needs.changeCheck.outputs.output == 'changed'
+    # needs: changeCheck
+    # if: needs.changeCheck.outputs.output == 'changed'
     permissions:
       contents: write
     runs-on: ubuntu-latest
