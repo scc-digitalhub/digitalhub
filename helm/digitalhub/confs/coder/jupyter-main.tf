@@ -340,7 +340,7 @@ resource "kubernetes_deployment" "jupyter" {
           }
           env {
             name  = "MLRUN_NAMESPACE"
-            value = "mlrun"
+            value = var.namespace
           }
           env {
             name  = "MLRUN_POSTGRES_URI"

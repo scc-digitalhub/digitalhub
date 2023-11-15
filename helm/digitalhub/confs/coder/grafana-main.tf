@@ -180,7 +180,7 @@ resource "kubernetes_deployment" "grafana" {
           image_pull_policy = "Always"
           command           = ["/bin/sh", "-c", coder_agent.grafana.init_script]
           security_context {
-            run_as_user = "472"
+            run_as_user                = "472"
             allow_privilege_escalation = false
           }
           env {
@@ -197,7 +197,7 @@ resource "kubernetes_deployment" "grafana" {
           }
           env {
             name  = "GF_INSTALL_PLUGINS"
-            value = "https://github.com/scc-digitalhub/grafana-dremio-datasource-plugin/raw/master/releases/digital-hub-dremio-1.0.1.zip;digital-hub-dremio"
+            value = "https://github.com/scc-digitalhub/grafana-dremio-datasource-plugin/raw/master/releases/digital-hub-dremio-1.1.1.zip;digital-hub-dremio"
           }
           env {
             name  = "GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS"

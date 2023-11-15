@@ -33,7 +33,7 @@ variable "db_host" {
 variable "db_name" {
   description = "Provide the db name"
   type        = string
-  default     = "mlrun"
+  default     = "database"
 }
 
 variable "db_secret" {

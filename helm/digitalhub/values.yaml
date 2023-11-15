@@ -186,10 +186,7 @@ mlrun-ce:
       size: 128Gi
     fullnameOverride: minio
     buckets:
-      - name: mlrun
-        policy: none
-        purge: false
-      - name: core
+      - name: datalake
         policy: none
         purge: false
   spark-operator:
@@ -219,7 +216,7 @@ mlrun-ce:
       secretKey: "minio123"
       endpoint: "minio"
       endpointPort: "9000"
-      bucket: "mlrun"
+      bucket: "datalake"
   kube-prometheus-stack:
     enabled: false  
 
@@ -303,6 +300,7 @@ postgrest-operator:
       secretKey: "password"
 
 core:
+  enabled: true
   minio:
     endpoint: "minio"
     endpointPort: "9000"
