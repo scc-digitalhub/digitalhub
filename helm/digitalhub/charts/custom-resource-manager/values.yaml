@@ -11,7 +11,7 @@ namespaceValues:
 
 image:
   repository: smartcommunitylab/custom-resource-manager
-  pullPolicy: IfNotPresentewr2312312
+  pullPolicy: IfNotPresentewr23123122321
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
