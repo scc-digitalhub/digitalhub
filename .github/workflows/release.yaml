@@ -24,7 +24,7 @@ jobs:
             content=`cat helm/digitalhub/Chart.yaml`
             diff=$(git diff -r HEAD^1 HEAD | tr '\n' ' ')
             chartDiff=$(echo "$diff" | grep -Po 'digitalhub\/Chart\.yaml.*' | cat)
-            chartVersions=$(echo "$chartDiff" | grep -Po '.version: \d\.\d\.\d.' | cat)
+            chartVersions=$(echo "$chartDiff" | grep -Po '(?<= ).version: \d+.\d+.\d+(?= )' | cat)
             chartOldVersion=$(echo "$chartVersions" | grep -Po '\-.*' | cat)
             chartNewVersion=$(echo "$chartVersions" | grep -Po '\+.*' | cat)
             if [[ -n "$chartOldVersion" ]]
