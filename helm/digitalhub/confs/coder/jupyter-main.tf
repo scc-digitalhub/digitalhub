@@ -325,7 +325,7 @@ resource "kubernetes_deployment" "jupyter" {
         }
         container {
           name              = "jupyter"
-          image             = "quay.io/mlrun/jupyter:1.4.0"
+          image             = "ghcr.io/scc-digitalhub/jupyter:1.4.0"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.jupyter.init_script]
           security_context {
@@ -375,7 +375,7 @@ resource "kubernetes_deployment" "jupyter" {
             }
           }
           env {
-            name = "DHCORE_ENDPOINT"
+            name  = "DHCORE_ENDPOINT"
             value = var.dhcore_endpoint
           }
           env_from {

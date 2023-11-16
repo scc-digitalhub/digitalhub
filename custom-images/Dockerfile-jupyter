@@ -1,0 +1,8 @@
+FROM quay.io/mlrun/jupyter:1.4.0
+LABEL org.opencontainers.image.source=https://github.com/scc-digitalhub/digitalhub
+RUN conda create -n digitalhub-sdk python=3.9 --no-default-packages
+SHELL ["conda", "run", "-n", "digitalhub-sdk", "/bin/bash", "-c"]
+RUN python -m pip install ipykernel
+RUN python -m ipykernel install --name digitalhub-sdk --display-name "digitalhub-sdk" --user
+RUN pip install -e "git+https://github.com/scc-digitalhub/digitalhub-core.git#egg=digitalhub_core&subdirectory=sdk"
+RUN pip install -e "git+https://github.com/scc-digitalhub/digitalhub-core.git#egg=digitalhub_core_dbt&subdirectory=sdk/modules/dbt"
