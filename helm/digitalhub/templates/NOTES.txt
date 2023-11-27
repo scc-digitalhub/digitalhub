@@ -28,4 +28,6 @@ Digitalhub componet URLs:
   - KubeFlow: http://{{ $externalUrl }}:30100
   - Coder: http://{{ $externalUrl }}:{{ .Values.coder.coder.service.httpNodePort }} (Username: {{ .Values.coder.email }} Password: {{ .Values.coder.password }})
   - Core: http://{{ $externalUrl }}:{{ .Values.core.service.httpNodePort }}
+  - Grafana: http://{{ $externalUrl }}:{{ .Values.grafana.service.nodePort }}
+  - Costom Resource Manager: http://{{ $externalUrl }}:{{ index .Values "custom-resource-manager" "service" "nodePort" }}
 {{ end }}

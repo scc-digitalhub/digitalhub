@@ -310,6 +310,9 @@ core:
 
 custom-resource-manager:
   enabled: true
+  service:
+    type: *serviceType
+    httpNodePort: "30220"
 
 grafana:
   enabled: true

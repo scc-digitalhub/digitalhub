@@ -21,6 +21,8 @@ locals {
   minio                = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}minio.${var.external_url}%{else}${var.external_url}:30080%{endif}"
   nuclio_dashboard     = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}nuclio-ui--${data.coder_workspace.me.name}--digitalhub-dashboard--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:30040%{endif}"
   kubeflow_ui          = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}kubeflow-ui--${data.coder_workspace.me.name}--digitalhub-dashboard--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:30100%{endif}"
+  grafana              = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}dashboard.${var.external_url}%{else}${var.external_url}:30210%{endif}"
+  crm                  = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}crm.${var.external_url}%{else}${var.external_url}:30220%{endif}"
 }
 
 variable "use_kubeconfig" {
@@ -218,6 +220,18 @@ resource "kubernetes_config_map" "components-json" {
             "name": "Kubeflow Dashboard",
             "description": "MLflow is an open source platform to manage the ML lifecycle, including experimentation, reproducibility, deployment, and a central model registry",
             "link": "${local.kubeflow_ui}"
+        },
+        {
+            "slug": "grafana,
+            "name": "Grafana",
+            "description": "Grafana is the open source analytics & monitoring solution for every database.",
+            "link": "${local.grafana}"
+        },
+        {
+            "slug": "crm",
+            "name": "Custom Resource Manager",
+            "description": "A manager for custom resources in kubernetes.",
+            "link": "${local.crm}"
         }
       ]
     EOT
@@ -406,7 +420,7 @@ resource "kubernetes_deployment" "dashboard" {
           image_pull_policy = "IfNotPresent"
           command           = ["/bin/dash", "-c", "exec /bin/coder agent"]
           security_context {
-            run_as_user = "65532"
+            run_as_user                = "65532"
             allow_privilege_escalation = false
           }
           env {
