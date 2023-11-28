@@ -21,11 +21,13 @@ nav:
     - 'components/sqlpad.md'
     - 'components/grafana.md'
     - 'components/vscode.md'
+    - 'components/resourcemanager.md'
   - Tasks:
     - 'tasks/projects.md'
     - 'tasks/workspaces.md'
     - 'tasks/data.md'
     - 'tasks/git.md'
+    - 'tasks/rm-custom-views.md'
   - Scenarios:
     - Extract-Transform-Load:
       - 'scenarios/etl/intro.md'
@@ -37,7 +39,11 @@ nav:
       - 'scenarios/ml/intro.md'
       - 'scenarios/ml/training.md'
       - 'scenarios/ml/deploy.md'
-    
+    - DBT transformation:
+      - 'scenarios/etl-core/scenario.md'
+    - Nefertem validation:
+      - 'scenarios/validation/scenario.md'
+
 theme:
   name: material
   custom_dir: custom/
@@ -45,11 +51,11 @@ theme:
     - navigation.expand
     - navigation.path
     - content.code.copy
-  palette: 
+  palette:
     # Palette toggle for light mode
     - scheme: default
       toggle:
-        icon: material/brightness-7 
+        icon: material/brightness-7
         name: Switch to dark mode
     # Palette toggle for dark mode
     - scheme: slate

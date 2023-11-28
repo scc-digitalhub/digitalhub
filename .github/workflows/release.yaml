@@ -24,19 +24,19 @@ jobs:
             content=`cat helm/digitalhub/Chart.yaml`
             diff=$(git diff -r HEAD^1 HEAD | tr '\n' ' ')
             chartDiff=$(echo "$diff" | grep -Po 'digitalhub\/Chart\.yaml.*' | cat)
-            chartVersions=$(echo "$chartDiff" | grep -Po '.version: \d\.\d\.\d' | cat)
+            chartVersions=$(echo "$chartDiff" | grep -Po '(?<= ).version: \d+.\d+.\d+(?= )' | cat)
             chartOldVersion=$(echo "$chartVersions" | grep -Po '\-.*' | cat)
             chartNewVersion=$(echo "$chartVersions" | grep -Po '\+.*' | cat)
             if [[ -n "$chartOldVersion" ]]
             then
-              chartOldNum=$(echo "$chartOldVersion" | grep -Po '\d' | tr '\n' ' ' | cat)
-              chartNewNum=$(echo "$chartNewVersion" | grep -Po '\d' | tr '\n' ' ' | cat)
-              firstOldNum=$(echo "${chartOldNum:0:1}")
-              secondOldNum=$(echo "${chartOldNum:2:2}")
-              thirdOldNum=$(echo "${chartOldNum:4:4}")
-              firstNewNum=$(echo "${chartNewNum:0:1}")
-              secondNewNum=$(echo "${chartNewNum:2:2}")
-              thirdNewNum=$(echo "${chartNewNum:4:4}")
+              chartOldNum=$(echo "$chartOldVersion" | grep -Po '(?<= )[\w+.-]+\d' | cat)
+              chartNewNum=$(echo "$chartNewVersion" | grep -Po '(?<= )[\w+.-]+\d' | cat)
+              firstOldNum=$(echo "$chartOldNum" | grep -Po '^([^\.]+)' | cat)
+              secondOldNum=$(echo "$chartOldNum" | grep -Po '(?<=\.)(.*)(?=\.)' | cat)
+              thirdOldNum=$(echo "$chartOldNum" | grep -Po '([^.]*$)' | cat)
+              firstNewNum=$(echo "$chartNewNum" | grep -Po '^([^\.]+)' | cat)
+              secondNewNum=$(echo "$chartNewNum" | grep -Po '(?<=\.)(.*)(?=\.)' | cat)
+              thirdNewNum=$(echo "$chartNewNum" | grep -Po '([^.]*$)' | cat)
               if [[ $firstNewNum -lt $firstOldNum ]]
               then
                 echo "chartChange=ERROR" >> "$GITHUB_OUTPUT"
@@ -71,8 +71,8 @@ jobs:
             echo "chartChange=unchanged" >> "$GITHUB_OUTPUT"
           fi
   release:
-    # needs: changeCheck
-    # if: needs.changeCheck.outputs.output == 'changed'
+    needs: changeCheck
+    if: needs.changeCheck.outputs.output == 'changed'
     permissions:
       contents: write
     runs-on: ubuntu-latest
