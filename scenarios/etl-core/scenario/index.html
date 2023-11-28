@@ -9,24 +9,24 @@
       
       
       
-        <link rel="prev" href="../jupyter/">
+        <link rel="prev" href="../../ml/deploy/">
       
       
-        <link rel="next" href="../mlrun/">
+        <link rel="next" href="../../validation/scenario/">
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.19">
     
     
       
-        <title>Dremio - Digital Hub</title>
+        <title>ETL with digitalhub-core and DBT scenario introduction - Digital Hub</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.eebd395e.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.eebd395e.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ecc896b0.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -42,7 +42,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dremio" class="md-skip">
+        <a href="#etl-with-digitalhub-core-and-dbt-scenario-introduction" class="md-skip">
           Skip to content
         </a>
       
@@ -87,7 +87,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Digital Hub" class="md-header__button md-logo" aria-label="Digital Hub" data-md-component="logo">
+    <a href="../../.." title="Digital Hub" class="md-header__button md-logo" aria-label="Digital Hub" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Dremio
+              ETL with digitalhub-core and DBT scenario introduction
             
           </span>
         </div>
@@ -199,7 +199,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Digital Hub" class="md-nav__button md-logo" aria-label="Digital Hub" data-md-component="logo">
+    <a href="../../.." title="Digital Hub" class="md-nav__button md-logo" aria-label="Digital Hub" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -218,7 +218,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -233,7 +233,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../architecture/" class="md-nav__link">
+      <a href="../../../architecture/" class="md-nav__link">
         Overview and architecture
       </a>
     </li>
@@ -248,7 +248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/" class="md-nav__link">
+      <a href="../../../installation/" class="md-nav__link">
         Installation
       </a>
     </li>
@@ -263,7 +263,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../core/" class="md-nav__link">
+      <a href="../../../core/" class="md-nav__link">
         Core
       </a>
     </li>
@@ -276,16 +276,16 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
       
       
       
@@ -294,7 +294,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
           Components
@@ -307,7 +307,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../deploying-components/" class="md-nav__link">
+      <a href="../../../components/deploying-components/" class="md-nav__link">
         Deploying components
       </a>
     </li>
@@ -321,7 +321,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dashboard/" class="md-nav__link">
+      <a href="../../../components/dashboard/" class="md-nav__link">
         Dashboard
       </a>
     </li>
@@ -335,7 +335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../jupyter/" class="md-nav__link">
+      <a href="../../../components/jupyter/" class="md-nav__link">
         Jupyter
       </a>
     </li>
@@ -347,59 +347,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Dremio
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../components/dremio/" class="md-nav__link">
         Dremio
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#query-data-sources" class="md-nav__link">
-    Query data sources
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    Resources
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -411,7 +363,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mlrun/" class="md-nav__link">
+      <a href="../../../components/mlrun/" class="md-nav__link">
         MLRun
       </a>
     </li>
@@ -425,7 +377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sqlpad/" class="md-nav__link">
+      <a href="../../../components/sqlpad/" class="md-nav__link">
         SQLPad
       </a>
     </li>
@@ -439,7 +391,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../grafana/" class="md-nav__link">
+      <a href="../../../components/grafana/" class="md-nav__link">
         Grafana
       </a>
     </li>
@@ -453,7 +405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vscode/" class="md-nav__link">
+      <a href="../../../components/vscode/" class="md-nav__link">
         Visual Studio Code
       </a>
     </li>
@@ -467,7 +419,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../resourcemanager/" class="md-nav__link">
+      <a href="../../../components/resourcemanager/" class="md-nav__link">
         Custom Resource Manager
       </a>
     </li>
@@ -518,7 +470,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tasks/projects/" class="md-nav__link">
+      <a href="../../../tasks/projects/" class="md-nav__link">
         Projects
       </a>
     </li>
@@ -532,7 +484,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tasks/workspaces/" class="md-nav__link">
+      <a href="../../../tasks/workspaces/" class="md-nav__link">
         Workspaces
       </a>
     </li>
@@ -546,7 +498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tasks/data/" class="md-nav__link">
+      <a href="../../../tasks/data/" class="md-nav__link">
         Data and transformations
       </a>
     </li>
@@ -560,7 +512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tasks/git/" class="md-nav__link">
+      <a href="../../../tasks/git/" class="md-nav__link">
         Git best practices
       </a>
     </li>
@@ -574,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tasks/rm-custom-views/" class="md-nav__link">
+      <a href="../../../tasks/rm-custom-views/" class="md-nav__link">
         CRM - Custom views
       </a>
     </li>
@@ -594,16 +546,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
       
       
       
@@ -612,7 +564,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_7">
           <span class="md-nav__icon md-icon"></span>
           Scenarios
@@ -654,7 +606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../scenarios/etl/intro/" class="md-nav__link">
+      <a href="../../etl/intro/" class="md-nav__link">
         ETL scenario introduction
       </a>
     </li>
@@ -668,7 +620,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../scenarios/etl/collect/" class="md-nav__link">
+      <a href="../../etl/collect/" class="md-nav__link">
         Collect the data
       </a>
     </li>
@@ -682,7 +634,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../scenarios/etl/process/" class="md-nav__link">
+      <a href="../../etl/process/" class="md-nav__link">
         Process the data
       </a>
     </li>
@@ -696,7 +648,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../scenarios/etl/pipeline/" class="md-nav__link">
+      <a href="../../etl/pipeline/" class="md-nav__link">
         Workflow
       </a>
     </li>
@@ -710,7 +662,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../scenarios/etl/expose/" class="md-nav__link">
+      <a href="../../etl/expose/" class="md-nav__link">
         Expose datasets as API
       </a>
     </li>
@@ -760,7 +712,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../scenarios/ml/intro/" class="md-nav__link">
+      <a href="../../ml/intro/" class="md-nav__link">
         ML scenario introduction
       </a>
     </li>
@@ -774,7 +726,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../scenarios/ml/training/" class="md-nav__link">
+      <a href="../../ml/training/" class="md-nav__link">
         Training the model
       </a>
     </li>
@@ -788,7 +740,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../scenarios/ml/deploy/" class="md-nav__link">
+      <a href="../../ml/deploy/" class="md-nav__link">
         Deploy and expose the model
       </a>
     </li>
@@ -807,16 +759,16 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_3" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" checked>
       
       
       
@@ -825,7 +777,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_7_3">
           <span class="md-nav__icon md-icon"></span>
           DBT transformation
@@ -836,11 +788,80 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../scenarios/etl-core/scenario/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          ETL with digitalhub-core and DBT scenario introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         ETL with digitalhub-core and DBT scenario introduction
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-data-source" class="md-nav__link">
+    Set data source
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-up-the-function" class="md-nav__link">
+    Set up the function
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-the-function" class="md-nav__link">
+    Run the function
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#explore-the-results" class="md-nav__link">
+    Explore the results
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -888,7 +909,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../scenarios/validation/scenario/" class="md-nav__link">
+      <a href="../../validation/scenario/" class="md-nav__link">
         Validation with digitalhub-core and Nefertem scenario introduction
       </a>
     </li>
@@ -936,15 +957,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#query-data-sources" class="md-nav__link">
-    Query data sources
+  <a href="#setup" class="md-nav__link">
+    Setup
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    Resources
+  <a href="#set-data-source" class="md-nav__link">
+    Set data source
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-up-the-function" class="md-nav__link">
+    Set up the function
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-the-function" class="md-nav__link">
+    Run the function
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#explore-the-results" class="md-nav__link">
+    Explore the results
   </a>
   
 </li>
@@ -964,28 +1006,73 @@
                   
 
 
-<h1 id="dremio">Dremio</h1>
-<p><a href="https://www.dremio.com/">Dremio</a> provides unified access to data from heterogeneous sources, combining them and granting the ability to visualize them.</p>
-<ul>
-<li>Support for many common sources (relational DBs, <em>NoSQL</em>, <em>Parquet</em>, <em>JSON</em>, <em>Excel</em>, etc.)</li>
-<li>Run read-only SQL queries and join data independently of source</li>
-<li>Create virtual datasets from queries</li>
-</ul>
-<div class="admonition info">
-<p class="admonition-title">How to access</p>
-<p>Dremio may be launched from <a href="/digitalhub/components/deploying-components">Coder, using its template</a>. It will ask for a <em>Dremio Admin Password</em>. Access Dremio by logging in with username <code>admin</code> and this password.</p>
-<p>The template automatically configures connections to both MinIO (<em>Object Storage</em>) and Postgres (<em>Database</em>), so you do not need to worry about adding them.</p>
-</div>
-<h2 id="query-data-sources">Query data sources</h2>
-<p>Once in, you will notice MinIO and Postgres on the left, under <em>Sources</em>. There may already be some data we can use for a quick test.</p>
-<p>Click on <em>minio</em> and you may see a file listed to the right or, if you see a folder instead, navigate deeper until you find a file. Click on any file you may have found. If the format was explicitly specified in the name, Dremio will detect it and offer a number of settings for the dataset. If not, try different values of <em>Format</em> until one seems correct. Then, click <em>Save</em>.</p>
-<p>Dremio will switch to to the <em>SQL Runner</em> and you can run queries against the file you selected.</p>
-<p><img alt="Dremio image" src="../../images/dremio.png" /></p>
-<p>Of course, you may also run queries against the Postgres database.</p>
-<h2 id="resources">Resources</h2>
-<ul>
-<li><a href="https://docs.dremio.com/">Official documentation</a></li>
-</ul>
+<h1 id="etl-with-digitalhub-core-and-dbt-scenario-introduction">ETL with digitalhub-core and DBT scenario introduction</h1>
+<p>Here we explore a proper, realistic scenario. We collect some data regarding organizations, analyze and transform it, then expose the resulting dataset.</p>
+<p>Access Jupyter from your Coder instance and create a new notebook. If a Jupyter workspace isn't already available, create one from its template.</p>
+<p>Open a new notebook using the digitalhub-core kernel.</p>
+<p>We'll now start writing code. Copy the snippets of code from here and paste them in your notebook, then execute them with <em>Shift+Enter</em>. After running, Jupyter will create a new code cell.</p>
+<p>The notebook file covering this scenario, as well as files for individual functions, are available in the <code>documentation/examples/etl-core</code> path within the repository of this documentation.</p>
+<h2 id="setup">Setup</h2>
+<p>First, we initialize our environment and create a project.</p>
+<p>Import required libraries:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">digitalhub</span><span class="o">-</span><span class="n">core</span> <span class="k">as</span> <span class="n">dhcore</span>
+</code></pre></div>
+<p>Create a project:</p>
+<div class="highlight"><pre><span></span><code><span class="n">PROJECT</span> <span class="o">=</span> <span class="s2">&quot;demo-etl&quot;</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">dhcore</span><span class="o">.</span><span class="n">get_or_create_project</span><span class="p">(</span><span class="n">PROJECT</span><span class="p">)</span>
+</code></pre></div>
+<p>Check that the project has been created successfully:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">project</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="set-data-source">Set data source</h2>
+<p>The data we will use is available as a CSV file on GitHub. It is a table of organizations, with columns for the organization name, country, and city.
+Set the URL to the data:</p>
+<div class="highlight"><pre><span></span><code><span class="n">URL</span> <span class="o">=</span> <span class="s2">&quot;https://media.githubusercontent.com/media/datablist/sample-csv-files/main/files/organizations/organizations-1000.csv&quot;</span>
+</code></pre></div>
+<p>Create a dataitem that represents the table and call it <code>table</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">di</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">new_dataitem</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;table&quot;</span><span class="p">,</span>
+                          <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;dataitem&quot;</span><span class="p">,</span>
+                          <span class="n">path</span><span class="o">=</span><span class="n">URL</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="set-up-the-function">Set up the function</h2>
+<p>We can now set up the function that operates a tranformation on data with DBT.
+First we define the SQL query that will be used:</p>
+<div class="highlight"><pre><span></span><code><span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">WITH tab AS (</span>
+<span class="s2">    SELECT  *</span>
+<span class="s2">    FROM    {{ ref(&#39;table&#39;) }}</span>
+<span class="s2">)</span>
+<span class="s2">SELECT  *</span>
+<span class="s2">FROM    tab</span>
+<span class="s2">WHERE   tab.&quot;Country&quot; = &#39;Algeria&#39;</span>
+</code></pre></div>
+<p>We simply select all rows from the table that have <code>Algeria</code> as the country.
+Then we create the function and call it <code>demo-function</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">func</span> <span class="o">=</span> <span class="n">proj</span><span class="o">.</span><span class="n">new_function</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;demo-function&quot;</span><span class="p">,</span>
+                         <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;dbt&quot;</span><span class="p">,</span>
+                         <span class="n">sql</span><span class="o">=</span><span class="n">sql</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="run-the-function">Run the function</h2>
+<p>We can now run the function and see the results:</p>
+<div class="highlight"><pre><span></span><code><span class="n">run</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;transform&quot;</span><span class="p">,</span>
+               <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dataitems&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;table&quot;</span><span class="p">]},</span>
+               <span class="n">outputs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dataitems&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;algeria&quot;</span><span class="p">]})</span>
+</code></pre></div>
+<p>As you can see, we specify the input dataitem as <code>table</code>, which is the dataitem we created earlier, and the output dataitem as <code>algeria</code> which is the dataitem table that will be created by the function.</p>
+<p>Once the function has finished running, we can see the results:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">run</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="explore-the-results">Explore the results</h2>
+<p>We can now explore the results of the function.
+First, we get the dataitem that was created by the function:</p>
+<div class="highlight"><pre><span></span><code><span class="n">di</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">get_dataitem</span><span class="p">(</span><span class="s2">&quot;algeria&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Then we can get the dataitem as a Pandas dataframe:</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">di</span><span class="o">.</span><span class="n">as_df</span><span class="p">()</span>
+</code></pre></div>
+<p>We can now explore the dataframe:</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
 
 
 
@@ -1019,10 +1106,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.path", "content.code.copy"], "search": "../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "navigation.path", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.220ee61c.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.220ee61c.min.js"></script>
       
     
   </body>

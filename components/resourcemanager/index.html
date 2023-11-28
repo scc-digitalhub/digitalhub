@@ -9,17 +9,17 @@
       
       
       
-        <link rel="prev" href="../jupyter/">
+        <link rel="prev" href="../vscode/">
       
       
-        <link rel="next" href="../mlrun/">
+        <link rel="next" href="../../tasks/projects/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.19">
     
     
       
-        <title>Dremio - Digital Hub</title>
+        <title>Custom Resource Manager - Digital Hub</title>
       
     
     
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dremio" class="md-skip">
+        <a href="#custom-resource-manager" class="md-skip">
           Skip to content
         </a>
       
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Dremio
+              Custom Resource Manager
             
           </span>
         </div>
@@ -347,59 +347,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Dremio
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../dremio/" class="md-nav__link">
         Dremio
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#query-data-sources" class="md-nav__link">
-    Query data sources
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    Resources
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -465,11 +417,59 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../resourcemanager/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Custom Resource Manager
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Custom Resource Manager
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#services-deployments" class="md-nav__link">
+    Services, Deployments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-resources" class="md-nav__link">
+    Custom resources
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -936,15 +936,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#query-data-sources" class="md-nav__link">
-    Query data sources
+  <a href="#services-deployments" class="md-nav__link">
+    Services, Deployments
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    Resources
+  <a href="#custom-resources" class="md-nav__link">
+    Custom resources
   </a>
   
 </li>
@@ -964,28 +964,33 @@
                   
 
 
-<h1 id="dremio">Dremio</h1>
-<p><a href="https://www.dremio.com/">Dremio</a> provides unified access to data from heterogeneous sources, combining them and granting the ability to visualize them.</p>
+<h1 id="custom-resource-manager">Custom Resource Manager</h1>
+<p><strong>Custom Resource Manager</strong> (CRM) is an application to manage several types of Kubernetes resources:</p>
 <ul>
-<li>Support for many common sources (relational DBs, <em>NoSQL</em>, <em>Parquet</em>, <em>JSON</em>, <em>Excel</em>, etc.)</li>
-<li>Run read-only SQL queries and join data independently of source</li>
-<li>Create virtual datasets from queries</li>
+<li>Custom resources</li>
+<li>Services</li>
+<li>Deployments</li>
+<li>Volumes</li>
+<li>Jobs</li>
 </ul>
-<div class="admonition info">
-<p class="admonition-title">How to access</p>
-<p>Dremio may be launched from <a href="/digitalhub/components/deploying-components">Coder, using its template</a>. It will ask for a <em>Dremio Admin Password</em>. Access Dremio by logging in with username <code>admin</code> and this password.</p>
-<p>The template automatically configures connections to both MinIO (<em>Object Storage</em>) and Postgres (<em>Database</em>), so you do not need to worry about adding them.</p>
+<p>It consists in a back-end, written in <em>Java</em>, which connects to the Kubernetes API to perform actions on resources, and a front-end, written in <em>React</em> and based on <a href="https://marmelab.com/react-admin/">React-admin</a>.</p>
+<p>Instructions on how to install and start an instance can be found on the <a href="https://github.com/scc-digitalhub/custom-resource-manager">repository</a>.</p>
+<h2 id="services-deployments">Services, Deployments</h2>
+<p>You can list services or deployments by clicking the corresponding button in the left menu, and view the details of one item by clicking its <em>Show</em> button. </p>
+<h2 id="custom-resources">Custom resources</h2>
+<p>Kubernetes custom resources can be viewed, created, edited and deleted through the use of the interface. However, each kind requires its schema to be defined first, so that the application may understand and describe the related resources.</p>
+<p>Access the <strong>Settings</strong> section from the left menu. You will likely see an empty list, so click <em>Create</em>.</p>
+<p>The <strong>CRD</strong> drop-down menu will list all <em>Custom Resource Definitions</em> available on the Kubernetes instance; when you pick one, the <strong>Version</strong> field will automatically be filled with the version of the currently active schema.</p>
+<p>Providing the <strong>Schema</strong> may seem daunting, but you can simply leave it empty and click <em>Save</em>, and it will automatically be built from the currently active schema.</p>
+<div class="admonition warning">
+<p class="admonition-title">Automatic schema specification</p>
+<p>When the schema is built automatically, you will need to <em>Edit</em> it afterwards, to add the <code>"$schema":"https://json-schema.org/draft/2020-12/schema"</code> property at root level, like this:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="s2">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span><span class="p">,</span><span class="err">...</span><span class="p">}</span>
+</code></pre></div>
+<p>This property is required by the <em>OpenAPI</em> specification, yet is missing from the properties present in Kubernetes. Until a solution to make it compliant is implemented, it will have to be manually added after automatic creation.</p>
 </div>
-<h2 id="query-data-sources">Query data sources</h2>
-<p>Once in, you will notice MinIO and Postgres on the left, under <em>Sources</em>. There may already be some data we can use for a quick test.</p>
-<p>Click on <em>minio</em> and you may see a file listed to the right or, if you see a folder instead, navigate deeper until you find a file. Click on any file you may have found. If the format was explicitly specified in the name, Dremio will detect it and offer a number of settings for the dataset. If not, try different values of <em>Format</em> until one seems correct. Then, click <em>Save</em>.</p>
-<p>Dremio will switch to to the <em>SQL Runner</em> and you can run queries against the file you selected.</p>
-<p><img alt="Dremio image" src="../../images/dremio.png" /></p>
-<p>Of course, you may also run queries against the Postgres database.</p>
-<h2 id="resources">Resources</h2>
-<ul>
-<li><a href="https://docs.dremio.com/">Official documentation</a></li>
-</ul>
+<p>Once the schema has been created, custom resources of the corresponding kind can be viewed, created, edited and deleted through the interface. Their fields will depend on the specification of this schema. If some resources already exist, they will be immediately be visible.</p>
+<p>The pages for creating, listing, inspecting and editing a custom resource <a href="/digitalhub/tasks/rm-custom-views">may be customized</a>.</p>
 
 
 
