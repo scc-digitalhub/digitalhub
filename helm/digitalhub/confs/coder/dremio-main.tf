@@ -59,7 +59,7 @@ variable "minio-creds-secret" {
 variable "postgresql_db_name" {
   type        = string
   description = "Postgresql database name"
-  default     = "mlrun"
+  default     = "digitalhub"
 }
 
 variable "postgresql_creds_secret" {
