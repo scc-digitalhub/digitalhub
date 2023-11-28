@@ -41,7 +41,7 @@ variable "namespace" {
 variable "db_name" {
   description = "Provide the db name"
   type        = string
-  default     = "mlrun"
+  default     = "digitalhub"
 }
 
 variable "db_secret" {
