@@ -99,11 +99,13 @@ Create default access URL
 {{- end }}
 
 {{- define "custom-resource-manager.allowedCrd" -}}
-{{- range $i, $apiGroup := .Values.crdAllowed }}
+{{- range $i, $apiGroup := .Values.rbac }}
 {{- range $j, $res := $apiGroup.resources }}
+{{- if $apiGroup.crd }}
 {{- if ne $i 0 }},{{ end }}
 {{- if ne $j 0 }},{{ end }}
-{{- printf "%s.%s" $res $apiGroup.apiGroup }}
+{{- printf "%s.%s" $res $apiGroup.apiGroups }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end -}}

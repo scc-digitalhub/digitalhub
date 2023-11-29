@@ -6,18 +6,10 @@ kind: Role
 metadata:
   name: {{ $roleCr }}
 rules:
-{{- range .Values.crdAllowed }}
-- apiGroups: [{{ .apiGroup }}]
+{{- range .Values.rbac }}
+- apiGroups: {{ if .apiGroups }}[{{ .apiGroups }}]{{ else }}[""]{{ end }}
   resources: [{{ join "," .resources }}]
-  verbs:
-  - create
-  - delete
-  - deletecollection
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  verbs: [{{ join ","  .verbs }}]
 {{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1

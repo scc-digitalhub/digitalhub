@@ -14,6 +14,12 @@ rules:
   verbs:
   - list
   - get
+- apiGroups: 
+  - "storage.k8s.io"
+  resources:
+  - storageclasses
+  verbs:
+  - list
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -36,18 +42,10 @@ kind: ClusterRole
 metadata:
   name: {{ $clusterRoleCr }}
 rules:
-{{- range .Values.crdAllowed }}
-- apiGroups: [{{ .apiGroup }}]
+{{- range .Values.rbac }}
+- apiGroups: {{ if .apiGroups }}[{{ .apiGroups }}]{{ else }}[""]{{ end }}
   resources: [{{ join "," .resources }}]
-  verbs:
-  - create
-  - delete
-  - deletecollection
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  verbs: [{{ join ","  .verbs }}]
 {{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1

@@ -160,34 +160,6 @@ resource "coder_metadata" "dremio" {
   }
 }
 
-resource "kubernetes_secret" "dremio-secrets" {
-  metadata {
-    name      = "dremio-shared-creds"
-    namespace = var.namespace
-    labels = {
-      "app.kubernetes.io/name"     = "dremio-secret"
-      "app.kubernetes.io/instance" = "dremio-secret-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      // Coder specific labels.
-      "com.coder.resource"       = "true"
-      "com.coder.workspace.id"   = data.coder_workspace.me.id
-      "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace.me.owner_id
-      "com.coder.user.username"  = data.coder_workspace.me.owner
-    }
-    annotations = {
-      "com.coder.user.email" = data.coder_workspace.me.owner_email
-    }
-  }
-  data = {
-    url      = "dremio-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}:${kubernetes_service.dremio-service.spec[0].port[1].port}"
-    username = "admin"
-    password = data.coder_parameter.admin_password.value
-  }
-
-  type = "Opaque"
-}
-
 resource "kubernetes_persistent_volume_claim" "dremio-data" {
   metadata {
     name      = "dremio-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}-data"

@@ -10,10 +10,10 @@ namespaceValues:
   defaultValue: "*"
 
 image:
-  repository: smartcommunitylab/custom-resource-manager
+  repository: ghcr.io/scc-digitalhub/custom-resource-manager
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "1.1.2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -36,17 +36,69 @@ podSecurityContext:
   runAsGroup: 65532
   fsGroup: 65532
 
-crdAllowed:
-  - apiGroup: "db.movetokube.com"
+rbac:
+  - apiGroups: "nuclio.io"
+    crd: true
+    resources:
+    - nuclioapigateways
+    verbs:
+    - get
+    - list
+    - create
+    - delete
+    - patch
+  - apiGroups: "db.movetokube.com"
+    crd: true
     resources:
     - postgresusers
     - postgres
-  - apiGroup: "nuclio.io"
-    resources:
-    - nuclioapigateways
-  - apiGroup: "operator.postgrest.org"
+    verbs:
+    - get
+    - list
+    - create
+    - delete
+    - patch
+  - apiGroups: "operator.postgrest.org"
+    crd: true
     resources:
     - postgrests
+    verbs:
+    - get
+    - list
+    - create
+    - delete
+    - patch
+  - apiGroups: "batch"
+    crd: false
+    resources:
+    - jobs
+    verbs:
+    - get
+    - list
+  - apiGroups: "apps"
+    crd: false
+    resources:
+    - deployments
+    verbs:
+    - get
+    - list
+  - apiGroups: ""
+    crd: false
+    resources:
+    - persistentvolumeclaims
+    verbs:
+    - get
+    - list
+    - create
+    - delete
+    - patch
+  - apiGroups: ""
+    crd: false
+    resources:
+    - services
+    verbs:
+    - get
+    - list
 
 securityContext:
   runAsNonRoot: true

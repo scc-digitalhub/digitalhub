@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "custom-resource-manager.fullname" . }}
+data:
+  K8S_SELECTOR_SERVICE: "app.kubernetes.io/part-of=coder,app.kubernetes.io/type=service|nuclio.io/class=function|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true"
+  K8S_SELECTOR_DEPLOYMENT: "app.kubernetes.io/type=workspace"
+  K8S_SELECTOR_JOB: "app.kubernetes.io/managed-by=core"
+  K8S_SELECTOR_PVC: "app.kubernetes.io/managed-by=krm"
+  K8S_PVC_MANAGED_BY: krm
+  K8S_PVC_STORAGE_CLASSES: "disk,fileshare"
+  K8S_NAMESPACE: {{ include "custom-resource-manager.namespaceCheck" . | quote }}
+  K8S_CRD_ALLOWED: {{ include "custom-resource-manager.allowedCrd" . }}
+  APPLICATION_URL: {{ include "custom-resource-manager.defaultAccessURL" . }}

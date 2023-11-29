@@ -45,13 +45,9 @@ spec:
             httpGet:
               path: /
               port: http
-          env:
-            - name: K8S_NAMESPACE
-              value: {{ include "custom-resource-manager.namespaceCheck" . | quote }}
-            - name: K8S_CRD_ALLOWED
-              value: {{ include "custom-resource-manager.allowedCrd" . }}
-            - name: APPLICATION_URL
-              value: {{ include "custom-resource-manager.defaultAccessURL" . }}
+          envFrom:
+          - configMapRef:
+              name: {{ include "custom-resource-manager.fullname" . }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
