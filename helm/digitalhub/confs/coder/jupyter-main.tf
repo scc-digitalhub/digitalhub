@@ -325,7 +325,7 @@ resource "kubernetes_deployment" "jupyter" {
         }
         container {
           name              = "jupyter"
-          image             = "ghcr.io/scc-digitalhub/jupyter:1.4.0_0.0.1"
+          image             = "ghcr.io/scc-digitalhub/jupyter:1.4.0"
           image_pull_policy = "Always"
           command           = ["sh", "-c", coder_agent.jupyter.init_script]
           security_context {

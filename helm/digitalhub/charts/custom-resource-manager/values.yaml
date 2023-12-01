@@ -68,16 +68,6 @@ rbac:
     - create
     - delete
     - patch
-  - apiGroups: "operator.dremiorestserver.com"
-    crd: true
-    resources:
-    - dremiorestservers
-    verbs:
-    - get
-    - list
-    - create
-    - delete
-    - patch
   - apiGroups: "batch"
     crd: false
     resources:
