@@ -314,6 +314,9 @@ custom-resource-manager:
     type: *serviceType
     httpNodePort: "30220"
 
+dremio-rest-server-operator:
+  enabled: true
+
 grafana:
   enabled: true
   adminPassword: digitalhub-test
