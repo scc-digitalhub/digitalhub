@@ -58,6 +58,16 @@ rbac:
     - create
     - delete
     - patch
+  - apiGroups: "operator.dremiorestserver.com"
+    crd: true
+    resources:
+    - dremiorestservers
+    verbs:
+    - get
+    - list
+    - create
+    - delete
+    - patch
   - apiGroups: "operator.postgrest.org"
     crd: true
     resources:
