@@ -274,13 +274,13 @@ ext-postgres-operator:
     password: ""
     uri_args: " "
     cloud_provider: " "
-    default_database: "postgres"
+    default_database: "digitalhub"
   postgresCredsExistingSecrets:
     username:
-      secretName: "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretName: "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
       secretKey: "username"
     password:
-      secretName: "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretName: "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
       secretKey: "password"
 
 postgrest-operator:
