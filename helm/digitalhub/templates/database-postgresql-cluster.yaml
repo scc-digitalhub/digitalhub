@@ -8,7 +8,7 @@ spec:
     size: 8Gi
   numberOfInstances: 3
   users:
-    admin:
+    digitalhubadmin:
     - superuser
     - createdb
     digitalhub: []
