@@ -302,11 +302,21 @@ postgrest-operator:
 core:
   enabled: true
   minio:
+    bucketName: datalake
     endpoint: "minio"
     endpointPort: "9000"
   service:
     type: *serviceType
     httpNodePort: "30180"
+  postgres:
+    host: database-postgres-cluster
+    database: digitalhub
+    port: "5432"
+  config:
+    rootUser: minio
+    rootPassword: minio123
+  krm:
+    port: "8080"
 
 custom-resource-manager:
   enabled: true

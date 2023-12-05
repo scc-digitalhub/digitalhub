@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: digitalhub-common-env
+data:
+  DIGITALHUB_ENDPOINT: "http://{{ include "core.fullname" . }}:{{ .Values.service.port }}"
+  DIGITALHUB_S3_ENDPOINT_URL: "{{ .Values.minio.endpoint }}:{{ index .Values.minio.endpointPort }}"
+  DIGITALHUB_S3_BUCKET_NAME: {{ .Values.minio.bucketName }}
+  DIGITALHUB_POSTGRES_HOST: {{ .Values.postgres.host }}
+  DIGITALHUB_POSTGRES_PORT: {{ .Values.postgres.port | quote  }}
+  DIGITALHUB_POSTGRES_DATABASE: {{ .Values.postgres.database }}
+  S3_ENDPOINT_URL: http://minio.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.minio.endpointPort }}
+  DIGITALHUB_VERSION: {{ .Chart.Version }}
+  DIGITALHUB_CORE_ENDPOINT: "http://{{ include "core.fullname" . }}:{{ .Values.service.port }}"
+  DIGITALHUB_KRM_ENDPOINT: "http://{{ .Release.Name }}-custom-resource-manager:{{ .Values.krm.port }}"
+  POSTGRES_HOST: {{ .Values.postgres.host }}
+  POSTGRES_PORT: {{ .Values.postgres.port | quote }}
+  POSTGRES_DATABASE: {{ .Values.postgres.database }}

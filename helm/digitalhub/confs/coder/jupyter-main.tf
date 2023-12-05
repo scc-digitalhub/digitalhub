@@ -50,6 +50,12 @@ variable "db_secret" {
   default     = "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
 }
 
+variable "minio_secret" {
+  description = "Provides the secret credentials for minio"
+  type        = string
+  default     = "minio"
+}
+
 variable "service_type" {
   type    = string
   default = "ClusterIP"
@@ -67,12 +73,6 @@ variable "https" {
 
 variable "external_url" {
   type = string
-}
-
-variable "dhcore_endpoint" {
-  type        = string
-  description = "DHCore endpoint"
-  default     = "http://digitalhub-core:8080"
 }
 
 data "coder_parameter" "cpu" {
@@ -374,13 +374,24 @@ resource "kubernetes_deployment" "jupyter" {
               }
             }
           }
-          env {
-            name  = "DHUB_CORE_ENDPOINT"
-            value = var.dhcore_endpoint
-          }
           env_from {
             config_map_ref {
               name = "mlrun-common-env"
+            }
+          }
+          env_from {
+            config_map_ref {
+              name = "digitalhub-common-env"
+            }
+          }
+          env_from {
+            secret_ref {
+              name = var.minio_secret
+            }
+          }
+          env_from {
+            secret_ref {
+              name = var.db_secret
             }
           }
           port {

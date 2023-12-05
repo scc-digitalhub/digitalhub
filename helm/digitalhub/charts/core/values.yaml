@@ -44,8 +44,10 @@ securityContext:
   # runAsUser: 1000
 
 minio:
+  bucketName: ""
   endpoint: ""
   endpointPort: ""
+  port: ""
 service:
   port: "8080"
   type: ClusterIP
@@ -110,3 +112,15 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+config:
+  rootUser: ""
+  rootPassword: ""
+
+postgres:
+  host: ""
+  database: ""
+  port: ""
+
+krm:
+  port: ""
