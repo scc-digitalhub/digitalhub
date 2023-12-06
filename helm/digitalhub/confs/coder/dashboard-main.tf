@@ -22,7 +22,7 @@ locals {
   nuclio_dashboard     = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}nuclio-ui--${data.coder_workspace.me.name}--digitalhub-dashboard--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:30040%{endif}"
   kubeflow_ui          = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}kubeflow-ui--${data.coder_workspace.me.name}--digitalhub-dashboard--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:30100%{endif}"
   grafana              = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}dashboard.${replace(var.external_url, "coder.", "")}%{else}${var.external_url}:30210%{endif}"
-  crm                  = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}crm.${replace(var.external_url, "coder.", "")}%{else}${var.external_url}:30220%{endif}"
+  krm                  = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}crm.${replace(var.external_url, "coder.", "")}%{else}${var.external_url}:30220%{endif}"
 }
 
 variable "use_kubeconfig" {
@@ -228,10 +228,10 @@ resource "kubernetes_config_map" "components-json" {
             "link": "${local.grafana}"
         },
         {
-            "slug": "crm",
-            "name": "Custom Resource Manager",
-            "description": "A manager for custom resources in kubernetes.",
-            "link": "${local.crm}"
+            "slug": "krm",
+            "name": "Kubernetes Resource Manager",
+            "description": "A manager for resources in kubernetes.",
+            "link": "${local.krm}"
         }
       ]
     EOT
