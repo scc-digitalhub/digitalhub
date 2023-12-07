@@ -83,7 +83,7 @@ deployment:
     image:
       repository: ghcr.io/scc-digitalhub/postgrest-operator
       # Overrides the image tag whose default is the chart appVersion.
-      tag: latest
+      tag: 2.0.2
     resources:
       limits:
         cpu: 500m

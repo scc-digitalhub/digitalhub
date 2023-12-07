@@ -109,6 +109,13 @@ rbac:
     verbs:
     - get
     - list
+  - apiGroups: ""
+    crd: false
+    resources:
+    - secrets
+    verbs:
+    - get
+    - list
 
 securityContext:
   runAsNonRoot: true
