@@ -15,14 +15,14 @@ provider "coder" {
 }
 
 locals {
-  digitalhub_dashboard = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}dashboard--${data.coder_workspace.me.name}--digitalhub-dashboard--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
-  mlrun_ui             = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}mlrun-ui--${data.coder_workspace.me.name}--digitalhub-dashboard--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:30060%{endif}"
-  mlrun_api            = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}mlrun-api--${data.coder_workspace.me.name}--digitalhub-dashboard--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:30070%{endif}"
+  digitalhub_dashboard = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}dashboard--digitalhub-dashboard--${data.coder_workspace.me.name}--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  mlrun_ui             = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}mlrun-ui--digitalhub-dashboard--${data.coder_workspace.me.name}--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:30060%{endif}"
+  mlrun_api            = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}mlrun-api--digitalhub-dashboard--${data.coder_workspace.me.name}--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:30070%{endif}"
   minio                = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}minio.${var.external_url}%{else}${var.external_url}:30080%{endif}"
-  nuclio_dashboard     = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}nuclio-ui--${data.coder_workspace.me.name}--digitalhub-dashboard--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:30040%{endif}"
-  kubeflow_ui          = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}kubeflow-ui--${data.coder_workspace.me.name}--digitalhub-dashboard--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:30100%{endif}"
+  nuclio_dashboard     = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}nuclio-ui--digitalhub-dashboard--${data.coder_workspace.me.name}--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:30040%{endif}"
+  kubeflow_ui          = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}kubeflow-ui--digitalhub-dashboard--${data.coder_workspace.me.name}--{data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:30100%{endif}"
   grafana              = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}dashboard.${replace(var.external_url, "coder.", "")}%{else}${var.external_url}:30210%{endif}"
-  crm                  = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}crm.${replace(var.external_url, "coder.", "")}%{else}${var.external_url}:30220%{endif}"
+  crm                  = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}krm.${replace(var.external_url, "coder.", "")}%{else}${var.external_url}:30220%{endif}"
 }
 
 variable "use_kubeconfig" {

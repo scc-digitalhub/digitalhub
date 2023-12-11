@@ -60,7 +60,7 @@ false
 Coder ingress TLS enabled.
 */}}
 {{- define "coder.ingressTlsEnabled" -}}
-{{- if .Values.coder.ingress.tls -}}
+{{- if .Values.coder.ingress.tls.enable -}}
 true
 {{- else -}}
 false

@@ -15,7 +15,7 @@ provider "coder" {
 }
 
 locals {
-  dremio_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}dremio--${data.coder_workspace.me.name}--dremio--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  dremio_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}dremio--dremio--${data.coder_workspace.me.name}--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
 }
 
 variable "use_kubeconfig" {

@@ -15,7 +15,7 @@ provider "coder" {
 }
 
 locals {
-  grafana_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}grafana--${data.coder_workspace.me.name}--grafana--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  grafana_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}grafana--grafana--${data.coder_workspace.me.name}--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
 }
 
 variable "namespace" {

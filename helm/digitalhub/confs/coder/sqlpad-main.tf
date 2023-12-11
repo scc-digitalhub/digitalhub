@@ -15,7 +15,7 @@ provider "coder" {
 }
 
 locals {
-  sqlpad_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}sqlpad--${data.coder_workspace.me.name}--sqlpad--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  sqlpad_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}sqlpad--sqlpad--${data.coder_workspace.me.name}--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
 }
 
 variable "namespace" {
