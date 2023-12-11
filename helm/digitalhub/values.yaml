@@ -243,7 +243,7 @@ coder:
       iconUrl: https://svgshare.com/i/u5R.svg
   coder:
     image:
-      tag: v2.0.0 
+      tag: v2.1.5 
     env:
       - name: CODER_PG_USERNAME
         valueFrom:
@@ -272,8 +272,8 @@ ext-postgres-operator:
     host: database-postgres-cluster
     user: ""
     password: ""
-    uri_args: " "
-    cloud_provider: " "
+    uri_args: ""
+    cloud_provider: ""
     default_database: "postgres"
   postgresCredsExistingSecrets:
     username:
@@ -289,7 +289,7 @@ postgrest-operator:
     host: database-postgres-cluster
     port: 5432
     uri_args: "sslmode=disable"
-    default_database: "postgres"
+    default_database: "digitalhub"
     postgrest_service_type: NodePort
   postgresCredsExistingSecrets:
     username:
