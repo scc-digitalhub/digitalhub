@@ -17,7 +17,7 @@ spec:
   - name: v1
     schema:
       openAPIV3Schema:
-        description: Postgrest is the Schema for the postgrests API
+        description: Schema for the postgrests API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -32,24 +32,49 @@ spec:
           metadata:
             type: object
           spec:
-            description: PostgrestSpec defines the desired state of Postgrest
+            description: PostgREST properties
             properties:
               anonRole:
-                description: 'if specified: check it exists, assume its permissions
-                  are already correct if not specified: create with permissions as
-                  <clean CR name>_postgrest_role'
+                description: Role used by PostgREST to authenticate on the database;
+                  if not specified, it will be auto-generated as <CR name>_postgrest_role'
                 type: string
+              connection:
+                description: Properties to connect to Postgres
+                properties:
+                  database:
+                    type: string
+                  extraParams:
+                    description: Additional connection properties as query parameters
+                      (e.g., sslmode=disable)
+                    type: string
+                  host:
+                    type: string
+                  password:
+                    type: string
+                  port:
+                    type: integer
+                  secretName:
+                    description: Alternative to user and password properties; secret
+                      will have to contain USER and PASSWORD, optionally POSTGRES_URL
+                    type: string
+                  user:
+                    type: string
+                type: object
               grants:
+                description: Comma-separated string of permitted actions (only if
+                  anonymous role is auto-generated)
                 type: string
-              schemas:
+              schema:
+                description: Schema for this PostgREST instance
                 type: string
               tables:
+                description: Tables to expose (only if anonymous role is auto-generated)
                 items:
                   type: string
                 type: array
             type: object
           status:
-            description: PostgrestStatus defines the observed state of Postgrest
+            description: PostgREST status
             properties:
               state:
                 type: string
