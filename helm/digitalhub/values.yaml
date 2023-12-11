@@ -274,7 +274,7 @@ ext-postgres-operator:
     password: ""
     uri_args: " "
     cloud_provider: " "
-    default_database: "digitalhub"
+    default_database: "postgres"
   postgresCredsExistingSecrets:
     username:
       secretName: "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
@@ -354,7 +354,7 @@ grafana:
             timescaledb: false
   plugins:
     - https://github.com/scc-digitalhub/grafana-dremio-datasource-plugin/raw/master/releases/digital-hub-dremio-1.1.1.zip;digital-hub-dremio
-  envFromSecret: digitalhub-public-reader-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+  envFromSecret: digitalhub-reader-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
   env:
     GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: "digital-hub-dremio"
 
