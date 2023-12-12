@@ -121,6 +121,7 @@ postgres:
   host: ""
   database: ""
   port: ""
+  schema: ""
 
 krm:
   port: ""

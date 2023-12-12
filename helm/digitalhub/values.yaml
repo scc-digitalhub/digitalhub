@@ -312,6 +312,7 @@ core:
     host: database-postgres-cluster
     database: digitalhub
     port: "5432"
+    schema: public
   config:
     rootUser: minio
     rootPassword: minio123

@@ -347,6 +347,24 @@ resource "kubernetes_deployment" "jupyter" {
             name  = "MLRUN_NAMESPACE"
             value = var.namespace
           }
+          env {
+            name = "POSTGRES_USER"
+            value_from {
+              secret_key_ref {
+                name = var.db_secret
+                key  = "username"
+              }
+            }
+          }
+          env {
+            name = "POSTGRES_PASSWORD"
+            value_from {
+              secret_key_ref {
+                name = var.db_secret
+                key  = "password"
+              }
+            }
+          }
           env_from {
             config_map_ref {
               name = "mlrun-common-env"
