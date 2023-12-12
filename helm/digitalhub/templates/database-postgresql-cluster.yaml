@@ -11,9 +11,6 @@ spec:
     digitalhubadmin:
     - superuser
     - createdb
-    digitalhub: []
-  databases:
-    digitalhub: digitalhub
   postgresql:
     version: "15"
   preparedDatabases:

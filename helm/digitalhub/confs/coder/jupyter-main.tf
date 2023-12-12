@@ -47,7 +47,7 @@ variable "db_name" {
 variable "db_secret" {
   description = "Provide the db secret name with username and password"
   type        = string
-  default     = "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
+  default     = "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
 }
 
 variable "minio_secret" {
@@ -324,10 +324,9 @@ resource "kubernetes_deployment" "jupyter" {
           }
         }
         container {
-          name              = "jupyter"
-          image             = "ghcr.io/scc-digitalhub/jupyter:1.4.0_0.0.8"
-          image_pull_policy = "Always"
-          command           = ["sh", "-c", coder_agent.jupyter.init_script]
+          name    = "jupyter"
+          image   = "ghcr.io/scc-digitalhub/jupyter:1.4.0_0.0.11"
+          command = ["sh", "-c", coder_agent.jupyter.init_script]
           security_context {
             run_as_user                = "1000"
             allow_privilege_escalation = false
@@ -348,32 +347,6 @@ resource "kubernetes_deployment" "jupyter" {
             name  = "MLRUN_NAMESPACE"
             value = var.namespace
           }
-          env {
-            name  = "MLRUN_POSTGRES_URI"
-            value = "database-postgres-cluster:5432"
-          }
-          env {
-            name  = "MLRUN_POSTGRES_DB_NAME"
-            value = var.db_name
-          }
-          env {
-            name = "MLRUN_POSTGRES_USERNAME"
-            value_from {
-              secret_key_ref {
-                name = var.db_secret
-                key  = "username"
-              }
-            }
-          }
-          env {
-            name = "MLRUN_POSTGRES_PASSWORD"
-            value_from {
-              secret_key_ref {
-                name = var.db_secret
-                key  = "password"
-              }
-            }
-          }
           env_from {
             config_map_ref {
               name = "mlrun-common-env"
@@ -382,16 +355,6 @@ resource "kubernetes_deployment" "jupyter" {
           env_from {
             config_map_ref {
               name = "digitalhub-common-env"
-            }
-          }
-          env_from {
-            secret_ref {
-              name = var.minio_secret
-            }
-          }
-          env_from {
-            secret_ref {
-              name = var.db_secret
             }
           }
           port {

@@ -13,7 +13,7 @@ image:
   repository: ghcr.io/scc-digitalhub/custom-resource-manager
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.1.2"
+  tag: "1.1.3"
 
 imagePullSecrets: []
 nameOverride: ""

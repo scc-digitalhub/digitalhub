@@ -65,7 +65,7 @@ variable "postgresql_db_name" {
 variable "postgresql_creds_secret" {
   type        = string
   description = "Postgresql database credentials secret"
-  default     = "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
+  default     = "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
 }
 
 variable "service_type" {

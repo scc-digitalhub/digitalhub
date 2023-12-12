@@ -15,5 +15,5 @@ data:
   JDBC_DRIVER: org.postgresql.Driver
   JDBC_DIALECT: org.hibernate.dialect.PostgreSQLDialect
   H2_CONSOLE: "false"
-  DH_CONFIG_COMMON_SECRETS: minio, digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+  DH_CONFIG_COMMON_SECRETS: minio, digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
   DH_CONFIG_COMMON_MAPS: digitalhub-common-env

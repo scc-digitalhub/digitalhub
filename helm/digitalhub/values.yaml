@@ -293,10 +293,10 @@ postgrest-operator:
     postgrest_service_type: NodePort
   postgresCredsExistingSecrets:
     username:
-      secretName: "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretName: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
       secretKey: "username"
     password:
-      secretName: "digitalhub.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretName: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
       secretKey: "password"
 
 core:

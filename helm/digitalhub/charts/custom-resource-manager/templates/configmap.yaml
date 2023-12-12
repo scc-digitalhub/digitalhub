@@ -13,4 +13,5 @@ data:
   K8S_CRD_ALLOWED: {{ include "custom-resource-manager.allowedCrd" . }}
   APPLICATION_URL: {{ include "custom-resource-manager.defaultAccessURL" . }}
   K8S_SELECTOR_OWNERS: "db.movetokube.com/v1alpha1"
-  K8S_SELECTOR_LABELS: "cluster-name=database-postgres-cluster"
+  K8S_SELECTOR_LABELS: ""
+  K8S_SELECTOR_NAMES: "(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"
