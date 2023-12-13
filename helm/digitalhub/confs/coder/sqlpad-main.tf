@@ -33,7 +33,7 @@ variable "db_host" {
 variable "db_name" {
   description = "Provide the db name"
   type        = string
-  default     = "database"
+  default     = "digitalhub"
 }
 
 variable "db_secret" {
@@ -219,6 +219,10 @@ resource "kubernetes_deployment" "sqlpad" {
           }
           env {
             name  = "SQLPAD_CONNECTIONS__pg__name"
+            value = var.db_name
+          }
+          env {
+            name  = "SQLPAD_CONNECTIONS__pg__database"
             value = var.db_name
           }
           env {

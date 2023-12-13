@@ -1,9 +1,9 @@
 apiVersion: v2
 name: digitalhub
-description: A Helm chart for Kubernetes
+description: The Digital Hub is an open-source platform for interoperability of data and services, built by integrating several open-source projects to manage, elaborate, expose and serve data through modern standards.
 type: application
-version: 0.2.30
-appVersion: "0.1.0"
+version: 0.2.31
+appVersion: "0.2.0"
 dependencies:
 - name: docker-registry
   version: "2.2.2"
