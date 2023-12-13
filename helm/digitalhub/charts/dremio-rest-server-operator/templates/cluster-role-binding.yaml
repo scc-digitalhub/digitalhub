@@ -13,5 +13,4 @@ subjects:
 - kind: ServiceAccount
   name: {{ .Chart.Name }}-controller-manager
   namespace: {{ .Release.Namespace }}
-{{ else }}
 {{ end }}

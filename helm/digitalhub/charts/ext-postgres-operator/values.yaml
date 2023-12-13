@@ -2,6 +2,11 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# Values affecting the namespace
+namespaceValues:
+  namespaced: true
+  namespace: ""
+
 replicaCount: 1
 
 image:

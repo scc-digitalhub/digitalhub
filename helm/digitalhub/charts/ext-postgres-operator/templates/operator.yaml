@@ -42,7 +42,7 @@ spec:
                 {{- end }}
           env:
             - name: WATCH_NAMESPACE
-              value: {{ .Values.watchNamespace | default .Release.Namespace }}
+              value: {{ include "ext-postgres-operator.namespaceCheck" . | quote }}
             - name: POD_NAME
               valueFrom:
                 fieldRef:

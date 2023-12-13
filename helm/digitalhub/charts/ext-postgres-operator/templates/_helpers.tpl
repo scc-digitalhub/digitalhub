@@ -61,3 +61,16 @@ Create the name of the service account to use
 {{- define "chart.serviceAccountName" -}}
 {{- default (include "chart.fullname" .) .Values.serviceAccount.name }}
 {{- end }}
+
+{{/*
+Namespace function
+*/}}
+{{- define "ext-postgres-operator.namespaceCheck" -}}
+{{- if .Values.namespaceValues.namespaced }}
+{{- if .Values.namespaceValues.namespace }}
+{{- .Values.namespaceValues.namespace }}
+{{- else }}
+{{- .Release.Namespace}}
+{{- end }}
+{{- end }}
+{{- end }}
