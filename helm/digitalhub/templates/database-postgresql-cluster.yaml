@@ -5,7 +5,7 @@ metadata:
 spec:
   teamId: "digitalhub"
   volume:
-    size: 8Gi
+    size: {{ index .Values "postgres-operator" "digitalhubDatabase" "volume" "size" }}
   numberOfInstances: 3
   users:
     digitalhubadmin:
@@ -19,3 +19,5 @@ spec:
       schemas:
         public:
           defaultUsers: true
+  resources:
+  {{- toYaml ( index .Values "postgres-operator" "digitalhubDatabase" "resources" ) | nindent 4 }}
