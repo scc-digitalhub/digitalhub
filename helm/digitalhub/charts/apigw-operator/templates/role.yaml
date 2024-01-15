@@ -42,28 +42,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   creationTimestamp: null
-  name: {{ .Chart.Name }}-manager-role
+  name: manager-role
 rules:
-- apiGroups:
-  - apps
-  resources:
-  - deployments
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  verbs:
-  - get
-  - list
-  - watch
 - apiGroups:
   - ""
   resources:
@@ -77,9 +57,9 @@ rules:
   - update
   - watch
 - apiGroups:
-  - ""
+  - networking
   resources:
-  - services
+  - ingresses
   verbs:
   - create
   - delete
@@ -88,24 +68,4 @@ rules:
   - patch
   - update
   - watch
-- apiGroups:
-  - operator.dremiorestserver.com
-  resources:
-  - dremiorestservers
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - operator.dremiorestserver.com
-  resources:
-  - dremiorestservers/status
-  verbs:
-  - get
-  - patch
-  - update
 {{ end }}

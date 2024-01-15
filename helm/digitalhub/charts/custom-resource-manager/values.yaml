@@ -47,6 +47,16 @@ rbac:
     - create
     - delete
     - patch
+  - apiGroups: "operator.scc-digitalhub.github.io/v1"
+    crd: true
+    resources:
+    - apigws
+    verbs:
+    - get
+    - list
+    - create
+    - delete
+    - patch
   - apiGroups: "db.movetokube.com"
     crd: true
     resources:
@@ -90,6 +100,7 @@ rbac:
     crd: false
     resources:
     - deployments
+    - replicasets
     verbs:
     - get
     - list
@@ -117,9 +128,14 @@ rbac:
     verbs:
     - get
     - list
-  - apiGroups: [""]
-    resources: ["pods", "pods/log"]
-    verbs: ["get", "list", "create"]
+  - apiGroups: ""
+    resources: 
+    - "pods"
+    - "pods/log"
+    verbs: 
+    - "get" 
+    - "list" 
+    - "create"
 
 securityContext:
   runAsNonRoot: true
