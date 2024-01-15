@@ -2,7 +2,7 @@ apiVersion: v2
 name: digitalhub
 description: The Digital Hub is an open-source platform for interoperability of data and services, built by integrating several open-source projects to manage, elaborate, expose and serve data through modern standards.
 type: application
-version: 0.2.31
+version: 0.2.33
 appVersion: "0.2.0"
 dependencies:
 - name: docker-registry
@@ -38,3 +38,7 @@ dependencies:
 - name: apigw-operator
   version: "0.1.0"
   condition: apigw-operator.enabled
+- name: rabbitmq-cluster-operator
+  repository: https://charts.bitnami.com/bitnami
+  version: "3.10.10"
+  condition: rabbitmq-cluster-operator.enabled

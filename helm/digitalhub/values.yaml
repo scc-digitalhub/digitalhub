@@ -376,3 +376,6 @@ jobs:
   delete:
     securityContext:
       readOnlyRootFilesystem: true
+
+rabbitmq-cluster-operator:
+  enabled: true
