@@ -35,3 +35,6 @@ dependencies:
 - name: core
   version: "0.1.0"
   condition: core.enabled
+- name: apigw-operator
+  version: "0.1.0"
+  condition: apigw-operator.enabled

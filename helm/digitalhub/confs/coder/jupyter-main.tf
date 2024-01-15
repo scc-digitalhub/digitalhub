@@ -312,9 +312,9 @@ resource "kubernetes_deployment" "jupyter" {
           name              = "init-chown-data"
           image             = "busybox:1.35"
           image_pull_policy = "Always"
-          command           = ["chown", "-R", "1000:100", "/home/jovyan/data"]
+          command           = ["chown", "-R", "1000:100", "/home/jovyan/work"]
           volume_mount {
-            mount_path = "/home/jovyan/data"
+            mount_path = "/home/jovyan/work"
             name       = "home"
             read_only  = false
           }

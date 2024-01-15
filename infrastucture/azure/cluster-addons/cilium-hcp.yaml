@@ -29,3 +29,5 @@ spec:
         clusterPoolIPv4MaskSize: 24 
     extraArgs:
       - "--mtu=1400"
+    gatewayAPI:
+      enabled: true

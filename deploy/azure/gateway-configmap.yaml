@@ -1,0 +1,31 @@
+apiVersion: v1
+data:
+  wildcard-certificate-dns.yaml: |
+    apiVersion: gateway.networking.k8s.io/v1beta1
+    kind: Gateway
+    metadata:
+      name: wildcard-services-https
+    spec:
+      gatewayClassName: cilium
+      listeners:
+      - name: https
+        protocol: HTTPS
+        port: 443
+        hostname: "*.services.${$DNS_NAME}"
+        tls:
+          certificateRefs:
+          - kind: Secret
+            name: digitalhub-test-wildcard
+        allowedRoutes:
+          namespaces:
+            from: All
+      - name: http
+        protocol: HTTP
+        port: 80
+        hostname: "*.services.${$DNS_NAME}"
+        allowedRoutes:
+          namespaces:
+            from: All
+kind: ConfigMap
+metadata:
+  name: gateway-wildcard-services-https

@@ -243,7 +243,7 @@ coder:
       iconUrl: https://svgshare.com/i/u5R.svg
   coder:
     image:
-      tag: v2.1.5 
+      tag: v2.6.0
     env:
       - name: CODER_PG_USERNAME
         valueFrom:
@@ -338,6 +338,9 @@ custom-resource-manager:
 dremio-rest-server-operator:
   enabled: true
 
+apigw-operator:
+  enabled: true
+  
 grafana:
   enabled: true
   adminPassword: digitalhub-test

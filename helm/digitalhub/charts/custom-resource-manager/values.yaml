@@ -13,7 +13,7 @@ image:
   repository: ghcr.io/scc-digitalhub/custom-resource-manager
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.1.4"
+  tag: "1.1.5"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -85,6 +85,7 @@ rbac:
     verbs:
     - get
     - list
+    - delete
   - apiGroups: "apps"
     crd: false
     resources:
@@ -116,6 +117,9 @@ rbac:
     verbs:
     - get
     - list
+  - apiGroups: [""]
+    resources: ["pods", "pods/log"]
+    verbs: ["get", "list", "create"]
 
 securityContext:
   runAsNonRoot: true
