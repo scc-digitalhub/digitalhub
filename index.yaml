@@ -3,6 +3,63 @@ entries:
   digitalhub:
   - apiVersion: v2
     appVersion: 0.2.0
+    created: "2024-01-15T16:33:44.232193929Z"
+    dependencies:
+    - condition: docker-registry.enabled
+      name: docker-registry
+      repository: https://helm.twun.io
+      version: 2.2.2
+    - condition: mlrun-ce.enabled
+      name: mlrun-ce
+      repository: ""
+      version: 0.6.3-rc3
+    - condition: coder.enabled
+      name: coder
+      repository: ""
+      version: 0.1.0
+    - condition: postgres-operator.enabled
+      name: postgres-operator
+      repository: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+      version: 1.10.0
+    - condition: ext-postgres-operator.enabled
+      name: ext-postgres-operator
+      repository: ""
+      version: 1.2.4
+    - condition: custom-resource-manager.enabled
+      name: custom-resource-manager
+      repository: ""
+      version: 0.1.0
+    - condition: postgrest-operator.enabled
+      name: postgrest-operator
+      repository: ""
+      version: 0.1.0
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 7.0.3
+    - condition: core.enabled
+      name: core
+      repository: ""
+      version: 0.1.0
+    - condition: apigw-operator.enabled
+      name: apigw-operator
+      repository: ""
+      version: 0.1.0
+    - condition: rabbitmq-cluster-operator.enabled
+      name: rabbitmq-cluster-operator
+      repository: https://charts.bitnami.com/bitnami
+      version: 3.10.10
+    description: The Digital Hub is an open-source platform for interoperability of
+      data and services, built by integrating several open-source projects to manage,
+      elaborate, expose and serve data through modern standards.
+    digest: bcfc9c1956a37c3c96bd8108dee6e1be34a4ceb94aa646da68fc61a2a4c23799
+    name: digitalhub
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-0.2.35/digitalhub-0.2.35.tgz
+    version: 0.2.35
+  - apiVersion: v2
+    appVersion: 0.2.0
     created: "2024-01-15T11:32:56.769206828Z"
     dependencies:
     - condition: docker-registry.enabled
@@ -718,4 +775,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-0.2.18/digitalhub-0.2.18.tgz
     version: 0.2.18
-generated: "2024-01-15T11:32:56.769330018Z"
+generated: "2024-01-15T16:33:44.232331056Z"
