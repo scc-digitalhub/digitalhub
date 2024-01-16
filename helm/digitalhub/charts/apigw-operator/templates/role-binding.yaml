@@ -26,6 +26,6 @@ roleRef:
   name: {{ .Chart.Name }}-manager-role
 subjects:
 - kind: ServiceAccount
-  name: {{ .Chart.Name }}-controller-manager
+  name: {{ include "apigw-operator.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 {{ end }}

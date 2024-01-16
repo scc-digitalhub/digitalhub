@@ -88,6 +88,16 @@ rbac:
     - create
     - delete
     - patch
+  - apiGroups: "operator.scc-digitalhub.github.io"
+    crd: true
+    resources:
+    - apigws
+    verbs:
+    - get
+    - list
+    - create
+    - delete
+    - patch
   - apiGroups: "batch"
     crd: false
     resources:
