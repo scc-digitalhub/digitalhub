@@ -416,7 +416,7 @@ resource "kubernetes_deployment" "dashboard" {
         }
         container {
           name              = "dashboard"
-          image             = "smartcommunitylab/digitalhub-dashboard:with-coder-agent-v2.1.5"
+          image             = "smartcommunitylab/digitalhub-dashboard:with-coder-agent-v2.6.0"
           image_pull_policy = "IfNotPresent"
           command           = ["/bin/dash", "-c", "exec /bin/coder agent"]
           security_context {

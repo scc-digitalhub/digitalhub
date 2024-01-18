@@ -37,26 +37,6 @@ podSecurityContext:
   fsGroup: 65532
 
 rbac:
-  - apiGroups: "nuclio.io"
-    crd: true
-    resources:
-    - nuclioapigateways
-    verbs:
-    - get
-    - list
-    - create
-    - delete
-    - patch
-  - apiGroups: "operator.scc-digitalhub.github.io/v1"
-    crd: true
-    resources:
-    - apigws
-    verbs:
-    - get
-    - list
-    - create
-    - delete
-    - patch
   - apiGroups: "db.movetokube.com"
     crd: true
     resources:

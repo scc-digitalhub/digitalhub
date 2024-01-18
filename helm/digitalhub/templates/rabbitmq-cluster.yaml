@@ -17,7 +17,7 @@ spec:
       disk_free_limit.relative = 1.0
       collect_statistics_interval = 10000
   persistence:
-    storageClassName: standard
+    storageClassName: disk
     storage: "4Gi"
   affinity:
     podAntiAffinity:
