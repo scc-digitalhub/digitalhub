@@ -3,3 +3,5 @@ kind: ConfigMap
 metadata:
   name: {{ .Chart.Name }}-configmap
 data:
+  ENABLE_TLS: {{ .Values.deployment.tls.enabled | quote }}
+  TLS_SECRET_NAME: {{ .Values.deployment.tls.wildcardCertSecretName }}
