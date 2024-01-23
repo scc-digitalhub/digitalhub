@@ -36,7 +36,7 @@ dependencies:
   version: "0.1.0"
   condition: core.enabled
 - name: apigw-operator
-  version: "0.1.0"
+  version: "0.1.1"
   condition: apigw-operator.enabled
 - name: rabbitmq-cluster-operator
   repository: https://charts.bitnami.com/bitnami
