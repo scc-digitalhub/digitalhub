@@ -151,7 +151,7 @@ deployment:
     image:
       repository: ghcr.io/scc-digitalhub/dremio-rest-server-operator
       # Overrides the image tag whose default is the chart appVersion.
-      tag: 1.0.1
+      tag: 1.0.2
     resources:
       limits:
         cpu: 500m
@@ -168,5 +168,5 @@ deployment:
 
 conf:
   drsImage: ghcr.io/scc-digitalhub/dremio-rest-server
-  drsImageTag: 0.0.6
+  drsImageTag: 0.0.8
   drsServiceType: ClusterIP
