@@ -34,23 +34,7 @@ spec:
           spec:
             description: Dremio REST Server properties
             properties:
-              containerLimits:
-                description: Corresponds to resources.limits of a container
-                properties:
-                  cpu:
-                    type: string
-                  memory:
-                    type: string
-                type: object
-              containerRequests:
-                description: Corresponds to resources.requests of a container
-                properties:
-                  cpu:
-                    type: string
-                  memory:
-                    type: string
-                type: object
-              dremio:
+              connection:
                 description: Properties to connect to Dremio
                 properties:
                   host:
@@ -64,13 +48,13 @@ spec:
                     type: string
                   port:
                     type: integer
+                  secretName:
+                    description: Alternative to user and password properties; secret
+                      will have to contain USER and PASSWORD
+                    type: string
                   user:
                     type: string
                 type: object
-              javaOptions:
-                description: 'Corresponds to JAVA_TOOL_OPTIONS: on JDK 9+, --add-opens=java.base/java.nio=ALL-UNNAMED
-                  is required'
-                type: string
               tables:
                 description: Comma-separated list of tables to expose
                 type: string
