@@ -168,5 +168,5 @@ deployment:
 
 conf:
   drsImage: ghcr.io/scc-digitalhub/dremio-rest-server
-  drsImageTag: 0.0.8
+  drsImageTag: 0.0.9
   drsServiceType: ClusterIP
