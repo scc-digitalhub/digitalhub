@@ -1,95 +1,65 @@
 name: Release Charts
+
 on:
   push:
     branches:
       - main
+
 jobs:
-  changeCheck:
-    runs-on: ubuntu-latest
-    outputs:
-      output: ${{ steps.checkchange.outputs.chartChange }}
-    steps:
-      - name: checkout
-        id: checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: checkChange
-        id: checkchange
-        run: |
-          changes=$(git diff --name-only -r HEAD^1 HEAD)
-          helmChanges=$(echo "$changes" | grep -Po '^(helm\/digitalhub.*)' | cat)
-          chartChange=$(echo "$helmChanges" | grep -Po '^(helm\/digitalhub\/Chart\.yaml)' | cat)
-          if [ -n "$chartChange" ]; then
-            content=`cat helm/digitalhub/Chart.yaml`
-            diff=$(git diff -r HEAD^1 HEAD | tr '\n' ' ')
-            chartDiff=$(echo "$diff" | grep -Po 'digitalhub\/Chart\.yaml.*' | cat)
-            chartVersions=$(echo "$chartDiff" | grep -Po '(?<= ).version: \d+.\d+.\d+(?= )' | cat)
-            chartOldVersion=$(echo "$chartVersions" | grep -Po '\-.*' | cat)
-            chartNewVersion=$(echo "$chartVersions" | grep -Po '\+.*' | cat)
-            if [[ -n "$chartOldVersion" ]]
-            then
-              chartOldNum=$(echo "$chartOldVersion" | grep -Po '(?<= )[\w+.-]+\d' | cat)
-              chartNewNum=$(echo "$chartNewVersion" | grep -Po '(?<= )[\w+.-]+\d' | cat)
-              firstOldNum=$(echo "$chartOldNum" | grep -Po '^([^\.]+)' | cat)
-              secondOldNum=$(echo "$chartOldNum" | grep -Po '(?<=\.)(.*)(?=\.)' | cat)
-              thirdOldNum=$(echo "$chartOldNum" | grep -Po '([^.]*$)' | cat)
-              firstNewNum=$(echo "$chartNewNum" | grep -Po '^([^\.]+)' | cat)
-              secondNewNum=$(echo "$chartNewNum" | grep -Po '(?<=\.)(.*)(?=\.)' | cat)
-              thirdNewNum=$(echo "$chartNewNum" | grep -Po '([^.]*$)' | cat)
-              if [[ $firstNewNum -lt $firstOldNum ]]
-              then
-                echo "chartChange=ERROR" >> "$GITHUB_OUTPUT"
-              else
-                if [[ $firstNewNum -gt $firstOldNum ]]
-                then
-                  echo "chartChange=changed" >> "$GITHUB_OUTPUT"
-                else
-                  if [[ $secondNewNum -lt $secondOldNum ]]
-                  then
-                    echo "chartChange=ERROR" >> "$GITHUB_OUTPUT"
-                  else
-                    if [[ $secondNewNum -gt $secondOldNum ]]
-                    then
-                      echo "chartChange=changed" >> "$GITHUB_OUTPUT"
-                    else
-                      if [[ $thirdNewNum -lt $thirdOldNum ]]
-                      then
-                        echo "chartChange=ERROR" >> "$GITHUB_OUTPUT"
-                      else
-                        if [[ $thirdNewNum -gt $thirdOldNum ]]
-                        then
-                          echo "chartChange=changed" >> "$GITHUB_OUTPUT"
-                        fi
-                      fi
-                    fi
-                  fi
-                fi  
-              fi
-            fi
-          else
-            echo "chartChange=unchanged" >> "$GITHUB_OUTPUT"
-          fi
   release:
-    needs: changeCheck
-    if: needs.changeCheck.outputs.output == 'changed'
     permissions:
-      contents: write
+      contents: write # to push chart release and create a release (helm/chart-releaser-action)
+      packages: write # needed for ghcr access
+      id-token: write # needed for keyless signing
+
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Fetch history
+        run: git fetch --prune --unshallow
+
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Install Helm
-        uses: azure/setup-helm@v3
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.0
+        with:
+          version: v3.14.0
+
+      - name: Add dependency chart repos
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add docker-registry https://helm.twun.io
+          helm repo add grafana https://grafana.github.io/helm-charts
+          helm repo add postgres-operator https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+          helm repo add opensearch https://opensearch-project.github.io/helm-charts/
+          helm repo add openmetadata https://helm.open-metadata.org
+          helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
-        with:
-          charts_dir: helm/
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_GENERATE_RELEASE_NOTES: true
+
+      # see https://github.com/helm/chart-releaser/issues/183
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push charts to GHCR
+        run: |
+          shopt -s nullglob
+          for pkg in .cr-release-packages/*; do
+            if [ -z "${pkg:-}" ]; then
+              break
+            fi
+            helm push "${pkg}" "oci://ghcr.io/${GITHUB_REPOSITORY_OWNER}/charts"
+          done

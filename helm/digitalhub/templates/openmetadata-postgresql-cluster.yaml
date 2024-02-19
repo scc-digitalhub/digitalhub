@@ -1,0 +1,18 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: openmetadata-postgres-cluster
+spec:
+  teamId: "openmetadata"
+  volume:
+    size: 8Gi
+  numberOfInstances: 1
+  users:
+    openmetadataadmin:
+    - superuser
+    - createdb
+    openmetadata: []
+  databases:
+    openmetadata: openmetadata
+  postgresql:
+    version: "15"

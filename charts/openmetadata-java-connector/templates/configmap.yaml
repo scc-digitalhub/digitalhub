@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-configmap
+data:
+  CONTEXT_PATH: {{ .Values.connector.contextPath }}
+  RABBITMQ_HOST: {{ .Values.connector.rabbitmq.host }}
+  RABBITMQ_PORT: {{ .Values.connector.rabbitmq.port }}
+  RABBITMQ_VIRTUALHOST: {{ .Values.connector.rabbitmq.virtualhost }}
+  SAMPLER_PROB: {{ .Values.connector.zipkin.samplerProb }}
+  ZIPKIN_ENABLED: {{ .Values.connector.zipkin.enabled }}
+  ZIPKIN_ENDPOINT: {{ .Values.connector.zipkin.endpoint }}
+  OPENMETADATA_HOST: {{ .Values.connector.openmetadata.host }}
+  OPENMETADATA_DATASERVICE_NAME: {{ .Values.connector.openmetadata.dataserviceName }}
+  OPENMETADATA_DATASERVICE_SQL: {{ .Values.connector.openmetadata.dataserviceSql }}
+  OPENMETADATA_DATASERVICE_S3: {{ .Values.connector.openmetadata.dataserviceS3 }}

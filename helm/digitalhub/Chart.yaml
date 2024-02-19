@@ -2,7 +2,7 @@ apiVersion: v2
 name: digitalhub
 description: The Digital Hub is an open-source platform for interoperability of data and services, built by integrating several open-source projects to manage, elaborate, expose and serve data through modern standards.
 type: application
-version: 0.2.44
+version: 0.2.45
 appVersion: "0.2.0"
 dependencies:
 - name: docker-registry
@@ -45,3 +45,14 @@ dependencies:
 - name: dremio-rest-server-operator
   version: "0.1.1"
   condition: dremio-rest-server-operator.enabled
+- name: airflow
+  version: "8.8.0"
+  condition: airflow.enabled
+- name: opensearch
+  version: "2.12.1"
+  repository: "https://opensearch-project.github.io/helm-charts/"
+  condition: opensearch.enabled
+- name: openmetadata
+  repository: https://helm.open-metadata.org
+  version: 1.3.0
+  condition: openmetadata.enabled

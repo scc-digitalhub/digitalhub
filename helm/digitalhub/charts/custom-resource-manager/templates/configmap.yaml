@@ -8,7 +8,7 @@ data:
   K8S_SELECTOR_JOB: "app.kubernetes.io/managed-by=dhcore"
   K8S_SELECTOR_PVC: "app.kubernetes.io/managed-by=krm"
   K8S_PVC_MANAGED_BY: krm
-  K8S_PVC_STORAGE_CLASSES: "disk,fileshare"
+  K8S_PVC_STORAGE_CLASSES: {{ .Values.storageClasses }}
   K8S_NAMESPACE: {{ include "custom-resource-manager.namespaceCheck" . | quote }}
   K8S_CRD_ALLOWED: {{ include "custom-resource-manager.allowedCrd" . }}
   APPLICATION_URL: {{ include "custom-resource-manager.defaultAccessURL" . }}

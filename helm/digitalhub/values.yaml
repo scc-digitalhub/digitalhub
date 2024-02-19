@@ -38,7 +38,6 @@ docker-registry:
     path: /
     hosts:
       - registry.digitalhub.test
-    labels: 
   persistence:
     accessMode: 'ReadWriteOnce'
     enabled: true
@@ -379,3 +378,140 @@ jobs:
 
 rabbitmq-cluster-operator:
   enabled: true
+
+opensearch:
+  enabled: true
+  clusterName: opensearch
+  fullnameOverride: opensearch
+  nodeGroup: ""
+  imagePullPolicy: Always
+  opensearchJavaOpts: "-Xmx1g -Xms1g"
+  persistence:
+    size: 8Gi
+  protocol: http
+  config:
+    opensearch.yml: |
+      plugins.security.disabled: true
+  singleNode: true
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "256M"
+    limits:
+      cpu: "2000m"
+      memory: "2048M"
+
+airflow:
+  enabled: true
+  airflow:
+    image:
+      repository: docker.getcollate.io/openmetadata/ingestion
+      tag: 1.3.0
+      pullPolicy: "IfNotPresent"
+    executor: "KubernetesExecutor"
+    config:
+      # This is required for OpenMetadata UI to fetch status of DAGs
+      AIRFLOW__API__AUTH_BACKENDS: "airflow.api.auth.backend.session,airflow.api.auth.backend.basic_auth"
+      # OpenMetadata Airflow Apis Plugin DAGs Configuration
+      AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/opt/airflow/dags"
+      # OpenMetadata Airflow Secrets Manager Configuration
+      AIRFLOW__OPENMETADATA_SECRETS_MANAGER__AWS_REGION: ""
+      AIRFLOW__OPENMETADATA_SECRETS_MANAGER__AWS_ACCESS_KEY_ID: ""
+      AIRFLOW__OPENMETADATA_SECRETS_MANAGER__AWS_ACCESS_KEY: ""
+    users:
+      - username: digitalhub
+        role: Admin
+        firstName: admin
+        lastName: admin
+        password: ${ADMIN_PASSWORD}
+        email: admin@digitalhub.local
+    usersTemplates:
+      ADMIN_PASSWORD:
+        kind: secret
+        name: airflow-admin-password
+        key: password
+  web:
+    extraVolumes:
+    - name: pod-template
+      configMap:
+        name: openmetadata-pod-template
+        defaultMode: 420
+    extraVolumeMounts:
+      - name: pod-template
+        readOnly: true
+        subPath: pod_template.yaml
+        mountPath: /opt/airflow/pod_templates/pod_template.yaml
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 60
+      periodSeconds: 30
+      timeoutSeconds: 10
+      failureThreshold: 10
+    livenessProbe:
+      enabled: true
+      initialDelaySeconds: 60
+      periodSeconds: 30
+      timeoutSeconds: 10
+      failureThreshold: 10
+  postgresql:
+    enabled: false
+  workers:
+    enabled: false
+  flower:
+    enabled: false
+  redis:
+    enabled: false
+  externalDatabase:
+    type: postgres
+    host: airflow-postgres-cluster
+    port: 5432
+    database: airflow
+    user: airflow
+    passwordSecret: airflow.airflow-postgres-cluster.credentials.postgresql.acid.zalan.do
+    passwordSecretKey: password
+  serviceAccount:
+    create: true
+    name: "airflow"
+  scheduler:
+    logCleanup:
+      enabled: false
+  dags:
+    persistence:
+      enabled: true
+      storageClass: "fileshare"
+      size: 1Gi
+      accessMode: ReadWriteMany
+  logs:
+    persistence:
+      enabled: true
+      storageClass: "fileshare"
+      accessMode: ReadWriteMany
+      size: 1Gi
+
+openmetadata:
+  enabled: true
+  nameOverride: openmetadata
+  fullnameOverride: "openmetadata"
+  openmetadata: 
+    config:
+      database:
+        enabled: true
+        host: openmetadata-postgres-cluster
+        port: 5432
+        driverClass: org.postgresql.Driver
+        databaseName: openmetadata
+        dbScheme: postgresql
+        dbParams: "&ssl=true&sslmode=require"
+        auth:
+          username: openmetadata
+          password:
+            secretRef: openmetadata.openmetadata-postgres-cluster.credentials.postgresql.acid.zalan.do
+            secretKey: password
+      pipelineServiceClientConfig:
+        auth:
+          enabled: true
+          username: digitalhub
+          password:
+            secretRef: airflow-admin-password
+            secretKey: password
+
