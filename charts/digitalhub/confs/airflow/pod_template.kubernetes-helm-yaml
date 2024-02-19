@@ -1,12 +1,12 @@
-{{- $podNodeSelector := include "airflow.podNodeSelector" (dict "Release" .Release "Values" .Values.airflow "nodeSelector" .Values.airflow.airflow.kubernetesPodTemplate.nodeSelector) }}
-{{- $podAffinity := include "airflow.podAffinity" (dict "Release" .Release "Values" .Values.airflow "affinity" .Values.airflow.airflow.kubernetesPodTemplate.affinity) }}
-{{- $podTolerations := include "airflow.podTolerations" (dict "Release" .Release "Values" .Values.airflow "tolerations" .Values.airflow.airflow.kubernetesPodTemplate.tolerations) }}
-{{- $podSecurityContext := include "airflow.podSecurityContext" (dict "Release" .Release "Values" .Values.airflow "securityContext" .Values.airflow.airflow.kubernetesPodTemplate.securityContext) }}
+{{- $podNodeSelector := include "airflow.podNodeSelector" (dict "Release" .Release "Chart" .Chart "Values" .Values.airflow "nodeSelector" .Values.airflow.airflow.kubernetesPodTemplate.nodeSelector) }}
+{{- $podAffinity := include "airflow.podAffinity" (dict "Release" .Release "Chart" .Chart "Values" .Values.airflow "affinity" .Values.airflow.airflow.kubernetesPodTemplate.affinity) }}
+{{- $podTolerations := include "airflow.podTolerations" (dict "Release" .Release "Chart" .Chart "Values" .Values.airflow "tolerations" .Values.airflow.airflow.kubernetesPodTemplate.tolerations) }}
+{{- $podSecurityContext := include "airflow.podSecurityContext" (dict "Release" .Release "Chart" .Chart "Values" .Values.airflow "securityContext" .Values.airflow.airflow.kubernetesPodTemplate.securityContext) }}
 {{- $extraPipPackages := .Values.airflow.airflow.kubernetesPodTemplate.extraPipPackages }}
 {{- $extraVolumeMounts := .Values.airflow.airflow.kubernetesPodTemplate.extraVolumeMounts }}
-{{- $volumeMounts := include "airflow.volumeMounts" (dict "Release" .Release "Values" .Values.airflow "extraPipPackages" $extraPipPackages "extraVolumeMounts" $extraVolumeMounts) }}
+{{- $volumeMounts := include "airflow.volumeMounts" (dict "Release" .Release "Chart" .Chart "Values" .Values.airflow "extraPipPackages" $extraPipPackages "extraVolumeMounts" $extraVolumeMounts) }}
 {{- $extraVolumes := .Values.airflow.airflow.kubernetesPodTemplate.extraVolumes }}
-{{- $volumes := include "airflow.volumes" (dict "Release" .Release "Values" .Values.airflow "extraPipPackages" $extraPipPackages "extraVolumes" $extraVolumes "extraVolumeMounts" $extraVolumeMounts) }}
+{{- $volumes := include "airflow.volumes" (dict "Release" .Release "Chart" .Chart "Values" .Values.airflow "extraPipPackages" $extraPipPackages "extraVolumes" $extraVolumes "extraVolumeMounts" $extraVolumeMounts) }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -46,7 +46,7 @@ spec:
   {{- if or ($extraPipPackages) (.Values.airflow.airflow.kubernetesPodTemplate.extraInitContainers) }}
   initContainers:
     {{- if $extraPipPackages }}
-    {{- include "airflow.init_container.install_pip_packages" (dict "Release" .Release "Values" .Values.airflow "extraPipPackages" $extraPipPackages) | indent 4 }}
+    {{- include "airflow.init_container.install_pip_packages" (dict "Release" .Release "Chart" .Chart "Values" .Values.airflow "extraPipPackages" $extraPipPackages) | indent 4 }}
     {{- end }}
     {{- if .Values.airflow.airflow.kubernetesPodTemplate.extraInitContainers }}
     {{- toYaml .Values.airflow.airflow.kubernetesPodTemplate.extraInitContainers | nindent 4 }}
@@ -68,7 +68,7 @@ spec:
           value: LocalExecutor
         {{- /* NOTE: the FIRST definition of an `env` takes precedence (so we include user-defined `env` LAST) */ -}}
         {{- /* NOTE: we set `CONNECTION_CHECK_MAX_COUNT=20` to enable airflow's `/entrypoint` db connection check */ -}}
-        {{- include "airflow.env" (dict "Release" .Release "Values" .Values.airflow "CONNECTION_CHECK_MAX_COUNT" "20")  | indent 8 }}
+        {{- include "airflow.env" (dict "Release" .Release "Chart" .Chart "Values" .Values.airflow "CONNECTION_CHECK_MAX_COUNT" "20")  | indent 8 }}
       ports: []
       command: []
       args: []
