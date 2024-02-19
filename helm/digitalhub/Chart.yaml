@@ -11,9 +11,11 @@ dependencies:
   condition: docker-registry.enabled
 - name: mlrun-ce
   version: "0.6.3-rc3"
+  repository: https://scc-digitalhub.github.io/digitalhub/
   condition: mlrun-ce.enabled
 - name: coder
   version: "0.1.0"
+  repository: https://scc-digitalhub.github.io/digitalhub/
   condition: coder.enabled
 - name: postgres-operator
   version: "1.10.0"
@@ -21,32 +23,39 @@ dependencies:
   condition: postgres-operator.enabled
 - name: ext-postgres-operator
   version: "1.2.4"
+  repository: https://scc-digitalhub.github.io/digitalhub/
   condition: ext-postgres-operator.enabled
 - name: custom-resource-manager
+  version: "0.1.0"
+  repository: https://scc-digitalhub.github.io/digitalhub/
   condition: custom-resource-manager.enabled
-  version: "0.1.0"
 - name: postgrest-operator
-  condition: postgrest-operator.enabled
   version: "0.1.0"
+  repository: https://scc-digitalhub.github.io/digitalhub/
+  condition: postgrest-operator.enabled
 - name: grafana
+  version: "7.0.3"
   repository: "https://grafana.github.io/helm-charts"
   condition: grafana.enabled
-  version: "7.0.3"
 - name: core
   version: "0.1.0"
+  repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: apigw-operator
   version: "0.1.2"
+  repository: https://scc-digitalhub.github.io/digitalhub/
   condition: apigw-operator.enabled
 - name: rabbitmq-cluster-operator
-  repository: https://charts.bitnami.com/bitnami
   version: "3.10.10"
+  repository: https://charts.bitnami.com/bitnami
   condition: rabbitmq-cluster-operator.enabled
 - name: dremio-rest-server-operator
   version: "0.1.1"
+  repository: https://scc-digitalhub.github.io/digitalhub/
   condition: dremio-rest-server-operator.enabled
 - name: airflow
   version: "8.8.0"
+  repository: https://scc-digitalhub.github.io/digitalhub/
   condition: airflow.enabled
 - name: opensearch
   version: "2.12.1"
