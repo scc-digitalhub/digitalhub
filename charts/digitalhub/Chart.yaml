@@ -2,7 +2,7 @@ apiVersion: v2
 name: digitalhub
 description: The Digital Hub is an open-source platform for interoperability of data and services, built by integrating several open-source projects to manage, elaborate, expose and serve data through modern standards.
 type: application
-version: 0.2.47
+version: 0.2.48
 appVersion: "0.3.0"
 dependencies:
 - name: docker-registry
@@ -54,7 +54,7 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: dremio-rest-server-operator.enabled
 - name: airflow
-  version: "8.8.0"
+  version: "8.8.1"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: airflow.enabled
 - name: opensearch
