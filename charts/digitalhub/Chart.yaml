@@ -2,8 +2,8 @@ apiVersion: v2
 name: digitalhub
 description: The Digital Hub is an open-source platform for interoperability of data and services, built by integrating several open-source projects to manage, elaborate, expose and serve data through modern standards.
 type: application
-version: 0.2.45
-appVersion: "0.2.0"
+version: 0.2.46
+appVersion: "0.3.0"
 dependencies:
 - name: docker-registry
   version: "2.2.2"
