@@ -54,7 +54,7 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: dremio-rest-server-operator.enabled
 - name: airflow
-  version: "8.8.1"
+  version: "8.8.0"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: airflow.enabled
 - name: opensearch
