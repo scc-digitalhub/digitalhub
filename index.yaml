@@ -98,6 +98,19 @@ entries:
   core:
   - apiVersion: v2
     appVersion: 0.0.29
+    created: "2024-02-21T16:02:42.739568148Z"
+    description: Core backend application for DigitalHub.
+    digest: 9071c17b139aecffa566503991eab07c4920011c5e489ab64a91644b436dec44
+    maintainers:
+    - name: scc-digitalhub
+      url: https://github.com/scc-digitalhub
+    name: core
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.1.3/core-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 0.0.29
     created: "2024-02-21T15:58:38.611159275Z"
     description: A Helm chart for Kubernetes
     digest: 692e9cc48f9cb03885a0dc783fa06e29324be1d252016538049837fbc6599d8d
@@ -1508,4 +1521,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-02-21T15:58:38.611218486Z"
+generated: "2024-02-21T16:02:42.739648108Z"
