@@ -20,13 +20,13 @@ global:
       nodePort: 30050
   externalHostAddress: &globalExternalUrl "192.168.49.2"
   securityContext:
-      runAsNonRoot: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+      - ALL
 
-docker-registry: 
+docker-registry:
   enabled: true
   fullnameOverride: digitalhub-docker-registry
   className: nginx
@@ -45,7 +45,7 @@ docker-registry:
   updateStrategy:
     type: Recreate
 
-mlrun-ce: 
+mlrun-ce:
   enabled: true
   nuclio:
     fullnameOverride: nuclio
@@ -122,11 +122,11 @@ mlrun-ce:
     db:
       name: db
       fullnameOverride: mlrun-db
-      securityContext: 
+      securityContext:
         runAsUser: 999
       podSecurityContext:
         runAsUser: 999
-        fsGroup: 999    
+        fsGroup: 999
       volumes:
         storageOverride:
           persistentVolumeClaim:
@@ -217,9 +217,9 @@ mlrun-ce:
       endpointPort: "9000"
       bucket: "datalake"
   kube-prometheus-stack:
-    enabled: false  
+    enabled: false
 
-coder: 
+coder:
   enabled: true
   username: test
   password: Test12456@!
@@ -262,7 +262,7 @@ coder:
       type: *serviceType
       httpNodePort: "30170"
 
-postgres-operator: 
+postgres-operator:
   enabled: true
   digitalhubDatabase:
     volume:
@@ -286,10 +286,10 @@ ext-postgres-operator:
     default_database: "postgres"
   postgresCredsExistingSecrets:
     username:
-      secretName: "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretName: "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
       secretKey: "username"
     password:
-      secretName: "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretName: "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
       secretKey: "password"
 
 postgrest-operator:
@@ -302,10 +302,10 @@ postgrest-operator:
     postgrest_service_type: NodePort
   postgresCredsExistingSecrets:
     username:
-      secretName: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretName: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
       secretKey: "username"
     password:
-      secretName: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
+      secretName: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
       secretKey: "password"
 
 core:
@@ -339,7 +339,7 @@ dremio-rest-server-operator:
 
 apigw-operator:
   enabled: true
-  
+
 grafana:
   enabled: true
   adminPassword: digitalhub-test
@@ -358,12 +358,12 @@ grafana:
             password: ${password}
           jsonData:
             database: digitalhub
-            sslmode: 'require' # disable/require/verify-ca/verify-full
-            maxOpenConns: 100 # Grafana v5.4+
-            maxIdleConns: 100 # Grafana v5.4+
-            maxIdleConnsAuto: true # Grafana v9.5.1+
-            connMaxLifetime: 14400 # Grafana v5.4+
-            postgresVersion: 1500 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
+            sslmode: 'require'
+            maxOpenConns: 100
+            maxIdleConns: 100
+            maxIdleConnsAuto: true
+            connMaxLifetime: 14400
+            postgresVersion: 1500
             timescaledb: false
   plugins:
     - https://github.com/scc-digitalhub/grafana-dremio-datasource-plugin/raw/master/releases/digital-hub-dremio-1.1.1.zip;digital-hub-dremio
@@ -492,7 +492,7 @@ openmetadata:
   enabled: true
   nameOverride: openmetadata
   fullnameOverride: "openmetadata"
-  openmetadata: 
+  openmetadata:
     config:
       database:
         enabled: true
@@ -514,4 +514,3 @@ openmetadata:
           password:
             secretRef: airflow-admin-password
             secretKey: password
-

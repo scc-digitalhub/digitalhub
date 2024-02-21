@@ -2,7 +2,10 @@ apiVersion: v2
 name: digitalhub
 description: The Digital Hub is an open-source platform for interoperability of data and services, built by integrating several open-source projects to manage, elaborate, expose and serve data through modern standards.
 type: application
-version: 0.2.48
+maintainers:
+  - name: scc-digitalhub
+    url: https://github.com/scc-digitalhub
+version: 0.2.49
 appVersion: "0.3.0"
 dependencies:
 - name: docker-registry
@@ -38,7 +41,7 @@ dependencies:
   repository: "https://grafana.github.io/helm-charts"
   condition: grafana.enabled
 - name: core
-  version: "0.1.0"
+  version: "0.1.3"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: apigw-operator
