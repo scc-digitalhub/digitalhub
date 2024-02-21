@@ -97,6 +97,19 @@ entries:
     version: 0.1.0
   core:
   - apiVersion: v2
+    appVersion: 0.0.29
+    created: "2024-02-21T15:58:38.611159275Z"
+    description: A Helm chart for Kubernetes
+    digest: 692e9cc48f9cb03885a0dc783fa06e29324be1d252016538049837fbc6599d8d
+    maintainers:
+    - name: scc-digitalhub
+      url: https://github.com/scc-digitalhub
+    name: core
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.1.2/core-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2024-02-19T12:19:12.153793079Z"
     description: A Helm chart for Kubernetes
@@ -1495,4 +1508,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-02-20T12:52:45.530969232Z"
+generated: "2024-02-21T15:58:38.611218486Z"
