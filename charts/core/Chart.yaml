@@ -1,8 +1,8 @@
 apiVersion: v2
 name: core
-description: A Helm chart for Kubernetes
+description: Core backend application for DigitalHub.
 type: application
-version: 0.1.2
+version: 0.1.3
 appVersion: "0.0.29"
 maintainers:
   - name: scc-digitalhub
