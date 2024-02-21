@@ -4,7 +4,7 @@ metadata:
   name: digitalhub-common-env
 data:
   S3_BUCKET_NAME: {{ .Values.minio.bucketName }}
-  S3_ENDPOINT_URL: http://minio.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.minio.endpointPort }}
+  S3_ENDPOINT_URL: "http://minio:{{ .Values.minio.endpointPort }}"
   DIGITALHUB_CORE_ENDPOINT: "http://{{ include "core.fullname" . }}:{{ .Values.service.port }}"
   DIGITALHUB_KRM_ENDPOINT: "http://{{ .Release.Name }}-custom-resource-manager:{{ .Values.krm.port }}"
   POSTGRES_HOST: {{ .Values.postgres.host }}

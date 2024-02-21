@@ -125,3 +125,37 @@ postgres:
 
 krm:
   port: ""
+
+runtime:
+  nefertem:
+    image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-nefertem"
+    tag: "0.2.22"
+  dbt:
+    image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-dbt"
+    tag: "0.2.22"
+  mlrun:
+    image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-mlrun"
+    tag: "0.2.22"
+
+events:
+  enabled: "true"
+  rabbitmq:
+    enabled: true
+    host: ""
+    port: ""
+    vhost: ""
+    queue: ""
+    topic: ""
+    routingKey: ""
+    credentials:
+      username: ""
+      password: ""
+      existingSecret:
+        name: ""
+        usernameKey: ""
+        passwordKey: ""
+
+solr:
+  enabled: false
+  url: ""
+  collection: ""

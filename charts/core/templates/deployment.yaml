@@ -77,6 +77,18 @@ spec:
                 secretKeyRef:
                   name: coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do
                   key: password
+            {{- if and .Values.events.enabled .Values.events.rabbitmq.enabled }}
+            - name: RABBITMQ_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.events.rabbitmq.credentials.existingSecret.name | default (printf "%s-rabbitmq-creds" (include "core.fullname" .)) }}
+                  key: {{ .Values.events.rabbitmq.credentials.existingSecret.usernameKey | default "username" }}
+            - name: RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.events.rabbitmq.credentials.existingSecret.name | default (printf "%s-rabbitmq-creds" (include "core.fullname" .)) }}
+                  key: {{ .Values.events.rabbitmq.credentials.existingSecret.passwordKey | default "password" }}
+            {{- end }}
           envFrom:
           - configMapRef:
               name: {{ include "core.fullname" . }}
