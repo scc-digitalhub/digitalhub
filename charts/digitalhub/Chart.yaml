@@ -41,7 +41,7 @@ dependencies:
   repository: "https://grafana.github.io/helm-charts"
   condition: grafana.enabled
 - name: core
-  version: "0.1.3"
+  version: "0.1.4"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: apigw-operator
