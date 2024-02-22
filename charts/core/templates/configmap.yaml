@@ -24,7 +24,7 @@ data:
   {{- if .Values.events.enabled }}
   ENABLE_EVENTS: {{ .Values.events.enabled | quote }} 
   {{- if .Values.events.rabbitmq.enabled }}
-  RABBITMQ_ENABLE: {{ .Values.events.rabbitmq.enabled }}
+  RABBITMQ_ENABLE: {{ .Values.events.rabbitmq.enabled | quote }}
   RABBITMQ_HOST: {{ .Values.events.rabbitmq.host }}
   RABBITMQ_PORT: {{ .Values.events.rabbitmq.port | quote }}
   RABBITMQ_VHOST: {{ .Values.events.rabbitmq.vhost }}
