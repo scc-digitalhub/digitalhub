@@ -68,6 +68,9 @@ spec:
                   key: {{ .Values.connector.openmetadata.existingSecrets.token.secretKey }}
             {{- end }}
           {{- end }}
+          envFrom:
+          - configMapRef:
+              name: {{ .Chart.Name }}-configmap
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
