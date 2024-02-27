@@ -172,6 +172,86 @@ entries:
   digitalhub:
   - apiVersion: v2
     appVersion: 0.3.0
+    created: "2024-02-27T10:22:21.774030208Z"
+    dependencies:
+    - condition: docker-registry.enabled
+      name: docker-registry
+      repository: https://helm.twun.io
+      version: 2.2.2
+    - condition: mlrun-ce.enabled
+      name: mlrun-ce
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.6.3-rc3
+    - condition: coder.enabled
+      name: coder
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.0
+    - condition: postgres-operator.enabled
+      name: postgres-operator
+      repository: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+      version: 1.10.0
+    - condition: ext-postgres-operator.enabled
+      name: ext-postgres-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 1.2.4
+    - condition: custom-resource-manager.enabled
+      name: custom-resource-manager
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.0
+    - condition: postgrest-operator.enabled
+      name: postgrest-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.0
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 7.0.3
+    - condition: core.enabled
+      name: core
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.5
+    - condition: apigw-operator.enabled
+      name: apigw-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.2
+    - condition: rabbitmq-cluster-operator.enabled
+      name: rabbitmq-cluster-operator
+      repository: https://charts.bitnami.com/bitnami
+      version: 3.10.10
+    - condition: dremio-rest-server-operator.enabled
+      name: dremio-rest-server-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.1
+    - condition: airflow.enabled
+      name: airflow
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 8.8.1
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: https://opensearch-project.github.io/helm-charts/
+      version: 2.12.1
+    - condition: openmetadata.enabled
+      name: openmetadata
+      repository: https://helm.open-metadata.org
+      version: 1.3.0
+    - condition: openmetadata-java-connector.enabled
+      name: openmetadata-java-connector
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.2
+    description: The Digital Hub is an open-source platform for interoperability of
+      data and services, built by integrating several open-source projects to manage,
+      elaborate, expose and serve data through modern standards.
+    digest: 4aa355d3a2b07621c9b693880c967d17a5f784a561f076ecb761f54fcec62a38
+    maintainers:
+    - name: scc-digitalhub
+      url: https://github.com/scc-digitalhub
+    name: digitalhub
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-0.2.52/digitalhub-0.2.52.tgz
+    version: 0.2.52
+  - apiVersion: v2
+    appVersion: 0.3.0
     created: "2024-02-22T15:54:44.292434846Z"
     dependencies:
     - condition: docker-registry.enabled
@@ -1742,6 +1822,18 @@ entries:
   openmetadata-java-connector:
   - apiVersion: v2
     appVersion: "1.2"
+    created: "2024-02-27T10:22:21.954776097Z"
+    description: Connector to store in OpenMetadata some Dataitem info coming from
+      the DigitaHub Platform. The data must be published on a RabbitMQ Queue in 'JSON'
+      format.
+    digest: b6df2225325347b4f495cec53c3d6afa0d4fdacc36e8811850285d0b47aaf0db
+    name: openmetadata-java-connector
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/openmetadata-java-connector-0.1.3/openmetadata-java-connector-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: "1.2"
     created: "2024-02-27T10:06:03.621388839Z"
     description: Connector to store in OpenMetadata some Dataitem info coming from
       the DigitaHub Platform. The data must be published on a RabbitMQ Queue in 'JSON'
@@ -1787,4 +1879,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-02-27T10:06:03.621487442Z"
+generated: "2024-02-27T10:22:21.955116336Z"
