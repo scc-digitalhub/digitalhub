@@ -40,33 +40,33 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          {{ if or (not .Values.connector.rabbitmq.existingSecrets.username.secretName) (not .Values.connector.rabbitmq.existingSecrets.password.secretName) (not .Values.connector.openmetadata.existingSecrets.token.secretName) -}}
+          {{- if or (not .Values.connector.rabbitmq.existingSecrets.username.secretName) (not .Values.connector.rabbitmq.existingSecrets.password.secretName) (not .Values.connector.openmetadata.existingSecrets.token.secretName) }}
           envFrom:
             - secretRef:
                 name: {{ include "openmetadata-java-connector.fullname" . }}            
           {{- else }}
           env:
-            {{- if and (not .Values.connector.rabbitmq.password) (.Values.connector.rabbitmq.existingSecrets.password.secretName) -}}
+            {{- if and (not .Values.connector.rabbitmq.password) (.Values.connector.rabbitmq.existingSecrets.password.secretName) }}
             - name: RABBITMQ_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.connector.rabbitmq.existingSecrets.password.secretName }}
                   key: {{ .Values.connector.rabbitmq.existingSecrets.password.secretKey }}
-            {{- end -}}
-            {{- if and (not .Values.connector.rabbitmq.username) (.Values.connector.rabbitmq.existingSecrets.username.secretName) -}}
+            {{- end }}
+            {{- if and (not .Values.connector.rabbitmq.username) (.Values.connector.rabbitmq.existingSecrets.username.secretName) }}
             - name: RABBITMQ_USER
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.connector.rabbitmq.existingSecrets.username.secretName }}
                   key: {{ .Values.connector.rabbitmq.existingSecrets.username.secretKey }}
-            {{- end -}}
-            {{- if and (not .Values.connector.openmetadata.token) (.Values.connector.openmetadata.existingSecrets.token.secretName) -}}
+            {{- end }}
+            {{- if and (not .Values.connector.openmetadata.token) (.Values.connector.openmetadata.existingSecrets.token.secretName) }}
             - name: OPENMETADATA_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.connector.openmetadata.existingSecrets.token.secretName }}
                   key: {{ .Values.connector.openmetadata.existingSecrets.token.secretKey }}
-            {{- end -}}
+            {{- end }}
           {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
