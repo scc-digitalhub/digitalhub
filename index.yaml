@@ -1822,6 +1822,18 @@ entries:
   openmetadata-java-connector:
   - apiVersion: v2
     appVersion: "1.2"
+    created: "2024-02-27T10:51:53.213957475Z"
+    description: Connector to store in OpenMetadata some Dataitem info coming from
+      the DigitaHub Platform. The data must be published on a RabbitMQ Queue in 'JSON'
+      format.
+    digest: 9dc30e3e11e2dbb0186c6161296200d5fb186ef089baac303150372f3ec185de
+    name: openmetadata-java-connector
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/openmetadata-java-connector-0.1.4/openmetadata-java-connector-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: "1.2"
     created: "2024-02-27T10:22:21.954776097Z"
     description: Connector to store in OpenMetadata some Dataitem info coming from
       the DigitaHub Platform. The data must be published on a RabbitMQ Queue in 'JSON'
@@ -1879,4 +1891,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-02-27T10:22:21.955116336Z"
+generated: "2024-02-27T10:51:53.214045461Z"
