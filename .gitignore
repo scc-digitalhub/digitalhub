@@ -5,5 +5,5 @@ docker-compose/resources/dagster-pipelines/*/__pycache__*
 documentation/site
 tmp/
 **Chart.lock
-*/**/charts
+*/**/charts/*
 **/tmpcharts
