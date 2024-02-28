@@ -5,7 +5,7 @@ type: application
 maintainers:
   - name: scc-digitalhub
     url: https://github.com/scc-digitalhub
-version: 0.2.53
+version: 0.2.54
 appVersion: "0.3.0"
 dependencies:
 - name: docker-registry
@@ -66,10 +66,10 @@ dependencies:
   condition: opensearch.enabled
 - name: openmetadata
   repository: https://helm.open-metadata.org
-  version: 1.2.4
+  version: 1.2.8
   condition: openmetadata.enabled
 - name: openmetadata-java-connector
-  version: 0.1.5
+  version: 0.1.6
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: openmetadata-java-connector.enabled
   
