@@ -490,6 +490,7 @@ airflow:
 
 openmetadata:
   enabled: true
+  initialize: true
   nameOverride: openmetadata
   fullnameOverride: "openmetadata"
   openmetadata:
