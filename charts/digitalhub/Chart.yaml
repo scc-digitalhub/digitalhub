@@ -5,7 +5,7 @@ type: application
 maintainers:
   - name: scc-digitalhub
     url: https://github.com/scc-digitalhub
-version: "0.2.60"
+version: "0.2.61"
 appVersion: "0.3.0"
 dependencies:
 - name: docker-registry
@@ -41,7 +41,7 @@ dependencies:
   repository: "https://grafana.github.io/helm-charts"
   condition: grafana.enabled
 - name: core
-  version: "0.1.5"
+  version: "0.1.6"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: apigw-operator
