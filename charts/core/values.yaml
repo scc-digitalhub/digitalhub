@@ -138,9 +138,9 @@ runtime:
     tag: "0.2.22"
 
 events:
-  enabled: "true"
+  enabled: "false"
   rabbitmq:
-    enabled: true
+    enabled: false
     host: ""
     port: ""
     vhost: ""
