@@ -209,6 +209,9 @@ mlrun-ce:
         helm.sh/resource-policy: "keep"
     db:
       username: root
+    ui:
+      ingress: 
+        enabled: false
     minio:
       enabled: true
       accessKey: "minio"
