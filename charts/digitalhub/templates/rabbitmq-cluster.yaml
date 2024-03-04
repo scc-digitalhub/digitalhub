@@ -1,9 +1,10 @@
+{{- if (index .Values "rabbitmq-cluster-operator" "enabled") }}
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
-  name: digitalhub-test-rabbitmq
+  name: digitalhub-rabbitmq
 spec:
-  replicas: 1
+  replicas: {{ index .Values "rabbitmq-cluster-operator" "cluster" "replicas" }}
   resources:
     requests:
       cpu: 1
@@ -17,8 +18,8 @@ spec:
       disk_free_limit.relative = 1.0
       collect_statistics_interval = 10000
   persistence:
-    storageClassName: disk
-    storage: "4Gi"
+    storageClassName: {{ index .Values "rabbitmq-cluster-operator" "cluster" "persistence" "storageClass" }}
+    storage: {{ index .Values "rabbitmq-cluster-operator" "cluster" "persistence" "storageSize" }}
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -27,7 +28,7 @@ spec:
             - key: app.kubernetes.io/name
               operator: In
               values:
-              - digitalhub-test
+              - digitalhub-rabbitmq
         topologyKey: kubernetes.io/hostname
   override:
     statefulSet:
@@ -41,4 +42,5 @@ spec:
               whenUnsatisfiable: DoNotSchedule
               labelSelector:
                 matchLabels:
-                  app.kubernetes.io/name: digitalhub-test
+                  app.kubernetes.io/name: digitalhub-rabbitmq
+{{- end }}

@@ -330,6 +330,22 @@ core:
     rootPassword: minio123
   krm:
     port: "8080"
+  events:
+    enabled: true
+    rabbitmq:
+      enabled: true
+      host: "digitalhub-rabbitmq"
+      port: "5672"
+      vhost: "/"
+      queue: "dhCoreQueue"
+      topic: "entityTopic"
+      routingKey: "entityRoutingKey"
+      credentials:
+        existingSecret:
+          name: "digitalhub-rabbitmq-default-user"
+          usernameKey: "username"
+          passwordKey: "password"
+    
 
 custom-resource-manager:
   enabled: true
@@ -381,6 +397,11 @@ jobs:
 
 rabbitmq-cluster-operator:
   enabled: true
+  cluster:
+    replicas: 1
+    persistence:
+      storagaClass: "standard"
+      storageSize: "4Gi" 
 
 opensearch:
   enabled: true
@@ -494,6 +515,8 @@ airflow:
 openmetadata:
   enabled: true
   initialize: true
+  service:
+    type: *serviceType
   nameOverride: openmetadata
   fullnameOverride: "openmetadata"
   openmetadata:
@@ -518,3 +541,27 @@ openmetadata:
           password:
             secretRef: airflow-admin-password
             secretKey: password
+
+openmetadata-java-connector:
+  enabled: true
+  connector:
+    rabbitmq:
+      host: "digitalhub-rabbitmq"
+      port: "5672"
+      virtualhost: "/"
+      existingSecrets:
+        username:
+          secretName: "digitalhub-rabbitmq-default-user"
+          secretKey: "username"
+        password:
+          secretName: "digitalhub-rabbitmq-default-user"
+          secretKey: "password"
+    openmetadata:
+      host: "http://openmetadata:8585/api"
+      dataserviceName: "DigitalHub"
+      dataserviceSql: "DigitalHubSQL"
+      dataserviceS3: "DigitalHubS3"
+      existingSecrets:
+        token: 
+          secretName: "openmetadata-bot-token"
+          secretKey: "token"

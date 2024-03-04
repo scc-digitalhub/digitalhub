@@ -6,7 +6,7 @@ spec:
   teamId: "digitalhub"
   volume:
     size: {{ index .Values "postgres-operator" "digitalhubDatabase" "volume" "size" }}
-  numberOfInstances: 3
+  numberOfInstances: 1
   users:
     digitalhubadmin:
     - superuser
