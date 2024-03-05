@@ -1,7 +1,8 @@
 global:
   cleanup:
-    persistentVolumeClaim: false
+    persistentVolumeClaims: false
     ingress: false
+    pods: false
   service:
     type: &serviceType "NodePort"
   registry:
