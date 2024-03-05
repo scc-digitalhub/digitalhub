@@ -3,6 +3,7 @@ global:
     persistentVolumeClaims: false
     ingress: false
     pods: false
+    jobs: false
   service:
     type: &serviceType "NodePort"
   registry:
@@ -515,7 +516,11 @@ airflow:
 
 openmetadata:
   enabled: true
-  initialize: true
+  initializer: 
+    enabled: true
+    maxRetry: "30"
+    username: "admin"
+    password: "admin"
   service:
     type: *serviceType
   nameOverride: openmetadata

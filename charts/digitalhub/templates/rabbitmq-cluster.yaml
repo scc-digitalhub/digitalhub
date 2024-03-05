@@ -38,7 +38,7 @@ spec:
             containers: []
             topologySpreadConstraints:
             - maxSkew: 1
-              topologyKey: "topology.kubernetes.io/zone"
+              topologyKey: "kubernetes.io/hostname"
               whenUnsatisfiable: DoNotSchedule
               labelSelector:
                 matchLabels:

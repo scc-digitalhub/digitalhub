@@ -30,5 +30,4 @@ Digitalhub componet URLs:
   - Core: http://{{ $externalUrl }}:{{ .Values.core.service.httpNodePort }}
   - Grafana: http://{{ $externalUrl }}:{{ .Values.grafana.service.nodePort }}
   - Custom Resource Manager: http://{{ $externalUrl }}:{{ index .Values "custom-resource-manager" "service" "nodePort" }}
-  - Openmetadata: http://{{ $externalUrl }}:{{ (index ((lookup "v1" "Service" .Release.Namespace "openmetadata").spec.ports) 0).nodePort }}
 {{ end }}

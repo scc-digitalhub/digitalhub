@@ -1,4 +1,4 @@
-{{- if and .Values.openmetadata.enabled .Values.openmetadata.initialize }}
+{{- if and .Values.openmetadata.enabled .Values.openmetadata.initializer.enabled }}
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -57,14 +57,14 @@ metadata:
   labels:
     {{- include "digitalhub.labels" . | nindent 4 }}
 data:
-    USERNAME: "admin"
-    PASSWORD: "admin"
+    USERNAME: {{ .Values.openmetadata.initializer.username }}
+    PASSWORD: {{ .Values.openmetadata.initializer.password }}
     HOSTNAME: "http://{{ include "OpenMetadata.fullname" .Subcharts.openmetadata }}"
     PORT: "8585"
     ADMIN_PORT: "8586"
     GENERATE_TOKEN: "true"
     CHANGE_USER_PASSWORD: "false"
-    READINESS_MAX_RETRY: "10"
+    READINESS_MAX_RETRY: {{ .Values.openmetadata.initializer.maxRetry | quote }}
     NAMESPACE: {{ .Release.Namespace }}
 ---
 apiVersion: batch/v1
