@@ -286,7 +286,7 @@ ext-postgres-operator:
     host: database-postgres-cluster
     user: ""
     password: ""
-    uri_args: ""
+    uri_args: " "
     cloud_provider: ""
     default_database: "postgres"
   postgresCredsExistingSecrets:
@@ -504,13 +504,13 @@ airflow:
   dags:
     persistence:
       enabled: true
-      storageClass: "fileshare"
+      storageClass: "standard"
       size: 1Gi
       accessMode: ReadWriteMany
   logs:
     persistence:
       enabled: true
-      storageClass: "fileshare"
+      storageClass: "standard"
       accessMode: ReadWriteMany
       size: 1Gi
 

@@ -17,7 +17,7 @@ The platform deployment is managed via Docker Compose. Each documented use case 
 
 1. Start minikube (change 192.168.49.0 if your network setup is different):
 ```sh
-    minikube start --insecure-registry "192.168.49.0/24"
+    minikube start --insecure-registry "192.168.49.0/24 --memory 8192 --cpus 4"
 ```
 2. Get minikube external IP:
 ```sh
