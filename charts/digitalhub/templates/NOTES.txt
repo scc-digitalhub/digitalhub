@@ -24,8 +24,8 @@ Digitalhub componet URLs:
   - MLRun UI: http://{{ $externalUrl }}:{{ index .Values "mlrun" "ui" "service" "nodePort" }}
   - Minio API: http://{{ $externalUrl }}:{{ index .Values "minio" "service" "nodePort" }} (Username: {{ index .Values "minio" "rootUser" }} Password: {{ index .Values "minio" "rootPassword" }})
   - Minio UI: http://{{ $externalUrl }}:{{ index .Values "minio" "consoleService" "nodePort" }} (Username: {{ index .Values "minio" "rootUser" }} Password: {{ index .Values "minio" "rootPassword" }})
+  - KubeFlow: http://{{ $externalUrl }}:{{ index .Values "pipelines" "service" "nodePort" }}
 {{- end }}
-  - KubeFlow: http://{{ $externalUrl }}:30100
   - Coder: http://{{ $externalUrl }}:{{ .Values.coder.coder.service.httpNodePort }} (Username: {{ .Values.coder.email }} Password: {{ .Values.coder.password }})
   - Core: http://{{ $externalUrl }}:{{ .Values.core.service.httpNodePort }}
   - Grafana: http://{{ $externalUrl }}:{{ .Values.grafana.service.nodePort }}
