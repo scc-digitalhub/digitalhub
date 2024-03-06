@@ -50,154 +50,31 @@ docker-registry:
 mlrun-ce:
   enabled: true
   nuclio:
-    fullnameOverride: nuclio
-    controller:
-      enabled: true
     dashboard:
-      enabled: true
-      containerBuilderKind: kaniko
       kaniko:
         insecurePushRegistry: true
         insecurePullRegistry: true
-    rbac:
-      create: true
-      crdAccessMode: namespaced
-    crd:
-      create: true
-    platform:
-      logger:
-        sinks:
-          myStdoutLoggerSink:
-            kind: stdout
-            attributes:
-              encoding: console
-              timeFieldName: time
-              timeFieldEncoding: iso8601
-        system:
-        - level: debug
-          sink: myStdoutLoggerSink
-        functions:
-        - level: debug
-          sink: myStdoutLoggerSink
   mlrun:
-    storage: filesystem
-    fullnameOverride: mlrun
-    nuclio:
-      mode: enabled
-    rbac:
-      create: true
-    v3io:
-      enabled: false
-    api:
-      fullnameOverride: mlrun-api
-      ingress:
-        enabled: false
-      volumes:
-        storageOverride:
-          persistentVolumeClaim:
-            claimName: mlrun-api-pvc
-      persistence:
-        enabled: true
-        existingClaim:
-        storageClass:
-        accessMode: "ReadWriteOnce"
-        size: "8Gi"
-        annotations:
-          helm.sh/resource-policy: "keep"
-      envFrom:
-        - configMapRef:
-            name: mlrun-common-env
-        - configMapRef:
-            name: mlrun-pipelines-config
-            optional: true
-        - configMapRef:
-            name: mlrun-spark-config
-            optional: true
-        - configMapRef:
-            name: mlrun-override-env
-            optional: true
-      extraPersistentVolumeMounts: ~
     ui:
-      fullnameOverride: mlrun-ui
       ingress:
         enabled: false
-    db:
-      name: db
-      fullnameOverride: mlrun-db
-      securityContext:
-        runAsUser: 999
-      podSecurityContext:
-        runAsUser: 999
-        fsGroup: 999
-      volumes:
-        storageOverride:
-          persistentVolumeClaim:
-            claimName: mlrun-db-pvc
-      persistence:
-        enabled: true
-        existingClaim:
-        storageClass:
-        accessMode: "ReadWriteOnce"
-        size: "8Gi"
-        annotations:
-          helm.sh/resource-policy: "keep"
-    httpDB:
-      dbType: mysql
-      dirPath: "/mlrun/db"
-      dsn: mysql+pymysql://root@mlrun-db:3306/mlrun
-      oldDsn: sqlite:////mlrun/db/mlrun.db?check_same_thread=false
-    ce:
-      mode: full
   jupyterNotebook:
     enabled: false
-  mpi-operator:
-    fullnameOverride: mpi-operator
-    crd:
-      create: true
-    rbac:
-      clusterResources:
-        create: true
-      namespaced:
-        create: true
-    deployment:
-      create: true
   minio:
     enabled: true
     rootUser: minio
     rootPassword: minio123
     mode: standalone
     replicas: 1
-    resources:
-      requests:
-        memory: 0.5Gi
     ingress:
       enabled: false
-      ingressClassName: "nginx"
-      path: /
-      hosts:
-        - minio-api.digitalhub.test
-    consoleIngress:
-      enabled: false
-      ingressClassName: "nginx"
-      path: /
-      hosts:
-        - minio.digitalhub.test
     persistence:
       enabled: true
       size: 128Gi
-    fullnameOverride: minio
     buckets:
       - name: datalake
         policy: none
         purge: false
-  spark-operator:
-    enabled: true
-    fullnameOverride: spark-operator
-    webhook:
-      enable: true
-    serviceAccounts:
-      spark:
-        name: "sparkapp"
   pipelines:
     enabled: true
     name: pipelines
@@ -206,9 +83,7 @@ mlrun-ce:
       existingClaim:
       storageClass:
       accessMode: "ReadWriteOnce"
-      size: "128Gi"
-      annotations:
-        helm.sh/resource-policy: "keep"
+      size: "20Gi"
     db:
       username: root
     ui:
