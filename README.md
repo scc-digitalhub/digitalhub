@@ -30,7 +30,7 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 ```
 5. Install DigitalHub with Helm:
 ```sh
-    helm upgrade digitalhub digitalhub/digitalhub/ -n digitalhub --install --create-namespace --timeout 15m0s
+    helm upgrade digitalhub digitalhub/digitalhub -n digitalhub --install --create-namespace --timeout 15m0s
 ```
 6. Wait until all pods are in Running state
 ```sh
