@@ -185,6 +185,86 @@ entries:
   digitalhub:
   - apiVersion: v2
     appVersion: 0.3.0
+    created: "2024-03-06T09:05:41.051774438Z"
+    dependencies:
+    - condition: docker-registry.enabled
+      name: docker-registry
+      repository: https://helm.twun.io
+      version: 2.2.2
+    - condition: mlrun-ce.enabled
+      name: mlrun-ce
+      repository: https://mlrun.github.io/ce
+      version: 0.6.3-rc10
+    - condition: coder.enabled
+      name: coder
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.0
+    - condition: postgres-operator.enabled
+      name: postgres-operator
+      repository: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+      version: 1.10.0
+    - condition: ext-postgres-operator.enabled
+      name: ext-postgres-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 1.2.4
+    - condition: custom-resource-manager.enabled
+      name: custom-resource-manager
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.0
+    - condition: postgrest-operator.enabled
+      name: postgrest-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.0
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 7.0.3
+    - condition: core.enabled
+      name: core
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.6
+    - condition: apigw-operator.enabled
+      name: apigw-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.2
+    - condition: rabbitmq-cluster-operator.enabled
+      name: rabbitmq-cluster-operator
+      repository: https://charts.bitnami.com/bitnami
+      version: 3.10.10
+    - condition: dremio-rest-server-operator.enabled
+      name: dremio-rest-server-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.1
+    - condition: airflow.enabled
+      name: airflow
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 8.8.1
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: https://opensearch-project.github.io/helm-charts/
+      version: 2.12.1
+    - condition: openmetadata.enabled
+      name: openmetadata
+      repository: https://helm.open-metadata.org
+      version: 1.2.8
+    - condition: openmetadata-java-connector.enabled
+      name: openmetadata-java-connector
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.7
+    description: The Digital Hub is an open-source platform for interoperability of
+      data and services, built by integrating several open-source projects to manage,
+      elaborate, expose and serve data through modern standards.
+    digest: 91b2e7783a3229b1cbd8d4deea54a31ff423e4777d2c1e417dd559061f578bb9
+    maintainers:
+    - name: scc-digitalhub
+      url: https://github.com/scc-digitalhub
+    name: digitalhub
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-0.2.66/digitalhub-0.2.66.tgz
+    version: 0.2.66
+  - apiVersion: v2
+    appVersion: 0.3.0
     created: "2024-03-05T15:28:47.040280545Z"
     dependencies:
     - condition: docker-registry.enabled
@@ -3094,4 +3174,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-03-05T15:28:47.040616828Z"
+generated: "2024-03-06T09:05:41.052192818Z"
