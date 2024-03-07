@@ -5,7 +5,7 @@ type: application
 maintainers:
   - name: scc-digitalhub
     url: https://github.com/scc-digitalhub
-version: "0.2.67"
+version: "0.2.68"
 appVersion: "0.2.0"
 dependencies:
 - name: docker-registry
