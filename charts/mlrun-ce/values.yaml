@@ -57,7 +57,6 @@ nuclio:
 mlrun:
 
   # set the type of filesystem to use: filesystem, s3
-  enabled: true
   storage: filesystem
   secrets:
     s3:
@@ -79,7 +78,7 @@ mlrun:
   api:
     fullnameOverride: mlrun-api
     image:
-      tag: 1.6.0
+      tag: 1.4.0
     service:
       type: NodePort
       nodePort: 30070
@@ -114,15 +113,15 @@ mlrun:
       type: NodePort
       nodePort: 30060
     image:
-      tag: 1.6.0
+      tag: 1.4.0
   db:
     name: db
     fullnameOverride: mlrun-db
-    securityContext:
+    securityContext: 
       runAsUser: 999
     podSecurityContext:
       runAsUser: 999
-      fsGroup: 999
+      fsGroup: 999    
     volumes:
       storageOverride:
         persistentVolumeClaim:
@@ -149,10 +148,7 @@ mlrun:
     mode: full
 
 jupyterNotebook:
-  serviceAccount:
-    create: true
-    name: mlrun-jupyter
-  awsInstall: false 
+  awsInstall: false
   fullnameOverride: mlrun-jupyter
   name: jupyter-notebook
   enabled: true
@@ -176,7 +172,7 @@ jupyterNotebook:
     #      - chart-example.local
   image:
     repository: quay.io/mlrun/jupyter
-    tag: 1.6.0
+    tag: 1.4.0
     pullPolicy: IfNotPresent
 
   # use this to override mlrunUIURL, by default it will be auto-resolved to externalHostAddress and
@@ -192,12 +188,13 @@ jupyterNotebook:
       value: ""
     - name: MLRUN_FEATURE_STORE__DEFAULT_TARGETS
       value: "parquet"
+    - name: S3_ENDPOINT_URL
+      value: http://minio.mlrun.svc.cluster.local:9000
+    - name: AWS_SECRET_ACCESS_KEY
+      value: minio123
+    - name: AWS_ACCESS_KEY_ID
+      value: minio
 
-  extraEnvKeyValue: {}
-  envFrom:
-    - configMapRef:
-        name: jupyter-common-env
-        optional: true        
   persistence:
     enabled: true
     existingClaim:
@@ -264,13 +261,6 @@ spark-operator:
 pipelines:
   enabled: true
   name: pipelines
-  service:
-    type: NodePort
-    nodePort: 30100
-  crd:
-    enabled: true
-  priority_class:
-    enabled: true
   persistence:
     enabled: true
     existingClaim:
@@ -287,6 +277,23 @@ pipelines:
     #    effect: NoSchedule
   db:
     username: root
+  ui:
+    service:
+      type: NodePort
+      nodePort: 30100
+    ingress:
+      enabled: false
+      ingressClassName: ""
+      annotations: {}
+      hosts:
+        - host: chart-example.local
+          paths: 
+            - pathType: ImplementationSpecific
+              path: /
+      tls: []
+      #  - secretName: chart-example-tls
+      #    hosts:
+      #      - chart-example.local
   minio:
     enabled: true
     accessKey: "minio"

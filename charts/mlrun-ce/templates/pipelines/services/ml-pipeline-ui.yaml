@@ -13,12 +13,12 @@ spec:
     port: 80
     protocol: TCP
     targetPort: 3000
-    {{- if eq .Values.pipelines.service.type "NodePort" }}
+    {{- if eq .Values.pipelines.ui.service.type "NodePort" }}
     nodePort: 30100
     {{- end }}
   selector:
     app: ml-pipeline-ui
     application-crd-id: kubeflow-pipelines
   sessionAffinity: None
-  type: {{ .Values.pipelines.service.type }}
+  type: {{ .Values.pipelines.ui.service.type}}
 {{- end -}}
