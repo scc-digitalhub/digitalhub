@@ -5,7 +5,7 @@ type: application
 maintainers:
   - name: scc-digitalhub
     url: https://github.com/scc-digitalhub
-version: "0.2.66"
+version: "0.2.64"
 appVersion: "0.3.0"
 dependencies:
 - name: docker-registry
@@ -13,8 +13,8 @@ dependencies:
   repository: "https://helm.twun.io"
   condition: docker-registry.enabled
 - name: mlrun-ce
-  version: "0.6.3-rc10"
-  repository: https://mlrun.github.io/ce
+  version: "0.6.3-rc3"
+  repository: https://scc-digitalhub.github.io/digitalhub/
   condition: mlrun-ce.enabled
 - name: coder
   version: "0.1.0"
