@@ -70,8 +70,16 @@ spec:
           - name: MLRUN_FUNCTION__SPEC__IMAGE_PULL_SECRET__DEFAULT
             value: {{ template "mlrun.defaultDockerRegistry.imagePullSecretName" . }}
           {{- end }}
+          {{- if and .Values.httpDB.secretDsn .Values.httpDB.secretDsn.name .Values.httpDB.secretDsn.key }}
+          - name: MLRUN_HTTPDB__DSN
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.httpDB.secretDsn.name }}
+                key: {{ .Values.httpDB.secretDsn.key }}
+          {{- else -}}
           - name: MLRUN_HTTPDB__DSN
             value: {{ .Values.httpDB.dsn }}
+          {{- end -}}
           - name: MLRUN_HTTPDB__OLD_DSN
             value: {{ .Values.httpDB.oldDsn }}
           {{- if .Values.v3io.enabled }}
