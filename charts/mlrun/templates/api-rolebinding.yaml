@@ -1,0 +1,19 @@
+{{- if .Values.rbac.create -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ template "mlrun.api.fullname" . }}
+  labels:
+{{ include "mlrun.api.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "mlrun.api.fullname" . }}
+subjects:
+- kind: ServiceAccount
+  name: {{ template "mlrun.serviceAccountName.api" . }}
+{{- if .Values.serviceAccounts.serviceAccountName }}
+- kind: ServiceAccount
+  name: {{ .Values.serviceAccounts.serviceAccountName }}
+{{- end }}
+{{- end -}}

@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mlrun.api.fullname" . }}
+  labels:
+    {{- include "mlrun.api.labels" . | nindent 4 }}
+spec:
+{{- if (or (eq .Values.api.service.type "ClusterIP") (empty .Values.api.service.type)) }}
+  type: ClusterIP
+  {{- if .Values.api.service.clusterIP }}
+  clusterIP: {{ .Values.api.service.clusterIP }}
+  {{end}}
+{{- else if eq .Values.api.service.type "LoadBalancer" }}
+  type: {{ .Values.api.service.type }}
+  {{- if .Values.api.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.api.service.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.api.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+{{ toYaml .Values.api.service.loadBalancerSourceRanges | indent 4 }}
+  {{- end -}}
+{{- else }}
+  type: {{ .Values.api.service.type }}
+{{- end }}
+{{- if .Values.api.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.api.service.externalIPs | indent 4 }}
+{{- end }}
+  ports:
+    - name: http
+      port: {{ .Values.api.service.port }}
+      protocol: TCP
+      targetPort: http
+{{ if (and (eq .Values.api.service.type "NodePort") (not (empty .Values.api.service.nodePort))) }}
+      nodePort: {{.Values.api.service.nodePort}}
+{{ end }}
+  selector:
+    {{- include "mlrun.api.selectorLabels" . | nindent 4 }}
