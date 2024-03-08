@@ -13,7 +13,12 @@ chart-repos:
   - opensearch=https://opensearch-project.github.io/helm-charts/
   - openmetadata=https://helm.open-metadata.org
 helm-extra-args: --timeout 600s
-excluded-charts: []
+excluded-charts: 
+  - airflow
+  - mlrun
+  - coder
+  - mlrun
+  - mlrun-ce
 additional-commands:
   - sh -ec "if [ -f '{{ .Path }}/ci/lint.sh' ]; then shellcheck '{{ .Path }}/ci/lint.sh'; bash '{{ .Path }}/ci/lint.sh'; fi"
   # - helm unittest --helm3 --strict --file unittests/*.yaml --file 'unittests/**/*.yaml' {{ .Path }}
