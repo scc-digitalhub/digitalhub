@@ -1,0 +1,17 @@
+{{- if and (eq .Values.httpDB.dbType "mysql") (.Values.db.exporter.enabled) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mlrun.db.exporter.fullname" . }}
+  labels:
+    {{- include "mlrun.db.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.db.exporter.service.type }}
+  ports:
+    - port: {{ .Values.db.exporter.service.externalPort }}
+      targetPort: {{ .Values.db.exporter.service.internalPort }}
+      protocol: TCP
+      name: {{ .Values.db.exporter.service.name }}
+  selector:
+    {{- include "mlrun.db.selectorLabels" . | nindent 4 }}
+{{- end }}

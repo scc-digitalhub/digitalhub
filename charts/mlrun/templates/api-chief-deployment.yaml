@@ -1,0 +1,269 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mlrun.api.chief.fullname" . }}
+  labels:
+    {{- include "mlrun.api.chief.labels" . | nindent 4 }}
+spec:
+  # .api.chief.minReplicas replaced .api.replicaCount, keeping support for backwards compatibility
+  # kindIs is the way to differentiate between empty and 0 (if replicaCount is 0 we do want to use it)
+  {{- if not (kindIs "invalid" .Values.api.replicaCount) }}
+  replicas: {{ .Values.api.replicaCount }}
+  {{- else }}
+  replicas: {{ .Values.api.chief.minReplicas }}
+  {{- end }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "mlrun.api.chief.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "mlrun.api.chief.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.api.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- if .Values.serviceAccounts.serviceAccountName}}
+      serviceAccountName: {{ .Values.serviceAccounts.serviceAccountName }}
+    {{- else }}
+      serviceAccountName: {{ include "mlrun.serviceAccountName.api" . }}
+    {{- end }}
+      securityContext:
+        {{- toYaml .Values.api.podSecurityContext | nindent 8 }}
+      {{- if .Values.api.extraInitContainers }}
+      initContainers:
+        {{- toYaml .Values.api.extraInitContainers | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ template "mlrun.name" . }}-{{ .Values.api.name }}
+          securityContext:
+            {{- toYaml .Values.api.securityContext | nindent 12 }}
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          imagePullPolicy: {{ .Values.api.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+          - name: MLRUN_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: MLRUN_HTTPDB__CLUSTERIZATION__ROLE
+            value: "chief"
+          - name: MLRUN_LOG_LEVEL
+            value: {{ .Values.api.logLevel }}
+          - name: MLRUN_HTTPDB__DB_TYPE
+            {{- if or (eq .Values.httpDB.dbType "mysql") (eq .Values.httpDB.dbType "sqlite") }}
+            value: "sqldb"
+            {{- else }}
+            value: "filedb"
+            {{- end }}
+          - name: MLRUN_HTTPDB__API_URL
+            value: http://{{ include "mlrun.api.fullname" . }}:{{ .Values.api.service.port }}
+          - name: MLRUN_HTTPDB__DIRPATH
+            value: {{ .Values.httpDB.dirPath }}
+          - name: MLRUN_HTTPDB__BUILDER__DOCKER_REGISTRY
+            value: {{ template "mlrun.defaultDockerRegistry.url" . }}
+          {{- if or .Values.defaultDockerRegistrySecretName .Values.global.registry.secretName }}
+          - name: MLRUN_HTTPDB__BUILDER__DOCKER_REGISTRY_SECRET
+            value: {{ template "mlrun.defaultDockerRegistry.builderSecretName" . }}
+          {{- end }}
+          {{- if or .Values.api.function.spec.image_pull_secret.default .Values.global.registry.secretName }}
+          - name: MLRUN_FUNCTION__SPEC__IMAGE_PULL_SECRET__DEFAULT
+            value: {{ template "mlrun.defaultDockerRegistry.imagePullSecretName" . }}
+          {{- end }}
+          - name: MLRUN_HTTPDB__DSN
+            value: {{ .Values.httpDB.dsn }}
+          - name: MLRUN_HTTPDB__OLD_DSN
+            value: {{ .Values.httpDB.oldDsn }}
+          {{- if .Values.v3io.enabled }}
+          - name: V3IO_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-v3io-fuse
+                key: accessKey
+          - name: V3IO_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-v3io-fuse
+                key: username
+          {{- end }}
+          - name: MLRUN_NUCLIO_MODE
+            value: {{ .Values.nuclio.mode }}
+          {{- if eq .Values.nuclio.mode "enabled" }}
+          - name: MLRUN_NUCLIO_DASHBOARD_URL
+            value: {{ template "mlrun.nuclio.apiURL" . }}
+          {{- end }}
+          {{- if .Values.api.sidecars.logCollector.enabled }}
+          - name: MLRUN_LOG_COLLECTOR__MODE
+            value: {{ .Values.api.sidecars.logCollector.mode }}
+          - name: MLRUN_LOG_COLLECTOR__ADDRESS
+            value: {{ include "mlrun.api.sidecars.logCollector.internalAddress" . }}
+          - name: MLRUN_LOG_COLLECTOR__GET_LOGS_BUFFER_SIZE_BYTES
+            value: {{ .Values.api.sidecars.logCollector.getLogsBufferSizeBytes | quote }}
+          {{- end }}
+          {{- if .Values.api.extraEnv }}
+          {{ toYaml .Values.api.extraEnv | nindent 10 }}
+          {{- end }}
+          {{- if .Values.api.extraEnvKeyValue }}
+          {{- range $name, $value := .Values.api.extraEnvKeyValue }}
+          - name: {{ $name }}
+            value: {{ $value | quote }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.api.envFrom }}
+          envFrom:
+          {{ toYaml .Values.api.envFrom | nindent 10 }}
+          {{- end }}
+          {{- if .Values.api.livenessProbe }}
+          livenessProbe:
+            {{ toYaml .Values.api.livenessProbe | nindent 12 }}
+          {{- end }}
+          {{- if .Values.api.readinessProbe }}
+          readinessProbe:
+            {{ toYaml .Values.api.readinessProbe | nindent 12 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.api.resources | nindent 12 }}
+          volumeMounts:
+            - name: storage
+              mountPath: {{ .Values.httpDB.dirPath }}
+            {{- range .Values.api.extraPersistentVolumeMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+              subPath: {{ .subPath | default "" }}
+              readOnly: {{ .readOnly }}
+            {{- end }}
+        {{- if .Values.api.opa.enabled }}
+        - name: {{ template "mlrun.name" . }}-{{ .Values.api.opa.name }}
+          securityContext:
+            {{- toYaml .Values.api.opa.securityContext | nindent 12 }}
+          image: "{{ .Values.api.opa.image.repository }}:{{ .Values.api.opa.image.tag }}"
+          imagePullPolicy: {{ .Values.api.opa.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8181
+          {{- if .Values.api.opa.livenessProbe }}
+          livenessProbe:
+            {{ toYaml .Values.api.opa.livenessProbe | nindent 12 }}
+          {{- end }}
+          {{- if .Values.api.opa.readinessProbe }}
+          readinessProbe:
+            {{ toYaml .Values.api.opa.readinessProbe | nindent 12 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.api.opa.resources | nindent 12 }}
+          args:
+            - "run"
+            - "--server"
+            - "--config-file=/config/config.yaml"
+            - "--log-level={{ .Values.api.opa.logLevel }}"
+            - "--log-format={{ .Values.api.opa.logFormat }}"
+            - "--ignore=.*"
+          volumeMounts:
+            - readOnly: true
+              mountPath: /config
+              name: config
+        {{- end }}
+        {{- if .Values.api.sidecars.logCollector.enabled }}
+        - name: {{ template "mlrun.name" . }}-{{ .Values.api.sidecars.logCollector.name }}
+          securityContext:
+            {{- toYaml .Values.api.sidecars.logCollector.securityContext | nindent 12 }}
+          image: "{{ .Values.api.sidecars.logCollector.image.repository }}:{{ .Values.api.sidecars.logCollector.image.tag }}"
+          imagePullPolicy: {{ .Values.api.sidecars.logCollector.image.pullPolicy }}
+          ports:
+          - name: grpc
+            containerPort: {{ .Values.api.sidecars.logCollector.listenPort }}
+          env:
+          - name: MLRUN_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: MLRUN_HTTPDB__CLUSTERIZATION__ROLE
+            value: "chief"
+          {{- if .Values.api.sidecars.logCollector.extraEnv }}
+          {{ toYaml .Values.api.sidecars.logCollector.extraEnv | nindent 10 }}
+          {{- end }}
+          {{- if .Values.api.sidecars.logCollector.extraEnvKeyValue }}
+          {{- range $name, $value := .Values.api.sidecars.logCollector.extraEnvKeyValue }}
+          - name: {{ $name }}
+            value: {{ $value | quote }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.api.sidecars.logCollector.envFrom }}
+          envFrom:
+          {{ toYaml .Values.api.sidecars.logCollector.envFrom | nindent 10 }}
+          {{- end }}
+          {{- if .Values.api.sidecars.logCollector.livenessProbe }}
+          livenessProbe:
+            exec:
+              command: [ "/grpc_health_probe", "-addr=:{{ .Values.api.sidecars.logCollector.listenPort }}" ]
+            {{ toYaml .Values.api.sidecars.logCollector.livenessProbe | nindent 12 }}
+          {{- end }}
+          {{- if .Values.api.sidecars.logCollector.readinessProbe }}
+          readinessProbe:
+            exec:
+              command: [ "/grpc_health_probe", "-addr=:{{ .Values.api.sidecars.logCollector.listenPort }}" ]
+            {{ toYaml .Values.api.sidecars.logCollector.readinessProbe | nindent 12 }}
+          {{- end }}
+          resources:
+              {{- toYaml .Values.api.sidecars.logCollector.resources | nindent 12 }}
+          volumeMounts:
+            - name: storage
+              mountPath: {{ .Values.api.sidecars.logCollector.workDir }}
+        {{- end }}
+      volumes:
+        - name: storage
+          {{- if .Values.api.volumes.storageOverride }}
+          {{- toYaml .Values.api.volumes.storageOverride | nindent 10 }}
+          {{- else }}
+          flexVolume:
+            driver: "v3io/fuse"
+            options:
+              container: users
+              subPath: /{{ .Values.v3io.username }}/.mlrun
+            secretRef:
+              name: {{ .Release.Name }}-v3io-fuse
+          {{- end }}
+        {{- range .Values.api.extraPersistentVolumeMounts }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            claimName: {{ .existingClaim }}
+        {{- end }}
+        {{- if .Values.api.opa.enabled }}
+        - name: config
+          secret:
+            secretName: {{ template "mlrun.api.opa.fullname" . }}
+        {{- end }}
+      {{- with .Values.api.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- if .Values.api.chief.affinity }}
+      affinity:
+        {{- toYaml .Values.api.chief.affinity | nindent 8 }}
+    {{- else if .Values.api.affinity }}
+      affinity:
+        {{- toYaml .Values.api.affinity | nindent 8 }}
+    {{- else }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    {{- include "mlrun.api.selectorLabels" . | nindent 20 }}
+                topologyKey: "kubernetes.io/hostname"
+    {{- end }}
+    {{- with .Values.api.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- if .Values.api.priorityClassName }}
+      priorityClassName: {{ .Values.api.priorityClassName | quote }}
+    {{- end }}

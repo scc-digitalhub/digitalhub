@@ -1,0 +1,25 @@
+{{- if and (.Values.db.persistence.enabled) (eq "mysql" .Values.httpDB.dbType) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.db.volumes.storageOverride.persistentVolumeClaim.claimName }}
+  labels:
+    {{- include "mlrun.db.labels" . | nindent 4 }}
+{{- with .Values.db.persistence.annotations }}
+  annotations:
+{{ toYaml . | nindent 4 }}
+{{- end }}
+spec:
+  accessModes:
+    - {{ .Values.db.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.db.persistence.size | quote }}
+{{- if .Values.db.persistence.storageClass }}
+{{- if (eq "-" .Values.db.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.db.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end -}}
