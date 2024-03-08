@@ -319,6 +319,7 @@ api:
         failureThreshold: 4
 
 db:
+  enabled: true
   name: db
   fullnameOverride:
 
@@ -597,7 +598,9 @@ httpDB:
   dirPath: "/mlrun/db"
 
   dsn: "sqlite:////mlrun/db/mlrun.db?check_same_thread=false"
-
+  secretDsn:
+    name: ""
+    key: ""
   # sqlite database dsn from which to migrate if using mysql database
   oldDsn: ""
 
