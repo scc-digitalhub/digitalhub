@@ -95,4 +95,5 @@ spec:
             - configMapRef:
                 name: openmetadata-initializer
       restartPolicy: OnFailure
+      backoffLimit: 20
 {{- end }}
