@@ -5,6 +5,7 @@ metadata:
   name: mlrun-log-collector-config
 data:
   MLRUN_LOG_COLLECTOR__LOG_LEVEL: "{{ .Values.api.sidecars.logCollector.logLevel }}"
+  MLRUN_LOG_COLLECTOR__ADVANCED_LOG_LEVEL: "{{ .Values.api.sidecars.logCollector.advancedLogLevel }}"
   MLRUN_LOG_COLLECTOR__LOG_FORMATTER: "{{ .Values.api.sidecars.logCollector.logFormat }}"
   MLRUN_LOG_COLLECTOR__LISTEN_PORT: "{{ .Values.api.sidecars.logCollector.listenPort }}"
   MLRUN_LOG_COLLECTOR__BASE_DIR: "{{ printf "%s" .Values.api.sidecars.logCollector.workDir | trimSuffix "/" }}/logs"
@@ -15,4 +16,5 @@ data:
   MLRUN_LOG_COLLECTOR__GET_LOGS_BUFFER_POOL_SIZE: "{{ .Values.api.sidecars.logCollector.getLogsBufferPoolSize }}"
   MLRUN_LOG_COLLECTOR__LOG_COLLECTION_BUFFER_SIZE_BYTES: "{{ .Values.api.sidecars.logCollector.logCollectionBufferSizeBytes }}"
   MLRUN_LOG_COLLECTOR__GET_LOGS_BUFFER_SIZE_BYTES: "{{ .Values.api.sidecars.logCollector.getLogsBufferSizeBytes }}"
+  MLRUN_LOG_COLLECTOR__LOG_TIME_UPDATE_BYTES_INTERVAL: "{{ .Values.api.sidecars.logCollector.logTimeUpdateBytesInterval }}"
 {{- end }}

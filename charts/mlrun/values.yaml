@@ -64,7 +64,7 @@ api:
 
   image:
     repository: mlrun/mlrun-api
-    tag: 1.4.0
+    tag: 1.5.2
     pullPolicy: IfNotPresent
     pullSecrets: []
 
@@ -276,6 +276,8 @@ api:
       getLogsBufferSizeBytes: "3932160"
       logCollectionBufferPoolSize: 512
       getLogsBufferPoolSize: 512
+      # 4KB ( 4 * 1024 = 4096 )
+      logTimeUpdateBytesInterval: "4096"
 
       readLogWaitTime: "3s"
       stateFileUpdateInterval: "10s"
@@ -283,6 +285,7 @@ api:
 
 
       logLevel: debug
+      advancedLogLevel: 0
       logFormat: text
       listenPort: 8282
 
@@ -290,7 +293,7 @@ api:
 
       image:
         repository: mlrun/log-collector
-        tag: 1.4.0
+        tag: 1.5.2
         pullPolicy: IfNotPresent
         pullSecrets: []
 
@@ -507,7 +510,7 @@ ui:
 
   image:
     repository: mlrun/mlrun-ui
-    tag: 1.4.0
+    tag: 1.5.2
     pullPolicy: IfNotPresent
     pullSecrets: []
 
@@ -607,6 +610,11 @@ httpDB:
   # Values to insert if mysql database is needed
   # dsn: "mysql+pymysql://root@mlrun-db:3306/mlrun"
   # oldDsn: "sqlite:////mlrun/db/mlrun.db?check_same_thread=false"
+
+modelMonitoring:
+  # If no dsn has been provided, will initiate monitoring database under mlrun-db service:
+  # mysql+pymysql://root@mlrun-db:3306/mlrun_model_monitoring
+  dsn:
 
 defaultDockerRegistryURL: ""
 defaultDockerRegistrySecretName: ""
