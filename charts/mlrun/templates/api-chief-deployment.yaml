@@ -21,6 +21,8 @@ spec:
     metadata:
       labels:
         {{- include "mlrun.api.chief.selectorLabels" . | nindent 8 }}
+      annotations:
+        kubectl.kubernetes.io/default-container: {{ template "mlrun.name" . }}-{{ .Values.api.name }}
     spec:
     {{- with .Values.api.image.pullSecrets }}
       imagePullSecrets:
@@ -115,7 +117,12 @@ spec:
             value: {{ .Values.api.sidecars.logCollector.getLogsBufferSizeBytes | quote }}
           {{- end }}
           {{- if .Values.api.extraEnv }}
-          {{ toYaml .Values.api.extraEnv | nindent 10 }}
+          {{- range .Values.api.extraEnv }}
+          {{- if not (hasKey $.Values.api.extraEnvKeyValue .name) }}
+          - name: {{ .name }}
+            value: {{ .value }}
+          {{- end }}
+          {{- end }}
           {{- end }}
           {{- if .Values.api.extraEnvKeyValue }}
           {{- range $name, $value := .Values.api.extraEnvKeyValue }}
