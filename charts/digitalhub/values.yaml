@@ -58,6 +58,15 @@ mlrun-ce:
     ui:
       ingress:
         enabled: false
+    db:
+      enabled: false
+    httpDB:
+       dbType: "mysql"
+       secretDsn:
+        name: ""
+        key: "" 
+    modelMonitoring:
+      dsn: ""
   jupyterNotebook:
     enabled: false
   minio:
@@ -446,3 +455,6 @@ openmetadata-java-connector:
         token: 
           secretName: "openmetadata-bot-token"
           secretKey: "token"
+
+mysql-operator-nakamasato:
+  enabled: false

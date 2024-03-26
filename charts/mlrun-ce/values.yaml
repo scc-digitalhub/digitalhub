@@ -9,6 +9,8 @@ global:
   nuclio:
     dashboard:
       nodePort: 30050
+  crd:
+    enabled: true
 
 nuclio:
 
@@ -116,6 +118,7 @@ mlrun:
     image:
       tag: 1.6.2-rc1
   db:
+    enabled: true
     name: db
     fullnameOverride: mlrun-db
     securityContext:
