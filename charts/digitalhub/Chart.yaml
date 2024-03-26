@@ -72,4 +72,7 @@ dependencies:
   version: "0.1.7"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: openmetadata-java-connector.enabled
-  
+- name: mysql-operator
+  version: "2.1.2"
+  repository: https://mysql.github.io/mysql-operator/
+  condition: mysql-operator.enabled
