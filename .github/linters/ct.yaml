@@ -8,7 +8,7 @@ chart-repos:
   - grafana=https://grafana.github.io/helm-charts
   - prometheus-community=https://prometheus-community.github.io/helm-charts
   - docker-registry=https://helm.twun.io
-  - digitahub=https://scc-digitalhub.github.io/digitalhub/
+  - digitalhub=https://scc-digitalhub.github.io/digitalhub/
   - zalando=https://opensource.zalando.com/postgres-operator/charts/postgres-operator
   - opensearch=https://opensearch-project.github.io/helm-charts/
   - openmetadata=https://helm.open-metadata.org
