@@ -3209,6 +3209,19 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-0.2.18/digitalhub-0.2.18.tgz
     version: 0.2.18
+  digitalhub-crds:
+  - apiVersion: v2
+    appVersion: 0.3.0
+    created: "2024-03-26T17:42:26.689567714Z"
+    description: This Helm Chart is a collection of all digitalhub CRDs, this chart
+      is used in the scenario where the user installing digitalhub does not have permissions
+      to create CRDs.
+    digest: 72fc2699fcb52581a6c799871c865d70eaa6759e604299f2c65d397fe6c980d1
+    name: digitalhub-crds
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-crds-0.1.0/digitalhub-crds-0.1.0.tgz
+    version: 0.1.0
   dremio-rest-server-operator:
   - apiVersion: v2
     appVersion: 1.0.2
@@ -3794,4 +3807,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-03-12T10:15:46.490150167Z"
+generated: "2024-03-26T17:42:26.689739613Z"
