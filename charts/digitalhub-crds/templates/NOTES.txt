@@ -1,0 +1,12 @@
+##########################################################
+#   _____   _       _           _ _     _       _        #
+#  (____ \ (_)     (_)_        | | |   | |     | |       #
+#   _   \ \ _  ____ _| |_  ____| | |__ | |_   _| | _     #
+#  | |   | | |/ _  | |  _)/ _  | |  __)| | | | | || \    #
+#  | |__/ /| ( ( | | | |_( ( | | | |   | | |_| | |_) )   #
+#  |_____/ |_|\_|| |_|\___)_||_|_|_|   |_|\____|____/    #
+#            (_____|                                     #
+#                                                        #
+##########################################################
+All crds installed correctly, now you can proceed with installing digitalhub with the command:
+  helm upgrade digitalhub digitalhub/digitalhub -n digitalhub --install --create-namespace --timeout 15m0s --skip-crds
