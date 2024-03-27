@@ -76,3 +76,5 @@ dependencies:
   version: "2.1.2"
   repository: https://mysql.github.io/mysql-operator/
   condition: mysql-operator.enabled
+- name: nakamasato-mysql-operator
+  condition: nakamasato-mysql-operator.enabled
