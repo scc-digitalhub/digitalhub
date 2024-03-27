@@ -19,7 +19,7 @@ data:
   MLRUN_DEFAULT_TENSORBOARD_LOGS_PATH: /home/jovyan/data/tensorboard/{{ `{{project}} `}}
   MLRUN_FEATURE_STORE__DEFAULT_TARGETS: parquet
   MLRUN_MODEL_ENDPOINT_MONITORING__STORE_TYPE: sql
-{{- if (and .Values.modelMonitoring.secretDsn .Values.modelMonitoring.secretDsn.name) }}
+{{- if (and .Values.mlrun.modelMonitoring.secretDsn .Values.mlrun.modelMonitoring.secretDsn.name) }}
   MLRUN_MODEL_ENDPOINT_MONITORING__ENDPOINT_STORE_CONNECTION: "{{ template "mlrun-ce.mlrun.modelMonitoring.DSN" . }}"
 {{- end }}
   MLRUN_GRAFANA_URL: http://{{ .Values.global.externalHostAddress }}:{{ index .Values "kube-prometheus-stack" "grafana" "service" "nodePort" }}
