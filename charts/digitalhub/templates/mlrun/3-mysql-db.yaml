@@ -1,0 +1,15 @@
+apiVersion: mysql.nakamasato.com/v1alpha1
+kind: MySQLDB
+metadata:
+  name: mlrun
+spec:
+  dbName: mlrun
+  mysqlName: mlrun-mysql
+---
+apiVersion: mysql.nakamasato.com/v1alpha1
+kind: MySQLDB
+metadata:
+  name: mlrun
+spec:
+  dbName: model_monitoring
+  mysqlName: mlrun-mysql
