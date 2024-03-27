@@ -63,10 +63,12 @@ mlrun-ce:
     httpDB:
        dbType: "mysql"
        secretDsn:
-        name: ""
-        key: "" 
+        name: "mlrun-mysql-dsn"
+        key: "dns" 
     modelMonitoring:
       dsn: ""
+      secretDsn:
+        name: "mlrun-model-mysql-dsn"
   jupyterNotebook:
     enabled: false
   minio:

@@ -1,0 +1,21 @@
+apiVersion: mysql.nakamasato.com/v1alpha1
+kind: MySQLUser
+metadata:
+  name: mlrun
+spec:
+  mysqlName: mlrun-mysql
+  host: '%'
+  grants:
+    - privileges: "ALL"
+      "on": "mlrun.*"
+---
+apiVersion: mysql.nakamasato.com/v1alpha1
+kind: MySQLUser
+metadata:
+  name: modelmonitoring
+spec:
+  mysqlName: mlrun-mysql
+  host: '%'
+  grants:
+    - privileges: "ALL"
+      "on": "model_monitoring.*"

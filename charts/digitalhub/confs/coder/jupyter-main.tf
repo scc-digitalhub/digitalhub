@@ -375,6 +375,11 @@ resource "kubernetes_deployment" "jupyter" {
               name = "digitalhub-common-env"
             }
           }
+          env_from {
+            secret_ref {
+              name = "mlrun-model-mysql-dsn"
+            }
+          }
           port {
             container_port = 8888
             name           = "http"
