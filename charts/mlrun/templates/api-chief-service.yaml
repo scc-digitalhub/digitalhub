@@ -1,0 +1,42 @@
+{{- if .Values.api.worker.minReplicas -}}
+{{- if semverCompare ">=1.1.0-X" .Values.api.image.tag -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mlrun.api.chief.fullname" . }}
+  labels:
+    {{- include "mlrun.api.chief.labels" . | nindent 4 }}
+spec:
+{{- if (or (eq .Values.api.chief.service.type "ClusterIP") (empty .Values.api.chief.service.type)) }}
+  type: ClusterIP
+  {{- if .Values.api.chief.service.clusterIP }}
+  clusterIP: {{ .Values.api.chief.service.clusterIP }}
+  {{end}}
+{{- else if eq .Values.api.chief.service.type "LoadBalancer" }}
+  type: {{ .Values.api.chief.service.type }}
+  {{- if .Values.api.chief.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.api.chief.service.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.api.chief.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+{{ toYaml .Values.api.chief.service.loadBalancerSourceRanges | indent 4 }}
+  {{- end -}}
+{{- else }}
+  type: {{ .Values.api.chief.service.type }}
+{{- end }}
+{{- if .Values.api.chief.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.api.chief.service.externalIPs | indent 4 }}
+{{- end }}
+  ports:
+    - name: http
+      port: {{ .Values.api.chief.service.port }}
+      protocol: TCP
+      targetPort: http
+{{ if (and (eq .Values.api.chief.service.type "NodePort") (not (empty .Values.api.chief.service.nodePort))) }}
+      nodePort: {{.Values.api.chief.service.nodePort}}
+{{ end }}
+  selector:
+    {{- include "mlrun.api.chief.selectorLabels" . | nindent 4 }}
+{{- end -}}
+{{- end -}}

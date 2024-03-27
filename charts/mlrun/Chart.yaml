@@ -1,0 +1,13 @@
+apiVersion: v1
+name: mlrun
+version: 0.9.20-dh-v0.3.2
+appVersion: 1.5.2
+description: Machine Learning automation and tracking
+sources:
+  - https://github.com/mlrun/mlrun
+maintainers:
+  - name: alonmr
+    email: alon_maor@mckinsey.com
+  - name: quaark
+    email: adam_melnick@mckinsey.com
+icon: https://di5r923elu32w2e633ofbxj9-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/Iguazio-Logo.png

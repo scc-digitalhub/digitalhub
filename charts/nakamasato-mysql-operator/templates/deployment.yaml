@@ -1,0 +1,126 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "chart.fullname" . }}-controller-manager
+  labels:
+  {{- include "chart.labels" . | nindent 4 }}
+  {{- if .Values.gcpServiceAccount }}
+  annotations:
+    iam.gke.io/gcp-service-account: {{ .Values.gcpServiceAccount }}
+  {{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chart.fullname" . }}-controller-manager
+  labels:
+    control-plane: controller-manager
+  {{- include "chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.controllerManager.replicas }}
+  selector:
+    matchLabels:
+      control-plane: controller-manager
+    {{- include "chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        control-plane: controller-manager
+      {{- include "chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - args:
+        - --leader-elect
+        {{- if eq .Values.cloudSecretManagerType "gcp" }}
+        - --cloud-secret-manager=gcp
+        {{- end }}
+        {{- if eq .Values.cloudSecretManagerType "k8s" }}
+        - --cloud-secret-manager=k8s
+        {{- end }}
+        command:
+        - /manager
+        image: {{ .Values.controllerManager.manager.image.repository }}:{{ .Values.controllerManager.manager.image.tag | default .Chart.AppVersion }}
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        name: manager
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources: {{- toYaml .Values.controllerManager.manager.resources | nindent 10
+          }}
+        securityContext:
+          allowPrivilegeEscalation: false
+        {{- if eq .Values.cloudSecretManagerType "gcp" }}
+        {{- if .Values.gcpServiceAccount }}
+        env:
+          - name: PROJECT_ID
+            value: {{ .Values.gcpProjectId }}
+        {{- else }}
+        volumeMounts:
+          - name: gcp-sa-private-key
+            mountPath: /var/secrets/google
+        env:
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /var/secrets/google/sa-private-key.json
+          - name: PROJECT_ID
+            value: {{ .Values.gcpProjectId }}
+        {{- end }}
+        {{- end }}
+        {{- if eq .Values.cloudSecretManagerType "k8s" }}
+        env:
+          - name: WATCH_NAMESPACE
+            value: {{ .Release.Namespace }}
+          - name: SECRET_NAMESPACE
+            value: {{ .Release.Namespace }}
+        {{- end }}
+      # https://cloud.google.com/sql/docs/mysql/connect-instance-kubernetes#deploy_the_sample_app
+      {{- with .Values.cloudSQL }}
+      # If you are using the Go Connector (recommended), you can
+      # remove cloud-sql-proxy (everything below this line)
+      - name: cloud-sql-proxy
+        # This uses the latest version of the Cloud SQL Proxy
+        # It is recommended to use a specific version for production environments.
+        # See: https://github.com/GoogleCloudPlatform/cloudsql-proxy
+        image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:latest
+        args:
+          # If connecting from a VPC-native GKE cluster, you can use the
+          # following flag to have the proxy connect over private IP
+          {{- if .usePrivateIp }}
+          # - "--private-ip"
+          {{- end }}
+
+          # If you are not connecting with Automatic IAM, you can delete
+          # the following flag.
+          {{- if .enableIamAuth }}
+          - "--auto-iam-authn"
+          {{- end }}
+
+          # tcp should be set to the port the proxy should listen on
+          # and should match the DB_PORT value set above.
+          # Defaults: MySQL: 3306, Postgres: 5432, SQLServer: 1433
+          - "--port=3306"
+          - {{ .instanceConnectionName }}
+        securityContext:
+          # The default Cloud SQL proxy image runs as the
+          # "nonroot" user and group (uid: 65532) by default.
+          runAsNonRoot: true
+      {{- end }}
+
+      securityContext:
+        runAsNonRoot: true
+      serviceAccountName: {{ include "chart.fullname" . }}-controller-manager
+      terminationGracePeriodSeconds: 10
+      {{- if and (eq .Values.cloudSecretManagerType "gcp") (empty .Values.gcpServiceAccount) }}
+      volumes:
+        - name: gcp-sa-private-key
+          secret:
+            secretName: gcp-sa-private-key
+      {{- end }}

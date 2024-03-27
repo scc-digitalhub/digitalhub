@@ -1,0 +1,18 @@
+{{- if and (eq .Values.httpDB.dbType "mysql") (.Values.db.enabled) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mlrun.db.initConfigMapName" . }}
+  labels:
+    {{- include "mlrun.db.labels" . | nindent 4 }}
+data:
+  enable-root-remote-access.sql: |
+    -- Allow passwordless (insecure) access to root user from anywhere
+    CREATE USER IF NOT EXISTS 'root'@'%';
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
+    FLUSH PRIVILEGES;
+    CREATE DATABASE IF NOT EXISTS mlrun;
+    {{- if not .Values.modelMonitoring.dsn }}
+    CREATE DATABASE IF NOT EXISTS mlrun_model_monitoring;
+    {{- end }}
+{{- end }}

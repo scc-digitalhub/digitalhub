@@ -58,6 +58,17 @@ mlrun-ce:
     ui:
       ingress:
         enabled: false
+    db:
+      enabled: false
+    httpDB:
+       dbType: "mysql"
+       secretDsn:
+        name: "mlrun-mysql-dsn"
+        key: "dns" 
+    modelMonitoring:
+      dsn: ""
+      secretDsn:
+        name: "mlrun-model-mysql-dsn"
   jupyterNotebook:
     enabled: false
   minio:
@@ -208,9 +219,9 @@ core:
   krm:
     port: "8080"
   events:
-    enabled: true
+    enabled: false
     rabbitmq:
-      enabled: true
+      enabled: false
       host: "digitalhub-rabbitmq"
       port: "5672"
       vhost: "/"
@@ -273,7 +284,7 @@ jobs:
       readOnlyRootFilesystem: true
 
 rabbitmq-cluster-operator:
-  enabled: true
+  enabled: false
   cluster:
     replicas: 1
     persistence:
@@ -281,7 +292,7 @@ rabbitmq-cluster-operator:
       storageSize: "4Gi" 
 
 opensearch:
-  enabled: true
+  enabled: false
   clusterName: opensearch
   fullnameOverride: opensearch
   nodeGroup: ""
@@ -303,7 +314,7 @@ opensearch:
       memory: "2048M"
 
 airflow:
-  enabled: true
+  enabled: false
   airflow:
     image:
       repository: docker.getcollate.io/openmetadata/ingestion
@@ -390,7 +401,7 @@ airflow:
       size: 1Gi
 
 openmetadata:
-  enabled: true
+  enabled: false
   initializer: 
     enabled: true
     maxRetry: "30"
@@ -424,7 +435,7 @@ openmetadata:
             secretKey: password
 
 openmetadata-java-connector:
-  enabled: true
+  enabled: false
   connector:
     rabbitmq:
       host: "digitalhub-rabbitmq"
@@ -446,3 +457,9 @@ openmetadata-java-connector:
         token: 
           secretName: "openmetadata-bot-token"
           secretKey: "token"
+
+nakamasato-mysql-operator:
+  enabled: true
+
+mysql-operator:
+  enabled: true

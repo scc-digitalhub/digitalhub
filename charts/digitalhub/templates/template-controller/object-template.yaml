@@ -1,0 +1,35 @@
+apiVersion: templates.kluctl.io/v1alpha1
+kind: ObjectTemplate
+metadata:
+  name: mlrun-mysql-secret-transformer
+spec:
+  serviceAccountName: secret-transformer
+  prune: true
+  matrix:
+    - name: mlrun-secret
+      object:
+        ref:
+          apiVersion: v1
+          kind: Secret
+          name: mysql-mlrun-mysql-mlrun
+    - name: model-secret
+      object:
+        ref:
+          apiVersion: v1
+          kind: Secret
+          name: mysql-mlrun-mysql-modelmonitoring
+  templates:
+  - object:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: "mlrun-mysql-dsn"
+      stringData:
+        dsn: "mysql+pymysql://mlrun:{{ "{{" }} matrix.mlrun-secret.data.password {{ "{{" }}@mlrun-mysql-cluster:3306/mlrun"
+  - object:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: "mlrun-model-mysql-dsn"
+      stringData:
+        MLRUN_MODEL_ENDPOINT_MONITORING__ENDPOINT_STORE_CONNECTION: "mysql+pymysql://modelmonitoring:{{ "{{" }} matrix.model-secret.data.password {{ "{{" }}@mlrun-mysql-cluster:3306/model_monitoring"

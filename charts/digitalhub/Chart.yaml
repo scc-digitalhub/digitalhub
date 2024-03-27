@@ -13,7 +13,7 @@ dependencies:
   repository: "https://helm.twun.io"
   condition: docker-registry.enabled
 - name: mlrun-ce
-  version: "0.6.3-dh-v0.3.1"
+  version: "0.6.3-dh-v0.3.2"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: mlrun-ce.enabled
 - name: coder
@@ -72,4 +72,12 @@ dependencies:
   version: "0.1.7"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: openmetadata-java-connector.enabled
-  
+- name: mysql-operator
+  version: "2.1.2"
+  repository: https://mysql.github.io/mysql-operator/
+  condition: mysql-operator.enabled
+- name: nakamasato-mysql-operator
+  condition: nakamasato-mysql-operator.enabled
+- name: template-controller
+  version: "0.2.5"
+  repository: https://kluctl.github.io/charts

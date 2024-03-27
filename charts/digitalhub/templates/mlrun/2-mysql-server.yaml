@@ -1,0 +1,12 @@
+apiVersion: mysql.nakamasato.com/v1alpha1
+kind: MySQL
+metadata:
+  name: mlrun-mysql
+spec:
+  host: mlrun-mysql-cluster.digitalhub-dev
+  adminUser:
+    name: mlrun-mysql-user
+    type: k8s
+  adminPassword:
+    name: mlrun-mysql-pass
+    type: k8s
