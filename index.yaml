@@ -3247,6 +3247,28 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/ext-postgres-operator-1.2.4/ext-postgres-operator-1.2.4.tgz
     version: 1.2.4
+  mlrun:
+  - apiVersion: v1
+    appVersion: 1.5.2
+    created: "2024-03-27T14:26:22.628581516Z"
+    dependencies:
+    - name: v3io-configs
+      repository: https://v3io.github.io/helm-charts/stable
+      version: 0.11.3
+    description: Machine Learning automation and tracking
+    digest: 618db39c13702277f2d8d657e18ddcacbf1280cce26cd426f8dbb87de6d8b6f1
+    icon: https://di5r923elu32w2e633ofbxj9-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/Iguazio-Logo.png
+    maintainers:
+    - email: alon_maor@mckinsey.com
+      name: alonmr
+    - email: adam_melnick@mckinsey.com
+      name: quaark
+    name: mlrun
+    sources:
+    - https://github.com/mlrun/mlrun
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/mlrun-0.9.20-dh-v0.3.2/mlrun-0.9.20-dh-v0.3.2.tgz
+    version: 0.9.20-dh-v0.3.2
   mlrun-ce:
   - apiVersion: v1
     created: "2024-02-29T15:23:56.882406078Z"
@@ -3586,6 +3608,44 @@ entries:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/mlrun-ce-0.6.3-dh-v0.3.1/mlrun-ce-0.6.3-dh-v0.3.1.tgz
     version: 0.6.3-dh-v0.3.1
   - apiVersion: v1
+    created: "2024-03-27T14:26:22.795099219Z"
+    dependencies:
+    - name: nuclio
+      repository: https://nuclio.github.io/nuclio/charts
+      version: 0.18.14
+    - condition: mlrun.enabled
+      name: mlrun
+      repository: https://v3io.github.io/helm-charts/stable
+      version: 0.9.16
+    - name: mpi-operator
+      repository: https://v3io.github.io/helm-charts/stable
+      version: 0.6.0
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.min.io/
+      version: 4.0.2
+    - condition: spark-operator.enabled
+      name: spark-operator
+      repository: https://kubeflow.github.io/spark-operator
+      version: 1.1.25
+    - condition: kube-prometheus-stack.enabled
+      name: kube-prometheus-stack
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 41.7.2
+    description: MLRUn Open Source Stack
+    digest: 83b3c61e759de364c48cd8eaf441bdbad1a608e7463a92ab4af9bb20bdd7728a
+    home: https://iguazio.com
+    icon: https://www.iguazio.com/wp-content/uploads/2019/10/Iguazio-Logo.png
+    maintainers:
+    - email: adamm@iguazio.com
+      name: Adam Melnick
+    - email: eliyahun@iguazio.com
+      name: Eliyahu Noach
+    name: mlrun-ce
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/mlrun-ce-0.6.3-dh-v0.3.1/mlrun-ce-0.6.3-dh-v0.3.1.tgz
+    version: 0.6.3-dh-v0.3.1
+  - apiVersion: v1
     created: "2024-03-08T12:56:05.925751997+01:00"
     dependencies:
     - name: nuclio
@@ -3699,6 +3759,17 @@ entries:
     urls:
     - mlrun-ce-0.6.3-dh-v0.3.0.tgz
     version: 0.6.3-dh-v0.3.0
+  nakamasato-mysql-operator:
+  - apiVersion: v2
+    appVersion: v0.3.3
+    created: "2024-03-27T14:26:22.926071299Z"
+    description: A Helm chart for Kubernetes
+    digest: 2ee7d6c3524e94abb2690e8e95fa943b17f2e4f67a95dfa969ed3101a759aff9
+    name: nakamasato-mysql-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/nakamasato-mysql-operator-v0.3.3/nakamasato-mysql-operator-v0.3.3.tgz
+    version: v0.3.3
   openmetadata-java-connector:
   - apiVersion: v2
     appVersion: 1.2.2
@@ -3807,4 +3878,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-03-26T17:42:26.689739613Z"
+generated: "2024-03-27T14:26:23.063777774Z"
