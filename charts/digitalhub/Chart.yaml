@@ -76,9 +76,9 @@ dependencies:
   version: "2.1.2"
   repository: https://mysql.github.io/mysql-operator/
   condition: mysql-operator.enabled
-- name: nakamasato-mysql-operator
-  repository: https://scc-digitalhub.github.io/digitalhub/
-  condition: nakamasato-mysql-operator.enabled
+# - name: nakamasato-mysql-operator
+#   repository: https://scc-digitalhub.github.io/digitalhub/
+  # condition: nakamasato-mysql-operator.enabled
 - name: template-controller
   version: "0.2.5"
   repository: https://kluctl.github.io/charts
