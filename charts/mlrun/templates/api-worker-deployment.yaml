@@ -126,6 +126,10 @@ spec:
           {{- end }}
           {{- if .Values.api.envFrom }}
           envFrom:
+          {{- if and .Values.modelMonitoring.secretDsn .Values.modelMonitoring.secretDsn.name }}
+            - secretRef:
+              name: .Values.modelMonitoring.secretDsn.name
+          {{- end }}
           {{ toYaml .Values.api.envFrom | nindent 10 }}
           {{- end }}
           {{- if .Values.api.livenessProbe }}
