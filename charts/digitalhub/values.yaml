@@ -59,16 +59,15 @@ mlrun-ce:
       ingress:
         enabled: false
     db:
-      enabled: false
+      enabled: true
     httpDB:
        dbType: "mysql"
        secretDsn:
-        name: "mlrun-mysql-dsn"
-        key: "dns" 
+        name: ""
+        key: "" 
     modelMonitoring:
-      dsn: ""
       secretDsn:
-        name: "mlrun-model-mysql-dsn"
+        name: ""
   jupyterNotebook:
     enabled: false
   minio:
@@ -462,4 +461,7 @@ nakamasato-mysql-operator:
   enabled: true
 
 mysql-operator:
+  enabled: true
+
+template-controller:
   enabled: true

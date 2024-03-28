@@ -5,7 +5,7 @@ type: application
 maintainers:
   - name: scc-digitalhub
     url: https://github.com/scc-digitalhub
-version: "0.3.6"
+version: "0.3.7"
 appVersion: "0.3.0"
 dependencies:
 - name: docker-registry
@@ -83,3 +83,4 @@ dependencies:
 - name: template-controller
   version: "0.2.5"
   repository: https://kluctl.github.io/charts
+  condition: template-controller.enabled

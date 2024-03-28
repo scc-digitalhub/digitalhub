@@ -1,3 +1,4 @@
+{{- if and (not (index .Values "mlrun-ce" "mlrun" "db" "enabled")) (eq (index .Values "mlrun-ce" "mlrun" "httpDB" "dbType") "mysql") }}
 apiVersion: templates.kluctl.io/v1alpha1
 kind: ObjectTemplate
 metadata:
@@ -33,3 +34,4 @@ spec:
         name: "mlrun-model-mysql-dsn"
       stringData:
         MLRUN_MODEL_ENDPOINT_MONITORING__ENDPOINT_STORE_CONNECTION: "mysql+pymysql://{{ "{{" }} matrix.mlrunsecret.data.rootUser | b64decode {{ "}}" }}:{{ "{{" }} matrix.modelsecret.data.rootPassword | b64decode {{ "}}" }}@mlrun-mysql-cluster:3306/model_monitoring"
+{{- end }}
