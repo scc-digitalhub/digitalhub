@@ -22,5 +22,5 @@ roleRef:
   name: secret-transformer
 subjects:
   - kind: ServiceAccount
-    name: postgres-secret-transformer
+    name: secret-transformer
     namespace: {{ .Release.Namespace }}
