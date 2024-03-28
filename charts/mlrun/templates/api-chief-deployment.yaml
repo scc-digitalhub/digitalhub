@@ -84,10 +84,10 @@ spec:
               secretKeyRef:
                 name: {{ .Values.httpDB.secretDsn.name }}
                 key: {{ .Values.httpDB.secretDsn.key }}
-          {{- else -}}
+          {{- else }}
           - name: MLRUN_HTTPDB__DSN
             value: {{ .Values.httpDB.dsn }}
-          {{- end -}}
+          {{- end }}
           - name: MLRUN_HTTPDB__OLD_DSN
             value: {{ .Values.httpDB.oldDsn }}
           {{- if .Values.v3io.enabled }}
@@ -132,7 +132,11 @@ spec:
           {{- end }}
           {{- if .Values.api.envFrom }}
           envFrom:
-          {{ toYaml .Values.api.envFrom | nindent 10 }}
+          {{- if and .Values.modelMonitoring.secretDsn .Values.modelMonitoring.secretDsn.name }}
+          - secretRef:
+              name: {{ .Values.modelMonitoring.secretDsn.name }}
+          {{- end }}
+          {{- toYaml .Values.api.envFrom | nindent 10 }}
           {{- end }}
           {{- if .Values.api.livenessProbe }}
           livenessProbe:
