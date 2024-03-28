@@ -13,7 +13,7 @@ dependencies:
   repository: "https://helm.twun.io"
   condition: docker-registry.enabled
 - name: mlrun-ce
-  version: "0.6.3-dh-v0.3.2"
+  version: "0.6.3-dh-v0.3.4"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: mlrun-ce.enabled
 - name: coder
