@@ -3341,6 +3341,27 @@ entries:
   mlrun:
   - apiVersion: v1
     appVersion: 1.5.2
+    created: "2024-03-28T07:27:10.398891526Z"
+    dependencies:
+    - name: v3io-configs
+      repository: https://v3io.github.io/helm-charts/stable
+      version: 0.11.3
+    description: Machine Learning automation and tracking
+    digest: 8b8751af82081d35e7bb31c16b7980b1624c95d7a967ca3a583e3ccc308f5a35
+    icon: https://di5r923elu32w2e633ofbxj9-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/Iguazio-Logo.png
+    maintainers:
+    - email: alon_maor@mckinsey.com
+      name: alonmr
+    - email: adam_melnick@mckinsey.com
+      name: quaark
+    name: mlrun
+    sources:
+    - https://github.com/mlrun/mlrun
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/mlrun-0.9.20-dh-v0.3.3/mlrun-0.9.20-dh-v0.3.3.tgz
+    version: 0.9.20-dh-v0.3.3
+  - apiVersion: v1
+    appVersion: 1.5.2
     created: "2024-03-27T14:26:22.628581516Z"
     dependencies:
     - name: v3io-configs
@@ -4083,4 +4104,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-03-27T14:47:33.742805989Z"
+generated: "2024-03-28T07:27:10.399094558Z"
