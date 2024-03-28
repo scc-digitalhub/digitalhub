@@ -11,13 +11,13 @@ spec:
         ref:
           apiVersion: v1
           kind: Secret
-          name: mysql-mlrun-mysql-mlrun
+          name: mlrun-mysql-admin
     - name: modelsecret
       object:
         ref:
           apiVersion: v1
           kind: Secret
-          name: mysql-mlrun-mysql-modelmonitoring
+          name: mlrun-mysql-admin
   templates:
   - object:
       apiVersion: v1
@@ -25,11 +25,11 @@ spec:
       metadata:
         name: "mlrun-mysql-dsn"
       stringData:
-        dsn: "mysql+pymysql://mlrun:{{ "{{" }} matrix.mlrunsecret.data.password | b64decode {{ "}}" }}@mlrun-mysql-cluster:3306/mlrun"
+        dsn: "mysql+pymysql://{{ "{{" }} matrix.mlrunsecret.data.rootUser | b64decode {{ "}}" }}:{{ "{{" }} matrix.mlrunsecret.data.rootPassword | b64decode {{ "}}" }}@mlrun-mysql-cluster:3306/mlrun"
   - object:
       apiVersion: v1
       kind: Secret
       metadata:
         name: "mlrun-model-mysql-dsn"
       stringData:
-        MLRUN_MODEL_ENDPOINT_MONITORING__ENDPOINT_STORE_CONNECTION: "mysql+pymysql://modelmonitoring:{{ "{{" }} matrix.modelsecret.data.password | b64decode {{ "}}" }}@mlrun-mysql-cluster:3306/model_monitoring"
+        MLRUN_MODEL_ENDPOINT_MONITORING__ENDPOINT_STORE_CONNECTION: "mysql+pymysql://{{ "{{" }} matrix.mlrunsecret.data.rootUser | b64decode {{ "}}" }}:{{ "{{" }} matrix.modelsecret.data.rootPassword | b64decode {{ "}}" }}@mlrun-mysql-cluster:3306/model_monitoring"
