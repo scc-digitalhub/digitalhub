@@ -3,24 +3,18 @@ kind: ConfigMap
 metadata:
   name: {{ include "core.fullname" . }}
 data:
-  DH_ENDPOINT: "http://{{ include "core.fullname" . }}:{{ .Values.service.port }}"
-  DH_S3_ENDPOINT_URL: "{{ .Values.minio.endpoint }}:{{ index .Values.minio.endpointPort }}"
-  DH_S3_BUCKET_NAME: core
-  DH_POSTGRES_HOST: "database-postgres-cluster"
-  DH_POSTGRES_PORT: "5432"
-  DH_POSTGRES_DATABASE: digitalhub
-  DH_POSTGRES_SCHEMA: public
+  DH_ENDPOINT: "http://{{ include "core.fullname" . }}:{{ .Values.service.port }}" 
   K8S_NAMESPACE: {{ .Release.Namespace }}
   JDBC_URL: "jdbc:postgresql://core-postgres-cluster:5432/core"
   JDBC_DRIVER: org.postgresql.Driver
   JDBC_DIALECT: org.hibernate.dialect.PostgreSQLDialect
-  JDBC_TABLE: "classpath:db/schema-postgres.sql"
-  H2_CONSOLE: "false"
   DH_CONFIG_COMMON_SECRETS: digitalhub-common-creds
   DH_CONFIG_COMMON_MAPS: digitalhub-common-env
+  LOG_LEVEL: INFO
   RUNTIME_NEFERTEM_IMAGE: {{ .Values.runtime.nefertem.image }}:{{ .Values.runtime.nefertem.tag }}
   RUNTIME_DBT_IMAGE: {{ .Values.runtime.dbt.image }}:{{ .Values.runtime.dbt.tag }}
   RUNTIME_MLRUN_IMAGE: {{ .Values.runtime.mlrun.image }}:{{ .Values.runtime.mlrun.tag }}
+  RUNTIME_KFP_IMAGE: {{ .Values.runtime.kfp.image }}:{{ .Values.runtime.kfp.tag }}
   {{- if .Values.events.enabled }}
   ENABLE_EVENTS: {{ .Values.events.enabled | quote }} 
   {{- if .Values.events.rabbitmq.enabled }}
@@ -37,4 +31,14 @@ data:
   ENABLE_SOLR: {{ .Values.solr.enabled | quote }}
   SOLR_URL: {{ .Values.solr.url }}
   SOLR_COLLECTION: {{ .Values.solr.collection }}
+{{- end }}
+{{- if .Values.authentication.basic.enabled }}
+  DH_AUTH_BASIC_USER: {{ .Values.authentication.basic.username }}
+  DH_AUTH_BASIC_PASSWORD: {{ .Values.authentication.basic.password }}
+{{- end }}
+{{- if .Values.authentication.openId.enabled }}
+  DH_AUTH_JWT_ISSUER_URI: {{ .Values.authentication.openId.jwtIssuerUri }}
+  DH_AUTH_JWT_AUDIENCE: {{ .Values.authentication.openId.jwtAudience }}
+  DH_AUTH_JWT_CLAIM: {{ .Values.authentication.openId.jwtClaim }}
+  DH_AUTH_OIDC_CLIENT_ID: {{ .Values.authentication.openId.oidcClientId }}
 {{- end }}
