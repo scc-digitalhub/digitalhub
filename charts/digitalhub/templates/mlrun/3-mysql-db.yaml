@@ -9,7 +9,7 @@ spec:
 apiVersion: mysql.nakamasato.com/v1alpha1
 kind: MySQLDB
 metadata:
-  name: mlrun
+  name: model
 spec:
   dbName: model_monitoring
   mysqlName: mlrun-mysql

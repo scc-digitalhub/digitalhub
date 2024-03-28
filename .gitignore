@@ -7,3 +7,4 @@ tmp/
 **Chart.lock
 */**/charts/*
 **/tmpcharts
+.cr-release-packages/
