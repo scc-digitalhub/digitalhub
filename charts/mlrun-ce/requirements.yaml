@@ -3,7 +3,7 @@ dependencies:
     version: "0.18.14"
     repository: "https://nuclio.github.io/nuclio/charts"
   - name: mlrun
-    version: "0.9.20-dh-v0.3.2"
+    version: "0.9.20-dh-v0.3.3"
     repository: "https://scc-digitalhub.github.io/digitalhub/"
     condition: mlrun.enabled
   - name: mpi-operator
