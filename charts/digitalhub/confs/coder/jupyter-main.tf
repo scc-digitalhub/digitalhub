@@ -158,8 +158,8 @@ resource "coder_agent" "jupyter" {
     vscode                 = false
     vscode_insiders        = false
     web_terminal           = false
-    port_forwarding_helper = false
-    ssh_helper             = false
+    port_forwarding_helper = true
+    ssh_helper             = true
   }
 }
 
