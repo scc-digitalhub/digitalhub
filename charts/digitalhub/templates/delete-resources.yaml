@@ -69,7 +69,7 @@ subjects:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: delete-databases
+  name: delete-postgres-databases
   annotations:
     "helm.sh/hook": pre-delete
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
@@ -79,13 +79,13 @@ metadata:
 spec:
   template:
     metadata:
-      name: delete-databases
+      name: delete-postgres-databases
       labels:
         {{- include "digitalhub.labels" . | nindent 8 }}
     spec:
       serviceAccountName: delete-resources
       containers:
-        - name: delete-databases
+        - name: delete-postgres-databases
           image: "bitnami/kubectl:latest"
           command: ["/bin/sh"]
           args: ["-c", "kubectl -n {{ .Release.Namespace }} delete postgresql --all && sleep 1m"]
@@ -94,6 +94,7 @@ spec:
             readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
       restartPolicy: OnFailure
 ---
+{{- if and (not (index .Values "mlrun-ce" "mlrun" "db" "enabled")) (eq (index .Values "mlrun-ce" "mlrun" "httpDB" "dbType") "mysql") }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -107,13 +108,13 @@ metadata:
 spec:
   template:
     metadata:
-      name: delete-databases
+      name: delete-mysql-resources
       labels:
         {{- include "digitalhub.labels" . | nindent 8 }}
     spec:
       serviceAccountName: delete-resources
       containers:
-        - name: delete-databases
+        - name: delete-mysql-resources
           image: "bitnami/kubectl:latest"
           command: ["/bin/sh"]
           args: ["-c", "kubectl -n {{ .Release.Namespace }} delete mysqldbs,mysqls,mysqlusers --all && sleep 1m"]
@@ -135,13 +136,13 @@ metadata:
 spec:
   template:
     metadata:
-      name: delete-databases
+      name: delete-mysql-cluster
       labels:
         {{- include "digitalhub.labels" . | nindent 8 }}
     spec:
       serviceAccountName: delete-resources
       containers:
-        - name: delete-databases
+        - name: delete-mysql-cluster
           image: "bitnami/kubectl:latest"
           command: ["/bin/sh"]
           args: ["-c", "kubectl -n {{ .Release.Namespace }} delete innodbclusters --all && sleep 1m"]
@@ -150,6 +151,8 @@ spec:
             readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
       restartPolicy: OnFailure
 ---
+{{- end }}
+{{- if (index .Values "rabbitmq-cluster-operator" "enabled") }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -169,7 +172,7 @@ spec:
     spec:
       serviceAccountName: delete-resources
       containers:
-        - name: delete-rabbimq
+        - name: delete-rabbitmq
           image: "bitnami/kubectl:latest"
           command: ["/bin/sh"]
           args: ["-c", "kubectl -n {{ .Release.Namespace }} delete rabbitmqcluster --all && sleep 1m"]
@@ -178,6 +181,7 @@ spec:
             readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
       restartPolicy: OnFailure
 ---
+{{- end }}
 apiVersion: batch/v1
 kind: Job
 metadata:
