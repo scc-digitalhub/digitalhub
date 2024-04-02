@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/scc-digitalhub/digitalhub-core
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v0.3.0-beta4"
+  tag: "v0.3.0-beta5"
 
 imagePullSecrets: []
 nameOverride: ""

@@ -5,6 +5,7 @@ metadata:
 data:
   DH_ENDPOINT: "http://{{ include "core.fullname" . }}:{{ .Values.service.port }}" 
   K8S_NAMESPACE: {{ .Release.Namespace }}
+  JDBC_PLATFORM: postgresql
   JDBC_URL: "jdbc:postgresql://core-postgres-cluster:5432/core"
   JDBC_DRIVER: org.postgresql.Driver
   JDBC_DIALECT: org.hibernate.dialect.PostgreSQLDialect
