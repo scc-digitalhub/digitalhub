@@ -1,3 +1,4 @@
+{{- if .Values.airflow.enabled }}
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
@@ -16,3 +17,4 @@ spec:
     airflow: airflow
   postgresql:
     version: "15"
+{{- end }}
