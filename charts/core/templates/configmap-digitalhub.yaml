@@ -12,3 +12,4 @@ data:
   POSTGRES_DATABASE: {{ .Values.postgres.database }}
   POSTGRES_SCHEMA: {{ .Values.postgres.schema }}
   S3_BUCKET_NAME: {{ .Values.minio.bucketName }}
+  KFP_ENDPOINT: {{ .Values.kfp.endpoint }}
