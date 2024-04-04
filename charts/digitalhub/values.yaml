@@ -217,6 +217,9 @@ core:
     rootPassword: minio123
   krm:
     port: "8080"
+  kfp:
+    endpoint: "http://ml-pipeline:8888"
+
   events:
     enabled: false
     rabbitmq:
