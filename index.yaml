@@ -98,6 +98,19 @@ entries:
   core:
   - apiVersion: v2
     appVersion: 0.3.0
+    created: "2024-04-04T13:56:14.549555433Z"
+    description: Core backend application for DigitalHub.
+    digest: 87bf32a26fa367d1b70ee9516b6ba1c57756cd1e85ef6aef620f43ebafbd6afb
+    maintainers:
+    - name: scc-digitalhub
+      url: https://github.com/scc-digitalhub
+    name: core
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.1.10/core-0.1.10.tgz
+    version: 0.1.10
+  - apiVersion: v2
+    appVersion: 0.3.0
     created: "2024-04-04T08:43:50.718182136Z"
     description: Core backend application for DigitalHub.
     digest: b79a33bee886345fd6e33ef2f397dc4191e0988d4723781fbd1e654f9f6ce884
@@ -5016,4 +5029,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-04T08:56:37.720282186Z"
+generated: "2024-04-04T13:56:14.549758752Z"
