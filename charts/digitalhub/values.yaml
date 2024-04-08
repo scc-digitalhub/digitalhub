@@ -461,10 +461,10 @@ openmetadata-java-connector:
           secretKey: "token"
 
 nakamasato-mysql-operator:
-  enabled: true
+  enabled: false
 
 mysql-operator:
-  enabled: true
+  enabled: false
 
 template-controller:
   enabled: true
