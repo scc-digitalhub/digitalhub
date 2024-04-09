@@ -1,4 +1,4 @@
-{{ if .Values.namespaceValues.namespaced }}
+{{ if .Values.rbac.roles.namespaced }}
 {{- $roleCrd := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "crd") -}}
 {{- $roleCr := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "cr") -}}
 apiVersion: rbac.authorization.k8s.io/v1
@@ -6,10 +6,10 @@ kind: Role
 metadata:
   name: {{ $roleCr }}
 rules:
-{{- range .Values.rbac }}
+{{- range .Values.rbac.roles }}
 - apiGroups: {{ if .apiGroups }}[{{ .apiGroups }}]{{ else }}[""]{{ end }}
-  resources: [{{ join "," .resources }}]
-  verbs: [{{ join ","  .verbs }}]
+  resources: {{ list (.resources) }}
+  verbs: {{ list (.verbs) }}
 {{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1

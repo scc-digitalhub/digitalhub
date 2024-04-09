@@ -99,7 +99,7 @@ Create default access URL
 {{- end }}
 
 {{- define "custom-resource-manager.allowedCrd" -}}
-{{- range $i, $apiGroup := .Values.rbac }}
+{{- range $i, $apiGroup := .Values.rbac.roles }}
 {{- range $j, $res := $apiGroup.resources }}
 {{- if $apiGroup.crd }}
 {{- if ne $i 0 }},{{ end }}
@@ -114,7 +114,7 @@ Create default access URL
 Namespace function
 */}}
 {{- define "custom-resource-manager.namespaceCheck" -}}
-{{- if .Values.namespaceValues.namespaced }}
+{{- if .Values.rbac.roles.namespaced }}
 {{- if .Values.namespaceValues.namespace }}
 {{- .Values.namespaceValues.namespace }}
 {{- else }}
