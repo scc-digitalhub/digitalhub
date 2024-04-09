@@ -5,7 +5,7 @@ storageClasses: default
 replicaCount: 1
 
 namespaceValues:
-  namespaced: true
+  
   namespace: ""
   defaultValue: "*"
 
@@ -37,95 +37,98 @@ podSecurityContext:
   fsGroup: 65532
 
 rbac:
-  - apiGroups: "db.movetokube.com"
-    crd: true
-    resources:
-    - postgresusers
-    - postgres
-    verbs:
-    - get
-    - list
-    - create
-    - delete
-    - patch
-  - apiGroups: "operator.dremiorestserver.com"
-    crd: true
-    resources:
-    - dremiorestservers
-    verbs:
-    - get
-    - list
-    - create
-    - delete
-    - patch
-  - apiGroups: "operator.postgrest.org"
-    crd: true
-    resources:
-    - postgrests
-    verbs:
-    - get
-    - list
-    - create
-    - delete
-    - patch
-  - apiGroups: "operator.scc-digitalhub.github.io"
-    crd: true
-    resources:
-    - apigws
-    verbs:
-    - get
-    - list
-    - create
-    - delete
-    - patch
-  - apiGroups: "batch"
-    crd: false
-    resources:
-    - jobs
-    verbs:
-    - get
-    - list
-    - delete
-  - apiGroups: "apps"
-    crd: false
-    resources:
-    - deployments
-    - replicasets
-    verbs:
-    - get
-    - list
-  - apiGroups: ""
-    crd: false
-    resources:
-    - persistentvolumeclaims
-    verbs:
-    - get
-    - list
-    - create
-    - delete
-    - patch
-  - apiGroups: ""
-    crd: false
-    resources:
-    - services
-    verbs:
-    - get
-    - list
-  - apiGroups: ""
-    crd: false
-    resources:
-    - secrets
-    verbs:
-    - get
-    - list
-  - apiGroups: ""
-    resources: 
-    - "pods"
-    - "pods/log"
-    verbs: 
-    - "get" 
-    - "list" 
-    - "create"
+  namespaced: true
+  clusterRole: true
+  roles:
+    - apiGroups: "db.movetokube.com"
+      crd: true
+      resources:
+      - postgresusers
+      - postgres
+      verbs:
+      - get
+      - list
+      - create
+      - delete
+      - patch
+    - apiGroups: "operator.dremiorestserver.com"
+      crd: true
+      resources:
+      - dremiorestservers
+      verbs:
+      - get
+      - list
+      - create
+      - delete
+      - patch
+    - apiGroups: "operator.postgrest.org"
+      crd: true
+      resources:
+      - postgrests
+      verbs:
+      - get
+      - list
+      - create
+      - delete
+      - patch
+    - apiGroups: "operator.scc-digitalhub.github.io"
+      crd: true
+      resources:
+      - apigws
+      verbs:
+      - get
+      - list
+      - create
+      - delete
+      - patch
+    - apiGroups: "batch"
+      crd: false
+      resources:
+      - jobs
+      verbs:
+      - get
+      - list
+      - delete
+    - apiGroups: "apps"
+      crd: false
+      resources:
+      - deployments
+      - replicasets
+      verbs:
+      - get
+      - list
+    - apiGroups: ""
+      crd: false
+      resources:
+      - persistentvolumeclaims
+      verbs:
+      - get
+      - list
+      - create
+      - delete
+      - patch
+    - apiGroups: ""
+      crd: false
+      resources:
+      - services
+      verbs:
+      - get
+      - list
+    - apiGroups: ""
+      crd: false
+      resources:
+      - secrets
+      verbs:
+      - get
+      - list
+    - apiGroups: ""
+      resources: 
+      - "pods"
+      - "pods/log"
+      verbs: 
+      - "get" 
+      - "list" 
+      - "create"
 
 securityContext:
   runAsNonRoot: true

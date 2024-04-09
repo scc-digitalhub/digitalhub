@@ -1,5 +1,6 @@
 {{- $clusterRoleCrd := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "crd") -}}
 {{- $clusterRoleCr := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "cr") -}}
+{{- .Values.rbac.clusterRole }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -36,16 +37,17 @@ subjects:
   name: {{ include "custom-resource-manager.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 ---
-{{ if not .Values.namespaceValues.namespaced }}
+{{- end }}
+{{ if not .Values.rbac.roles.namespaced }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: {{ $clusterRoleCr }}
 rules:
-{{- range .Values.rbac }}
+{{- range .Values.rbac.roles }}
 - apiGroups: {{ if .apiGroups }}[{{ .apiGroups }}]{{ else }}[""]{{ end }}
-  resources: [{{ join "," .resources }}]
-  verbs: [{{ join ","  .verbs }}]
+  resources: {{ list (.resources) }}
+  verbs: {{ list (.verbs) }}
 {{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
