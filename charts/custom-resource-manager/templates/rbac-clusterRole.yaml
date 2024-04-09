@@ -1,6 +1,6 @@
 {{- $clusterRoleCrd := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "crd") -}}
 {{- $clusterRoleCr := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "cr") -}}
-{{- .Values.rbac.clusterRole }}
+{{- if .Values.rbac.clusterRole }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
