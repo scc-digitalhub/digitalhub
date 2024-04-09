@@ -251,6 +251,8 @@ apigw-operator:
 
 grafana:
   enabled: true
+  rbac: 
+    namespaced: true
   adminPassword: digitalhub-test
   service:
     type: NodePort
