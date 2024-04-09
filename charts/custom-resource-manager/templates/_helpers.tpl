@@ -114,7 +114,7 @@ Create default access URL
 Namespace function
 */}}
 {{- define "custom-resource-manager.namespaceCheck" -}}
-{{- if .Values.rbac.roles.namespaced }}
+{{- if .Values.rbac.namespaced }}
 {{- if .Values.namespaceValues.namespace }}
 {{- .Values.namespaceValues.namespace }}
 {{- else }}
