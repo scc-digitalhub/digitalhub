@@ -226,6 +226,16 @@ entries:
   custom-resource-manager:
   - apiVersion: v2
     appVersion: 1.1.5
+    created: "2024-04-09T13:01:57.173311206Z"
+    description: A Helm chart for Kubernetes
+    digest: 21dd513b735a727b9ea5f75411333426f5d3d2e8e9132f63532e5627b853edd4
+    name: custom-resource-manager
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/custom-resource-manager-0.1.3/custom-resource-manager-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 1.1.5
     created: "2024-04-09T08:50:31.953581594Z"
     description: A Helm chart for Kubernetes
     digest: c0d9f961a6fcd82a6ef10d06764bc14ec79abd83e5d115b50c8fddef58886874
@@ -5315,4 +5325,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-09T09:13:43.822851111Z"
+generated: "2024-04-09T13:01:57.173523983Z"
