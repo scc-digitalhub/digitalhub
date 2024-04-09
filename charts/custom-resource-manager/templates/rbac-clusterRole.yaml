@@ -46,8 +46,8 @@ metadata:
 rules:
 {{- range .Values.rbac.roles }}
 - apiGroups: {{ if .apiGroups }}[{{ .apiGroups }}]{{ else }}[""]{{ end }}
-  resources: {{ list (.resources) }}
-  verbs: {{ list (.verbs) }}
+  resources: {{ join "," .resources | list }}
+  verbs: {{ join "," .verbs | list }}
 {{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
