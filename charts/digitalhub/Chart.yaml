@@ -29,7 +29,7 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: ext-postgres-operator.enabled
 - name: custom-resource-manager
-  version: "0.1.3"
+  version: "0.1.4"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: custom-resource-manager.enabled
 - name: postgrest-operator
