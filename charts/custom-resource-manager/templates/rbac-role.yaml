@@ -1,4 +1,4 @@
-{{ if .Values.rbac.roles.namespaced }}
+{{ if .Values.rbac.namespaced }}
 {{- $roleCrd := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "crd") -}}
 {{- $roleCr := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "cr") -}}
 apiVersion: rbac.authorization.k8s.io/v1
