@@ -325,7 +325,7 @@ resource "kubernetes_deployment" "jupyter" {
         }
         container {
           name    = "jupyter"
-          image   = "ghcr.io/scc-digitalhub/jupyter:1.6.2-rc5_0.3.0"
+          image   = "ghcr.io/scc-digitalhub/jupyter:1.6.2rc6_0.3.1"
           command = ["sh", "-c", coder_agent.jupyter.init_script]
           security_context {
             run_as_user                = "1000"
