@@ -15,3 +15,7 @@ data:
   K8S_SELECTOR_OWNERS: "db.movetokube.com/v1alpha1"
   K8S_SELECTOR_LABELS: ""
   K8S_SELECTOR_NAMES: "(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"
+  KRM_AUTH_OAUTH2_ISSUER: {{ .Values.oidc.issuer }}
+  SCOPE: {{ .Values.oidc.scope }}
+  AUTH_TYPE: {{ .Values.oidc.authType }}
+  REDIRECT_URL: {{ .Values.oidc.redirectUrl }}
