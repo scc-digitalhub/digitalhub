@@ -182,3 +182,15 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+oidc:
+  enabled: false
+  audience:
+    clientId: ""
+    externalSecret:
+      name: ""
+      key: ""
+  issuer: ""
+  scope: ""
+  authType: ""
+  redirectUrl: ""
