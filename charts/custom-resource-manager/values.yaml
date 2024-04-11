@@ -5,7 +5,6 @@ storageClasses: default
 replicaCount: 1
 
 namespaceValues:
-  
   namespace: ""
   defaultValue: "*"
 
@@ -30,7 +29,7 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: 
+podSecurityContext:
   runAsNonRoot: true
   runAsUser: 65532
   runAsGroup: 65532
@@ -122,12 +121,12 @@ rbac:
       - get
       - list
     - apiGroups: ""
-      resources: 
+      resources:
       - "pods"
       - "pods/log"
-      verbs: 
-      - "get" 
-      - "list" 
+      verbs:
+      - "get"
+      - "list"
       - "create"
 
 securityContext:
@@ -139,7 +138,7 @@ securityContext:
 
 service:
   type: NodePort
-  port: 8080 
+  port: 8080
   nodePort: "30160"
 
 ingress:
@@ -182,3 +181,15 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+oidc:
+  enabled: false
+  audience:
+    clientId: ""
+    externalSecret:
+      name: ""
+      key: ""
+  issuer: ""
+  scope: ""
+  authType: ""
+  redirectUrl: ""

@@ -45,6 +45,18 @@ spec:
             httpGet:
               path: /
               port: http
+          {{- if .Values.oidc.enabled }}
+          env:
+            - name: KRM_AUTH_OAUTH2_AUDIENCE
+              {{- if .Values.oidc.audience.externalSecret.name  }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.oidc.audience.externalSecret.name }}
+                  key: {{ .Values.oidc.audience.externalSecret.key }}
+              {{- else}}
+              value: {{ .Values.oidc.audience.clientId }}
+              {{- end }}
+          {{- end }}
           envFrom:
           - configMapRef:
               name: {{ include "custom-resource-manager.fullname" . }}
