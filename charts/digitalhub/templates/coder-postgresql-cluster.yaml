@@ -1,3 +1,4 @@
+{{- if .Values.coder.enabled }}
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
@@ -16,3 +17,4 @@ spec:
     coder: coder
   postgresql:
     version: "15"
+{{- end }}
