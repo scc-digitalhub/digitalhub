@@ -139,7 +139,7 @@ runtime:
   mlrun:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-mlrun"
     tag: "0.3.0"
-  kfp: 
+  kfp:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-kfp"
     tag: "0.3.0"
 
