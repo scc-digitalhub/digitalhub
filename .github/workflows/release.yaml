@@ -27,9 +27,9 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Set up Helm
-        uses: Azure/setup-helm@v4.0.0
+        uses: Azure/setup-helm@v4
         with:
-          version: v3.14.0
+          version: v3.14.4
 
       - name: Add dependency chart repos
         run: |

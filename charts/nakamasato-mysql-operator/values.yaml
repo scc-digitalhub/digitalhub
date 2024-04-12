@@ -1,4 +1,4 @@
-cloudSecretManagerType: raw # set gcp if you use GCP SecretManager
+cloudSecretManagerType: raw  # set gcp if you use GCP SecretManager
 # gcpServiceAccount: GSA_NAME@GSA_PROJECT.iam.gserviceaccount.com
 # gcpProjectId: <projectid>
 # cloudSQL:
