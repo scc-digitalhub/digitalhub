@@ -470,3 +470,24 @@ mysql-operator:
 
 template-controller:
   enabled: true
+
+oauth2-proxy:
+  enabled: false
+  apps:
+    - name: ""
+      service:
+        name: ""
+        port: ""
+      ingress:
+        enabled: false
+        annotations: {}
+        ingressClassName: ""
+        hosts: []
+        path: /
+        tls: []
+      redirectUrl: ""
+      oidcIssuerUrl: ""
+      existingSecret:
+        name: ""
+        clientId: ""
+        secretKey: ""
