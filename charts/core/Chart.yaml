@@ -5,5 +5,7 @@ type: application
 version: 0.1.10
 appVersion: "0.3.0"
 maintainers:
-  - name: scc-digitalhub
-    url: https://github.com/scc-digitalhub
+  - name: ffais
+    url: https://github.com/ffais
+  - name: calcagiara
+    url: https://github.com/Calcagiara

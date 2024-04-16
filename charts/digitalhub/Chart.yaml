@@ -3,8 +3,10 @@ name: digitalhub
 description: The Digital Hub is an open-source platform for interoperability of data and services, built by integrating several open-source projects to manage, elaborate, expose and serve data through modern standards.
 type: application
 maintainers:
-  - name: scc-digitalhub
-    url: https://github.com/scc-digitalhub
+  - name: ffais
+    url: https://github.com/ffais
+  - name: calcagiara
+    url: https://github.com/Calcagiara
 version: "0.3.20"
 appVersion: "0.3.0"
 dependencies:
