@@ -57,7 +57,7 @@ ingress:
   className: ""
   hosts:
     - host: ""
-      paths: 
+      paths:
         - pathType: ImplementationSpecific
           path: /
   tls:
