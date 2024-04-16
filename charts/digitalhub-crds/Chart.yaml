@@ -4,3 +4,8 @@ description: This Helm Chart is a collection of all digitalhub CRDs, this chart 
 type: application
 version: 0.1.0
 appVersion: "0.3.0"
+maintainers:
+  - name: ffais
+    url: https://github.com/ffais
+  - name: calcagiara
+    url: https://github.com/Calcagiara
