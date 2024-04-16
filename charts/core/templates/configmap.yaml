@@ -6,9 +6,9 @@ data:
   {{- if .Values.ingress.enabled }}
   {{- with (index .Values.ingress.hosts 0) }}
   DH_ENDPOINT: "https://{{ .host }}"
-  {{- else }}
-  DH_ENDPOINT: "http://{{ include "core.fullname" . }}:{{ .Values.service.port }}"
   {{- end }}
+  {{- else }}
+  DH_ENDPOINT: "http://{{ include "core.endpoint" . }}"
   {{- end }}
   K8S_NAMESPACE: {{ .Release.Namespace }}
   JDBC_PLATFORM: postgresql
