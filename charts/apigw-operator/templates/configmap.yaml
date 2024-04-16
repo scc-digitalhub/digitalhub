@@ -5,3 +5,4 @@ metadata:
 data:
   ENABLE_TLS: {{ .Values.deployment.tls.enabled | quote }}
   TLS_SECRET_NAME: {{ .Values.deployment.tls.wildcardCertSecretName }}
+  INGRESS_CLASS_NAME: {{ .Values.deployment.ingressClassName }}
