@@ -89,6 +89,17 @@ spec:
                   name: {{ .Values.events.rabbitmq.credentials.existingSecret.name | default (printf "%s-rabbitmq-creds" (include "core.fullname" .)) }}
                   key: {{ .Values.events.rabbitmq.credentials.existingSecret.passwordKey | default "password" }}
             {{- end }}
+            {{- if .Values.oidc.enabled }}
+            - name: DH_AUTH_OIDC_CLIENT_ID
+              {{- if .Values.oidc.audience.externalSecret.name  }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.oidc.audience.externalSecret.name }}
+                  key: {{ .Values.oidc.audience.externalSecret.key }}
+              {{- else}}
+              value: {{ .Values.oidc.audience.clientId }}
+              {{- end }}
+            {{- end }}
           envFrom:
           - configMapRef:
               name: {{ include "core.fullname" . }}
