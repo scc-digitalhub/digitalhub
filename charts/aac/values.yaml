@@ -1,0 +1,148 @@
+# Default values for aac.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: smartcommunitylab/aac
+  pullPolicy: IfNotPresent
+  aacCommand1: "java"
+  aacCommand2: "org.springframework.boot.loader.JarLauncher"
+  aacCommand3: "-Dspring-boot.run.arguments=--logging.level.ROOT=DEBUG"
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: 5.x-latest
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: aac
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext:
+  runAsUser: 805
+  runAsGroup: 805
+  fsGroup: 805
+
+global:
+  externalHostAddress: ""
+
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 805
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+
+service:
+  type: ClusterIP
+  port: "8080"
+  httpNodePort: ""
+
+ingress:
+  enabled: false
+  className: ""
+  hosts:
+    - host: ""
+      paths:
+        - pathType: ImplementationSpecific
+          path: /
+  tls:
+  - secretName: ""
+    hosts:
+      - ""
+  annotations: {}
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes:
+  - name: aac-volume
+    secret:
+      secretName: aac-bootstrap-secret
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts:
+- name: aac-volume
+  mountPath: /home/aac/bootstrap.yaml
+  subPath: bootstrap.yaml
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# AAC Config Map
+config:
+  jdbcDialect: org.hibernate.dialect.PostgreSQLDialect
+  jdbcDriver: org.postgresql.Driver
+  bootstrapApply: "true"
+  bootstrap: file:///home/aac/bootstrap.yaml
+  logLevel: DEBUG
+  jdbcUrl: "jdbc:postgresql://aac-postgres-cluster:5432/aacDB"
+  mailHost: ""
+  mailPort: 465
+  mailProtocol: smtps
+  applicationExtUrl: ""
+
+# Secrets
+bootstrapCreds:
+  existingSecret: ""
+
+aacCreds:
+  existingSecret: ""
+  passwordKey: ""
+
+mailCreds:
+  existingSecret: ""
+  passwordKey: ""
+
+jdbcCreds:
+  existingSecret: ""
+  passwordKey: ""
+
+mailSecret:
+  user: test@user.it
+  password: testPassword
+
+postgresOperator:
+  installed: true
+
+bootstrap: []

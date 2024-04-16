@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "aac.fullname" . }}
+  labels:
+    {{- include "aac.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "aac.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "aac.labels" . | nindent 8 }}
+	{{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "aac.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          command: [{{ .Values.image.aacCommand1 }}, {{ .Values.image.aacCommand2 }}, {{ .Values.image.aacCommand3 }}]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: MAIL_USER
+              valueFrom:
+                secretKeyRef:
+                {{- if .Values.mailCreds.existingSecret }}
+                  name: {{ .Values.mailCreds.existingSecret }}
+                  key: {{ .Values.mailCreds.passwordKey }}
+                {{- else }}
+                  name: aac-mail-secret
+                  key: jdbc-user
+                {{- end }}
+            - name: MAIL_PASS
+              valueFrom:
+                secretKeyRef:
+                {{- if .Values.mailCreds.existingSecret }}
+                  name: {{ .Values.mailCreds.existingSecret }}
+                  key: {{ .Values.mailCreds.passwordKey }}
+                {{- else }}
+                  name: aac-mail-secret
+                  key: jdbc-password
+                {{- end }}
+            - name: JDBC_USER
+              valueFrom:
+                secretKeyRef:
+                {{- if .Values.jdbcCreds.existingSecret }}
+                  name: {{ .Values.jdbcCreds.existingSecret }}
+                  key: {{ .Values.jdbcCreds.passwordKey }}
+                {{- else }}
+                  name: aacadmin.aac-postgres-cluster.credentials.postgresql.acid.zalan.do
+                  key: username
+                {{- end }}
+            - name: JDBC_PASS
+              valueFrom:
+                secretKeyRef:
+                {{- if .Values.jdbcCreds.existingSecret }}
+                  name: {{ .Values.jdbcCreds.existingSecret }}
+                  key: {{ .Values.jdbcCreds.passwordKey }}
+                {{- else }}
+                  name: aacadmin.aac-postgres-cluster.credentials.postgresql.acid.zalan.do
+                  key: password
+                {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          envFrom:
+          - configMapRef:
+              name: {{ include "aac.fullname" . }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
