@@ -61,8 +61,8 @@ mlrun-ce:
     db:
       enabled: true
     httpDB:
-       dbType: "mysql"
-       secretDsn:
+      dbType: "mysql"
+      secretDsn:
         name: ""
         key: "" 
     modelMonitoring:
@@ -97,7 +97,7 @@ mlrun-ce:
     db:
       username: root
     ui:
-      ingress: 
+      ingress:
         enabled: false
     minio:
       enabled: true
@@ -235,7 +235,6 @@ core:
           name: "digitalhub-rabbitmq-default-user"
           usernameKey: "username"
           passwordKey: "password"
-    
 
 custom-resource-manager:
   enabled: true
@@ -251,7 +250,7 @@ apigw-operator:
 
 grafana:
   enabled: true
-  rbac: 
+  rbac:
     namespaced: true
   adminPassword: digitalhub-test
   service:
@@ -293,7 +292,7 @@ rabbitmq-cluster-operator:
     replicas: 1
     persistence:
       storagaClass: "standard"
-      storageSize: "4Gi" 
+      storageSize: "4Gi"
 
 opensearch:
   enabled: false
@@ -406,7 +405,7 @@ airflow:
 
 openmetadata:
   enabled: false
-  initializer: 
+  initializer:
     enabled: true
     maxRetry: "30"
     username: "admin"
@@ -458,7 +457,7 @@ openmetadata-java-connector:
       dataserviceSql: "DigitalHubSQL"
       dataserviceS3: "DigitalHubS3"
       existingSecrets:
-        token: 
+        token:
           secretName: "openmetadata-bot-token"
           secretKey: "token"
 
@@ -470,3 +469,24 @@ mysql-operator:
 
 template-controller:
   enabled: true
+
+oauth2-proxy:
+  enabled: false
+  apps:
+    - name: ""
+      service:
+        name: ""
+        port: ""
+      ingress:
+        enabled: false
+        annotations: {}
+        ingressClassName: ""
+        hosts: []
+        path: /
+        tls: []
+      redirectUrl: ""
+      oidcIssuerUrl: ""
+      existingSecret:
+        name: ""
+        clientId: ""
+        secretKey: ""
