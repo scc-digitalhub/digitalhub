@@ -177,3 +177,14 @@ solr:
   enabled: false
   url: ""
   collection: ""
+
+oidc:
+  enabled: false
+  audience:
+    clientId: ""
+    externalSecret:
+      name: ""
+      key: ""
+  issuer: ""
+  scope: ""
+  claim: ""
