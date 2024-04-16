@@ -24,7 +24,7 @@ connector:
     dataserviceS3: "DigitalHubS3"
     token: ""
     existingSecrets:
-      token: 
+      token:
         secretName: ""
         secretKey: ""
 
