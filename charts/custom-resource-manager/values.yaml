@@ -1,9 +1,7 @@
-# Default values for custom-resource-manager.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+global:
+  externalHostAddress: ""
 storageClasses: default
 replicaCount: 1
-
 namespaceValues:
   namespace: ""
   defaultValue: "*"
