@@ -64,7 +64,7 @@ mlrun-ce:
       dbType: "mysql"
       secretDsn:
         name: ""
-        key: "" 
+        key: ""
     modelMonitoring:
       secretDsn:
         name: ""
