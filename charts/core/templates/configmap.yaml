@@ -3,7 +3,13 @@ kind: ConfigMap
 metadata:
   name: {{ include "core.fullname" . }}
 data:
-  DH_ENDPOINT: "http://{{ include "core.fullname" . }}:{{ .Values.service.port }}" 
+  {{- if .Values.ingress.enabled }}
+  {{- with (index .Values.ingress.hosts 0) }}
+  DH_ENDPOINT: "https://{{ .host }}"
+  {{- end }}
+  {{- else }}
+  DH_ENDPOINT: "http://{{ include "core.endpoint" . }}"
+  {{- end }}
   K8S_NAMESPACE: {{ .Release.Namespace }}
   JDBC_PLATFORM: postgresql
   JDBC_URL: "jdbc:postgresql://core-postgres-cluster:5432/core"
@@ -42,4 +48,9 @@ data:
   DH_AUTH_JWT_AUDIENCE: {{ .Values.authentication.openId.jwtAudience }}
   DH_AUTH_JWT_CLAIM: {{ .Values.authentication.openId.jwtClaim }}
   DH_AUTH_OIDC_CLIENT_ID: {{ .Values.authentication.openId.oidcClientId }}
+{{- end }}
+{{- if .Values.oidc.enabled }}
+  DH_AUTH_JWT_ISSUER_URI: {{ .Values.oidc.issuer }}
+  DH_AUTH_OIDC_SCOPE: {{ .Values.oidc.scope }}
+  DH_AUTH_JWT_CLAIM: {{ .Values.oidc.claim }}
 {{- end }}
