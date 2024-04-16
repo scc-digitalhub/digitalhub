@@ -62,3 +62,14 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Calculate Core endpoint
+*/}}
+{{- define "core.endpoint" -}}
+{{- if eq .Values.service.type "NodePort"}}
+{{ .Values.global.externalHostAddress }}:{{ .Values.service.httpNodePort }}
+{{- else }}
+{{ .Values.global.externalHostAddress }}:{{ .Values.service.port }}
+{{- end }}
+{{- end }}
