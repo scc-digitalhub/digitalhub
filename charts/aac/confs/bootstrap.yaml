@@ -1,0 +1,83 @@
+{{- if .Values.bootstrap }}
+realms:
+{{- $root := . -}}
+{{- range $realm := .Values.bootstrap }}
+  - name: {{ $realm.name }}
+    slug: {{ $realm.slug }}
+    public: {{ $realm.public }}
+    identityProviders: 
+      {{- toYaml $realm.identityProviders | nindent 6 }}
+    {{- if $realm.clientApps }}
+    clientApps:
+    {{- range $clientApp := $realm.clientApps }}
+      - clientId: {{ tpl $clientApp.clientId $root }}
+        type: {{ $clientApp.type }}
+        name: {{ $clientApp.name }}
+        {{- if $clientApp.realm }}
+        realm: {{ $realm.name }}
+        {{- end }}
+        description: {{ $clientApp.description }}
+        configuration:
+            clientSecret: {{ tpl $clientApp.configuration.clientSecret $root }}
+            {{- toYaml $clientApp.configuration.conf | nindent 12 }}
+        {{- if $clientApp.scopes }}
+        scopes:
+        {{- range $clientApp.scopes }}
+          - {{ . }}
+        {{- end }}
+        {{- end }}
+        {{- if $clientApp.resourceIds }}
+        resourceIds: 
+        {{- range $clientApp.resourceIds }}
+          - {{ . }}
+        {{- end }}
+        {{- end }}
+        {{- if $clientApp.providers }}
+        providers:
+        {{- range $clientApp.providers }}
+          - {{ . }}
+        {{- end }}
+        {{- end }}
+        authorities: [
+            ]
+        spaceRoles: [
+            ]
+        hookWebUrls: {
+            }
+        roles: [
+            ]
+        {{- if $clientApp.hookFunctions }}
+        hookFunctions:
+          {{- toYaml $clientApp.hookFunctions | nindent 10 }}
+        {{- end }}
+    {{- end }}
+    {{- end }}
+    {{- if $realm.users }}
+    users:
+    {{- range $user := $realm.users }}
+      - uuid: {{ $user.uuid }}
+        userId: {{ $user.userId }}
+        username: {{ $user.username }}
+        email: {{ $user.email }}
+        type: {{ $user.type }}
+        authority: {{ $user.authority }}
+        provider: {{ $user.provider }}
+        name: {{ $user.name }}
+        surname: {{ $user.surname }}       
+        confirmed: {{ $user.confirmed }}    
+    {{- end }}
+    {{- end }}
+    {{- if $realm.credentials }}
+    credentials:
+    {{- range $credential := $realm.credentials }}
+      - type: {{ $credential.type }} 
+        authority: {{ $credential.authority }} 
+        provider: {{ $credential.provider }} 
+        username: {{ $credential.username }} 
+        userId: {{ $credential.userId }} 
+        password: {{ $credential.password }}               
+        id: {{ $credential.id }} 
+    {{- end }}
+    {{- end }}
+{{- end }}
+{{- end }}  

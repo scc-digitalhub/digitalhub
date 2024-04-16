@@ -1,0 +1,20 @@
+{{- if .Values.postgresOperator.installed }}
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: aac-postgres-cluster
+spec:
+  teamId: "aac"
+  volume:
+    size: 8Gi
+  numberOfInstances: 1
+  users:
+    aacadmin:  # database owner
+    - superuser
+    - createdb
+    aacuser: []
+  databases:
+    aacDB: aacuser
+  postgresql:
+    version: "15"
+{{- end }}
