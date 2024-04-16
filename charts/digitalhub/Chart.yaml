@@ -47,7 +47,7 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: apigw-operator
-  version: "0.1.5"
+  version: "0.1.3"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: apigw-operator.enabled
 - name: rabbitmq-cluster-operator
