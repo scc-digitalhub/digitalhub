@@ -2,7 +2,7 @@ apiVersion: v2
 name: openmetadata-java-connector
 description: Connector to store in OpenMetadata some Dataitem info coming from the DigitalHub Platform. The data must be published on a RabbitMQ Queue in 'JSON' format.
 type: application
-version: 0.1.7
+version: 0.1.8
 appVersion: "1.2.2"
 maintainers:
   - name: ffais
