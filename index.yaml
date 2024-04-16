@@ -63,6 +63,21 @@ entries:
     version: 8.8.0
   apigw-operator:
   - apiVersion: v2
+    appVersion: 1.0.5
+    created: "2024-04-16T08:56:41.758822039Z"
+    description: A Helm chart for Kubernetes
+    digest: 21921d5eaa8b6a309d77664ec30af7961630a8216cc6d8d13d4ba04f5ace9311
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: apigw-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/apigw-operator-0.1.3/apigw-operator-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
     appVersion: 1.0.4
     created: "2024-02-19T12:19:11.907094029Z"
     description: A Helm chart for Kubernetes
@@ -224,6 +239,21 @@ entries:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.1.0/core-0.1.0.tgz
     version: 0.1.0
   custom-resource-manager:
+  - apiVersion: v2
+    appVersion: 1.1.5
+    created: "2024-04-16T08:56:42.006190377Z"
+    description: A Helm chart for Kubernetes
+    digest: cff8d2dbb448f62927a07d2c37b543ffabaf9055bc031dbb73e92de7ebfec894
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: custom-resource-manager
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/custom-resource-manager-0.1.7/custom-resource-manager-0.1.7.tgz
+    version: 0.1.7
   - apiVersion: v2
     appVersion: 1.1.5
     created: "2024-04-09T14:22:21.872251425Z"
@@ -4989,6 +5019,21 @@ entries:
   dremio-rest-server-operator:
   - apiVersion: v2
     appVersion: 1.0.2
+    created: "2024-04-16T08:56:42.421483149Z"
+    description: A Helm chart for Kubernetes
+    digest: 736cb3cd189af4bc4fc0db52b720cdb2ce093ff24393046dabd664a22e336b9d
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: dremio-rest-server-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/dremio-rest-server-operator-0.1.2/dremio-rest-server-operator-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.0.2
     created: "2024-02-19T12:19:12.409206845Z"
     description: A Helm chart for Kubernetes
     digest: e80692866f671042f73937028bb8ec7182887f42cc507b7a066dfe1a1fec8e1d
@@ -5710,6 +5755,23 @@ entries:
   openmetadata-java-connector:
   - apiVersion: v2
     appVersion: 1.2.2
+    created: "2024-04-16T08:56:42.652110047Z"
+    description: Connector to store in OpenMetadata some Dataitem info coming from
+      the DigitalHub Platform. The data must be published on a RabbitMQ Queue in 'JSON'
+      format.
+    digest: 6e001a8a1b58012169fd22ff2c8ff4385d0c99f9244356b4a7bd7748ad950e2e
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: openmetadata-java-connector
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/openmetadata-java-connector-0.1.8/openmetadata-java-connector-0.1.8.tgz
+    version: 0.1.8
+  - apiVersion: v2
+    appVersion: 1.2.2
     created: "2024-03-01T12:50:49.823772883Z"
     description: Connector to store in OpenMetadata some Dataitem info coming from
       the DigitaHub Platform. The data must be published on a RabbitMQ Queue in 'JSON'
@@ -5807,6 +5869,21 @@ entries:
   postgrest-operator:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-04-16T08:56:42.761615564Z"
+    description: A Helm chart for Kubernetes
+    digest: 3638b3ba5a081980e039ca9a5af16f3ff0a915412531b858ec87fa883de57853
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: postgrest-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.1/postgrest-operator-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-02-19T12:19:12.835349209Z"
     description: A Helm chart for Kubernetes
     digest: 77db38144c3567231a16d55b3225e65b9aaea5c7e6e90dcb7cffaf3d3c4c6c2f
@@ -5815,4 +5892,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-11T11:09:41.278572677Z"
+generated: "2024-04-16T08:56:42.761946778Z"
