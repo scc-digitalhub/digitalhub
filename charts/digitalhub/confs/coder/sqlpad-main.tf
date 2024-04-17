@@ -52,6 +52,10 @@ variable "node_port" {
   default = "30140"
 }
 
+variable "image" {
+  type    = string
+}
+
 variable "https" {
   type    = bool
   default = false
@@ -74,7 +78,7 @@ resource "coder_agent" "sqlpad" {
   startup_script_timeout = 180
   startup_script         = <<-EOT
     set -e
-    node /usr/app/server.js 2>&1 &
+    node /usr/app/server.js 2>&1
   EOT
   display_apps {
     vscode                 = false
@@ -194,7 +198,7 @@ resource "kubernetes_deployment" "sqlpad" {
         }
         container {
           name              = "sqlpad"
-          image             = "smartcommunitylab/sqlpad:nonroot"
+          image             = var.image
           image_pull_policy = "IfNotPresent"
           command           = ["sh", "-c", coder_agent.sqlpad.init_script]
           security_context {

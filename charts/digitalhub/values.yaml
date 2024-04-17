@@ -7,7 +7,7 @@ global:
   service:
     type: &serviceType "NodePort"
   registry:
-    url: 192.168.49.2:30150
+    url: 192.168.85.2:30150
     username: ""
     password: ""
     email: ""
@@ -20,7 +20,7 @@ global:
   nuclio:
     dashboard:
       nodePort: 30050
-  externalHostAddress: &globalExternalUrl "192.168.49.2"
+  externalHostAddress: &globalExternalUrl "192.168.85.2"
   securityContext:
     runAsNonRoot: true
     allowPrivilegeEscalation: false
@@ -118,18 +118,23 @@ coder:
     - name: jupyter
       nodePort: "30040"
       iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
+      image: "ghcr.io/scc-digitalhub/jupyter:1.6.2-rc6_0.3.2"
     - name: dremio
       nodePort: "30120"
       iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/dremio_logo_icon_168234.png
+      image: "dremio/dremio-oss:24.1.0"
     - name: sqlpad
       nodePort: "30140"
       iconUrl: https://i.ibb.co/TrBDsZM/sqlpad.png
+      image: "smartcommunitylab/sqlpad:nonroot"
     - name: grafana
       nodePort: "30130"
       iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/grafana_logo_icon_171048.png
+      image: "smartcommunitylab/grafana"
     - name: dashboard
       nodePort: "30110"
       iconUrl: https://svgshare.com/i/u5R.svg
+      image: "smartcommunitylab/digitalhub-dashboard:with-coder-agent-v2.6.0"
   coder:
     image:
       tag: v2.6.0
