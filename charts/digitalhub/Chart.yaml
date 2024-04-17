@@ -7,61 +7,57 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.4.0-beta2"
+version: "0.4.0-beta3"
 appVersion: "0.4.0"
 dependencies:
-- name: docker-registry
-  version: "2.2.2"
-  repository: "https://helm.twun.io"
-  condition: docker-registry.enabled
-- name: mlrun-ce
-  version: "0.6.3-dh-v0.3.4"
-  repository: https://scc-digitalhub.github.io/digitalhub/
-  condition: mlrun-ce.enabled
-- name: coder
-  version: "0.1.0"
-  repository: https://scc-digitalhub.github.io/digitalhub/
-  condition: coder.enabled
-- name: postgres-operator
-  version: "1.11.0"
-  repository: "https://opensource.zalando.com/postgres-operator/charts/postgres-operator"
-  condition: postgres-operator.enabled
-- name: ext-postgres-operator
-  version: "1.2.4"
-  repository: https://scc-digitalhub.github.io/digitalhub/
-  condition: ext-postgres-operator.enabled
-- name: custom-resource-manager
-  version: "0.1.7"
-  repository: https://scc-digitalhub.github.io/digitalhub/
-  condition: custom-resource-manager.enabled
-- name: postgrest-operator
-  version: "0.1.1"
-  repository: https://scc-digitalhub.github.io/digitalhub/
-  condition: postgrest-operator.enabled
-- name: grafana
-  version: "7.0.3"
-  repository: "https://grafana.github.io/helm-charts"
-  condition: grafana.enabled
-- name: core
-  version: "0.1.10"
-  repository: https://scc-digitalhub.github.io/digitalhub/
-  condition: core.enabled
 - name: apigw-operator
-  version: "0.1.3"
+  version: "0.1.4"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: apigw-operator.enabled
-- name: rabbitmq-cluster-operator
-  version: "3.10.10"
-  repository: https://charts.bitnami.com/bitnami
-  condition: rabbitmq-cluster-operator.enabled
-- name: dremio-rest-server-operator
-  version: "0.1.2"
-  repository: https://scc-digitalhub.github.io/digitalhub/
-  condition: dremio-rest-server-operator.enabled
 - name: airflow
   version: "8.8.1"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: airflow.enabled
+- name: coder
+  version: "0.1.0"
+  repository: https://scc-digitalhub.github.io/digitalhub/
+  condition: coder.enabled
+- name: core
+  version: "0.1.11"
+  repository: https://scc-digitalhub.github.io/digitalhub/
+  condition: core.enabled
+- name: custom-resource-manager
+  version: "0.1.8"
+  repository: https://scc-digitalhub.github.io/digitalhub/
+  condition: custom-resource-manager.enabled
+- name: dremio-rest-server-operator
+  version: "0.1.3"
+  repository: https://scc-digitalhub.github.io/digitalhub/
+  condition: dremio-rest-server-operator.enabled
+- name: docker-registry
+  version: "2.2.2"
+  repository: "https://helm.twun.io"
+  condition: docker-registry.enabled
+- name: ext-postgres-operator
+  version: "1.2.4"
+  repository: https://scc-digitalhub.github.io/digitalhub/
+  condition: ext-postgres-operator.enabled
+- name: grafana
+  version: "7.0.3"
+  repository: "https://grafana.github.io/helm-charts"
+  condition: grafana.enabled
+- name: mlrun-ce
+  version: "0.6.3-dh-v0.3.4"
+  repository: https://scc-digitalhub.github.io/digitalhub/
+  condition: mlrun-ce.enabled
+- name: mysql-operator
+  version: "2.1.2"
+  repository: https://mysql.github.io/mysql-operator/
+  condition: mysql-operator.enabled
+- name: nakamasato-mysql-operator
+  version: "v0.3.3"
+  repository: https://scc-digitalhub.github.io/digitalhub/
+  condition: nakamasato-mysql-operator.enabled
 - name: opensearch
   version: "2.12.1"
   repository: "https://opensearch-project.github.io/helm-charts/"
@@ -74,14 +70,18 @@ dependencies:
   version: "0.1.8"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: openmetadata-java-connector.enabled
-- name: mysql-operator
-  version: "2.1.2"
-  repository: https://mysql.github.io/mysql-operator/
-  condition: mysql-operator.enabled
-- name: nakamasato-mysql-operator
-  version: "v0.3.3"
+- name: postgres-operator
+  version: "1.11.0"
+  repository: "https://opensource.zalando.com/postgres-operator/charts/postgres-operator"
+  condition: postgres-operator.enabled
+- name: postgrest-operator
+  version: "0.1.2"
   repository: https://scc-digitalhub.github.io/digitalhub/
-  condition: nakamasato-mysql-operator.enabled
+  condition: postgrest-operator.enabled
+- name: rabbitmq-cluster-operator
+  version: "3.10.10"
+  repository: https://charts.bitnami.com/bitnami
+  condition: rabbitmq-cluster-operator.enabled
 - name: template-controller
   version: "0.2.5"
   repository: https://kluctl.github.io/charts
