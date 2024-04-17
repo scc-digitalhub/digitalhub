@@ -64,6 +64,10 @@ variable "node_port" {
   default = "30110"
 }
 
+variable "image" {
+  type    = string
+}
+
 provider "kubernetes" {
   # Authenticate via ~/.kube/config or a Coder-specific ServiceAccount, depending on admin preferences
   config_path = var.use_kubeconfig == true ? "~/.kube/config" : null
@@ -416,7 +420,7 @@ resource "kubernetes_deployment" "dashboard" {
         }
         container {
           name              = "dashboard"
-          image             = "smartcommunitylab/digitalhub-dashboard:with-coder-agent-v2.6.0"
+          image             = var.image
           image_pull_policy = "IfNotPresent"
           command           = ["/bin/dash", "-c", "exec /bin/coder agent"]
           security_context {

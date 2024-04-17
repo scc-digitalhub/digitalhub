@@ -66,6 +66,10 @@ variable "node_port" {
   default = "30040"
 }
 
+variable "image" {
+  type    = string
+}
+
 variable "https" {
   type    = bool
   default = false
@@ -325,7 +329,7 @@ resource "kubernetes_deployment" "jupyter" {
         }
         container {
           name    = "jupyter"
-          image   = "ghcr.io/scc-digitalhub/jupyter:1.6.2rc6_0.3.1"
+          image   = var.image
           command = ["sh", "-c", coder_agent.jupyter.init_script]
           security_context {
             run_as_user                = "1000"

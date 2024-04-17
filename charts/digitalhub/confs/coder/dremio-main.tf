@@ -78,6 +78,10 @@ variable "node_port" {
   default = "30120"
 }
 
+variable "image" {
+  type    = string
+}
+
 variable "arrow_flight_node_port" {
   type    = string
   default = "30190"
@@ -433,7 +437,7 @@ resource "kubernetes_deployment" "dremio" {
         }
         container {
           name              = "dremio"
-          image             = "dremio/dremio-oss:24.1.0"
+          image             = var.image
           image_pull_policy = "IfNotPresent"
           command           = ["sh", "-c", coder_agent.dremio.init_script]
           security_context {
