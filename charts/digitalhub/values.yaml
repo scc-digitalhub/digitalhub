@@ -7,7 +7,7 @@ global:
   service:
     type: &serviceType "NodePort"
   registry:
-    url: 192.168.85.2:30150
+    url: 192.168.49.2:30150
     username: ""
     password: ""
     email: ""
@@ -20,7 +20,7 @@ global:
   nuclio:
     dashboard:
       nodePort: 30050
-  externalHostAddress: &globalExternalUrl "192.168.85.2"
+  externalHostAddress: &globalExternalUrl "192.168.49.2"
   securityContext:
     runAsNonRoot: true
     allowPrivilegeEscalation: false
