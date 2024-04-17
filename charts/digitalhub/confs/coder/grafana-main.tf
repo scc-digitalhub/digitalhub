@@ -34,6 +34,10 @@ variable "node_port" {
   default = "30130"
 }
 
+variable "image" {
+  type    = string
+}
+
 variable "https" {
   type    = bool
   default = false
@@ -56,7 +60,7 @@ resource "coder_agent" "grafana" {
   startup_script_timeout = 180
   startup_script         = <<-EOT
     set -e
-    /run.sh 2>&1 &
+    /run.sh 2>&1
   EOT
   display_apps {
     vscode                 = false
@@ -176,7 +180,7 @@ resource "kubernetes_deployment" "grafana" {
         }
         container {
           name              = "grafana"
-          image             = "smartcommunitylab/grafana"
+          image             = var.image
           image_pull_policy = "Always"
           command           = ["/bin/sh", "-c", coder_agent.grafana.init_script]
           security_context {
