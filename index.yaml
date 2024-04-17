@@ -383,6 +383,100 @@ entries:
   digitalhub:
   - apiVersion: v2
     appVersion: 0.4.0
+    created: "2024-04-17T15:10:40.495826784Z"
+    dependencies:
+    - condition: docker-registry.enabled
+      name: docker-registry
+      repository: https://helm.twun.io
+      version: 2.2.2
+    - condition: mlrun-ce.enabled
+      name: mlrun-ce
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.6.3-dh-v0.3.4
+    - condition: coder.enabled
+      name: coder
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.0
+    - condition: postgres-operator.enabled
+      name: postgres-operator
+      repository: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+      version: 1.11.0
+    - condition: ext-postgres-operator.enabled
+      name: ext-postgres-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 1.2.4
+    - condition: custom-resource-manager.enabled
+      name: custom-resource-manager
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.7
+    - condition: postgrest-operator.enabled
+      name: postgrest-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.1
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 7.0.3
+    - condition: core.enabled
+      name: core
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.10
+    - condition: apigw-operator.enabled
+      name: apigw-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.3
+    - condition: rabbitmq-cluster-operator.enabled
+      name: rabbitmq-cluster-operator
+      repository: https://charts.bitnami.com/bitnami
+      version: 3.10.10
+    - condition: dremio-rest-server-operator.enabled
+      name: dremio-rest-server-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.2
+    - condition: airflow.enabled
+      name: airflow
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 8.8.1
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: https://opensearch-project.github.io/helm-charts/
+      version: 2.12.1
+    - condition: openmetadata.enabled
+      name: openmetadata
+      repository: https://helm.open-metadata.org
+      version: 1.2.8
+    - condition: openmetadata-java-connector.enabled
+      name: openmetadata-java-connector
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.8
+    - condition: mysql-operator.enabled
+      name: mysql-operator
+      repository: https://mysql.github.io/mysql-operator/
+      version: 2.1.2
+    - condition: nakamasato-mysql-operator.enabled
+      name: nakamasato-mysql-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: v0.3.3
+    - condition: template-controller.enabled
+      name: template-controller
+      repository: https://kluctl.github.io/charts
+      version: 0.2.5
+    description: The Digital Hub is an open-source platform for interoperability of
+      data and services, built by integrating several open-source projects to manage,
+      elaborate, expose and serve data through modern standards.
+    digest: e415dee9cc62207a6873e56551810cc2ccba0a847c44a24cae2b96cfd0454ef7
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: digitalhub
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-0.4.0-beta2/digitalhub-0.4.0-beta2.tgz
+    version: 0.4.0-beta2
+  - apiVersion: v2
+    appVersion: 0.4.0
     created: "2024-04-16T09:07:20.176167169Z"
     dependencies:
     - condition: docker-registry.enabled
@@ -6072,4 +6166,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-17T14:41:12.885448426Z"
+generated: "2024-04-17T15:10:40.496229549Z"
