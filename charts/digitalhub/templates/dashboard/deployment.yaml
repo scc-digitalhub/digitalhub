@@ -72,7 +72,6 @@ spec:
         - name: dashboard-monitoring-json
           configMap:
             name: dashboard-monitoring-json
-      {{- end }}
       {{- with .Values.dashboard.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
