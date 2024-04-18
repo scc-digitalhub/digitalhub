@@ -1,0 +1,33 @@
+{{ if and .Values.dashboard.oidc.enabled .Values.dashboard.oidc.audience.externalSecret.name -}}
+apiVersion: templates.kluctl.io/v1alpha1
+kind: ObjectTemplate
+metadata:
+  name: dashboard-aac-transformer
+spec:
+  serviceAccountName: secret-transformer
+  prune: false
+  matrix:
+    - name: aacdashboardsecret
+      object:
+        ref:
+          apiVersion: v1
+          kind: Secret
+          name: {{ .Values.dashboard.oidc.audience.externalSecret.name }}
+  templates:
+  - object:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: dashboard-oidc-secret
+      stringData:
+        env.js: |-
+          window.env = {"VITE_OIDC_CONFIG":JSON.stringify({"accessTokenExpiringNotificationTime": "3570", "authority": "{{ .Values.dashboard.oidc.config.issuer }}", "clientId": "{{ "{{" }} matrix.aacdashboardsecret.data.clientid | b64decode {{ "}}" }}", "redirectUri": "https://{{ include "digitalhub.oidcDashboardEndpoint" . }}/oidc-callback", "responseType": "code", "scope": "openid profile email", "automaticSilentRenew": "false", "automaticSilentSignin": "false", "post_logout_redirect_uri": "https://{{ include "digitalhub.oidcDashboardEndpoint" . }}"}), "VITE_PLATFORM_TITLE": "Digital Hub", "VITE_PLATFORM_VERSION": "0.4"}
+{{- else -}}
+{{- $v := tpl (.Files.Get "confs/dashboard/env.js") . }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dashboard-oidc-secret
+data:
+  env.js: {{ $v | b64enc }}
+{{- end }}

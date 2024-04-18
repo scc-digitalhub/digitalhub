@@ -69,3 +69,20 @@ Create registry auth values
 {{- printf "%s:%s" .Values.global.registry.username .Values.global.registry.password | b64enc }}
 {{- end }}
 {{- end }}
+
+{{/*
+Calculate dashboard oidc configuration endpoint
+*/}}
+{{- define "digitalhub.oidcDashboardEndpoint" -}}
+{{- if .Values.dashboard.ingress.enabled}}
+{{- with (index .Values.dashboard.ingress.hosts 0) }}
+{{- .host -}}
+{{- end }}
+{{- else }}
+{{- if eq .Values.global.service.type "NodePort"}}
+{{ .Values.global.externalHostAddress }}:{{ .Values.dashboard.service.httpNodePort }}
+{{- else }}
+{{ .Values.global.externalHostAddress }}:{{ .Values.dashboard.service.port }}
+{{- end }}
+{{- end }}
+{{- end }}
