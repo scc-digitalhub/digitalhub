@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "digitalhub.fullname" . }}-dashboard
+  labels:
+    {{- include "digitalhub.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.dashboard.autoscaling.enabled }}
+  replicas: {{ .Values.dashboard.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "digitalhub.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.dashboard.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "digitalhub.labels" . | nindent 8 }}
+	{{- with .Values.dashboard.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.dashboard.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "digitalhub.fullname" . }}-dashboard
+      securityContext:
+        {{- toYaml .Values.dashboard.podSecurityContext | nindent 8 }}
+      containers:
+        - name: dashboard
+          securityContext:
+            {{- toYaml .Values.dashboard.securityContext | nindent 12 }}
+          image: "{{ .Values.dashboard.image.repository }}:{{ .Values.dashboard.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.dashboard.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.dashboard.service.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.dashboard.resources | nindent 12 }}
+          volumeMounts:
+            - name: dashboard-components-json
+              mountPath: "/usr/share/nginx/html/components.json"
+              subPath: components.json
+              readOnly: false
+            - name: dashboard-monitoring-json
+              mountPath: "/usr/share/nginx/html/monitoring.json"
+              subPath: monitoring.json
+              readOnly: false
+            - name: "nginx-config"
+              mountPath: "/etc/nginx/nginx.conf"
+              subPath: "nginx.conf"
+              readOnly: false
+            - name: "env-js"
+              mountPath: "/usr/share/nginx/html/public/env.js"
+              subPath: "env.js"
+              readOnly: false
+      volumes:
+        - name: dashboard-components-json
+          configMap:
+            name: dashboard-components-json
+        - name: nginx-config
+          configMap:
+            name: dashboard-nginx-config
+        - name: env-js
+          secret:
+            secretName: dashboard-oidc-secret
+        - name: dashboard-monitoring-json
+          configMap:
+            name: dashboard-monitoring-json
+      {{- end }}
+      {{- with .Values.dashboard.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.dashboard.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.dashboard.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
