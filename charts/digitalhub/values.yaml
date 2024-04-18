@@ -527,7 +527,7 @@ dashboard:
     annotations: {}
     hosts:
       - host: ""
-        paths: 
+        paths:
           - pathType: ImplementationSpecific
             path: /
     tls:
