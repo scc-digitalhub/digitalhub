@@ -131,10 +131,6 @@ coder:
       nodePort: "30130"
       iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/grafana_logo_icon_171048.png
       image: "smartcommunitylab/grafana"
-    - name: dashboard
-      nodePort: "30110"
-      iconUrl: https://svgshare.com/i/u5R.svg
-      image: "smartcommunitylab/digitalhub-dashboard:with-coder-agent-v2.6.0"
   coder:
     image:
       tag: v2.6.0
@@ -224,7 +220,6 @@ core:
     port: "8080"
   kfp:
     endpoint: "http://ml-pipeline:8888"
-
   events:
     enabled: false
     rabbitmq:
@@ -495,3 +490,72 @@ oauth2-proxy:
         name: ""
         clientId: ""
         secretKey: ""
+
+dashboard:
+  replicaCount: 1
+  image:
+    repository: smartcommunitylab/digitalhub-dashboard
+    pullPolicy: IfNotPresent
+    tag: "nonroot"
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: ""
+  serviceAccount:
+    create: true
+    automount: true
+    annotations: {}
+    name: "digitalhub-dashboard"
+  podAnnotations: {}
+  podLabels: {}
+  podSecurityContext:
+    runAsUser: 65532
+    fsGroup: 65532
+  securityContext:
+    runAsUser: 65532
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
+    capabilities:
+      drop:
+        - ALL
+  service:
+    type: *serviceType
+    port: "8080"
+    httpNodePort: "30110"
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+    hosts:
+      - host: ""
+        paths:
+          - pathType: ImplementationSpecific
+            path: /
+    tls:
+    - secretName: ""
+      hosts:
+        - ""
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+  volumes:
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  oidc:
+    enabled: false
+    audience:
+      clientId: ""
+      externalSecret:
+        name: ""
+        key: ""
+    config:
+      issuer: ""

@@ -1,0 +1,96 @@
+{{ $externalUrl := .Values.global.externalHostAddress -}}
+[
+  {
+    "slug": "coder",
+    "name": "Coder",
+    "description": "Workspace manager",
+    "port": "",
+    {{- if .Values.coder.coder.ingress.enable }}
+    "link": "https://{{ .Values.coder.coder.ingress.host }}"
+    {{- else }}
+    "link": "http://{{ $externalUrl }}:{{ .Values.coder.coder.service.httpNodePort }}"
+    {{- end }}
+  },
+  {
+    "slug": "dhcore",
+    "name": "DH Core",
+    "description": "Core Digital Hub",
+    "port": "",
+    {{- if .Values.core.ingress.enabled }}
+    {{- with (index .Values.core.ingress.hosts 0) }}
+    "link": "https://{{ .host }}"
+    {{- end }}
+    {{- else }}
+    "link": "http://{{ $externalUrl }}:{{ .Values.core.service.httpNodePort }}"
+    {{- end }}
+  },
+  {
+    "slug": "krm",
+    "name": "Kubernetes Resource Manager",
+    "description": "Manager for Kubernetes Resources",
+    "port": "",
+    {{- if (index .Values "custom-resource-manager" "ingress" "enabled") }}
+    {{- with (index .Values "custom-resource-manager" "ingress" "hosts" 0) }}
+    "link": "https://{{ .host }}"
+    {{- end }}
+    {{- else }}
+    "link": "http://{{ $externalUrl }}:{{ index .Values "custom-resource-manager" "service" "nodePort"}}"
+    {{- end }}
+  },
+  {
+    "slug": "minio",
+    "name": "Minio",
+    "description": "S3-compatible datalake",
+    "port": "",
+    {{- if (index .Values "mlrun-ce" "minio" "consoleIngress" "enabled") }}
+    {{- with (index .Values "mlrun-ce" "minio" "consoleIngress" "hosts" 0) }}
+    "link": "https://{{ . }}"
+    {{- end }}
+    {{- else }}
+    {{- with (index .Subcharts "mlrun-ce") }}
+    "link": "http://{{ $externalUrl }}:{{ .Values.minio.consoleService.nodePort }}"
+    {{- end }}
+    {{- end }}
+  },
+  {
+    "slug": "grafana",
+    "name": "Grafana",
+    "description": "Resource monitoring",
+    "port": "",
+    {{- if .Values.grafana.ingress.enabled }}
+    {{- with (index .Values.grafana.ingress.hosts 0) }}
+    "link": "https://{{ . }}"
+    {{- end }}
+    {{- else }}
+    "link": "http://{{ $externalUrl }}:{{ .Values.grafana.service.nodePort }}"
+    {{- end }}
+  },
+  {
+    "slug": "nuclio",
+    "name": "Nuclio",
+    "description": "Serverless platform",
+    "port": "",
+    {{- if (index .Values "mlrun-ce" "nuclio" "dashboard" "ingress" "enabled") }}
+    {{- with (index .Values "mlrun-ce" "nuclio" "dashboard" "ingress" "hosts" 0) }}
+    "link": "https://{{ . }}"
+    {{- end }}
+    {{- else }}
+    "link": "http://{{ $externalUrl }}:{{ .Values.global.nuclio.dashboard.nodePort }}"
+    {{- end }}
+  },
+  {
+    "slug": "mlrun",
+    "name": "MLRun Dashboard",
+    "description": "ML Run platform UI and API for the MLOps processes",
+    "port": "",
+    {{- if (index .Values "mlrun-ce" "mlrun" "ui" "ingress" "enabled") }}
+    {{- with (index .Values "mlrun-ce" "mlrun" "ui" "ingress" "hosts" 0) }}
+    "link": "https://{{ .host }}"
+    {{- end }}
+    {{- else }}
+    {{- with (index .Subcharts "mlrun-ce") }}
+    "link": "http://{{ $externalUrl }}:{{ .Values.mlrun.ui.service.nodePort }}"
+    {{- end }}
+    {{- end }}
+  }
+]

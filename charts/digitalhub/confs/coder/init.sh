@@ -15,4 +15,3 @@ cp /home/coder/custom-template/{{ .name }}-main.tf /home/coder/{{ .name }}/main.
 coder templates create -d /home/coder/{{ .name }} {{ .name }} --variable namespace={{ $.Release.Namespace }},service_type={{ $.Values.global.service.type }},node_port={{ .nodePort }},image={{ .image }},external_url={{ default $.Values.global.externalHostAddress $.Subcharts.coder.Values.externalHostAddress }},https={{ include "coder.tlsEnabled" $.Subcharts.coder }}{{ if eq .name "jupyter"}},dhcore_endpoint=http://{{ include "core.fullname" $.Subcharts.core }}:{{ $.Subcharts.core.Values.service.port }}{{ end }} -y 
 coder template edit --icon "{{ .iconUrl }}" {{ .name }}
 {{- end }}
-coder create --template="dashboard" digitalhub-dashboard -y

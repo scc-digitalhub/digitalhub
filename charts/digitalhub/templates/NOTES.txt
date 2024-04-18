@@ -14,8 +14,9 @@
   kubectl --namespace {{ .Release.Namespace }} get pods
 {{ if (eq .Values.global.service.type "NodePort") }}
 Digitalhub componet URLs:
+  - Dashboard: http://{{ $externalUrl }}:{{ .Values.dashboard.service.httpNodePort }}
 {{- range .Values.coder.customCoderTemplates }}
-  - {{ .name | title }}: http://{{ $externalUrl }}:{{ .nodePort }} {{ if ne .name "dashboard" }}{{ printf "(Create %s workspace from template in the coder dashboard before use)" .name }}{{ end }}
+  - {{ .name | title }}: http://{{ $externalUrl }}:{{ .nodePort }} {{ printf "(Create %s workspace from template in the coder dashboard before use)" .name }}
 {{- end }}
   - Docker Registry: http://{{ $externalUrl }}:{{ index .Values "docker-registry" "service" "nodePort" }}
   - Nuclio: http://{{ $externalUrl }}:{{ index .Values "global" "nuclio" "dashboard" "nodePort" }}
