@@ -47,7 +47,7 @@ dependencies:
   repository: "https://grafana.github.io/helm-charts"
   condition: grafana.enabled
 - name: mlrun-ce
-  version: "0.6.3-dh-v0.3.4"
+  version: "0.6.3-dh-v0.3.5"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: mlrun-ce.enabled
 - name: mysql-operator
