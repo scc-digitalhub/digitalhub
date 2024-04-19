@@ -27,7 +27,7 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: custom-resource-manager
-  version: "0.1.8"
+  version: "0.1.9"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: custom-resource-manager.enabled
 - name: dremio-rest-server-operator
