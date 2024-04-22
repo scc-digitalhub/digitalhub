@@ -23,7 +23,7 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: coder.enabled
 - name: core
-  version: "0.1.11"
+  version: "0.1.12"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: custom-resource-manager
