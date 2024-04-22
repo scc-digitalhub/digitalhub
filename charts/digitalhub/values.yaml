@@ -235,6 +235,12 @@ core:
           name: "digitalhub-rabbitmq-default-user"
           usernameKey: "username"
           passwordKey: "password"
+    solr:
+      enabled: true
+      url: "http://dhcore-solrcloud-common"
+      collection:
+        name: "dhcore"
+        initialize: true
 
 custom-resource-manager:
   enabled: true
@@ -559,7 +565,9 @@ dashboard:
         key: ""
     config:
       issuer: ""
-
-sorl:
-  enabled: false
+solr-operator:
+  enabled: true
+  
+solr:
+  enabled: true
   replicas: 1
