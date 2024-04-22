@@ -15,7 +15,7 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
         - name: wait-solr
-          image: alpine
+          image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0
           command: ["/bin/sh", "-c"]
           args: 
             - until [ "$(curl -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/solr/admin/info/health")" -eq 200 ]; do echo "waiting for coder to be ready"; sleep 5; done
@@ -23,7 +23,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
       containers:
         - name: solr-init-job
-          image: alpine
+          image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0
           command: ["/bin/sh", "-c"]
           args: 
             - curl -s {{ .Values.solr.url }}/solr/admin/collections?action=CREATE&name={{ .Values.solr.collection.name }}&numShards=1&replicationFactor=1&maxShardsPerNode=1&collection.configName=_default
