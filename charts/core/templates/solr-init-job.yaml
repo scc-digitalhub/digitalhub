@@ -1,0 +1,40 @@
+{{- if .Values.solr.collection.initialize }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: solr-init-job
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: wait-solr
+          image: alpine
+          command: ["/bin/sh", "-c"]
+          args: 
+            - until [ "$(curl -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/solr/admin/info/health")" -eq 200 ]; do echo "waiting for coder to be ready"; sleep 5; done
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+      containers:
+        - name: solr-init-job
+          image: alpine
+          command: ["/bin/sh", "-c"]
+          args: 
+            - curl -s {{ .Values.solr.url }}/solr/admin/collections?action=CREATE&name={{ .Values.solr.collection.name }}&numShards=1&replicationFactor=1&maxShardsPerNode=1&collection.configName=_default
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+      restartPolicy: Never
+      volumes:
+        - name: init-files
+          configMap:
+            name: coder-init
+        - name: custom-template
+          configMap:
+            name: coder-custom-template
+{{- end }}

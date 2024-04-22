@@ -37,7 +37,7 @@ data:
 {{- if .Values.solr.enabled }}
   ENABLE_SOLR: {{ .Values.solr.enabled | quote }}
   SOLR_URL: {{ .Values.solr.url }}
-  SOLR_COLLECTION: {{ .Values.solr.collection }}
+  SOLR_COLLECTION: {{ .Values.solr.collection.name }}
 {{- end }}
 {{- if .Values.authentication.basic.enabled }}
   DH_AUTH_BASIC_USER: {{ .Values.authentication.basic.username }}
