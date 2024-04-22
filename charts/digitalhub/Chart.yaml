@@ -74,6 +74,8 @@ dependencies:
   version: "1.11.0"
   repository: "https://opensource.zalando.com/postgres-operator/charts/postgres-operator"
   condition: postgres-operator.enabled
+  tags:
+    - operator
 - name: postgrest-operator
   version: "0.1.2"
   repository: https://scc-digitalhub.github.io/digitalhub/
@@ -82,7 +84,21 @@ dependencies:
   version: "3.10.10"
   repository: https://charts.bitnami.com/bitnami
   condition: rabbitmq-cluster-operator.enabled
+  tags:
+    - operator
 - name: template-controller
   version: "0.2.5"
   repository: https://kluctl.github.io/charts
   condition: template-controller.enabled
+  tags:
+    - operator
+- name: solr-operator
+  version: "0.8.1"
+  repository: https://solr.apache.org/charts
+  condition: apache-solr.enabled
+  tags:
+    - operator
+- name: solr
+  version: "0.8.1"
+  repository: https://solr.apache.org/charts
+  condition: solr.enabled

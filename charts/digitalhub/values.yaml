@@ -559,3 +559,7 @@ dashboard:
         key: ""
     config:
       issuer: ""
+
+sorl:
+  enabled: false
+  replicas: 1
