@@ -176,8 +176,10 @@ events:
 solr:
   enabled: false
   url: ""
-  collection: ""
-
+  collection:
+    name: ""
+    initialize: true
+    
 oidc:
   enabled: false
   audience:
