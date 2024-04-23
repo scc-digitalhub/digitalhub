@@ -7,7 +7,7 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.4.0-beta6"
+version: "0.4.0-beta7"
 appVersion: "0.4.0"
 dependencies:
 - name: apigw-operator
@@ -23,7 +23,7 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: coder.enabled
 - name: core
-  version: "0.1.13"
+  version: "0.1.14"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: custom-resource-manager
