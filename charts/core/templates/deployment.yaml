@@ -30,6 +30,16 @@ spec:
       serviceAccountName: {{ include "core.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.solr.enabled }}
+      initContainers:
+        - name: wait-solr
+          image: {{ .Values.solr.collection.initialize.image }}
+          command: ["/bin/sh", "-c"]
+          args: 
+            - until [ "$(curl -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/solr/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
