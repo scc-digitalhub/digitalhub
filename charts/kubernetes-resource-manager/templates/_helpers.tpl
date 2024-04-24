@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "custom-resource-manager.name" -}}
+{{- define "kubernetes-resource-manager.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "custom-resource-manager.fullname" -}}
+{{- define "kubernetes-resource-manager.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "custom-resource-manager.chart" -}}
+{{- define "kubernetes-resource-manager.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "custom-resource-manager.labels" -}}
-helm.sh/chart: {{ include "custom-resource-manager.chart" . }}
-{{ include "custom-resource-manager.selectorLabels" . }}
+{{- define "kubernetes-resource-manager.labels" -}}
+helm.sh/chart: {{ include "kubernetes-resource-manager.chart" . }}
+{{ include "kubernetes-resource-manager.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "custom-resource-manager.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "custom-resource-manager.name" . }}
+{{- define "kubernetes-resource-manager.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "kubernetes-resource-manager.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "custom-resource-manager.serviceAccountName" -}}
+{{- define "kubernetes-resource-manager.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "custom-resource-manager.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "kubernetes-resource-manager.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -64,7 +64,7 @@ Create the name of the service account to use
 {{/*
 Create TLS enabled.
 */}}
-{{- define "custom-resource-manager.tlsEnabled" -}}
+{{- define "kubernetes-resource-manager.tlsEnabled" -}}
 {{- if .Values.ingress.tls -}}
 true
 {{- else -}}
@@ -75,10 +75,10 @@ false
 {{/*
 Create default access URL
 */}}
-{{- define "custom-resource-manager.defaultAccessURL" }}
+{{- define "kubernetes-resource-manager.defaultAccessURL" }}
   {{- $proto := "" -}}
   {{- $port := "" -}}
-  {{- if eq (include "custom-resource-manager.tlsEnabled" .) "true" -}}
+  {{- if eq (include "kubernetes-resource-manager.tlsEnabled" .) "true" -}}
     {{- $proto = "https" -}}
       {{- if eq .Values.service.type "NodePort" -}}
         {{- $port = .Values.service.nodePort -}}
@@ -94,11 +94,11 @@ Create default access URL
   {{- else if .Values.ingress.hosts -}}
     {{ printf "%s://%s" $proto (index .Values.ingress.hosts 0 ).host }}
   {{- else -}}
-    {{ $proto }}://{{ include "custom-resource-manager.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+    {{ $proto }}://{{ include "kubernetes-resource-manager.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
   {{- end }}
 {{- end }}
 
-{{- define "custom-resource-manager.allowedCrd" -}}
+{{- define "kubernetes-resource-manager.allowedCrd" -}}
 {{- range $i, $apiGroup := .Values.rbac.roles }}
 {{- range $j, $res := $apiGroup.resources }}
 {{- if $apiGroup.crd }}
@@ -113,7 +113,7 @@ Create default access URL
 {{/*
 Namespace function
 */}}
-{{- define "custom-resource-manager.namespaceCheck" -}}
+{{- define "kubernetes-resource-manager.namespaceCheck" -}}
 {{- if .Values.rbac.namespaced }}
 {{- if .Values.namespaceValues.namespace }}
 {{- .Values.namespaceValues.namespace }}
