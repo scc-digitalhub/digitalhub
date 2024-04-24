@@ -38,8 +38,6 @@ jobs:
           helm repo add docker-registry https://helm.twun.io
           helm repo add grafana https://grafana.github.io/helm-charts
           helm repo add postgres-operator https://opensource.zalando.com/postgres-operator/charts/postgres-operator
-          helm repo add opensearch https://opensearch-project.github.io/helm-charts/
-          helm repo add openmetadata https://helm.open-metadata.org
           helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
           #temp remove after merging mlrun-ce
           helm repo add stable https://charts.helm.sh/stable
