@@ -43,6 +43,9 @@ rules:
   - apiGroups: ["mysql.oracle.com"]
     resources: ["*"]
     verbs: ["get", "list", "watch", "delete"]
+  - apiGroups: ["solr.apache.org"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch", "delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -62,6 +65,34 @@ subjects:
   - name: delete-resources
     namespace: {{ .Release.Namespace }}
     kind: ServiceAccount
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: delete-solr
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
+    "helm.sh/hook-weight": "-1"
+  labels:
+    {{- include "digitalhub.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      name: delete-solr
+      labels:
+        {{- include "digitalhub.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: delete-resources
+      containers:
+        - name: delete-solr
+          image: "bitnami/kubectl:latest"
+          command: ["/bin/sh"]
+          args: ["-c", "kubectl -n {{ .Release.Namespace }} delete solrclouds --all && sleep 2m"]
+          securityContext:
+            {{- toYaml .Values.global.securityContext | nindent 12}}
+            readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
+      restartPolicy: OnFailure
 ---
 apiVersion: batch/v1
 kind: Job

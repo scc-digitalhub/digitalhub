@@ -7,7 +7,7 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.4.0-beta9"
+version: "0.4.0-beta10"
 appVersion: "0.4.0"
 dependencies:
 - name: apigw-operator
@@ -22,10 +22,10 @@ dependencies:
   version: "0.1.15"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
-# - name: kubernetes-resource-manager
-#   version: "0.1.9"
-#   repository: https://scc-digitalhub.github.io/digitalhub/
-#   condition: kubernetes-resource-manager.enabled
+- name: kubernetes-resource-manager
+  version: "0.1.10"
+  repository: https://scc-digitalhub.github.io/digitalhub/
+  condition: kubernetes-resource-manager.enabled
 - name: dremio-rest-server-operator
   version: "0.1.3"
   repository: https://scc-digitalhub.github.io/digitalhub/
