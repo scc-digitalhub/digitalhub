@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "custom-resource-manager.fullname" . }}
+  name: {{ include "kubernetes-resource-manager.fullname" . }}
   labels:
-    {{- include "custom-resource-manager.labels" . | nindent 4 }}
+    {{- include "kubernetes-resource-manager.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -15,4 +15,4 @@ spec:
       {{ printf "%s: %s" "nodePort" (.Values.service.nodePort) }}
       {{- end }}
   selector:
-    {{- include "custom-resource-manager.selectorLabels" . | nindent 4 }}
+    {{- include "kubernetes-resource-manager.selectorLabels" . | nindent 4 }}

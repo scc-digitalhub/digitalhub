@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "custom-resource-manager.fullname" . }}
+  name: {{ include "kubernetes-resource-manager.fullname" . }}
   labels:
-    {{- include "custom-resource-manager.labels" . | nindent 4 }}
+    {{- include "kubernetes-resource-manager.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "custom-resource-manager.selectorLabels" . | nindent 6 }}
+      {{- include "kubernetes-resource-manager.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "custom-resource-manager.selectorLabels" . | nindent 8 }}
+        {{- include "kubernetes-resource-manager.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "custom-resource-manager.serviceAccountName" . }}
+      serviceAccountName: {{ include "kubernetes-resource-manager.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -59,7 +59,7 @@ spec:
           {{- end }}
           envFrom:
           - configMapRef:
-              name: {{ include "custom-resource-manager.fullname" . }}
+              name: {{ include "kubernetes-resource-manager.fullname" . }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

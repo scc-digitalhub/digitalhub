@@ -1,0 +1,46 @@
+{{- $clusterRoleName := include "kubernetes-resource-manager.fullname" . }}
+{{- if .Values.rbac.clusterRole.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ $clusterRoleName }}
+  labels:
+    {{- include "kubernetes-resource-manager.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - "apiextensions.k8s.io"
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - list
+  - get
+- apiGroups: 
+  - "storage.k8s.io"
+  resources:
+  - storageclasses
+  verbs:
+  - list
+{{ if not .Values.rbac.namespaced }}
+{{- range .Values.rbac.roles }}
+- apiGroups: {{ if .apiGroups }}[{{ .apiGroups }}]{{ else }}[""]{{ end }}
+  resources: {{ join "," .resources | list }}
+  verbs: {{ join "," .verbs | list }}
+{{- end }}
+{{- end }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ $clusterRoleName }}
+  labels:
+    {{- include "kubernetes-resource-manager.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ $clusterRoleName }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "kubernetes-resource-manager.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
+---
+{{- end }}

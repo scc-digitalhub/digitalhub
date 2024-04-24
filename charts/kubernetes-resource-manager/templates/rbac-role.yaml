@@ -1,6 +1,5 @@
 {{ if .Values.rbac.namespaced }}
-{{- $roleCrd := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "crd") -}}
-{{- $roleCr := (printf "%s-%s" (include "custom-resource-manager.fullname" .) "cr") -}}
+{{- $roleCr := (printf "%s-%s" (include "kubernetes-resource-manager.fullname" .) "cr") -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -16,7 +15,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   labels:
-    {{- include "custom-resource-manager.labels" . | nindent 4 }}
+    {{- include "kubernetes-resource-manager.labels" . | nindent 4 }}
   name: {{ $roleCr }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -24,6 +23,6 @@ roleRef:
   name: {{ $roleCr }}
 subjects:
 - kind: ServiceAccount
-  name: {{ include "custom-resource-manager.serviceAccountName" . }}
+  name: {{ include "kubernetes-resource-manager.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 {{ end }}

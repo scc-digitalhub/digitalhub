@@ -370,7 +370,7 @@ ext-postgres-operator:
       secretName: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do" 
       secretKey: "password"
 
-custom-resource-manager:
+kubernetes-resource-manager:
   enabled: true
   ingress:
     enabled: true

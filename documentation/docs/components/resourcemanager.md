@@ -10,7 +10,7 @@
 
 It consists in a back-end, written in *Java*, which connects to the Kubernetes API to perform actions on resources, and a front-end, written in *React* and based on [React-admin](https://marmelab.com/react-admin/).
 
-Instructions on how to install and start an instance can be found on the [repository](https://github.com/scc-digitalhub/custom-resource-manager).
+Instructions on how to install and start an instance can be found on the [repository](https://github.com/scc-digitalhub/kubernetes-resource-manager).
 
 ## Services, Deployments
 
