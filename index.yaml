@@ -6901,6 +6901,21 @@ entries:
   kubernetes-resource-manager:
   - apiVersion: v2
     appVersion: 1.1.6
+    created: "2024-04-24T09:30:03.59874534Z"
+    description: A Helm chart for Kubernetes
+    digest: 264bde0e446d2680d144d60c437a590656b143ded668b26097c692946549e7f6
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: kubernetes-resource-manager
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/kubernetes-resource-manager-0.1.11/kubernetes-resource-manager-0.1.11.tgz
+    version: 0.1.11
+  - apiVersion: v2
+    appVersion: 1.1.6
     created: "2024-04-24T09:21:54.745476367Z"
     description: A Helm chart for Kubernetes
     digest: ea4619a7f15d8c728945bf55b0b91be4c0e82645b6ce0a49bbc0e84229af7b68
@@ -7803,4 +7818,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-24T09:21:54.745854052Z"
+generated: "2024-04-24T09:30:03.599074001Z"
