@@ -1,3 +1,4 @@
+{{- if ( index .Values "template-controller" "enabled" ) }}
 apiVersion: templates.kluctl.io/v1alpha1
 kind: ObjectTemplate
 metadata:
@@ -29,3 +30,4 @@ spec:
         POSTGRES_PASSWORD: "{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}"
         AWS_ACCESS_KEY_ID: "{{ "{{" }} matrix.miniosecret.data.rootUser | b64decode {{ "}}" }}"
         AWS_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.miniosecret.data.rootPassword | b64decode {{ "}}" }}"
+{{- end }}
