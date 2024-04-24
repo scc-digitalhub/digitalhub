@@ -356,9 +356,9 @@ oauth2-proxy:
 dashboard:
   replicaCount: 1
   image:
-    repository: smartcommunitylab/digitalhub-dashboard
+    repository: ghcr.io/scc-digitalhub/dh-dashboard
     pullPolicy: IfNotPresent
-    tag: "nonroot"
+    tag: "0.1.0"
   imagePullSecrets: []
   nameOverride: ""
   fullnameOverride: ""
