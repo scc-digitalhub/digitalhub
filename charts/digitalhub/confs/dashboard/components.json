@@ -39,8 +39,8 @@
   },
 {{- range (index .Values "oauth2-proxy" "apps") }}
   {
-    "slug": {{ .name }},
-    "name": {{ .name | title }},
+    "slug": {{ .name | quote }},
+    "name": {{ .name | title | quote }},
     {{- if eq .name "nuclio"}}
     "description": "Serverless platform",
     {{- else if eq .name "mlrun" }}
