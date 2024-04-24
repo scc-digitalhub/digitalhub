@@ -35,7 +35,8 @@ podSecurityContext:
 
 rbac:
   namespaced: true
-  clusterRole: true
+  clusterRole:
+    create: true
   roles:
     - apiGroups: "db.movetokube.com"
       crd: true
