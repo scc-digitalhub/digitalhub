@@ -7,7 +7,7 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.4.0-beta8"
+version: "0.4.0-beta9"
 appVersion: "0.4.0"
 dependencies:
 - name: apigw-operator
@@ -42,6 +42,10 @@ dependencies:
   version: "7.0.3"
   repository: "https://grafana.github.io/helm-charts"
   condition: grafana.enabled
+- name: minio
+  repository: "https://charts.min.io/"
+  version: "5.1.0"
+  condition: minio.enabled
 - name: mlrun-ce
   version: "0.6.3-dh-v0.3.5"
   repository: https://scc-digitalhub.github.io/digitalhub/
