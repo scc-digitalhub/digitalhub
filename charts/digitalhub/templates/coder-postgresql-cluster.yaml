@@ -17,5 +17,6 @@ spec:
     coder: coder
   postgresql:
     version: "15"
+  resources:
   {{- toYaml ( index .Values "postgres-operator" "databases" "coder" "resources" ) | nindent 4 }}
 {{- end }}
