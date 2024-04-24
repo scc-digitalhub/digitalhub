@@ -182,7 +182,7 @@ solr:
       enabled: true
       image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
 
-    
+
 oidc:
   enabled: false
   audience:
