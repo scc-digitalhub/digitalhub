@@ -155,16 +155,40 @@ coder:
 
 postgres-operator:
   enabled: true
-  digitalhubDatabase:
-    volume:
-      size: 256Gi
-    resources:
-      requests:
-        cpu: 1000m
-        memory: 1000Mi
-      limits:
-        cpu: "4"
-        memory: 8Gi
+  databases:
+    digitalhub:
+      enabled: true
+      volume:
+        size: 8Gi
+      resources:
+        requests:
+          cpu: 512m
+          memory: 1000Mi
+        limits:
+          cpu: "2"
+          memory: 2Gi
+    core:
+      enabled: true
+      volume:
+        size: 8Gi
+      resources:
+        requests:
+          cpu: 512m
+          memory: 1000Mi
+        limits:
+          cpu: "2"
+          memory: 2Gi
+    coder:
+      enabled: true
+      volume:
+        size: 8Gi
+      resources:
+        requests:
+          cpu: 512m
+          memory: 1000Mi
+        limits:
+          cpu: "2"
+          memory: 2Gi
 
 ext-postgres-operator:
   enabled: true
