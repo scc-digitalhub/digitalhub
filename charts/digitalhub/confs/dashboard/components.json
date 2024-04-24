@@ -29,12 +29,12 @@
     "name": "Kubernetes Resource Manager",
     "description": "Manager for Kubernetes Resources",
     "port": "",
-    {{- if (index .Values "custom-resource-manager" "ingress" "enabled") }}
-    {{- with (index .Values "custom-resource-manager" "ingress" "hosts" 0) }}
+    {{- if (index .Values "kubernetes-resource-manager" "ingress" "enabled") }}
+    {{- with (index .Values "kubernetes-resource-manager" "ingress" "hosts" 0) }}
     "link": "https://{{ .host }}"
     {{- end }}
     {{- else }}
-    "link": "http://{{ $externalUrl }}:{{ index .Values "custom-resource-manager" "service" "nodePort"}}"
+    "link": "http://{{ $externalUrl }}:{{ index .Values "kubernetes-resource-manager" "service" "nodePort"}}"
     {{- end }}
   },
   {

@@ -30,5 +30,5 @@ Digitalhub componet URLs:
   - Coder: http://{{ $externalUrl }}:{{ .Values.coder.coder.service.httpNodePort }} (Username: {{ .Values.coder.email }} Password: {{ .Values.coder.password }})
   - Core: http://{{ $externalUrl }}:{{ .Values.core.service.httpNodePort }}
   - Grafana: http://{{ $externalUrl }}:{{ .Values.grafana.service.nodePort }}
-  - Custom Resource Manager: http://{{ $externalUrl }}:{{ index .Values "custom-resource-manager" "service" "nodePort" }}
+  - Kubernetes Resource Manager: http://{{ $externalUrl }}:{{ index .Values "kubernetes-resource-manager" "service" "nodePort" }}
 {{ end }}
