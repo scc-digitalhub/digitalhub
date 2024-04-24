@@ -550,6 +550,94 @@ entries:
     version: 0.4.0-beta9
   - apiVersion: v2
     appVersion: 0.4.0
+    created: "2024-04-24T09:21:54.547113196Z"
+    dependencies:
+    - condition: apigw-operator.enabled
+      name: apigw-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.4
+    - condition: coder.enabled
+      name: coder
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.0
+    - condition: core.enabled
+      name: core
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.15
+    - condition: dremio-rest-server-operator.enabled
+      name: dremio-rest-server-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.3
+    - condition: docker-registry.enabled
+      name: docker-registry
+      repository: https://helm.twun.io
+      version: 2.2.2
+    - condition: ext-postgres-operator.enabled
+      name: ext-postgres-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 1.2.4
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 7.0.3
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.min.io/
+      version: 5.1.0
+    - condition: mlrun-ce.enabled
+      name: mlrun-ce
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.6.3-dh-v0.3.5
+    - condition: mysql-operator.enabled
+      name: mysql-operator
+      repository: https://mysql.github.io/mysql-operator/
+      version: 2.1.2
+    - condition: nakamasato-mysql-operator.enabled
+      name: nakamasato-mysql-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: v0.3.3
+    - condition: postgres-operator.enabled
+      name: postgres-operator
+      repository: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+      tags:
+      - operator
+      version: 1.11.0
+    - condition: postgrest-operator.enabled
+      name: postgrest-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.2
+    - condition: template-controller.enabled
+      name: template-controller
+      repository: https://kluctl.github.io/charts
+      tags:
+      - operator
+      version: 0.2.5
+    - condition: solr-operator.enabled
+      name: solr-operator
+      repository: https://solr.apache.org/charts
+      tags:
+      - operator
+      version: 0.8.1
+    - condition: solr.enabled
+      name: solr
+      repository: https://solr.apache.org/charts
+      version: 0.8.1
+    description: The Digital Hub is an open-source platform for interoperability of
+      data and services, built by integrating several open-source projects to manage,
+      elaborate, expose and serve data through modern standards.
+    digest: 204a2819dc94af58d2be1dcb9e8d54937cc300c501c36b7f5a5244643b95f420
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: digitalhub
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-0.4.0-beta9/digitalhub-0.4.0-beta9.tgz
+    version: 0.4.0-beta9
+  - apiVersion: v2
+    appVersion: 0.4.0
     created: "2024-04-23T11:59:47.06609856Z"
     dependencies:
     - condition: apigw-operator.enabled
@@ -6810,6 +6898,22 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/ext-postgres-operator-1.2.4/ext-postgres-operator-1.2.4.tgz
     version: 1.2.4
+  kubernetes-resource-manager:
+  - apiVersion: v2
+    appVersion: 1.1.6
+    created: "2024-04-24T09:21:54.745476367Z"
+    description: A Helm chart for Kubernetes
+    digest: ea4619a7f15d8c728945bf55b0b91be4c0e82645b6ce0a49bbc0e84229af7b68
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: kubernetes-resource-manager
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/kubernetes-resource-manager-0.1.10/kubernetes-resource-manager-0.1.10.tgz
+    version: 0.1.10
   mlrun:
   - apiVersion: v1
     appVersion: 1.5.2
@@ -7699,4 +7803,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-24T09:03:30.451003298Z"
+generated: "2024-04-24T09:21:54.745854052Z"
