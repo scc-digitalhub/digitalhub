@@ -329,6 +329,8 @@ mysql-operator:
 
 template-controller:
   enabled: true
+  objectTemplate:
+    enabled: true
 
 oauth2-proxy:
   enabled: false

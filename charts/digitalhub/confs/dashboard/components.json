@@ -42,14 +42,12 @@
     "name": "Minio",
     "description": "S3-compatible datalake",
     "port": "",
-    {{- if (index .Values "mlrun-ce" "minio" "consoleIngress" "enabled") }}
-    {{- with (index .Values "mlrun-ce" "minio" "consoleIngress" "hosts" 0) }}
+    {{- if (index .Values "minio" "consoleIngress" "enabled") }}
+    {{- with (index .Values "minio" "consoleIngress" "hosts" 0) }}
     "link": "https://{{ . }}"
     {{- end }}
     {{- else }}
-    {{- with (index .Subcharts "mlrun-ce") }}
     "link": "http://{{ $externalUrl }}:{{ .Values.minio.consoleService.nodePort }}"
-    {{- end }}
     {{- end }}
   },
   {
