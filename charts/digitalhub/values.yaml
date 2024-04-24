@@ -71,7 +71,7 @@ mlrun-ce:
   jupyterNotebook:
     enabled: false
   minio:
-    enabled: true
+    enabled: false
     rootUser: minio
     rootPassword: minio123
     mode: standalone
@@ -398,7 +398,35 @@ solr-operator:
   zookeeper-operator:
     crd:
       create: true
-  
+
 solr:
   enabled: true
   replicas: 1
+
+minio:
+  enabled: true
+  rootUser: minio
+  rootPassword: minio123
+  mode: standalone
+  replicas: 1
+  ingress:
+    enabled: false
+  persistence:
+    enabled: true
+    size: 128Gi
+  buckets:
+    - name: datalake
+      policy: none
+      purge: false
+  resources:
+    requests:
+      memory: 0.5Gi
+  service:
+    type: NodePort
+    port: 9000
+    nodePort: 30080
+  consoleService:
+    type: NodePort
+    port: 9001
+    nodePort: 30090
+  fullnameOverride: minio
