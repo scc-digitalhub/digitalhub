@@ -20,6 +20,9 @@ global:
   nuclio:
     dashboard:
       nodePort: 30050
+  minio:
+    rootUser: &minioRootUser minio
+    rootPassword: &minioRootPassword minio123
   externalHostAddress: &globalExternalUrl "192.168.49.2"
   securityContext:
     runAsNonRoot: true
@@ -72,8 +75,8 @@ mlrun-ce:
     enabled: false
   minio:
     enabled: false
-    rootUser: minio
-    rootPassword: minio123
+    rootUser: *minioRootUser
+    rootPassword: *minioRootPassword
     mode: standalone
     replicas: 1
     ingress:
@@ -101,8 +104,8 @@ mlrun-ce:
         enabled: false
     minio:
       enabled: true
-      accessKey: "minio"
-      secretKey: "minio123"
+      accessKey: *minioRootUser
+      secretKey: *minioRootPassword
       endpoint: "minio"
       endpointPort: "9000"
       bucket: "datalake"
@@ -429,8 +432,8 @@ solr:
 
 minio:
   enabled: true
-  rootUser: minio
-  rootPassword: minio123
+  rootUser: *minioRootUser
+  rootPassword: *minioRootPassword
   mode: standalone
   replicas: 1
   ingress:
@@ -446,11 +449,11 @@ minio:
     requests:
       memory: 0.5Gi
   service:
-    type: NodePort
+    type: *serviceType
     port: 9000
     nodePort: 30080
   consoleService:
-    type: NodePort
+    type: *serviceType
     port: 9001
     nodePort: 30090
   fullnameOverride: minio
