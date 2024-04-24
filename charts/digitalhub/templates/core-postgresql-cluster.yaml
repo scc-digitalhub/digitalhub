@@ -1,3 +1,4 @@
+{{- if and .Values.core.enabled ( index .Values "postgres-operator" "databases" "core" "enabled" ) }}
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
@@ -5,7 +6,7 @@ metadata:
 spec:
   teamId: "core"
   volume:
-    size: 8Gi
+    size: {{ index .Values "postgres-operator" "databases" "core" "volume" "size" }}
   numberOfInstances: 1
   users:
     coreadmin:  # database owner
@@ -16,3 +17,6 @@ spec:
     core: coreuser
   postgresql:
     version: "15"
+  resources:
+  {{- toYaml ( index .Values "postgres-operator" "databases" "core" "resources" ) | nindent 4 }}
+{{- end }}

@@ -1,4 +1,4 @@
-{{- if .Values.coder.enabled }}
+{{- if and .Values.coder.enabled ( index .Values "postgres-operator" "databases" "coder" "enabled" ) }}
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
@@ -6,7 +6,7 @@ metadata:
 spec:
   teamId: "coder"
   volume:
-    size: 8Gi
+    size: {{ index .Values "postgres-operator" "databases" "coder" "volume" "size" }}
   numberOfInstances: 1
   users:
     coderadmin:
@@ -17,4 +17,5 @@ spec:
     coder: coder
   postgresql:
     version: "15"
+  {{- toYaml ( index .Values "postgres-operator" "databases" "coder" "resources" ) | nindent 4 }}
 {{- end }}

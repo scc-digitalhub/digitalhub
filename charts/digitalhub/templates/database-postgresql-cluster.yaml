@@ -1,3 +1,4 @@
+{{- if ( index .Values "postgres-operator" "databases" "digitalhub" "enabled" ) }}
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
@@ -5,7 +6,7 @@ metadata:
 spec:
   teamId: "digitalhub"
   volume:
-    size: {{ index .Values "postgres-operator" "digitalhubDatabase" "volume" "size" }}
+    size: {{ index .Values "postgres-operator" "databases" "digitalhub" "volume" "size" }}
   numberOfInstances: 1
   users:
     digitalhubadmin:
@@ -20,4 +21,5 @@ spec:
         public:
           defaultUsers: true
   resources:
-  {{- toYaml ( index .Values "postgres-operator" "digitalhubDatabase" "resources" ) | nindent 4 }}
+  {{- toYaml ( index .Values "postgres-operator" "databases" "digitalhub" "resources" ) | nindent 4 }}
+{{- end }}

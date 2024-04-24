@@ -1,3 +1,4 @@
+{{- if (index .Values "template-controller" "enabled") }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -24,3 +25,4 @@ subjects:
   - kind: ServiceAccount
     name: secret-transformer
     namespace: {{ .Release.Namespace }}
+{{- end }}
