@@ -17,7 +17,7 @@ spec:
           image: {{ .Values.solr.collection.initialize.image }}
           command: ["/bin/sh", "-c"]
           args: 
-            - until [ "$(curl -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/solr/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
+            - until [ "$(curl -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
       containers:
@@ -25,7 +25,7 @@ spec:
           image: {{ .Values.solr.collection.initialize.image }}
           command: ["/bin/sh", "-c"]
           args: 
-            - curl -s "{{ .Values.solr.url }}/solr/admin/collections?action=CREATE&name={{ .Values.solr.collection.name }}&numShards=1&replicationFactor=1&maxShardsPerNode=1&collection.configName=_default"
+            - curl -s "{{ .Values.solr.url }}/admin/collections?action=CREATE&name={{ .Values.solr.collection.name }}&numShards=1&replicationFactor=1&maxShardsPerNode=1&collection.configName=_default"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
       restartPolicy: Never
