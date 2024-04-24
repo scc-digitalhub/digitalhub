@@ -1,8 +1,8 @@
-{{- if ( index .Values "template-controller" "enabled" ) }}
+{{- if ( index .Values "template-controller" "objectTemplate" "enabled" ) }}
 apiVersion: templates.kluctl.io/v1alpha1
 kind: ObjectTemplate
 metadata:
-  name: digitalhub-common-creds-transformer
+  name: {{ include "digitalhub.fullname" . }}-common-creds-transformer
 spec:
   serviceAccountName: secret-transformer
   prune: true
