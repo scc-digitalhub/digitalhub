@@ -146,3 +146,8 @@ postgresOperator:
   installed: true
 
 bootstrap: []
+
+secrets:
+  annotations: {}
+  reflector:
+    enabled: false
