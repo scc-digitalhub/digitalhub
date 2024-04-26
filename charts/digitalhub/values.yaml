@@ -122,8 +122,8 @@ mlrun-ce:
   kube-prometheus-stack:
     enabled: false
   mpi-operator:
-      crd:
-        create: *globalCrd
+    crd:
+      create: *globalCrd
 
 coder:
   enabled: true
