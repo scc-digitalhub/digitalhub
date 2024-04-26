@@ -1,11 +1,15 @@
 global:
   cleanup:
-    persistentVolumeClaims: false
+    deployments: false
+    statefulsets: false
     ingress: false
     pods: false
     jobs: false
+    persistentVolumeClaims: false
   service:
     type: &serviceType "NodePort"
+  crd:
+    enabled: &globalCrd true
   registry:
     url: 192.168.49.2:30150
     username: ""
@@ -53,6 +57,8 @@ docker-registry:
 mlrun-ce:
   enabled: true
   nuclio:
+    crd:
+      create: *globalCrd
     dashboard:
       kaniko:
         insecurePushRegistry: true
@@ -90,6 +96,10 @@ mlrun-ce:
         purge: false
   pipelines:
     enabled: true
+    crd:
+      create: *globalCrd
+    priority_class:
+      enabled: true
     name: pipelines
     persistence:
       enabled: true
@@ -111,6 +121,9 @@ mlrun-ce:
       bucket: "datalake"
   kube-prometheus-stack:
     enabled: false
+  mpi-operator:
+      crd:
+        create: *globalCrd
 
 coder:
   enabled: true
