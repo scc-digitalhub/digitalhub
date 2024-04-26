@@ -7,7 +7,7 @@ metadata:
   annotations:
     "helm.sh/hook": pre-delete,post-delete
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
-    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-weight": "-2"
   labels:
     {{- include "digitalhub.labels" . | nindent 4 }}
 ---
@@ -18,7 +18,7 @@ metadata:
   annotations:
     "helm.sh/hook": pre-delete,post-delete
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
-    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-weight": "-2"
   labels:
     {{- include "digitalhub.labels" . | nindent 4 }}
 rules:
@@ -54,7 +54,7 @@ metadata:
   annotations:
     "helm.sh/hook": pre-delete,post-delete
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
-    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-weight": "-2"
   labels:
     {{- include "digitalhub.labels" .  | nindent 4}}
 roleRef:
@@ -208,16 +208,13 @@ spec:
             readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
       restartPolicy: OnFailure
 ---
-{{- if or .Values.global.cleanup.ingress .Values.global.cleanup.persistentVolumeClaim -}}
 {{- $resource := list -}}
-{{- if and .Values.global.cleanup.ingress .Values.global.cleanup.persistentVolumeClaim -}}
-{{- $resource = append $resource "pvc" -}}
-{{- $resource = append $resource "ingresses" -}}
-{{- else if  .Values.global.cleanup.ingress -}}
-{{- $resource = append $resource "ingresses" -}}
-{{- else -}}
-{{- $resource = append $resource "pvc" -}}
-{{- end -}}
+{{- range $k, $v := .Values.global.cleanup }}
+{{- if $v }}
+{{- $resource = append $resource $k -}}
+{{- end }}
+{{- end }}
+{{- if gt (len $resource) 0 -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
