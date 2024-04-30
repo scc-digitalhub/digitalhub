@@ -277,7 +277,7 @@ core:
           passwordKey: "password"
     solr:
       enabled: true
-      url: "http://dhcore-solrcloud-common"
+      url: "http://digitalhub-solrcloud-common/solr"
       collection:
         name: "dhcore"
         initialize:
@@ -444,6 +444,7 @@ solr-operator:
 solr:
   enabled: true
   replicas: 1
+  nameOverride: digitalhub
 
 minio:
   enabled: true
