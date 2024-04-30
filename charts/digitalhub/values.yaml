@@ -475,6 +475,7 @@ minio:
   fullnameOverride: minio
 
 minio-operator:
+  enabled: true
   minio:
     service:
       name: minio
