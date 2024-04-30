@@ -7798,6 +7798,23 @@ entries:
   digitalhub-crds:
   - apiVersion: v2
     appVersion: 0.3.0
+    created: "2024-04-30T15:23:56.005026693Z"
+    description: This Helm Chart is a collection of all digitalhub CRDs, this chart
+      is used in the scenario where the user installing digitalhub does not have permissions
+      to create CRDs.
+    digest: df4dea6a15cfcb3961e78658eee6057a08727a02f732a0c19ea32107177defa8
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: digitalhub-crds
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-crds-0.1.1/digitalhub-crds-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.3.0
     created: "2024-03-26T17:42:26.689567714Z"
     description: This Helm Chart is a collection of all digitalhub CRDs, this chart
       is used in the scenario where the user installing digitalhub does not have permissions
@@ -7866,6 +7883,21 @@ entries:
   kubernetes-resource-manager:
   - apiVersion: v2
     appVersion: 1.1.6
+    created: "2024-04-30T15:23:56.139875334Z"
+    description: A Helm chart for Kubernetes
+    digest: 49a19bb48b5737d981017cf3d8104514168031f963cbde7ec22d0b2d9b758ea2
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: kubernetes-resource-manager
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/kubernetes-resource-manager-0.1.12/kubernetes-resource-manager-0.1.12.tgz
+    version: 0.1.12
+  - apiVersion: v2
+    appVersion: 1.1.6
     created: "2024-04-24T09:30:03.59874534Z"
     description: A Helm chart for Kubernetes
     digest: 264bde0e446d2680d144d60c437a590656b143ded668b26097c692946549e7f6
@@ -7894,6 +7926,23 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/kubernetes-resource-manager-0.1.10/kubernetes-resource-manager-0.1.10.tgz
     version: 0.1.10
+  minio-operator:
+  - apiVersion: v2
+    appVersion: 1.0.1
+    created: "2024-04-30T15:23:56.254180299Z"
+    description: A Kubernetes operator to handle instances of buckets, users and policies
+      on MinIO.
+    digest: 5b9237ea96db258078e736a414f71d7bc6a7a7bc86f02866ffaed819384a8d28
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: minio-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/minio-operator-0.1.0/minio-operator-0.1.0.tgz
+    version: 0.1.0
   mlrun:
   - apiVersion: v1
     appVersion: 1.5.2
@@ -8783,4 +8832,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-30T10:00:26.172703696Z"
+generated: "2024-04-30T15:23:56.254537486Z"
