@@ -50,14 +50,6 @@ dependencies:
   version: "0.6.3-dh-v0.3.5"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: mlrun-ce.enabled
-- name: mysql-operator
-  version: "2.1.2"
-  repository: https://mysql.github.io/mysql-operator/
-  condition: mysql-operator.enabled
-- name: nakamasato-mysql-operator
-  version: "v0.3.3"
-  repository: https://scc-digitalhub.github.io/digitalhub/
-  condition: nakamasato-mysql-operator.enabled
 - name: postgres-operator
   version: "1.11.0"
   repository: "https://opensource.zalando.com/postgres-operator/charts/postgres-operator"
