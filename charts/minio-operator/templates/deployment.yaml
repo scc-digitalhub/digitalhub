@@ -1,0 +1,120 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "minio-operator.fullname" . }}
+  labels:
+    {{- include "minio-operator.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "minio-operator.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "minio-operator.labels" . | nindent 8 }}
+	{{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "minio-operator.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: {{ .Values.deployment.kubeRbacProxy.name }}
+          args:
+            {{- toYaml .Values.deployment.kubeRbacProxy.args | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.deployment.kubeRbacProxy.securityContext | nindent 12 }}
+          image: "{{ .Values.deployment.kubeRbacProxy.image.repository }}:{{ .Values.deployment.kubeRbacProxy.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: https
+              containerPort: {{ .Values.deployment.kubeRbacProxy.ports.containerPort }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.deployment.kubeRbacProxy.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        - name: {{ .Values.deployment.manager.name }}
+          args:
+            {{- toYaml .Values.deployment.manager.args | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.deployment.manager.securityContext | nindent 12 }}
+          image: "{{ .Values.deployment.manager.image.repository }}:{{ .Values.deployment.manager.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            {{- toYaml .Values.deployment.manager.command | nindent 12 }}
+          resources:
+            {{- toYaml .Values.deployment.manager.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          env:
+            - name: WATCH_NAMESPACE
+              value: {{ include "minio-operator.namespaceCheck" . | quote }}
+            - name: MINIO_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                {{- if .Values.minio.minioCredsExistingSecret.username.secretName }}
+                  name: {{ .Values.minio.minioCredsExistingSecret.username.secretName}}
+                  key: {{ .Values.minio.minioCredsExistingSecret.username.secretKey}}
+                {{- else }}
+                  name: minio
+                  key: rootUser
+                {{- end }}
+            - name: MINIO_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                {{- if .Values.minio.minioCredsExistingSecret.password.secretName }}
+                  name: {{ .Values.minio.minioCredsExistingSecret.password.secretName}}
+                  key: {{ .Values.minio.minioCredsExistingSecret.password.secretKey}}
+                {{- else }}
+                  name: minio
+                  key: rootPassword
+                {{- end }}     
+          envFrom:
+            - configMapRef:
+                name: {{ .Chart.Name }}-configmap
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
