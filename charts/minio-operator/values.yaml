@@ -119,7 +119,7 @@ affinity:
           operator: In
           values:
           - linux
-      
+
 deployment:
   kubeRbacProxy:
     name: kube-rbac-proxy

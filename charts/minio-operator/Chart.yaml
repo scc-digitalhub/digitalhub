@@ -2,7 +2,7 @@ apiVersion: v2
 name: minio-operator
 description: A Kubernetes operator to handle instances of buckets, users and policies on MinIO.
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: "1.0.1"
 maintainers:
   - name: ffais
