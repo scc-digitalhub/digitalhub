@@ -150,10 +150,14 @@ authentication:
     password: ""
   openId:
     enabled: false
-    jwtIssuerUri: ""
+    issuerUri: ""
     jwtAudience: ""
     jwtClaim: ""
     oidcClientId: ""
+    scope: ""
+    externalSecret:
+      name: ""
+      key: ""
 
 events:
   enabled: "false"
@@ -181,15 +185,3 @@ solr:
     initialize:
       enabled: true
       image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
-
-
-oidc:
-  enabled: false
-  audience:
-    clientId: ""
-    externalSecret:
-      name: ""
-      key: ""
-  issuer: ""
-  scope: ""
-  claim: ""
