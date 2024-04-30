@@ -7929,6 +7929,22 @@ entries:
   minio-operator:
   - apiVersion: v2
     appVersion: 1.0.1
+    created: "2024-04-30T15:35:52.616255724Z"
+    description: A Kubernetes operator to handle instances of buckets, users and policies
+      on MinIO.
+    digest: 0151cdd4d4eba73edb47bb8717def241416083a0652521e4ddbaf60fbafd1f3a
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: minio-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/minio-operator-0.1.1/minio-operator-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.0.1
     created: "2024-04-30T15:23:56.254180299Z"
     description: A Kubernetes operator to handle instances of buckets, users and policies
       on MinIO.
@@ -8832,4 +8848,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-30T15:23:56.254537486Z"
+generated: "2024-04-30T15:35:52.616749261Z"
