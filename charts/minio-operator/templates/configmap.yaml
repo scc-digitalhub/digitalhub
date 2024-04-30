@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-configmap
+data:
+  MINIO_ENDPOINT: {{ .Values.minio.service.name }}:{{ .Values.minio.service.port }}
+  MINIO_USE_SSL: "false"
+  MINIO_EMPTY_BUCKET_ON_DELETE: "true"

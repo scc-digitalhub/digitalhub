@@ -275,14 +275,14 @@ core:
           name: "digitalhub-rabbitmq-default-user"
           usernameKey: "username"
           passwordKey: "password"
-    solr:
-      enabled: true
-      url: "http://digitalhub-solrcloud-common/solr"
-      collection:
-        name: "dhcore"
-        initialize:
-          enabled: true
-          image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
+  solr:
+    enabled: true
+    url: "http://digitalhub-solrcloud-common/solr"
+    collection:
+      name: "dhcore"
+      initialize:
+        enabled: true
+        image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
 
 kubernetes-resource-manager:
   enabled: true
@@ -473,3 +473,11 @@ minio:
     port: 9001
     nodePort: 30090
   fullnameOverride: minio
+
+minio-operator:
+  minio:
+    service:
+      name: minio
+      type: *serviceType
+      port: 9000
+      nodePort: 30080
