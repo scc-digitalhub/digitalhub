@@ -69,6 +69,18 @@ rbac:
       - create
       - delete
       - patch
+    - apiGroups: "minio.scc-digitalhub.github.io"
+      crd: true
+      resources:
+      - buckets
+      - policies
+      - users
+      verbs:
+      - get
+      - list
+      - create
+      - delete
+      - patch
     - apiGroups: "operator.scc-digitalhub.github.io"
       crd: true
       resources:
