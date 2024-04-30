@@ -444,6 +444,7 @@ solr-operator:
 solr:
   enabled: true
   replicas: 1
+  nameOverride: digitalhub
 
 minio:
   enabled: true
