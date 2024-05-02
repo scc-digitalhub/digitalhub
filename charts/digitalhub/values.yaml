@@ -69,6 +69,9 @@ mlrun-ce:
         enabled: false
     db:
       enabled: true
+      image:
+        repository: mysql
+        tag: 8.0.35
     httpDB:
       dbType: "mysql"
       secretDsn:
