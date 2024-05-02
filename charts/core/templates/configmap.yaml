@@ -4,15 +4,9 @@ metadata:
   name: {{ include "core.fullname" . }}
 data:
   {{- if .Values.ingress.enabled }}
-  {{- if .Values.ingress.tls }}
   {{- with (index .Values.ingress.hosts 0) }}
-  DH_ENDPOINT: "https://{{ .host }}"
-  {{- end }}
-  {{- else }}
-  {{- with (index .Values.ingress.hosts 0) }}
-  DH_ENDPOINT: "http://{{ .host }}"
-  {{- end }}
-  {{- end }}
+  DH_ENDPOINT: "{{ if $.Values.ingress.tls }}https://{{ else }}http://{{ end }}{{ .host }}"
+  {{- end }}  
   {{- else }}
   DH_ENDPOINT: "http://{{ include "core.endpoint" . }}"
   {{- end }}
