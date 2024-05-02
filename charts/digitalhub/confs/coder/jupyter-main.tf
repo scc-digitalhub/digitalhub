@@ -352,6 +352,10 @@ resource "kubernetes_deployment" "jupyter" {
             value = var.namespace
           }
           env {
+            name  = "DIGITALHUB_CORE_TOKEN"
+            value = data.coder_workspace.me.owner_oidc_access_token
+          }
+          env {
             name = "POSTGRES_USER"
             value_from {
               secret_key_ref {
