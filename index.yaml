@@ -3,6 +3,21 @@ entries:
   aac:
   - apiVersion: v2
     appVersion: 5.0.0
+    created: "2024-05-02T14:11:00.941599347Z"
+    description: A Helm chart for Kubernetes
+    digest: 21667a3a8f7265c87cf26c9cb84ce231faabfeff69af8304295b5578c63f9214
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: aac
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/aac-0.1.2/aac-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 5.0.0
     created: "2024-04-26T12:35:38.086772952Z"
     description: A Helm chart for Kubernetes
     digest: 27d3ebc763aeaa151f178023114090bf6a496013900cf906b8eff6d1f5334d5c
@@ -152,6 +167,21 @@ entries:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/coder-0.1.0/coder-0.1.0.tgz
     version: 0.1.0
   core:
+  - apiVersion: v2
+    appVersion: 0.4.0-beta6
+    created: "2024-05-02T14:11:01.065357648Z"
+    description: Core backend application for DigitalHub.
+    digest: db9f276e958ba85bcffda4593093731e299d87fd2b819763a1454bf9e9cfe63f
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: core
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.1.18/core-0.1.18.tgz
+    version: 0.1.18
   - apiVersion: v2
     appVersion: 0.4.0-beta5
     created: "2024-04-30T09:46:49.985663064Z"
@@ -8234,6 +8264,21 @@ entries:
     version: 1.2.4
   kubernetes-resource-manager:
   - apiVersion: v2
+    appVersion: 1.1.8
+    created: "2024-05-02T14:11:01.382526215Z"
+    description: A Helm chart for Kubernetes
+    digest: 314b27bd64388988588f61e8ec5573f688f637be0883b85c0e3fb1c155f99958
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: kubernetes-resource-manager
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/kubernetes-resource-manager-0.1.13/kubernetes-resource-manager-0.1.13.tgz
+    version: 0.1.13
+  - apiVersion: v2
     appVersion: 1.1.6
     created: "2024-04-30T15:23:56.139875334Z"
     description: A Helm chart for Kubernetes
@@ -9238,4 +9283,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-05-02T13:08:52.063888078Z"
+generated: "2024-05-02T14:11:01.38300599Z"
