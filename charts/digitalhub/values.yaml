@@ -112,6 +112,9 @@ mlrun-ce:
     ui:
       ingress:
         enabled: false
+      service:
+        type: *serviceType
+        nodePort: 30100
     minio:
       enabled: true
       accessKey: *minioRootUser

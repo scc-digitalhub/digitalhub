@@ -37,12 +37,6 @@ rules:
   - apiGroups: ["networking.k8s.io"]
     resources: ["ingresses"]
     verbs: ["get", "list", "watch", "delete"]
-  - apiGroups: ["mysql.nakamasato.com"]
-    resources: ["*"]
-    verbs: ["get", "list", "watch", "delete"]
-  - apiGroups: ["mysql.oracle.com"]
-    resources: ["*"]
-    verbs: ["get", "list", "watch", "delete"]
   - apiGroups: ["solr.apache.org"]
     resources: ["*"]
     verbs: ["get", "list", "watch", "delete"]
@@ -122,64 +116,6 @@ spec:
             readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
       restartPolicy: OnFailure
 ---
-{{- if and (not (index .Values "mlrun-ce" "mlrun" "db" "enabled")) (eq (index .Values "mlrun-ce" "mlrun" "httpDB" "dbType") "mysql") }}
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: delete-mysql-resources
-  annotations:
-    "helm.sh/hook": pre-delete
-    "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
-    "helm.sh/hook-weight": "3"
-  labels:
-    {{- include "digitalhub.labels" . | nindent 4 }}
-spec:
-  template:
-    metadata:
-      name: delete-mysql-resources
-      labels:
-        {{- include "digitalhub.labels" . | nindent 8 }}
-    spec:
-      serviceAccountName: delete-resources
-      containers:
-        - name: delete-mysql-resources
-          image: "bitnami/kubectl:latest"
-          command: ["/bin/sh"]
-          args: ["-c", "kubectl -n {{ .Release.Namespace }} delete mysqldbs,mysqls,mysqlusers --all && sleep 1m"]
-          securityContext:
-            {{- toYaml .Values.global.securityContext | nindent 12}}
-            readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
-      restartPolicy: OnFailure
----
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: delete-mysql-cluster
-  annotations:
-    "helm.sh/hook": pre-delete
-    "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
-    "helm.sh/hook-weight": "4"
-  labels:
-    {{- include "digitalhub.labels" . | nindent 4 }}
-spec:
-  template:
-    metadata:
-      name: delete-mysql-cluster
-      labels:
-        {{- include "digitalhub.labels" . | nindent 8 }}
-    spec:
-      serviceAccountName: delete-resources
-      containers:
-        - name: delete-mysql-cluster
-          image: "bitnami/kubectl:latest"
-          command: ["/bin/sh"]
-          args: ["-c", "kubectl -n {{ .Release.Namespace }} delete innodbclusters --all && sleep 1m"]
-          securityContext:
-            {{- toYaml .Values.global.securityContext | nindent 12}}
-            readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
-      restartPolicy: OnFailure
----
-{{- end }}
 apiVersion: batch/v1
 kind: Job
 metadata:
