@@ -263,7 +263,7 @@ spark-operator:
   enabled: true
   fullnameOverride: spark-operator
   webhook:
-     enable: true
+    enable: true
   serviceAccounts:
     spark:
       name: "sparkapp"
@@ -271,9 +271,6 @@ spark-operator:
 pipelines:
   enabled: true
   name: pipelines
-  service:
-    type: NodePort
-    nodePort: 30100
   crd:
     enabled: true
   priority_class:
@@ -295,6 +292,9 @@ pipelines:
   db:
     username: root
   ui:
+    service:
+      type: NodePort
+      nodePort: 30100
     ingress:
       enabled: false
       ingressClassName: ""
