@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 build_chart () {
-  array=('aac' 'digitalhub' 'digitalhub-crds')
+  array=('aac' 'digitalhub' 'digitalhub-crds' 'mlrun')
   for f in charts/*
   do
   IFS='/'
