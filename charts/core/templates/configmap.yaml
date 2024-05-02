@@ -5,8 +5,8 @@ metadata:
 data:
   {{- if .Values.ingress.enabled }}
   {{- with (index .Values.ingress.hosts 0) }}
-  DH_ENDPOINT: "https://{{ .host }}"
-  {{- end }}
+  DH_ENDPOINT: "{{ if $.Values.ingress.tls }}https://{{ else }}http://{{ end }}{{ .host }}"
+  {{- end }}  
   {{- else }}
   DH_ENDPOINT: "http://{{ include "core.endpoint" . }}"
   {{- end }}

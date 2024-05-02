@@ -5,13 +5,13 @@
 replicaCount: 1
 
 image:
-  repository: smartcommunitylab/aac
+  repository: ghcr.io/scc-digitalhub/aac
   pullPolicy: IfNotPresent
   aacCommand1: "java"
   aacCommand2: "org.springframework.boot.loader.JarLauncher"
   aacCommand3: "-Dspring-boot.run.arguments=--logging.level.ROOT=DEBUG"
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 5.x-latest
+  tag: 5.x-94ad08c
 
 imagePullSecrets: []
 nameOverride: ""

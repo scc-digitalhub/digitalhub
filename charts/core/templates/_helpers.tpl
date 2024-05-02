@@ -68,8 +68,8 @@ Calculate Core endpoint
 */}}
 {{- define "core.endpoint" -}}
 {{- if eq .Values.service.type "NodePort"}}
-{{ .Values.global.externalHostAddress }}:{{ .Values.service.httpNodePort }}
+{{- .Values.global.externalHostAddress }}:{{ .Values.service.httpNodePort }}
 {{- else }}
-{{ .Values.global.externalHostAddress }}:{{ .Values.service.port }}
+{{- .Values.global.externalHostAddress }}:{{ .Values.service.port }}
 {{- end }}
 {{- end }}
