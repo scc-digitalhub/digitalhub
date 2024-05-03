@@ -27,6 +27,10 @@ global:
   minio:
     rootUser: &minioRootUser minio
     rootPassword: &minioRootPassword minio123
+    endpoint: &minioEndpoint "minio-test"
+    endpointPort: &minioEndpointPort "139000"
+    bucket: &minioBucket "mlrun"
+    protocol: "http"
   externalHostAddress: &globalExternalUrl "192.168.49.2"
   securityContext:
     runAsNonRoot: true
@@ -122,9 +126,9 @@ mlrun-ce:
       enabled: true
       accessKey: *minioRootUser
       secretKey: *minioRootPassword
-      endpoint: "minio"
-      endpointPort: "9000"
-      bucket: "datalake"
+      endpoint: *minioEndpoint
+      endpointPort: *minioEndpointPort
+      bucket: *minioBucket
   kube-prometheus-stack:
     enabled: false
   mpi-operator:
