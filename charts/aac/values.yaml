@@ -126,9 +126,13 @@ config:
 bootstrapCreds:
   existingSecret: ""
 
-aacCreds:
+adminExistingCreds:
   existingSecret: ""
-  passwordKey: ""
+  userKey: ""
+  passKey: ""
+
+appCreds:
+  existingSecret: ""
 
 mailCreds:
   existingSecret: ""
@@ -141,6 +145,10 @@ jdbcCreds:
 mailSecret:
   user: test@user.it
   password: testPassword
+
+adminCreds:
+  username: "admin"
+  password: "admin"
 
 postgresOperator:
   installed: true
