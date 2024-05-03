@@ -27,8 +27,8 @@ global:
   minio:
     rootUser: &minioRootUser minio
     rootPassword: &minioRootPassword minio123
-    endpoint: &minioEndpoint "minio-test"
-    endpointPort: &minioEndpointPort "139000"
+    endpoint: &minioEndpoint "minio"
+    endpointPort: &minioEndpointPort "9000"
     bucket: &minioBucket "mlrun"
     protocol: "http"
   externalHostAddress: &globalExternalUrl "192.168.49.2"
