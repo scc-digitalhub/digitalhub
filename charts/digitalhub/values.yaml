@@ -153,6 +153,10 @@ coder:
       nodePort: "30130"
       iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/grafana_logo_icon_171048.png
       image: "smartcommunitylab/grafana"
+    - name: vscode
+      nodePort: "30190"
+      iconUrl: https://user-images.githubusercontent.com/29654835/27530003-e78876b8-5a13-11e7-8863-83fbdb900f72.png
+      image: "codercom/enterprise-base:ubuntu"
   coder:
     image:
       tag: v2.6.0
