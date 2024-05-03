@@ -455,3 +455,19 @@ minio-operator:
       type: *serviceType
       port: 9000
       nodePort: 30080
+  oidc:
+    enabled: false
+    configUrl: ""
+    clientId: ""
+    clientSecret: ""
+    # Provide existing client secret from the Kubernetes Secret resource, existing secret will have priority over `clientId` and/or `clientSecret``
+    existingClientSecretName: ""
+    existingClientIdKey: ""
+    existingClientSecretKey: ""
+    claimName: ""
+    scopes: ""
+    redirectUri: ""
+    # Can leave empty
+    claimPrefix: ""
+    comment: ""
+    displayName: ""
