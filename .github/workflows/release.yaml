@@ -36,7 +36,6 @@ jobs:
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm repo add docker-registry https://helm.twun.io
-          helm repo add grafana https://grafana.github.io/helm-charts
           helm repo add postgres-operator https://opensource.zalando.com/postgres-operator/charts/postgres-operator
           helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
           #temp remove after merging mlrun-ce
