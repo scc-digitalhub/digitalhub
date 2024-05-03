@@ -1,21 +1,18 @@
 terraform {
   required_providers {
     coder = {
-      source  = "coder/coder"
-      version = "~> 0.11.0"
+      source = "coder/coder"
     }
     kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.22"
+      source = "hashicorp/kubernetes"
     }
   }
 }
 
 provider "coder" {
 }
-
 locals {
-  jupyter_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}jupyter--jupyter--${data.coder_workspace.me.name}--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  vscode_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}vscode--vscode--${data.coder_workspace.me.name}--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
 }
 
 variable "use_kubeconfig" {
@@ -34,7 +31,7 @@ variable "use_kubeconfig" {
 
 variable "namespace" {
   type        = string
-  description = "The Kubernetes namespace to create workspaces in (must exist prior to creating workspaces)"
+  description = "The Kubernetes namespace to create workspaces in (must exist prior to creating workspaces). If the Coder host is itself running as a Pod on the same Kubernetes cluster as you are deploying workspaces to, set this to the same namespace."
   default     = "digitalhub"
 }
 
@@ -150,13 +147,16 @@ provider "kubernetes" {
 
 data "coder_workspace" "me" {}
 
-resource "coder_agent" "jupyter" {
+resource "coder_agent" "vscode" {
   os                     = "linux"
   arch                   = "amd64"
   startup_script_timeout = 180
   startup_script         = <<-EOT
     set -e
-    jupyter lab --ServerApp.ip=0.0.0.0 --ServerApp.port=8888 --ServerApp.token="" --ServerApp.password=""
+
+    # install and start code-server
+    curl -fsSL https://code-server.dev/install.sh | sh -s -- --method=standalone --prefix=/tmp/code-server --version 4.11.0
+    /tmp/code-server/bin/code-server --auth none --port 13337 >/tmp/code-server.log 2>&1 &
   EOT
   metadata {
     display_name = "CPU Usage"
@@ -179,49 +179,59 @@ resource "coder_agent" "jupyter" {
     interval     = 60
     timeout      = 1
   }
+  metadata {
+    display_name = "Load Average (Host)"
+    key          = "6_load_host"
+    # get load avg scaled by number of cores
+    script   = <<EOT
+      echo "`cat /proc/loadavg | awk '{ print $1 }'` `nproc`" | awk '{ printf "%0.2f", $1/$2 }'
+    EOT
+    interval = 60
+    timeout  = 1
+  }
   display_apps {
-    vscode                 = false
-    vscode_insiders        = false
+    vscode                 = true
+    vscode_insiders        = true
     web_terminal           = false
     port_forwarding_helper = true
     ssh_helper             = true
   }
 }
 
-resource "coder_app" "jupyter" {
-  agent_id     = coder_agent.jupyter.id
-  slug         = "jupyter"
-  display_name = "JupyterLab"
-  icon         = "/icon/jupyter.svg"
-  url          = "http://127.0.0.1:8888"
+resource "coder_app" "vscode-server" {
+  agent_id     = coder_agent.vscode.id
+  slug         = "vscode-server"
+  display_name = "vscode-server"
+  icon         = "/icon/code.svg"
+  url          = "http://localhost:13337?folder=/home/coder"
   subdomain    = true
   share        = "owner"
   healthcheck {
-    url       = "http://127.0.0.1:8888/api"
+    url       = "http://localhost:13337/healthz"
     interval  = 5
     threshold = 10
   }
 }
 
-resource "coder_metadata" "jupyter" {
+resource "coder_metadata" "vscode" {
   count       = data.coder_workspace.me.start_count
-  resource_id = kubernetes_service.jupyter-service.id
+  resource_id = kubernetes_service.vscode-service.id
   item {
     key   = "URL"
-    value = local.jupyter_url
+    value = local.vscode_url
   }
 }
 
 resource "kubernetes_persistent_volume_claim" "home" {
   metadata {
-    name      = "jupyter-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}-home"
+    name      = "vscode-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}-home"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "jupyter-pvc"
-      "app.kubernetes.io/instance" = "jupyter-pvc-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/name"     = "vscode-pvc"
+      "app.kubernetes.io/instance" = "vscode-pvc-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "pvc"
-      // Coder specific labels.
+      //Coder-specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
       "com.coder.workspace.name" = data.coder_workspace.me.name
@@ -243,13 +253,13 @@ resource "kubernetes_persistent_volume_claim" "home" {
   }
 }
 
-resource "kubernetes_service" "jupyter-service" {
+resource "kubernetes_service" "vscode-service" {
   metadata {
-    name      = "jupyter-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+    name      = "vscode-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "jupyter-workspace"
-      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/name"     = "vscode-workspace"
+      "app.kubernetes.io/instance" = "vscode-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "service"
       // Coder specific labels.
@@ -265,32 +275,32 @@ resource "kubernetes_service" "jupyter-service" {
   }
   spec {
     selector = {
-      "app.kubernetes.io/name"     = "jupyter-workspace"
-      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/name"     = "vscode-workspace"
+      "app.kubernetes.io/instance" = "vscode-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "workspace"
     }
     port {
-      port        = 8888
-      target_port = 8888
+      port        = 13337
+      target_port = 13337
       node_port   = var.service_type == "ClusterIP" ? null : var.node_port
     }
     type = var.service_type
   }
 }
 
-resource "kubernetes_deployment" "jupyter" {
+resource "kubernetes_deployment" "vscode" {
   count = data.coder_workspace.me.start_count
   depends_on = [
     kubernetes_persistent_volume_claim.home
   ]
   wait_for_rollout = false
   metadata {
-    name      = "jupyter-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+    name      = "vscode-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "jupyter-workspace"
-      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/name"     = "vscode-workspace"
+      "app.kubernetes.io/instance" = "vscode-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "workspace"
       // Coder specific labels.
@@ -311,8 +321,8 @@ resource "kubernetes_deployment" "jupyter" {
     }
     selector {
       match_labels = {
-        "app.kubernetes.io/name"     = "jupyter-workspace"
-        "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+        "app.kubernetes.io/name"     = "vscode-workspace"
+        "app.kubernetes.io/instance" = "vscode-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
         "app.kubernetes.io/part-of"  = "coder"
         "app.kubernetes.io/type"     = "workspace"
       }
@@ -320,44 +330,31 @@ resource "kubernetes_deployment" "jupyter" {
     template {
       metadata {
         labels = {
-          "app.kubernetes.io/name"     = "jupyter-workspace"
-          "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+          "app.kubernetes.io/name"     = "vscode-workspace"
+          "app.kubernetes.io/instance" = "vscode-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
           "app.kubernetes.io/part-of"  = "coder"
           "app.kubernetes.io/type"     = "workspace"
         }
       }
       spec {
         security_context {
-          run_as_user  = "1000"
-          fs_group     = "100"
-          run_as_group = "100"
+          run_as_user  = 1000
+          fs_group     = 1000
+          run_as_group = "1000"
         }
-        init_container {
-          name              = "init-chown-data"
-          image             = "busybox:1.35"
-          image_pull_policy = "Always"
-          command           = ["chown", "-R", "1000:100", "/home/jovyan/work"]
-          volume_mount {
-            mount_path = "/home/jovyan/work"
-            name       = "home"
-            read_only  = false
-          }
-          security_context {
-            run_as_user                = "0"
-            allow_privilege_escalation = false
-          }
-        }
+
         container {
-          name    = "jupyter"
-          image   = var.image
-          command = ["sh", "-c", coder_agent.jupyter.init_script]
+          name              = "vscode"
+          image             = var.image
+          image_pull_policy = "Always"
+          command           = ["sh", "-c", coder_agent.vscode.init_script]
           security_context {
             run_as_user                = "1000"
             allow_privilege_escalation = false
           }
           env {
             name  = "CODER_AGENT_TOKEN"
-            value = coder_agent.jupyter.token
+            value = coder_agent.vscode.token
           }
           env {
             name  = "V3IO_USERNAME"
@@ -404,7 +401,7 @@ resource "kubernetes_deployment" "jupyter" {
             }
           }
           port {
-            container_port = 8888
+            container_port = 13337
             name           = "http"
             protocol       = "TCP"
           }
@@ -419,7 +416,7 @@ resource "kubernetes_deployment" "jupyter" {
             }
           }
           volume_mount {
-            mount_path = "/home/jovyan/work"
+            mount_path = "/home/coder"
             name       = "home"
             read_only  = false
           }
