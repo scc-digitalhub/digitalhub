@@ -7,7 +7,7 @@ namespaceValues:
   defaultValue: "*"
 
 image:
-  repository: ghcr.io/scc-digitalhub/custom-resource-manager
+  repository: ghcr.io/scc-digitalhub/kubernetes-resource-manager
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
