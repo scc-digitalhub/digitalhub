@@ -78,6 +78,26 @@ spec:
                   name: aacadmin.aac-postgres-cluster.credentials.postgresql.acid.zalan.do
                   key: password
                 {{- end }}
+            - name: ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                {{- if .Values.adminExistingCreds.existingSecret }}
+                  name: {{ .Values.adminExistingCreds.existingSecret }}
+                  key: {{ .Values.adminExistingCreds.userKey }}
+                {{- else }}
+                  name: aac-admin-secret
+                  key: username
+                {{- end }}
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                {{- if .Values.adminExistingCreds.existingSecret }}
+                  name: {{ .Values.adminExistingCreds.existingSecret }}
+                  key: {{ .Values.adminExistingCreds.passKey }}
+                {{- else }}
+                  name: aac-admin-secret
+                  key: password
+                {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
