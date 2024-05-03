@@ -446,15 +446,6 @@ minio:
     port: 9001
     nodePort: 30090
   fullnameOverride: minio
-
-minio-operator:
-  enabled: true
-  minio:
-    service:
-      name: minio
-      type: *serviceType
-      port: 9000
-      nodePort: 30080
   oidc:
     enabled: false
     configUrl: ""
@@ -471,3 +462,12 @@ minio-operator:
     claimPrefix: ""
     comment: ""
     displayName: ""
+
+minio-operator:
+  enabled: true
+  minio:
+    service:
+      name: minio
+      type: *serviceType
+      port: 9000
+      nodePort: 30080
