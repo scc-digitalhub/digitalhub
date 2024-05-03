@@ -119,10 +119,19 @@ Create chart name and version as used by the chart label.
 Minio Service URL
 */}}
 {{- define "mlrun-ce.minio.service.url" -}}
+{{- if and (.Values.global.minio) (not .Values.minio.enabled) -}}
+{{ .Values.global.minio.protocol }}://{{ .Values.global.minio.endpoint }}:{{ .Values.global.minio.endpointPort}}
+{{- else -}}
 http://minio.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.minio.service.port }}
 {{- end -}}
+{{- end -}}
+
 {{- define "mlrun-ce.minio-pipeline.service.url" -}}
+{{- if .Values.pipelines.minio.endpoint -}}
+{{- printf "%s" .Values.pipelines.minio.endpoint -}}
+{{- else -}}
 minio.{{.Release.Namespace}}.svc.cluster.local
+{{- end -}}
 {{- end -}}
 
 {{/*
