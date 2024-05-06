@@ -5,14 +5,14 @@ metadata:
   name: mlrun-common-env
 data:
   MLRUN_STORAGE__AUTO_MOUNT_TYPE: s3
-  MLRUN_STORAGE__AUTO_MOUNT_PARAMS: "aws_access_key={{ .Values.minio.rootUser }},aws_secret_key={{ .Values.minio.rootPassword }},endpoint_url={{ include "mlrun-ce.minio.service.url" . }}"
+  MLRUN_STORAGE__AUTO_MOUNT_PARAMS: "aws_access_key={{ include "mlrun-ce.minio.rootUser" . }},aws_secret_key={{ include "mlrun-ce.minio.rootPassword" . }},endpoint_url={{ include "mlrun-ce.minio.service.url" . }}"
   MLRUN_HTTPDB__PROJECTS__FOLLOWERS: nuclio
   S3_ENDPOINT_URL: {{ include "mlrun-ce.minio.service.url" . }}
-  AWS_SECRET_ACCESS_KEY: {{ .Values.minio.rootPassword }}
-  AWS_ACCESS_KEY_ID: {{ .Values.minio.rootUser }}
+  AWS_SECRET_ACCESS_KEY: {{ include "mlrun-ce.minio.rootPassword" . }}
+  AWS_ACCESS_KEY_ID: {{ include "mlrun-ce.minio.rootUser" . }}
   MLRUN_HTTPDB__REAL_PATH: s3://
-  MLRUN_ARTIFACT_PATH: s3://{{ .Values.pipelines.minio.bucket }}/projects/{{ `{{run.project}}` }}/artifacts
-  MLRUN_FEATURE_STORE__DATA_PREFIXES__DEFAULT: s3://{{ .Values.pipelines.minio.bucket }}/projects/{project}/FeatureStore/{name}/{kind}
+  MLRUN_ARTIFACT_PATH: s3://{{ define "mlrun-ce.minio.bucket" . }}/projects/{{ `{{run.project}}` }}/artifacts
+  MLRUN_FEATURE_STORE__DATA_PREFIXES__DEFAULT: s3://{{ define "mlrun-ce.minio.bucket" . }}/projects/{project}/FeatureStore/{name}/{kind}
   MLRUN_FEATURE_STORE__DATA_PREFIXES__NOSQL: ""
   MLRUN_CE__MODE: {{ .Values.mlrun.ce.mode }}
   MLRUN_CE__VERSION: {{ .Chart.Version }}
