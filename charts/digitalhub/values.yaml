@@ -29,7 +29,7 @@ global:
     rootPassword: &minioRootPassword minio123
     endpoint: &minioEndpoint "minio"
     endpointPort: &minioEndpointPort "9000"
-    bucket: &minioBucket "mlrun"
+    bucket: &minioBucket "datalake"
     protocol: "http"
   externalHostAddress: &globalExternalUrl "192.168.49.2"
   securityContext:
@@ -256,9 +256,12 @@ postgrest-operator:
 core:
   enabled: true
   minio:
-    bucketName: datalake
-    endpoint: "minio"
-    endpointPort: "9000"
+    rootUser: *minioRootUser
+    rootPassword: *minioRootPassword
+    endpoint: *minioEndpoint
+    endpointPort: *minioEndpointPort
+    bucket: *minioBucket
+    protocol: *minioProtocol
   service:
     type: *serviceType
     httpNodePort: "30180"
@@ -474,8 +477,9 @@ minio:
 minio-operator:
   enabled: true
   minio:
-    service:
-      name: minio
-      type: *serviceType
-      port: 9000
-      nodePort: 30080
+    accessKey: *minioRootUser
+    secretKey: *minioRootPassword
+    endpoint: *minioEndpoint
+    endpointPort: *minioEndpointPort
+    bucket: *minioBucket
+    protocol: *minioProtocol
