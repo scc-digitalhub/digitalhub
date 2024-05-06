@@ -129,6 +129,7 @@ mlrun-ce:
       endpoint: *minioEndpoint
       endpointPort: *minioEndpointPort
       bucket: *minioBucket
+      protocol: *minioProtocol
   kube-prometheus-stack:
     enabled: false
   mpi-operator:
