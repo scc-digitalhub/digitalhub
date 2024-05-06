@@ -44,14 +44,17 @@ spec:
               apiVersion: v1
               fieldPath: metadata.namespace
         - name: OBJECTSTORECONFIG_SECURE
-          value: "false"
+          value: "{{ if eq .Values.pipelines.minio.protocol "http" }}false{{ else }}true{{ end }}"
         - name: OBJECTSTORECONFIG_HOST
           valueFrom:
             configMapKeyRef:
               name: pipeline-install-config
               key: minioServiceHost
         - name: OBJECTSTORECONFIG_PORT
-          value: "9000"
+          valueFrom:
+            configMapKeyRef:
+              name: pipeline-install-config
+              key: minioServicePort
         - name: OBJECTSTORECONFIG_BUCKETNAME
           valueFrom:
             configMapKeyRef:

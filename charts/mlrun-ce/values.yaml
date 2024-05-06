@@ -322,6 +322,7 @@ pipelines:
     endpoint: "minio"
     endpointPort: "9000"
     bucket: "mlrun"
+    protocol: "http"
   images:
     argoexec:
       repository: gcr.io/ml-pipeline/argoexec
