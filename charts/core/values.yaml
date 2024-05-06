@@ -44,10 +44,13 @@ securityContext:
   # runAsUser: 1000
 
 minio:
-  bucketName: ""
-  endpoint: ""
-  endpointPort: ""
-  port: ""
+  rootUser: minio
+  rootPassword: minio123
+  endpoint: "minio"
+  endpointPort: "9000"
+  bucket: "mlrun"
+  protocol: "http"
+
 service:
   port: "8080"
   type: ClusterIP
