@@ -178,8 +178,8 @@ minio:
     password:
       secretName: ""
       secretKey: ""
-  service:
-    name: ""
-    type: ""
-    port: ""
-    nodePort: ""
+  endpoint: "minio"
+  endpointPort: "9000"
+  bucket: "mlrun"
+  protocol: "http"
+  emptyBucketOnDelete: true
