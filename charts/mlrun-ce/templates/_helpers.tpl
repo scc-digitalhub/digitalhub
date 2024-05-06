@@ -126,6 +126,30 @@ http://minio.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.minio.service
 {{- end -}}
 {{- end -}}
 
+{{- define "mlrun-ce.minio.rootUser" -}}
+{{- if and (.Values.global.minio) (not .Values.minio.enabled) -}}
+{{ .Values.global.minio.rootUser }}
+{{- else -}}
+{{ .Values.minio.rootUser }}
+{{- end -}}
+{{- end -}}
+
+{{- define "mlrun-ce.minio.rootPassword" -}}
+{{- if and (.Values.global.minio) (not .Values.minio.enabled) -}}
+{{ .Values.global.minio.rootPassword }}
+{{- else -}}
+{{ .Values.minio.rootPassword }}
+{{- end -}}
+{{- end -}}
+
+{{- define "mlrun-ce.minio.bucket" -}}
+{{- if and (.Values.global.minio) (not .Values.minio.enabled) -}}
+{{ .Values.global.minio.bucket }}
+{{- else -}}
+{{ (index .Values.minio.buckets 0).name }}
+{{- end -}}
+{{- end -}}
+
 {{- define "mlrun-ce.minio-pipeline.service.url" -}}
 {{- if .Values.pipelines.minio.endpoint -}}
 {{- printf "%s" .Values.pipelines.minio.endpoint -}}
