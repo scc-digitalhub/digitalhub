@@ -7,7 +7,7 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.4.15"
+version: "0.4.16"
 appVersion: "0.4.0"
 dependencies:
 - name: apigw-operator
@@ -19,7 +19,7 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: coder.enabled
 - name: core
-  version: "0.1.19"
+  version: "0.1.20"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: kubernetes-resource-manager
@@ -43,7 +43,7 @@ dependencies:
   version: "5.1.0"
   condition: minio.enabled
 - name: mlrun-ce
-  version: "0.6.3-dh-v0.3.8"
+  version: "0.6.3-dh-v0.3.9"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: mlrun-ce.enabled
 - name: postgres-operator
