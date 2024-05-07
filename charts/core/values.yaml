@@ -34,6 +34,12 @@ podSecurityContext:
 
 global:
   externalHostAddress: ""
+  registry:
+    url: ""
+    secretName: ""
+    username: ""
+    password: ""
+    email: ""
 
 securityContext:
   capabilities:

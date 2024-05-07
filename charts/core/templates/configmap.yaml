@@ -52,3 +52,7 @@ data:
   DH_AUTH_OIDC_ISSUER_URI: {{ .Values.authentication.openId.issuerUri }}
   DH_AUTH_OIDC_SCOPE: {{ .Values.authentication.openId.scope }}
 {{- end }}
+{{- if and .Values.global.registry.username .Values.global.registry.password .Values.global.registry.email }}
+  KANIKO_IMAGE_REGISTRY: {{ .Values.global.registry.url }}
+  KANIKO_SECRET: {{ .Values.global.registry.secretName }}
+{{- end }}

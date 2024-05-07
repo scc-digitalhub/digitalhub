@@ -42,6 +42,7 @@ rules:
   resources:
   - secrets
   - services
+  - configmaps
   verbs:
   - get
   - list
@@ -49,9 +50,3 @@ rules:
   - update
   - delete
   - patch
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  verbs:
-  - get
