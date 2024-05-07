@@ -16,7 +16,7 @@ data:
   JDBC_DRIVER: org.postgresql.Driver
   JDBC_DIALECT: org.hibernate.dialect.PostgreSQLDialect
   DH_CONFIG_COMMON_SECRETS: digitalhub-common-creds
-  DH_CONFIG_COMMON_MAPS: digitalhub-common-env
+  DH_CONFIG_COMMON_MAPS: digitalhub-common-env,mlrun-common-env
   LOG_LEVEL: INFO
   RUNTIME_NEFERTEM_IMAGE: {{ .Values.runtime.nefertem.image }}:{{ .Values.runtime.nefertem.tag }}
   RUNTIME_DBT_IMAGE: {{ .Values.runtime.dbt.image }}:{{ .Values.runtime.dbt.tag }}
