@@ -204,3 +204,15 @@ oidc:
   scope: ""
   authType: ""
   redirectUrl: ""
+
+resourceSelectors:
+  services: "app.kubernetes.io/part-of=coder,app.kubernetes.io/type=service|nuclio.io/class=function|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore"
+  deployments: "app.kubernetes.io/type=workspace,app.kubernetes.io/managed-by=dhcore"
+  jobs: "app.kubernetes.io/managed-by=dhcore"
+  pvcs:
+    labels: "app.kubernetes.io/managed-by=krm"
+    managedBy: "krm"
+  secrets:
+    labels: ""
+    owners: "db.movetokube.com/v1alpha1"
+    names: "(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"
