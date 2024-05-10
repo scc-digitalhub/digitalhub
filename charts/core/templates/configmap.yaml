@@ -55,4 +55,6 @@ data:
 {{- if and .Values.global.registry.username .Values.global.registry.password .Values.global.registry.email }}
   KANIKO_IMAGE_REGISTRY: {{ .Values.global.registry.url }}
   KANIKO_SECRET: {{ .Values.global.registry.secretName }}
+  DOCKER_REGISTRY: {{ .Values.global.registry.url }}
+  DOCKER_REGISTRY_SECRET: {{ .Values.global.registry.secretName }}
 {{- end }}
