@@ -50,6 +50,12 @@ variable "minio_endpoint" {
   default     = "minio:9000"
 }
 
+variable "minio_bucket" {
+  type        = string
+  description = "Minio buckat name"
+  default     = "datalake"
+}
+
 variable "minio-creds-secret" {
   type        = string
   description = "Minio database credentials secret"
@@ -79,7 +85,7 @@ variable "node_port" {
 }
 
 variable "image" {
-  type    = string
+  type = string
 }
 
 variable "arrow_flight_node_port" {
@@ -291,6 +297,10 @@ resource "kubernetes_job" "source-init" {
           env {
             name  = "MINIO_ENDPOINT"
             value = var.minio_endpoint
+          }
+          env {
+            name  = "MINIO_BUCKET"
+            value = var.minio_bucket
           }
           env {
             name  = "PSQL_HOSTNAME"

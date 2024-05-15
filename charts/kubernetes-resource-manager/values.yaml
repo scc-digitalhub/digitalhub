@@ -206,13 +206,21 @@ oidc:
   redirectUrl: ""
 
 resourceSelectors:
+  # list separated by |
   services: "app.kubernetes.io/part-of=coder|app.kubernetes.io/type=service|nuclio.io/class=function|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore"
+  # list separated by |
   deployments: "app.kubernetes.io/type=workspace|app.kubernetes.io/managed-by=dhcore"
+  # list separated by |
   jobs: "app.kubernetes.io/managed-by=dhcore"
   pvcs:
+    # list separated by |
     labels: "app.kubernetes.io/managed-by=krm"
+    # string
     managedBy: "krm"
   secrets:
+    # list separated by |
     labels: ""
+    # list separated by ,
     owners: "db.movetokube.com/v1alpha1"
+    # list separated by ,
     names: "(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"
