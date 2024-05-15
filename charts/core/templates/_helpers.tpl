@@ -67,9 +67,19 @@ Create the name of the service account to use
 Calculate Core endpoint
 */}}
 {{- define "core.endpoint" -}}
-{{- if eq .Values.service.type "NodePort"}}
-{{- .Values.global.externalHostAddress }}:{{ .Values.service.httpNodePort }}
+{{- $protocol := "http://" -}}
+{{- if .Values.ingress.enabled }}
+{{- if or .Values.ingress.tls .Values.global.externalTls }}
+{{- $protocol = "https://" -}}
+{{- end }}
+{{- with (index .Values.ingress.hosts 0) }}
+{{- $protocol }}{{ .host }}
+{{- end }}
 {{- else }}
-{{- .Values.global.externalHostAddress }}:{{ .Values.service.port }}
+{{- if eq .Values.service.type "NodePort"}}
+{{- $protocol }}{{ .Values.global.externalHostAddress }}:{{ .Values.service.httpNodePort }}
+{{- else }}
+{{- $protocol }}{{ .Values.global.externalHostAddress }}:{{ .Values.service.port }}
+{{- end }}
 {{- end }}
 {{- end }}
