@@ -14,9 +14,8 @@ spec:
           env:
             {{- with .Subcharts.coder.Values.coder.env -}}
             {{ toYaml . | nindent 12 }}
-            {{- end }}  
-            - name: CODER_ACCESS_URL
-              value: "http://coder"
+            {{- end }}
+            {{- include "digitalhub.coderAccUrl" . | nindent 12 -}}
             - name: CODER_URL
               value: "http://coder"
             - name: CODER_FIRST_USER_USERNAME

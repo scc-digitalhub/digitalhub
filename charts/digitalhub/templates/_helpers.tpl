@@ -86,3 +86,31 @@ Calculate dashboard oidc configuration endpoint
 {{- end }}
 {{- end }}
 {{- end }}
+
+{{/*
+Calculate coder access url
+*/}}
+{{- define "digitalhub.coderAccUrl" -}}
+{{- $hasAccessURL := false }}
+{{- range .Values.coder.coder.env }}
+{{- if (eq .name "CODER_ACCESS_URL") }}
+{{- $hasAccessURL = true }}
+{{- end }}
+{{- end }}
+{{- if not $hasAccessURL -}}
+- name: CODER_ACCESS_URL
+  value: "http://coder"
+{{ end -}}
+{{- end -}}
+
+{{/*
+Coder ingress TLS enabled check.
+*/}}
+{{- define "digitalhub.coderIngressTlsEnabled" -}}
+{{- if or .Values.coder.coder.ingress.tls.enable .Values.global.externalTls -}}
+true
+{{- else -}}
+false
+{{- end }}
+{{- end }}
+
