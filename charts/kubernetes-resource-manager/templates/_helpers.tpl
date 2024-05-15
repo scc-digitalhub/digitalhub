@@ -65,11 +65,13 @@ Create the name of the service account to use
 Create TLS enabled.
 */}}
 {{- define "kubernetes-resource-manager.tlsEnabled" -}}
-{{- if .Values.ingress.tls -}}
+{{- if .Values.ingress.enabled }}
+{{- if or .Values.ingress.tls .Values.global.externalTls -}}
 true
 {{- else -}}
 false
 {{- end -}}
+{{- end }}
 {{- end }}
 
 {{/*
