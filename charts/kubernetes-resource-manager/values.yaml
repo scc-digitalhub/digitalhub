@@ -1,5 +1,6 @@
 global:
   externalHostAddress: ""
+  externalTls: false
 storageClasses: default
 replicaCount: 1
 namespaceValues:
