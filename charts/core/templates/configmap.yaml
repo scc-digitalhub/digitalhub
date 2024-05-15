@@ -3,20 +3,14 @@ kind: ConfigMap
 metadata:
   name: {{ include "core.fullname" . }}
 data:
-  {{- if .Values.ingress.enabled }}
-  {{- with (index .Values.ingress.hosts 0) }}
-  DH_ENDPOINT: "{{ if $.Values.ingress.tls }}https://{{ else }}http://{{ end }}{{ .host }}"
-  {{- end }}  
-  {{- else }}
-  DH_ENDPOINT: "http://{{ include "core.endpoint" . }}"
-  {{- end }}
+  DH_ENDPOINT: "{{ include "core.endpoint" . }}"
   K8S_NAMESPACE: {{ .Release.Namespace }}
   JDBC_PLATFORM: postgresql
   JDBC_URL: "jdbc:postgresql://core-postgres-cluster:5432/core"
   JDBC_DRIVER: org.postgresql.Driver
   JDBC_DIALECT: org.hibernate.dialect.PostgreSQLDialect
   DH_CONFIG_COMMON_SECRETS: digitalhub-common-creds
-  DH_CONFIG_COMMON_MAPS: digitalhub-common-env,mlrun-common-env
+  DH_CONFIG_COMMON_MAPS: digitalhub-common-env
   LOG_LEVEL: INFO
   RUNTIME_NEFERTEM_IMAGE: {{ .Values.runtime.nefertem.image }}:{{ .Values.runtime.nefertem.tag }}
   RUNTIME_DBT_IMAGE: {{ .Values.runtime.dbt.image }}:{{ .Values.runtime.dbt.tag }}
