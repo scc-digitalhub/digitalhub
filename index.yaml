@@ -183,6 +183,21 @@ entries:
     version: 0.1.0
   core:
   - apiVersion: v2
+    appVersion: 0.4.0
+    created: "2024-05-15T08:52:43.820334661Z"
+    description: Core backend application for DigitalHub.
+    digest: 1d6c42ce498b10cdbad972bc8d95021e5fb729e86bf24489c19347f3c78d3ebc
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: core
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.1.24/core-0.1.24.tgz
+    version: 0.1.24
+  - apiVersion: v2
     appVersion: 0.4.0-beta12
     created: "2024-05-10T14:25:36.529624043Z"
     description: Core backend application for DigitalHub.
@@ -9451,6 +9466,21 @@ entries:
   kubernetes-resource-manager:
   - apiVersion: v2
     appVersion: 1.1.8
+    created: "2024-05-15T08:52:44.118971245Z"
+    description: A Helm chart for Kubernetes
+    digest: 9bb45abbe8b2b50fef30909069aff096cf9d489fd0cebf7de61c3ee452204776
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: kubernetes-resource-manager
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/kubernetes-resource-manager-0.1.17/kubernetes-resource-manager-0.1.17.tgz
+    version: 0.1.17
+  - apiVersion: v2
+    appVersion: 1.1.8
     created: "2024-05-10T12:42:30.630603664Z"
     description: A Helm chart for Kubernetes
     digest: eceb49873ff44b529528ad494a7ded4b39d44757ea3bb196577cac6a9c85c9b1
@@ -10682,4 +10712,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-05-10T14:31:11.392433498Z"
+generated: "2024-05-15T08:52:44.119580547Z"
