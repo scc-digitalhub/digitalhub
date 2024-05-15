@@ -119,6 +119,21 @@ entries:
     version: 8.8.0
   apigw-operator:
   - apiVersion: v2
+    appVersion: 1.1.1
+    created: "2024-05-15T11:15:43.232767414Z"
+    description: A Helm chart for Kubernetes
+    digest: 347c52711f16153a94dc8d1e02a0fcd9fda8dfe7bb80a56a5af5c1e272076559
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: apigw-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/apigw-operator-0.1.5/apigw-operator-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
     appVersion: 1.0.5
     created: "2024-04-17T14:41:12.439957613Z"
     description: A Helm chart for Kubernetes
@@ -9494,6 +9509,21 @@ entries:
     version: 0.1.0
   dremio-rest-server-operator:
   - apiVersion: v2
+    appVersion: 1.0.3
+    created: "2024-05-15T11:15:43.362145235Z"
+    description: A Helm chart for Kubernetes
+    digest: d8b77c947005176416653386b17ceb0f5864bb1e5ec09937cf170e995534e264
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: dremio-rest-server-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/dremio-rest-server-operator-0.1.4/dremio-rest-server-operator-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
     appVersion: 1.0.2
     created: "2024-04-17T14:41:12.764738336Z"
     description: A Helm chart for Kubernetes
@@ -10757,6 +10787,21 @@ entries:
     version: 0.1.0
   postgrest-operator:
   - apiVersion: v2
+    appVersion: 2.0.4
+    created: "2024-05-15T11:15:43.489540803Z"
+    description: A Helm chart for Kubernetes
+    digest: 8a020e6b0c6f4595a6306cafba971834c7d12eb149bf407939e4cbb12f8dae8c
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: postgrest-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.3/postgrest-operator-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
     appVersion: 2.0.2
     created: "2024-04-17T14:41:12.885230007Z"
     description: A Helm chart for Kubernetes
@@ -10796,4 +10841,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-05-15T09:04:51.15136714Z"
+generated: "2024-05-15T11:15:43.490015695Z"
