@@ -32,6 +32,7 @@ global:
     bucket: &minioBucket "datalake"
     protocol: &minioProtocol "http"
   externalHostAddress: &globalExternalUrl "192.168.49.2"
+  externalTls: false
   securityContext:
     runAsNonRoot: true
     allowPrivilegeEscalation: false
@@ -145,7 +146,7 @@ coder:
     - name: jupyter
       nodePort: "30040"
       iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-      image: "ghcr.io/scc-digitalhub/jupyter:1.6.2-rc6_0.4.0b7"
+      image: "ghcr.io/scc-digitalhub/jupyter:1.6.2-rc6_0.4.0"
     - name: dremio
       nodePort: "30120"
       iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/dremio_logo_icon_168234.png
