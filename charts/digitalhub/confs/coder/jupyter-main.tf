@@ -375,27 +375,14 @@ resource "kubernetes_deployment" "jupyter" {
             name  = "DIGITALHUB_CORE_TOKEN"
             value = data.coder_workspace.me.owner_oidc_access_token
           }
-          env {
-            name = "POSTGRES_USER"
-            value_from {
-              secret_key_ref {
-                name = var.db_secret
-                key  = "username"
-              }
-            }
-          }
-          env {
-            name = "POSTGRES_PASSWORD"
-            value_from {
-              secret_key_ref {
-                name = var.db_secret
-                key  = "password"
-              }
-            }
-          }
           env_from {
             config_map_ref {
               name = "mlrun-common-env"
+            }
+          }
+          env_from {
+            secret_ref {
+              name = "digitalhub-common-creds"
             }
           }
           env_from {
