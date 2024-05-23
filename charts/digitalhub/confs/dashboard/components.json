@@ -1,5 +1,20 @@
 {{ $externalUrl := .Values.global.externalHostAddress -}}
 [
+  {{- if .Values.minio.enabled }}
+  {
+    "slug": "minio",
+    "name": "Minio",
+    "description": "S3-compatible datalake",
+    "port": "",
+    {{- if (index .Values "minio" "consoleIngress" "enabled") }}
+    {{- with (index .Values "minio" "consoleIngress" "hosts" 0) }}
+    "link": "https://{{ . }}"
+    {{- end }}
+    {{- else }}
+    "link": "http://{{ $externalUrl }}:{{ .Values.minio.consoleService.nodePort }}"
+    {{- end }}
+  },
+{{- end }}
   {
     "slug": "coder",
     "name": "Coder",
@@ -9,19 +24,6 @@
     "link": "https://{{ .Values.coder.coder.ingress.host }}"
     {{- else }}
     "link": "http://{{ $externalUrl }}:{{ .Values.coder.coder.service.httpNodePort }}"
-    {{- end }}
-  },
-  {
-    "slug": "dhcore",
-    "name": "DH Core",
-    "description": "Core Digital Hub",
-    "port": "",
-    {{- if .Values.core.ingress.enabled }}
-    {{- with (index .Values.core.ingress.hosts 0) }}
-    "link": "https://{{ .host }}"
-    {{- end }}
-    {{- else }}
-    "link": "http://{{ $externalUrl }}:{{ .Values.core.service.httpNodePort }}"
     {{- end }}
   },
   {
@@ -111,16 +113,16 @@
   },
 {{- end }}
   {
-    "slug": "minio",
-    "name": "Minio",
-    "description": "S3-compatible datalake",
+    "slug": "dhcore",
+    "name": "DH Core",
+    "description": "Core Digital Hub",
     "port": "",
-    {{- if (index .Values "minio" "consoleIngress" "enabled") }}
-    {{- with (index .Values "minio" "consoleIngress" "hosts" 0) }}
-    "link": "https://{{ . }}"
+    {{- if .Values.core.ingress.enabled }}
+    {{- with (index .Values.core.ingress.hosts 0) }}
+    "link": "https://{{ .host }}"
     {{- end }}
     {{- else }}
-    "link": "http://{{ $externalUrl }}:{{ .Values.minio.consoleService.nodePort }}"
+    "link": "http://{{ $externalUrl }}:{{ .Values.core.service.httpNodePort }}"
     {{- end }}
   }
 ]
