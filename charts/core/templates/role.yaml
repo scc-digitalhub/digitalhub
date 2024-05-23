@@ -38,6 +38,14 @@ rules:
   - get
   - list
 - apiGroups:
+  - "metrics.k8s.io"
+  resources:
+  - nodes
+  - pods
+  verbs:
+  - get
+  - list
+- apiGroups:
   - ""
   resources:
   - secrets
