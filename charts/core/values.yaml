@@ -142,16 +142,16 @@ kfp:
 runtime:
   nefertem:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-nefertem"
-    tag: "0.4.0"
+    tag: "0.5.0b1"
   dbt:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-dbt"
-    tag: "0.4.0"
+    tag: "0.5.0b1"
   mlrun:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-mlrun"
-    tag: "0.4.0"
+    tag: "0.5.0b1"
   kfp:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-kfp"
-    tag: "0.4.0"
+    tag: "0.5.0b1"
 
 authentication:
   basic:
