@@ -120,6 +120,9 @@ config:
   mailHost: ""
   mailPort: 465
   mailProtocol: smtps
+  mailTls: "false"
+  mailSender: ""
+  mailDebug: "false"
   applicationExtUrl: ""
 
 # Secrets
