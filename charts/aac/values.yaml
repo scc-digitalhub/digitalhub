@@ -140,6 +140,7 @@ appCreds:
 mailCreds:
   existingSecret: ""
   passwordKey: ""
+  usernameKey: ""
 
 jdbcCreds:
   existingSecret: ""
