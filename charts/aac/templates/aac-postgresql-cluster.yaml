@@ -2,19 +2,19 @@
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
-  name: aac-postgres-cluster
+  name: {{ .Values.postgresOperator.psqlClusterName }}
 spec:
   teamId: "aac"
   volume:
     size: 8Gi
   numberOfInstances: 1
   users:
-    aacadmin:  # database owner
+    {{ .Values.postgresOperator.adminUser }}:  # database owner
     - superuser
     - createdb
-    aacuser: []
+    {{ .Values.postgresOperator.user }}: []
   databases:
-    aacDB: aacuser
+    {{ .Values.postgresOperator.database }}: {{ .Values.postgresOperator.user }}
   postgresql:
     version: "15"
 {{- end }}
