@@ -9,9 +9,9 @@ data:
   MAIL_HOST: {{ .Values.config.mailHost }}
   MAIL_PORT: {{ .Values.config.mailPort | quote }}
   MAIL_PROTOCOL: {{ .Values.config.mailProtocol }}
-  MAIL_TLS: {{ .Values.config.mailTls }}
+  MAIL_TLS: {{ .Values.config.mailTls | quote }}
   MAIL_SENDER: {{ .Values.config.mailSender }}
-  MAIL_DEBUG: {{ .Values.config.mailDebug }}
+  MAIL_DEBUG: {{ .Values.config.mailDebug | quote }}
   BOOTSTRAP_APPLY: {{ .Values.config.bootstrapApply | quote }}
   BOOTSTRAP: {{ .Values.config.bootstrap }}
   LOG_LEVEL: {{ .Values.config.logLevel }}
