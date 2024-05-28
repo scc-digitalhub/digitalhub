@@ -111,12 +111,12 @@ affinity: {}
 
 # AAC Config Map
 config:
-  jdbcDialect: org.hibernate.dialect.PostgreSQLDialect
-  jdbcDriver: org.postgresql.Driver
+  jdbcDialect: org.hibernate.dialect.H2Dialect
+  jdbcDriver: org.h2.Driver
   bootstrapApply: "true"
   bootstrap: file:///home/aac/bootstrap.yaml
   logLevel: DEBUG
-  jdbcUrl: "jdbc:postgresql://aac-postgres-cluster:5432/aacDB"
+  jdbcUrl: "jdbc:h2:file:./data/db"
   mailHost: ""
   mailPort: 465
   mailProtocol: smtps
@@ -126,6 +126,12 @@ config:
   applicationExtUrl: ""
 
 # Secrets
+
+# AAC default H2 database credentials. Do not set them if you are using an external one.
+jdbcH2creds:
+  user: ""
+  password: ""
+
 bootstrapCreds:
   existingSecret: ""
 
@@ -142,8 +148,9 @@ mailCreds:
   passwordKey: ""
   usernameKey: ""
 
-jdbcCreds:
+jdbcExistingCreds:
   existingSecret: ""
+  userKey: ""
   passwordKey: ""
 
 mailSecret:
@@ -155,7 +162,11 @@ adminCreds:
   password: "admin"
 
 postgresOperator:
-  installed: true
+  installed: false
+  psqlClusterName: ""
+  adminUser: ""
+  user: ""
+  database: ""
 
 bootstrap: []
 

@@ -61,22 +61,32 @@ spec:
             - name: JDBC_USER
               valueFrom:
                 secretKeyRef:
-                {{- if .Values.jdbcCreds.existingSecret }}
-                  name: {{ .Values.jdbcCreds.existingSecret }}
-                  key: {{ .Values.jdbcCreds.passwordKey }}
+                {{- if .Values.jdbcExistingCreds.existingSecret }}
+                  name: {{ .Values.jdbcExistingCreds.existingSecret }}
+                  key: {{ .Values.jdbcExistingCreds.userKey }}
                 {{- else }}
-                  name: aacadmin.aac-postgres-cluster.credentials.postgresql.acid.zalan.do
+                {{- if .Values.postgresOperator.installed }}
+                  name: {{ .Values.postgresOperator.adminUser }}.{{ .Values.postgresOperator.psqlClusterName }}.credentials.postgresql.acid.zalan.do
                   key: username
+                {{- else }}
+                  name: aac-h2-creds
+                  key: user
+                {{- end }}
                 {{- end }}
             - name: JDBC_PASS
               valueFrom:
                 secretKeyRef:
-                {{- if .Values.jdbcCreds.existingSecret }}
-                  name: {{ .Values.jdbcCreds.existingSecret }}
-                  key: {{ .Values.jdbcCreds.passwordKey }}
+                {{- if .Values.jdbcExistingCreds.existingSecret }}
+                  name: {{ .Values.jdbcExistingCreds.existingSecret }}
+                  key: {{ .Values.jdbcExistingCreds.passwordKey }}
                 {{- else }}
-                  name: aacadmin.aac-postgres-cluster.credentials.postgresql.acid.zalan.do
+                {{- if .Values.postgresOperator.installed }}
+                  name: {{ .Values.postgresOperator.adminUser }}.{{ .Values.postgresOperator.psqlClusterName }}.credentials.postgresql.acid.zalan.do
                   key: password
+                {{- else }}
+                  name: aac-h2-creds
+                  key: password
+                {{- end }}
                 {{- end }}
             - name: ADMIN_USERNAME
               valueFrom:
