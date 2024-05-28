@@ -102,7 +102,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.postgrestString.existingSecret }}
-                  key: {{ .Values.postgrestString.passwordKey }}
+                  key: {{ .Values.postgrestString.databaseUrlKey }}
               {{- else }}
               value: postgresql://$(POSTGRES_USER):$(POSTGRES_PASS)@$(HOST):$(PORT)/$(DEFAULT_DATABASE)?$(URI_ARGS)
               {{- end }}
