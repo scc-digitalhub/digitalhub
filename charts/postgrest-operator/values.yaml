@@ -10,7 +10,7 @@ namespaceValues:
 # Secret containing the postgrest url
 postgrestString:
   existingSecret: ""
-  passwordKey: ""
+  databaseUrlKey: ""
 
 # Secret containing username and password of postgres
 postgresCredsExistingSecrets:
