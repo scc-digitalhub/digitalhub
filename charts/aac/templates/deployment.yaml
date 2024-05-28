@@ -43,7 +43,7 @@ spec:
                 secretKeyRef:
                 {{- if .Values.mailCreds.existingSecret }}
                   name: {{ .Values.mailCreds.existingSecret }}
-                  key: {{ .Values.mailCreds.passwordKey }}
+                  key: {{ .Values.mailCreds.usernameKey }}
                 {{- else }}
                   name: aac-mail-secret
                   key: jdbc-user
