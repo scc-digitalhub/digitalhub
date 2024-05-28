@@ -16,3 +16,4 @@ data:
   BOOTSTRAP: {{ .Values.config.bootstrap }}
   LOG_LEVEL: {{ .Values.config.logLevel }}
   APPLICATION_EXT_URL: {{ .Values.config.applicationExtUrl }}
+  APPLICATION_EMAIL: {{ .Values.config.mailSender }}
