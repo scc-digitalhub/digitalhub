@@ -194,6 +194,21 @@ entries:
     version: 8.8.0
   apigw-operator:
   - apiVersion: v2
+    appVersion: 1.1.2
+    created: "2024-06-03T11:36:17.252385977Z"
+    description: A Helm chart for Kubernetes
+    digest: 7c0c87f1f2fc5d6459c54521d0c37a887d87ffd69e8aa1949afcee378bb42908
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: apigw-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/apigw-operator-0.1.6/apigw-operator-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
     appVersion: 1.1.1
     created: "2024-05-15T11:15:43.232767414Z"
     description: A Helm chart for Kubernetes
@@ -10371,6 +10386,21 @@ entries:
     version: 1.2.4
   kubernetes-resource-manager:
   - apiVersion: v2
+    appVersion: 1.1.9
+    created: "2024-06-03T11:36:17.390649733Z"
+    description: A Helm chart for Kubernetes
+    digest: d56b51d79cf33a8f4f9513d23ad7decf7650d5ec296082369686df7077555072
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: kubernetes-resource-manager
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/kubernetes-resource-manager-0.1.18/kubernetes-resource-manager-0.1.18.tgz
+    version: 0.1.18
+  - apiVersion: v2
     appVersion: 1.1.8
     created: "2024-05-15T08:52:44.118971245Z"
     description: A Helm chart for Kubernetes
@@ -11884,4 +11914,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-05-29T09:23:39.077313129Z"
+generated: "2024-06-03T11:36:17.391160647Z"
