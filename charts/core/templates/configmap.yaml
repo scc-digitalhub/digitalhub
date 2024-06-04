@@ -16,6 +16,7 @@ data:
   RUNTIME_DBT_IMAGE: {{ .Values.runtime.dbt.image }}:{{ .Values.runtime.dbt.tag }}
   RUNTIME_MLRUN_IMAGE: {{ .Values.runtime.mlrun.image }}:{{ .Values.runtime.mlrun.tag }}
   RUNTIME_KFP_IMAGE: {{ .Values.runtime.kfp.image }}:{{ .Values.runtime.kfp.tag }}
+  RUNTIME_PYTHON_IMAGE: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag }}
   {{- if .Values.events.enabled }}
   ENABLE_EVENTS: {{ .Values.events.enabled | quote }} 
   {{- if .Values.events.rabbitmq.enabled }}
