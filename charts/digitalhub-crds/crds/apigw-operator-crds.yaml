@@ -61,6 +61,8 @@ spec:
           status:
             description: ApiGwStatus defines the observed state of ApiGw
             properties:
+              hash:
+                type: string
               state:
                 type: string
             type: object

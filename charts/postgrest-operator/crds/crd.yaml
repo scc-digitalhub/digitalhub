@@ -76,6 +76,8 @@ spec:
           status:
             description: PostgREST status
             properties:
+              message:
+                type: string
               state:
                 type: string
             type: object
