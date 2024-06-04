@@ -277,6 +277,15 @@ postgrest-operator:
 
 core:
   enabled: true
+  runtime:
+    nefertem:
+      tag: "0.5.0b7"
+    dbt:
+      tag: "0.5.0b7"
+    mlrun:
+      tag: "0.5.0b7"
+    kfp:
+      tag: "0.5.0b7"
   minio:
     endpoint: *minioEndpoint
     endpointPort: *minioEndpointPort
