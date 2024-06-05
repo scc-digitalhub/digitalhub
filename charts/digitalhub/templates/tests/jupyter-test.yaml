@@ -1,9 +1,12 @@
+{{- $files := .Files }}
+{{- range $key, $value := .Files }}
+{{- if hasPrefix "confs/tests/jupyter-test/jupyter-test" $key }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "{{ include "digitalhub.fullname" . }}-jupyter-test"
+  name: "{{ include "digitalhub.fullname" $ }}-{{ $key | trimPrefix "confs/tests/jupyter-test/" | trimSuffix ".py" }}"
   labels:
-    {{- include "digitalhub.labels" . | nindent 4 }}
+    {{- include "digitalhub.labels" $ | nindent 4 }}
   annotations:
     "helm.sh/hook": test
 spec:
@@ -11,16 +14,21 @@ spec:
     spec:
       containers:
         - name: jupyter
-          {{- range .Values.coder.customCoderTemplates }}
+          {{- range $.Values.coder.customCoderTemplates }}
           {{- if eq .name "jupyter" }}
           image: {{ .image }}
           {{- end }}
           {{- end }}
-          command: ['sh', '-c', 'python src/jupyter_test.py']
+          command: ['sh', '-c', 'python src/{{ $key | trimPrefix "confs/tests/jupyter-test/" }}']
           volumeMounts:
             - name: test-jupyter-volume
               mountPath: /home/jovyan/src
               readOnly: false
+            {{- if eq ($key | trimPrefix "confs/tests/jupyter-test/" | trimSuffix ".py") "jupyter-test-parkings" }}
+            - name: test-jupyter-parkings-volume
+              mountPath: /home/jovyan/src/parkings
+              readOnly: false
+            {{- end }}
           env:
             - name: "MLRUN_DBPATH"
               value: "http://mlrun-api:8080"
@@ -36,6 +44,18 @@ spec:
                 secretKeyRef:
                   name: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
                   key: "password"
+            {{- if $.Values.core.authentication.openId.enabled }}
+            - name: "CORE_CLIENT_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: "aac-digitalhub-tenant1-core-secret"
+                  key: "clientid"
+            - name: "CORE_CLIENT_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "aac-digitalhub-tenant1-core-secret"
+                  key: "clientsecret"
+            {{- end }}
           envFrom:
             - configMapRef:
                 name: mlrun-common-env
@@ -47,10 +67,18 @@ spec:
       volumes:
         - name: test-jupyter-volume
           configMap:
-            name: {{ include "digitalhub.fullname" . }}-configmap-test
+            name: {{ include "digitalhub.fullname" $ }}-test
+        {{- if eq ($key | trimPrefix "confs/tests/jupyter-test/" | trimSuffix ".py") "jupyter-test-parkings" }}
+        - name: test-jupyter-parkings-volume
+          configMap:
+            name: {{ include "digitalhub.fullname" $ }}-test-parkings
+        {{- end }}
       securityContext:
         runAsUser: 1000
         fsGroup: 100
         runAsGroup: 100
       restartPolicy: Never
   backoffLimit: 0
+---
+{{- end }}
+{{- end }}
