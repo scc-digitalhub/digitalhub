@@ -2,11 +2,11 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 0.11.0"
+      version = "~> 0.23.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.22"
+      version = "~> 2.30"
     }
   }
 }
@@ -15,7 +15,7 @@ provider "coder" {
 }
 
 locals {
-  dremio_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}dremio--dremio--${data.coder_workspace.me.name}--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  dremio_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}dremio--dremio--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
 }
 
 variable "use_kubeconfig" {
@@ -127,6 +127,8 @@ provider "kubernetes" {
 
 data "coder_workspace" "me" {}
 
+data "coder_workspace_owner" "me" {}
+
 resource "coder_agent" "dremio" {
   os             = "linux"
   arch           = "amd64"
@@ -158,11 +160,11 @@ resource "coder_metadata" "dremio" {
   resource_id = kubernetes_service.dremio-service.id
   item {
     key   = "Internal Endpoint"
-    value = "http://dremio-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}:${kubernetes_service.dremio-service.spec[0].port[0].port}"
+    value = "http://dremio-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}:${kubernetes_service.dremio-service.spec[0].port[0].port}"
   }
   item {
     key   = "Arrow Flight Endpoint"
-    value = "dremio-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}:${kubernetes_service.dremio-service.spec[0].port[1].port}"
+    value = "dremio-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}:${kubernetes_service.dremio-service.spec[0].port[1].port}"
   }
   item {
     key   = "URL"
@@ -172,21 +174,21 @@ resource "coder_metadata" "dremio" {
 
 resource "kubernetes_persistent_volume_claim" "dremio-data" {
   metadata {
-    name      = "dremio-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}-data"
+    name      = "dremio-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}-data"
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name"     = "dremio-pvc"
-      "app.kubernetes.io/instance" = "dremio-pvc-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "dremio-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
       "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace.me.owner_id
-      "com.coder.user.username"  = data.coder_workspace.me.owner
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
-      "com.coder.user.email" = data.coder_workspace.me.owner_email
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
     }
   }
   wait_until_bound = false
@@ -202,28 +204,28 @@ resource "kubernetes_persistent_volume_claim" "dremio-data" {
 
 resource "kubernetes_service" "dremio-service" {
   metadata {
-    name      = "dremio-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+    name      = "dremio-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name"     = "dremio-workspace"
-      "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "service"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
       "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace.me.owner_id
-      "com.coder.user.username"  = data.coder_workspace.me.owner
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
-      "com.coder.user.email" = data.coder_workspace.me.owner_email
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
     }
   }
   spec {
     selector = {
       "app.kubernetes.io/name"     = "dremio-workspace"
-      "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "workspace"
     }
@@ -255,22 +257,22 @@ resource "kubernetes_job" "source-init" {
     kubernetes_service.dremio-service
   ]
   metadata {
-    name      = "dremio-source-init-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+    name      = "dremio-source-init-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name"     = "dremio-source-init"
-      "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "job"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
       "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace.me.owner_id
-      "com.coder.user.username"  = data.coder_workspace.me.owner
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
-      "com.coder.user.email" = data.coder_workspace.me.owner_email
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
     }
   }
   spec {
@@ -375,22 +377,22 @@ resource "kubernetes_deployment" "dremio" {
   ]
   wait_for_rollout = false
   metadata {
-    name      = "dremio-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+    name      = "dremio-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name"     = "dremio-workspace"
-      "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "workspace"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
       "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace.me.owner_id
-      "com.coder.user.username"  = data.coder_workspace.me.owner
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
-      "com.coder.user.email" = data.coder_workspace.me.owner_email
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
     }
   }
   spec {
@@ -401,7 +403,7 @@ resource "kubernetes_deployment" "dremio" {
     selector {
       match_labels = {
         "app.kubernetes.io/name"     = "dremio-workspace"
-        "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+        "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
         "app.kubernetes.io/part-of"  = "coder"
         "app.kubernetes.io/type"     = "workspace"
       }
@@ -410,7 +412,7 @@ resource "kubernetes_deployment" "dremio" {
       metadata {
         labels = {
           "app.kubernetes.io/name"     = "dremio-workspace"
-          "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+          "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
           "app.kubernetes.io/part-of"  = "coder"
           "app.kubernetes.io/type"     = "workspace"
         }

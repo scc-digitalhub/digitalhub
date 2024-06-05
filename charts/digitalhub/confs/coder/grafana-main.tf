@@ -2,11 +2,11 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 0.11.0"
+      version = "~> 0.23.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.22"
+      version = "~> 2.30"
     }
   }
 }
@@ -15,7 +15,7 @@ provider "coder" {
 }
 
 locals {
-  grafana_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}grafana--grafana--${data.coder_workspace.me.name}--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  grafana_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}grafana--grafana--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
 }
 
 variable "namespace" {
@@ -35,7 +35,7 @@ variable "node_port" {
 }
 
 variable "image" {
-  type    = string
+  type = string
 }
 
 variable "https" {
@@ -54,11 +54,12 @@ provider "kubernetes" {
 
 data "coder_workspace" "me" {}
 
+data "coder_workspace_owner" "me" {}
+
 resource "coder_agent" "grafana" {
-  os                     = "linux"
-  arch                   = "amd64"
-  startup_script_timeout = 180
-  startup_script         = <<-EOT
+  os             = "linux"
+  arch           = "amd64"
+  startup_script = <<-EOT
     set -e
     /run.sh 2>&1
   EOT
@@ -99,28 +100,28 @@ resource "coder_metadata" "grafana" {
 
 resource "kubernetes_service" "grafana-service" {
   metadata {
-    name      = "grafana-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+    name      = "grafana-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name"     = "grafana-workspace"
-      "app.kubernetes.io/instance" = "grafana-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "grafana-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "service"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
       "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace.me.owner_id
-      "com.coder.user.username"  = data.coder_workspace.me.owner
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
-      "com.coder.user.email" = data.coder_workspace.me.owner_email
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
     }
   }
   spec {
     selector = {
       "app.kubernetes.io/name"     = "grafana-workspace"
-      "app.kubernetes.io/instance" = "grafana-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "grafana-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "workspace"
     }
@@ -137,22 +138,22 @@ resource "kubernetes_deployment" "grafana" {
   count            = data.coder_workspace.me.start_count
   wait_for_rollout = false
   metadata {
-    name      = "grafana-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+    name      = "grafana-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name"     = "grafana-workspace"
-      "app.kubernetes.io/instance" = "grafana-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "grafana-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "workspace"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
       "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace.me.owner_id
-      "com.coder.user.username"  = data.coder_workspace.me.owner
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
-      "com.coder.user.email" = data.coder_workspace.me.owner_email
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
     }
   }
   spec {
@@ -160,7 +161,7 @@ resource "kubernetes_deployment" "grafana" {
     selector {
       match_labels = {
         "app.kubernetes.io/name"     = "grafana-workspace"
-        "app.kubernetes.io/instance" = "grafana-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+        "app.kubernetes.io/instance" = "grafana-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
         "app.kubernetes.io/part-of"  = "coder"
         "app.kubernetes.io/type"     = "workspace"
       }
@@ -169,7 +170,7 @@ resource "kubernetes_deployment" "grafana" {
       metadata {
         labels = {
           "app.kubernetes.io/name"     = "grafana-workspace"
-          "app.kubernetes.io/instance" = "grafana-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+          "app.kubernetes.io/instance" = "grafana-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
           "app.kubernetes.io/part-of"  = "coder"
           "app.kubernetes.io/type"     = "workspace"
         }
