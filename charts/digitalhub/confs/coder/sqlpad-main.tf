@@ -2,11 +2,11 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 0.11.0"
+      version = "~> 0.23.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.22"
+      version = "~> 2.30"
     }
   }
 }
@@ -15,7 +15,7 @@ provider "coder" {
 }
 
 locals {
-  sqlpad_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}sqlpad--sqlpad--${data.coder_workspace.me.name}--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  sqlpad_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}sqlpad--sqlpad--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
 }
 
 variable "namespace" {
@@ -53,7 +53,7 @@ variable "node_port" {
 }
 
 variable "image" {
-  type    = string
+  type = string
 }
 
 variable "https" {
@@ -72,14 +72,39 @@ provider "kubernetes" {
 
 data "coder_workspace" "me" {}
 
+data "coder_workspace_owner" "me" {}
+
 resource "coder_agent" "sqlpad" {
-  os                     = "linux"
-  arch                   = "amd64"
-  startup_script_timeout = 180
-  startup_script         = <<-EOT
+  os             = "linux"
+  arch           = "amd64"
+  startup_script = <<-EOT
     set -e
     node /usr/app/server.js 2>&1
   EOT
+  metadata {
+    display_name = "CPU Usage"
+    key          = "0_cpu_usage"
+    script       = "coder stat cpu"
+    interval     = 10
+    timeout      = 1
+  }
+  metadata {
+    display_name = "RAM Usage"
+    key          = "1_ram_usage"
+    script       = "coder stat mem"
+    interval     = 10
+    timeout      = 1
+  }
+  metadata {
+    display_name = "Load Average (Host)"
+    key          = "6_load_host"
+    # get load avg scaled by number of cores
+    script   = <<EOT
+      echo "`cat /proc/loadavg | awk '{ print $1 }'` `nproc`" | awk '{ printf "%0.2f", $1/$2 }'
+    EOT
+    interval = 60
+    timeout  = 1
+  }
   display_apps {
     vscode                 = false
     vscode_insiders        = false
@@ -116,28 +141,28 @@ resource "coder_app" "sqlpad" {
 
 resource "kubernetes_service" "sqlpad-service" {
   metadata {
-    name      = "sqlpad-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+    name      = "sqlpad-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name"     = "sqlpad-workspace"
-      "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "service"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
       "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace.me.owner_id
-      "com.coder.user.username"  = data.coder_workspace.me.owner
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
-      "com.coder.user.email" = data.coder_workspace.me.owner_email
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
     }
   }
   spec {
     selector = {
       "app.kubernetes.io/name"     = "sqlpad-workspace"
-      "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "workspace"
     }
@@ -154,22 +179,22 @@ resource "kubernetes_deployment" "sqlpad" {
   count            = data.coder_workspace.me.start_count
   wait_for_rollout = false
   metadata {
-    name      = "sqlpad-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+    name      = "sqlpad-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name"     = "sqlpad-workspace"
-      "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "workspace"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
       "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace.me.owner_id
-      "com.coder.user.username"  = data.coder_workspace.me.owner
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
-      "com.coder.user.email" = data.coder_workspace.me.owner_email
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
     }
   }
   spec {
@@ -177,7 +202,7 @@ resource "kubernetes_deployment" "sqlpad" {
     selector {
       match_labels = {
         "app.kubernetes.io/name"     = "sqlpad-workspace"
-        "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+        "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
         "app.kubernetes.io/part-of"  = "coder"
         "app.kubernetes.io/type"     = "workspace"
       }
@@ -186,7 +211,7 @@ resource "kubernetes_deployment" "sqlpad" {
       metadata {
         labels = {
           "app.kubernetes.io/name"     = "sqlpad-workspace"
-          "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+          "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
           "app.kubernetes.io/part-of"  = "coder"
           "app.kubernetes.io/type"     = "workspace"
         }

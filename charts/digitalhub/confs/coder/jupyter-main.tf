@@ -2,11 +2,11 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 0.11.0"
+      version = "~> 0.23.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.22"
+      version = "~> 2.30"
     }
   }
 }
@@ -15,7 +15,7 @@ provider "coder" {
 }
 
 locals {
-  jupyter_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}jupyter--jupyter--${data.coder_workspace.me.name}--${data.coder_workspace.me.owner}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  jupyter_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}jupyter--jupyter--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
 }
 
 variable "use_kubeconfig" {
@@ -150,11 +150,12 @@ provider "kubernetes" {
 
 data "coder_workspace" "me" {}
 
+data "coder_workspace_owner" "me" {}
+
 resource "coder_agent" "jupyter" {
-  os                     = "linux"
-  arch                   = "amd64"
-  startup_script_timeout = 180
-  startup_script         = <<-EOT
+  os             = "linux"
+  arch           = "amd64"
+  startup_script = <<-EOT
     set -e
     jupyter lab --ServerApp.ip=0.0.0.0 --ServerApp.port=8888 --ServerApp.token="" --ServerApp.password=""
   EOT
@@ -175,9 +176,19 @@ resource "coder_agent" "jupyter" {
   metadata {
     display_name = "Home Disk"
     key          = "3_home_disk"
-    script       = "coder stat disk --path $${HOME}"
+    script       = "coder stat disk --path /home/jovyan/work"
     interval     = 60
     timeout      = 1
+  }
+  metadata {
+    display_name = "Load Average (Host)"
+    key          = "6_load_host"
+    # get load avg scaled by number of cores
+    script   = <<EOT
+      echo "`cat /proc/loadavg | awk '{ print $1 }'` `nproc`" | awk '{ printf "%0.2f", $1/$2 }'
+    EOT
+    interval = 60
+    timeout  = 1
   }
   display_apps {
     vscode                 = false
@@ -214,22 +225,22 @@ resource "coder_metadata" "jupyter" {
 
 resource "kubernetes_persistent_volume_claim" "home" {
   metadata {
-    name      = "jupyter-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}-home"
+    name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}-home"
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name"     = "jupyter-pvc"
-      "app.kubernetes.io/instance" = "jupyter-pvc-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "jupyter-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "pvc"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
       "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace.me.owner_id
-      "com.coder.user.username"  = data.coder_workspace.me.owner
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
-      "com.coder.user.email" = data.coder_workspace.me.owner_email
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
     }
   }
   wait_until_bound = false
@@ -245,28 +256,28 @@ resource "kubernetes_persistent_volume_claim" "home" {
 
 resource "kubernetes_service" "jupyter-service" {
   metadata {
-    name      = "jupyter-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+    name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name"     = "jupyter-workspace"
-      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "service"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
       "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace.me.owner_id
-      "com.coder.user.username"  = data.coder_workspace.me.owner
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
-      "com.coder.user.email" = data.coder_workspace.me.owner_email
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
     }
   }
   spec {
     selector = {
       "app.kubernetes.io/name"     = "jupyter-workspace"
-      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "workspace"
     }
@@ -286,22 +297,22 @@ resource "kubernetes_deployment" "jupyter" {
   ]
   wait_for_rollout = false
   metadata {
-    name      = "jupyter-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+    name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name"     = "jupyter-workspace"
-      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "workspace"
       // Coder specific labels.
       "com.coder.resource"       = "true"
       "com.coder.workspace.id"   = data.coder_workspace.me.id
       "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace.me.owner_id
-      "com.coder.user.username"  = data.coder_workspace.me.owner
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
-      "com.coder.user.email" = data.coder_workspace.me.owner_email
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
     }
   }
   spec {
@@ -312,7 +323,7 @@ resource "kubernetes_deployment" "jupyter" {
     selector {
       match_labels = {
         "app.kubernetes.io/name"     = "jupyter-workspace"
-        "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+        "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
         "app.kubernetes.io/part-of"  = "coder"
         "app.kubernetes.io/type"     = "workspace"
       }
@@ -321,7 +332,7 @@ resource "kubernetes_deployment" "jupyter" {
       metadata {
         labels = {
           "app.kubernetes.io/name"     = "jupyter-workspace"
-          "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace.me.owner)}-${lower(data.coder_workspace.me.name)}"
+          "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
           "app.kubernetes.io/part-of"  = "coder"
           "app.kubernetes.io/type"     = "workspace"
         }
@@ -361,7 +372,7 @@ resource "kubernetes_deployment" "jupyter" {
           }
           env {
             name  = "V3IO_USERNAME"
-            value = data.coder_workspace.me.owner
+            value = data.coder_workspace_owner.me.name
           }
           env {
             name  = "MLRUN_DBPATH"
@@ -373,7 +384,7 @@ resource "kubernetes_deployment" "jupyter" {
           }
           env {
             name  = "DIGITALHUB_CORE_TOKEN"
-            value = data.coder_workspace.me.owner_oidc_access_token
+            value = data.coder_workspace_owner.me.oidc_access_token
           }
           env_from {
             config_map_ref {
