@@ -136,6 +136,37 @@ resource "coder_agent" "dremio" {
     set -e
     /opt/dremio/bin/dremio start
   EOT
+  metadata {
+    display_name = "CPU Usage"
+    key          = "0_cpu_usage"
+    script       = "coder stat cpu"
+    interval     = 10
+    timeout      = 1
+  }
+  metadata {
+    display_name = "RAM Usage"
+    key          = "1_ram_usage"
+    script       = "coder stat mem"
+    interval     = 10
+    timeout      = 1
+  }
+  metadata {
+    display_name = "Dremio Disk"
+    key          = "3_home_disk"
+    script       = "coder stat disk --path /opt/dremio/data"
+    interval     = 60
+    timeout      = 1
+  }
+  metadata {
+    display_name = "Load Average (Host)"
+    key          = "6_load_host"
+    # get load avg scaled by number of cores
+    script   = <<EOT
+      echo "`cat /proc/loadavg | awk '{ print $1 }'` `nproc`" | awk '{ printf "%0.2f", $1/$2 }'
+    EOT
+    interval = 60
+    timeout  = 1
+  }
   display_apps {
     vscode                 = false
     vscode_insiders        = false
