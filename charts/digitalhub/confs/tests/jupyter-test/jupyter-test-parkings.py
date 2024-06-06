@@ -30,18 +30,18 @@ project = mlrun.get_or_create_project("parcheggi", "./")
 project.set_source(source="git://github.com/scc-digitalhub/gdb-project-parkings.git", pull_at_runtime=True)
 project.save()
 
-project.set_function("src/download-all.py", name="download-all", kind="job", image="mlrun/mlrun", handler="downloader")
+project.set_function("src/parkings/download-all.py", name="download-all", kind="job", image="mlrun/mlrun", handler="downloader")
 
-project.set_function("src/extract_parkings.py", name="extract-parkings", kind="job", image="mlrun/mlrun", handler="extract_parkings")
+project.set_function("src/parkings/extract_parkings.py", name="extract-parkings", kind="job", image="mlrun/mlrun", handler="extract_parkings")
 
-project.set_function("src/aggregate_parkings.py", name="aggregate-parkings", kind="job", image="mlrun/mlrun", handler="aggregate_parkings")
+project.set_function("src/parkings/aggregate_parkings.py", name="aggregate-parkings", kind="job", image="mlrun/mlrun", handler="aggregate_parkings")
 
-project.set_function("src/parkings_to_db.py", name="to-db", kind="job", image="mlrun/mlrun", handler="to_db", requirements=["sqlalchemy", "psycopg2-binary"])
+project.set_function("src/parkings/parkings_to_db.py", name="to-db", kind="job", image="mlrun/mlrun", handler="to_db", requirements=["sqlalchemy", "psycopg2-binary"])
 project.set_secrets({"DB_USERNAME": os.getenv("POSTGRES_USER"), "DB_PASSWORD": os.getenv("POSTGRES_PASSWORD")})
 project.save()
 project.build_function("to-db", base_image="mlrun/mlrun")
 
-project.set_workflow("parking-data-pipeline","./src/parking_data_pipeline.py", handler="parking_pipeline")
+project.set_workflow("parking-data-pipeline","./src/parkings/parking_data_pipeline.py", handler="parking_pipeline")
 project.save()
 
-project.run("parking-data-pipeline", schedule="0 0 * * *")
+project.run("parking-data-pipeline", watch=True, timeout=300)

@@ -295,6 +295,9 @@ core:
     port: "8080"
   kfp:
     endpoint: "http://ml-pipeline:8888"
+  authentication:
+    openId:
+      enabled: false
   events:
     enabled: false
     rabbitmq:
