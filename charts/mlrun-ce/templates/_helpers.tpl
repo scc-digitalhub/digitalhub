@@ -126,17 +126,17 @@ http://minio.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.minio.service
 {{- end -}}
 {{- end -}}
 
-{{- define "mlrun-ce.minio.rootUser" -}}
+{{- define "mlrun-ce.minio.tenantUser" -}}
 {{- if and (.Values.global.minio) (not .Values.minio.enabled) -}}
-{{ .Values.global.minio.rootUser }}
+{{ .Values.global.minio.tenantUser }}
 {{- else -}}
 {{ .Values.minio.rootUser }}
 {{- end -}}
 {{- end -}}
 
-{{- define "mlrun-ce.minio.rootPassword" -}}
+{{- define "mlrun-ce.minio.tenantPassword" -}}
 {{- if and (.Values.global.minio) (not .Values.minio.enabled) -}}
-{{ .Values.global.minio.rootPassword }}
+{{ .Values.global.minio.tenantPassword }}
 {{- else -}}
 {{ .Values.minio.rootPassword }}
 {{- end -}}

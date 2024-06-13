@@ -24,8 +24,8 @@ You're up and running !
   http://{{ .Values.global.externalHostAddress }}:{{ .Values.minio.consoleService.nodePort }}
 
   Credentials:
-    username: {{ .Values.minio.rootUser }}
-    password: {{ .Values.minio.rootPassword }}
+    username: {{ include "mlrun-ce.minio.tenantUser" . }}
+    password: {{ include "mlrun-ce.minio.tenantPassword" . }}
 
 {{- end }}
 

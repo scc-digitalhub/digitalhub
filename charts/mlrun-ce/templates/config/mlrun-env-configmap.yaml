@@ -5,11 +5,11 @@ metadata:
   name: mlrun-common-env
 data:
   MLRUN_STORAGE__AUTO_MOUNT_TYPE: s3
-  MLRUN_STORAGE__AUTO_MOUNT_PARAMS: "aws_access_key={{ include "mlrun-ce.minio.rootUser" . }},aws_secret_key={{ include "mlrun-ce.minio.rootPassword" . }},endpoint_url={{ include "mlrun-ce.minio.service.url" . }}"
+  MLRUN_STORAGE__AUTO_MOUNT_PARAMS: "aws_access_key={{ include "mlrun-ce.minio.tenantUser" . }},aws_secret_key={{ include "mlrun-ce.minio.tenantPassword" . }},endpoint_url={{ include "mlrun-ce.minio.service.url" . }}"
   MLRUN_HTTPDB__PROJECTS__FOLLOWERS: nuclio
   S3_ENDPOINT_URL: {{ include "mlrun-ce.minio.service.url" . }}
-  AWS_SECRET_ACCESS_KEY: {{ include "mlrun-ce.minio.rootPassword" . }}
-  AWS_ACCESS_KEY_ID: {{ include "mlrun-ce.minio.rootUser" . }}
+  AWS_SECRET_ACCESS_KEY: {{ include "mlrun-ce.minio.tenantPassword" . }}
+  AWS_ACCESS_KEY_ID: {{ include "mlrun-ce.minio.tenantUser" . }}
   MLRUN_HTTPDB__REAL_PATH: s3://
   MLRUN_ARTIFACT_PATH: s3://{{ include "mlrun-ce.minio.bucket" . }}/projects/{{ `{{run.project}}` }}/artifacts
   MLRUN_FEATURE_STORE__DATA_PREFIXES__DEFAULT: s3://{{ include "mlrun-ce.minio.bucket" . }}/projects/{project}/FeatureStore/{name}/{kind}
@@ -23,5 +23,4 @@ data:
   MLRUN_MODEL_ENDPOINT_MONITORING__ENDPOINT_STORE_CONNECTION: "{{ template "mlrun-ce.mlrun.modelMonitoring.DSN" . }}"
 {{- end }}
   MLRUN_GRAFANA_URL: http://{{ .Values.global.externalHostAddress }}:{{ index .Values "kube-prometheus-stack" "grafana" "service" "nodePort" }}
-  MLRUN_httpdb__nuclio__default_service_type: {{ .Values.pipelines.ui.service.type }}
 {{- end}}
