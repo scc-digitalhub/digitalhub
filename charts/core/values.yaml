@@ -51,8 +51,6 @@ securityContext:
   # runAsUser: 1000
 
 minio:
-  rootUser: minio
-  rootPassword: minio123
   endpoint: "minio"
   endpointPort: "9000"
   bucket: "mlrun"
