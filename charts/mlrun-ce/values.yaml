@@ -12,8 +12,8 @@ global:
   crd:
     enabled: true
   minio:
-    rootUser: minio
-    rootPassword: minio123
+    tenantUser: datalake
+    tenantPassword: datalake
     endpoint: "minio"
     endpointPort: "9000"
     bucket: "mlrun"

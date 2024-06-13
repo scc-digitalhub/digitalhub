@@ -23,8 +23,8 @@ Digitalhub componet URLs:
 {{- with (index .Subcharts "mlrun-ce") }}
   - MLRun API: http://{{ $externalUrl }}:{{ index .Values "mlrun" "api" "service" "nodePort" }}
   - MLRun UI: http://{{ $externalUrl }}:{{ index .Values "mlrun" "ui" "service" "nodePort" }}
-  - Minio API: http://{{ $externalUrl }}:{{ index .Values "minio" "service" "nodePort" }} (Username: {{ index .Values "minio" "rootUser" }} Password: {{ index .Values "minio" "rootPassword" }})
-  - Minio UI: http://{{ $externalUrl }}:{{ index .Values "minio" "consoleService" "nodePort" }} (Username: {{ index .Values "minio" "rootUser" }} Password: {{ index .Values "minio" "rootPassword" }})
+  - Minio API: http://{{ $externalUrl }}:{{ index .Values "minio" "service" "nodePort" }} (Admin username: {{ index .Values "minio" "rootUser" }} - Admin password: {{ index .Values "minio" "rootPassword" }} | User username: {{ index .Values "global" "minio" "tenantUser" }} - User password: {{ index .Values "global" "minio" "tenantPassword" }})
+  - Minio UI: http://{{ $externalUrl }}:{{ index .Values "minio" "consoleService" "nodePort" }} (Admin username: {{ index .Values "minio" "rootUser" }} - Admin password: {{ index .Values "minio" "rootPassword" }} | User username: {{ index .Values "global" "minio" "tenantUser" }} - User password: {{ index .Values "global" "minio" "tenantPassword" }})
   - KubeFlow: http://{{ $externalUrl }}:{{ index .Values "pipelines" "ui" "service" "nodePort" }}
 {{- end }}
   - Coder: http://{{ $externalUrl }}:{{ .Values.coder.coder.service.httpNodePort }} (Username: {{ .Values.coder.email }} Password: {{ .Values.coder.password }})

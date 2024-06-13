@@ -27,9 +27,12 @@ global:
   minio:
     rootUser: &minioRootUser minio
     rootPassword: &minioRootPassword minio123
+    tenantUser: &minioTenantUser datalake
+    tenantPassword: &minioTenantPassword datalake
     endpoint: &minioEndpoint "minio"
     endpointPort: &minioEndpointPort "9000"
     bucket: &minioBucket "datalake"
+    policy: &minioPolicy "datalakepolicy"
     protocol: &minioProtocol "http"
   externalHostAddress: &globalExternalUrl "192.168.49.2"
   externalTls: false
@@ -65,6 +68,8 @@ mlrun-ce:
     crd:
       create: *globalCrd
     dashboard:
+      ingress:
+        enabled: false
       kaniko:
         insecurePushRegistry: true
         insecurePullRegistry: true
@@ -132,8 +137,8 @@ mlrun-ce:
         nodePort: 30100
     minio:
       enabled: true
-      accessKey: *minioRootUser
-      secretKey: *minioRootPassword
+      accessKey: *minioTenantUser
+      secretKey: *minioTenantPassword
       endpoint: *minioEndpoint
       endpointPort: *minioEndpointPort
       bucket: *minioBucket
@@ -274,8 +279,6 @@ core:
     kfp:
       tag: "0.5.0b7"
   minio:
-    rootUser: *minioRootUser
-    rootPassword: *minioRootPassword
     endpoint: *minioEndpoint
     endpointPort: *minioEndpointPort
     bucket: *minioBucket
@@ -453,6 +456,8 @@ solr:
 
 minio:
   enabled: true
+  deploymentUpdate:
+    type: Recreate
   rootUser: *minioRootUser
   rootPassword: *minioRootPassword
   mode: standalone
@@ -466,6 +471,31 @@ minio:
     - name: datalake
       policy: none
       purge: false
+  # By default, users and policies are created with our minio operator.
+  # Should you decide to disable it and create the resources with the minio chart, use the structure specified below:
+  # policies:
+  #   - name: datalakepolicy
+  #     statements:
+  #     - effect: Allow
+  #       resources:
+  #         - 'arn:aws:s3:::datalake/*'
+  #       actions:
+  #         - 's3:GetBucketLocation'
+  #         - 's3:GetObject'
+  #         - 's3:DeleteObject'
+  #         - 's3:PutObject'
+  #         - 's3:ListBucket'
+  #         - 's3:AbortMultipartUpload'
+  #         - 's3:ListMultipartUploadParts'
+  #         - 's3:ListBucketMultipartUploads'
+  #         - 's3:ListBucketMultipartUploads'
+  #         - 's3:GetObjectRetention'
+  #         - 's3:GetBucketObjectLockConfiguration'
+  #         - 's3:GetObjectVersionTagging'
+  # users:
+  #   - accessKey: datalake
+  #     secretKey: datalake
+  #     policy: datalakepolicy
   resources:
     requests:
       memory: 0.5Gi
