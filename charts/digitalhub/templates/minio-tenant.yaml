@@ -1,0 +1,57 @@
+{{- if .Values.minio.enabled }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: minio-tenant
+type: Opaque
+data:
+  tenantUser: {{ .Values.global.minio.tenantUser | b64enc }}
+  tenantPassword: {{ .Values.global.minio.tenantPassword | b64enc }}
+{{- end }}
+---
+{{- if index .Values "minio-operator" "enabled" }}
+apiVersion: minio.scc-digitalhub.github.io/v1
+kind: Policy
+metadata:
+  name: tenantpolicy
+  namespace: {{ .Release.Namespace }}
+spec:
+  name: {{ .Values.global.minio.policy }}
+  content: >-
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Effect": "Allow",
+              "Action": [
+                  "s3:GetBucketLocation",
+                  "s3:GetObject",
+                  "s3:DeleteObject",
+                  "s3:PutObject",
+                  "s3:ListBucket",
+                  "s3:AbortMultipartUpload",
+                  "s3:ListMultipartUploadParts",
+                  "s3:ListBucketMultipartUploads",
+                  "s3:ListBucketMultipartUploads",
+                  "s3:GetObjectRetention",
+                  "s3:GetBucketObjectLockConfiguration",
+                  "s3:GetObjectVersionTagging"
+              ],
+              "Resource": [
+                  "arn:aws:s3:::{{ .Values.global.minio.bucket }}/*"
+              ]
+          }
+      ]
+    }
+---
+apiVersion: minio.scc-digitalhub.github.io/v1
+kind: User
+metadata:
+  name: tenantuser
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessKey: {{ .Values.global.minio.tenantUser }}
+  secretKey: {{ .Values.global.minio.tenantPassword }}
+  policies:
+    - {{ .Values.global.minio.policy }}
+{{- end }}

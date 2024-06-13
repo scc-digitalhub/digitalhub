@@ -18,7 +18,7 @@ spec:
         ref:
           apiVersion: v1
           kind: Secret
-          name: minio
+          name: minio-tenant
   templates:
   - object:
       apiVersion: v1
@@ -28,6 +28,6 @@ spec:
       stringData:
         POSTGRES_USER: "{{ "{{" }} matrix.postgressecret.data.username | b64decode {{ "}}" }}"
         POSTGRES_PASSWORD: "{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}"
-        AWS_ACCESS_KEY_ID: "{{ "{{" }} matrix.miniosecret.data.rootUser | b64decode {{ "}}" }}"
-        AWS_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.miniosecret.data.rootPassword | b64decode {{ "}}" }}"
+        AWS_ACCESS_KEY_ID: "{{ "{{" }} matrix.miniosecret.data.tenantUser | b64decode {{ "}}" }}"
+        AWS_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.miniosecret.data.tenantPassword | b64decode {{ "}}" }}"
 {{- end }}
