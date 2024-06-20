@@ -68,6 +68,8 @@ mlrun-ce:
       kaniko:
         insecurePushRegistry: true
         insecurePullRegistry: true
+      ingress:
+        enabled: false
   mlrun:
     api:
       image:
