@@ -23,5 +23,4 @@ data:
   MLRUN_MODEL_ENDPOINT_MONITORING__ENDPOINT_STORE_CONNECTION: "{{ template "mlrun-ce.mlrun.modelMonitoring.DSN" . }}"
 {{- end }}
   MLRUN_GRAFANA_URL: http://{{ .Values.global.externalHostAddress }}:{{ index .Values "kube-prometheus-stack" "grafana" "service" "nodePort" }}
-  MLRUN_httpdb__nuclio__default_service_type: {{ .Values.pipelines.ui.service.type }}
 {{- end}}
