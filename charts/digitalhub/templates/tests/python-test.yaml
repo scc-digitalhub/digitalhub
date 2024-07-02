@@ -1,10 +1,11 @@
 {{- $files := .Files }}
 {{- range $key, $value := .Files }}
-{{- if hasPrefix "confs/tests/jupyter-test/jupyter-test" $key }}
+{{- if hasPrefix "confs/tests/python-test/python-test" $key }}
+{{- $testName := ($key | trimPrefix "confs/tests/python-test/python-test-" | trimSuffix ".py") }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "{{ include "digitalhub.fullname" $ }}-{{ $key | trimPrefix "confs/tests/jupyter-test/" | trimSuffix ".py" }}"
+  name: "{{ include "digitalhub.fullname" $ }}-python-test-{{$testName}}"
   labels:
     {{- include "digitalhub.labels" $ | nindent 4 }}
   annotations:
@@ -13,22 +14,13 @@ spec:
   template:
     spec:
       containers:
-        - name: jupyter
-          {{- range $.Values.coder.customCoderTemplates }}
-          {{- if eq .name "jupyter" }}
-          image: {{ .image }}
-          {{- end }}
-          {{- end }}
-          command: ['sh', '-c', 'python src/{{ $key | trimPrefix "confs/tests/jupyter-test/" }}']
+        - name: python
+          image: python:3.9-slim
+          command: ['sh', '-c', 'pip install digitalhub_runtime_{{$testName}}[local]==0.5.0 requests-oauthlib {{- if eq ($testName) "nefertem" }} nefertem-inference-frictionless nefertem-profiling-frictionless nefertem-validation-frictionless {{- end }} && python home/{{ $key | trimPrefix "confs/tests/python-test/" }}']
           volumeMounts:
-            - name: test-jupyter-volume
-              mountPath: /home/jovyan/src
+            - name: test-volume
+              mountPath: /home
               readOnly: false
-            {{- if eq ($key | trimPrefix "confs/tests/jupyter-test/" | trimSuffix ".py") "jupyter-test-parkings" }}
-            - name: test-jupyter-parkings-volume
-              mountPath: /home/jovyan/src/parkings
-              readOnly: false
-            {{- end }}
           env:
             - name: "MLRUN_DBPATH"
               value: "http://mlrun-api:8080"
@@ -65,14 +57,9 @@ spec:
             readOnlyRootFilesystem: false
             runAsUser: 0
       volumes:
-        - name: test-jupyter-volume
+        - name: test-volume
           configMap:
-            name: {{ include "digitalhub.fullname" $ }}-jupyter-test
-        {{- if eq ($key | trimPrefix "confs/tests/jupyter-test/" | trimSuffix ".py") "jupyter-test-parkings" }}
-        - name: test-jupyter-parkings-volume
-          configMap:
-            name: {{ include "digitalhub.fullname" $ }}-jupyter-test-parkings
-        {{- end }}
+            name: {{ include "digitalhub.fullname" $ }}-python-test
       securityContext:
         runAsUser: 1000
         fsGroup: 100
