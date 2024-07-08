@@ -7,8 +7,8 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.5.13"
-appVersion: "0.5.0"
+version: "0.6.0"
+appVersion: "0.6.0"
 dependencies:
 - name: apigw-operator
   version: "0.1.7"
@@ -19,7 +19,7 @@ dependencies:
   repository: https://helm.coder.com/v2
   condition: coder.enabled
 - name: core
-  version: "0.1.29"
+  version: "0.1.30"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: kubernetes-resource-manager
