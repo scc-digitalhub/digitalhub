@@ -53,3 +53,4 @@ data:
   DOCKER_REGISTRY: {{ .Values.global.registry.url }}
   DOCKER_REGISTRY_SECRET: {{ .Values.global.registry.secretName }}
 {{- end }}
+DH_CORS_ORIGINS: {{ .Values.corsOrigin }}
