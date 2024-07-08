@@ -142,21 +142,19 @@ kfp:
 runtime:
   nefertem:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-nefertem"
-    tag: "0.6.0"
+    tag: "0.6.0b2"
   dbt:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-dbt"
-    tag: "0.6.0"
+    tag: "0.6.0b2"
   mlrun:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-mlrun"
-    tag: "0.6.0"
+    tag: "0.6.0b2"
   kfp:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-kfp"
-    tag: "0.6.0"
+    tag: "0.6.0b2"
   python:
-    image: "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime"
-    tag3_9: "3.9-0.6.0"
-    tag3_10: "3.10-0.6.0"
-    tag3_11: "3.11-0.6.0"
+    image: "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime-3.9"
+    tag: "0.6.0b2"
 
 authentication:
   basic:
@@ -202,7 +200,3 @@ solr:
       image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
 
 corsOrigin: ""
-
-registry:
-  kaniko:
-    imagePrefix: ""
