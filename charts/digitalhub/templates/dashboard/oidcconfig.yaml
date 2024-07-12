@@ -21,7 +21,7 @@ spec:
         name: dashboard-oidc-secret
       stringData:
         env.js: |-
-          window.env = {"VITE_OIDC_CONFIG":JSON.stringify({"accessTokenExpiringNotificationTime": "3570", "authority": "{{ .Values.dashboard.oidc.config.issuer }}", "clientId": "{{ "{{" }} matrix.aacdashboardsecret.data.clientid | b64decode {{ "}}" }}", "redirectUri": "https://{{ include "digitalhub.oidcDashboardEndpoint" . }}/oidc-callback", "responseType": "code", "scope": "openid profile email", "automaticSilentRenew": "false", "automaticSilentSignin": "false", "post_logout_redirect_uri": "https://{{ include "digitalhub.oidcDashboardEndpoint" . }}"}), "VITE_PLATFORM_TITLE": "Digital Hub", "VITE_PLATFORM_VERSION": "0.4"}
+          window.env = {"VITE_OIDC_CONFIG":JSON.stringify({"accessTokenExpiringNotificationTime": "3570", "authority": "{{ .Values.dashboard.oidc.config.issuer }}", "clientId": "{{ "{{" }} matrix.aacdashboardsecret.data.clientid | b64decode {{ "}}" }}", "redirectUri": "https://{{ include "digitalhub.oidcDashboardEndpoint" . }}/oidc-callback", "responseType": "code", "scope": "openid profile email", "automaticSilentRenew": "false", "automaticSilentSignin": "false", "post_logout_redirect_uri": "https://{{ include "digitalhub.oidcDashboardEndpoint" . }}"}), "VITE_PLATFORM_TITLE": "OltreAI", "VITE_PLATFORM_VERSION": "0.6"}
 {{- else -}}
 {{- $v := tpl (.Files.Get "confs/dashboard/env.js") . }}
 apiVersion: v1
