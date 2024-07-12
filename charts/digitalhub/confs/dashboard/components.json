@@ -39,18 +39,29 @@
     "link": "http://{{ $externalUrl }}:{{ index .Values "kubernetes-resource-manager" "service" "nodePort"}}"
     {{- end }}
   },
+{{- if (index .Values.dashboard "additional-components" "enabled") }}
+{{- range (index .Values.dashboard "additional-components" "apps") }}
+  {
+    "slug": {{ .name | quote }},
+    "name": {{ .name | title | quote }},
+    "description": {{ .description | quote }},
+    "port": "",
+  {{- if .ingress.enabled }}
+    {{- with (index . "ingress" "hosts" 0) }}
+    "link": "https://{{ . }}"
+    {{- end }}
+  {{- else }}
+    "link": "http://{{ .service.name }}:{{ .service.port }}"
+  {{- end }}
+  },
+{{- end}}
+{{- end }}
 {{- if (index .Values "oauth2-proxy" "enabled") }}
 {{- range (index .Values "oauth2-proxy" "apps") }}
   {
     "slug": {{ .name | quote }},
     "name": {{ .name | title | quote }},
-    {{- if eq .name "nuclio"}}
-    "description": "Serverless platform",
-    {{- else if eq .name "mlrun" }}
-    "description": "ML Run platform UI and API for the MLOps processes",
-    {{- else if eq .name "kubeflow" }}
-    "description": "Kubeflow Pipelines is a platform for building and deploying portable, scalable machine learning (ML) workflows",
-    {{- end }}
+    "description": {{ .description | quote }},
     "port": "",
   {{- if .ingress.enabled }}
     {{- with (index . "ingress" "hosts" 0) }}
@@ -63,6 +74,8 @@
     "link": "http://{{ $externalUrl }}:{{ index .Values "mlrun-ce" "mlrun" "ui" "service" "nodePort" }}"
     {{- else if eq .name "kubeflow" }}
     "link": "http://{{ $externalUrl }}:{{ index .Values "mlrun-ce" "pipelines" "ui" "service" "nodePort" }}"
+    {{- else }}
+    "link": "http://{{ .service.name }}:{{ .service.port }}"
     {{- end }}
   {{- end }}
   },
