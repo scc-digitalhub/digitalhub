@@ -155,7 +155,7 @@ coder:
     - name: jupyter
       nodePort: "30040"
       iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-      image: "ghcr.io/scc-digitalhub/jupyter:1.6.2-rc1_0.6.0b2"
+      image: "ghcr.io/scc-digitalhub/jupyter:1.6.2-rc1_0.6.0b7"
     - name: dremio
       nodePort: "30120"
       iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/dremio_logo_icon_168234.png
@@ -347,6 +347,7 @@ oauth2-proxy:
   enabled: false
   apps:
     - name: ""
+      description: ""
       service:
         name: ""
         port: ""
@@ -432,6 +433,27 @@ dashboard:
         key: ""
     config:
       issuer: ""
+  additional-components:
+    enabled: false
+    apps:
+      - name: ""
+        description: ""
+        service:
+          name: ""
+          port: ""
+        ingress:
+          enabled: false
+          annotations: {}
+          ingressClassName: ""
+          hosts: []
+          path: /
+          tls: []
+        redirectUrl: ""
+        oidcIssuerUrl: ""
+        existingSecret:
+          name: ""
+          clientId: ""
+          secretKey: ""
 
 solr-operator:
   enabled: true
