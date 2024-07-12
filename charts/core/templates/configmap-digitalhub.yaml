@@ -5,6 +5,7 @@ metadata:
 data:
   S3_BUCKET_NAME: {{ .Values.minio.bucket }}
   S3_ENDPOINT_URL: "{{ .Values.minio.protocol }}://{{ .Values.minio.endpoint }}:{{ .Values.minio.endpointPort }}"
+  JUPYTERLAB_S3_ENDPOINT: "{{ .Values.minio.protocol }}://{{ .Values.minio.endpoint }}:{{ .Values.minio.endpointPort }}"
   DIGITALHUB_CORE_ENDPOINT: "http://{{ include "core.fullname" . }}:{{ .Values.service.port }}"
   DIGITALHUB_KRM_ENDPOINT: "http://{{ .Release.Name }}-kubernetes-resource-manager:{{ .Values.krm.port }}"
   POSTGRES_HOST: {{ .Values.postgres.host }}
