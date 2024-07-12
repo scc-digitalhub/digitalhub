@@ -347,6 +347,7 @@ oauth2-proxy:
   enabled: false
   apps:
     - name: ""
+      description: ""
       service:
         name: ""
         port: ""
@@ -432,6 +433,27 @@ dashboard:
         key: ""
     config:
       issuer: ""
+  additional-components:
+    enabled: false
+    apps:
+      - name: ""
+        description: ""
+        service:
+          name: ""
+          port: ""
+        ingress:
+          enabled: false
+          annotations: {}
+          ingressClassName: ""
+          hosts: []
+          path: /
+          tls: []
+        redirectUrl: ""
+        oidcIssuerUrl: ""
+        existingSecret:
+          name: ""
+          clientId: ""
+          secretKey: ""
 
 solr-operator:
   enabled: true
