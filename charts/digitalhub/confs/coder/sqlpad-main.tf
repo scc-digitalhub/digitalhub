@@ -116,7 +116,7 @@ resource "coder_agent" "sqlpad" {
 
 resource "coder_metadata" "sqlpad" {
   count       = data.coder_workspace.me.start_count
-  resource_id = kubernetes_service.sqlpad-service.id
+  resource_id = kubernetes_deployment.sqlpad.id
   item {
     key   = "URL"
     value = local.sqlpad_url
