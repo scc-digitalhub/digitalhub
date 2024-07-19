@@ -216,7 +216,7 @@ resource "coder_app" "jupyter" {
 
 resource "coder_metadata" "jupyter" {
   count       = data.coder_workspace.me.start_count
-  resource_id = kubernetes_service.jupyter-service.id
+  resource_id = kubernetes_deployment.jupyter.id
   item {
     key   = "URL"
     value = local.jupyter_url

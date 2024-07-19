@@ -115,7 +115,7 @@ resource "coder_app" "grafana" {
 
 resource "coder_metadata" "grafana" {
   count       = data.coder_workspace.me.start_count
-  resource_id = kubernetes_service.grafana-service.id
+  resource_id = kubernetes_deployment.grafana.id
   item {
     key   = "URL"
     value = local.grafana_url
