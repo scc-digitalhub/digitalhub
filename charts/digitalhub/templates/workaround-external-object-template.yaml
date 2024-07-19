@@ -1,0 +1,40 @@
+{{- if ( index .Values "template-controller" "objectTemplate" "enabled" ) }}
+apiVersion: templates.kluctl.io/v1alpha1
+kind: ObjectTemplate
+metadata:
+  name: {{ include "digitalhub.fullname" . }}-external-values-mlrun-configmap
+spec:
+  serviceAccountName: configmap-transformer
+  prune: true
+  matrix:
+    - name: mlruncommonenv
+      object:
+        ref:
+          apiVersion: v1
+          kind: ConfigMap
+          name: mlrun-common-env
+        jsonPath: .data
+  templates:
+    - object:
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: "mlrun-common-env-external"
+        data:
+          AWS_ACCESS_KEY_ID: "{{ "{{" }} matrix.mlruncommonenv.AWS_ACCESS_KEY_ID {{ "}}" }}"
+          AWS_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.mlruncommonenv.AWS_SECRET_ACCESS_KEY {{ "}}" }}"
+          MLRUN_ARTIFACT_PATH: "{{ "{{" }} matrix.mlruncommonenv.MLRUN_ARTIFACT_PATH {{ "}}" }}"
+          MLRUN_CE__MODE: "{{ "{{" }} matrix.mlruncommonenv.MLRUN_CE__MODE {{ "}}" }}"
+          MLRUN_CE__VERSION: "{{ "{{" }} matrix.mlruncommonenv.MLRUN_CE__VERSION {{ "}}" }}"
+          MLRUN_DEFAULT_TENSORBOARD_LOGS_PATH: "{{ "{{" }} matrix.mlruncommonenv.MLRUN_DEFAULT_TENSORBOARD_LOGS_PATH {{ "}}" }}"
+          MLRUN_FEATURE_STORE__DATA_PREFIXES__DEFAULT: "{{ "{{" }} matrix.mlruncommonenv.MLRUN_FEATURE_STORE__DATA_PREFIXES__DEFAULT {{ "}}" }}"
+          MLRUN_FEATURE_STORE__DATA_PREFIXES__NOSQL: ""
+          MLRUN_FEATURE_STORE__DEFAULT_TARGETS: "{{ "{{" }} matrix.mlruncommonenv.MLRUN_FEATURE_STORE__DEFAULT_TARGETS {{ "}}" }}"
+          MLRUN_GRAFANA_URL: "{{ "{{" }} matrix.mlruncommonenv.MLRUN_GRAFANA_URL {{ "}}" }}"
+          MLRUN_HTTPDB__PROJECTS__FOLLOWERS: "{{ "{{" }} matrix.mlruncommonenv.MLRUN_HTTPDB__PROJECTS__FOLLOWERS {{ "}}" }}"
+          MLRUN_HTTPDB__REAL_PATH: "{{ "{{" }} matrix.mlruncommonenv.MLRUN_HTTPDB__REAL_PATH {{ "}}" }}"
+          MLRUN_MODEL_ENDPOINT_MONITORING__STORE_TYPE: "{{ "{{" }} matrix.mlruncommonenv.MLRUN_MODEL_ENDPOINT_MONITORING__STORE_TYPE {{ "}}" }}"
+          MLRUN_STORAGE__AUTO_MOUNT_PARAMS: aws_access_key={{ "{{" }} matrix.mlruncommonenv.AWS_ACCESS_KEY_ID {{ "}}" }},aws_secret_key={{ "{{" }} matrix.mlruncommonenv.AWS_SECRET_ACCESS_KEY {{ "}}" }},endpoint_url=https://{{ (index .Values.minio.ingress.hosts 0) }}
+          MLRUN_STORAGE__AUTO_MOUNT_TYPE: "{{ "{{" }} matrix.mlruncommonenv.MLRUN_STORAGE__AUTO_MOUNT_TYPE {{ "}}" }}"
+          S3_ENDPOINT_URL: https://{{ (index .Values.minio.ingress.hosts 0) }}
+{{- end }}

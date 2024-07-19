@@ -25,4 +25,31 @@ subjects:
   - kind: ServiceAccount
     name: secret-transformer
     namespace: {{ .Release.Namespace }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: configmap-transformer
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: configmap-transformer
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["*"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: configmap-transformer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: configmap-transformer
+subjects:
+  - kind: ServiceAccount
+    name: configmap-transformer
+    namespace: {{ .Release.Namespace }}
 {{- end }}
