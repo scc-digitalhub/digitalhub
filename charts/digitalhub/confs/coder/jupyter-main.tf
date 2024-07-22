@@ -79,6 +79,10 @@ variable "external_url" {
   type = string
 }
 
+variable "privileged" {
+  type = string
+}
+
 data "coder_parameter" "cpu" {
   name         = "cpu"
   display_name = "CPU"
@@ -216,7 +220,7 @@ resource "coder_app" "jupyter" {
 
 resource "coder_metadata" "jupyter" {
   count       = data.coder_workspace.me.start_count
-  resource_id = kubernetes_deployment.jupyter.id
+  resource_id = kubernetes_deployment.jupyter[0].id
   item {
     key   = "URL"
     value = local.jupyter_url
@@ -364,7 +368,7 @@ resource "kubernetes_deployment" "jupyter" {
           command = ["sh", "-c", coder_agent.jupyter.init_script]
           security_context {
             run_as_user                = "1000"
-            allow_privilege_escalation = false
+            allow_privilege_escalation = var.privileged
           }
           env {
             name  = "CODER_AGENT_TOKEN"

@@ -216,7 +216,7 @@ resource "coder_app" "vscode-server" {
 
 resource "coder_metadata" "vscode" {
   count       = data.coder_workspace.me.start_count
-  resource_id = kubernetes_deployment.vscode.id
+  resource_id = kubernetes_deployment.vscode[0].id
   item {
     key   = "URL"
     value = local.vscode_url
