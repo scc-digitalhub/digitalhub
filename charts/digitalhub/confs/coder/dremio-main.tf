@@ -188,7 +188,7 @@ resource "coder_app" "dremio" {
 
 resource "coder_metadata" "dremio" {
   count       = data.coder_workspace.me.start_count
-  resource_id = kubernetes_deployment.dremio.id
+  resource_id = kubernetes_deployment.dremio[0].id
   item {
     key   = "Internal Endpoint"
     value = "http://dremio-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}:${kubernetes_service.dremio-service.spec[0].port[0].port}"
