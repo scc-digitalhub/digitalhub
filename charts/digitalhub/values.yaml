@@ -31,7 +31,7 @@ global:
     endpointPort: &minioEndpointPort "9000"
     bucket: &minioBucket "datalake"
     protocol: &minioProtocol "http"
-  externalHostAddress: &globalExternalUrl "192.168.76.2"
+  externalHostAddress: &globalExternalUrl "192.168.49.2"
   externalTls: false
   securityContext:
     runAsNonRoot: true
