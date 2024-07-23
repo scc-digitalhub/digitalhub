@@ -81,6 +81,7 @@ variable "external_url" {
 
 variable "privileged" {
   type = string
+  default = "false"
 }
 
 data "coder_parameter" "cpu" {
