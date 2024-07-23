@@ -7,7 +7,7 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.6.6"
+version: "0.6.7"
 appVersion: "0.6.0"
 dependencies:
 - name: apigw-operator
@@ -19,11 +19,11 @@ dependencies:
   repository: https://helm.coder.com/v2
   condition: coder.enabled
 - name: core
-  version: "0.1.31"
+  version: "0.1.32"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: kubernetes-resource-manager
-  version: "0.1.20"
+  version: "0.1.21"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: kubernetes-resource-manager.enabled
 - name: dremio-rest-server-operator
@@ -53,7 +53,7 @@ dependencies:
   tags:
     - operator
 - name: postgrest-operator
-  version: "0.1.5"
+  version: "0.1.6"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: postgrest-operator.enabled
 - name: template-controller
