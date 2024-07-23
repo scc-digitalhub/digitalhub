@@ -208,9 +208,9 @@ oidc:
 
 resourceSelectors:
   # list separated by |
-  services: "app.kubernetes.io/part-of=coder|app.kubernetes.io/type=service|nuclio.io/class=function|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore"
+  services: "app.kubernetes.io/type=service|nuclio.io/class=function|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore"
   # list separated by |
-  deployments: "app.kubernetes.io/type=workspace|app.kubernetes.io/managed-by=dhcore"
+  deployments: "app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|app.kubernetes.io/type=workspace|app.kubernetes.io/managed-by=dhcore"
   # list separated by |
   jobs: "app.kubernetes.io/managed-by=dhcore"
   pvcs:
