@@ -155,7 +155,7 @@ coder:
     - name: jupyter
       nodePort: "30040"
       iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-      image: "ghcr.io/scc-digitalhub/jupyter:1.6.2-rc1_0.6.0b7"
+      image: "ghcr.io/scc-digitalhub/jupyter:1.6.2-rc1_0.6.0b11"
       privileged: false
     - name: dremio
       nodePort: "30120"
