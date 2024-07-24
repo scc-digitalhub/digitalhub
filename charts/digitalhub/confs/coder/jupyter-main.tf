@@ -70,6 +70,14 @@ variable "image" {
   type = string
 }
 
+variable "image_3_9" {
+  type = string
+}
+
+variable "image_3_11" {
+  type = string
+}
+
 variable "https" {
   type    = bool
   default = false
@@ -89,7 +97,7 @@ data "coder_parameter" "cpu" {
   display_name = "CPU"
   description  = "The number of CPU cores"
   default      = "2"
-  icon         = "/icon/memory.svg"
+  icon         = "/emojis/1f680.png"
   mutable      = true
   option {
     name  = "2 Cores"
@@ -145,6 +153,27 @@ data "coder_parameter" "home_disk_size" {
   validation {
     min = 1
     max = 99999
+  }
+}
+
+data "coder_parameter" "python_version" {
+  name         = "python_version"
+  display_name = "Python Version"
+  description  = "Select the Python version for this workspace"
+  default      = var.image
+  icon         = "/icon/python.svg"
+  mutable      = true
+  option {
+    name  = "3.9"
+    value = var.image_3_9
+  }
+  option {
+    name  = "3.10"
+    value = var.image
+  }
+  option {
+    name  = "3.11"
+    value = var.image_3_11
   }
 }
 
@@ -365,7 +394,7 @@ resource "kubernetes_deployment" "jupyter" {
         }
         container {
           name    = "jupyter"
-          image   = var.image
+          image   = data.coder_parameter.python_version.value
           command = ["sh", "-c", coder_agent.jupyter.init_script]
           security_context {
             run_as_user                = "1000"
