@@ -88,7 +88,7 @@ variable "external_url" {
 }
 
 variable "privileged" {
-  type = string
+  type    = string
   default = "false"
 }
 
@@ -210,7 +210,7 @@ resource "coder_agent" "jupyter" {
   metadata {
     display_name = "Home Disk"
     key          = "3_home_disk"
-    script       = "coder stat disk --path /home/jovyan/work"
+    script       = "coder stat disk --path /home/${data.coder_workspace_owner.me.name}"
     interval     = 60
     timeout      = 1
   }
@@ -378,18 +378,53 @@ resource "kubernetes_deployment" "jupyter" {
           run_as_group = "100"
         }
         init_container {
-          name              = "init-chown-data"
-          image             = "busybox:1.35"
+          name              = "copy-users-file"
+          image             = data.coder_parameter.python_version.value
           image_pull_policy = "Always"
-          command           = ["chown", "-R", "1000:100", "/home/jovyan/work"]
+          command           = ["bash", "-c", "cp -r /etc/ /etc-backup/"]
+          env {
+            name  = "NB_USER"
+            value = data.coder_workspace_owner.me.name
+          }
           volume_mount {
-            mount_path = "/home/jovyan/work"
+            mount_path = "/home/${data.coder_workspace_owner.me.name}"
             name       = "home"
             read_only  = false
           }
+          volume_mount {
+            name       = "user"
+            mount_path = "/etc-backup"
+
+          }
           security_context {
             run_as_user                = "0"
-            allow_privilege_escalation = false
+            run_as_group               = "0"
+            allow_privilege_escalation = true
+          }
+        }
+        init_container {
+          name              = "init-new-user"
+          image             = data.coder_parameter.python_version.value
+          image_pull_policy = "Always"
+          command           = ["/usr/local/bin/start.sh"]
+          env {
+            name  = "NB_USER"
+            value = data.coder_workspace_owner.me.name
+          }
+          volume_mount {
+            mount_path = "/home/${data.coder_workspace_owner.me.name}"
+            name       = "home"
+            read_only  = false
+          }
+          volume_mount {
+            name       = "user"
+            mount_path = "/etc/"
+            sub_path   = "etc/"
+          }
+          security_context {
+            run_as_user                = "0"
+            run_as_group               = "0"
+            allow_privilege_escalation = true
           }
         }
         container {
@@ -419,6 +454,14 @@ resource "kubernetes_deployment" "jupyter" {
           env {
             name  = "DIGITALHUB_CORE_TOKEN"
             value = data.coder_workspace_owner.me.oidc_access_token
+          }
+          env {
+            name  = "NB_USER"
+            value = data.coder_workspace_owner.me.name
+          }
+          env {
+            name  = "GRANT_SUDO"
+            value = var.privileged ? 1 : 0
           }
           env_from {
             config_map_ref {
@@ -451,9 +494,14 @@ resource "kubernetes_deployment" "jupyter" {
             }
           }
           volume_mount {
-            mount_path = "/home/jovyan/work"
+            mount_path = "/home/${data.coder_workspace_owner.me.name}"
             name       = "home"
             read_only  = false
+          }
+          volume_mount {
+            name       = "user"
+            mount_path = "/etc/"
+            sub_path   = "etc/"
           }
         }
         volume {
@@ -461,6 +509,12 @@ resource "kubernetes_deployment" "jupyter" {
           persistent_volume_claim {
             claim_name = kubernetes_persistent_volume_claim.home.metadata.0.name
             read_only  = false
+          }
+        }
+        volume {
+          name = "user"
+          empty_dir {
+            size_limit = "2Mi"
           }
         }
         affinity {
