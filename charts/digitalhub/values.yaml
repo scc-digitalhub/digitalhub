@@ -180,7 +180,7 @@ coder:
       tag: v2.12.0
     env:
       - name: CODER_TELEMETRY
-        value: false
+        value: "false"
       - name: CODER_PG_USERNAME
         valueFrom:
           secretKeyRef:
