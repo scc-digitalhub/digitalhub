@@ -155,9 +155,9 @@ coder:
     - name: jupyter
       nodePort: "30040"
       iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-      image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.6.0b0"
-      image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.6.0b0"
-      image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.6.0b0"
+      image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.6.0"
+      image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.6.0"
+      image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.6.0"
       privileged: false
     - name: dremio
       nodePort: "30120"
@@ -319,7 +319,7 @@ core:
       initialize:
         enabled: true
         image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
-  testSuite: "==0.6.0b5"
+  testSuite: "==0.6.0"
 
 kubernetes-resource-manager:
   enabled: true
