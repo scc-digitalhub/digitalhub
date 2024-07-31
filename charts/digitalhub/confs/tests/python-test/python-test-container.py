@@ -46,13 +46,19 @@ def main():
     # Get or create project
     project = dh.get_or_create_project("project-container")
 
-    # Create new function
-    func = project.new_function(name="function-container",
-                              kind="container",
-                              image="hello-world:latest")
+    function = project.new_function(name="build",
+                                kind="container",
+                                base_image="python:3.9-slim",
+                                command="echo",
+                                args=["hello world"])
+    # Build the container
+    run_build = function.run(action="build",
+                            instructions=["ls"])
+    # Wait for run to finish
+    poller(run_build)
 
     # Run function
-    run = func.run("job")
+    run = function.run("job")
 
     # Wait for run to finish
     poller(run)
