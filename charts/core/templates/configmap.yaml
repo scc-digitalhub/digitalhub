@@ -18,6 +18,7 @@ data:
   RUNTIME_KFP_IMAGE: {{ .Values.runtime.kfp.image }}:{{ .Values.runtime.kfp.tag }}
   RUNTIME_PYTHON_IMAGE_3_9: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_9 }}
   RUNTIME_PYTHON_IMAGE_3_10: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_10 }}
+  RUNTIME_PYTHON_IMAGE_3_11: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_11 }}
   {{- if .Values.events.enabled }}
   ENABLE_EVENTS: {{ .Values.events.enabled | quote }} 
   {{- if .Values.events.rabbitmq.enabled }}
@@ -48,10 +49,11 @@ data:
   DH_AUTH_OIDC_ISSUER_URI: {{ .Values.authentication.openId.issuerUri }}
   DH_AUTH_OIDC_SCOPE: {{ .Values.authentication.openId.scope }}
 {{- end }}
-{{- if and .Values.global.registry.username .Values.global.registry.password .Values.global.registry.email }}
-  KANIKO_IMAGE_REGISTRY: {{ .Values.global.registry.url }}
-  KANIKO_SECRET: {{ .Values.global.registry.secretName }}
+{{- if .Values.global.registry.url }}
   DOCKER_REGISTRY: {{ .Values.global.registry.url }}
+{{- end }}
+{{- if and .Values.global.registry.username .Values.global.registry.password .Values.global.registry.email }}
+  KANIKO_IMAGE_PREFIX: {{ .Values.registry.kaniko.imagePrefix | default .Release.Namespace }}
   DOCKER_REGISTRY_SECRET: {{ .Values.global.registry.secretName }}
 {{- end }}
   DH_CORS_ORIGINS: {{ .Values.corsOrigin | quote }}
