@@ -191,7 +191,7 @@ resource "coder_agent" "jupyter" {
   arch           = "amd64"
   startup_script = <<-EOT
     set -e
-    jupyter lab --ServerApp.ip=0.0.0.0 --ServerApp.port=8888 --ServerApp.token="" --ServerApp.password=""
+    jupyter lab --ServerApp.ip=0.0.0.0 --ServerApp.port=8888 --ServerApp.token="" --ServerApp.password="" --ServerApp.root_dir="/home/${data.coder_workspace_owner.me.name}"
   EOT
   metadata {
     display_name = "CPU Usage"
@@ -389,6 +389,7 @@ resource "kubernetes_deployment" "jupyter" {
           volume_mount {
             mount_path = "/home/${data.coder_workspace_owner.me.name}"
             name       = "home"
+            sub_path   = data.coder_workspace_owner.me.name
             read_only  = false
           }
           volume_mount {
@@ -411,9 +412,14 @@ resource "kubernetes_deployment" "jupyter" {
             name  = "NB_USER"
             value = data.coder_workspace_owner.me.name
           }
+          env {
+            name  = "CP_OPTS"
+            value = "--r"
+          }
           volume_mount {
             mount_path = "/home/${data.coder_workspace_owner.me.name}"
             name       = "home"
+            sub_path   = data.coder_workspace_owner.me.name
             read_only  = false
           }
           volume_mount {
@@ -496,6 +502,7 @@ resource "kubernetes_deployment" "jupyter" {
           volume_mount {
             mount_path = "/home/${data.coder_workspace_owner.me.name}"
             name       = "home"
+            sub_path   = data.coder_workspace_owner.me.name
             read_only  = false
           }
           volume_mount {
