@@ -5,4 +5,5 @@ metadata:
   name: coder-init
 data:
   init.sh: | {{- tpl (.Files.Get "confs/coder/init.sh") . | nindent 4 }}
+  upgrade.sh: | {{- tpl (.Files.Get "confs/coder/upgrade.sh") . | nindent 4 }}
 {{- end }}

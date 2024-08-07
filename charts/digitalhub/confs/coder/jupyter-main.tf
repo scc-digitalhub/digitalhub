@@ -434,9 +434,10 @@ resource "kubernetes_deployment" "jupyter" {
           }
         }
         container {
-          name    = "jupyter"
-          image   = data.coder_parameter.python_version.value
-          command = ["sh", "-c", coder_agent.jupyter.init_script]
+          name        = "jupyter"
+          image       = data.coder_parameter.python_version.value
+          command     = ["sh", "-c", coder_agent.jupyter.init_script]
+          working_dir = "/home/${data.coder_workspace_owner.me.name}"
           security_context {
             run_as_user                = "1000"
             allow_privilege_escalation = var.privileged
@@ -468,6 +469,10 @@ resource "kubernetes_deployment" "jupyter" {
           env {
             name  = "GRANT_SUDO"
             value = var.privileged ? 1 : 0
+          }
+          env {
+            name  = "HOME"
+            value = "/home/${data.coder_workspace_owner.me.name}"
           }
           env_from {
             config_map_ref {

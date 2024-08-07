@@ -313,22 +313,23 @@ coder:
   username: test
   password: ${MINIO_PASSWORD}
   email: test@digitalhub.test
-  customCoderTemplates:
-    - name: jupyter
-      nodePort: "30040"
-      iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-    - name: dremio
-      nodePort: "30120"
-      iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/dremio_logo_icon_168234.png
-    - name: sqlpad
-      nodePort: "30140"
-      iconUrl: https://i.ibb.co/TrBDsZM/sqlpad.png
-    - name: grafana
-      nodePort: "30130"
-      iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/grafana_logo_icon_171048.png
-    - name: dashboard
-      nodePort: "30110"
-      iconUrl: https://svgshare.com/i/u5R.svg
+  template:
+    customTemplates:
+      - name: jupyter
+        nodePort: "30040"
+        iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
+      - name: dremio
+        nodePort: "30120"
+        iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/dremio_logo_icon_168234.png
+      - name: sqlpad
+        nodePort: "30140"
+        iconUrl: https://i.ibb.co/TrBDsZM/sqlpad.png
+      - name: grafana
+        nodePort: "30130"
+        iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/grafana_logo_icon_171048.png
+      - name: dashboard
+        nodePort: "30110"
+        iconUrl: https://svgshare.com/i/u5R.svg
   coder:
     image:
       tag: v2.1.5
