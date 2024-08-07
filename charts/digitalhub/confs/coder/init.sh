@@ -8,7 +8,7 @@ do
     sleep 5
 done
 coder login
-{{- range .Values.coder.customCoderTemplates }}
+{{- range .Values.coder.template.customTemplates }}
 echo "Installing {{ .name }} template"
 mkdir /home/coder/{{ .name }}/
 cp /home/coder/custom-template/{{ .name }}-main.tf /home/coder/{{ .name }}/main.tf

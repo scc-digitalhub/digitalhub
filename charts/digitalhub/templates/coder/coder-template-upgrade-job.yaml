@@ -1,19 +1,19 @@
-{{- if .Values.coder.enabled }}
+{{- if and .Values.coder.enabled .Values.coder.template.upgrade.enabled .Values.coder.template.upgrade.token}}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: coder-deploy-template
+  name: coder-template-upgrade
   annotations:
-    "helm.sh/hook": post-install
+    "helm.sh/hook": post-upgrade
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   backoffLimit: 1
   template:
     spec:
       containers:
-        - name: coder-deploy-template
+        - name: coder-template-upgrade
           image: {{ .Subcharts.coder.Values.coder.image.repo }}:{{ .Subcharts.coder.Values.coder.image.tag }}
-          command: ["/bin/bash", "/home/coder/init-files/init.sh"]
+          command: ["/bin/bash", "/home/coder/init-files/upgrade.sh"]
           env:
             {{- with .Subcharts.coder.Values.coder.env -}}
             {{ toYaml . | nindent 12 }}
@@ -21,23 +21,8 @@ spec:
             {{- include "digitalhub.coderAccUrl" . | nindent 12 -}}
             - name: CODER_URL
               value: "http://coder"
-            - name: CODER_FIRST_USER_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: coder-user
-                  key: username
-            - name: CODER_FIRST_USER_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: coder-user
-                  key: password
-            - name: CODER_FIRST_USER_EMAIL
-              valueFrom:
-                secretKeyRef:
-                  name: coder-user
-                  key: email
-            - name: CODER_FIRST_USER_TRIAL
-              value: "false"
+            - name: CODER_SESSION_TOKEN
+              value: {{ .Values.coder.template.upgrade.token }}
           volumeMounts:
           - name: init-files
             mountPath: "/home/coder/init-files"

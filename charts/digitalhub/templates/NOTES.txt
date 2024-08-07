@@ -15,7 +15,7 @@
 {{ if (eq .Values.global.service.type "NodePort") }}
 Digitalhub componet URLs:
   - Dashboard: http://{{ $externalUrl }}:{{ .Values.dashboard.service.httpNodePort }}
-{{- range .Values.coder.customCoderTemplates }}
+{{- range .Values.coder.template.customTemplates }}
   - {{ .name | title }}: http://{{ $externalUrl }}:{{ .nodePort }} {{ printf "(Create %s workspace from template in the coder dashboard before use)" .name }}
 {{- end }}
   - Docker Registry: http://{{ $externalUrl }}:{{ index .Values "docker-registry" "service" "nodePort" }}
