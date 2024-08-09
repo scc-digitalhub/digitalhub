@@ -59,7 +59,7 @@ variable "minio_bucket" {
 variable "minio-creds-secret" {
   type        = string
   description = "Minio database credentials secret"
-  default     = "minio"
+  default     = "digitalhub-minio-creds"
 }
 
 variable "postgresql_db_name" {
@@ -366,7 +366,7 @@ resource "kubernetes_job" "source-init" {
             value_from {
               secret_key_ref {
                 name = var.minio-creds-secret
-                key  = "rootUser"
+                key  = "digitalhubUser"
               }
             }
           }
@@ -375,7 +375,7 @@ resource "kubernetes_job" "source-init" {
             value_from {
               secret_key_ref {
                 name = var.minio-creds-secret
-                key  = "rootPassword"
+                key  = "digitalhubPassword"
               }
             }
           }
