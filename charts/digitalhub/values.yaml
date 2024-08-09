@@ -101,6 +101,8 @@ mlrun-ce:
   minio:
     enabled: false
     mode: standalone
+    rootUser: *digitalhubUser
+    rootPassword: *digitalhubPassword
     replicas: 1
     ingress:
       enabled: false
