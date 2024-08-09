@@ -28,9 +28,9 @@ spec:
       stringData:
         POSTGRES_USER: "{{ "{{" }} matrix.postgressecret.data.username | b64decode {{ "}}" }}"
         POSTGRES_PASSWORD: "{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}"
-        AWS_ACCESS_KEY_ID: "{{ "{{" }} matrix.miniosecret.data.rootUser | b64decode {{ "}}" }}"
-        AWS_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.miniosecret.data.rootPassword | b64decode {{ "}}" }}"
-        JUPYTERLAB_S3_ACCESS_KEY_ID: "{{ "{{" }} matrix.miniosecret.data.rootUser | b64decode {{ "}}" }}"
-        JUPYTERLAB_S3_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.miniosecret.data.rootPassword | b64decode {{ "}}" }}"
+        AWS_ACCESS_KEY_ID: "{{ "{{" }} matrix.miniosecret.data.digitalhubUser | b64decode {{ "}}" }}"
+        AWS_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.miniosecret.data.digitalhubPassword | b64decode {{ "}}" }}"
+        JUPYTERLAB_S3_ACCESS_KEY_ID: "{{ "{{" }} matrix.miniosecret.data.digitalhubUser | b64decode {{ "}}" }}"
+        JUPYTERLAB_S3_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.miniosecret.data.digitalhubPassword | b64decode {{ "}}" }}"
         POSTGRES_URL: "postgresql://{{ "{{" }} matrix.postgressecret.data.username | b64decode {{ "}}" }}:{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}@database-postgres-cluster:5432/digitalhub"
 {{- end }}
