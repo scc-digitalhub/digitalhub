@@ -1,0 +1,10 @@
+{{- if .Values.minio.enabled }}
+apiVersion: v1
+data:
+  digitalhubUser: {{ .Values.global.minio.digitalhubUser | b64enc }}
+  digitalhubPassword: {{ .Values.global.minio.digitalhubPassword | b64enc }}
+kind: Secret
+metadata:
+  name: digitalhub-minio-creds
+type: Opaque
+{{- end }}

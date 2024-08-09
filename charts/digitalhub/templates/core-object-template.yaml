@@ -18,7 +18,7 @@ spec:
         ref:
           apiVersion: v1
           kind: Secret
-          name: minio
+          name: digitalhub-minio-creds
   templates:
   - object:
       apiVersion: v1

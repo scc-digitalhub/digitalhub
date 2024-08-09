@@ -27,6 +27,8 @@ global:
   minio:
     rootUser: &minioRootUser minio
     rootPassword: &minioRootPassword minio123
+    digitalhubUser: &digitalhubUser digitalhub
+    digitalhubPassword: &digitalhubPassword digitalhub
     endpoint: &minioEndpoint "minio"
     endpointPort: &minioEndpointPort "9000"
     bucket: &minioBucket "datalake"
@@ -98,8 +100,6 @@ mlrun-ce:
       tag: 1.6.2-rc1
   minio:
     enabled: false
-    rootUser: *minioRootUser
-    rootPassword: *minioRootPassword
     mode: standalone
     replicas: 1
     ingress:
@@ -134,8 +134,8 @@ mlrun-ce:
         nodePort: 30100
     minio:
       enabled: true
-      accessKey: *minioRootUser
-      secretKey: *minioRootPassword
+      accessKey: *digitalhubUser
+      secretKey: *digitalhubPassword
       endpoint: *minioEndpoint
       endpointPort: *minioEndpointPort
       bucket: *minioBucket
@@ -276,8 +276,6 @@ postgrest-operator:
 core:
   enabled: true
   minio:
-    rootUser: *minioRootUser
-    rootPassword: *minioRootPassword
     endpoint: *minioEndpoint
     endpointPort: *minioEndpointPort
     bucket: *minioBucket
@@ -519,6 +517,20 @@ minio:
     claimPrefix: ""
     comment: ""
     displayName: ""
+  deploymentUpdate:
+    type: Recreate
+  users:
+    - accessKey: *digitalhubUser
+      secretKey: *digitalhubPassword
+      policy: readwritedigitalhub
+  policies:
+    - name: readwritedigitalhub
+      statements:
+        - effect: Allow
+          resources:
+            - 'arn:aws:s3:::datalake/*'
+          actions:
+            - "s3:*"
 
 minio-operator:
   enabled: true
