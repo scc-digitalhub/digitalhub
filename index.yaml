@@ -304,6 +304,21 @@ entries:
   core:
   - apiVersion: v2
     appVersion: 0.6.0
+    created: "2024-08-19T11:43:55.271028859Z"
+    description: Core backend application for DigitalHub.
+    digest: f559d59eba7ea9b56f4956ddedc9f8b3047699dbb34f3bb180591156ecbd4cd5
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: core
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.1.36/core-0.1.36.tgz
+    version: 0.1.36
+  - apiVersion: v2
+    appVersion: 0.6.0
     created: "2024-08-19T08:42:21.208923436Z"
     description: Core backend application for DigitalHub.
     digest: 5c87250a01c742f03d8dfabbc8016874a5f523f4fff6d6afe7ded80e487adc86
@@ -12936,6 +12951,22 @@ entries:
   minio-operator:
   - apiVersion: v2
     appVersion: 1.0.1
+    created: "2024-08-19T11:43:55.419288583Z"
+    description: A Kubernetes operator to handle instances of buckets, users and policies
+      on MinIO.
+    digest: 7d19120b9808a970b245596911d37d352c2f39b32f7dde4221877110eec2a002
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: minio-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/minio-operator-0.1.3/minio-operator-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 1.0.1
     created: "2024-05-06T07:46:15.219417466Z"
     description: A Kubernetes operator to handle instances of buckets, users and policies
       on MinIO.
@@ -14901,4 +14932,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-08-19T09:37:54.374892012Z"
+generated: "2024-08-19T11:43:55.419939991Z"
