@@ -47,12 +47,6 @@ variable "db_secret" {
   default     = "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
 }
 
-variable "minio_secret" {
-  description = "Provides the secret credentials for minio"
-  type        = string
-  default     = "minio"
-}
-
 variable "service_type" {
   type    = string
   default = "ClusterIP"

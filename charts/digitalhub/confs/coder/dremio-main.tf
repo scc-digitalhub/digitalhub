@@ -56,12 +56,6 @@ variable "minio_bucket" {
   default     = "datalake"
 }
 
-variable "minio-creds-secret" {
-  type        = string
-  description = "Minio database credentials secret"
-  default     = "digitalhub-minio-creds"
-}
-
 variable "postgresql_db_name" {
   type        = string
   description = "Postgresql database name"
@@ -104,6 +98,10 @@ variable "https" {
 }
 
 variable "external_url" {
+  type = string
+}
+
+variable "minio_digitalhub_user_secret" {
   type = string
 }
 
@@ -365,7 +363,7 @@ resource "kubernetes_job" "source-init" {
             name = "MINIO_USERNAME"
             value_from {
               secret_key_ref {
-                name = var.minio-creds-secret
+                name = var.minio_digitalhub_user_secret
                 key  = "digitalhubUser"
               }
             }
@@ -374,7 +372,7 @@ resource "kubernetes_job" "source-init" {
             name = "MINIO_PASSWORD"
             value_from {
               secret_key_ref {
-                name = var.minio-creds-secret
+                name = var.minio_digitalhub_user_secret
                 key  = "digitalhubPassword"
               }
             }
