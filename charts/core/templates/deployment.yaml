@@ -50,22 +50,22 @@ spec:
             - name: DH_S3_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: digitalhub-minio-creds
+                  name: {{ .Values.global.minio.digitalhubUserSecret }}
                   key: digitalhubUser
             - name: DH_S3_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: digitalhub-minio-creds
+                  name: {{ .Values.global.minio.digitalhubUserSecret }}
                   key: digitalhubPassword
             - name: DH_AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: digitalhub-minio-creds
+                  name: {{ .Values.global.minio.digitalhubUserSecret }}
                   key: digitalhubUser
             - name: DH_AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: digitalhub-minio-creds
+                  name: {{ .Values.global.minio.digitalhubUserSecret }}
                   key: digitalhubPassword
             - name: DH_POSTGRES_USER
               valueFrom:
