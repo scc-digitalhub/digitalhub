@@ -7,8 +7,8 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.6.15"
-appVersion: "0.6.0"
+version: "0.7.0-beta1"
+appVersion: "0.7.0"
 dependencies:
 - name: apigw-operator
   version: "0.1.7"
@@ -19,7 +19,7 @@ dependencies:
   repository: https://helm.coder.com/v2
   condition: coder.enabled
 - name: core
-  version: "0.1.34"
+  version: "0.1.36"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: kubernetes-resource-manager
@@ -73,6 +73,6 @@ dependencies:
   repository: https://solr.apache.org/charts
   condition: solr.enabled
 - name: minio-operator
-  version: "0.1.2"
+  version: "0.1.3"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: minio-operator.enabled

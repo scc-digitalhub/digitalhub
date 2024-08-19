@@ -5,6 +5,6 @@ data:
   digitalhubPassword: {{ .Values.global.minio.digitalhubPassword | b64enc }}
 kind: Secret
 metadata:
-  name: digitalhub-minio-creds
+  name: {{ .Values.global.minio.digitalhubUserSecret }}
 type: Opaque
 {{- end }}

@@ -18,7 +18,7 @@ spec:
         ref:
           apiVersion: v1
           kind: Secret
-          name: digitalhub-minio-creds
+          name: {{ .Values.global.minio.digitalhubUserSecret }}
   templates:
   - object:
       apiVersion: v1
