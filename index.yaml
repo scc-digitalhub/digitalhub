@@ -13153,6 +13153,27 @@ entries:
     version: 0.9.20-dh-v0.3.3
   - apiVersion: v1
     appVersion: 1.5.2
+    created: "2024-08-19T09:00:48.580062492Z"
+    dependencies:
+    - name: v3io-configs
+      repository: https://v3io.github.io/helm-charts/stable
+      version: 0.11.3
+    description: Machine Learning automation and tracking
+    digest: 793f1f6fdbae41125a961516d7e1bf54e4c30c1cd6aba1115bcbd51f5ed21b3a
+    icon: https://di5r923elu32w2e633ofbxj9-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/Iguazio-Logo.png
+    maintainers:
+    - email: alon_maor@mckinsey.com
+      name: alonmr
+    - email: adam_melnick@mckinsey.com
+      name: quaark
+    name: mlrun
+    sources:
+    - https://github.com/mlrun/mlrun
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/mlrun-0.9.20-dh-v0.3.3/mlrun-0.9.20-dh-v0.3.3.tgz
+    version: 0.9.20-dh-v0.3.3
+  - apiVersion: v1
+    appVersion: 1.5.2
     created: "2024-03-27T14:26:22.628581516Z"
     dependencies:
     - name: v3io-configs
@@ -13625,6 +13646,44 @@ entries:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/mlrun-ce-0.6.3-dh-v0.3.12/mlrun-ce-0.6.3-dh-v0.3.12.tgz
     version: 0.6.3-dh-v0.3.12
   - apiVersion: v1
+    created: "2024-08-19T09:00:48.819665091Z"
+    dependencies:
+    - name: nuclio
+      repository: https://nuclio.github.io/nuclio/charts
+      version: 0.18.14
+    - condition: mlrun.enabled
+      name: mlrun
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.9.20-dh-v0.3.3
+    - name: mpi-operator
+      repository: https://v3io.github.io/helm-charts/stable
+      version: 0.6.0
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.min.io/
+      version: 4.0.2
+    - condition: spark-operator.enabled
+      name: spark-operator
+      repository: https://kubeflow.github.io/spark-operator
+      version: 1.1.25
+    - condition: kube-prometheus-stack.enabled
+      name: kube-prometheus-stack
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 41.7.2
+    description: MLRUn Open Source Stack
+    digest: 768fd0ed60aeb90316436df34910c1fc97f0d785d367efe456c48908625cf147
+    home: https://iguazio.com
+    icon: https://www.iguazio.com/wp-content/uploads/2019/10/Iguazio-Logo.png
+    maintainers:
+    - email: adamm@iguazio.com
+      name: Adam Melnick
+    - email: eliyahun@iguazio.com
+      name: Eliyahu Noach
+    name: mlrun-ce
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/mlrun-ce-0.6.3-dh-v0.3.12/mlrun-ce-0.6.3-dh-v0.3.12.tgz
+    version: 0.6.3-dh-v0.3.12
+  - apiVersion: v1
     created: "2024-06-06T14:17:47.363849584Z"
     dependencies:
     - name: nuclio
@@ -13663,6 +13722,44 @@ entries:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/mlrun-ce-0.6.3-dh-v0.3.11/mlrun-ce-0.6.3-dh-v0.3.11.tgz
     version: 0.6.3-dh-v0.3.11
   - apiVersion: v1
+    created: "2024-05-23T08:16:09.500914453Z"
+    dependencies:
+    - name: nuclio
+      repository: https://nuclio.github.io/nuclio/charts
+      version: 0.18.14
+    - condition: mlrun.enabled
+      name: mlrun
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.9.20-dh-v0.3.3
+    - name: mpi-operator
+      repository: https://v3io.github.io/helm-charts/stable
+      version: 0.6.0
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.min.io/
+      version: 4.0.2
+    - condition: spark-operator.enabled
+      name: spark-operator
+      repository: https://kubeflow.github.io/spark-operator
+      version: 1.1.25
+    - condition: kube-prometheus-stack.enabled
+      name: kube-prometheus-stack
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 41.7.2
+    description: MLRUn Open Source Stack
+    digest: 180b903ed1f03f67100bab4f6131af581a4196dd34f53da88f0ed3db5965b6fe
+    home: https://iguazio.com
+    icon: https://www.iguazio.com/wp-content/uploads/2019/10/Iguazio-Logo.png
+    maintainers:
+    - email: adamm@iguazio.com
+      name: Adam Melnick
+    - email: eliyahun@iguazio.com
+      name: Eliyahu Noach
+    name: mlrun-ce
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/mlrun-ce-0.6.3-dh-v0.3.10/mlrun-ce-0.6.3-dh-v0.3.10.tgz
+    version: 0.6.3-dh-v0.3.10
+  - apiVersion: v1
     created: "2024-05-22T11:16:49.730908859Z"
     dependencies:
     - name: nuclio
@@ -13689,82 +13786,6 @@ entries:
       version: 41.7.2
     description: MLRUn Open Source Stack
     digest: 5a67595930a2d35bf8097ccccbbcd550bd73c84435dbb67705f1e1142640bee3
-    home: https://iguazio.com
-    icon: https://www.iguazio.com/wp-content/uploads/2019/10/Iguazio-Logo.png
-    maintainers:
-    - email: adamm@iguazio.com
-      name: Adam Melnick
-    - email: eliyahun@iguazio.com
-      name: Eliyahu Noach
-    name: mlrun-ce
-    urls:
-    - https://github.com/scc-digitalhub/digitalhub/releases/download/mlrun-ce-0.6.3-dh-v0.3.10/mlrun-ce-0.6.3-dh-v0.3.10.tgz
-    version: 0.6.3-dh-v0.3.10
-  - apiVersion: v1
-    created: "2024-07-08T15:32:48.436301708Z"
-    dependencies:
-    - name: nuclio
-      repository: https://nuclio.github.io/nuclio/charts
-      version: 0.18.14
-    - condition: mlrun.enabled
-      name: mlrun
-      repository: https://scc-digitalhub.github.io/digitalhub/
-      version: 0.9.20-dh-v0.3.3
-    - name: mpi-operator
-      repository: https://v3io.github.io/helm-charts/stable
-      version: 0.6.0
-    - condition: minio.enabled
-      name: minio
-      repository: https://charts.min.io/
-      version: 4.0.2
-    - condition: spark-operator.enabled
-      name: spark-operator
-      repository: https://kubeflow.github.io/spark-operator
-      version: 1.1.25
-    - condition: kube-prometheus-stack.enabled
-      name: kube-prometheus-stack
-      repository: https://prometheus-community.github.io/helm-charts
-      version: 41.7.2
-    description: MLRUn Open Source Stack
-    digest: 85fc00fabb771999f997eadfb2a9831412cbbb2c0af0e096cad1797b7e0a6f12
-    home: https://iguazio.com
-    icon: https://www.iguazio.com/wp-content/uploads/2019/10/Iguazio-Logo.png
-    maintainers:
-    - email: adamm@iguazio.com
-      name: Adam Melnick
-    - email: eliyahun@iguazio.com
-      name: Eliyahu Noach
-    name: mlrun-ce
-    urls:
-    - https://github.com/scc-digitalhub/digitalhub/releases/download/mlrun-ce-0.6.3-dh-v0.3.10/mlrun-ce-0.6.3-dh-v0.3.10.tgz
-    version: 0.6.3-dh-v0.3.10
-  - apiVersion: v1
-    created: "2024-05-22T11:15:24.560291066Z"
-    dependencies:
-    - name: nuclio
-      repository: https://nuclio.github.io/nuclio/charts
-      version: 0.18.14
-    - condition: mlrun.enabled
-      name: mlrun
-      repository: https://scc-digitalhub.github.io/digitalhub/
-      version: 0.9.20-dh-v0.3.3
-    - name: mpi-operator
-      repository: https://v3io.github.io/helm-charts/stable
-      version: 0.6.0
-    - condition: minio.enabled
-      name: minio
-      repository: https://charts.min.io/
-      version: 4.0.2
-    - condition: spark-operator.enabled
-      name: spark-operator
-      repository: https://kubeflow.github.io/spark-operator
-      version: 1.1.25
-    - condition: kube-prometheus-stack.enabled
-      name: kube-prometheus-stack
-      repository: https://prometheus-community.github.io/helm-charts
-      version: 41.7.2
-    description: MLRUn Open Source Stack
-    digest: 05d49d1ebb62bd1e46e194cc888bdc2d972e34880fb3d65c9a34fe7ab26b8430
     home: https://iguazio.com
     icon: https://www.iguazio.com/wp-content/uploads/2019/10/Iguazio-Logo.png
     maintainers:
@@ -13853,7 +13874,7 @@ entries:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/mlrun-ce-0.6.3-dh-v0.3.10/mlrun-ce-0.6.3-dh-v0.3.10.tgz
     version: 0.6.3-dh-v0.3.10
   - apiVersion: v1
-    created: "2024-05-23T08:16:09.500914453Z"
+    created: "2024-07-08T15:32:48.436301708Z"
     dependencies:
     - name: nuclio
       repository: https://nuclio.github.io/nuclio/charts
@@ -13878,7 +13899,7 @@ entries:
       repository: https://prometheus-community.github.io/helm-charts
       version: 41.7.2
     description: MLRUn Open Source Stack
-    digest: 180b903ed1f03f67100bab4f6131af581a4196dd34f53da88f0ed3db5965b6fe
+    digest: 85fc00fabb771999f997eadfb2a9831412cbbb2c0af0e096cad1797b7e0a6f12
     home: https://iguazio.com
     icon: https://www.iguazio.com/wp-content/uploads/2019/10/Iguazio-Logo.png
     maintainers:
@@ -13955,6 +13976,44 @@ entries:
       version: 41.7.2
     description: MLRUn Open Source Stack
     digest: 2b1183245211328ee3bf12ed36b387365b80bf965d3f57bf30354182c839740f
+    home: https://iguazio.com
+    icon: https://www.iguazio.com/wp-content/uploads/2019/10/Iguazio-Logo.png
+    maintainers:
+    - email: adamm@iguazio.com
+      name: Adam Melnick
+    - email: eliyahun@iguazio.com
+      name: Eliyahu Noach
+    name: mlrun-ce
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/mlrun-ce-0.6.3-dh-v0.3.10/mlrun-ce-0.6.3-dh-v0.3.10.tgz
+    version: 0.6.3-dh-v0.3.10
+  - apiVersion: v1
+    created: "2024-05-22T11:15:24.560291066Z"
+    dependencies:
+    - name: nuclio
+      repository: https://nuclio.github.io/nuclio/charts
+      version: 0.18.14
+    - condition: mlrun.enabled
+      name: mlrun
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.9.20-dh-v0.3.3
+    - name: mpi-operator
+      repository: https://v3io.github.io/helm-charts/stable
+      version: 0.6.0
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.min.io/
+      version: 4.0.2
+    - condition: spark-operator.enabled
+      name: spark-operator
+      repository: https://kubeflow.github.io/spark-operator
+      version: 1.1.25
+    - condition: kube-prometheus-stack.enabled
+      name: kube-prometheus-stack
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 41.7.2
+    description: MLRUn Open Source Stack
+    digest: 05d49d1ebb62bd1e46e194cc888bdc2d972e34880fb3d65c9a34fe7ab26b8430
     home: https://iguazio.com
     icon: https://www.iguazio.com/wp-content/uploads/2019/10/Iguazio-Logo.png
     maintainers:
@@ -14724,4 +14783,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-08-19T08:50:10.229095565Z"
+generated: "2024-08-19T09:00:49.197333152Z"
