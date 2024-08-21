@@ -225,3 +225,6 @@ resourceSelectors:
     owners: "db.movetokube.com/v1alpha1"
     # list separated by ,
     names: "(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"
+
+env:
+  additionalEnv: {}
