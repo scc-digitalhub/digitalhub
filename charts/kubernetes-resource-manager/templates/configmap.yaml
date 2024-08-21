@@ -19,3 +19,6 @@ data:
   KRM_AUTH_OAUTH2_SCOPES: {{ .Values.oidc.scope }}
   AUTH_TYPE: {{ .Values.oidc.authType }}
   REDIRECT_URL: {{ .Values.oidc.redirectUrl }}
+  {{- if .Values.env.additionalEnv }}
+  {{- toYaml .Values.env.additionalEnv | nindent 2}}
+  {{- end }}
