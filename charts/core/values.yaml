@@ -59,6 +59,8 @@ minio:
   endpointPort: "9000"
   bucket: "mlrun"
   protocol: "http"
+  awsDefaultRegion: ""
+  awsRegion: ""
 
 service:
   port: "8080"
@@ -147,15 +149,15 @@ runtime:
     tag: "0.6.1"
   dbt:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-dbt"
-    tag: "0.6.1"
+    tag: "0.7.0b0"
   kfp:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-kfp"
-    tag: "0.6.1"
+    tag: "0.7.0b0"
   python:
     image: "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime"
-    tag3_9: "3.9-0.6.1"
-    tag3_10: "3.10-0.6.1"
-    tag3_11: "3.11-0.6.1"
+    tag3_9: "3.9-0.7.0b0"
+    tag3_10: "3.10-0.7.0b0"
+    tag3_11: "3.11-0.7.0b0"
 
 authentication:
   basic:
@@ -205,3 +207,8 @@ corsOrigin: ""
 registry:
   kaniko:
     imagePrefix: ""
+
+keystore:
+  secretName: ""
+  keyName: ""
+  keystoreKid: ""

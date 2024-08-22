@@ -56,3 +56,9 @@ data:
   DOCKER_REGISTRY_SECRET: {{ .Values.global.registry.secretName }}
 {{- end }}
   DH_CORS_ORIGINS: {{ .Values.corsOrigin | quote }}
+{{- if .Values.keystore.secretName }}
+  JWT_KEYSTORE_PATH: "/etc/keystore/{{ .Values.keystore.keyName }}"
+  JWT_KEYSTORE_KID: {{ .Values.keystore.keystoreKid }}
+{{- end }}
+  AWS_DEFAULT_REGION: {{ .Values.minio.awsDefaultRegion }}
+  AWS_REGION: {{ .Values.minio.awsRegion }}
