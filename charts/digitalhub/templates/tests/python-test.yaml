@@ -47,6 +47,14 @@ spec:
                 secretKeyRef:
                   name: "aac-digitalhub-tenant1-core-secret"
                   key: "clientsecret"
+            {{- if $.Values.core.ingress.enabled }}
+            {{- with (index $.Values.core.ingress.hosts 0) }}
+            - name: "DHCORE_ENDPOINT"
+              value: https://{{ .host }}
+            - name: "DHCORE_ISSUER"
+              value: https://{{ .host }}
+            {{- end }}
+            {{- end }}
             {{- end }}
           envFrom:
             - configMapRef:
