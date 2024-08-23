@@ -286,6 +286,8 @@ core:
     protocol: *minioProtocol
     awsDefaultRegion: "us-west-1"
     awsRegion: "us-west-1"
+    # Change the publicUrl value to the one you are using for accessing the minio-API from your browser, in the form "http/s://yourminioapiurl"
+    publicUrl: "http://192.168.49.2:30080"
   service:
     type: *serviceType
     httpNodePort: "30180"

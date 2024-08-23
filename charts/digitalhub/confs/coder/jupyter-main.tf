@@ -526,14 +526,6 @@ resource "kubernetes_deployment" "jupyter" {
             value = local.core_refresh_token
           }
           env {
-            name = "DHCORE_ENDPOINT"
-            value = var.dhcore_endpoint
-          }
-          env {
-            name = "DHCORE_ISSUER"
-            value = var.dhcore_issuer
-          }
-          env {
             name = "DHCORE_CLIENT_ID"
             value_from {
               secret_key_ref {
