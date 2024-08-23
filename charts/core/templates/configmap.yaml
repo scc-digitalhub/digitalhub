@@ -62,3 +62,5 @@ data:
 {{- end }}
   AWS_DEFAULT_REGION: {{ .Values.minio.awsDefaultRegion }}
   AWS_REGION: {{ .Values.minio.awsRegion }}
+  S3_ENDPOINT: {{ .Values.minio.publicUrl }}
+  S3_BUCKET: {{ .Values.minio.bucket }}
