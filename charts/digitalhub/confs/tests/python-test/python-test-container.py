@@ -41,7 +41,7 @@ def main():
         client = BackendApplicationClient(client_id=client_id)
         oauth = OAuth2Session(client=client, scope=scope)
         token = oauth.fetch_token(token_url='https://aac.digitalhub-dev.smartcommunitylab.it/oauth/token', client_id=client_id, client_secret=client_secret, scope=scope)
-        os.environ["DIGITALHUB_CORE_TOKEN"] = token["access_token"]
+        os.environ["DHCORE_ACCESS_TOKEN"] = token["access_token"]
     
     # Get or create project
     project = dh.get_or_create_project("project-container")

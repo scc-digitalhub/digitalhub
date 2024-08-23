@@ -8,10 +8,17 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "~> 2.30"
     }
+    http = {
+      source = "hashicorp/http"
+      version = "3.4.4"
+    }
   }
 }
 
 provider "coder" {
+}
+
+provider "http" {
 }
 
 locals {
@@ -84,6 +91,26 @@ variable "external_url" {
 variable "privileged" {
   type    = string
   default = "false"
+}
+
+variable "core_auth_creds" {
+  type        = string
+  default     = "core-auth-creds"
+}
+
+variable "clientId" {
+  type        = string
+  default     = "core-auth-creds"
+}
+
+variable "dhcore_endpoint" {
+  type        = string
+  default     = ""
+}
+
+variable "dhcore_issuer" {
+  type        = string
+  default     = ""
 }
 
 data "coder_parameter" "cpu" {
@@ -171,6 +198,25 @@ data "coder_parameter" "python_version" {
   }
 }
 
+data "http" "exchange_token" {
+  count = data.coder_workspace_owner.me.oidc_access_token != "" ? 1 : 0
+  url = "${var.dhcore_endpoint}/auth/token"
+  method = "POST"
+
+  # Optional request headers
+  request_headers = {
+    Content-Type  = "application/x-www-form-urlencoded"
+    Authorization = "Basic ${base64encode("${data.kubernetes_secret.auth.data["clientId"]}:${data.kubernetes_secret.auth.data["clientSecret"]}")}"
+  }
+
+  request_body = "grant_type=urn:ietf:params:oauth:grant-type:token-exchange&subject_token_type=urn:ietf:params:oauth:token-type:access_token&subject_token=${data.coder_workspace_owner.me.oidc_access_token}"
+}
+
+locals {
+  core_access_token = data.coder_workspace_owner.me.oidc_access_token != "" ? jsondecode(data.http.exchange_token[0].response_body)["access_token"] : null
+  core_refresh_token = data.coder_workspace_owner.me.oidc_access_token != "" ? jsondecode(data.http.exchange_token[0].response_body)["refresh_token"] : null
+}
+
 provider "kubernetes" {
   # Authenticate via ~/.kube/config or a Coder-specific ServiceAccount, depending on admin preferences
   config_path = var.use_kubeconfig == true ? "~/.kube/config" : null
@@ -179,6 +225,13 @@ provider "kubernetes" {
 data "coder_workspace" "me" {}
 
 data "coder_workspace_owner" "me" {}
+
+data "kubernetes_secret" "auth" {
+  metadata {
+    name      = var.core_auth_creds
+    namespace = var.namespace
+  }
+}
 
 resource "coder_agent" "jupyter" {
   os             = "linux"
@@ -453,10 +506,6 @@ resource "kubernetes_deployment" "jupyter" {
             value = var.namespace
           }
           env {
-            name  = "DIGITALHUB_CORE_TOKEN"
-            value = data.coder_workspace_owner.me.oidc_access_token
-          }
-          env {
             name  = "NB_USER"
             value = data.coder_workspace_owner.me.name
           }
@@ -467,6 +516,31 @@ resource "kubernetes_deployment" "jupyter" {
           env {
             name  = "HOME"
             value = "/home/${data.coder_workspace_owner.me.name}"
+          }
+          env {
+            name = "DHCORE_ACCESS_TOKEN"
+            value = local.core_access_token
+          }
+          env {
+            name = "DHCORE_REFRESH_TOKEN"
+            value = local.core_refresh_token
+          }
+          env {
+            name = "DHCORE_ENDPOINT"
+            value = var.dhcore_endpoint
+          }
+          env {
+            name = "DHCORE_ISSUER"
+            value = var.dhcore_issuer
+          }
+          env {
+            name = "DHCORE_CLIENT_ID"
+            value_from {
+              secret_key_ref {
+                name = var.core_auth_creds
+                key  = "clientId"
+              }
+            }
           }
           env_from {
             config_map_ref {
