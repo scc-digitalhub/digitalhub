@@ -3,6 +3,21 @@ entries:
   aac:
   - apiVersion: v2
     appVersion: 5.0.0
+    created: "2024-08-26T12:22:10.938145678Z"
+    description: A Helm chart for Kubernetes
+    digest: 45bc7f4583852e072339580c6afe9add4c580e7b6324818e151454401ee0c132
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: aac
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/aac-0.1.9/aac-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
+    appVersion: 5.0.0
     created: "2024-05-28T13:49:51.464042354Z"
     description: A Helm chart for Kubernetes
     digest: 8906610be594fe450b04d5a17a25597a4476bf4ccab1fa22953cade460163630
@@ -317,6 +332,21 @@ entries:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/coder-0.1.0/coder-0.1.0.tgz
     version: 0.1.0
   core:
+  - apiVersion: v2
+    appVersion: 0.7.0-beta3
+    created: "2024-08-26T12:22:11.04515579Z"
+    description: Core backend application for DigitalHub.
+    digest: fbcbbede4b257c1ec67dadaa42f3c5220993768a577222cd9d212258b603ad0a
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: core
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.2.1/core-0.2.1.tgz
+    version: 0.2.1
   - apiVersion: v2
     appVersion: 0.7.0-beta2
     created: "2024-08-26T09:35:16.968546787Z"
@@ -15587,4 +15617,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-08-26T09:35:16.970086336Z"
+generated: "2024-08-26T12:22:11.045909648Z"
