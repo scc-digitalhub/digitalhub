@@ -124,6 +124,7 @@ config:
   mailSender: ""
   mailDebug: "false"
   applicationExtUrl: ""
+  keystorePath: ""
 
 # Secrets
 
