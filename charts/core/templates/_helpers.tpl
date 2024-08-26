@@ -83,3 +83,14 @@ Calculate Core endpoint
 {{- end }}
 {{- end }}
 {{- end }}
+
+{{/*
+Build core profile variable
+*/}}
+{{- define "core.profiles" -}}
+{{- $profiles := list }}
+{{- range .Values.profiles }}
+{{- $profiles = append $profiles (printf "%s|%s" .name .path) }}
+{{- end }}
+{{- join "," $profiles }}
+{{- end }}

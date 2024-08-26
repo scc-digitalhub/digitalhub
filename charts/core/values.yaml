@@ -214,3 +214,11 @@ keystore:
   secretName: ""
   keyName: ""
   keystoreKid: ""
+
+profiles: []
+  # - name: template1
+  #   path: test/template1.json
+  # - name: template2
+  #   path: test/template2.json
+  # - name: template3
+  #   path: test/template3.json

@@ -64,3 +64,6 @@ data:
   AWS_REGION: {{ .Values.minio.awsRegion }}
   S3_ENDPOINT: {{ .Values.minio.publicUrl }}
   S3_BUCKET: {{ .Values.minio.bucket }}
+{{- if .Values.profiles }}
+  K8S_TEMPLATES: {{ include "core.profiles" . | quote }}
+{{- end }}
