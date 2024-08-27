@@ -120,7 +120,6 @@ volumes: []
 #   configMap:
 #     name: template1
 
-    
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
 # - name: foo
