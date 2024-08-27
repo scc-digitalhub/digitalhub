@@ -116,12 +116,19 @@ volumes: []
 #   secret:
 #     secretName: mysecret
 #     optional: false
+# - name: template1
+#   configMap:
+#     name: template1
 
+    
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
+# - name: template1
+#   mountPath: test/template1.json
+#   subPath: template1.json
 
 nodeSelector: {}
 
