@@ -66,3 +66,4 @@ data:
 {{- if .Values.profiles }}
   K8S_TEMPLATES: {{ include "core.profiles" . | quote }}
 {{- end }}
+  K8S_INIT_IMAGE: "{{ .Values.initImage.builderTool.image }}:{{ .Values.initImage.builderTool.tag }}"
