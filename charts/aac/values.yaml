@@ -124,7 +124,6 @@ config:
   mailSender: ""
   mailDebug: "false"
   applicationExtUrl: ""
-  keystorePath: ""
 
 # Secrets
 
@@ -175,3 +174,7 @@ secrets:
   annotations: {}
   reflector:
     enabled: false
+
+keystore:
+  secretName: ""
+  keyName: ""

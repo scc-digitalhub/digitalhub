@@ -18,5 +18,5 @@ data:
   APPLICATION_EXT_URL: {{ .Values.config.applicationExtUrl }}
   APPLICATION_EMAIL: {{ .Values.config.mailSender }}
   {{ if .Values.config.keystorePath -}}
-  JWK_KEYSTORE: {{ .Values.config.keystorePath }}
+  JWK_KEYSTORE: "/etc/keystore/{{ .Values.keystore.keyName }}"
   {{ end -}}
