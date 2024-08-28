@@ -114,15 +114,25 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+          {{- if .Values.keystore.secretName }}
+            - name: keystore
+              mountPath: "/etc/keystore/{{ .Values.keystore.keyName }}"
+              subPath: {{ .Values.keystore.keyName }}
+          {{- end }}
+          {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
           envFrom:
           - configMapRef:
               name: {{ include "aac.fullname" . }}
-      {{- with .Values.volumes }}
       volumes:
+      {{- if .Values.keystore.secretName }}
+        - name: keystore
+          secret:
+            secretName: {{ .Values.keystore.secretName }}
+      {{- end }}
+      {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
