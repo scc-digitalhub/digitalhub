@@ -16,7 +16,7 @@ spec:
       containers:
         - name: python
           image: python:3.9-slim
-          command: ['sh', '-c', 'pip install "digitalhub_runtime_{{$testName}}[local]{{ $.Values.core.testSuite }}" requests-oauthlib {{- if eq ($testName) "nefertem" }} nefertem-inference-frictionless nefertem-profiling-frictionless nefertem-validation-frictionless {{- end }} && python home/{{ $key | trimPrefix "confs/tests/python-test/" }}']
+          command: ['sh', '-c', 'pip install "digitalhub_runtime_{{$testName}}[local]{{ $.Values.core.testSuite }}" requests-oauthlib && python home/{{ $key | trimPrefix "confs/tests/python-test/" }}']
           volumeMounts:
             - name: test-volume
               mountPath: /home

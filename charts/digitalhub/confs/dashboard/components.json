@@ -5,6 +5,7 @@
     "slug": "minio",
     "name": "Minio",
     "description": "S3-compatible datalake",
+    "order": 3,
     "port": "",
     {{- if (index .Values "minio" "consoleIngress" "enabled") }}
     {{- with (index .Values "minio" "consoleIngress" "hosts" 0) }}
@@ -19,6 +20,7 @@
     "slug": "coder",
     "name": "Coder",
     "description": "Workspace manager",
+    "order": 1,
     "port": "",
     {{- if .Values.coder.coder.ingress.enable }}
     "link": "https://{{ .Values.coder.coder.ingress.host }}"
@@ -30,6 +32,7 @@
     "slug": "krm",
     "name": "Kubernetes Resource Manager",
     "description": "Manager for Kubernetes Resources",
+    "order": 2,
     "port": "",
     {{- if (index .Values "kubernetes-resource-manager" "ingress" "enabled") }}
     {{- with (index .Values "kubernetes-resource-manager" "ingress" "hosts" 0) }}
@@ -82,6 +85,21 @@
 {{- end}}
 {{- else }}
   {
+    "slug": "kubeflow",
+    "name": "Kubeflow Dashboard",
+    "description": "Kubeflow Pipelines is a platform for building and deploying portable, scalable machine learning (ML) workflows",
+    "port": "",
+    {{- if (index .Values "mlrun-ce" "pipelines" "ui" "ingress" "enabled") }}
+    {{- with (index .Values "mlrun-ce" "pipelines" "ui" "ingress" "hosts" 0) }}
+    "link": "https://{{ .host }}"
+    {{- end }}
+    {{- else }}
+    {{- with (index .Subcharts "mlrun-ce") }}
+    "link": "http://{{ $externalUrl }}:{{ .Values.pipelines.ui.service.nodePort }}"
+    {{- end }}
+    {{- end }}
+  },
+  {
     "slug": "nuclio",
     "name": "Nuclio",
     "description": "Serverless platform",
@@ -109,26 +127,12 @@
     {{- end }}
     {{- end }}
   },
-  {
-    "slug": "kubeflow",
-    "name": "Kubeflow Dashboard",
-    "description": "Kubeflow Pipelines is a platform for building and deploying portable, scalable machine learning (ML) workflows",
-    "port": "",
-    {{- if (index .Values "mlrun-ce" "pipelines" "ui" "ingress" "enabled") }}
-    {{- with (index .Values "mlrun-ce" "pipelines" "ui" "ingress" "hosts" 0) }}
-    "link": "https://{{ .host }}"
-    {{- end }}
-    {{- else }}
-    {{- with (index .Subcharts "mlrun-ce") }}
-    "link": "http://{{ $externalUrl }}:{{ .Values.pipelines.ui.service.nodePort }}"
-    {{- end }}
-    {{- end }}
-  },
 {{- end }}
   {
-    "slug": "dhcore",
-    "name": "DH Core",
-    "description": "Core Digital Hub",
+    "slug": "core",
+    "name": "Core",
+    "description": "Core Management UI",
+    "order": 0,
     "port": "",
     {{- if .Values.core.ingress.enabled }}
     {{- with (index .Values.core.ingress.hosts 0) }}
