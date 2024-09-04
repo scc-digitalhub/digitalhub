@@ -160,9 +160,9 @@ runtime:
     tag: "0.7.0b3"
   python:
     image: "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime"
-    tag3_9: "3.9-0.7.0b2"
-    tag3_10: "3.10-0.7.0b2"
-    tag3_11: "3.11-0.7.0b2"
+    tag3_9: "3.9-0.7.0b3"
+    tag3_10: "3.10-0.7.0b3"
+    tag3_11: "3.11-0.7.0b3"
 
 initImage:
   builderTool:
@@ -230,3 +230,22 @@ profiles: []
   #   path: test/template2.json
   # - name: template3
   #   path: test/template3.json
+
+coreAuthCreds:
+  clientId: ""
+  clientSecret: ""
+
+kanikoArgs: false
+
+additionalConfig:
+  debug:
+    enableMetrics: false
+    enableLogs: true
+  security:
+    disableRoot: true
+  resources:
+    cpuReq: ""
+    cpuLim: ""
+    memReq: ""
+    memLim: ""
+    gpuKey: ""
