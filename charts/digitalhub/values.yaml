@@ -330,16 +330,16 @@ core:
         enabled: true
         image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
   testSuite: ">=0.7.0b"
-  coreAuthCreds: # These are example creds, change them to your needs.
+  coreAuthCreds:  # These are example creds, change them to your needs.
     clientId: "m04bfbmd03m8sf4u9ucz54ti"
     clientSecret: "9rb5215z0aqd7fadzxuoyqe3"
   kanikoArgs: false
-  additionalConfig: # Configuration of pods created by Core
+  additionalConfig:  # Configuration of pods created by Core
     debug:
       enableMetrics: false  # Enable/disable metrics. Metrics server deployment is required.
       enableLogs: true  # Enable/disable logs
     security:
-      disableRoot: true # Enable/disable pods running as root
+      disableRoot: true  # Enable/disable pods running as root
     resources:  # Set resources requests/limits
       cpuReq: "100m"
       cpuLim: ""
