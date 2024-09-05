@@ -154,10 +154,10 @@ kfp:
 runtime:
   dbt:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-dbt"
-    tag: "0.7.0b3"
+    tag: "0.7.0b4-1"
   kfp:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-kfp"
-    tag: "0.7.0b3"
+    tag: "0.7.0b4-1"
   python:
     image: "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime"
     tag3_9: "3.9-0.7.0b3"
