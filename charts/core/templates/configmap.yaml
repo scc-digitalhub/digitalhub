@@ -65,7 +65,7 @@ data:
   S3_ENDPOINT: {{ .Values.minio.publicUrl }}
   S3_BUCKET: {{ .Values.minio.bucket }}
 {{- if .Values.profiles }}
-  K8S_TEMPLATES: {{ include "core.profiles" . | quote }}
+  K8S_TEMPLATES: {{ include "core.templates" . | quote }}
 {{- end }}
   K8S_INIT_IMAGE: "{{ .Values.initImage.builderTool.image }}:{{ .Values.initImage.builderTool.tag }}"
   K8S_ENABLE_METRICS: {{ .Values.additionalConfig.debug.enableMetrics | quote }}
@@ -76,3 +76,5 @@ data:
   K8S_RESOURCE_MEM_DEFAULT: {{ .Values.additionalConfig.resources.memReq }}
   K8S_RESOURCE_MEM_LIMIT: {{ .Values.additionalConfig.resources.memLim }}
   K8S_RESOURCE_GPU_KEY: {{ .Values.additionalConfig.resources.gpuKey }}
+  K8S_SERVICE_TYPE: {{ .Values.additionalConfig.service.type }}
+  K8S_JOB_DEADLINE: {{ .Values.additionalConfig.job.deadline }}

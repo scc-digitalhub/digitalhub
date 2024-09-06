@@ -223,7 +223,7 @@ keystore:
   keyName: ""
   keystoreKid: ""
 
-profiles: []
+templates: []
   # - name: template1
   #   path: test/template1.json
   # - name: template2
@@ -249,3 +249,7 @@ additionalConfig:
     memReq: ""
     memLim: ""
     gpuKey: ""
+  service:
+    type: "NodePort"
+  job:
+    deadline: "604800"
