@@ -77,4 +77,4 @@ data:
   K8S_RESOURCE_MEM_LIMIT: {{ .Values.additionalConfig.resources.memLim }}
   K8S_RESOURCE_GPU_KEY: {{ .Values.additionalConfig.resources.gpuKey }}
   K8S_SERVICE_TYPE: {{ .Values.additionalConfig.service.type }}
-  K8S_JOB_DEADLINE: {{ .Values.additionalConfig.job.deadline }}
+  K8S_JOB_DEADLINE: {{ .Values.additionalConfig.job.deadline | quote }}
