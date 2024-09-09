@@ -71,10 +71,10 @@ data:
   K8S_ENABLE_METRICS: {{ .Values.additionalConfig.debug.enableMetrics | quote }}
   K8S_ENABLE_LOGS: {{ .Values.additionalConfig.debug.enableLogs | quote }}
   K8S_SEC_DISABLE_ROOT: {{ .Values.additionalConfig.security.disableRoot | quote }}
-  K8S_RESOURCE_CPU_DEFAULT: {{ .Values.additionalConfig.resources.cpuReq }}
-  K8S_RESOURCE_CPU_LIMIT: {{ .Values.additionalConfig.resources.cpuLim }}
-  K8S_RESOURCE_MEM_DEFAULT: {{ .Values.additionalConfig.resources.memReq }}
-  K8S_RESOURCE_MEM_LIMIT: {{ .Values.additionalConfig.resources.memLim }}
-  K8S_RESOURCE_GPU_KEY: {{ .Values.additionalConfig.resources.gpuKey }}
-  K8S_SERVICE_TYPE: {{ .Values.additionalConfig.service.type }}
+  K8S_RESOURCE_CPU_DEFAULT: {{ .Values.additionalConfig.resources.cpuReq | quote }}
+  K8S_RESOURCE_CPU_LIMIT: {{ .Values.additionalConfig.resources.cpuLim | quote }}
+  K8S_RESOURCE_MEM_DEFAULT: {{ .Values.additionalConfig.resources.memReq | quote }}
+  K8S_RESOURCE_MEM_LIMIT: {{ .Values.additionalConfig.resources.memLim | quote }}
+  K8S_RESOURCE_GPU_KEY: {{ .Values.additionalConfig.resources.gpuKey | quote }}
+  K8S_SERVICE_TYPE: {{ .Values.additionalConfig.service.type | quote }}
   K8S_JOB_DEADLINE: {{ .Values.additionalConfig.job.deadline | quote }}
