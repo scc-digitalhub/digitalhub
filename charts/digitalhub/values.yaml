@@ -163,9 +163,9 @@ coder:
       - name: jupyter
         nodePort: "30040"
         iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.7.0b3"
-        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.7.0b3"
-        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.7.0b3"
+        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.7.0b6"
+        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.7.0b6"
+        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.7.0b6"
         privileged: false
       - name: dremio
         nodePort: "30120"
@@ -333,7 +333,7 @@ core:
   coreAuthCreds:  # These are example creds, change them to your needs.
     clientId: "m04bfbmd03m8sf4u9ucz54ti"
     clientSecret: "9rb5215z0aqd7fadzxuoyqe3"
-  kanikoArgs: false
+  kanikoArgs: ""
   additionalConfig:  # Configuration of pods created by Core
     debug:
       enableMetrics: false  # Enable/disable metrics. Metrics server deployment is required.
