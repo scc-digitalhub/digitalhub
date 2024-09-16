@@ -9,7 +9,7 @@ terraform {
       version = "~> 2.30"
     }
     http = {
-      source = "hashicorp/http"
+      source  = "hashicorp/http"
       version = "3.4.4"
     }
   }
@@ -94,23 +94,23 @@ variable "privileged" {
 }
 
 variable "core_auth_creds" {
-  type        = string
-  default     = "core-auth-creds"
+  type    = string
+  default = "core-auth-creds"
 }
 
 variable "clientId" {
-  type        = string
-  default     = "core-auth-creds"
+  type    = string
+  default = "core-auth-creds"
 }
 
 variable "dhcore_endpoint" {
-  type        = string
-  default     = ""
+  type    = string
+  default = ""
 }
 
 variable "dhcore_issuer" {
-  type        = string
-  default     = ""
+  type    = string
+  default = ""
 }
 
 data "coder_parameter" "cpu" {
@@ -199,8 +199,8 @@ data "coder_parameter" "python_version" {
 }
 
 data "http" "exchange_token" {
-  count = data.coder_workspace_owner.me.oidc_access_token != "" ? 1 : 0
-  url = "${var.dhcore_endpoint}/auth/token"
+  count  = data.coder_workspace_owner.me.oidc_access_token != "" ? 1 : 0
+  url    = "${var.dhcore_endpoint}/auth/token"
   method = "POST"
 
   # Optional request headers
@@ -213,7 +213,7 @@ data "http" "exchange_token" {
 }
 
 locals {
-  core_access_token = data.coder_workspace_owner.me.oidc_access_token != "" ? jsondecode(data.http.exchange_token[0].response_body)["access_token"] : null
+  core_access_token  = data.coder_workspace_owner.me.oidc_access_token != "" ? jsondecode(data.http.exchange_token[0].response_body)["access_token"] : null
   core_refresh_token = data.coder_workspace_owner.me.oidc_access_token != "" ? jsondecode(data.http.exchange_token[0].response_body)["refresh_token"] : null
 }
 
@@ -518,11 +518,11 @@ resource "kubernetes_deployment" "jupyter" {
             value = "/home/${data.coder_workspace_owner.me.name}"
           }
           env {
-            name = "DHCORE_ACCESS_TOKEN"
+            name  = "DHCORE_ACCESS_TOKEN"
             value = local.core_access_token
           }
           env {
-            name = "DHCORE_REFRESH_TOKEN"
+            name  = "DHCORE_REFRESH_TOKEN"
             value = local.core_refresh_token
           }
           env {
@@ -532,11 +532,6 @@ resource "kubernetes_deployment" "jupyter" {
                 name = var.core_auth_creds
                 key  = "clientId"
               }
-            }
-          }
-          env_from {
-            config_map_ref {
-              name = "mlrun-common-env"
             }
           }
           env_from {

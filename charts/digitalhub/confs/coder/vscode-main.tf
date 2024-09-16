@@ -386,8 +386,8 @@ resource "kubernetes_deployment" "vscode" {
             }
           }
           env_from {
-            config_map_ref {
-              name = "mlrun-common-env"
+            secret_ref {
+              name = "digitalhub-common-creds"
             }
           }
           env_from {
