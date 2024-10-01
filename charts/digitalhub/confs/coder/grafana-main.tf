@@ -233,6 +233,7 @@ resource "kubernetes_deployment" "grafana" {
       spec {
         security_context {
           run_as_user = "472"
+          fs_group = "472"
         }
         container {
           name              = "grafana"
