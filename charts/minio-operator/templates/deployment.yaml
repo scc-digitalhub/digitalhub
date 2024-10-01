@@ -13,8 +13,9 @@ spec:
       {{- include "minio-operator.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -86,7 +87,7 @@ spec:
                   name: {{ .Values.minio.minioCredsExistingSecret.username.secretName}}
                   key: {{ .Values.minio.minioCredsExistingSecret.username.secretKey}}
                 {{- else }}
-                  name: minio
+                  name: {{ .Values.global.minio.rootUserSecret}}
                   key: rootUser
                 {{- end }}
             - name: MINIO_SECRET_ACCESS_KEY
@@ -96,7 +97,7 @@ spec:
                   name: {{ .Values.minio.minioCredsExistingSecret.password.secretName}}
                   key: {{ .Values.minio.minioCredsExistingSecret.password.secretKey}}
                 {{- else }}
-                  name: minio
+                  name: {{ .Values.global.minio.rootUserSecret}}
                   key: rootPassword
                 {{- end }}     
           envFrom:

@@ -139,6 +139,37 @@ resource "coder_app" "sqlpad" {
   }
 }
 
+resource "kubernetes_persistent_volume_claim" "database" {
+  metadata {
+    name      = "sqlpad-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}-database"
+    namespace = var.namespace
+    labels = {
+      "app.kubernetes.io/name"     = "sqlpad-pvc"
+      "app.kubernetes.io/instance" = "sqlpad-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"  = "coder"
+      "app.kubernetes.io/type"     = "pvc"
+      // Coder specific labels.
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+    }
+    annotations = {
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
+    }
+  }
+  wait_until_bound = false
+  spec {
+    access_modes = ["ReadWriteOnce"]
+    resources {
+      requests = {
+        storage = "1Gi"
+      }
+    }
+  }
+}
+
 resource "kubernetes_service" "sqlpad-service" {
   metadata {
     name      = "sqlpad-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
@@ -300,13 +331,17 @@ resource "kubernetes_deployment" "sqlpad" {
           }
           volume_mount {
             mount_path = "/var/lib/sqlpad"
-            name       = "home"
+            name       = "database"
+            sub_path   = "sqlpad"
             read_only  = false
           }
         }
         volume {
-          name = "home"
-          empty_dir {}
+          name = "database"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim.database.metadata.0.name
+            read_only  = false
+          }
         }
         affinity {
           pod_anti_affinity {

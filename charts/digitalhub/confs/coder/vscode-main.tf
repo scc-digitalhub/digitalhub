@@ -47,12 +47,6 @@ variable "db_secret" {
   default     = "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
 }
 
-variable "minio_secret" {
-  description = "Provides the secret credentials for minio"
-  type        = string
-  default     = "minio"
-}
-
 variable "service_type" {
   type    = string
   default = "ClusterIP"
@@ -392,8 +386,8 @@ resource "kubernetes_deployment" "vscode" {
             }
           }
           env_from {
-            config_map_ref {
-              name = "mlrun-common-env"
+            secret_ref {
+              name = "digitalhub-common-creds"
             }
           }
           env_from {

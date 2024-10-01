@@ -83,3 +83,14 @@ Calculate Core endpoint
 {{- end }}
 {{- end }}
 {{- end }}
+
+{{/*
+Build core profile variable
+*/}}
+{{- define "core.templates" -}}
+{{- $templates := list }}
+{{- range .Values.templates }}
+{{- $templates = append $templates (printf "%s" .path) }}
+{{- end }}
+{{- join "," $templates }}
+{{- end }}

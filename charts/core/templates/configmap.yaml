@@ -12,7 +12,6 @@ data:
   DH_CONFIG_COMMON_SECRETS: digitalhub-common-creds
   DH_CONFIG_COMMON_MAPS: digitalhub-common-env
   LOG_LEVEL: INFO
-  RUNTIME_NEFERTEM_IMAGE: {{ .Values.runtime.nefertem.image }}:{{ .Values.runtime.nefertem.tag }}
   RUNTIME_DBT_IMAGE: {{ .Values.runtime.dbt.image }}:{{ .Values.runtime.dbt.tag }}
   RUNTIME_KFP_IMAGE: {{ .Values.runtime.kfp.image }}:{{ .Values.runtime.kfp.tag }}
   RUNTIME_PYTHON_IMAGE_3_9: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_9 }}
@@ -55,4 +54,27 @@ data:
   KANIKO_IMAGE_PREFIX: {{ .Values.registry.kaniko.imagePrefix | default .Release.Namespace }}
   DOCKER_REGISTRY_SECRET: {{ .Values.global.registry.secretName }}
 {{- end }}
+  KANIKO_ARGS: {{ .Values.kanikoArgs | quote }}
   DH_CORS_ORIGINS: {{ .Values.corsOrigin | quote }}
+{{- if .Values.keystore.secretName }}
+  JWT_KEYSTORE_PATH: "/etc/keystore/{{ .Values.keystore.keyName }}"
+  JWT_KEYSTORE_KID: {{ .Values.keystore.keystoreKid }}
+{{- end }}
+  AWS_DEFAULT_REGION: {{ .Values.minio.awsDefaultRegion }}
+  AWS_REGION: {{ .Values.minio.awsRegion }}
+  S3_ENDPOINT: {{ .Values.minio.publicUrl }}
+  S3_BUCKET: {{ .Values.minio.bucket }}
+{{- if .Values.templates }}
+  K8S_TEMPLATES: {{ include "core.templates" . | quote }}
+{{- end }}
+  K8S_INIT_IMAGE: "{{ .Values.initImage.builderTool.image }}:{{ .Values.initImage.builderTool.tag }}"
+  K8S_ENABLE_METRICS: {{ .Values.additionalConfig.debug.enableMetrics | quote }}
+  K8S_ENABLE_LOGS: {{ .Values.additionalConfig.debug.enableLogs | quote }}
+  K8S_SEC_DISABLE_ROOT: {{ .Values.additionalConfig.security.disableRoot | quote }}
+  K8S_RESOURCE_CPU_DEFAULT: {{ .Values.additionalConfig.resources.cpuReq | quote }}
+  K8S_RESOURCE_CPU_LIMIT: {{ .Values.additionalConfig.resources.cpuLim | quote }}
+  K8S_RESOURCE_MEM_DEFAULT: {{ .Values.additionalConfig.resources.memReq | quote }}
+  K8S_RESOURCE_MEM_LIMIT: {{ .Values.additionalConfig.resources.memLim | quote }}
+  K8S_RESOURCE_GPU_KEY: {{ .Values.additionalConfig.resources.gpuKey | quote }}
+  K8S_SERVICE_TYPE: {{ .Values.additionalConfig.service.type | quote }}
+  K8S_JOB_DEADLINE: {{ .Values.additionalConfig.job.deadline | quote }}

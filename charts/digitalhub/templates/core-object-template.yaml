@@ -18,7 +18,13 @@ spec:
         ref:
           apiVersion: v1
           kind: Secret
-          name: digitalhub-minio-creds
+          name: {{ .Values.global.minio.digitalhubUserSecret }}
+    - name: coresecret
+      object:
+        ref:
+          apiVersion: v1
+          kind: Secret
+          name: core-auth-creds
   templates:
   - object:
       apiVersion: v1
@@ -33,4 +39,5 @@ spec:
         JUPYTERLAB_S3_ACCESS_KEY_ID: "{{ "{{" }} matrix.miniosecret.data.digitalhubUser | b64decode {{ "}}" }}"
         JUPYTERLAB_S3_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.miniosecret.data.digitalhubPassword | b64decode {{ "}}" }}"
         POSTGRES_URL: "postgresql://{{ "{{" }} matrix.postgressecret.data.username | b64decode {{ "}}" }}:{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}@database-postgres-cluster:5432/digitalhub"
+        JWT_CLIENT_ID: "{{ "{{" }} matrix.coresecret.data.clientId | b64decode {{ "}}" }}"
 {{- end }}

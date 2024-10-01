@@ -9,6 +9,8 @@ namespaceValues:
 
 global:
   externalHostAddress: ""
+  minio:
+    rootUserSecret: ""
 
 replicaCount: 1
 

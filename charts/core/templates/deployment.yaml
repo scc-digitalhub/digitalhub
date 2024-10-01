@@ -13,8 +13,9 @@ spec:
       {{- include "core.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -47,36 +48,16 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: DH_S3_ACCESS_KEY_ID
+            - name: AWS_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: digitalhub-minio-creds
+                  name: {{ .Values.global.minio.digitalhubUserSecret }}
                   key: digitalhubUser
-            - name: DH_S3_SECRET_ACCESS_KEY
+            - name: AWS_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: digitalhub-minio-creds
+                  name: {{ .Values.global.minio.digitalhubUserSecret }}
                   key: digitalhubPassword
-            - name: DH_AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: digitalhub-minio-creds
-                  key: digitalhubUser
-            - name: DH_AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: digitalhub-minio-creds
-                  key: digitalhubPassword
-            - name: DH_POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
-                  key: username
-            - name: DH_POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
-                  key: password
             - name: JDBC_USER
               valueFrom:
                 secretKeyRef:
@@ -110,6 +91,16 @@ spec:
               value: {{ .Values.authentication.openId.oidcClientId }}
               {{- end }}
             {{- end }}
+            - name: JWT_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: core-auth-creds
+                  key: clientId
+            - name: JWT_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: core-auth-creds
+                  key: clientSecret
           envFrom:
           - configMapRef:
               name: {{ include "core.fullname" . }}
@@ -119,12 +110,22 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+          {{- if .Values.keystore.secretName }}
+            - name: keystore
+              mountPath: "/etc/keystore/{{ .Values.keystore.keyName }}"
+              subPath: {{ .Values.keystore.keyName }}
+          {{- end }}
+          {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.volumes }}
       volumes:
+      {{- if .Values.keystore.secretName }}
+        - name: keystore
+          secret:
+            secretName: {{ .Values.keystore.secretName }}
+      {{- end }}
+      {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}

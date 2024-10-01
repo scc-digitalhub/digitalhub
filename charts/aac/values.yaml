@@ -174,3 +174,7 @@ secrets:
   annotations: {}
   reflector:
     enabled: false
+
+keystore:
+  secretName: ""
+  keyName: ""

@@ -13,8 +13,9 @@ spec:
       {{- include "digitalhub.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.dashboard.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/dashboard/configmap.yaml") . | sha256sum }}
+      {{- with .Values.dashboard.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:

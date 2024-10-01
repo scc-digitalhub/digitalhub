@@ -2,8 +2,8 @@ apiVersion: v2
 name: core
 description: Core backend application for DigitalHub.
 type: application
-version: 0.1.35
-appVersion: "0.6.0"
+version: 0.2.11
+appVersion: "0.7.0"
 maintainers:
   - name: ffais
     url: https://github.com/ffais

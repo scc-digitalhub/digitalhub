@@ -122,6 +122,37 @@ resource "coder_metadata" "grafana" {
   }
 }
 
+resource "kubernetes_persistent_volume_claim" "database" {
+  metadata {
+    name      = "grafana-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}-database"
+    namespace = var.namespace
+    labels = {
+      "app.kubernetes.io/name"     = "grafana-pvc"
+      "app.kubernetes.io/instance" = "grafana-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"  = "coder"
+      "app.kubernetes.io/type"     = "pvc"
+      // Coder specific labels.
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+    }
+    annotations = {
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
+    }
+  }
+  wait_until_bound = false
+  spec {
+    access_modes = ["ReadWriteOnce"]
+    resources {
+      requests = {
+        storage = "1Gi"
+      }
+    }
+  }
+}
+
 resource "kubernetes_service" "grafana-service" {
   metadata {
     name      = "grafana-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
@@ -202,6 +233,7 @@ resource "kubernetes_deployment" "grafana" {
       spec {
         security_context {
           run_as_user = "472"
+          fs_group = "472"
         }
         container {
           name              = "grafana"
@@ -244,13 +276,17 @@ resource "kubernetes_deployment" "grafana" {
           }
           volume_mount {
             mount_path = "/var/lib/grafana"
-            name       = "grafana-storage"
+            name       = "database"
+            sub_path   = "grafana"
             read_only  = false
           }
         }
         volume {
-          name = "grafana-storage"
-          empty_dir {}
+          name = "database"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim.database.metadata.0.name
+            read_only  = false
+          }
         }
         affinity {
           pod_anti_affinity {

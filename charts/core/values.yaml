@@ -35,6 +35,8 @@ podSecurityContext:
 global:
   externalHostAddress: ""
   externalTls: false
+  minio:
+    digitalhubUserSecret: ""
   registry:
     url: ""
     secretName: ""
@@ -57,6 +59,10 @@ minio:
   endpointPort: "9000"
   bucket: "mlrun"
   protocol: "http"
+  awsDefaultRegion: ""
+  awsRegion: ""
+  # Change the publicUrl value to the one you are using for accessing the minio-API from your browser, in the form "http/s://yourminioapiurl"
+  publicUrl: ""
 
 service:
   port: "8080"
@@ -110,12 +116,18 @@ volumes: []
 #   secret:
 #     secretName: mysecret
 #     optional: false
+# - name: template1
+#   configMap:
+#     name: template1
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
+# - name: template1
+#   mountPath: test/template1.json
+#   subPath: template1.json
 
 nodeSelector: {}
 
@@ -140,20 +152,22 @@ kfp:
   endpoint: ""
 
 runtime:
-  nefertem:
-    image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-nefertem"
-    tag: "0.6.1"
   dbt:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-dbt"
-    tag: "0.6.1"
+    tag: "0.7.0"
   kfp:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-kfp"
-    tag: "0.6.1"
+    tag: "0.7.0"
   python:
     image: "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime"
-    tag3_9: "3.9-0.6.1"
-    tag3_10: "3.10-0.6.1"
-    tag3_11: "3.11-0.6.1"
+    tag3_9: "3.9-0.7.0"
+    tag3_10: "3.10-0.7.0"
+    tag3_11: "3.11-0.7.0"
+
+initImage:
+  builderTool:
+    image: "ghcr.io/scc-digitalhub/digitalhub-core-builder-tool"
+    tag: "latest"
 
 authentication:
   basic:
@@ -203,3 +217,39 @@ corsOrigin: ""
 registry:
   kaniko:
     imagePrefix: ""
+
+keystore:
+  secretName: ""
+  keyName: ""
+  keystoreKid: ""
+
+templates: []
+  # - name: template1
+  #   path: test/template1.json
+  # - name: template2
+  #   path: test/template2.json
+  # - name: template3
+  #   path: test/template3.json
+
+coreAuthCreds:
+  clientId: ""
+  clientSecret: ""
+
+kanikoArgs: ""
+
+additionalConfig:
+  debug:
+    enableMetrics: false
+    enableLogs: true
+  security:
+    disableRoot: true
+  resources:
+    cpuReq: ""
+    cpuLim: ""
+    memReq: ""
+    memLim: ""
+    gpuKey: ""
+  service:
+    type: "NodePort"
+  job:
+    deadline: "604800"

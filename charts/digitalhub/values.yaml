@@ -25,8 +25,10 @@ global:
     dashboard:
       nodePort: 30050
   minio:
+    rootUserSecret: minio
     rootUser: &minioRootUser minio
     rootPassword: &minioRootPassword minio123
+    digitalhubUserSecret: digitalhub-minio-creds
     digitalhubUser: &digitalhubUser digitalhub
     digitalhubPassword: &digitalhubPassword digitalhub
     endpoint: &minioEndpoint "minio"
@@ -161,9 +163,9 @@ coder:
       - name: jupyter
         nodePort: "30040"
         iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.6.1"
-        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.6.1"
-        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.6.1"
+        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.7.0"
+        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.7.0"
+        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.7.0"
         privileged: false
       - name: dremio
         nodePort: "30120"
@@ -282,6 +284,10 @@ core:
     endpointPort: *minioEndpointPort
     bucket: *minioBucket
     protocol: *minioProtocol
+    awsDefaultRegion: "us-west-1"
+    awsRegion: "us-west-1"
+    # Change the publicUrl value to the one you are using for accessing the minio-API from your browser, in the form "http/s://yourminioapiurl"
+    publicUrl: "http://192.168.49.2:30080"
   service:
     type: *serviceType
     httpNodePort: "30180"
@@ -323,7 +329,23 @@ core:
       initialize:
         enabled: true
         image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
-  testSuite: "==0.6.0"
+  testSuite: ">=0.7.0b"
+  coreAuthCreds:  # These are example creds, change them to your needs.
+    clientId: "m04bfbmd03m8sf4u9ucz54ti"
+    clientSecret: "9rb5215z0aqd7fadzxuoyqe3"
+  kanikoArgs: ""
+  additionalConfig:  # Configuration of pods created by Core
+    debug:
+      enableMetrics: false  # Enable/disable metrics. Metrics server deployment is required.
+      enableLogs: true  # Enable/disable logs
+    security:
+      disableRoot: true  # Enable/disable pods running as root
+    resources:  # Set resources requests/limits
+      cpuReq: "100m"
+      cpuLim: ""
+      memReq: "64m"
+      memLim: ""
+      gpuKey: "nvidia.com/gpu"
 
 kubernetes-resource-manager:
   enabled: true
@@ -380,7 +402,7 @@ dashboard:
   image:
     repository: ghcr.io/scc-digitalhub/dh-dashboard
     pullPolicy: IfNotPresent
-    tag: "0.1.0"
+    tag: "0.1.2"
   imagePullSecrets: []
   nameOverride: ""
   fullnameOverride: ""

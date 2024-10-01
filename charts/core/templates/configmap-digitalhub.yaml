@@ -14,6 +14,8 @@ data:
   POSTGRES_SCHEMA: {{ .Values.postgres.schema }}
   S3_BUCKET_NAME: {{ .Values.minio.bucket }}
   KFP_ENDPOINT: {{ .Values.kfp.endpoint }}
-  DIGITALHUB_CORE_WORKFLOW_IMAGE: {{ .Values.runtime.kfp.image }}
+  DHCORE_WORKFLOW_IMAGE: {{ .Values.runtime.kfp.image }}
   KFP_ENDPOINT: http://ml-pipeline:8888
   MLRUN_DBPATH: http://mlrun-api:8080
+  DHCORE_ENDPOINT: "{{ include "core.endpoint" . }}"
+  DHCORE_ISSUER: "{{ include "core.endpoint" . }}"
