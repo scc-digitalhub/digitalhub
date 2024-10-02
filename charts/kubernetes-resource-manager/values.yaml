@@ -202,6 +202,7 @@ oidc:
       name: ""
       key: ""
   issuer: ""
+  roleClaim: ""
   scope: ""
   authType: ""
   redirectUrl: ""
