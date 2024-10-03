@@ -219,9 +219,11 @@ registry:
     imagePrefix: ""
 
 keystore:
-  secretName: ""
-  keyName: ""
+  existingSecret:
+    secretName: ""
+    keyName: ""
   keystoreKid: ""
+  keystorePath: "/etc/keystore"
 
 templates: []
   # - name: template1

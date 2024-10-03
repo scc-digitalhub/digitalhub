@@ -56,9 +56,12 @@ data:
 {{- end }}
   KANIKO_ARGS: {{ .Values.kanikoArgs | quote }}
   DH_CORS_ORIGINS: {{ .Values.corsOrigin | quote }}
-{{- if .Values.keystore.secretName }}
-  JWT_KEYSTORE_PATH: "/etc/keystore/{{ .Values.keystore.keyName }}"
-  JWT_KEYSTORE_KID: {{ .Values.keystore.keystoreKid }}
+{{- if and .Values.keystore.existingSecret.secretName .Values.keystore.existingSecret.keystorePath }}
+  JWT_KEYSTORE_PATH: "{{ .Values.keystore.keystorePath }}/{{ .Values.keystore.existingSecret.keyName }}"
+  JWT_KEYSTORE_KID: {{ .Values.keystore.keystoreKid | quote }}
+{{- else if not(.Values.keystore.existingSecret.secretName) .Values.keystore.existingSecret.keystorePath -}}
+  JWT_KEYSTORE_PATH: "{{ .Values.keystore.keystorePath }}/keystore.jwks"
+  JWT_KEYSTORE_KID: {{ .Values.keystore.keystoreKid | quote }}
 {{- end }}
   AWS_DEFAULT_REGION: {{ .Values.minio.awsDefaultRegion }}
   AWS_REGION: {{ .Values.minio.awsRegion }}

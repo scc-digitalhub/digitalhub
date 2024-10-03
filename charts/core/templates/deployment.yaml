@@ -111,19 +111,19 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-          {{- if .Values.keystore.secretName }}
+          {{- if and .Values.keystore.existingSecret.secretName .Values.keystore.existingSecret.keystorePath }}
             - name: keystore
-              mountPath: "/etc/keystore/{{ .Values.keystore.keyName }}"
-              subPath: {{ .Values.keystore.keyName }}
+              mountPath: "{{ .Values.keystore.keystorePath }}/{{ .Values.keystore.existingSecret.keyName }}"
+              subPath: {{ .Values.keystore.existingSecret.keyName }}
           {{- end }}
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
       volumes:
-      {{- if .Values.keystore.secretName }}
+      {{- if and .Values.keystore.existingSecret.secretName .Values.keystore.existingSecret.keystorePath }}
         - name: keystore
           secret:
-            secretName: {{ .Values.keystore.secretName }}
+            secretName: {{ .Values.keystore.existingSecret.secretName }}
       {{- end }}
       {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
