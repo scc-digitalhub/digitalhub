@@ -2,8 +2,8 @@ apiVersion: v2
 name: kubernetes-resource-manager
 description: A Helm chart for Kubernetes
 type: application
-version: 0.2.2
-appVersion: "1.2.1"
+version: 0.2.3
+appVersion: "1.2.2"
 maintainers:
   - name: ffais
     url: https://github.com/ffais
