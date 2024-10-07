@@ -35,7 +35,7 @@ variable "use_kubeconfig" {
 variable "namespace" {
   type        = string
   description = "The Kubernetes namespace to create workspaces in (must exist prior to creating workspaces)"
-  default     = "mlrun"
+  default     = "digitalhub"
 }
 
 variable "postgresql_hostname" {

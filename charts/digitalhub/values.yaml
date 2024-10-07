@@ -21,9 +21,6 @@ global:
     username: ""
     password: ""
     secretName: ""
-  nuclio:
-    dashboard:
-      nodePort: 30050
   minio:
     rootUserSecret: minio
     rootUser: &minioRootUser minio
@@ -35,6 +32,8 @@ global:
     endpointPort: &minioEndpointPort "9000"
     bucket: &minioBucket "datalake"
     protocol: &minioProtocol "http"
+  solr:
+    fullNameOverride: &solrFullNameOverride digitalhub
   externalHostAddress: &globalExternalUrl "192.168.49.2"
   externalTls: false
   securityContext:
@@ -62,93 +61,6 @@ docker-registry:
     size: 128Gi
   updateStrategy:
     type: Recreate
-
-mlrun-ce:
-  enabled: true
-  nuclio:
-    crd:
-      create: *globalCrd
-    dashboard:
-      kaniko:
-        insecurePushRegistry: true
-        insecurePullRegistry: true
-      ingress:
-        enabled: false
-  mlrun:
-    api:
-      image:
-        tag: 1.6.2-rc1
-    ui:
-      image:
-        tag: 1.6.2-rc1
-      ingress:
-        enabled: false
-    db:
-      enabled: true
-      image:
-        repository: mysql
-        tag: 8.0.35
-    httpDB:
-      dbType: "mysql"
-      secretDsn:
-        name: ""
-        key: ""
-    modelMonitoring:
-      secretDsn:
-        name: ""
-  jupyterNotebook:
-    enabled: false
-    image:
-      tag: 1.6.2-rc1
-  minio:
-    enabled: false
-    mode: standalone
-    rootUser: *digitalhubUser
-    rootPassword: *digitalhubPassword
-    replicas: 1
-    ingress:
-      enabled: false
-    persistence:
-      enabled: true
-      size: 128Gi
-    buckets:
-      - name: datalake
-        policy: none
-        purge: false
-  pipelines:
-    enabled: true
-    crd:
-      create: *globalCrd
-    priority_class:
-      enabled: true
-    name: pipelines
-    persistence:
-      enabled: true
-      existingClaim:
-      storageClass:
-      accessMode: "ReadWriteOnce"
-      size: "20Gi"
-    db:
-      username: root
-    ui:
-      ingress:
-        enabled: false
-      service:
-        type: *serviceType
-        nodePort: 30100
-    minio:
-      enabled: true
-      accessKey: *digitalhubUser
-      secretKey: *digitalhubPassword
-      endpoint: *minioEndpoint
-      endpointPort: *minioEndpointPort
-      bucket: *minioBucket
-      protocol: *minioProtocol
-  kube-prometheus-stack:
-    enabled: false
-  mpi-operator:
-    crd:
-      create: *globalCrd
 
 coder:
   enabled: true
@@ -324,10 +236,12 @@ core:
   solr:
     enabled: true
     url: "http://digitalhub-solrcloud-common/solr"
+    user: solr
+    fullNameOverride: *solrFullNameOverride
     collection:
       name: "dhcore"
       initialize:
-        enabled: true
+        enabled: false
         image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
   testSuite: ">=0.7.0b"
   coreAuthCreds:  # These are example creds, change them to your needs.
@@ -496,7 +410,14 @@ solr-operator:
 solr:
   enabled: true
   replicas: 1
-  fullnameOverride: digitalhub
+  fullnameOverride: *solrFullNameOverride
+  # WARNING: the following feature is currently bugged, waiting for a Solr official fix!
+  # Uncomment the following options to use solr with the unprivileged solr user and a randomly generated password
+  # Be sure to also set core.solr.collection.initialize to true in this values file.
+  # solrOptions:
+  #   security:
+  #     authenticationType: Basic
+  #     probesRequireAuth: true
 
 minio:
   enabled: true
@@ -561,6 +482,52 @@ minio-operator:
   minio:
     accessKey: *minioRootUser
     secretKey: *minioRootPassword
+    endpoint: *minioEndpoint
+    endpointPort: *minioEndpointPort
+    bucket: *minioBucket
+    protocol: *minioProtocol
+
+kubeflow-pipelines:
+  enabled: true
+  crd:
+    create: *globalCrd
+  priority_class:
+    enabled: true
+  name: pipelines
+  persistence:
+    enabled: true
+    existingClaim:
+    storageClass:
+    accessMode: "ReadWriteOnce"
+    size: "20Gi"
+  # These values crate a new mysql deployment using rootUsername and rootPassword for the admin account.
+  # Set this to false in case you want to use an existing mysql deployment.
+  embeddedMySql:
+    enabled: true
+    rootUsername: root
+    rootPassword: pwd
+  db:
+    # If you have an already existing mysql database that you want to use, you must provide the secret containing username and password of the user.
+    # WARNING: if you want to use an existing mysql deployment, make sure to:
+    # - Have two databases, "metadb" and "mlpipeline"
+    # - In the secret, specify a user that has privileges on the two above mentioned databases
+    externalSecret:
+      secretName: ""
+      usernameKey: ""
+      passwordKey: ""
+    # Set the username and password for the unprivileged user of a new mysql database deployment.
+    username: mysqluser
+    password: pwd
+  ui:
+    ingress:
+      enabled: false
+    service:
+      type: *serviceType
+      nodePort: 30100
+  s3:
+    enabled: true
+    accessKey: *digitalhubUser
+    secretKey: *digitalhubPassword
     endpoint: *minioEndpoint
     endpointPort: *minioEndpointPort
     bucket: *minioBucket

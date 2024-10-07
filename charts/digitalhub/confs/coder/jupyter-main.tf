@@ -494,18 +494,6 @@ resource "kubernetes_deployment" "jupyter" {
             value = coder_agent.jupyter.token
           }
           env {
-            name  = "V3IO_USERNAME"
-            value = data.coder_workspace_owner.me.name
-          }
-          env {
-            name  = "MLRUN_DBPATH"
-            value = "http://mlrun-api:8080"
-          }
-          env {
-            name  = "MLRUN_NAMESPACE"
-            value = var.namespace
-          }
-          env {
             name  = "NB_USER"
             value = data.coder_workspace_owner.me.name
           }

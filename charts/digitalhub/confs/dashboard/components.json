@@ -71,12 +71,8 @@
     "link": "https://{{ . }}"
     {{- end }}
   {{- else }}
-    {{- if eq .name "nuclio"}}
-    "link": "http://{{ $externalUrl }}:{{ .Values.global.nuclio.dashboard.nodePort }}"
-    {{- else if eq .name "mlrun" }}
-    "link": "http://{{ $externalUrl }}:{{ index .Values "mlrun-ce" "mlrun" "ui" "service" "nodePort" }}"
-    {{- else if eq .name "kubeflow" }}
-    "link": "http://{{ $externalUrl }}:{{ index .Values "mlrun-ce" "pipelines" "ui" "service" "nodePort" }}"
+    {{- if eq .name "kubeflow"}}
+    "link": "http://{{ $externalUrl }}:{{ index .Values "kubeflow-pipelines" "ui" "service" "nodePort" }}"
     {{- else }}
     "link": "http://{{ .service.name }}:{{ .service.port }}"
     {{- end }}
@@ -89,41 +85,13 @@
     "name": "Kubeflow Dashboard",
     "description": "Kubeflow Pipelines is a platform for building and deploying portable, scalable machine learning (ML) workflows",
     "port": "",
-    {{- if (index .Values "mlrun-ce" "pipelines" "ui" "ingress" "enabled") }}
-    {{- with (index .Values "mlrun-ce" "pipelines" "ui" "ingress" "hosts" 0) }}
+    {{- if (index .Values "kubeflow-pipelines" "ui" "ingress" "enabled") }}
+    {{- with (index .Values "kubeflow-pipelines" "ui" "ingress" "hosts" 0) }}
     "link": "https://{{ .host }}"
     {{- end }}
     {{- else }}
-    {{- with (index .Subcharts "mlrun-ce") }}
-    "link": "http://{{ $externalUrl }}:{{ .Values.pipelines.ui.service.nodePort }}"
-    {{- end }}
-    {{- end }}
-  },
-  {
-    "slug": "nuclio",
-    "name": "Nuclio",
-    "description": "Serverless platform",
-    "port": "",
-    {{- if (index .Values "mlrun-ce" "nuclio" "dashboard" "ingress" "enabled") }}
-    {{- with (index .Values "mlrun-ce" "nuclio" "dashboard" "ingress" "hosts" 0) }}
-    "link": "https://{{ . }}"
-    {{- end }}
-    {{- else }}
-    "link": "http://{{ $externalUrl }}:{{ .Values.global.nuclio.dashboard.nodePort }}"
-    {{- end }}
-  },
-  {
-    "slug": "mlrun",
-    "name": "MLRun Dashboard",
-    "description": "ML Run platform UI and API for the MLOps processes",
-    "port": "",
-    {{- if (index .Values "mlrun-ce" "mlrun" "ui" "ingress" "enabled") }}
-    {{- with (index .Values "mlrun-ce" "mlrun" "ui" "ingress" "hosts" 0) }}
-    "link": "https://{{ .host }}"
-    {{- end }}
-    {{- else }}
-    {{- with (index .Subcharts "mlrun-ce") }}
-    "link": "http://{{ $externalUrl }}:{{ .Values.mlrun.ui.service.nodePort }}"
+    {{- with (index .Subcharts "kubeflow-pipelines") }}
+    "link": "http://{{ $externalUrl }}:{{ .Values.ui.service.nodePort }}"
     {{- end }}
     {{- end }}
   },

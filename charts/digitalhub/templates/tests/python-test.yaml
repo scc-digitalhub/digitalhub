@@ -22,10 +22,6 @@ spec:
               mountPath: /home
               readOnly: false
           env:
-            - name: "MLRUN_DBPATH"
-              value: "http://mlrun-api:8080"
-            - name: "MLRUN_NAMESPACE"
-              value: "mlrun"
             - name: "POSTGRES_USER"
               valueFrom:
                 secretKeyRef:
@@ -57,8 +53,6 @@ spec:
             {{- end }}
             {{- end }}
           envFrom:
-            - configMapRef:
-                name: mlrun-common-env
             - configMapRef:
                 name: digitalhub-common-env
           securityContext:
