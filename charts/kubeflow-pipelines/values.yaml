@@ -1,0 +1,114 @@
+enabled: true
+name: pipelines
+
+crd:
+  enabled: true
+
+priority_class:
+  enabled: true
+  value: 1000000
+
+persistence:
+  enabled: true
+  existingClaim:
+  storageClass:
+  accessMode: "ReadWriteOnce"
+  size: "20Gi"
+  annotations:
+    helm.sh/resource-policy: "keep"
+
+nodeSelector: {}
+  # node-role.kubernetes.io/node: "true"
+  # tier: cs
+
+tolerations: []
+  #  - key: "node-role.kubernetes.io/master"
+  #    effect: NoSchedule
+
+embeddedMySql:
+  enabled: true
+  rootUsername: root
+  rootPassword: pwd
+
+db:
+  externalSecret:
+    secretName: ""
+    usernameKey: ""
+    passwordKey: ""
+  username: user
+  password: pwd
+  host: mysql
+  port: 3306
+  type: mysql
+  mlmdDb: metadb
+  pipelineDb: mlpipeline
+
+ui:
+  service:
+    type: NodePort
+    nodePort: 30100
+  ingress:
+    enabled: false
+    ingressClassName: ""
+    annotations: {}
+    hosts:
+      - host: chart-example.local
+        paths:
+          - pathType: ImplementationSpecific
+            path: /
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+s3:
+  enabled: true
+  externalSecret:
+    secretName: ""
+    accessKeyField: ""
+    secretKeyField: ""
+  accessKey: "minio"
+  secretKey: "minio123"
+  endpoint: "minio"
+  endpointPort: "9000"
+  bucket: "datalake"
+  protocol: "http"
+
+images:
+  argoexec:
+    repository: gcr.io/ml-pipeline/argoexec
+    tag: v3.4.17-license-compliance
+  workflowController:
+    repository: gcr.io/ml-pipeline/workflow-controller
+    tag: v3.4.17-license-compliance
+  apiServer:
+    repository: gcr.io/ml-pipeline/api-server
+    tag: 2.3.0
+  persistenceagent:
+    repository: gcr.io/ml-pipeline/persistenceagent
+    tag: 2.3.0
+  scheduledworkflow:
+    repository: gcr.io/ml-pipeline/scheduledworkflow
+    tag: 2.3.0
+  ui:
+    repository: gcr.io/ml-pipeline/frontend
+    tag: 2.3.0
+  viewerCrdController:
+    repository: gcr.io/ml-pipeline/viewer-crd-controller
+    tag: 2.3.0
+  visualizationServer:
+    repository: gcr.io/ml-pipeline/visualization-server
+    tag: 2.3.0
+  metadata:
+    container:
+      repository: gcr.io/tfx-oss-public/ml_metadata_store_server
+      tag: 1.14.0
+  metadataEnvoy:
+    repository: gcr.io/ml-pipeline/metadata-envoy
+    tag: 2.3.0
+  metadataWriter:
+    repository: gcr.io/ml-pipeline/metadata-writer
+    tag: 2.3.0
+  mysql:
+    repository: gcr.io/ml-pipeline/mysql
+    tag: 8.0.26

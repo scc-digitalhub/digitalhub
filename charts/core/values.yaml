@@ -57,7 +57,7 @@ minio:
   rootPassword: minio123
   endpoint: "minio"
   endpointPort: "9000"
-  bucket: "mlrun"
+  bucket: "datalake"
   protocol: "http"
   awsDefaultRegion: ""
   awsRegion: ""
@@ -206,6 +206,8 @@ events:
 solr:
   enabled: false
   url: ""
+  user: ""
+  fullNameOverride: ""
   collection:
     name: ""
     initialize:

@@ -1,0 +1,11 @@
+{{- if .Values.solr.collection.initialize.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: solr-init-config
+data:
+  solr.sh: |
+    #!/bin/sh
+    curl --user "admin:$SOLR_ADMIN_PWD" -s "{{ .Values.solr.url }}/admin/collections?action=CREATE&name={{ .Values.solr.collection.name }}&numShards=1&replicationFactor=1&maxShardsPerNode=1&collection.configName=_default"
+    curl --user "admin:$SOLR_ADMIN_PWD" -H "Content-type:application/json" -d "{"set-permission": {"collection": "{{ .Values.solr.collection.name }}", "name": "all", "role": ["users", "admin"]},}" {{ .Values.solr.url }}/admin/authorization
+{{- end }}

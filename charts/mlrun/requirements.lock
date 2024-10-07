@@ -1,6 +1,0 @@
-dependencies:
-- name: v3io-configs
-  repository: https://v3io.github.io/helm-charts/stable
-  version: 0.11.3
-digest: sha256:5aaf04843eda9eab85b3608b6ff41e6bd8ff4301ee915bc44f2b980003348e54
-generated: "2022-03-09T16:36:10.647513756+02:00"

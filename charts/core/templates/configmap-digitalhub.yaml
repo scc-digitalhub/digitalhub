@@ -16,6 +16,5 @@ data:
   KFP_ENDPOINT: {{ .Values.kfp.endpoint }}
   DHCORE_WORKFLOW_IMAGE: {{ .Values.runtime.kfp.image }}
   KFP_ENDPOINT: http://ml-pipeline:8888
-  MLRUN_DBPATH: http://mlrun-api:8080
   DHCORE_ENDPOINT: "{{ include "core.endpoint" . }}"
   DHCORE_ISSUER: "{{ include "core.endpoint" . }}"

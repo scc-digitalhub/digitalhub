@@ -17,17 +17,30 @@ spec:
           image: {{ .Values.solr.collection.initialize.image }}
           command: ["/bin/sh", "-c"]
           args: 
-            - until [ "$(curl -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
+            - until [ "$(curl --user admin:$SOLR_ADMIN_PWD -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          env:
+            - name: "SOLR_ADMIN_PWD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.solr.fullNameOverride }}-solrcloud-security-bootstrap
+                  key: admin
       containers:
         - name: solr-init-job
           image: {{ .Values.solr.collection.initialize.image }}
-          command: ["/bin/sh", "-c"]
-          args: 
-            - curl -s "{{ .Values.solr.url }}/admin/collections?action=CREATE&name={{ .Values.solr.collection.name }}&numShards=1&replicationFactor=1&maxShardsPerNode=1&collection.configName=_default"
+          command: ["/bin/sh", "/script/solr.sh"]
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          volumeMounts:
+          - name: init-config
+            mountPath: /script
+          env:
+            - name: "SOLR_ADMIN_PWD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.solr.fullNameOverride }}-solrcloud-security-bootstrap
+                  key: admin
       restartPolicy: Never
       volumes:
         - name: init-files
@@ -36,4 +49,7 @@ spec:
         - name: custom-template
           configMap:
             name: coder-custom-template
+        - name: init-config
+          configMap:
+            name: solr-init-config
 {{- end }}
