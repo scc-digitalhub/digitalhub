@@ -1,24 +1,21 @@
-{{- if .Values.pipelines.enabled -}}
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-#  generation: 1
-  name: scheduledworkflows.kubeflow.org
+    internal.kpt.dev/upstream-identifier: apiextensions.k8s.io|CustomResourceDefinition|default|workflowartifactgctasks.argoproj.io
+  name: workflowartifactgctasks.argoproj.io
 spec:
-  conversion:
-    strategy: None
-  group: kubeflow.org
+  group: argoproj.io
   names:
-    kind: ScheduledWorkflow
-    listKind: ScheduledWorkflowList
-    plural: scheduledworkflows
+    kind: WorkflowArtifactGCTask
+    listKind: WorkflowArtifactGCTaskList
+    plural: workflowartifactgctasks
     shortNames:
-    - swf
-    singular: scheduledworkflow
+    - wfat
+    singular: workflowartifactgctask
   scope: Namespaced
   versions:
-  - name: v1beta1
+  - name: v1alpha1
     schema:
       openAPIV3Schema:
         properties:
@@ -37,9 +34,10 @@ spec:
             x-kubernetes-map-type: atomic
             x-kubernetes-preserve-unknown-fields: true
         required:
+        - metadata
         - spec
-        - status
         type: object
     served: true
     storage: true
-{{- end -}}
+    subresources:
+      status: {}
