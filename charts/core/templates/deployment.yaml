@@ -36,8 +36,18 @@ spec:
         - name: wait-solr
           image: {{ .Values.solr.collection.initialize.image }}
           command: ["/bin/sh", "-c"]
-          args: 
+          args:
+          {{- if not .Values.solr.collection.initialize.enabled }}
             - until [ "$(curl -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
+          {{- else }}
+            - until [ "$(curl --user admin:$SOLR_ADMIN_PWD -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
+          env:
+            - name: "SOLR_ADMIN_PWD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.solr.fullNameOverride }}-solrcloud-security-bootstrap
+                  key: admin
+          {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
       {{- end }}
@@ -101,6 +111,13 @@ spec:
                 secretKeyRef:
                   name: core-auth-creds
                   key: clientSecret
+            {{- if .Values.solr.collection.initialize.enabled }}
+            - name: SOLR_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.solr.fullNameOverride }}-solrcloud-security-bootstrap
+                  key: solr
+            {{- end }}
           envFrom:
           - configMapRef:
               name: {{ include "core.fullname" . }}

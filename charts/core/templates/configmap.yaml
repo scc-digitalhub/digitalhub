@@ -33,6 +33,9 @@ data:
   ENABLE_SOLR: {{ .Values.solr.enabled | quote }}
   SOLR_URL: {{ .Values.solr.url }}
   SOLR_COLLECTION: {{ .Values.solr.collection.name }}
+  {{- if .Values.solr.collection.initialize.enabled }}
+  SOLR_USER: {{ .Values.solr.user }}
+  {{- end }}
 {{- end }}
 {{- if .Values.authentication.basic.enabled }}
   DH_AUTH_BASIC_USER: {{ .Values.authentication.basic.username }}
@@ -59,7 +62,7 @@ data:
 {{- if and .Values.keystore.existingSecret.secretName .Values.keystore.existingSecret.keystorePath }}
   JWT_KEYSTORE_PATH: "{{ .Values.keystore.keystorePath }}/{{ .Values.keystore.existingSecret.keyName }}"
   JWT_KEYSTORE_KID: {{ .Values.keystore.keystoreKid | quote }}
-{{- else if not(.Values.keystore.existingSecret.secretName) .Values.keystore.existingSecret.keystorePath -}}
+{{- else if and (not .Values.keystore.existingSecret.secretName) .Values.keystore.existingSecret.keystorePath -}}
   JWT_KEYSTORE_PATH: "{{ .Values.keystore.keystorePath }}/keystore.jwks"
   JWT_KEYSTORE_KID: {{ .Values.keystore.keystoreKid | quote }}
 {{- end }}
