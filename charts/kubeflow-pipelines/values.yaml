@@ -53,7 +53,7 @@ ui:
     annotations: {}
     hosts:
       - host: chart-example.local
-        paths: 
+        paths:
           - pathType: ImplementationSpecific
             path: /
     tls: []
