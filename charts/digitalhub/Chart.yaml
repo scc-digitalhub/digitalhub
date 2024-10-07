@@ -19,11 +19,11 @@ dependencies:
   repository: https://helm.coder.com/v2
   condition: coder.enabled
 - name: core
-  version: "0.2.11"
+  version: "0.2.14"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: kubernetes-resource-manager
-  version: "0.2.1"
+  version: "0.2.3"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: kubernetes-resource-manager.enabled
 - name: dremio-rest-server-operator
@@ -38,14 +38,14 @@ dependencies:
   version: "1.2.4"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: ext-postgres-operator.enabled
+- name: kubeflow-pipelines
+  version: "0.1.0"
+  repository: https://scc-digitalhub.github.io/digitalhub/
+  condition: kubeflow-pipelines.enabled
 - name: minio
   repository: "https://charts.min.io/"
   version: "5.1.0"
   condition: minio.enabled
-- name: mlrun-ce
-  version: "0.6.3-dh-v0.3.12"
-  repository: https://scc-digitalhub.github.io/digitalhub/
-  condition: mlrun-ce.enabled
 - name: postgres-operator
   version: "1.11.0"
   repository: "https://opensource.zalando.com/postgres-operator/charts/postgres-operator"
@@ -73,6 +73,6 @@ dependencies:
   repository: https://solr.apache.org/charts
   condition: solr.enabled
 - name: minio-operator
-  version: "0.1.4"
+  version: "0.1.5"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: minio-operator.enabled

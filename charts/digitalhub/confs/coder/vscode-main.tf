@@ -352,18 +352,6 @@ resource "kubernetes_deployment" "vscode" {
             value = coder_agent.vscode.token
           }
           env {
-            name  = "V3IO_USERNAME"
-            value = data.coder_workspace_owner.me.name
-          }
-          env {
-            name  = "MLRUN_DBPATH"
-            value = "http://mlrun-api:8080"
-          }
-          env {
-            name  = "MLRUN_NAMESPACE"
-            value = var.namespace
-          }
-          env {
             name  = "DIGITALHUB_CORE_TOKEN"
             value = data.coder_workspace_owner.me.oidc_access_token
           }
