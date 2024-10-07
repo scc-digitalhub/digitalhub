@@ -1,0 +1,10 @@
+apiVersion: v2
+name: kubeflow-pipelines
+description: A Helm chart for deploying Kubeflow Pipelines
+type: application
+version: 0.1.0
+maintainers:
+  - name: ffais
+    url: https://github.com/ffais
+  - name: calcagiara
+    url: https://github.com/Calcagiara
