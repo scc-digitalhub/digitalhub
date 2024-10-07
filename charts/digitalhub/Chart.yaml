@@ -7,8 +7,8 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.7.2"
-appVersion: "0.7.0"
+version: "0.8.0-beta1"
+appVersion: "0.8.0"
 dependencies:
 - name: apigw-operator
   version: "0.1.8"
