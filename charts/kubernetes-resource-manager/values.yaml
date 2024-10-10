@@ -212,6 +212,8 @@ oidc:
   scope: ""
   authType: ""
   redirectUrl: ""
+  access:
+    roles: []
 
 resourceSelectors:
   # list separated by |
