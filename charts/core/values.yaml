@@ -184,6 +184,7 @@ authentication:
     externalSecret:
       name: ""
       key: ""
+    jwtUsername: preferred_username
 
 events:
   enabled: "false"
