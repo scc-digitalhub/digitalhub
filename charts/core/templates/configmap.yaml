@@ -49,6 +49,7 @@ data:
   DH_AUTH_JWT_CLAIM: {{ .Values.authentication.openId.jwtClaim }}
   DH_AUTH_OIDC_ISSUER_URI: {{ .Values.authentication.openId.issuerUri }}
   DH_AUTH_OIDC_SCOPE: {{ .Values.authentication.openId.scope }}
+  DH_AUTH_JWT_USERNAME: {{ .Values.authentication.openId.jwtUsername }}
 {{- end }}
 {{- if .Values.global.registry.url }}
   DOCKER_REGISTRY: {{ .Values.global.registry.url }}

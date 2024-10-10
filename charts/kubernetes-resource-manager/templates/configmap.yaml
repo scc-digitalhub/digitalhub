@@ -23,3 +23,6 @@ data:
   {{- if .Values.env.additionalEnv }}
   {{- toYaml .Values.env.additionalEnv | nindent 2}}
   {{- end }}
+  {{- if and .Values.oidc.enabled .Values.oidc.access.roles }}
+  {{- include "kubernetes-resource-manager.roles" . }}
+  {{- end }}

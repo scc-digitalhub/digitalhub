@@ -126,3 +126,13 @@ Namespace function
 {{- .Values.namespaceValues.defaultValue }}
 {{- end }}
 {{- end }}
+
+{{/*
+Function for setting roles for KRM
+*/}}
+{{- define "kubernetes-resource-manager.roles" }}
+{{- range $i, $roles := .Values.oidc.access.roles }}
+  ACCESS_ROLES_{{ $i }}_ROLE: {{ $roles.role }}
+  ACCESS_ROLES_{{ $i }}_RESOURCES: {{ $roles.resources }}
+{{- end }}
+{{- end }}
