@@ -105,19 +105,6 @@ variable "minio_digitalhub_user_secret" {
   type = string
 }
 
-data "coder_parameter" "admin_password" {
-  name         = "admin_password"
-  display_name = "Dremio Admin Password"
-  description  = "Choose a password for Dremio admin account must be at least 8 letters long, must contain at least one number and one letter"
-  type         = "string"
-  icon         = "/emojis/1f510.png"
-  mutable      = false
-  # validation {
-  #   regex = "[a-zA-Z][0-9][a-zA-Z0-9]{6,}|[a-zA-Z]{2}[0-9][a-zA-Z0-9]{5,}|[a-zA-Z]{3}[0-9][a-zA-Z0-9]{4,}|[a-zA-Z]{5}[0-9][a-zA-Z0-9]{3,}|[a-zA-Z]{6}[0-9][a-zA-Z0-9]{2,}|[a-zA-Z]{7,}[0-9][a-zA-Z0-9]*|[0-9][a-zA-Z][a-zA-Z0-9]{6,}|[0-9]{2}[a-zA-Z][a-zA-Z0-9]{5,}|[0-9]{3}[a-zA-Z][a-zA-Z0-9]{4,}|[0-9]{5}[a-zA-Z][a-zA-Z0-9]{3,}|[0-9]{6}[a-zA-Z][a-zA-Z0-9]{2,}|[0-9]{7,}[a-zA-Z][a-zA-Z0-9]*"
-  #   error = "Invalid password: must be at least 8 letters long, must contain at least one number and one letter"
-  # }
-}
-
 provider "kubernetes" {
   # Authenticate via ~/.kube/config or a Coder-specific ServiceAccount, depending on admin preferences
   config_path = var.use_kubeconfig == true ? "~/.kube/config" : null
@@ -126,6 +113,12 @@ provider "kubernetes" {
 data "coder_workspace" "me" {}
 
 data "coder_workspace_owner" "me" {}
+
+resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "!%&*()-_=+:?"
+}
 
 resource "coder_agent" "dremio" {
   os             = "linux"
@@ -198,6 +191,11 @@ resource "coder_metadata" "dremio" {
   item {
     key   = "URL"
     value = local.dremio_url
+  }
+  item {
+  key = "Password"
+  value = random_password.password.result
+  sensitive = true
   }
 }
 
@@ -319,7 +317,7 @@ resource "kubernetes_job" "source-init" {
           command = ["/bin/sh", "/init-files/add_source_with_api.sh"]
           env {
             name  = "ADMIN_PASSWORD"
-            value = data.coder_parameter.admin_password.value
+            value = random_password.password.result
           }
           env {
             name  = "DREMIO_URL"
@@ -376,6 +374,14 @@ resource "kubernetes_job" "source-init" {
                 key  = "digitalhubPassword"
               }
             }
+          }
+          env {
+            name  = "DREMIO_CODER_USERNAME"
+            value = data.coder_workspace_owner.me.name
+          }
+          env {
+            name  = "DREMIO_CODER_EMAIL"
+            value = data.coder_workspace_owner.me.email
           }
           volume_mount {
             name       = "init-files"
@@ -459,7 +465,7 @@ resource "kubernetes_deployment" "dremio" {
           command           = ["/bin/bash", "/tmp/init/init-data.sh"]
           env {
             name  = "ADMIN_PASSWORD"
-            value = data.coder_parameter.admin_password.value
+            value = random_password.password.result
           }
           volume_mount {
             mount_path = "/opt/dremio/data"
