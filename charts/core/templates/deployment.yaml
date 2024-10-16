@@ -128,7 +128,7 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-          {{- if and .Values.keystore.existingSecret.secretName .Values.keystore.existingSecret.keystorePath }}
+          {{- if and .Values.keystore.existingSecret.secretName .Values.keystore.keystorePath }}
             - name: keystore
               mountPath: "{{ .Values.keystore.keystorePath }}/{{ .Values.keystore.existingSecret.keyName }}"
               subPath: {{ .Values.keystore.existingSecret.keyName }}
@@ -137,7 +137,7 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
       volumes:
-      {{- if and .Values.keystore.existingSecret.secretName .Values.keystore.existingSecret.keystorePath }}
+      {{- if and .Values.keystore.existingSecret.secretName .Values.keystore.keystorePath }}
         - name: keystore
           secret:
             secretName: {{ .Values.keystore.existingSecret.secretName }}
