@@ -60,10 +60,10 @@ data:
 {{- end }}
   KANIKO_ARGS: {{ .Values.kanikoArgs | quote }}
   DH_CORS_ORIGINS: {{ .Values.corsOrigin | quote }}
-{{- if and .Values.keystore.existingSecret.secretName .Values.keystore.existingSecret.keystorePath }}
+{{- if and .Values.keystore.existingSecret.secretName .Values.keystore.keystorePath }}
   JWT_KEYSTORE_PATH: "{{ .Values.keystore.keystorePath }}/{{ .Values.keystore.existingSecret.keyName }}"
   JWT_KEYSTORE_KID: {{ .Values.keystore.keystoreKid | quote }}
-{{- else if and (not .Values.keystore.existingSecret.secretName) .Values.keystore.existingSecret.keystorePath -}}
+{{- else if and (not .Values.keystore.existingSecret.secretName) .Values.keystore.keystorePath }}
   JWT_KEYSTORE_PATH: "{{ .Values.keystore.keystorePath }}/keystore.jwks"
   JWT_KEYSTORE_KID: {{ .Values.keystore.keystoreKid | quote }}
 {{- end }}
