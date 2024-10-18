@@ -1,5 +1,5 @@
 #!/bin/bash
-TOKEN=$(curl -s -X POST "http://${DREMIO_URL}:9047/apiv2/login" --header 'Content-Type: application/json' --data-raw "{\"userName\": \"admin\",\"password\": \"${ADMIN_PASSWORD}\"}" | jq -r .token)
+TOKEN=$(curl -s -X POST "http://${DREMIO_URL}:9047/apiv2/login" --header 'Content-Type: application/json' --data-raw "{\"userName\": \"${DREMIO_CODER_EMAIL}\",\"password\": \"${ADMIN_PASSWORD}\"}" | jq -r .token)
 
 echo "add postgres"
 curl -v -s -X POST "http://${DREMIO_URL}:9047/api/v3/catalog" \
