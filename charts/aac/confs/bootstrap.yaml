@@ -65,7 +65,9 @@ realms:
         {{- end }}
         description: {{ $clientApp.description }}
         configuration:
+            {{- if $clientApp.configuration.clientSecret }}
             clientSecret: {{ tpl $clientApp.configuration.clientSecret $root }}
+            {{- end }}
             {{- toYaml $clientApp.configuration.conf | nindent 12 }}
         {{- if $clientApp.scopes }}
         scopes:

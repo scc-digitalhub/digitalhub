@@ -172,6 +172,12 @@ bootstrap: []
 
 secrets:
   annotations: {}
+  ## If you wish to generate clientId and clientSecrets randomly in the bootstrap (for example, using {{ randAlphaNum 24 | nospace }})
+  ## make sure that you add pre-install hook to the annotations, so that the secrets won't get modified in case of a helm update.
+  ## Example:
+  # annotations:
+  #   "helm.sh/hook": pre-install
+  #   "helm.sh/hook-weight": "-5"
   reflector:
     enabled: false
 
