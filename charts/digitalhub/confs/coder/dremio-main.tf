@@ -105,19 +105,6 @@ variable "minio_digitalhub_user_secret" {
   type = string
 }
 
-data "coder_parameter" "admin_password" {
-  name         = "admin_password"
-  display_name = "Dremio Admin Password"
-  description  = "Choose a password for Dremio admin account must be at least 8 letters long, must contain at least one number and one letter"
-  type         = "string"
-  icon         = "/emojis/1f510.png"
-  mutable      = false
-  # validation {
-  #   regex = "[a-zA-Z][0-9][a-zA-Z0-9]{6,}|[a-zA-Z]{2}[0-9][a-zA-Z0-9]{5,}|[a-zA-Z]{3}[0-9][a-zA-Z0-9]{4,}|[a-zA-Z]{5}[0-9][a-zA-Z0-9]{3,}|[a-zA-Z]{6}[0-9][a-zA-Z0-9]{2,}|[a-zA-Z]{7,}[0-9][a-zA-Z0-9]*|[0-9][a-zA-Z][a-zA-Z0-9]{6,}|[0-9]{2}[a-zA-Z][a-zA-Z0-9]{5,}|[0-9]{3}[a-zA-Z][a-zA-Z0-9]{4,}|[0-9]{5}[a-zA-Z][a-zA-Z0-9]{3,}|[0-9]{6}[a-zA-Z][a-zA-Z0-9]{2,}|[0-9]{7,}[a-zA-Z][a-zA-Z0-9]*"
-  #   error = "Invalid password: must be at least 8 letters long, must contain at least one number and one letter"
-  # }
-}
-
 provider "kubernetes" {
   # Authenticate via ~/.kube/config or a Coder-specific ServiceAccount, depending on admin preferences
   config_path = var.use_kubeconfig == true ? "~/.kube/config" : null
@@ -126,6 +113,12 @@ provider "kubernetes" {
 data "coder_workspace" "me" {}
 
 data "coder_workspace_owner" "me" {}
+
+resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "!%&*()-_=+:?"
+}
 
 resource "coder_agent" "dremio" {
   os             = "linux"
@@ -198,6 +191,16 @@ resource "coder_metadata" "dremio" {
   item {
     key   = "URL"
     value = local.dremio_url
+  }
+  item {
+  key = "Username"
+  value = data.coder_workspace_owner.me.email
+  sensitive = false
+  }
+  item {
+  key = "Password"
+  value = random_password.password.result
+  sensitive = true
   }
 }
 
@@ -313,13 +316,40 @@ resource "kubernetes_job" "source-init" {
           image   = "badouralix/curl-jq"
           command = ["/bin/sh", "-c", "until [ \"$(curl -s -w '%%{http_code}' -o /dev/null \"http://${kubernetes_service.dremio-service.metadata.0.name}:9047/api/v2/buildinfo\")\" -eq 200 ]; do echo \"waiting for dremio to be ready\"; sleep 5; done"]
         }
+        init_container {
+          name              = "init-dremio-data"
+          image             = "dremio/dremio-oss:24.1.0"
+          image_pull_policy = "IfNotPresent"
+          command           = ["/bin/bash", "/tmp/init/init-data.sh"]
+          env {
+            name  = "ADMIN_PASSWORD"
+            value = random_password.password.result
+          }
+          env {
+            name  = "DREMIO_CODER_EMAIL"
+            value = data.coder_workspace_owner.me.email
+          }
+          env {
+            name  = "DREMIO_URL"
+            value = kubernetes_service.dremio-service.metadata.0.name
+          }
+          volume_mount {
+            mount_path = "/tmp/init/"
+            name       = "dremio-init-data"
+            read_only  = false
+          }
+          security_context {
+            run_as_user                = "999"
+            allow_privilege_escalation = false
+          }
+        }
         container {
           name    = "dremio-add-sources"
           image   = "badouralix/curl-jq"
           command = ["/bin/sh", "/init-files/add_source_with_api.sh"]
           env {
             name  = "ADMIN_PASSWORD"
-            value = data.coder_parameter.admin_password.value
+            value = random_password.password.result
           }
           env {
             name  = "DREMIO_URL"
@@ -377,6 +407,10 @@ resource "kubernetes_job" "source-init" {
               }
             }
           }
+          env {
+            name  = "DREMIO_CODER_EMAIL"
+            value = data.coder_workspace_owner.me.email
+          }
           volume_mount {
             name       = "init-files"
             mount_path = "/init-files"
@@ -392,6 +426,17 @@ resource "kubernetes_job" "source-init" {
               path = "add_source_with_api.sh"
             }
           }
+        }
+        volume {
+          name = "dremio-init-data"
+          config_map {
+            name = "dremio-init-data"
+            items {
+              key  = "init-data.sh"
+              path = "init-data.sh"
+            }
+          }
+
         }
       }
     }
@@ -452,30 +497,6 @@ resource "kubernetes_deployment" "dremio" {
           fs_group     = "999"
           run_as_group = "999"
         }
-        init_container {
-          name              = "init-dremio-data"
-          image             = "dremio/dremio-oss:24.1.0"
-          image_pull_policy = "IfNotPresent"
-          command           = ["/bin/bash", "/tmp/init/init-data.sh"]
-          env {
-            name  = "ADMIN_PASSWORD"
-            value = data.coder_parameter.admin_password.value
-          }
-          volume_mount {
-            mount_path = "/opt/dremio/data"
-            name       = "dremio-data"
-            read_only  = false
-          }
-          volume_mount {
-            mount_path = "/tmp/init/"
-            name       = "dremio-init-data"
-            read_only  = false
-          }
-          security_context {
-            run_as_user                = "999"
-            allow_privilege_escalation = false
-          }
-        }
         container {
           name              = "dremio"
           image             = var.image
@@ -517,21 +538,6 @@ resource "kubernetes_deployment" "dremio" {
             claim_name = kubernetes_persistent_volume_claim.dremio-data.metadata.0.name
             read_only  = false
           }
-        }
-        volume {
-          name = "dremio-init-data"
-          config_map {
-            name = "dremio-init-data"
-            items {
-              key  = "dremio-backup.tar"
-              path = "dremio-backup.tar"
-            }
-            items {
-              key  = "init-data.sh"
-              path = "init-data.sh"
-            }
-          }
-
         }
         volume {
           name = "dremio-home"

@@ -28,9 +28,12 @@ global:
     digitalhubUserSecret: digitalhub-minio-creds
     digitalhubUser: &digitalhubUser digitalhub
     digitalhubPassword: &digitalhubPassword digitalhub
+    kfpUser: &kfpUser kfp
+    kfpPassword: &kfpPassword kfpwd123
     endpoint: &minioEndpoint "minio"
     endpointPort: &minioEndpointPort "9000"
     bucket: &minioBucket "datalake"
+    kfpBucket: &kfpBucket "kfp"
     protocol: &minioProtocol "http"
   solr:
     fullNameOverride: &solrFullNameOverride digitalhub
@@ -434,6 +437,9 @@ minio:
     - name: datalake
       policy: none
       purge: false
+    - name: kfp
+      policy: none
+      purge: false
   resources:
     requests:
       memory: 0.5Gi
@@ -468,12 +474,22 @@ minio:
     - accessKey: *digitalhubUser
       secretKey: *digitalhubPassword
       policy: readwritedigitalhub
+    - accessKey: *kfpUser
+      secretKey: *kfpPassword
+      policy: readwritekfp
   policies:
     - name: readwritedigitalhub
       statements:
         - effect: Allow
           resources:
             - 'arn:aws:s3:::datalake/*'
+          actions:
+            - "s3:*"
+    - name: readwritekfp
+      statements:
+        - effect: Allow
+          resources:
+            - 'arn:aws:s3:::kfp/*'
           actions:
             - "s3:*"
 
@@ -526,9 +542,9 @@ kubeflow-pipelines:
       nodePort: 30100
   s3:
     enabled: true
-    accessKey: *digitalhubUser
-    secretKey: *digitalhubPassword
+    accessKey: *kfpUser
+    secretKey: *kfpPassword
     endpoint: *minioEndpoint
     endpointPort: *minioEndpointPort
-    bucket: *minioBucket
+    bucket: *kfpBucket
     protocol: *minioProtocol

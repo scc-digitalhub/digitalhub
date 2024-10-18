@@ -36,13 +36,13 @@ spec:
             - name: "CORE_CLIENT_ID"
               valueFrom:
                 secretKeyRef:
-                  name: "aac-digitalhub-tenant1-core-secret"
-                  key: "clientid"
+                  name: "core-auth-creds"
+                  key: "clientId"
             - name: "CORE_CLIENT_SECRET"
               valueFrom:
                 secretKeyRef:
-                  name: "aac-digitalhub-tenant1-core-secret"
-                  key: "clientsecret"
+                  name: "core-auth-creds"
+                  key: "clientSecret"
             {{- if $.Values.core.ingress.enabled }}
             {{- with (index $.Values.core.ingress.hosts 0) }}
             - name: "DHCORE_ENDPOINT"
