@@ -7,8 +7,8 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.8.0"
-appVersion: "0.8.0"
+version: "0.9.0-beta1"
+appVersion: "0.9.0"
 dependencies:
 - name: apigw-operator
   version: "0.1.8"
@@ -19,7 +19,7 @@ dependencies:
   repository: https://helm.coder.com/v2
   condition: coder.enabled
 - name: core
-  version: "0.2.17"
+  version: "0.2.18"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: kubernetes-resource-manager
@@ -35,11 +35,11 @@ dependencies:
   repository: "https://helm.twun.io"
   condition: docker-registry.enabled
 - name: ext-postgres-operator
-  version: "1.2.4"
+  version: "1.2.5"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: ext-postgres-operator.enabled
 - name: kubeflow-pipelines
-  version: "0.1.0"
+  version: "0.1.1"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: kubeflow-pipelines.enabled
 - name: minio
