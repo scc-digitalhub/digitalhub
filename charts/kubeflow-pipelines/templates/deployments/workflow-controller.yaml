@@ -13,6 +13,8 @@ spec:
       application-crd-id: kubeflow-pipelines
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmaps/workflow-controller-configmap.yaml") . | sha256sum }}
       labels:
         app: workflow-controller
         application-crd-id: kubeflow-pipelines

@@ -13,6 +13,9 @@ spec:
       component: metadata-grpc-server
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmaps/pipeline-install-config.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secrets/mysql-secret.yaml") . | sha256sum }}
       labels:
         application-crd-id: kubeflow-pipelines
         component: metadata-grpc-server
