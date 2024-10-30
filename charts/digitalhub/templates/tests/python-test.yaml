@@ -1,7 +1,7 @@
 {{- $files := .Files }}
 {{- range $key, $value := .Files }}
-{{- if hasPrefix "confs/tests/python-test/python-test" $key }}
-{{- $testName := ($key | trimPrefix "confs/tests/python-test/python-test-" | trimSuffix ".py") }}
+{{- if hasPrefix "confs/tests/python-test/" $key }}
+{{- $testName := ($key | trimPrefix "confs/tests/python-test/" | trimSuffix ".py") }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -13,13 +13,31 @@ metadata:
 spec:
   template:
     spec:
+      initContainers:
+        - name: clone-repo
+          image: bitnami/git:latest
+          command: ["/bin/sh", "-c", "cd home/git/ && git clone https://github.com/scc-digitalhub/digitalhub-tutorials.git"]
+          volumeMounts:
+            - name: git-volume
+              mountPath: /home/git
+              readOnly: false
+          securityContext:
+            readOnlyRootFilesystem: false
+            runAsUser: 0
       containers:
         - name: python
-          image: python:3.9-slim
-          command: ['sh', '-c', 'pip install "digitalhub_runtime_{{$testName}}[local]{{ $.Values.core.testSuite }}" requests-oauthlib && python home/{{ $key | trimPrefix "confs/tests/python-test/" }}']
+          image: python:3.10-slim
+          command: ['sh', './home/scripts/init-python-script.sh']
           volumeMounts:
             - name: test-volume
-              mountPath: /home
+              mountPath: /home/src
+              readOnly: false
+            - name: test-python-script-volume
+              mountPath: /home/scripts/init-python-script.sh
+              readOnly: false
+              subPath: "init-python-script.sh"
+            - name: git-volume
+              mountPath: /home/git
               readOnly: false
           env:
             - name: "POSTGRES_USER"
@@ -32,6 +50,10 @@ spec:
                 secretKeyRef:
                   name: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
                   key: "password"
+            - name: TEST_SCRIPT
+              value: {{ $key | trimPrefix "confs/tests/python-test/" }}
+            - name: TEST_FOLDER
+              value: {{ $key | trimPrefix "confs/tests/python-test/" | trimSuffix ".py" }}
             {{- if $.Values.core.authentication.openId.enabled }}
             - name: "CORE_CLIENT_ID"
               valueFrom:
@@ -62,10 +84,15 @@ spec:
         - name: test-volume
           configMap:
             name: {{ include "digitalhub.fullname" $ }}-python-test
+        - name: test-python-script-volume
+          configMap:
+            name: {{ include "digitalhub.fullname" $ }}-python-script-test
+        - name: git-volume
+          emptyDir: {}      
       securityContext:
-        runAsUser: 1000
-        fsGroup: 100
-        runAsGroup: 100
+        runAsUser: 0
+        fsGroup: 0
+        runAsGroup: 0
       restartPolicy: Never
   backoffLimit: 0
 ---
