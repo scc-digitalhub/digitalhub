@@ -15541,6 +15541,20 @@ entries:
     version: 1.2.4
   kubeflow-pipelines:
   - apiVersion: v2
+    created: "2024-10-31T11:56:36.780419971Z"
+    description: A Helm chart for deploying Kubeflow Pipelines
+    digest: ae04ee6c71eaa7be68b1433c73b0ae14642e966030a1024b2e2d605b30540468
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: kubeflow-pipelines
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/kubeflow-pipelines-0.1.2/kubeflow-pipelines-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     created: "2024-10-30T15:47:29.18702418Z"
     description: A Helm chart for deploying Kubeflow Pipelines
     digest: 915992850d692c63331c1a88dc424e0a3748cf3abc6fd9896dd9e309daa65893
@@ -17885,4 +17899,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-10-31T10:07:35.371985161Z"
+generated: "2024-10-31T11:56:36.781082089Z"
