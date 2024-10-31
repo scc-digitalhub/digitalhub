@@ -14,7 +14,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/oauth2-proxy/configmap.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/oauth2-proxy/configmap.yaml") $ | sha256sum }}
       labels:
         app: oauth-proxy-{{ $value.name }}
     spec:
