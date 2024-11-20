@@ -258,3 +258,9 @@ additionalConfig:
     type: "NodePort"
   job:
     deadline: "604800"
+
+coreTokens:
+  accessTokenDuration: "43200"
+  refreshTokenDuration: "86400"
+
+configmapAdditionalEnv: {}
