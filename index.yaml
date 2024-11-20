@@ -364,6 +364,21 @@ entries:
   core:
   - apiVersion: v2
     appVersion: 0.8.0
+    created: "2024-11-20T15:57:18.044019782Z"
+    description: Core backend application for DigitalHub.
+    digest: 951ad77d99615e5bc60fcb7c64540757ba7692fefaa00efa2a883563f2941ca7
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: core
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.2.19/core-0.2.19.tgz
+    version: 0.2.19
+  - apiVersion: v2
+    appVersion: 0.8.0
     created: "2024-10-30T15:47:28.942948847Z"
     description: Core backend application for DigitalHub.
     digest: 0f5b0516bea95812a12c887f9c8c8d9d6c7987ced5d6522316603071efba830f
@@ -15599,6 +15614,19 @@ entries:
   ext-postgres-operator:
   - apiVersion: v2
     appVersion: 1.2.3
+    created: "2024-11-20T15:57:18.213103532Z"
+    description: 'A Helm chart for the External Postgres operator  helm repo add ext-postgres-operator
+      https://movetokube.github.io/postgres-operator/ helm upgrade --install -n operators
+      ext-postgres-operator  ext-postgres-operator/ext-postgres-operator --version
+      1.2.3 '
+    digest: fd208b97e6d9b3dd935da600c83234fa2b1f5b259886e375f336d624def415f5
+    name: ext-postgres-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/ext-postgres-operator-1.2.6/ext-postgres-operator-1.2.6.tgz
+    version: 1.2.6
+  - apiVersion: v2
+    appVersion: 1.2.3
     created: "2024-10-30T15:47:29.060084265Z"
     description: 'A Helm chart for the External Postgres operator  helm repo add ext-postgres-operator
       https://movetokube.github.io/postgres-operator/ helm upgrade --install -n operators
@@ -17983,4 +18011,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-10-31T12:19:17.564402181Z"
+generated: "2024-11-20T15:57:18.213804474Z"
