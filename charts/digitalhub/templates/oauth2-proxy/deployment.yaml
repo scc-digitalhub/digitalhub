@@ -37,6 +37,10 @@ spec:
               secretKeyRef:
                 name: {{ $value.existingSecret.name }}
                 key: {{ $value.existingSecret.secretKey }}
+        {{- if $value.resources }}
+        resources:
+          {{- toYaml $value.resources | nindent 12 }}
+        {{- end }}
 ---
 {{- end }}
 {{- end }}
