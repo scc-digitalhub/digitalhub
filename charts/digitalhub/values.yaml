@@ -313,6 +313,7 @@ oauth2-proxy:
         name: ""
         clientId: ""
         secretKey: ""
+      resources: {}
 
 dashboard:
   replicaCount: 1
