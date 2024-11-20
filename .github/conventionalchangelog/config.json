@@ -1,0 +1,39 @@
+{
+    "options": {
+      "preset": {
+        "name": "@dslab/conventionalcommits-helm",
+        "types": [
+            { "type": "feat", "scope": "aac", "hidden": true },
+            { "type": "fix", "scope": "aac", "hidden": true },
+            { "type": "bump", "scope": "aac", "hidden": true},
+            { "type": "feature", "scope": "aac", "hidden": true},
+            { "type": "perf", "scope": "aac", "hidden": true},
+            { "type": "revert", "scope": "aac", "hidden": true},
+            { "type": "docs", "scope": "aac", "hidden": true},
+            { "type": "style", "scope": "aac", "hidden": true},
+            { "type": "chore", "scope": "aac", "hidden": true},
+            { "type": "refactor", "scope": "aac", "hidden": true},
+            { "type": "test", "scope": "aac", "hidden": true},
+            { "type": "build", "scope": "aac", "hidden": true},
+            { "type": "ci", "scope": "aac", "hidden": true},
+            { "type": "feat", "scope": "test", "hidden": true },
+            { "type": "fix", "scope": "test", "hidden": true },
+            { "type": "feat", "scope": "tests", "hidden": true },
+            { "type": "fix", "scope": "tests", "hidden": true },
+            { "type": "bump", "section": "New version"},
+            { "type": "feat", "section": "Features" },
+            { "type": "feature", "section": "Features" },
+            { "type": "fix", "section": "Bug Fixes" },
+            { "type": "perf", "section": "Performance Improvements" },
+            { "type": "revert", "section": "Reverts" },
+            { "type": "docs", "section": "Documentation"},
+            { "type": "style", "section": "Styles"},
+            { "type": "chore", "section": "Miscellaneous Chores"},
+            { "type": "refactor", "section": "Code Refactoring"},
+            { "type": "test", "section": "Tests"},
+            { "type": "build", "section": "Build System"},
+            { "type": "ci", "section": "Continuous Integration"}
+        ]
+      }
+    }
+  }
