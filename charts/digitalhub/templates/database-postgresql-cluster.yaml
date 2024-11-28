@@ -20,6 +20,10 @@ spec:
       schemas:
         public:
           defaultUsers: true
+      extensions:
+        timescaledb: public
+        postgis: public
+        pgvector: public
   resources:
   {{- toYaml ( index .Values "postgres-operator" "databases" "digitalhub" "resources" ) | nindent 4 }}
 {{- end }}
