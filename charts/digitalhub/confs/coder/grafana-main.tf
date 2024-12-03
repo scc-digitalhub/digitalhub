@@ -213,6 +213,9 @@ resource "kubernetes_deployment" "grafana" {
   }
   spec {
     replicas = 1
+    strategy {
+      type = "Recreate"
+    }
     selector {
       match_labels = {
         "app.kubernetes.io/name"     = "grafana-workspace"
