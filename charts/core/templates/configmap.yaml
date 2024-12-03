@@ -67,6 +67,8 @@ data:
   JWT_KEYSTORE_PATH: "{{ .Values.keystore.keystorePath }}/keystore.jwks"
   JWT_KEYSTORE_KID: {{ .Values.keystore.keystoreKid | quote }}
 {{- end }}
+  JWT_ACCESS_TOKEN_DURATION: {{ .Values.coreTokens.accessTokenDuration | quote }}
+  JWT_REFRESH_TOKEN_DURATION: {{ .Values.coreTokens.refreshTokenDuration | quote }}
   AWS_DEFAULT_REGION: {{ .Values.minio.awsDefaultRegion }}
   AWS_REGION: {{ .Values.minio.awsRegion }}
   S3_ENDPOINT: {{ .Values.minio.publicUrl }}
@@ -85,3 +87,6 @@ data:
   K8S_RESOURCE_GPU_KEY: {{ .Values.additionalConfig.resources.gpuKey | quote }}
   K8S_SERVICE_TYPE: {{ .Values.additionalConfig.service.type | quote }}
   K8S_JOB_DEADLINE: {{ .Values.additionalConfig.job.deadline | quote }}
+{{- with .Values.configmapAdditionalEnv }}
+{{- toYaml . | nindent 2 }}
+{{- end }}

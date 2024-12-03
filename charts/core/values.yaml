@@ -154,15 +154,15 @@ kfp:
 runtime:
   dbt:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-dbt"
-    tag: "0.8.0"
+    tag: "0.8.1"
   kfp:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk/wrapper-kfp"
-    tag: "0.8.0"
+    tag: "0.8.1"
   python:
     image: "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime"
-    tag3_9: "3.9-0.8.0"
-    tag3_10: "3.10-0.8.0"
-    tag3_11: "3.11-0.8.0"
+    tag3_9: "3.9-0.8.1"
+    tag3_10: "3.10-0.8.1"
+    tag3_11: "3.11-0.8.1"
 
 initImage:
   builderTool:
@@ -258,3 +258,9 @@ additionalConfig:
     type: "NodePort"
   job:
     deadline: "604800"
+
+coreTokens:
+  accessTokenDuration: "43200"
+  refreshTokenDuration: "86400"
+
+configmapAdditionalEnv: {}
