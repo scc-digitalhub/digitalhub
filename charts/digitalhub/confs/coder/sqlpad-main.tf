@@ -230,6 +230,9 @@ resource "kubernetes_deployment" "sqlpad" {
   }
   spec {
     replicas = 1
+    strategy {
+      type = "Recreate"
+    }
     selector {
       match_labels = {
         "app.kubernetes.io/name"     = "sqlpad-workspace"
