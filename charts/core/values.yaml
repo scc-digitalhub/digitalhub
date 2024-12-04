@@ -258,6 +258,7 @@ additionalConfig:
     type: "NodePort"
   job:
     deadline: "604800"
+    jobSuspend: false
 
 coreTokens:
   accessTokenDuration: "43200"
