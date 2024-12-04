@@ -6,7 +6,7 @@ data:
 {{- $files := .Files }}
 {{- range $key, $value := .Files }}
 {{- if hasPrefix "confs/tests/python-test/" $key }}
-  {{ $key | trimPrefix "confs/tests/python-test/" }}: {{ $files.Get $key | quote }}
+  {{ $key | trimPrefix "confs/tests/python-test/" }}: {{ tpl ($files.Get $key) $ | quote }}
 {{- end }}
 {{- end }}
 ---
@@ -15,4 +15,4 @@ kind: ConfigMap
 metadata:
   name: {{ include "digitalhub.fullname" . }}-python-script-test
 data:
-{{ (.Files.Glob "confs/tests/init-python-script.sh").AsConfig | indent 2 }}
+  init-python-script.sh: {{ tpl ( .Files.Get "confs/tests/init-python-script.sh") $ | quote }}

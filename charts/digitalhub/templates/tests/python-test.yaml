@@ -26,7 +26,7 @@ spec:
             runAsUser: 0
       containers:
         - name: python
-          image: python:3.10-slim
+          image: "{{ $.Values.platformTests.image | default "python" }}:{{ $.Values.platformTests.tag | default "3.10-slim" }}"
           command: ['sh', './home/scripts/init-python-script.sh']
           volumeMounts:
             - name: test-volume
@@ -40,20 +40,12 @@ spec:
               mountPath: /home/git
               readOnly: false
           env:
-            - name: "POSTGRES_USER"
-              valueFrom:
-                secretKeyRef:
-                  name: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
-                  key: "username"
-            - name: "POSTGRES_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
-                  key: "password"
             - name: TEST_SCRIPT
               value: {{ $key | trimPrefix "confs/tests/python-test/" }}
             - name: TEST_FOLDER
               value: {{ $key | trimPrefix "confs/tests/python-test/" | trimSuffix ".py" }}
+            - name: OAUTHLIB_INSECURE_TRANSPORT
+              value: "True"
             {{- if $.Values.core.authentication.openId.enabled }}
             - name: "CORE_CLIENT_ID"
               valueFrom:
