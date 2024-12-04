@@ -114,3 +114,19 @@ false
 {{- end }}
 {{- end }}
 
+{{/*
+Set packages versions for tests
+*/}}
+{{- define "digitalhub.testPackages" -}}
+{{- $command := "pip install --cache-dir home/pipcache" -}}
+{{- range $package := .Values.platformTests.packages -}}
+{{- $command = printf "%s %s" $command $package.name }}
+{{- if $package.tag -}}
+{{- $command = printf "%s==%s" $command $package.tag }}
+{{- end -}}
+{{- end }}
+{{- $command = printf "%s %s" $command "requests-oauthlib" }}
+{{ $command }}
+{{- end }}
+
+

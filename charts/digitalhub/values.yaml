@@ -549,3 +549,20 @@ kubeflow-pipelines:
     endpointPort: *minioEndpointPort
     bucket: *kfpBucket
     protocol: *minioProtocol
+
+platformTests:
+  image: ""
+  tag: ""
+  packages:
+  - name: "digitalhub[full]"
+    tag: ""
+  - name: "digitalhub-runtime-python"
+    tag: ""
+  - name: "digitalhub-runtime-container"
+    tag: ""
+  - name: "digitalhub-runtime-dbt"
+    tag: ""
+  - name: "digitalhub-runtime-kfp"
+    tag: ""
+  - name: "digitalhub-runtime-modelserve"
+    tag: ""

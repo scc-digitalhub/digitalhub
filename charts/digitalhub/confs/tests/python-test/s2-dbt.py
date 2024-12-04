@@ -37,10 +37,9 @@ def main():
         # Get Core Token
         client_id = os.getenv("CORE_CLIENT_ID")
         client_secret = os.getenv("CORE_CLIENT_SECRET")
-        scope = 'tenant1-core'
         client = BackendApplicationClient(client_id=client_id)
-        oauth = OAuth2Session(client=client, scope=scope)
-        token = oauth.fetch_token(token_url='https://core.tenant1.digitalhub-dev.smartcommunitylab.it/auth/token', client_id=client_id, client_secret=client_secret, scope=scope)
+        oauth = OAuth2Session(client=client)
+        token = oauth.fetch_token(token_url='http://{{ include "core.fullname" .Subcharts.core }}:{{ .Subcharts.core.Values.service.port }}/auth/token', client_id=client_id, client_secret=client_secret)
         os.environ["DHCORE_ACCESS_TOKEN"] = token["access_token"]
 
     # Load project
