@@ -19,9 +19,6 @@ Digitalhub componet URLs:
   - {{ .name | title }}: http://{{ $externalUrl }}:{{ .nodePort }} {{ printf "(Create %s workspace from template in the coder dashboard before use)" .name }}
 {{- end }}
   - Docker Registry: http://{{ $externalUrl }}:{{ index .Values "docker-registry" "service" "nodePort" }}
-{{- with (index .Subcharts "kubeflow-pipelines") }}
-  - KubeFlow: http://{{ $externalUrl }}:{{ index .Values "ui" "service" "nodePort" }}
-{{- end }}
   - Minio API: http://{{ $externalUrl }}:{{ .Values.minio.service.nodePort }} (Username: {{ .Values.minio.rootUser }} Password: {{ .Values.minio.rootPassword }})
   - Minio UI: http://{{ $externalUrl }}:{{ .Values.minio.consoleService.nodePort }} (Username: {{ .Values.minio.rootUser }} Password: {{ .Values.minio.rootPassword }})
   - Coder: http://{{ $externalUrl }}:{{ .Values.coder.coder.service.httpNodePort }} (Username: {{ .Values.coder.email }} Password: {{ .Values.coder.password }})
