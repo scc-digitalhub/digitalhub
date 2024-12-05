@@ -43,9 +43,13 @@ def main():
         os.environ["DHCORE_ACCESS_TOKEN"] = token["access_token"]
 
     # Load project
-    proj = dh.import_project("project-ml-ci.yml")
+    try:
+      proj = dh.import_project("projects-project-ml-ci.yaml")
+    except:
+      proj = dh.load_project("projects-project-ml-ci.yaml")
 
-    workflow_run = proj.run('pipeline_ml')
+    proj.run('pipeline_ml', action="build")
+    workflow_run = proj.run('pipeline_ml', action="pipeline")
 
     # Wait for run to finish
     poller(workflow_run)

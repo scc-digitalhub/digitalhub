@@ -43,11 +43,16 @@ def main():
         os.environ["DHCORE_ACCESS_TOKEN"] = token["access_token"]
 
     # Load project
-    proj = dh.import_project("project-etl-ci.yml")
+    try:
+      proj = dh.import_project("projects-project-etl.yaml")
+    except:
+      proj = dh.load_project("projects-project-etl.yaml")
 
     URL = "https://opendata.comune.bologna.it/api/explore/v2.1/catalog/datasets/rilevazione-flusso-veicoli-tramite-spire-anno-2023/exports/csv?lang=it&timezone=Europe%2FRome&use_labels=true&delimiter=%3B"
     di= proj.new_dataitem(name="url_data_item",kind="table",path=URL)
-    workflow_run = proj.run('pipeline', parameters={"url": di.key})
+
+    proj.run('pipeline', action="build")
+    workflow_run = proj.run('pipeline', action="pipeline", parameters={"url": di.key})
 
     # Wait for run to finish
     poller(workflow_run)
