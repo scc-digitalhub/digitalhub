@@ -23,7 +23,7 @@ spec:
       extensions:
         timescaledb: public
         postgis: public
-        pgvector: public
+        vector: public
   resources:
   {{- toYaml ( index .Values "postgres-operator" "databases" "digitalhub" "resources" ) | nindent 4 }}
 {{- end }}
