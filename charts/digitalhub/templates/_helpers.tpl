@@ -118,7 +118,12 @@ false
 Set packages versions for tests
 */}}
 {{- define "digitalhub.testPackages" -}}
-{{- $command := "pip install --cache-dir home/pipcache" -}}
+{{- $command := "" -}}
+{{- if .Values.platformTests.preRelease -}}
+{{- $command = "pip install --pre --cache-dir home/pipcache" -}}
+{{- else -}}
+{{- $command = "pip install --cache-dir home/pipcache" -}}
+{{- end -}}
 {{- range $package := .Values.platformTests.packages -}}
 {{- $command = printf "%s %s" $command $package.name }}
 {{- if $package.tag -}}

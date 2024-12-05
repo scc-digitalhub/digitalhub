@@ -43,11 +43,16 @@ def main():
         os.environ["DHCORE_ACCESS_TOKEN"] = token["access_token"]
 
     # Load project
-    proj = dh.import_project("project-dbt-ci.yml")
+    try:
+      proj = dh.import_project("projects-project-dbt-ci.yaml")
+    except:
+      proj = dh.load_project("projects-project-dbt-ci.yaml")
 
     url = "https://gist.githubusercontent.com/kevin336/acbb2271e66c10a5b73aacf82ca82784/raw/e38afe62e088394d61ed30884dd50a6826eee0a8/employees.csv"
     di_url = proj.new_dataitem(name="url_data_item",kind="table",path=url)
-    workflow_run = proj.run('pipeline_dbt', parameters={"url": di_url.key})
+
+    proj.run('pipeline_dbt', action="build")
+    workflow_run = proj.run('pipeline_dbt', action="pipeline", parameters={"di": di_url.key})
 
     # Wait for run to finish
     poller(workflow_run)
