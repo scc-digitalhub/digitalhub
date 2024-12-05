@@ -28,12 +28,13 @@ global:
     digitalhubUserSecret: digitalhub-minio-creds
     digitalhubUser: &digitalhubUser digitalhub
     digitalhubPassword: &digitalhubPassword digitalhub
-    kfpUser: &kfpUser kfp
-    kfpPassword: &kfpPassword kfpwd123
+    argoSecret: &argoSecret argo-minio-creds
+    argoUser: &argoUser argo
+    argoPassword: &argoPassword argo1234
     endpoint: &minioEndpoint "minio"
     endpointPort: &minioEndpointPort "9000"
     bucket: &minioBucket "datalake"
-    kfpBucket: &kfpBucket "kfp"
+    argoBucket: &argoBucket "argo"
     protocol: &minioProtocol "http"
   solr:
     fullNameOverride: &solrFullNameOverride digitalhub
@@ -214,10 +215,6 @@ core:
   config:
     rootUser: minio
     rootPassword: minio123
-  krm:
-    port: "8080"
-  kfp:
-    endpoint: "http://ml-pipeline:8888"
   authentication:
     openId:
       enabled: false
@@ -246,7 +243,6 @@ core:
       initialize:
         enabled: false
         image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
-  testSuite: ">=0.7.0b"
   coreAuthCreds:  # These are example creds, change them to your needs.
     clientId: "m04bfbmd03m8sf4u9ucz54ti"
     clientSecret: "9rb5215z0aqd7fadzxuoyqe3"
@@ -263,6 +259,11 @@ core:
       memReq: "64m"
       memLim: ""
       gpuKey: "nvidia.com/gpu"
+  argoWorkflow:
+    configmap: artifact-repositories
+    key: artifact-repository
+    serviceAccount: argo-workflow
+    user: "8877"
 
 kubernetes-resource-manager:
   enabled: true
@@ -438,7 +439,7 @@ minio:
     - name: datalake
       policy: none
       purge: false
-    - name: kfp
+    - name: argo
       policy: none
       purge: false
   resources:
@@ -475,9 +476,9 @@ minio:
     - accessKey: *digitalhubUser
       secretKey: *digitalhubPassword
       policy: readwritedigitalhub
-    - accessKey: *kfpUser
-      secretKey: *kfpPassword
-      policy: readwritekfp
+    - accessKey: *argoUser
+      secretKey: *argoPassword
+      policy: readwriteargo
   policies:
     - name: readwritedigitalhub
       statements:
@@ -486,11 +487,11 @@ minio:
             - 'arn:aws:s3:::datalake/*'
           actions:
             - "s3:*"
-    - name: readwritekfp
+    - name: readwriteargo
       statements:
         - effect: Allow
           resources:
-            - 'arn:aws:s3:::kfp/*'
+            - 'arn:aws:s3:::argo/*'
           actions:
             - "s3:*"
 
@@ -504,53 +505,8 @@ minio-operator:
     bucket: *minioBucket
     protocol: *minioProtocol
 
-kubeflow-pipelines:
-  enabled: true
-  crd:
-    create: *globalCrd
-  priority_class:
-    enabled: true
-  name: pipelines
-  persistence:
-    enabled: true
-    existingClaim:
-    storageClass:
-    accessMode: "ReadWriteOnce"
-    size: "20Gi"
-  # These values crate a new mysql deployment using rootUsername and rootPassword for the admin account.
-  # Set this to false in case you want to use an existing mysql deployment.
-  embeddedMySql:
-    enabled: true
-    rootUsername: root
-    rootPassword: pwd
-  db:
-    # If you have an already existing mysql database that you want to use, you must provide the secret containing username and password of the user.
-    # WARNING: if you want to use an existing mysql deployment, make sure to:
-    # - Have two databases, "metadb" and "mlpipeline"
-    # - In the secret, specify a user that has privileges on the two above mentioned databases
-    externalSecret:
-      secretName: ""
-      usernameKey: ""
-      passwordKey: ""
-    # Set the username and password for the unprivileged user of a new mysql database deployment.
-    username: mysqluser
-    password: pwd
-  ui:
-    ingress:
-      enabled: false
-    service:
-      type: *serviceType
-      nodePort: 30100
-  s3:
-    enabled: true
-    accessKey: *kfpUser
-    secretKey: *kfpPassword
-    endpoint: *minioEndpoint
-    endpointPort: *minioEndpointPort
-    bucket: *kfpBucket
-    protocol: *minioProtocol
-
 platformTests:
+  preRelease: true ## Used for installing pre release packages
   image: ""
   tag: ""
   packages:
@@ -566,3 +522,37 @@ platformTests:
     tag: ""
   - name: "digitalhub-runtime-modelserve"
     tag: ""
+
+argo-workflows:
+  enabled: true
+  singleNamespace: true
+  workflow:
+    serviceAccount:
+      create: true
+      name: argo-workflow
+  controller:
+    configMap:
+      create: true
+    serviceAccount:
+      name: argo-workflow-controller
+    workflowDefaults:
+      spec:
+        serviceAccountName: argo-workflow
+  server:
+    enabled: false
+  artifactRepositoryRef:
+    artifact-repositories:
+      annotations:
+        workflows.argoproj.io/default-artifact-repository: artifact-repository
+      artifact-repository:
+        archiveLogs: false
+        s3:
+          accessKeySecret:
+            name: *argoSecret
+            key: accesskey
+          secretKeySecret:
+            name: *argoSecret
+            key: secretkey
+          insecure: true
+          bucket: *argoBucket
+          endpoint: minio:9000
