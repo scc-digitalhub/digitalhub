@@ -506,7 +506,7 @@ minio-operator:
     protocol: *minioProtocol
 
 platformTests:
-  preRelease: true ## Used for installing pre release packages
+  preRelease: true   ## Used for installing pre release packages
   image: ""
   tag: ""
   packages:
