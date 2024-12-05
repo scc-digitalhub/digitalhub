@@ -59,3 +59,11 @@ rules:
   - update
   - delete
   - patch
+- apiGroups:
+  - argoproj.io
+  resources:
+  - workflows
+  verbs:
+  - get
+  - create
+  - delete
