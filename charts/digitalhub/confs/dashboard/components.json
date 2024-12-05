@@ -71,30 +71,10 @@
     "link": "https://{{ . }}"
     {{- end }}
   {{- else }}
-    {{- if eq .name "kubeflow"}}
-    "link": "http://{{ $externalUrl }}:{{ index .Values "kubeflow-pipelines" "ui" "service" "nodePort" }}"
-    {{- else }}
     "link": "http://{{ .service.name }}:{{ .service.port }}"
-    {{- end }}
   {{- end }}
   },
 {{- end}}
-{{- else }}
-  {
-    "slug": "kubeflow",
-    "name": "Kubeflow Dashboard",
-    "description": "Kubeflow Pipelines is a platform for building and deploying portable, scalable machine learning (ML) workflows",
-    "port": "",
-    {{- if (index .Values "kubeflow-pipelines" "ui" "ingress" "enabled") }}
-    {{- with (index .Values "kubeflow-pipelines" "ui" "ingress" "hosts" 0) }}
-    "link": "https://{{ .host }}"
-    {{- end }}
-    {{- else }}
-    {{- with (index .Subcharts "kubeflow-pipelines") }}
-    "link": "http://{{ $externalUrl }}:{{ .Values.ui.service.nodePort }}"
-    {{- end }}
-    {{- end }}
-  },
 {{- end }}
   {
     "slug": "core",
