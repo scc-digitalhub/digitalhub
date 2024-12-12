@@ -2,7 +2,7 @@ apiVersion: v2
 name: digitalhub-crds
 description: This Helm Chart is a collection of all digitalhub CRDs, this chart is used in the scenario where the user installing digitalhub does not have permissions to create CRDs.
 type: application
-version: 0.1.4
+version: 0.1.5
 appVersion: "0.3.0"
 maintainers:
   - name: ffais
