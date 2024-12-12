@@ -16248,6 +16248,23 @@ entries:
   digitalhub-crds:
   - apiVersion: v2
     appVersion: 0.3.0
+    created: "2024-12-12T13:11:20.972841722Z"
+    description: This Helm Chart is a collection of all digitalhub CRDs, this chart
+      is used in the scenario where the user installing digitalhub does not have permissions
+      to create CRDs.
+    digest: 1672acf7fd0de8a4514add2161d037b451faa57565be4ad676d2a31d3817cebc
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: digitalhub-crds
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-crds-0.1.5/digitalhub-crds-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 0.3.0
     created: "2024-10-07T15:37:10.743047435Z"
     description: This Helm Chart is a collection of all digitalhub CRDs, this chart
       is used in the scenario where the user installing digitalhub does not have permissions
@@ -18812,4 +18829,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-06T08:54:20.271460319Z"
+generated: "2024-12-12T13:11:20.973492665Z"
