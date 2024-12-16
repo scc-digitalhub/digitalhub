@@ -5,33 +5,6 @@ import os
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
-
-def poller(run):
-
-    start = time()
-    max_time = 15 * 60 # 15 minutes
-
-    while True:
-
-        if (time() - start) > max_time:
-            raise Exception(f"Timed out waiting: run status is {run.status.state}")
-
-        run.refresh()
-
-        if run.status.state == "ERROR":
-            raise Exception(f"Something got wrong with run: {run.status.state} - {run.status.message}")
-
-        if run.status.state == "COMPLETED":
-            print("Run finished.")
-            sys.exit(0)
-
-        if run.status.state == "STOPPED":
-            print("Run stopped.")
-            sys.exit(1)
-
-        sleep(5)
-
-
 def main():
     if "CORE_CLIENT_ID" in os.environ:
         # Get Core Token
@@ -51,12 +24,12 @@ def main():
     url = "https://gist.githubusercontent.com/kevin336/acbb2271e66c10a5b73aacf82ca82784/raw/e38afe62e088394d61ed30884dd50a6826eee0a8/employees.csv"
     di_url = proj.new_dataitem(name="url_data_item",kind="table",path=url)
 
-    proj.run('pipeline_dbt', action="build")
-    workflow_run = proj.run('pipeline_dbt', action="pipeline", parameters={"di": di_url.key})
-
-    # Wait for run to finish
-    poller(workflow_run)
-
+    proj.run('pipeline_dbt', action="build", wait=True)
+    workflow_run = proj.run('pipeline_dbt', action="pipeline", parameters={"di": di_url.key}, wait=True)
+    if(workflow_run.status.state == "COMPLETED"):
+      dh.delete_project(proj.name)
+    else:
+      sys.exit(1)
 
 if __name__ == "__main__":
     main()
