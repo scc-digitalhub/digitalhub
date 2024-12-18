@@ -5,33 +5,6 @@ import os
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
-
-def poller(run):
-
-    start = time()
-    max_time = 15 * 60 # 15 minutes
-
-    while True:
-
-        if (time() - start) > max_time:
-            raise Exception(f"Timed out waiting: run status is {run.status.state}")
-
-        run.refresh()
-
-        if run.status.state == "ERROR":
-            raise Exception(f"Something got wrong with run: {run.status.state} - {run.status.message}")
-
-        if run.status.state == "COMPLETED":
-            print("Run finished.")
-            sys.exit(0)
-
-        if run.status.state == "STOPPED":
-            print("Run stopped.")
-            sys.exit(1)
-
-        sleep(5)
-
-
 def main():
     if "CORE_CLIENT_ID" in os.environ:
         # Get Core Token
@@ -51,11 +24,12 @@ def main():
     URL = "https://opendata.comune.bologna.it/api/explore/v2.1/catalog/datasets/rilevazione-flusso-veicoli-tramite-spire-anno-2023/exports/csv?lang=it&timezone=Europe%2FRome&use_labels=true&delimiter=%3B"
     di= proj.new_dataitem(name="url_data_item",kind="table",path=URL)
 
-    proj.run('pipeline', action="build")
-    workflow_run = proj.run('pipeline', action="pipeline", parameters={"url": di.key})
-
-    # Wait for run to finish
-    poller(workflow_run)
+    proj.run('pipeline', action="build", wait=True)
+    workflow_run = proj.run('pipeline', action="pipeline", parameters={"url": di.key}, wait=True)
+    if(workflow_run.status.state == "COMPLETED"):
+      dh.delete_project(proj.name)
+    else:
+      sys.exit(1)
 
 
 if __name__ == "__main__":
