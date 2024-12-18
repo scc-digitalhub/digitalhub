@@ -59,23 +59,6 @@
   },
 {{- end}}
 {{- end }}
-{{- if (index .Values "oauth2-proxy" "enabled") }}
-{{- range (index .Values "oauth2-proxy" "apps") }}
-  {
-    "slug": {{ .name | quote }},
-    "name": {{ .name | title | quote }},
-    "description": {{ .description | quote }},
-    "port": "",
-  {{- if .ingress.enabled }}
-    {{- with (index . "ingress" "hosts" 0) }}
-    "link": "https://{{ . }}"
-    {{- end }}
-  {{- else }}
-    "link": "http://{{ .service.name }}:{{ .service.port }}"
-  {{- end }}
-  },
-{{- end}}
-{{- end }}
   {
     "slug": "core",
     "name": "Core",
