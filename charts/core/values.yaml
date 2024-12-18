@@ -148,15 +148,18 @@ postgres:
 runtime:
   dbt:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt"
-    tag: "0.9.0b1"
+    tag: "0.9.0"
   kfp:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp"
-    tag: "0.9.0b2"
+    tag: "0.9.0"
   python:
     image: "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime"
-    tag3_9: "3.9-0.9.0b2"
-    tag3_10: "3.10-0.9.0b2"
-    tag3_11: "3.11-0.9.0b2"
+    tag3_9: "3.9-0.9.0"
+    tag3_10: "3.10-0.9.0"
+    tag3_11: "3.11-0.9.0"
+  huggingFace:
+    image: "kserve/huggingfaceserver"
+    tag: "v0.14.0"
 
 initImage:
   builderTool:
