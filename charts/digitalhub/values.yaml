@@ -79,9 +79,9 @@ coder:
       - name: jupyter
         nodePort: "30040"
         iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.9.0b2"
-        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.9.0b2"
-        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.9.0b2"
+        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.9.0"
+        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.9.0"
+        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.9.0"
         privileged: false
       - name: dremio
         nodePort: "30120"
@@ -293,29 +293,6 @@ template-controller:
   objectTemplate:
     enabled: true
 
-oauth2-proxy:
-  enabled: false
-  apps:
-    - name: ""
-      description: ""
-      service:
-        name: ""
-        port: ""
-      ingress:
-        enabled: false
-        annotations: {}
-        ingressClassName: ""
-        hosts: []
-        path: /
-        tls: []
-      redirectUrl: ""
-      oidcIssuerUrl: ""
-      existingSecret:
-        name: ""
-        clientId: ""
-        secretKey: ""
-      resources: {}
-
 dashboard:
   replicaCount: 1
   image:
@@ -506,22 +483,22 @@ minio-operator:
     protocol: *minioProtocol
 
 platformTests:
-  preRelease: true   ## Used for installing pre release packages
+  preRelease: false   ## Used for installing pre release packages
   image: ""
   tag: ""
   packages:
   - name: "digitalhub[full]"
-    tag: ""
+    tag: "0.9.0"
   - name: "digitalhub-runtime-python"
-    tag: ""
+    tag: "0.9.0"
   - name: "digitalhub-runtime-container"
-    tag: ""
+    tag: "0.9.0"
   - name: "digitalhub-runtime-dbt"
-    tag: ""
+    tag: "0.9.0"
   - name: "digitalhub-runtime-kfp"
-    tag: ""
+    tag: "0.9.0"
   - name: "digitalhub-runtime-modelserve"
-    tag: ""
+    tag: "0.9.0"
 
 argo-workflows:
   enabled: true
