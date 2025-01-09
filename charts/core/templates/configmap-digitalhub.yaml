@@ -10,8 +10,6 @@ data:
   POSTGRES_DATABASE: {{ .Values.postgres.database }}
   POSTGRES_SCHEMA: {{ .Values.postgres.schema }}
   S3_BUCKET_NAME: {{ .Values.minio.bucket }}
-  KFP_ENDPOINT: {{ .Values.kfp.endpoint }}
   DHCORE_WORKFLOW_IMAGE: {{ .Values.runtime.kfp.image }}:{{ .Values.runtime.kfp.tag }}
-  KFP_ENDPOINT: http://ml-pipeline:8888
-  DHCORE_ENDPOINT: "{{ include "core.endpoint" . }}"
-  DHCORE_ISSUER: "{{ include "core.endpoint" . }}"
+  DHCORE_ENDPOINT: http://{{ include "core.fullname" . }}:{{ .Values.service.port }}
+  DHCORE_ISSUER: http://{{ include "core.fullname" . }}:{{ .Values.service.port }}
