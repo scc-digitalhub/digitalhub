@@ -79,9 +79,9 @@ coder:
       - name: jupyter
         nodePort: "30040"
         iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.9.0"
-        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.9.0"
-        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.9.0"
+        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.9.1"
+        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.9.1"
+        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.9.1"
         privileged: false
       - name: dremio
         nodePort: "30120"
@@ -393,6 +393,18 @@ solr:
   enabled: true
   replicas: 1
   fullnameOverride: *solrFullNameOverride
+  dataStorage:
+    # Either persistent or ephemeral
+    type: "ephemeral"
+    capacity: "10Gi"
+    # Options for persistent storage. Only used if type = "persistent"
+    persistent:
+      reclaimPolicy: "Delete"
+      pvc:
+        name: ""
+        labels: {}
+        annotations: {}
+        storageClassName: ""
   # WARNING: the following feature is currently bugged, waiting for a Solr official fix!
   # Uncomment the following options to use solr with the unprivileged solr user and a randomly generated password
   # Be sure to also set core.solr.collection.initialize to true in this values file.
@@ -484,21 +496,22 @@ minio-operator:
 
 platformTests:
   preRelease: false   ## Used for installing pre release packages
+  deleteOnCompletion: false
   image: ""
   tag: ""
   packages:
   - name: "digitalhub[full]"
-    tag: "0.9.0"
+    tag: "0.9.2"
   - name: "digitalhub-runtime-python"
-    tag: "0.9.0"
+    tag: "0.9.1"
   - name: "digitalhub-runtime-container"
-    tag: "0.9.0"
+    tag: "0.9.3"
   - name: "digitalhub-runtime-dbt"
-    tag: "0.9.0"
+    tag: "0.9.1"
   - name: "digitalhub-runtime-kfp"
-    tag: "0.9.0"
+    tag: "0.9.1"
   - name: "digitalhub-runtime-modelserve"
-    tag: "0.9.0"
+    tag: "0.9.1"
 
 argo-workflows:
   enabled: true
