@@ -27,7 +27,11 @@ def main():
     proj.run('pipeline_dbt', action="build", wait=True)
     workflow_run = proj.run('pipeline_dbt', action="pipeline", parameters={"di": di_url.key}, wait=True)
     if(workflow_run.status.state == "COMPLETED"):
+    {{- if .Values.platformTests.deleteOnCompletion }}
       dh.delete_project(proj.name)
+    {{- else }}
+      sys.exit(0)
+    {{- end }}
     else:
       sys.exit(1)
 
