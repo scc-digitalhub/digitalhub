@@ -2,11 +2,11 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 0.23.0"
+      version = "~> 2.2.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.30"
+      version = "~> 2.36.0"
     }
   }
 }
@@ -101,7 +101,7 @@ resource "coder_app" "grafana" {
   agent_id     = coder_agent.grafana.id
   slug         = "grafana"
   display_name = "grafana"
-  icon         = "https://cdn.icon-icons.com/icons2/2699/PNG/512/grafana_logo_icon_171048.png"
+  icon         = "https://cdn.iconscout.com/icon/free/png-256/free-grafana-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030088.png?f=webp"
   url          = "http://localhost:3000"
   subdomain    = true
   share        = "authenticated"

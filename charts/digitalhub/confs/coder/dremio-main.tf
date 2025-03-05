@@ -2,11 +2,11 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 0.23.0"
+      version = "~> 2.2.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.30"
+      version = "~> 2.36.0"
     }
   }
 }
@@ -171,7 +171,7 @@ resource "coder_app" "dremio" {
   agent_id     = coder_agent.dremio.id
   slug         = "dremio"
   display_name = "Dremio"
-  icon         = "https://cdn.icon-icons.com/icons2/2699/PNG/512/dremio_logo_icon_168234.png"
+  icon         = "https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png"
   url          = "http://127.0.0.1:9047"
   subdomain    = true
   share        = "authenticated"
