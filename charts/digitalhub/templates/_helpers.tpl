@@ -115,23 +115,21 @@ false
 {{- end }}
 
 {{/*
-Set packages versions for tests
+Set packages versions for code-toolbox and tests
 */}}
-{{- define "digitalhub.testPackages" -}}
-{{- $command := "" -}}
-{{- if .Values.platformTests.preRelease -}}
-{{- $command = "pip install --pre --cache-dir home/pipcache" -}}
+{{- define "digitalhub.packages" -}}
+{{ $command := "" }}
+{{- if .Values.platformPackages.preRelease -}}
+{{ $command = "pip install --pre" }}
 {{- else -}}
-{{- $command = "pip install --cache-dir home/pipcache" -}}
+{{ $command = "pip install" }}
 {{- end -}}
-{{- range $package := .Values.platformTests.packages -}}
-{{- $command = printf "%s %s" $command $package.name }}
+{{- range $package := .Values.platformPackages.packages -}}
+{{ $command = printf "%s %s" $command $package.name }}
 {{- if $package.tag -}}
-{{- $command = printf "%s==%s" $command $package.tag }}
+{{ $command = printf "%s==%s" $command $package.tag }}
 {{- end -}}
 {{- end }}
-{{- $command = printf "%s %s" $command "requests-oauthlib" }}
-{{ $command }}
+{{- $command = printf "%s" $command }}
+{{- $command }}
 {{- end }}
-
-
