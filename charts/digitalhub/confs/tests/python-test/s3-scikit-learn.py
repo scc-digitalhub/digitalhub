@@ -24,7 +24,7 @@ def main():
     proj.run('pipeline_ml', action="build", wait=True)
     workflow_run = proj.run('pipeline_ml', action="pipeline", wait=True)
     if(workflow_run.status.state == "COMPLETED"):
-    {{- if .Values.platformTests.deleteOnCompletion }}
+    {{- if .Values.platformPackages.deleteOnCompletion }}
       dh.delete_project(proj.name)
     {{- else }}
       sys.exit(0)

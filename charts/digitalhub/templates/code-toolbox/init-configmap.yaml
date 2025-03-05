@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: code-toolbox-init
+data:
+  {{- range .Values.coder.template.customTemplates }}
+  {{- if eq .name "code-toolbox-experimental" }}
+  tolerations.json: {{ .tolerations | toJson | quote }}
+  {{- end }}
+  {{- end }}
+  run.sh: | {{- tpl (.Files.Get "confs/code-toolbox/run.sh") . | nindent 4 }}
+  

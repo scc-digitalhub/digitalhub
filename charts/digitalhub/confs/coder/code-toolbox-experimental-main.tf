@@ -22,7 +22,7 @@ provider "http" {
 }
 
 locals {
-  jupyter_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}jupyter--jupyter--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  code_toolbox_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}code-toolbox--code-toolbox--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
 }
 
 variable "use_kubeconfig" {
@@ -65,18 +65,6 @@ variable "service_type" {
 variable "node_port" {
   type    = string
   default = "30040"
-}
-
-variable "image" {
-  type = string
-}
-
-variable "image_3_9" {
-  type = string
-}
-
-variable "image_3_11" {
-  type = string
 }
 
 variable "https" {
@@ -138,6 +126,22 @@ data "coder_parameter" "cpu" {
   }
 }
 
+data "coder_parameter" "gpu" {
+  name         = "gpu"
+  display_name = "GPU"
+  description  = "Enable GPU usage for this workspace?"
+  default      = false
+  mutable      = true
+  option {
+    name  = "Yes"
+    value = true
+  }
+  option {
+    name  = "No"
+    value = false
+  }
+}
+
 data "coder_parameter" "memory" {
   name         = "memory"
   display_name = "Memory"
@@ -177,24 +181,50 @@ data "coder_parameter" "home_disk_size" {
   }
 }
 
+data "coder_parameter" "image" {
+  name         = "image"
+  display_name = "Image"
+  description  = "Select the image for this workspace"
+  icon         = "https://cdn-icons-png.flaticon.com/512/438/438524.png"
+  mutable      = true
+  default      = "python"
+
+  option {
+    name  = "Python3"
+    value = "python"
+    icon = "/icon/python.svg"
+  }
+  option {
+    name  = "CUDA"
+    value = "nvcr.io/nvidia/cuda"
+    icon = "https://static-00.iconduck.com/assets.00/file-type-cuda-icon-512x339-1bcw8fyl.png"
+  }
+  option {
+    name  = "PyTorch"
+    value = "nvcr.io/nvidia/pytorch"
+    icon = "https://static-00.iconduck.com/assets.00/pytorch-icon-1694x2048-jgwjy3ne.png"
+  }
+  option {
+    name  = "TensorFlow"
+    value = "nvcr.io/nvidia/tensorflow"
+    icon = "https://static-00.iconduck.com/assets.00/tensorflow-icon-1911x2048-1m2s54vn.png"
+  }
+}
+
 data "coder_parameter" "python_version" {
   name         = "python_version"
   display_name = "Python Version"
   description  = "Select the Python version for this workspace"
-  default      = var.image
+  default      = "3.10"
   icon         = "/icon/python.svg"
   mutable      = true
   option {
-    name  = "3.9"
-    value = var.image_3_9
-  }
-  option {
     name  = "3.10"
-    value = var.image
+    value = "3.10"
   }
   option {
-    name  = "3.11"
-    value = var.image_3_11
+    name  = "3.12"
+    value = "3.12"
   }
 }
 
@@ -209,12 +239,19 @@ data "http" "exchange_token" {
     Authorization = "Basic ${base64encode("${data.kubernetes_secret.auth.data["clientId"]}:${data.kubernetes_secret.auth.data["clientSecret"]}")}"
   }
 
-  request_body = "grant_type=urn:ietf:params:oauth:grant-type:token-exchange&subject_token_type=urn:ietf:params:oauth:token-type:access_token&subject_token=${data.coder_workspace_owner.me.oidc_access_token}"
+  request_body = "grant_type=urn:ietf:params:oauth:grant-type:token-exchange&scope=openid%20offline_access%20credentials&subject_token_type=urn:ietf:params:oauth:token-type:access_token&subject_token=${data.coder_workspace_owner.me.oidc_access_token}"
 }
 
 locals {
   core_access_token  = data.coder_workspace_owner.me.oidc_access_token != "" ? jsondecode(data.http.exchange_token[0].response_body)["access_token"] : null
-  core_refresh_token = data.coder_workspace_owner.me.oidc_access_token != "" ? jsondecode(data.http.exchange_token[0].response_body)["refresh_token"] : null
+  core_refresh_token = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"refresh_token",null) : null
+
+  # Image selection
+  pytorch_tag = "%{ if data.coder_parameter.python_version.value == "3.10" }24.12-py3%{ else }%{ if data.coder_parameter.python_version.value == "3.12" }25.02-py3%{ endif }%{ endif }"
+  tensorflow_tag = "%{ if data.coder_parameter.python_version.value == "3.10" }24.12-tf2-py3%{ else }%{ if data.coder_parameter.python_version.value == "3.12" }25.02-tf2-py3%{ endif }%{ endif }"
+  final_image = "${data.coder_parameter.image.value}:%{ if data.coder_parameter.image.value == "python" }3%{ else }%{ if data.coder_parameter.image.value == "nvcr.io/nvidia/cuda" }12.8.0-cudnn-runtime-ubuntu22.04%{ else }%{ if data.coder_parameter.image.value == "nvcr.io/nvidia/pytorch"}${local.pytorch_tag}%{ else }%{ if data.coder_parameter.image.value == "nvcr.io/nvidia/tensorflow"}${local.tensorflow_tag}%{ endif }%{ endif }%{ endif }%{ endif }"
+  testino = [{"effect": "NoSchedule", "key": "nvidia.com/gpu", "operator": "Equal", "value": "a100"},{"effect": "NoSchedule", "key": "nvidia.com/gpu", "operator": "Equal", "value": "a100"}]
+  tolerations = jsondecode(data.kubernetes_config_map.workspace_config.data["tolerations.json"])
 }
 
 provider "kubernetes" {
@@ -233,13 +270,39 @@ data "kubernetes_secret" "auth" {
   }
 }
 
-resource "coder_agent" "jupyter" {
+module "vscode-web" {
+  count          = data.coder_workspace.me.start_count
+  source         = "registry.coder.com/modules/vscode-web/coder"
+  version        = "1.0.30"
+  agent_id       = coder_agent.code_toolbox.id
+  accept_license = true
+  folder         = "/home/${data.coder_workspace_owner.me.name}"
+  install_prefix = "/home/${data.coder_workspace_owner.me.name}/vscode-web"
+}
+
+module "personalize" {
+  count    = data.coder_workspace.me.start_count
+  source   = "registry.coder.com/modules/personalize/coder"
+  version  = "1.0.2"
+  agent_id = coder_agent.code_toolbox.id
+  path     = "/scripts/run.sh"
+  log_path = "/tmp/personalize.log"
+}
+
+module "jetbrains_gateway" {
+  source         = "registry.coder.com/modules/jetbrains-gateway/coder"
+  version        = "1.0.28"
+  agent_id       = coder_agent.code_toolbox.id
+  agent_name     = "code_toolbox"
+  folder         = "/home/${data.coder_workspace_owner.me.name}"
+  jetbrains_ides = ["CL", "GO", "IU", "PY", "WS"]
+  default        = "PY"
+  latest = true
+}
+
+resource "coder_agent" "code_toolbox" {
   os             = "linux"
   arch           = "amd64"
-  startup_script = <<-EOT
-    set -e
-    jupyter lab --ServerApp.ip=0.0.0.0 --ServerApp.port=8888 --ServerApp.token="" --ServerApp.password="" --ServerApp.root_dir="/home/${data.coder_workspace_owner.me.name}"
-  EOT
   metadata {
     display_name = "CPU Usage"
     key          = "0_cpu_usage"
@@ -272,16 +335,25 @@ resource "coder_agent" "jupyter" {
     timeout  = 1
   }
   display_apps {
-    vscode                 = false
-    vscode_insiders        = false
+    vscode                 = true
+    vscode_insiders        = true
     web_terminal           = false
     port_forwarding_helper = true
     ssh_helper             = true
   }
 }
 
+resource "coder_metadata" "code_toolbox" {
+  count       = data.coder_workspace.me.start_count
+  resource_id = kubernetes_deployment.code-toolbox[0].id
+  item {
+    key   = "URL"
+    value = local.code_toolbox_url
+  }
+}
+
 resource "coder_app" "jupyter" {
-  agent_id     = coder_agent.jupyter.id
+  agent_id     = coder_agent.code_toolbox.id
   slug         = "jupyter"
   display_name = "JupyterLab"
   icon         = "/icon/jupyter.svg"
@@ -295,22 +367,20 @@ resource "coder_app" "jupyter" {
   }
 }
 
-resource "coder_metadata" "jupyter" {
-  count       = data.coder_workspace.me.start_count
-  resource_id = kubernetes_deployment.jupyter[0].id
-  item {
-    key   = "URL"
-    value = local.jupyter_url
+data "kubernetes_config_map" "workspace_config" {
+  metadata {
+    name      = "code-toolbox-init"
+    namespace = var.namespace
   }
 }
 
 resource "kubernetes_persistent_volume_claim" "home" {
   metadata {
-    name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}-home"
+    name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}-home"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "jupyter-pvc"
-      "app.kubernetes.io/instance" = "jupyter-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/name"     = "code-toolbox-pvc"
+      "app.kubernetes.io/instance" = "code-toolbox-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "pvc"
       // Coder specific labels.
@@ -335,13 +405,13 @@ resource "kubernetes_persistent_volume_claim" "home" {
   }
 }
 
-resource "kubernetes_service" "jupyter-service" {
+resource "kubernetes_service" "code-toolbox-service" {
   metadata {
-    name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+    name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "jupyter-workspace"
-      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/name"     = "code-toolbox-workspace"
+      "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "service"
       // Coder specific labels.
@@ -357,8 +427,8 @@ resource "kubernetes_service" "jupyter-service" {
   }
   spec {
     selector = {
-      "app.kubernetes.io/name"     = "jupyter-workspace"
-      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/name"     = "code-toolbox-workspace"
+      "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "workspace"
     }
@@ -371,18 +441,18 @@ resource "kubernetes_service" "jupyter-service" {
   }
 }
 
-resource "kubernetes_deployment" "jupyter" {
+resource "kubernetes_deployment" "code-toolbox" {
   count = data.coder_workspace.me.start_count
   depends_on = [
     kubernetes_persistent_volume_claim.home
   ]
   wait_for_rollout = false
   metadata {
-    name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+    name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "jupyter-workspace"
-      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/name"     = "code-toolbox-workspace"
+      "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
       "app.kubernetes.io/type"     = "workspace"
       // Coder specific labels.
@@ -403,8 +473,8 @@ resource "kubernetes_deployment" "jupyter" {
     }
     selector {
       match_labels = {
-        "app.kubernetes.io/name"     = "jupyter-workspace"
-        "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+        "app.kubernetes.io/name"     = "code-toolbox-workspace"
+        "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
         "app.kubernetes.io/part-of"  = "coder"
         "app.kubernetes.io/type"     = "workspace"
       }
@@ -412,29 +482,34 @@ resource "kubernetes_deployment" "jupyter" {
     template {
       metadata {
         labels = {
-          "app.kubernetes.io/name"     = "jupyter-workspace"
-          "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+          "app.kubernetes.io/name"     = "code-toolbox-workspace"
+          "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
           "app.kubernetes.io/part-of"  = "coder"
           "app.kubernetes.io/type"     = "workspace"
         }
       }
       spec {
+        dynamic "toleration" {
+          for_each = data.coder_parameter.gpu.value != "false" ? local.tolerations : []
+          content {
+            key      = toleration.value["key"]
+            operator = toleration.value["operator"]
+            value    = toleration.value["value"]
+            effect   = toleration.value["effect"]
+          }
+        }
         security_context {
-          run_as_user  = "1000"
-          fs_group     = "100"
-          run_as_group = "100"
+          run_as_user  = "10000"
+          fs_group     = "10000"
+          run_as_group = "10000"
         }
         init_container {
           name              = "copy-users-file"
-          image             = data.coder_parameter.python_version.value
+          image             = local.final_image
           image_pull_policy = "Always"
-          command           = ["bash", "-c", "cp -r /etc/ /etc-backup/"]
-          env {
-            name  = "NB_USER"
-            value = data.coder_workspace_owner.me.name
-          }
+          command           = ["bash", "-c", "groupadd -g 10000 ${data.coder_workspace_owner.me.name} && useradd -m -u 10000 -g 10000 ${data.coder_workspace_owner.me.name} && cp /etc/passwd /etc/shadow /etc/group /etc/gshadow /etc-backup/ && cp -raTp /home/${data.coder_workspace_owner.me.name}/ /home/${data.coder_workspace_owner.me.name}-backup/"]
           volume_mount {
-            mount_path = "/home/${data.coder_workspace_owner.me.name}"
+            mount_path = "/home/${data.coder_workspace_owner.me.name}-backup"
             name       = "home"
             sub_path   = data.coder_workspace_owner.me.name
             read_only  = false
@@ -442,37 +517,6 @@ resource "kubernetes_deployment" "jupyter" {
           volume_mount {
             name       = "user"
             mount_path = "/etc-backup"
-
-          }
-          security_context {
-            run_as_user                = "0"
-            run_as_group               = "0"
-            allow_privilege_escalation = true
-          }
-        }
-        init_container {
-          name              = "init-new-user"
-          image             = data.coder_parameter.python_version.value
-          image_pull_policy = "Always"
-          command           = ["/usr/local/bin/start.sh"]
-          env {
-            name  = "NB_USER"
-            value = data.coder_workspace_owner.me.name
-          }
-          env {
-            name  = "CP_OPTS"
-            value = "--r"
-          }
-          volume_mount {
-            mount_path = "/home/${data.coder_workspace_owner.me.name}"
-            name       = "home"
-            sub_path   = data.coder_workspace_owner.me.name
-            read_only  = false
-          }
-          volume_mount {
-            name       = "user"
-            mount_path = "/etc/"
-            sub_path   = "etc/"
           }
           security_context {
             run_as_user                = "0"
@@ -481,29 +525,21 @@ resource "kubernetes_deployment" "jupyter" {
           }
         }
         container {
-          name        = "jupyter"
-          image       = data.coder_parameter.python_version.value
-          command     = ["sh", "-c", coder_agent.jupyter.init_script]
+          name        = "code-toolbox"
+          image       = local.final_image
+          command     = ["sh", "-c", coder_agent.code_toolbox.init_script]
           working_dir = "/home/${data.coder_workspace_owner.me.name}"
           security_context {
-            run_as_user                = "1000"
+            run_as_user                = "10000"
             allow_privilege_escalation = var.privileged
-          }
-          env {
-            name  = "CODER_AGENT_TOKEN"
-            value = coder_agent.jupyter.token
-          }
-          env {
-            name  = "NB_USER"
-            value = data.coder_workspace_owner.me.name
-          }
-          env {
-            name  = "GRANT_SUDO"
-            value = var.privileged ? 1 : 0
           }
           env {
             name  = "HOME"
             value = "/home/${data.coder_workspace_owner.me.name}"
+          }
+          env {
+            name  = "CODER_AGENT_TOKEN"
+            value = coder_agent.code_toolbox.token
           }
           env {
             name  = "DHCORE_ACCESS_TOKEN"
@@ -512,6 +548,22 @@ resource "kubernetes_deployment" "jupyter" {
           env {
             name  = "DHCORE_REFRESH_TOKEN"
             value = local.core_refresh_token
+          }
+          env {
+            name  = "PYTHON_VERSION"
+            value = data.coder_parameter.python_version.value
+          }
+          env {
+            name  = "JUPYTER_PORT"
+            value = 8888
+          }
+          env {
+            name  = "JUPYTER_LOG_PATH"
+            value = "/tmp/jupyter.log"
+          }
+          env {
+            name  = "SHELL"
+            value = "/bin/bash"
           }
           env {
             name = "DHCORE_CLIENT_ID"
@@ -541,10 +593,12 @@ resource "kubernetes_deployment" "jupyter" {
             requests = {
               "cpu"    = "250m"
               "memory" = "512Mi"
+              "nvidia.com/gpu" = data.coder_parameter.gpu.value ? 1 : null
             }
             limits = {
               "cpu"    = "${data.coder_parameter.cpu.value}"
               "memory" = "${data.coder_parameter.memory.value}Gi"
+              "nvidia.com/gpu" = data.coder_parameter.gpu.value ? 1 : null
             }
           }
           volume_mount {
@@ -554,9 +608,41 @@ resource "kubernetes_deployment" "jupyter" {
             read_only  = false
           }
           volume_mount {
+            name       = "init-packages"
+            mount_path = "/scripts/run.sh"
+            sub_path   = "run.sh"
+            read_only  = false
+          }
+          volume_mount {
+            mount_path = "/etc/passwd"
             name       = "user"
-            mount_path = "/etc/"
-            sub_path   = "etc/"
+            sub_path   = "passwd"
+            read_only  = true
+          }
+          volume_mount {
+            mount_path = "/etc/shadow"
+            name       = "user"
+            sub_path   = "shadow"
+            read_only  = true
+          }
+          volume_mount {
+            mount_path = "/etc/group"
+            name       = "user"
+            sub_path   = "group"
+            read_only  = true
+          }
+          volume_mount {
+            mount_path = "/etc/gshadow"
+            name       = "user"
+            sub_path   = "gshadow"
+            read_only  = true
+          }
+        }
+        volume {
+          name = "init-packages"
+          config_map {
+            name = "code-toolbox-init"
+            default_mode = "0755"
           }
         }
         volume {

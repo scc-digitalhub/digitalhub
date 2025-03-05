@@ -83,9 +83,14 @@ coder:
         image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.9.1"
         image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.9.1"
         privileged: false
+      - name: code-toolbox-experimental
+        nodePort: "30050"
+        iconUrl: https://cdn-icons-png.flaticon.com/512/7301/7301969.png
+        privileged: false
+        tolerations: []
       - name: dremio
         nodePort: "30120"
-        iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/dremio_logo_icon_168234.png
+        iconUrl: https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png
         image: "dremio/dremio-oss:24.1.0"
       - name: sqlpad
         nodePort: "30140"
@@ -93,7 +98,7 @@ coder:
         image: "smartcommunitylab/sqlpad:nonroot"
       - name: grafana
         nodePort: "30130"
-        iconUrl: https://cdn.icon-icons.com/icons2/2699/PNG/512/grafana_logo_icon_171048.png
+        iconUrl: https://cdn.iconscout.com/icon/free/png-256/free-grafana-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030088.png?f=webp
         image: "smartcommunitylab/grafana"
       - name: vscode
         nodePort: "30190"
@@ -101,7 +106,7 @@ coder:
         image: "codercom/enterprise-base:ubuntu"
   coder:
     image:
-      tag: v2.12.0
+      tag: v2.19.0
     env:
       - name: CODER_TELEMETRY
         value: "false"
@@ -298,7 +303,7 @@ dashboard:
   image:
     repository: ghcr.io/scc-digitalhub/dh-dashboard
     pullPolicy: IfNotPresent
-    tag: "0.1.2"
+    tag: "0.1.3"
   imagePullSecrets: []
   nameOverride: ""
   fullnameOverride: ""
@@ -494,9 +499,9 @@ minio-operator:
     bucket: *minioBucket
     protocol: *minioProtocol
 
-platformTests:
+platformPackages:
   preRelease: false   ## Used for installing pre release packages
-  deleteOnCompletion: false
+  deleteOnCompletion: true  ## Leave this to true if you want to delete the test projects created with helm test
   image: ""
   tag: ""
   packages:

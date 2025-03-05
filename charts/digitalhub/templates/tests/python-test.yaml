@@ -26,7 +26,7 @@ spec:
             runAsUser: 0
       containers:
         - name: python
-          image: "{{ $.Values.platformTests.image | default "python" }}:{{ $.Values.platformTests.tag | default "3.10-slim" }}"
+          image: "{{ $.Values.platformPackages.image | default "python" }}:{{ $.Values.platformPackages.tag | default "3.10-slim" }}"
           command: ['sh', './home/scripts/init-python-script.sh']
           volumeMounts:
             - name: test-volume
