@@ -148,15 +148,15 @@ postgres:
 runtime:
   dbt:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt"
-    tag: "0.9.1"
+    tag: "0.10.0b5"
   kfp:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp"
-    tag: "0.9.1"
+    tag: "0.10.0b6"
   python:
     image: "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime"
-    tag3_9: "3.9-0.9.1"
-    tag3_10: "3.10-0.9.1"
-    tag3_11: "3.11-0.9.1"
+    tag3_9: "3.9-0.10.0b7"
+    tag3_10: "3.10-0.10.0b7"
+    tag3_11: "3.11-0.10.0b7"
   huggingFace:
     image: "kserve/huggingfaceserver"
     tag: "v0.14.0"
@@ -268,3 +268,92 @@ argoWorkflow:
   key: default-artifact-repository
   serviceAccount: default
   user: "1000"
+
+sts:
+  enabled: false
+  replicaCount: 1
+
+  image:
+    repository: ghcr.io/scc-digitalhub/db-sts
+    pullPolicy: IfNotPresent
+    tag: "0.2.0"
+
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: ""
+
+  serviceAccount:
+    create: true
+    automount: true
+    annotations: {}
+    name: "core-sts"
+
+  podAnnotations: {}
+  podLabels: {}
+
+  podSecurityContext:
+    runAsNonRoot: true
+
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+  postgres:
+    connectionUrl: ""
+    database: ""
+    port: ""
+
+  credentials:
+    credentialRoles: ""
+    clientId: ""
+    clientSecret: ""
+    jwtIssuerUri: "http://digitalhub-core:8080"
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+  # Additional volumes on the output Deployment definition.
+  volumes: []
+  # - name: foo
+  #   secret:
+  #     secretName: mysecret
+  #     optional: false
+
+  # Additional volumeMounts on the output Deployment definition.
+  volumeMounts: []
+  # - name: foo
+  #   mountPath: "/etc/foo"
+  #   readOnly: true
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  db:
+    enabled: true
+    claim: "db/role"
+    role: "digitalhubadmin"
+    duration: 86400
+  minio:
+    enabled: true

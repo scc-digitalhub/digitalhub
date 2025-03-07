@@ -1,0 +1,80 @@
+{{- if .Values.sts.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "core.fullname" . }}-sts
+  labels:
+    {{- include "core-sts.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.sts.autoscaling.enabled }}
+  replicas: {{ .Values.sts.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "core-sts.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.sts.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "core-sts.labels" . | nindent 8 }}
+        {{- with .Values.sts.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.sts.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "core.serviceAccountName" . }}-sts
+      securityContext:
+        {{- toYaml .Values.sts.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-sts
+          securityContext:
+            {{- toYaml .Values.sts.securityContext | nindent 12 }}
+          image: "{{ .Values.sts.image.repository }}:{{ .Values.sts.image.tag }}"
+          imagePullPolicy: {{ .Values.sts.image.pullPolicy }}
+          env:
+            - name: CONNECTION_USER
+              valueFrom:
+                secretKeyRef:
+                  name: digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+                  key: username
+            - name: CONNECTION_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+                  key: password
+          ports:
+            - name: http
+              containerPort: {{ .Values.sts.service.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.sts.resources | nindent 12 }}
+          envFrom:
+          - configMapRef:
+              name: {{ include "core.fullname" . }}-sts
+          {{- with .Values.sts.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.sts.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.sts.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.sts.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.sts.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

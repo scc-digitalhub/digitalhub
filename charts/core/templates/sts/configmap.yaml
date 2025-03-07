@@ -1,0 +1,14 @@
+{{- if .Values.sts.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "core.fullname" . }}-sts
+data:
+  CONNECTION_URL: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.database }}"
+  POSTGRES_DATABASE: {{ .Values.postgres.database }}
+  STS_ENDPOINT: http://{{ include "core.fullname" . }}-sts:{{ .Values.service.port }}
+  STS_CREDENTIALS_ROLES: {{ .Values.sts.credentials.credentialRoles }}
+  STS_CLIENT_ID: {{ .Values.sts.credentials.clientId }}
+  STS_CLIENT_SECRET: {{ .Values.sts.credentials.clientSecret }}
+  STS_JWT_ISSUER_URI: {{ .Values.sts.credentials.jwtIssuerUri }}
+{{- end }}

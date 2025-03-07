@@ -1,0 +1,17 @@
+{{- if .Values.sts.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "core.fullname" . }}-sts
+  labels:
+    {{- include "core-sts.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.sts.service.type }}
+  ports:
+    - port: {{ .Values.sts.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "core-sts.selectorLabels" . | nindent 4 }}
+{{- end }}
