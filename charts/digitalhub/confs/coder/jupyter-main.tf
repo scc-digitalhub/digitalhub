@@ -93,6 +93,11 @@ variable "privileged" {
   default = "false"
 }
 
+variable "stsenabled" {
+  type    = bool
+  default = false
+}
+
 variable "core_auth_creds" {
   type    = string
   default = "core-auth-creds"
@@ -198,6 +203,17 @@ data "coder_parameter" "python_version" {
   }
 }
 
+module "jetbrains_gateway" {
+  source         = "registry.coder.com/modules/jetbrains-gateway/coder"
+  version        = "1.0.28"
+  agent_id       = coder_agent.jupyter.id
+  agent_name     = "jupyter"
+  folder         = "/home/${data.coder_workspace_owner.me.name}"
+  jetbrains_ides = ["CL", "GO", "IU", "PY", "WS"]
+  default        = "PY"
+  latest = true
+}
+
 data "http" "exchange_token" {
   count  = data.coder_workspace_owner.me.oidc_access_token != "" ? 1 : 0
   url    = "${var.dhcore_endpoint}/auth/token"
@@ -209,12 +225,14 @@ data "http" "exchange_token" {
     Authorization = "Basic ${base64encode("${data.kubernetes_secret.auth.data["clientId"]}:${data.kubernetes_secret.auth.data["clientSecret"]}")}"
   }
 
-  request_body = "grant_type=urn:ietf:params:oauth:grant-type:token-exchange&subject_token_type=urn:ietf:params:oauth:token-type:access_token&subject_token=${data.coder_workspace_owner.me.oidc_access_token}"
+  request_body = "grant_type=urn:ietf:params:oauth:grant-type:token-exchange&scope=openid%20offline_access%20credentials&subject_token_type=urn:ietf:params:oauth:token-type:access_token&subject_token=${data.coder_workspace_owner.me.oidc_access_token}"
 }
 
 locals {
-  core_access_token  = data.coder_workspace_owner.me.oidc_access_token != "" ? jsondecode(data.http.exchange_token[0].response_body)["access_token"] : null
-  core_refresh_token = data.coder_workspace_owner.me.oidc_access_token != "" ? jsondecode(data.http.exchange_token[0].response_body)["refresh_token"] : null
+  response  = data.coder_workspace_owner.me.oidc_access_token != "" ? jsondecode(data.http.exchange_token[0].response_body) : {}
+  testresponse  = data.coder_workspace_owner.me.oidc_access_token != "" ? jsonencode(jsondecode(data.http.exchange_token[0].response_body)) : ""
+  core_access_token  = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"access_token",null) : null
+  core_refresh_token = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"refresh_token",null) : null
 }
 
 provider "kubernetes" {
@@ -371,6 +389,42 @@ resource "kubernetes_service" "jupyter-service" {
   }
 }
 
+resource "kubernetes_secret" "jupyter-secret" {
+  count  = var.stsenabled ? 1 : 0
+  metadata {
+    name = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+    namespace = var.namespace
+    labels = {
+      "app.kubernetes.io/name"     = "jupyter-workspace"
+      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"  = "coder"
+      "app.kubernetes.io/type"     = "secret"
+      // Coder specific labels.
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+    }
+    annotations = {
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
+    }
+  }
+
+  type = "Opaque"
+
+  data = {
+    "DHCORE_ACCESS_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"access_token",null) : null
+    "DHCORE_REFRESH_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"refresh_token",null) : null
+    "DHCORE_AWS_ACCESS_KEY_ID" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_access_key_id",null) : null
+    "DHCORE_AWS_SECRET_ACCESS_KEY" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_secret_access_key",null) : null
+    "DHCORE_DB_PASSWORD" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_password",null) : null
+    "DHCORE_DB_USERNAME" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_username",null) : null
+    "DHCORE_AWS_SESSION_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_session_token",null) : null
+  }
+}
+
+
 resource "kubernetes_deployment" "jupyter" {
   count = data.coder_workspace.me.start_count
   depends_on = [
@@ -505,31 +559,25 @@ resource "kubernetes_deployment" "jupyter" {
             name  = "HOME"
             value = "/home/${data.coder_workspace_owner.me.name}"
           }
-          env {
-            name  = "DHCORE_ACCESS_TOKEN"
-            value = local.core_access_token
-          }
-          env {
-            name  = "DHCORE_REFRESH_TOKEN"
-            value = local.core_refresh_token
-          }
-          env {
-            name = "DHCORE_CLIENT_ID"
-            value_from {
-              secret_key_ref {
-                name = var.core_auth_creds
-                key  = "clientId"
-              }
-            }
-          }
-          env_from {
-            secret_ref {
-              name = "digitalhub-common-creds"
-            }
-          }
           env_from {
             config_map_ref {
               name = "digitalhub-common-env"
+            }
+          }
+          dynamic env_from {
+            for_each = var.stsenabled ? [] : [1]
+            content {
+              secret_ref {
+                name = "digitalhub-common-creds"
+              }
+            }
+          }
+          dynamic env_from {
+            for_each = var.stsenabled ? [1] : []
+            content {
+              secret_ref {
+                name = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+              }
             }
           }
           port {

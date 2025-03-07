@@ -1,3 +1,4 @@
+{{- if not .Values.core.sts.enabled -}}
 {{- if ( index .Values "template-controller" "objectTemplate" "enabled" ) }}
 apiVersion: templates.kluctl.io/v1alpha1
 kind: ObjectTemplate
@@ -32,12 +33,11 @@ spec:
       metadata:
         name: "digitalhub-common-creds"
       stringData:
-        POSTGRES_USER: "{{ "{{" }} matrix.postgressecret.data.username | b64decode {{ "}}" }}"
-        POSTGRES_PASSWORD: "{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}"
-        AWS_ACCESS_KEY_ID: "{{ "{{" }} matrix.miniosecret.data.digitalhubUser | b64decode {{ "}}" }}"
-        AWS_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.miniosecret.data.digitalhubPassword | b64decode {{ "}}" }}"
-        JUPYTERLAB_S3_ACCESS_KEY_ID: "{{ "{{" }} matrix.miniosecret.data.digitalhubUser | b64decode {{ "}}" }}"
-        JUPYTERLAB_S3_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.miniosecret.data.digitalhubPassword | b64decode {{ "}}" }}"
-        POSTGRES_URL: "postgresql://{{ "{{" }} matrix.postgressecret.data.username | b64decode {{ "}}" }}:{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}@database-postgres-cluster:5432/digitalhub"
-        JWT_CLIENT_ID: "{{ "{{" }} matrix.coresecret.data.clientId | b64decode {{ "}}" }}"
+        DHCORE_DB_USERNAME: "{{ "{{" }} matrix.postgressecret.data.username | b64decode {{ "}}" }}"
+        DHCORE_DB_PASSWORD: "{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}"
+        DHCORE_AWS_ACCESS_KEY_ID: "{{ "{{" }} matrix.miniosecret.data.digitalhubUser | b64decode {{ "}}" }}"
+        DHCORE_AWS_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.miniosecret.data.digitalhubPassword | b64decode {{ "}}" }}"
+        DHCORE_DB_URL: "postgresql://{{ "{{" }} matrix.postgressecret.data.username | b64decode {{ "}}" }}:{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}@database-postgres-cluster:5432/digitalhub"
+        DHCORE_JWT_CLIENT_ID: "{{ "{{" }} matrix.coresecret.data.clientId | b64decode {{ "}}" }}"
+{{- end }}
 {{- end }}
