@@ -79,9 +79,9 @@ coder:
       - name: jupyter
         nodePort: "30040"
         iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.9.1"
-        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.9.1"
-        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.9.1"
+        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.10.0b6"
+        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.10.0b6"
+        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.10.0b6"
         privileged: false
       - name: code-toolbox-experimental
         nodePort: "30050"
@@ -106,7 +106,7 @@ coder:
         image: "codercom/enterprise-base:ubuntu"
   coder:
     image:
-      tag: v2.19.0
+      tag: v2.19.1
     env:
       - name: CODER_TELEMETRY
         value: "false"
@@ -269,6 +269,25 @@ core:
     key: artifact-repository
     serviceAccount: argo-workflow
     user: "8877"
+  sts:
+    enabled: false
+    clientId: &stsClientId "sjcqfiix79hx"
+    clientSecret: &stsClientSecret "s7tznmn3q6nz"
+    db:
+      enabled: true
+      stsUser: *stsClientId
+      stsPassword: *stsClientSecret
+    minio:
+      enabled: true
+    postgres:
+      connectionUrl: "jdbc:postgresql://database-postgres-cluster:5432/digitalhub"
+      database: "digitalhub"
+      port: "5432"
+    credentials:
+      credentialRoles: "digitalhubadmin"
+      clientId: *stsClientId
+      clientSecret: *stsClientSecret
+      jwtIssuerUri: "https://aac.digitalhub-dev.smartcommunitylab.it"
 
 kubernetes-resource-manager:
   enabled: true

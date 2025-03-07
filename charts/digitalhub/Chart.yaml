@@ -7,7 +7,7 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.10.0-beta1"
+version: "0.10.0-beta2"
 appVersion: "0.10.0"
 dependencies:
 - name: argo-workflows
@@ -19,11 +19,11 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: apigw-operator.enabled
 - name: coder
-  version: "2.19.0"
+  version: "2.19.1"
   repository: https://helm.coder.com/v2
   condition: coder.enabled
 - name: core
-  version: "0.3.2"
+  version: "0.3.3"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: kubernetes-resource-manager
