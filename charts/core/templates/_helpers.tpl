@@ -45,10 +45,32 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
+Common labels
+*/}}
+{{- define "core-sts.labels" -}}
+helm.sh/chart: {{ include "core.chart" . }}
+{{ include "core-sts.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/created-by: {{ include "core.chart" . }}
+app.kubernetes.io/part-of: {{ include "core.fullname" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
 Selector labels
 */}}
 {{- define "core.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "core.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "core-sts.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "core.name" . }}-sts
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
