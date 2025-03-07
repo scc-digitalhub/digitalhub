@@ -34,4 +34,5 @@ jupyter-lab --no-browser \
   --ServerApp.port="${JUPYTER_PORT}" \
   --ServerApp.token='' \
   --ServerApp.password='' \
+  --ServerApp.root_dir="${HOME}" \
   > "${JUPYTER_LOG_PATH}" 2>&1 &
