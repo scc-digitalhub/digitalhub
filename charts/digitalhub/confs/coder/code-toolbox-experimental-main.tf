@@ -81,6 +81,11 @@ variable "privileged" {
   default = "false"
 }
 
+variable "stsenabled" {
+  type    = bool
+  default = false
+}
+
 variable "core_auth_creds" {
   type    = string
   default = "core-auth-creds"
@@ -146,13 +151,9 @@ data "coder_parameter" "memory" {
   name         = "memory"
   display_name = "Memory"
   description  = "The amount of memory in GB"
-  default      = "2"
+  default      = "4"
   icon         = "/icon/memory.svg"
   mutable      = true
-  option {
-    name  = "2 GB"
-    value = "2"
-  }
   option {
     name  = "4 GB"
     value = "4"
@@ -164,6 +165,18 @@ data "coder_parameter" "memory" {
   option {
     name  = "8 GB"
     value = "8"
+  }
+  option {
+    name  = "16 GB"
+    value = "16"
+  }
+  option {
+    name  = "32 GB"
+    value = "32"
+  }
+  option {
+    name  = "64 GB"
+    value = "64"
   }
 }
 
@@ -193,11 +206,6 @@ data "coder_parameter" "image" {
     name  = "Python3"
     value = "python"
     icon = "/icon/python.svg"
-  }
-  option {
-    name  = "CUDA"
-    value = "nvcr.io/nvidia/cuda"
-    icon = "https://static-00.iconduck.com/assets.00/file-type-cuda-icon-512x339-1bcw8fyl.png"
   }
   option {
     name  = "PyTorch"
@@ -243,14 +251,10 @@ data "http" "exchange_token" {
 }
 
 locals {
-  core_access_token  = data.coder_workspace_owner.me.oidc_access_token != "" ? jsondecode(data.http.exchange_token[0].response_body)["access_token"] : null
-  core_refresh_token = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"refresh_token",null) : null
-
   # Image selection
   pytorch_tag = "%{ if data.coder_parameter.python_version.value == "3.10" }24.12-py3%{ else }%{ if data.coder_parameter.python_version.value == "3.12" }25.02-py3%{ endif }%{ endif }"
   tensorflow_tag = "%{ if data.coder_parameter.python_version.value == "3.10" }24.12-tf2-py3%{ else }%{ if data.coder_parameter.python_version.value == "3.12" }25.02-tf2-py3%{ endif }%{ endif }"
-  final_image = "${data.coder_parameter.image.value}:%{ if data.coder_parameter.image.value == "python" }3%{ else }%{ if data.coder_parameter.image.value == "nvcr.io/nvidia/cuda" }12.8.0-cudnn-runtime-ubuntu22.04%{ else }%{ if data.coder_parameter.image.value == "nvcr.io/nvidia/pytorch"}${local.pytorch_tag}%{ else }%{ if data.coder_parameter.image.value == "nvcr.io/nvidia/tensorflow"}${local.tensorflow_tag}%{ endif }%{ endif }%{ endif }%{ endif }"
-  testino = [{"effect": "NoSchedule", "key": "nvidia.com/gpu", "operator": "Equal", "value": "a100"},{"effect": "NoSchedule", "key": "nvidia.com/gpu", "operator": "Equal", "value": "a100"}]
+  final_image = "${data.coder_parameter.image.value}:%{ if data.coder_parameter.image.value == "python" }3%{ else }%{ if data.coder_parameter.image.value == "nvcr.io/nvidia/pytorch"}${local.pytorch_tag}%{ else }%{ if data.coder_parameter.image.value == "nvcr.io/nvidia/tensorflow"}${local.tensorflow_tag}%{ endif }%{ endif }%{ endif }"
   tolerations = jsondecode(data.kubernetes_config_map.workspace_config.data["tolerations.json"])
 }
 
@@ -274,7 +278,7 @@ module "vscode-web" {
   count          = data.coder_workspace.me.start_count
   source         = "registry.coder.com/modules/vscode-web/coder"
   version        = "1.0.30"
-  agent_id       = coder_agent.code_toolbox.id
+  agent_id       = coder_agent.code-toolbox.id
   accept_license = true
   folder         = "/home/${data.coder_workspace_owner.me.name}"
   install_prefix = "/home/${data.coder_workspace_owner.me.name}/vscode-web"
@@ -284,7 +288,7 @@ module "personalize" {
   count    = data.coder_workspace.me.start_count
   source   = "registry.coder.com/modules/personalize/coder"
   version  = "1.0.2"
-  agent_id = coder_agent.code_toolbox.id
+  agent_id = coder_agent.code-toolbox.id
   path     = "/scripts/run.sh"
   log_path = "/tmp/personalize.log"
 }
@@ -292,7 +296,7 @@ module "personalize" {
 module "jetbrains_gateway" {
   source         = "registry.coder.com/modules/jetbrains-gateway/coder"
   version        = "1.0.28"
-  agent_id       = coder_agent.code_toolbox.id
+  agent_id       = coder_agent.code-toolbox.id
   agent_name     = "code_toolbox"
   folder         = "/home/${data.coder_workspace_owner.me.name}"
   jetbrains_ides = ["CL", "GO", "IU", "PY", "WS"]
@@ -300,7 +304,7 @@ module "jetbrains_gateway" {
   latest = true
 }
 
-resource "coder_agent" "code_toolbox" {
+resource "coder_agent" "code-toolbox" {
   os             = "linux"
   arch           = "amd64"
   metadata {
@@ -353,7 +357,7 @@ resource "coder_metadata" "code_toolbox" {
 }
 
 resource "coder_app" "jupyter" {
-  agent_id     = coder_agent.code_toolbox.id
+  agent_id     = coder_agent.code-toolbox.id
   slug         = "jupyter"
   display_name = "JupyterLab"
   icon         = "/icon/jupyter.svg"
@@ -438,6 +442,41 @@ resource "kubernetes_service" "code-toolbox-service" {
       node_port   = var.service_type == "ClusterIP" ? null : var.node_port
     }
     type = var.service_type
+  }
+}
+
+resource "kubernetes_secret" "code-toolbox-secret" {
+  count  = var.stsenabled ? 1 : 0
+  metadata {
+    name = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+    namespace = var.namespace
+    labels = {
+      "app.kubernetes.io/name"     = "code-toolbox-workspace"
+      "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"  = "coder"
+      "app.kubernetes.io/type"     = "secret"
+      // Coder specific labels.
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+    }
+    annotations = {
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
+    }
+  }
+
+  type = "Opaque"
+
+  data = {
+    "DHCORE_ACCESS_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"access_token",null) : null
+    "DHCORE_REFRESH_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"refresh_token",null) : null
+    "DHCORE_AWS_ACCESS_KEY_ID" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_access_key_id",null) : null
+    "DHCORE_AWS_SECRET_ACCESS_KEY" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_secret_access_key",null) : null
+    "DHCORE_DB_PASSWORD" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_password",null) : null
+    "DHCORE_DB_USERNAME" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_username",null) : null
+    "DHCORE_AWS_SESSION_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_session_token",null) : null
   }
 }
 
@@ -527,7 +566,7 @@ resource "kubernetes_deployment" "code-toolbox" {
         container {
           name        = "code-toolbox"
           image       = local.final_image
-          command     = ["sh", "-c", coder_agent.code_toolbox.init_script]
+          command     = ["sh", "-c", coder_agent.code-toolbox.init_script]
           working_dir = "/home/${data.coder_workspace_owner.me.name}"
           security_context {
             run_as_user                = "10000"
@@ -539,15 +578,7 @@ resource "kubernetes_deployment" "code-toolbox" {
           }
           env {
             name  = "CODER_AGENT_TOKEN"
-            value = coder_agent.code_toolbox.token
-          }
-          env {
-            name  = "DHCORE_ACCESS_TOKEN"
-            value = local.core_access_token
-          }
-          env {
-            name  = "DHCORE_REFRESH_TOKEN"
-            value = local.core_refresh_token
+            value = coder_agent.code-toolbox.token
           }
           env {
             name  = "PYTHON_VERSION"
@@ -558,6 +589,10 @@ resource "kubernetes_deployment" "code-toolbox" {
             value = 8888
           }
           env {
+            name  = "GRANT_SUDO"
+            value = var.privileged ? 1 : 0
+          }
+          env {
             name  = "JUPYTER_LOG_PATH"
             value = "/tmp/jupyter.log"
           }
@@ -565,23 +600,25 @@ resource "kubernetes_deployment" "code-toolbox" {
             name  = "SHELL"
             value = "/bin/bash"
           }
-          env {
-            name = "DHCORE_CLIENT_ID"
-            value_from {
-              secret_key_ref {
-                name = var.core_auth_creds
-                key  = "clientId"
-              }
-            }
-          }
-          env_from {
-            secret_ref {
-              name = "digitalhub-common-creds"
-            }
-          }
           env_from {
             config_map_ref {
               name = "digitalhub-common-env"
+            }
+          }
+          dynamic env_from {
+            for_each = var.stsenabled ? [] : [1]
+            content {
+              secret_ref {
+                name = "digitalhub-common-creds"
+              }
+            }
+          }
+          dynamic env_from {
+            for_each = var.stsenabled ? [1] : []
+            content {
+              secret_ref {
+                name = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+              }
             }
           }
           port {
@@ -637,6 +674,13 @@ resource "kubernetes_deployment" "code-toolbox" {
             sub_path   = "gshadow"
             read_only  = true
           }
+          dynamic volume_mount {
+            for_each  =  data.coder_parameter.gpu.value ? [1] : []
+            content {
+              mount_path = "/dev/shm"
+              name       = "shm"
+            }
+          }
         }
         volume {
           name = "init-packages"
@@ -656,6 +700,16 @@ resource "kubernetes_deployment" "code-toolbox" {
           name = "user"
           empty_dir {
             size_limit = "2Mi"
+          }
+        }
+        dynamic volume {
+          for_each  =  data.coder_parameter.gpu.value ? [1] : []
+          content {
+            name = "shm"
+            empty_dir {
+              size_limit = "${data.coder_parameter.memory.value}Gi"
+              medium = "Memory"
+            }
           }
         }
         affinity {
