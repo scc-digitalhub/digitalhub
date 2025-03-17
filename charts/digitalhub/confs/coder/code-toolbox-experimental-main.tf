@@ -197,7 +197,7 @@ data "coder_parameter" "home_disk_size" {
 data "coder_parameter" "image" {
   name         = "image"
   display_name = "Image"
-  description  = "Select the image for this workspace"
+  description  = "Select the image for this workspace (JupyterLab included for all options)"
   icon         = "https://cdn-icons-png.flaticon.com/512/438/438524.png"
   mutable      = true
   default      = "python"
@@ -252,8 +252,8 @@ data "http" "exchange_token" {
 
 locals {
   # Image selection
-  pytorch_tag = "%{ if data.coder_parameter.python_version.value == "3.10" }24.12-py3%{ else }%{ if data.coder_parameter.python_version.value == "3.12" }25.02-py3%{ endif }%{ endif }"
-  tensorflow_tag = "%{ if data.coder_parameter.python_version.value == "3.10" }24.12-tf2-py3%{ else }%{ if data.coder_parameter.python_version.value == "3.12" }25.02-tf2-py3%{ endif }%{ endif }"
+  pytorch_tag = "%{ if data.coder_parameter.python_version.value == "3.10" }24.10-py3%{ else }%{ if data.coder_parameter.python_version.value == "3.12" }25.02-py3%{ endif }%{ endif }"
+  tensorflow_tag = "%{ if data.coder_parameter.python_version.value == "3.10" }24.10-tf2-py3%{ else }%{ if data.coder_parameter.python_version.value == "3.12" }25.02-tf2-py3%{ endif }%{ endif }"
   final_image = "${data.coder_parameter.image.value}:%{ if data.coder_parameter.image.value == "python" }3%{ else }%{ if data.coder_parameter.image.value == "nvcr.io/nvidia/pytorch"}${local.pytorch_tag}%{ else }%{ if data.coder_parameter.image.value == "nvcr.io/nvidia/tensorflow"}${local.tensorflow_tag}%{ endif }%{ endif }%{ endif }"
   tolerations = jsondecode(data.kubernetes_config_map.workspace_config.data["tolerations.json"])
 }
@@ -472,11 +472,12 @@ resource "kubernetes_secret" "code-toolbox-secret" {
   data = {
     "DHCORE_ACCESS_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"access_token",null) : null
     "DHCORE_REFRESH_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"refresh_token",null) : null
-    "DHCORE_AWS_ACCESS_KEY_ID" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_access_key_id",null) : null
-    "DHCORE_AWS_SECRET_ACCESS_KEY" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_secret_access_key",null) : null
-    "DHCORE_DB_PASSWORD" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_password",null) : null
-    "DHCORE_DB_USERNAME" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_username",null) : null
-    "DHCORE_AWS_SESSION_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_session_token",null) : null
+    "AWS_ACCESS_KEY_ID" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_access_key_id",null) : null
+    "AWS_SECRET_ACCESS_KEY" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_secret_access_key",null) : null
+    "DB_PASSWORD" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_password",null) : null
+    "DB_USERNAME" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_username",null) : null
+    "AWS_SESSION_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_session_token",null) : null
+    "DHCORE_CLIENT_ID" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"client_id",null) : null
   }
 }
 

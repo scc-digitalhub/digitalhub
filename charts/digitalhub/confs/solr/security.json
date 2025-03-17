@@ -1,0 +1,115 @@
+{
+    "authentication": {
+        "blockUnknown": true,
+        "class": "solr.BasicAuthPlugin",
+        "credentials": {
+            "admin": "{{ .Values.solr.creds.admin.passwordSha }}",
+            "k8s-oper": "{{ .Values.solr.creds.k8sOper.passwordSha }}",
+            "solr": "{{ .Values.solr.creds.solr.passwordSha }}",
+            "user": "{{ .Values.solr.creds.user.passwordSha }}"
+        },
+        "realm": "Solr Basic Auth",
+        "forwardCredentials": false
+    },
+    "authorization": {
+        "class": "solr.RuleBasedAuthorizationPlugin",
+        "user-role": {
+            "admin": [
+                "admin",
+                "k8s"
+            ],
+            "k8s-oper": [
+                "k8s"
+            ],
+            "solr": [
+                "users",
+                "k8s"
+            ],
+            "user": [
+                "unprivileged"
+            ]
+        },
+        "permissions": [
+            {
+                "name": "k8s-probe-0",
+                "role": "k8s",
+                "collection": null,
+                "path": "/admin/info/system"
+            },
+            {
+                "name": "k8s-probe-1",
+                "role": "k8s",
+                "collection": null,
+                "path": "/admin/info/health"
+            },
+            {
+                "name": "k8s-status",
+                "role": "k8s",
+                "collection": null,
+                "path": "/admin/collections"
+            },
+            {
+                "name": "k8s-metrics",
+                "role": "k8s",
+                "collection": null,
+                "path": "/admin/metrics"
+            },
+            {
+                "name": "k8s-zk",
+                "role": "k8s",
+                "collection": null,
+                "path": "/admin/zookeeper/status"
+            },
+            {
+                "name": "k8s-ping",
+                "role": "k8s",
+                "collection": "*",
+                "path": "/admin/ping"
+            },
+            {
+                "name": "read",
+                "role": [
+                    "admin",
+                    "users"
+                ]
+            },
+            {
+                "name": "update",
+                "role": [
+                    "admin"
+                ]
+            },
+            {
+                "name": "security-read",
+                "role": [
+                    "admin"
+                ]
+            },
+            {
+                "name": "security-edit",
+                "role": [
+                    "admin"
+                ]
+            },
+            {
+                "name": "collectionpermissions",
+                "collection": [
+                    "dhcore"
+                ],
+                "role": [
+                    "unprivileged",
+                    "admin"
+                ],
+                "path": [
+                    "/*"
+                ]
+            },
+            {
+                "name": "all",
+                "role": [
+                    "admin"
+                ]
+            }
+        ]
+    }
+}

@@ -228,13 +228,6 @@ data "http" "exchange_token" {
   request_body = "grant_type=urn:ietf:params:oauth:grant-type:token-exchange&scope=openid%20offline_access%20credentials&subject_token_type=urn:ietf:params:oauth:token-type:access_token&subject_token=${data.coder_workspace_owner.me.oidc_access_token}"
 }
 
-locals {
-  response  = data.coder_workspace_owner.me.oidc_access_token != "" ? jsondecode(data.http.exchange_token[0].response_body) : {}
-  testresponse  = data.coder_workspace_owner.me.oidc_access_token != "" ? jsonencode(jsondecode(data.http.exchange_token[0].response_body)) : ""
-  core_access_token  = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"access_token",null) : null
-  core_refresh_token = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"refresh_token",null) : null
-}
-
 provider "kubernetes" {
   # Authenticate via ~/.kube/config or a Coder-specific ServiceAccount, depending on admin preferences
   config_path = var.use_kubeconfig == true ? "~/.kube/config" : null
@@ -416,11 +409,12 @@ resource "kubernetes_secret" "jupyter-secret" {
   data = {
     "DHCORE_ACCESS_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"access_token",null) : null
     "DHCORE_REFRESH_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"refresh_token",null) : null
-    "DHCORE_AWS_ACCESS_KEY_ID" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_access_key_id",null) : null
-    "DHCORE_AWS_SECRET_ACCESS_KEY" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_secret_access_key",null) : null
-    "DHCORE_DB_PASSWORD" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_password",null) : null
-    "DHCORE_DB_USERNAME" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_username",null) : null
-    "DHCORE_AWS_SESSION_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_session_token",null) : null
+    "AWS_ACCESS_KEY_ID" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_access_key_id",null) : null
+    "AWS_SECRET_ACCESS_KEY" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_secret_access_key",null) : null
+    "DB_PASSWORD" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_password",null) : null
+    "DB_USERNAME" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_username",null) : null
+    "AWS_SESSION_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_session_token",null) : null
+    "DHCORE_CLIENT_ID" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"client_id",null) : null
   }
 }
 
