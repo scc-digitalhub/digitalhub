@@ -148,15 +148,15 @@ postgres:
 runtime:
   dbt:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt"
-    tag: "0.10.0b5"
+    tag: "0.10.0b8"
   kfp:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp"
-    tag: "0.10.0b6"
+    tag: "0.10.0b9"
   python:
     image: "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime"
-    tag3_9: "3.9-0.10.0b7"
-    tag3_10: "3.10-0.10.0b7"
-    tag3_11: "3.11-0.10.0b7"
+    tag3_9: "3.9-0.10.0b10"
+    tag3_10: "3.10-0.10.0b10"
+    tag3_11: "3.11-0.10.0b10"
   huggingFace:
     image: "kserve/huggingfaceserver"
     tag: "v0.14.0"
@@ -210,6 +210,7 @@ solr:
     name: ""
     initialize:
       enabled: true
+      securityJsonSecret: ""
       image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
 
 corsOrigin: ""
