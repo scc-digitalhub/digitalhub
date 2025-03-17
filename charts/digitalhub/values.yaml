@@ -418,7 +418,7 @@ solr:
   enabled: true
   image:
     repository: "solr"
-    tag: "9.7" 
+    tag: "9.7"
   replicas: 1
   fullnameOverride: *solrFullNameOverride
   # The following options are meant to be used when running solr with an unprivileged user.
@@ -437,18 +437,18 @@ solr:
     # Solr requires cripted passwords in the format sha256(sha256(salt || password)).
     # You can either generate the encripted password yourself or using some online tools, but it must be specified alongside the not-encrypted password.
     # Be sure to double check if they match.
-      admin:   # Do not remove this user, required by the operator
-        password: "thi4iegheeX7euthe7di"   # Example random password
-        passwordSha: "C8QrTZf6jpu+cPKTsLtyEhv1XVXAYZGmStTKXzB80sg= MW5pNXZlaGIyaWhkdW5w"   # Encrypted password
-      k8sOper:   # Do not remove this user, required by the operator
-        password: "imPBf@tU(asx9%TZ"
-        passwordSha: "3iPc1JWet22a05UZXCFfo/qRUqwg2iVULyv5RBEqPdM= LSpnG/l2j8AA9vrryMGkkFLO+bYeN7ZUvrU270WAfyA="
-      solr:   # Do not remove this user, required by the operator
-        password: "aed0ohBie3hai6jo7sho"
-        passwordSha: "i61TpZKyvff3CHnyZ0kMTzkNezkxkilCre93wLkz7jQ= NzlyN3k1cm0xZGt3eWR1MA=="
-      user:   # Unprivileged user
-        password: "soogh8aiy6vah6Aecai6"
-        passwordSha: "ps9jK0qKXJqZawtFS+SxhB2CdCu90Qgz4riZ0XwzYd4= YWxxZXV3enB1YmE2c2gwdg=="
+    admin:   # Do not remove this user, required by the operator
+      password: "thi4iegheeX7euthe7di"   # Example random password
+      passwordSha: "C8QrTZf6jpu+cPKTsLtyEhv1XVXAYZGmStTKXzB80sg= MW5pNXZlaGIyaWhkdW5w"   # Encrypted password
+    k8sOper:   # Do not remove this user, required by the operator
+      password: "imPBf@tU(asx9%TZ"
+      passwordSha: "3iPc1JWet22a05UZXCFfo/qRUqwg2iVULyv5RBEqPdM= LSpnG/l2j8AA9vrryMGkkFLO+bYeN7ZUvrU270WAfyA="
+    solr:   # Do not remove this user, required by the operator
+      password: "aed0ohBie3hai6jo7sho"
+      passwordSha: "i61TpZKyvff3CHnyZ0kMTzkNezkxkilCre93wLkz7jQ= NzlyN3k1cm0xZGt3eWR1MA=="
+    user:   # Unprivileged user
+      password: "soogh8aiy6vah6Aecai6"
+      passwordSha: "ps9jK0qKXJqZawtFS+SxhB2CdCu90Qgz4riZ0XwzYd4= YWxxZXV3enB1YmE2c2gwdg=="
   dataStorage:
     # Either persistent or ephemeral
     type: "ephemeral"
