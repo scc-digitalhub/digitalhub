@@ -21,6 +21,11 @@ fi
 
 uv {{ include "digitalhub.packages" . }}
 
+if ! jupyter kernelspec list | grep -q "local/share/jupyter/kernels/python${PYTHON_VERSION}"
+then
+  python -m ipykernel install --user --name=python${PYTHON_VERSION} --display-name "Python ${PYTHON_VERSION} (OltreAI)"
+fi
+
 if ! grep -Fxq "source python${PYTHON_VERSION}/bin/activate" .bashrc
 then
   echo "source python${PYTHON_VERSION}/bin/activate" >> .bashrc
@@ -35,4 +40,5 @@ jupyter-lab --no-browser \
   --ServerApp.token='' \
   --ServerApp.password='' \
   --ServerApp.root_dir="${HOME}" \
+  --KernelSpecManager.allowed_kernelspecs="python${PYTHON_VERSION}" \
   > "${JUPYTER_LOG_PATH}" 2>&1 &
