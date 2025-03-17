@@ -65,6 +65,9 @@ spec:
               value: https://{{ .host }}
             {{- end }}
             {{- end }}
+            {{- else }}
+            - name: "DHCORE_ENDPOINT"
+              value: http://{{ $.Release.Name }}-core:8080
             {{- end }}
           securityContext:
             readOnlyRootFilesystem: false
