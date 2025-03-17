@@ -3,12 +3,12 @@ kind: ConfigMap
 metadata:
   name: digitalhub-common-env
 data:
-  DHCORE_S3_BUCKET: {{ .Values.minio.bucket }}
-  DHCORE_S3_ENDPOINT_URL: "{{ .Values.minio.protocol }}://{{ .Values.minio.endpoint }}:{{ .Values.minio.endpointPort }}"
-  DHCORE_DB_HOST: {{ .Values.postgres.host }}
-  DHCORE_DB_PORT: {{ .Values.postgres.port | quote }}
-  DHCORE_DB_DATABASE: {{ .Values.postgres.database }}
-  DHCORE_DB_SCHEMA: {{ .Values.postgres.schema }}
+  S3_BUCKET: {{ .Values.minio.bucket }}
+  S3_ENDPOINT_URL: "{{ .Values.minio.protocol }}://{{ .Values.minio.endpoint }}:{{ .Values.minio.endpointPort }}"
+  DB_HOST: {{ .Values.postgres.host }}
+  DB_PORT: {{ .Values.postgres.port | quote }}
+  DB_DATABASE: {{ .Values.postgres.database }}
+  DB_SCHEMA: {{ .Values.postgres.schema }}
   DHCORE_WORKFLOW_IMAGE: {{ .Values.runtime.kfp.image }}:{{ .Values.runtime.kfp.tag }}
   DHCORE_ENDPOINT: http://{{ include "core.fullname" . }}:{{ .Values.service.port }}
   DHCORE_ISSUER: http://{{ include "core.fullname" . }}:{{ .Values.service.port }}

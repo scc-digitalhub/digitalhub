@@ -74,7 +74,7 @@ data:
   JWT_REFRESH_TOKEN_DURATION: {{ .Values.coreTokens.refreshTokenDuration | quote }}
   AWS_DEFAULT_REGION: {{ .Values.minio.awsDefaultRegion }}
   AWS_REGION: {{ .Values.minio.awsRegion }}
-  S3_ENDPOINT: {{ .Values.minio.publicUrl }}
+  S3_ENDPOINT_URL: {{ .Values.minio.publicUrl }}
   S3_BUCKET: {{ .Values.minio.bucket }}
 {{- if .Values.templates }}
   K8S_TEMPLATES: {{ include "core.templates" . | quote }}
