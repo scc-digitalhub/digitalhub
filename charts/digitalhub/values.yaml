@@ -79,9 +79,9 @@ coder:
       - name: jupyter
         nodePort: "30040"
         iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.10.0b6"
-        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.10.0b6"
-        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.10.0b6"
+        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.10.0b9"
+        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.10.0b9"
+        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.10.0b9"
         privileged: false
       - name: code-toolbox-experimental
         nodePort: "30050"
@@ -241,12 +241,13 @@ core:
   solr:
     enabled: true
     url: "http://digitalhub-solrcloud-common/solr"
-    user: solr
+    user: user
     fullNameOverride: *solrFullNameOverride
     collection:
       name: "dhcore"
       initialize:
-        enabled: false
+        enabled: true
+        securityJsonSecret: digitalhub-solrcloud-security-bootstrap   # Name of the security.json secret
         image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
   coreAuthCreds:  # These are example creds, change them to your needs.
     clientId: "m04bfbmd03m8sf4u9ucz54ti"
@@ -415,8 +416,39 @@ solr-operator:
 
 solr:
   enabled: true
+  image:
+    repository: "solr"
+    tag: "9.7" 
   replicas: 1
   fullnameOverride: *solrFullNameOverride
+  # The following options are meant to be used when running solr with an unprivileged user.
+  # If you want to use these options, be sure to also set core.solr.collection.initialize to true in this values file.
+  # For more informations about what these options do, check the Solr official documentation.
+  useExistingSecurityJson: false   # Set this to true if you already have a solr installation with a configured securityJson (creds settings won't affect your environment)
+  solrOptions:
+    security:
+      authenticationType: Basic
+      probesRequireAuth: true
+      basicAuthSecret: digitalhub-solrcloud-basic-auth   # Specify the required basicAuth secret
+      bootstrapSecurityJson:
+        name: digitalhub-solrcloud-security-bootstrap   # Name of the secret with the configured security.json
+        key: security.json   # Key in the secret corresponding to the security.json
+  creds:
+    # Solr requires cripted passwords in the format sha256(sha256(salt || password)).
+    # You can either generate the encripted password yourself or using some online tools, but it must be specified alongside the not-encrypted password.
+    # Be sure to double check if they match.
+      admin:   # Do not remove this user, required by the operator
+        password: "thi4iegheeX7euthe7di"   # Example random password
+        passwordSha: "C8QrTZf6jpu+cPKTsLtyEhv1XVXAYZGmStTKXzB80sg= MW5pNXZlaGIyaWhkdW5w"   # Encrypted password
+      k8sOper:   # Do not remove this user, required by the operator
+        password: "imPBf@tU(asx9%TZ"
+        passwordSha: "3iPc1JWet22a05UZXCFfo/qRUqwg2iVULyv5RBEqPdM= LSpnG/l2j8AA9vrryMGkkFLO+bYeN7ZUvrU270WAfyA="
+      solr:   # Do not remove this user, required by the operator
+        password: "aed0ohBie3hai6jo7sho"
+        passwordSha: "i61TpZKyvff3CHnyZ0kMTzkNezkxkilCre93wLkz7jQ= NzlyN3k1cm0xZGt3eWR1MA=="
+      user:   # Unprivileged user
+        password: "soogh8aiy6vah6Aecai6"
+        passwordSha: "ps9jK0qKXJqZawtFS+SxhB2CdCu90Qgz4riZ0XwzYd4= YWxxZXV3enB1YmE2c2gwdg=="
   dataStorage:
     # Either persistent or ephemeral
     type: "ephemeral"
@@ -429,13 +461,6 @@ solr:
         labels: {}
         annotations: {}
         storageClassName: ""
-  # WARNING: the following feature is currently bugged, waiting for a Solr official fix!
-  # Uncomment the following options to use solr with the unprivileged solr user and a randomly generated password
-  # Be sure to also set core.solr.collection.initialize to true in this values file.
-  # solrOptions:
-  #   security:
-  #     authenticationType: Basic
-  #     probesRequireAuth: true
 
 minio:
   enabled: true
@@ -519,23 +544,23 @@ minio-operator:
     protocol: *minioProtocol
 
 platformPackages:
-  preRelease: false   ## Used for installing pre release packages
+  preRelease: true   ## Used for installing pre release packages
   deleteOnCompletion: true  ## Leave this to true if you want to delete the test projects created with helm test
   image: ""
   tag: ""
   packages:
   - name: "digitalhub[full]"
-    tag: "0.9.2"
+    tag: "0.10.0b7"
   - name: "digitalhub-runtime-python"
-    tag: "0.9.1"
+    tag: "0.10.0b4"
   - name: "digitalhub-runtime-container"
-    tag: "0.9.3"
+    tag: "0.10.0b3"
   - name: "digitalhub-runtime-dbt"
-    tag: "0.9.1"
+    tag: "0.10.0b1"
   - name: "digitalhub-runtime-kfp"
-    tag: "0.9.1"
+    tag: "0.10.0b1"
   - name: "digitalhub-runtime-modelserve"
-    tag: "0.9.1"
+    tag: "0.10.0b1"
 
 argo-workflows:
   enabled: true
