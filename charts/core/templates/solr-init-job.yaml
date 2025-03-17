@@ -24,7 +24,7 @@ spec:
             - name: "SOLR_ADMIN_PWD"
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.solr.fullNameOverride }}-solrcloud-security-bootstrap
+                  name: {{ .Values.solr.collection.initialize.securityJsonSecret }}
                   key: admin
       containers:
         - name: solr-init-job
@@ -39,7 +39,7 @@ spec:
             - name: "SOLR_ADMIN_PWD"
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.solr.fullNameOverride }}-solrcloud-security-bootstrap
+                  name: {{ .Values.solr.collection.initialize.securityJsonSecret }}
                   key: admin
       restartPolicy: Never
       volumes:
