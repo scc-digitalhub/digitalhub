@@ -116,8 +116,8 @@ spec:
             - name: SOLR_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.solr.fullNameOverride }}-solrcloud-security-bootstrap
-                  key: solr
+                  name: {{ .Values.solr.collection.initialize.securityJsonSecret }}
+                  key: user
             {{- end }}
           envFrom:
           - configMapRef:
