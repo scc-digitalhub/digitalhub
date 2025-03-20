@@ -30,6 +30,8 @@ podAnnotations: {}
 
 podSecurityContext:
   runAsNonRoot: true
+  seccompProfile:
+    type: "RuntimeDefault"
   runAsUser: 65532
   runAsGroup: 65532
   fsGroup: 65532
@@ -149,6 +151,8 @@ rbac:
 
 securityContext:
   runAsNonRoot: true
+  seccompProfile:
+    type: "RuntimeDefault"
   allowPrivilegeEscalation: false
   capabilities:
     drop:

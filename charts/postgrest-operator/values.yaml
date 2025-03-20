@@ -43,13 +43,18 @@ fullnameOverride: ""
 # Values for the deployment
 deployment:
   replicaCount: 1
-  securityContext:
+  podSecurityContext:
     runAsNonRoot: true
+    seccompProfile:
+      type: "RuntimeDefault"
   image:
     pullPolicy: IfNotPresent
   kubeRbacProxy:
     name: kube-rbac-proxy
     securityContext:
+      runAsNonRoot: true
+      seccompProfile:
+        type: "RuntimeDefault"
       allowPrivilegeEscalation: false
       capabilities:
         drop:
@@ -76,6 +81,9 @@ deployment:
   manager:
     name: manager
     securityContext:
+      runAsNonRoot: true
+      seccompProfile:
+        type: "RuntimeDefault"
       allowPrivilegeEscalation: false
       capabilities:
         drop:
@@ -113,9 +121,6 @@ podAnnotations:
   kubectl.kubernetes.io/default-container: manager
 podLabels:
   control-plane: controller-manager
-
-podSecurityContext: {}
-  # fsGroup: 2000
 
 service:
   port: 8443

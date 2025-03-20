@@ -40,14 +40,8 @@ podLabels: {}
 
 podSecurityContext:
   runAsNonRoot: true
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+  seccompProfile:
+    type: "RuntimeDefault"
 
 service:
   type: ClusterIP
@@ -135,6 +129,9 @@ deployment:
       # Overrides the image tag whose default is the chart appVersion.
       tag: v0.13.1
     securityContext:
+      runAsNonRoot: true
+      seccompProfile:
+        type: "RuntimeDefault"
       allowPrivilegeEscalation: false
       capabilities:
         drop:
@@ -161,6 +158,9 @@ deployment:
       # Overrides the image tag whose default is the chart appVersion.
       tag: ""
     securityContext:
+      runAsNonRoot: true
+      seccompProfile:
+        type: "RuntimeDefault"
       allowPrivilegeEscalation: false
       capabilities:
         drop:
