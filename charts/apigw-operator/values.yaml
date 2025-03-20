@@ -31,14 +31,8 @@ podLabels:
 
 podSecurityContext:
   runAsNonRoot: true
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+  seccompProfile:
+    type: "RuntimeDefault"
 
 service:
   type: ClusterIP
@@ -124,6 +118,9 @@ deployment:
     - --v=0
     name: kube-rbac-proxy
     securityContext:
+      runAsNonRoot: true
+      seccompProfile:
+        type: "RuntimeDefault"
       allowPrivilegeEscalation: false
       capabilities:
         drop:
@@ -144,6 +141,9 @@ deployment:
   manager:
     name: manager
     securityContext:
+      runAsNonRoot: true
+      seccompProfile:
+        type: "RuntimeDefault"
       allowPrivilegeEscalation: false
       capabilities:
         drop:
