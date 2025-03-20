@@ -237,6 +237,10 @@ resource "kubernetes_deployment" "grafana" {
         security_context {
           run_as_user = "472"
           fs_group = "472"
+          run_as_non_root = true
+          seccomp_profile {
+            type = "RuntimeDefault"
+          }
         }
         container {
           name              = "grafana"
@@ -246,6 +250,15 @@ resource "kubernetes_deployment" "grafana" {
           security_context {
             run_as_user                = "472"
             allow_privilege_escalation = false
+            capabilities {
+              drop = [
+                "ALL"
+              ]
+            }
+            run_as_non_root = true
+            seccomp_profile {
+              type = "RuntimeDefault"
+            }
           }
           env {
             name  = "CODER_AGENT_TOKEN"

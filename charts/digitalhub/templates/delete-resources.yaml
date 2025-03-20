@@ -174,5 +174,7 @@ spec:
           image: "bitnami/kubectl:latest"
           command: ["/bin/sh"]
           args: ["-c", "{{ range $resource }}kubectl -n {{ $.Release.Namespace }} delete --all {{ . }} && {{ end }} sleep 1m"]
+          securityContext:
+            {{- toYaml .Values.global.securityContext | nindent 12}}
       restartPolicy: OnFailure
 {{- end }}

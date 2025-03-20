@@ -341,6 +341,15 @@ resource "kubernetes_job" "source-init" {
           security_context {
             run_as_user                = "999"
             allow_privilege_escalation = false
+            capabilities {
+              drop = [
+                "ALL"
+              ]
+            }
+            run_as_non_root = true
+            seccomp_profile {
+              type = "RuntimeDefault"
+            }
           }
         }
         container {
@@ -496,6 +505,10 @@ resource "kubernetes_deployment" "dremio" {
           run_as_user  = "999"
           fs_group     = "999"
           run_as_group = "999"
+          run_as_non_root = true
+          seccomp_profile {
+            type = "RuntimeDefault"
+          }
         }
         container {
           name              = "dremio"
@@ -506,6 +519,15 @@ resource "kubernetes_deployment" "dremio" {
             run_as_user                = "999"
             run_as_group               = "999"
             allow_privilege_escalation = false
+            capabilities {
+              drop = [
+                "ALL"
+              ]
+            }
+            run_as_non_root = true
+            seccomp_profile {
+              type = "RuntimeDefault"
+            }
           }
           env {
             name  = "CODER_AGENT_TOKEN"
