@@ -542,6 +542,10 @@ resource "kubernetes_deployment" "code-toolbox" {
           run_as_user  = "10000"
           fs_group     = "10000"
           run_as_group = "10000"
+          run_as_non_root = true
+          seccomp_profile {
+            type = "RuntimeDefault"
+          }
         }
         init_container {
           name              = "copy-users-file"
@@ -561,7 +565,7 @@ resource "kubernetes_deployment" "code-toolbox" {
           security_context {
             run_as_user                = "0"
             run_as_group               = "0"
-            allow_privilege_escalation = true
+            allow_privilege_escalation = var.privileged
           }
         }
         container {
@@ -572,6 +576,11 @@ resource "kubernetes_deployment" "code-toolbox" {
           security_context {
             run_as_user                = "10000"
             allow_privilege_escalation = var.privileged
+            capabilities {
+              drop = [
+                "ALL"
+              ]
+            }
           }
           env {
             name  = "HOME"

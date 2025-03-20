@@ -203,17 +203,6 @@ data "coder_parameter" "python_version" {
   }
 }
 
-module "jetbrains_gateway" {
-  source         = "registry.coder.com/modules/jetbrains-gateway/coder"
-  version        = "1.0.28"
-  agent_id       = coder_agent.jupyter.id
-  agent_name     = "jupyter"
-  folder         = "/home/${data.coder_workspace_owner.me.name}"
-  jetbrains_ides = ["CL", "GO", "IU", "PY", "WS"]
-  default        = "PY"
-  latest = true
-}
-
 data "http" "exchange_token" {
   count  = data.coder_workspace_owner.me.oidc_access_token != "" ? 1 : 0
   url    = "${var.dhcore_endpoint}/auth/token"
@@ -471,6 +460,10 @@ resource "kubernetes_deployment" "jupyter" {
           run_as_user  = "1000"
           fs_group     = "100"
           run_as_group = "100"
+          run_as_non_root = true
+          seccomp_profile {
+            type = "RuntimeDefault"
+          }
         }
         init_container {
           name              = "copy-users-file"
@@ -495,7 +488,10 @@ resource "kubernetes_deployment" "jupyter" {
           security_context {
             run_as_user                = "0"
             run_as_group               = "0"
-            allow_privilege_escalation = true
+            allow_privilege_escalation = var.privileged
+            seccomp_profile {
+              type = "RuntimeDefault"
+            }
           }
         }
         init_container {
@@ -525,7 +521,10 @@ resource "kubernetes_deployment" "jupyter" {
           security_context {
             run_as_user                = "0"
             run_as_group               = "0"
-            allow_privilege_escalation = true
+            allow_privilege_escalation = var.privileged
+            seccomp_profile {
+              type = "RuntimeDefault"
+            }
           }
         }
         container {
@@ -536,6 +535,15 @@ resource "kubernetes_deployment" "jupyter" {
           security_context {
             run_as_user                = "1000"
             allow_privilege_escalation = var.privileged
+            capabilities {
+              drop = [
+                "ALL"
+              ]
+            }
+            run_as_non_root = true
+            seccomp_profile {
+              type = "RuntimeDefault"
+            }
           }
           env {
             name  = "CODER_AGENT_TOKEN"
