@@ -19,4 +19,5 @@ data:
   APPLICATION_EMAIL: {{ .Values.config.mailSender }}
   {{ if and .Values.keystore.secretName .Values.config.keystorePath -}}
   JWK_KEYSTORE: "file://{{ .Values.config.keystorePath }}/{{ .Values.keystore.keyName }}"
+  SECURITY_CACHE_JWKS: {{ .Values.config.cacheJwks }}
   {{ end -}}
