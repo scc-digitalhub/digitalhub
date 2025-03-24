@@ -18,5 +18,5 @@ data:
   APPLICATION_EXT_URL: {{ .Values.config.applicationExtUrl }}
   APPLICATION_EMAIL: {{ .Values.config.mailSender }}
   {{ if and .Values.keystore.secretName .Values.config.keystorePath -}}
-  JWK_KEYSTORE: "{{ .Values.config.keystorePath }}/{{ .Values.keystore.keyName }}"
+  JWK_KEYSTORE: "file://{{ .Values.config.keystorePath }}/{{ .Values.keystore.keyName }}"
   {{ end -}}
