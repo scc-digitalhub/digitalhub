@@ -371,10 +371,20 @@ resource "kubernetes_service" "jupyter-service" {
   }
 }
 
+resource "random_uuid" "check-token-exchange" {
+  count = data.coder_workspace_owner.me.oidc_access_token != "" ? 1 : 0
+  lifecycle {
+    precondition {
+      condition     = contains([201, 204, 200], data.http.exchange_token[0].status_code)
+      error_message = "Invalid AAC Token"
+    }
+  }
+}
+
 resource "kubernetes_secret" "jupyter-secret" {
-  count  = var.stsenabled ? 1 : 0
+  count = var.stsenabled ? 1 : 0
   metadata {
-    name = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+    name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name"     = "jupyter-workspace"
@@ -396,14 +406,14 @@ resource "kubernetes_secret" "jupyter-secret" {
   type = "Opaque"
 
   data = {
-    "DHCORE_ACCESS_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"access_token",null) : null
-    "DHCORE_REFRESH_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"refresh_token",null) : null
-    "AWS_ACCESS_KEY_ID" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_access_key_id",null) : null
-    "AWS_SECRET_ACCESS_KEY" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_secret_access_key",null) : null
-    "DB_PASSWORD" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_password",null) : null
-    "DB_USERNAME" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_username",null) : null
-    "AWS_SESSION_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_session_token",null) : null
-    "DHCORE_CLIENT_ID" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"client_id",null) : null
+    "DHCORE_ACCESS_TOKEN"   = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "access_token", null) : null
+    "DHCORE_REFRESH_TOKEN"  = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "refresh_token", null) : null
+    "AWS_ACCESS_KEY_ID"     = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "aws_access_key_id", null) : null
+    "AWS_SECRET_ACCESS_KEY" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "aws_secret_access_key", null) : null
+    "DB_PASSWORD"           = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "db_password", null) : null
+    "DB_USERNAME"           = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "db_username", null) : null
+    "AWS_SESSION_TOKEN"     = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "aws_session_token", null) : null
+    "DHCORE_CLIENT_ID"      = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "client_id", null) : null
   }
 }
 
@@ -457,9 +467,9 @@ resource "kubernetes_deployment" "jupyter" {
       }
       spec {
         security_context {
-          run_as_user  = "1000"
-          fs_group     = "100"
-          run_as_group = "100"
+          run_as_user     = "1000"
+          fs_group        = "100"
+          run_as_group    = "100"
           run_as_non_root = true
           seccomp_profile {
             type = "RuntimeDefault"
@@ -566,7 +576,7 @@ resource "kubernetes_deployment" "jupyter" {
               name = "digitalhub-common-env"
             }
           }
-          dynamic env_from {
+          dynamic "env_from" {
             for_each = var.stsenabled ? [] : [1]
             content {
               secret_ref {
@@ -574,7 +584,7 @@ resource "kubernetes_deployment" "jupyter" {
               }
             }
           }
-          dynamic env_from {
+          dynamic "env_from" {
             for_each = var.stsenabled ? [1] : []
             content {
               secret_ref {

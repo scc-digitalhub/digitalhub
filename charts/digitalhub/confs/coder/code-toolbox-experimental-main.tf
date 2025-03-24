@@ -205,17 +205,17 @@ data "coder_parameter" "image" {
   option {
     name  = "Python3"
     value = "python"
-    icon = "/icon/python.svg"
+    icon  = "/icon/python.svg"
   }
   option {
     name  = "PyTorch"
     value = "nvcr.io/nvidia/pytorch"
-    icon = "https://static-00.iconduck.com/assets.00/pytorch-icon-1694x2048-jgwjy3ne.png"
+    icon  = "https://static-00.iconduck.com/assets.00/pytorch-icon-1694x2048-jgwjy3ne.png"
   }
   option {
     name  = "TensorFlow"
     value = "nvcr.io/nvidia/tensorflow"
-    icon = "https://static-00.iconduck.com/assets.00/tensorflow-icon-1911x2048-1m2s54vn.png"
+    icon  = "https://static-00.iconduck.com/assets.00/tensorflow-icon-1911x2048-1m2s54vn.png"
   }
 }
 
@@ -252,10 +252,10 @@ data "http" "exchange_token" {
 
 locals {
   # Image selection
-  pytorch_tag = "%{ if data.coder_parameter.python_version.value == "3.10" }24.10-py3%{ else }%{ if data.coder_parameter.python_version.value == "3.12" }25.02-py3%{ endif }%{ endif }"
-  tensorflow_tag = "%{ if data.coder_parameter.python_version.value == "3.10" }24.10-tf2-py3%{ else }%{ if data.coder_parameter.python_version.value == "3.12" }25.02-tf2-py3%{ endif }%{ endif }"
-  final_image = "${data.coder_parameter.image.value}:%{ if data.coder_parameter.image.value == "python" }3%{ else }%{ if data.coder_parameter.image.value == "nvcr.io/nvidia/pytorch"}${local.pytorch_tag}%{ else }%{ if data.coder_parameter.image.value == "nvcr.io/nvidia/tensorflow"}${local.tensorflow_tag}%{ endif }%{ endif }%{ endif }"
-  tolerations = jsondecode(data.kubernetes_config_map.workspace_config.data["tolerations.json"])
+  pytorch_tag    = "%{if data.coder_parameter.python_version.value == "3.10"}24.10-py3%{else}%{if data.coder_parameter.python_version.value == "3.12"}25.02-py3%{endif}%{endif}"
+  tensorflow_tag = "%{if data.coder_parameter.python_version.value == "3.10"}24.10-tf2-py3%{else}%{if data.coder_parameter.python_version.value == "3.12"}25.02-tf2-py3%{endif}%{endif}"
+  final_image    = "${data.coder_parameter.image.value}:%{if data.coder_parameter.image.value == "python"}3%{else}%{if data.coder_parameter.image.value == "nvcr.io/nvidia/pytorch"}${local.pytorch_tag}%{else}%{if data.coder_parameter.image.value == "nvcr.io/nvidia/tensorflow"}${local.tensorflow_tag}%{endif}%{endif}%{endif}"
+  tolerations    = jsondecode(data.kubernetes_config_map.workspace_config.data["tolerations.json"])
 }
 
 provider "kubernetes" {
@@ -301,12 +301,12 @@ module "jetbrains_gateway" {
   folder         = "/home/${data.coder_workspace_owner.me.name}"
   jetbrains_ides = ["CL", "GO", "IU", "PY", "WS"]
   default        = "PY"
-  latest = true
+  latest         = true
 }
 
 resource "coder_agent" "code-toolbox" {
-  os             = "linux"
-  arch           = "amd64"
+  os   = "linux"
+  arch = "amd64"
   metadata {
     display_name = "CPU Usage"
     key          = "0_cpu_usage"
@@ -445,10 +445,20 @@ resource "kubernetes_service" "code-toolbox-service" {
   }
 }
 
+resource "random_uuid" "check-token-exchange" {
+  count = data.coder_workspace_owner.me.oidc_access_token != "" ? 1 : 0
+  lifecycle {
+    precondition {
+      condition     = contains([201, 204, 200], data.http.exchange_token[0].status_code)
+      error_message = "Invalid AAC Token"
+    }
+  }
+}
+
 resource "kubernetes_secret" "code-toolbox-secret" {
-  count  = var.stsenabled ? 1 : 0
+  count = var.stsenabled ? 1 : 0
   metadata {
-    name = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+    name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
       "app.kubernetes.io/name"     = "code-toolbox-workspace"
@@ -470,14 +480,14 @@ resource "kubernetes_secret" "code-toolbox-secret" {
   type = "Opaque"
 
   data = {
-    "DHCORE_ACCESS_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"access_token",null) : null
-    "DHCORE_REFRESH_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"refresh_token",null) : null
-    "AWS_ACCESS_KEY_ID" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_access_key_id",null) : null
-    "AWS_SECRET_ACCESS_KEY" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_secret_access_key",null) : null
-    "DB_PASSWORD" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_password",null) : null
-    "DB_USERNAME" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"db_username",null) : null
-    "AWS_SESSION_TOKEN" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"aws_session_token",null) : null
-    "DHCORE_CLIENT_ID" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body),"client_id",null) : null
+    "DHCORE_ACCESS_TOKEN"   = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "access_token", null) : null
+    "DHCORE_REFRESH_TOKEN"  = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "refresh_token", null) : null
+    "AWS_ACCESS_KEY_ID"     = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "aws_access_key_id", null) : null
+    "AWS_SECRET_ACCESS_KEY" = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "aws_secret_access_key", null) : null
+    "DB_PASSWORD"           = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "db_password", null) : null
+    "DB_USERNAME"           = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "db_username", null) : null
+    "AWS_SESSION_TOKEN"     = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "aws_session_token", null) : null
+    "DHCORE_CLIENT_ID"      = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "client_id", null) : null
   }
 }
 
@@ -539,9 +549,9 @@ resource "kubernetes_deployment" "code-toolbox" {
           }
         }
         security_context {
-          run_as_user  = "10000"
-          fs_group     = "10000"
-          run_as_group = "10000"
+          run_as_user     = "10000"
+          fs_group        = "10000"
+          run_as_group    = "10000"
           run_as_non_root = true
           seccomp_profile {
             type = "RuntimeDefault"
@@ -615,7 +625,7 @@ resource "kubernetes_deployment" "code-toolbox" {
               name = "digitalhub-common-env"
             }
           }
-          dynamic env_from {
+          dynamic "env_from" {
             for_each = var.stsenabled ? [] : [1]
             content {
               secret_ref {
@@ -623,7 +633,7 @@ resource "kubernetes_deployment" "code-toolbox" {
               }
             }
           }
-          dynamic env_from {
+          dynamic "env_from" {
             for_each = var.stsenabled ? [1] : []
             content {
               secret_ref {
@@ -638,13 +648,13 @@ resource "kubernetes_deployment" "code-toolbox" {
           }
           resources {
             requests = {
-              "cpu"    = "250m"
-              "memory" = "512Mi"
+              "cpu"            = "250m"
+              "memory"         = "512Mi"
               "nvidia.com/gpu" = data.coder_parameter.gpu.value ? 1 : null
             }
             limits = {
-              "cpu"    = "${data.coder_parameter.cpu.value}"
-              "memory" = "${data.coder_parameter.memory.value}Gi"
+              "cpu"            = "${data.coder_parameter.cpu.value}"
+              "memory"         = "${data.coder_parameter.memory.value}Gi"
               "nvidia.com/gpu" = data.coder_parameter.gpu.value ? 1 : null
             }
           }
@@ -684,8 +694,8 @@ resource "kubernetes_deployment" "code-toolbox" {
             sub_path   = "gshadow"
             read_only  = true
           }
-          dynamic volume_mount {
-            for_each  =  data.coder_parameter.gpu.value ? [1] : []
+          dynamic "volume_mount" {
+            for_each = data.coder_parameter.gpu.value ? [1] : []
             content {
               mount_path = "/dev/shm"
               name       = "shm"
@@ -695,7 +705,7 @@ resource "kubernetes_deployment" "code-toolbox" {
         volume {
           name = "init-packages"
           config_map {
-            name = "code-toolbox-init"
+            name         = "code-toolbox-init"
             default_mode = "0755"
           }
         }
@@ -712,13 +722,13 @@ resource "kubernetes_deployment" "code-toolbox" {
             size_limit = "2Mi"
           }
         }
-        dynamic volume {
-          for_each  =  data.coder_parameter.gpu.value ? [1] : []
+        dynamic "volume" {
+          for_each = data.coder_parameter.gpu.value ? [1] : []
           content {
             name = "shm"
             empty_dir {
               size_limit = "${data.coder_parameter.memory.value}Gi"
-              medium = "Memory"
+              medium     = "Memory"
             }
           }
         }
