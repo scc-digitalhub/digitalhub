@@ -100,12 +100,27 @@ data:
 {{- end }}
 {{- if .Values.sts.enabled }}
   DB_CREDENTIALS_PROVIDER: {{ .Values.sts.db.enabled | quote }}
+{{- if .Values.sts.db.enabled }}
   DB_CREDENTIALS_DATABASE: {{ .Values.postgres.database }}
   DB_CREDENTIALS_ENDPOINT:  http://{{ .Release.Name }}-core-sts:8080
   DB_CREDENTIALS_CLAIM: {{ .Values.sts.db.claim }}
   DB_CREDENTIALS_ROLE: {{ .Values.sts.db.role }}
-  DB_CREDENTIALS_DURATION: {{ .Values.sts.db.duration | quote }}
+{{- if .Values.sts.credentials.duration }}
+  DB_CREDENTIALS_DURATION: {{ .Values.sts.credentials.duration | quote }}
+{{- else }}
+  DB_CREDENTIALS_DURATION: {{ .Values.sts.credentials.db.duration | quote }}
+{{- end }}
   DB_CREDENTIALS_USER: {{ .Values.sts.credentials.clientId }}
   DB_CREDENTIALS_PASSWORD: {{ .Values.sts.credentials.clientSecret }}
+{{- end }}
   MINIO_CREDENTIALS_PROVIDER: {{ .Values.sts.minio.enabled | quote }}
+{{- if .Values.sts.minio.enabled }}
+  MINIO_CREDENTIALS_CLAIM: {{ .Values.sts.minio.claim }}
+  MINIO_CREDENTIALS_POLICY: {{ .Values.sts.minio.policy }}
+{{- if .Values.sts.credentials.duration }}
+  MINIO_CREDENTIALS_DURATION: {{ .Values.sts.credentials.duration | quote }}
+{{- else }}
+  MINIO_CREDENTIALS_DURATION: {{ .Values.sts.credentials.minio.duration | quote }}
+{{- end }}
+{{- end }}  
 {{- end }}

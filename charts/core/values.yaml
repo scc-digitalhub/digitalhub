@@ -333,6 +333,11 @@ sts:
     driver: ""
 
   credentials:
+    duration: ""
+    minio:
+      duration: ""
+    db:
+      duration: ""
     credentialRoles: ""
     clientId: ""
     clientSecret: ""
@@ -368,6 +373,7 @@ sts:
     enabled: true
     claim: "db/role"
     role: ""
-    duration: 86400
   minio:
     enabled: true
+    claim: "minio/policy"
+    policy: "readwritedigitalhub"
