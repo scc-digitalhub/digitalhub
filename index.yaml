@@ -424,6 +424,21 @@ entries:
   core:
   - apiVersion: v2
     appVersion: 0.10.0
+    created: "2025-03-28T12:24:14.435815086Z"
+    description: Core backend application for DigitalHub.
+    digest: be89d149061b75cade63d7fed1d65c2e8e06d129000add968b203f7914129761
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: core
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.3.7/core-0.3.7.tgz
+    version: 0.3.7
+  - apiVersion: v2
+    appVersion: 0.10.0
     created: "2025-03-20T14:17:22.240644111Z"
     description: Core backend application for DigitalHub.
     digest: 72fb9b1f13b19559f897b6befcc134dee6ab9982ee511a3d36adb999ad2cfee5
@@ -19811,4 +19826,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-24T17:54:40.781118278Z"
+generated: "2025-03-28T12:24:14.436553065Z"
