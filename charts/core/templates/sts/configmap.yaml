@@ -11,4 +11,7 @@ data:
   STS_CLIENT_ID: {{ .Values.sts.credentials.clientId }}
   STS_CLIENT_SECRET: {{ .Values.sts.credentials.clientSecret }}
   STS_JWT_ISSUER_URI: {{ .Values.sts.credentials.jwtIssuerUri }}
+  JDBC_PLATFORM: {{ .Values.sts.stsDb.platform }}
+  JDBC_DRIVER: {{ .Values.sts.stsDb.driver }}
+  JDBC_URL: jdbc:postgresql://core-postgres-cluster:5432/sts
 {{- end }}

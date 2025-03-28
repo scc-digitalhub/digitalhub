@@ -13,9 +13,10 @@ spec:
     matchLabels:
       {{- include "core-sts.selectorLabels" . | nindent 6 }}
   template:
-    metadata:
-      {{- with .Values.sts.podAnnotations }}
+    metadata: 
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- with .Values.sts.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -47,6 +48,16 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+                  key: password
+            - name: JDBC_USER
+              valueFrom:
+                secretKeyRef:
+                  name: stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do
+                  key: username
+            - name: JDBC_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do
                   key: password
           ports:
             - name: http
