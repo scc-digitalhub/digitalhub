@@ -456,7 +456,7 @@ resource "random_uuid" "check-token-exchange" {
 }
 
 resource "kubernetes_secret" "code-toolbox-secret" {
-  count = var.stsenabled ? 1 : 0
+  count = (var.stsenabled && data.coder_workspace.me.start_count == 1 ) ? 1 : 0
   metadata {
     name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
