@@ -133,3 +133,44 @@ Set packages versions for code-toolbox and tests
 {{- $command = printf "%s" $command }}
 {{- $command }}
 {{- end }}
+
+
+{{/*
+Variables used in the creation and upgrade of Coder templates
+*/}}
+{{- define "digitalhub.coderTemplateVariables" -}}
+{{- $variables := list}}
+{{- $root := index . 0 -}}
+{{- $template := index . 1  -}}
+{{- $variables = append $variables (printf "minio_endpoint=%s:%s" $root.Values.global.minio.endpoint $root.Values.global.minio.endpointPort ) }}
+{{- $variables = append $variables (printf "minio_bucket=%s" $root.Values.global.minio.bucket ) }}
+{{- $variables = append $variables (printf "namespace=%s" $root.Release.Namespace ) }}
+{{- $variables = append $variables (printf "service_type=%s" $root.Values.global.service.type ) }}
+{{- $variables = append $variables (printf "node_port=%s" $template.nodePort ) }}
+{{- $variables = append $variables (printf "external_url=%s" (default $root.Values.global.externalHostAddress $root.Subcharts.coder.Values.externalHostAddress) ) }}
+{{- $variables = append $variables (printf "https=%s" (include "digitalhub.coderIngressTlsEnabled" $root) ) }}
+{{- if not (eq $template.name "code-toolbox-experimental")}}
+  {{- $variables = append $variables (printf "image=%s" $template.image ) }}
+{{- end }}
+{{- if eq $template.name "dremio"}}
+  {{- $variables = append $variables (printf "minio_digitalhub_user_secret=%s" $root.Values.global.minio.digitalhubUserSecret ) }}
+{{- end }}
+{{- if eq $template.name "jupyter"}}
+  {{- $variables = append $variables (printf "image_3_9=%s" $template.image39 ) }}
+  {{- $variables = append $variables (printf "image_3_11=%s" $template.image311 ) }}
+{{- end }}
+{{- if or (eq $template.name "jupyter") (eq $template.name "code-toolbox-experimental")}}
+  {{- $variables = append $variables (printf "privileged=%v" $template.privileged ) }}
+  {{- $variables = append $variables (printf "stsenabled=%v" $root.Values.core.sts.enabled ) }}
+  {{- if $root.Values.core.ingress.enabled }}
+    {{- with (index $root.Values.core.ingress.hosts 0) }}
+      {{- $variables = append $variables (printf "dhcore_endpoint=https://%s" .host ) }}
+      {{- $variables = append $variables (printf "dhcore_issuer=https://%s" .host ) }}
+    {{- end }}
+  {{- else }}
+    {{- $variables = append $variables (printf "dhcore_endpoint=\"\"" ) }}
+    {{- $variables = append $variables (printf "dhcore_issuer=\"\"" ) }}
+  {{- end }}
+{{- end }}
+{{- join "," $variables -}}
+{{- end -}}
