@@ -272,7 +272,7 @@ resource "coder_agent" "jupyter" {
     timeout  = 1
   }
   display_apps {
-    vscode                 = false
+    vscode                 = true
     vscode_insiders        = false
     web_terminal           = false
     port_forwarding_helper = true
@@ -382,7 +382,7 @@ resource "random_uuid" "check-token-exchange" {
 }
 
 resource "kubernetes_secret" "jupyter-secret" {
-  count = var.stsenabled ? 1 : 0
+  count = (var.stsenabled && data.coder_workspace.me.start_count == 1 ) ? 1 : 0
   metadata {
     name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
