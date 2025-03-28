@@ -152,15 +152,15 @@ postgres:
 runtime:
   dbt:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt"
-    tag: "0.10.0"
+    tag: "0.10.1"
   kfp:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp"
-    tag: "0.10.0"
+    tag: "0.10.1"
   python:
     image: "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime"
-    tag3_9: "3.9-0.10.0"
-    tag3_10: "3.10-0.10.0"
-    tag3_11: "3.11-0.10.0"
+    tag3_9: "3.9-0.10.1"
+    tag3_10: "3.10-0.10.1"
+    tag3_11: "3.11-0.10.1"
   huggingFace:
     image: "kserve/huggingfaceserver"
     tag: "v0.14.0"
@@ -281,7 +281,7 @@ sts:
   image:
     repository: ghcr.io/scc-digitalhub/db-sts
     pullPolicy: IfNotPresent
-    tag: "0.2.0"
+    tag: "0.3.0"
 
   imagePullSecrets: []
   nameOverride: ""
@@ -327,6 +327,11 @@ sts:
     database: ""
     port: ""
 
+  stsDb:
+    database: ""
+    platform: ""
+    driver: ""
+
   credentials:
     credentialRoles: ""
     clientId: ""
@@ -362,7 +367,7 @@ sts:
   db:
     enabled: true
     claim: "db/role"
-    role: "digitalhubadmin"
+    role: ""
     duration: 86400
   minio:
     enabled: true
