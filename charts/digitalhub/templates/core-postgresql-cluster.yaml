@@ -13,8 +13,14 @@ spec:
     - superuser
     - createdb
     coreuser: []
+    {{- if .Values.core.sts.enabled }}
+    stsuser: []
+    {{- end }}
   databases:
     core: coreuser
+    {{- if .Values.core.sts.enabled }}
+    sts: stsuser
+    {{- end }}
   postgresql:
     version: "15"
   resources:
