@@ -325,14 +325,21 @@ core:
       role: "digitalhub_owner_user"
     minio:
       enabled: true
+      claim: "minio/policy"
+      policy: "readwritedigitalhub"
     postgres:
       connectionUrl: "jdbc:postgresql://database-postgres-cluster:5432/digitalhub"
       database: "digitalhub"
       port: "5432"
     credentials:
+      duration: 86400   # Setting this value sets the time in seconds for the sts credentials, both for the db and minio. Set this to empty string if you wish to set them one by one below.
       credentialRoles: "digitalhub_owner_user"
       clientId: *stsClientId
       clientSecret: *stsClientSecret
+      minio:
+        duration: 86400
+      db:
+        duration: 86400
       jwtIssuerUri: ""   # Set this value to the endpoint of the issuer used in your environment
 
 kubernetes-resource-manager:
