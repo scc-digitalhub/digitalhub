@@ -19,7 +19,7 @@ else
   printf "%s\n\n" "🥳 jupyterlab is already installed"
 fi
 
-uv {{ include "digitalhub.packages" . }}
+uv {{ include "digitalhub.packages" . }} jupyterlab-git ipywidgets
 
 if ! jupyter kernelspec list | grep -q "local/share/jupyter/kernels/python${PYTHON_VERSION}"
 then
