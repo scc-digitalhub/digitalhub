@@ -67,3 +67,14 @@ rules:
   - get
   - create
   - delete
+- apiGroups:
+  - kubeai.org
+  resources:
+  - models
+  verbs:
+  - get
+  - list
+  - create
+  - update
+  - delete
+  - patch

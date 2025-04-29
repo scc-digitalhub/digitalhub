@@ -59,6 +59,18 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+          {{- if .Values.sts.minio.enabled }}
+            - name: MINIO_CREDENTIALS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.minio.digitalhubUserSecret }}
+                  key: digitalhubUser
+            - name: MINIO_CREDENTIALS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.global.minio.digitalhubUserSecret }}
+                  key: digitalhubPassword
+          {{- else }}
             - name: AWS_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
@@ -69,6 +81,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.global.minio.digitalhubUserSecret }}
                   key: digitalhubPassword
+          {{- end }}
             - name: JDBC_USER
               valueFrom:
                 secretKeyRef:

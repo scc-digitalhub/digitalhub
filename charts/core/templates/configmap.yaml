@@ -73,9 +73,12 @@ data:
   JWT_ACCESS_TOKEN_DURATION: {{ .Values.coreTokens.accessTokenDuration | quote }}
   JWT_REFRESH_TOKEN_DURATION: {{ .Values.coreTokens.refreshTokenDuration | quote }}
   AWS_DEFAULT_REGION: {{ .Values.minio.awsDefaultRegion }}
+  FILES_DEFAULT_STORE: s3://{{ .Values.minio.bucket }}
+{{- if not .Values.sts.minio.enabled }}
   AWS_REGION: {{ .Values.minio.awsRegion }}
   S3_ENDPOINT_URL: {{ .Values.minio.publicUrl }}
   S3_BUCKET: {{ .Values.minio.bucket }}
+{{- end }}
 {{- if .Values.templates }}
   K8S_TEMPLATES: {{ include "core.templates" . | quote }}
 {{- end }}
@@ -117,6 +120,8 @@ data:
 {{- if .Values.sts.minio.enabled }}
   MINIO_CREDENTIALS_CLAIM: {{ .Values.sts.minio.claim }}
   MINIO_CREDENTIALS_POLICY: {{ .Values.sts.minio.policy }}
+  MINIO_CREDENTIALS_ENDPOINT: {{ .Values.minio.publicUrl }}
+  MINIO_CREDENTIALS_REGION: {{ .Values.minio.awsRegion }}
 {{- if .Values.sts.credentials.duration }}
   MINIO_CREDENTIALS_DURATION: {{ .Values.sts.credentials.duration | quote }}
 {{- else }}
