@@ -1,0 +1,12 @@
+FROM grafana/grafana:12.0.0-ubuntu
+
+USER root
+
+RUN groupadd -f appuser \
+    && useradd -m -s /bin/bash -g appuser appuser \
+    && mkdir -p /home/appuser /usr/app /var/lib/grafana \
+    && chown -R appuser:appuser /usr/app /home/appuser /var/lib/grafana
+
+WORKDIR /home/appuser/app 
+
+USER appuser
