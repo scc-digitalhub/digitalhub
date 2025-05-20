@@ -90,6 +90,8 @@ data:
   K8S_RESOURCE_CPU_LIMIT: {{ .Values.additionalConfig.resources.cpuLim | quote }}
   K8S_RESOURCE_MEM_DEFAULT: {{ .Values.additionalConfig.resources.memReq | quote }}
   K8S_RESOURCE_MEM_LIMIT: {{ .Values.additionalConfig.resources.memLim | quote }}
+  K8S_RESOURCE_PVC_DEFAULT: {{ .Values.additionalConfig.resources.pvcReq | quote }}
+  K8S_RESOURCE_PVC_LIMIT: {{ .Values.additionalConfig.resources.pvcLim | quote }}
   K8S_RESOURCE_GPU_KEY: {{ .Values.additionalConfig.resources.gpuKey | quote }}
   K8S_SERVICE_TYPE: {{ .Values.additionalConfig.service.type | quote }}
   K8S_JOB_DEADLINE: {{ .Values.additionalConfig.job.deadline | quote }}
