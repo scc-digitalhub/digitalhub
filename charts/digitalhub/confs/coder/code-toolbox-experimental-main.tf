@@ -2,7 +2,7 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 2.2.0"
+      version = "~> 2.4.2"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
@@ -10,7 +10,7 @@ terraform {
     }
     http = {
       source  = "hashicorp/http"
-      version = "3.4.5"
+      version = "3.5.0"
     }
   }
 }
@@ -104,6 +104,11 @@ variable "dhcore_endpoint" {
 variable "dhcore_issuer" {
   type    = string
   default = ""
+}
+
+variable "extra_vars" {
+  type    = bool
+  default = false
 }
 
 data "coder_parameter" "cpu" {
@@ -623,6 +628,14 @@ resource "kubernetes_deployment" "code-toolbox" {
           env_from {
             config_map_ref {
               name = "digitalhub-common-env"
+            }
+          }
+          dynamic "env_from" {
+            for_each = var.extra_vars ? [1] : []
+            content {
+              config_map_ref {
+                name = "code-toolbox-experimental-additional-env"
+              }
             }
           }
           dynamic "env_from" {
