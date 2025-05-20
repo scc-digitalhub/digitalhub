@@ -2,7 +2,7 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 2.2.0"
+      version = "~> 2.4.2"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
@@ -45,6 +45,11 @@ variable "https" {
 
 variable "external_url" {
   type = string
+}
+
+variable "extra_vars" {
+  type    = bool
+  default = false
 }
 
 provider "kubernetes" {
@@ -279,6 +284,14 @@ resource "kubernetes_deployment" "grafana" {
           env {
             name  = "GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS"
             value = "digital-hub-dremio"
+          }
+          dynamic "env_from" {
+            for_each = var.extra_vars ? [1] : []
+            content {
+              config_map_ref {
+                name = "grafana-additional-env"
+              }
+            }
           }
           resources {
             requests = {

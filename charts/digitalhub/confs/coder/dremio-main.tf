@@ -2,7 +2,7 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 2.2.0"
+      version = "~> 2.4.2"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
@@ -103,6 +103,11 @@ variable "external_url" {
 
 variable "minio_digitalhub_user_secret" {
   type = string
+}
+
+variable "extra_vars" {
+  type    = bool
+  default = false
 }
 
 provider "kubernetes" {
@@ -532,6 +537,14 @@ resource "kubernetes_deployment" "dremio" {
           env {
             name  = "CODER_AGENT_TOKEN"
             value = coder_agent.dremio.token
+          }
+          dynamic "env_from" {
+            for_each = var.extra_vars ? [1] : []
+            content {
+              config_map_ref {
+                name = "dremio-additional-env"
+              }
+            }
           }
           resources {
             requests = {
