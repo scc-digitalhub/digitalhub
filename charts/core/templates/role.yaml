@@ -52,6 +52,7 @@ rules:
   - secrets
   - services
   - configmaps
+  - persistentvolumeclaims
   verbs:
   - get
   - list

@@ -12,3 +12,4 @@ data:
   DHCORE_WORKFLOW_IMAGE: {{ .Values.runtime.kfp.image }}:{{ .Values.runtime.kfp.tag }}
   DHCORE_ENDPOINT: http://{{ include "core.fullname" . }}:{{ .Values.service.port }}
   DHCORE_ISSUER: http://{{ include "core.fullname" . }}:{{ .Values.service.port }}
+  DHCORE_DEFAULT_FILES_STORE: s3://{{ .Values.minio.bucket }}
