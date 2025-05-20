@@ -142,6 +142,10 @@ Variables used in the creation and upgrade of Coder templates
 {{- $variables := list}}
 {{- $root := index . 0 -}}
 {{- $template := index . 1  -}}
+{{- if $template.extraVars -}}
+{{- $variables = append $variables (printf "extra_vars=true" ) }}
+{{- end }}
+{{- $variables = append $variables (printf "node_port=%s" $template.nodePort ) }}
 {{- $variables = append $variables (printf "minio_endpoint=%s:%s" $root.Values.global.minio.endpoint $root.Values.global.minio.endpointPort ) }}
 {{- $variables = append $variables (printf "minio_bucket=%s" $root.Values.global.minio.bucket ) }}
 {{- $variables = append $variables (printf "namespace=%s" $root.Release.Namespace ) }}

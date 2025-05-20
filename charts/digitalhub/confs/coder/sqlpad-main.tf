@@ -2,7 +2,7 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 2.2.0"
+      version = "~> 2.4.2"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
@@ -63,6 +63,11 @@ variable "https" {
 
 variable "external_url" {
   type = string
+}
+
+variable "extra_vars" {
+  type    = bool
+  default = false
 }
 
 provider "kubernetes" {
@@ -332,6 +337,14 @@ resource "kubernetes_deployment" "sqlpad" {
               secret_key_ref {
                 name = var.db_secret
                 key  = "username"
+              }
+            }
+          }
+          dynamic "env_from" {
+            for_each = var.extra_vars ? [1] : []
+            content {
+              config_map_ref {
+                name = "sqlpad-additional-env"
               }
             }
           }

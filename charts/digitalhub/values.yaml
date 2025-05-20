@@ -95,35 +95,46 @@ coder:
       - name: jupyter
         nodePort: "30040"
         iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.10.1"
-        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.10.1"
-        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.10.1"
+        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.11.0b3"
+        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.11.0b3"
+        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.11.0b3"
         privileged: false
         stopAfter: 8h   # Sets the time after which the workspace will stop. (0 means the workspace deosn't stop)
+        extraVars: []
       - name: code-toolbox-experimental
         nodePort: "30050"
         iconUrl: https://cdn-icons-png.flaticon.com/512/7301/7301969.png
         privileged: false
         stopAfter: 8h
         tolerations: []
+        extraVars: []
       - name: dremio
         nodePort: "30120"
         iconUrl: https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png
         image: "dremio/dremio-oss:24.1.0"
         stopAfter: 0h
+        extraVars: []
       - name: sqlpad
         nodePort: "30140"
         iconUrl: https://i.ibb.co/TrBDsZM/sqlpad.png
         image: "smartcommunitylab/sqlpad:nonroot"
         stopAfter: 8h
+        extraVars: []
       - name: grafana
         nodePort: "30130"
         iconUrl: https://cdn.iconscout.com/icon/free/png-256/free-grafana-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030088.png?f=webp
         image: "smartcommunitylab/grafana"
         stopAfter: 0h
+        extraVars:
+        - name: GF_PLUGINS_CHECK_FOR_PLUGIN_UPDATES
+          value: false
+        - name: GF_ANALYTICS_CHECK_FOR_UPDATES
+          value: false
+        - name: GF_ANALYTICS_REPORTING_ENABLED
+          value: false
   coder:
     image:
-      tag: v2.19.1
+      tag: v2.21.3
     env:
       - name: CODER_TELEMETRY
         value: "false"
@@ -200,6 +211,8 @@ postgres-operator:
 
 ext-postgres-operator:
   enabled: true
+  image:
+    tag: "1.3.5"
   postgres:
     host: database-postgres-cluster
     user: ""
@@ -304,6 +317,8 @@ core:
       cpuLim: ""
       memReq: "64m"
       memLim: ""
+      pvcReq: "2Gi"
+      pvcLim: ""
       gpuKey: "nvidia.com/gpu"
   argoWorkflow:
     configmap: artifact-repositories
@@ -331,6 +346,7 @@ core:
       connectionUrl: "jdbc:postgresql://database-postgres-cluster:5432/digitalhub"
       database: "digitalhub"
       port: "5432"
+    stsCredsDuration: 86400   # This is the max time for the sts credentials duration. The duration for minio and postgres credentials MUST be equal or lower to this value.
     credentials:
       duration: 86400   # Setting this value sets the time in seconds for the sts credentials, both for the db and minio. Set this to empty string if you wish to set them one by one below.
       credentialRoles: "digitalhub_owner_user"
@@ -683,23 +699,23 @@ minio-operator:
     protocol: *minioProtocol
 
 platformPackages:
-  preRelease: false   ## Used for installing pre release packages
+  preRelease: true   ## Used for installing pre release packages
   deleteOnCompletion: true  ## Leave this to true if you want to delete the test projects created with helm test
   image: ""
   tag: ""
   packages:
   - name: "digitalhub[full]"
-    tag: "0.10.1"
+    tag: ""
   - name: "digitalhub-runtime-python"
-    tag: "0.10.1"
+    tag: ""
   - name: "digitalhub-runtime-container"
-    tag: "0.10.1"
+    tag: ""
   - name: "digitalhub-runtime-dbt"
-    tag: "0.10.1"
+    tag: ""
   - name: "digitalhub-runtime-kfp"
-    tag: "0.10.1"
+    tag: ""
   - name: "digitalhub-runtime-modelserve"
-    tag: "0.10.1"
+    tag: ""
 
 argo-workflows:
   enabled: true
