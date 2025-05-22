@@ -2,6 +2,8 @@ FROM timescale/timescaledb:2.20.0-pg16 AS timescale
 
 FROM ghcr.io/cloudnative-pg/postgresql:16
 
+LABEL org.opencontainers.image.source=https://github.com/scc-digitalhub/digitalhub
+
 USER root
 
 RUN apt-get update && apt-get install -y curl gnupg ca-certificates lsb-release \                               
