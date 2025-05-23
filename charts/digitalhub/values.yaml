@@ -362,7 +362,7 @@ kubernetes-resource-manager:
   enabled: true
   service:
     type: *serviceType
-    httpNodePort: "30220"
+    nodePort: "30220"
 
 dremio-rest-server-operator:
   enabled: true
@@ -497,7 +497,7 @@ solr-operator:
   enabled: true
   zookeeper-operator:
     crd:
-      create: true
+      create: &globalCrd
   securityContext:
     runAsNonRoot: true
     seccompProfile:
@@ -719,6 +719,8 @@ platformPackages:
 
 argo-workflows:
   enabled: true
+  crds:
+    install: &globalCrd
   singleNamespace: true
   workflow:
     serviceAccount:
@@ -762,8 +764,11 @@ argo-workflows:
           insecure: true
           bucket: *argoBucket
           endpoint: minio:9000
+
 kubeai:
   enabled: true
+  crds:
+    enabled: &globalCrd
   open-webui:
     enabled: false
   resourceProfiles:
