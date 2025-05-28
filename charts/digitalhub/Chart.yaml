@@ -77,6 +77,6 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: minio-operator.enabled
 - name: kubeai
-  version: "0.21.0"
+  version: "0.21.3"
   repository: https://ffais.github.io/kubeai/
   condition: kubeai.enabled

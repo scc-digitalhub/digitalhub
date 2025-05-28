@@ -770,7 +770,10 @@ kubeai:
   crds:
     enabled: &globalCrd
   open-webui:
-    enabled: false
+    enabled: true
+    service:
+      type: *serviceType
+      nodePort: "30160"
   resourceProfiles:
     cpu:
       imageName: "cpu"
