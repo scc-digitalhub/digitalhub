@@ -1,4 +1,4 @@
-{{- if .Values.solr.collection.initialize.enabled }}
+{{- if and .Values.solr.collection.initialize.enabled .Values.solr.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
