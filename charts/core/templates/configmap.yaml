@@ -74,11 +74,8 @@ data:
   JWT_REFRESH_TOKEN_DURATION: {{ .Values.coreTokens.refreshTokenDuration | quote }}
   AWS_DEFAULT_REGION: {{ .Values.minio.awsDefaultRegion }}
   FILES_DEFAULT_STORE: s3://{{ .Values.minio.bucket }}
-{{- if not .Values.sts.minio.enabled }}
-  AWS_REGION: {{ .Values.minio.awsRegion }}
   S3_ENDPOINT_URL: {{ .Values.minio.publicUrl }}
   S3_BUCKET: {{ .Values.minio.bucket }}
-{{- end }}
 {{- if .Values.templates }}
   K8S_TEMPLATES: {{ include "core.templates" . | quote }}
 {{- end }}
@@ -96,6 +93,9 @@ data:
   K8S_SERVICE_TYPE: {{ .Values.additionalConfig.service.type | quote }}
   K8S_JOB_DEADLINE: {{ .Values.additionalConfig.job.deadline | quote }}
   K8S_JOB_SUSPEND: {{ .Values.additionalConfig.job.jobSuspend | quote }}
+{{- if .Values.kubeai.enabled }}
+  RUNTIME_KUBEAI_ENDPOINT: "http://{{ .Values.kubeai.serviceName }}:{{ .Values.kubeai.port }}"
+{{- end }}
   ARGOWORKFLOWS_ARTIFACTS_CONFIGMAP: {{ .Values.argoWorkflow.configmap }}
   ARGOWORKFLOWS_ARTIFACTS_KEY: {{ .Values.argoWorkflow.key }}
   ARGOWORKFLOWS_SERVICE_ACCOUNT: {{ .Values.argoWorkflow.serviceAccount }}
