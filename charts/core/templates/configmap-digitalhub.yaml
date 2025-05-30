@@ -4,7 +4,7 @@ metadata:
   name: digitalhub-common-env
 data:
   S3_BUCKET: {{ .Values.minio.bucket }}
-  S3_ENDPOINT_URL: "{{ .Values.minio.protocol }}://{{ .Values.minio.endpoint }}:{{ .Values.minio.endpointPort }}"
+  AWS_ENDPOINT_URL: "{{ .Values.minio.protocol }}://{{ .Values.minio.endpoint }}:{{ .Values.minio.endpointPort }}"
   DB_HOST: {{ .Values.postgres.host }}
   DB_PORT: {{ .Values.postgres.port | quote }}
   DB_DATABASE: {{ .Values.postgres.database }}
@@ -13,3 +13,4 @@ data:
   DHCORE_ENDPOINT: http://{{ include "core.fullname" . }}:{{ .Values.service.port }}
   DHCORE_ISSUER: http://{{ include "core.fullname" . }}:{{ .Values.service.port }}
   DHCORE_DEFAULT_FILES_STORE: s3://{{ .Values.minio.bucket }}
+  AWS_REGION: {{ .Values.minio.awsDefaultRegion }}
