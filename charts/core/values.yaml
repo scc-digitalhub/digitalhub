@@ -152,15 +152,15 @@ postgres:
 runtime:
   dbt:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt"
-    tag: "0.11.0b3"
+    tag: "0.11.0b7"
   kfp:
     image: "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp"
-    tag: "0.11.0b3"
+    tag: "0.11.0b7"
   python:
     image: "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime"
-    tag3_9: "3.9-0.11.0b3"
-    tag3_10: "3.10-0.11.0b3"
-    tag3_11: "3.11-0.11.0b3"
+    tag3_9: "3.9-0.11.0b7"
+    tag3_10: "3.10-0.11.0b7"
+    tag3_11: "3.11-0.11.0b7"
   huggingFace:
     image: "kserve/huggingfaceserver"
     tag: "v0.14.0"
@@ -168,7 +168,7 @@ runtime:
 initImage:
   builderTool:
     image: "ghcr.io/scc-digitalhub/digitalhub-core-builder-tool"
-    tag: "latest"
+    tag: "b95c095f"
 
 authentication:
   basic:
@@ -381,3 +381,9 @@ sts:
     enabled: true
     claim: "minio/policy"
     policy: "readwritedigitalhub"
+
+kubeai:
+  enabled: true
+  serviceName: ""
+  port: ""
+
