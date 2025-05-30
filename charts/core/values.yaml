@@ -386,4 +386,3 @@ kubeai:
   enabled: true
   serviceName: ""
   port: ""
-
