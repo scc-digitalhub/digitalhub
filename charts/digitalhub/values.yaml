@@ -497,7 +497,7 @@ solr-operator:
   enabled: true
   zookeeper-operator:
     crd:
-      create: &globalCrd
+      create: *globalCrd
   securityContext:
     runAsNonRoot: true
     seccompProfile:
@@ -720,7 +720,7 @@ platformPackages:
 argo-workflows:
   enabled: true
   crds:
-    install: &globalCrd
+    install: *globalCrd
   singleNamespace: true
   workflow:
     serviceAccount:
@@ -768,7 +768,9 @@ argo-workflows:
 kubeai:
   enabled: true
   crds:
-    enabled: &globalCrd
+    enabled: *globalCrd
+  open-webui:
+    enabled: false
   resourceProfiles:
     cpu:
       imageName: "cpu"
