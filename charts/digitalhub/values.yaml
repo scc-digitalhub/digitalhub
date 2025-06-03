@@ -95,9 +95,9 @@ coder:
       - name: jupyter
         nodePort: "30040"
         iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.11.0b3"
-        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.11.0b3"
-        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.11.0b3"
+        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.11.0"
+        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.11.0"
+        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.11.0"
         privileged: false
         stopAfter: 8h   # Sets the time after which the workspace will stop. (0 means the workspace deosn't stop)
         extraVars: []
@@ -150,6 +150,8 @@ coder:
             key: password
       - name: CODER_PG_CONNECTION_URL
         value: "postgres://$(CODER_PG_USERNAME):$(CODER_PG_PASSWORD)@coder-postgres-cluster:5432/coder"
+      - name: CODER_OAUTH2_GITHUB_DEFAULT_PROVIDER_ENABLE
+        value: "false"
     ingress:
       enable: false
     service:
@@ -357,6 +359,10 @@ core:
       db:
         duration: 86400
       jwtIssuerUri: ""   # Set this value to the endpoint of the issuer used in your environment
+  kubeai:
+    enabled: true
+    serviceName: "kubeai"
+    port: "80"
 
 kubernetes-resource-manager:
   enabled: true
@@ -403,7 +409,7 @@ dashboard:
   image:
     repository: ghcr.io/scc-digitalhub/dh-dashboard
     pullPolicy: IfNotPresent
-    tag: "0.1.3"
+    tag: "0.1.4"
   imagePullSecrets: []
   nameOverride: ""
   fullnameOverride: ""
@@ -699,23 +705,23 @@ minio-operator:
     protocol: *minioProtocol
 
 platformPackages:
-  preRelease: true   ## Used for installing pre release packages
+  preRelease: false   ## Used for installing pre release packages
   deleteOnCompletion: true  ## Leave this to true if you want to delete the test projects created with helm test
   image: ""
   tag: ""
   packages:
   - name: "digitalhub[full]"
-    tag: ""
+    tag: "0.11.0"
   - name: "digitalhub-runtime-python"
-    tag: ""
+    tag: "0.11.0"
   - name: "digitalhub-runtime-container"
-    tag: ""
+    tag: "0.11.0"
   - name: "digitalhub-runtime-dbt"
-    tag: ""
+    tag: "0.11.0"
   - name: "digitalhub-runtime-kfp"
-    tag: ""
+    tag: "0.11.0"
   - name: "digitalhub-runtime-modelserve"
-    tag: ""
+    tag: "0.11.0"
 
 argo-workflows:
   enabled: true
@@ -777,7 +783,7 @@ kubeai:
       requests:
         cpu: 1
         memory: "2Gi"
-        
+
 open-webui:
   enabled: true
   ollama:
