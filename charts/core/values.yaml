@@ -217,6 +217,10 @@ solr:
       securityJsonSecret: ""
       image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
 
+lucene:
+  indexPath: false
+  reindex: never
+  
 corsOrigin: ""
 
 registry:
