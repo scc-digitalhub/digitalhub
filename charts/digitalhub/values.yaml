@@ -769,14 +769,43 @@ kubeai:
   enabled: true
   crds:
     enabled: &globalCrd
-  open-webui:
-    enabled: true
-    service:
-      type: *serviceType
-      nodePort: "30160"
   resourceProfiles:
     cpu:
       imageName: "cpu"
       requests:
         cpu: 1
         memory: "2Gi"
+        
+open-webui:
+  enabled: true
+  ollama:
+    enabled: false
+  pipelines:
+    enabled: false
+  openaiBaseApiUrl: "http://kubeai/openai/v1"
+  extraEnvVars:
+    - name: ENABLE_LOGIN_FORM
+      value: "True"
+    - name: OPENAI_API_KEYS
+      value: "not-used"
+    - name: SAFE_MODE
+      value: "True"
+    - name: ENABLE_EVALUATION_ARENA_MODELS
+      value: "False"
+    - name: DEFAULT_USER_ROLE
+      value: "user"
+    - name: ENABLE_API_KEY
+      value: "False"
+  service:
+    type: *serviceType
+    nodePort: "30160"
+  initialize:
+    enabled: true
+    image: smartcommunitylab/k8s-ansible-clusterctl:1.32.5-1.10.1
+    admin:
+      username: test@test.local
+      password: Test12456@!
+      existingSecret:
+        name: ""
+        usernameKey: ""
+        passwordKey: ""
