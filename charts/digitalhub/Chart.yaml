@@ -80,3 +80,7 @@ dependencies:
   version: "0.21.3"
   repository: https://ffais.github.io/kubeai/
   condition: kubeai.enabled
+- name: open-webui
+  condition: open-webui.enabled
+  repository: https://helm.openwebui.com/
+  version: "6.19.0"

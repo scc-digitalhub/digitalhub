@@ -1,6 +1,6 @@
 {{ $externalUrl := .Values.global.externalHostAddress -}}
 [
-  {{- if .Values.minio.enabled }}
+{{- if .Values.minio.enabled }}
   {
     "slug": "minio",
     "name": "Minio",
@@ -9,6 +9,22 @@
     "port": "",
     {{- if (index .Values "minio" "consoleIngress" "enabled") }}
     {{- with (index .Values "minio" "consoleIngress" "hosts" 0) }}
+    "link": "https://{{ . }}"
+    {{- end }}
+    {{- else }}
+    "link": "http://{{ $externalUrl }}:{{ .Values.minio.consoleService.nodePort }}"
+    {{- end }}
+  },
+{{- end }}
+{{- if (index .Values "open-webui" "enabled") }}
+  {
+    "slug": "open-webui",
+    "name": "Open WebUI",
+    "description": "Open WebUI is an extensible, self-hosted AI interface that adapts to your workflow, all while operating entirely offline.",
+    "order": 4,
+    "port": "",
+    {{- if (index .Values "open-webui" "ingress" "enabled") }}
+    {{- with (index .Values "open-webui" "ingress" "host") }}
     "link": "https://{{ . }}"
     {{- end }}
     {{- else }}
