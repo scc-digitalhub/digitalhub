@@ -133,3 +133,4 @@ data:
 {{- end }}
   LUCENE_INDEX_PATH: {{ .Values.lucene.indexPath | quote }}
   LUCENE_REINDEX: {{ .Values.lucene.reindex | quote }}
+  K8S_RESOURCE_PVC_STORAGE_CLASS: {{ .Values.defaultStorageClass | quote }}
