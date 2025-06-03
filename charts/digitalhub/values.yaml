@@ -781,7 +781,7 @@ kubeai:
       requests:
         cpu: 1
         memory: "2Gi"
-        
+
 open-webui:
   enabled: true
   ollama:
