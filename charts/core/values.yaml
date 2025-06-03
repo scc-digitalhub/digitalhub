@@ -56,6 +56,8 @@ securityContext:
   allowPrivilegeEscalation: false
   # runAsUser: 1000
 
+defaultStorageClass: ""
+
 minio:
   rootUser: minio
   rootPassword: minio123
