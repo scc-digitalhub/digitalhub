@@ -59,8 +59,6 @@ securityContext:
 defaultStorageClass: ""
 
 minio:
-  rootUser: minio
-  rootPassword: minio123
   endpoint: "minio"
   endpointPort: "9000"
   bucket: "datalake"
@@ -69,7 +67,10 @@ minio:
   awsRegion: ""
   # Change the publicUrl value to the one you are using for accessing the minio-API from your browser, in the form "http/s://yourminioapiurl"
   publicUrl: ""
-
+  sts:
+    enabled: true
+    claim: "minio/policy"
+    policy: "readwritedigitalhub"
 service:
   port: "8080"
   type: ClusterIP
@@ -141,14 +142,24 @@ tolerations: []
 
 affinity: {}
 
-config:
-  rootUser: ""
-  rootPassword: ""
-
 postgres:
   host: ""
   database: ""
   port: ""
+  schema: ""
+  credentials:
+    username: ""
+    password: ""
+    existingSecret:
+      name: ""
+      usernameKey:
+      passwordKey:
+
+
+databaseProvider:
+  host: ""
+  port: ""
+  database: ""
   schema: ""
 
 runtime:
@@ -245,8 +256,8 @@ templates: []
   #   path: test/template3.json
 
 coreAuthCreds:
-  clientId: ""
-  clientSecret: ""
+  clientId: &coreClientId ""
+  clientSecret: &coreClientSecret ""
 
 kanikoArgs: ""
 
@@ -330,28 +341,44 @@ sts:
       cpu: 100m
       memory: 128Mi
 
-  postgres:
-    connectionUrl: ""
+  stsDb:
+    host: ""
     database: ""
     port: ""
-
-  stsDb:
-    database: ""
+    schema: ""
     platform: ""
     driver: ""
+    credentials:
+      username: ""
+      password: ""
+      existingSecret:
+        name: ""
+        usernameKey: ""
+        passwordKey: ""
 
-  stsCredsDuration: ""
+  databaseProvider:
+    enabled: true
+    credentials:
+      username: ""
+      password: ""
+      existingSecret:
+        name: ""
+        usernameKey: ""
+        passwordKey: ""  
 
   credentials:
-    duration: ""
-    minio:
-      duration: ""
-    db:
-      duration: ""
-    credentialRoles: ""
+    roles: ""
+  client:
     clientId: ""
     clientSecret: ""
-    jwtIssuerUri: "http://digitalhub-core:8080"
+    existingSecret:
+      name: ""
+      clientIdKey: ""
+      clientSecretKey: ""
+  jwt:
+    issuerUri: "http://digitalhub-core:8080"
+    audience: sts
+    claim: "db/role"
 
   autoscaling:
     enabled: false
@@ -378,15 +405,6 @@ sts:
   tolerations: []
 
   affinity: {}
-
-  db:
-    enabled: true
-    claim: "db/role"
-    role: ""
-  minio:
-    enabled: true
-    claim: "minio/policy"
-    policy: "readwritedigitalhub"
 
 kubeai:
   enabled: true

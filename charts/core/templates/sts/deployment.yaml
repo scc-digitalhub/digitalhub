@@ -39,26 +39,60 @@ spec:
           image: "{{ .Values.sts.image.repository }}:{{ .Values.sts.image.tag }}"
           imagePullPolicy: {{ .Values.sts.image.pullPolicy }}
           env:
+            - name: STS_CLIENT_ID
+              {{- if and .Values.sts.client.existingSecret.name .Values.sts.client.existingSecret.clientIdKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.sts.client.existingSecret.name }}
+                  key: {{ .Values.sts.client.existingSecret.clientIdKey }}
+              {{- else }}
+              values: {{ .Values.sts.client.clientId }}
+              {{- end }}
+            - name: STS_CLIENT_SECRET
+              {{- if and .Values.sts.client.existingSecret.name .Values.sts.client.existingSecret.clientSecretKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.sts.client.existingSecret.name }}
+                  key: {{ .Values.sts.client.existingSecret.clientSecretKey}}
+              {{- else }}
+              values: {{ .Values.sts.client.clientSecret }}
+              {{- end }}
             - name: CONNECTION_USER
+              {{- if and .Values.sts.databaseProvider.credentials.existingSecret.name .Values.sts.databaseProvider.credentials.existingSecret.usernameKey }}
               valueFrom:
                 secretKeyRef:
-                  name: digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do
-                  key: username
+                  name: {{ .Values.sts.databaseProvider.credentials.existingSecret.name }}
+                  key: {{ .Values.sts.databaseProvider.credentials.existingSecret.usernameKey }}
+              {{- else }}
+              value: {{ .Values.sts.databaseProvider.credentials.username }}
+              {{- end }}
             - name: CONNECTION_PASS
+              {{- if and .Values.sts.databaseProvider.credentials.existingSecret.name .Values.sts.databaseProvider.credentials.existingSecret.passwordKey }}
               valueFrom:
                 secretKeyRef:
-                  name: digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do
-                  key: password
+                  name: {{ .Values.sts.databaseProvider.credentials.existingSecret.name }}
+                  key: {{ .Values.sts.databaseProvider.credentials.existingSecret.passwordKey }}
+              {{- else }}
+              value: {{ .Values.sts.databaseProvider.credentials.password }}
+              {{- end }}
             - name: JDBC_USER
+              {{- if and .Values.sts.stsDb.credentials.existingSecret.name .Values.sts.stsDb.credentials.existingSecret.usernameKey }}
               valueFrom:
                 secretKeyRef:
-                  name: stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do
-                  key: username
+                  name: {{ .Values.sts.stsDb.credentials.existingSecret.name }}
+                  key: {{ .Values.sts.stsDb.credentials.existingSecret.usernameKey }}
+              {{- else }}
+              value: {{ .Values.sts.stsDb.credentials.username }}
+              {{- end }}
             - name: JDBC_PASS
+              {{- if and .Values.sts.stsDb.credentials.existingSecret.name .Values.sts.stsDb.credentials.existingSecret.passwordKey }}
               valueFrom:
                 secretKeyRef:
-                  name: stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do
-                  key: password
+                  name: {{ .Values.sts.stsDb.credentials.existingSecret.name }}
+                  key: {{ .Values.sts.stsDb.credentials.existingSecret.passwordKey }}
+              {{- else }}
+              value: {{ .Values.sts.stsDb.credentials.password }}
+              {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.sts.service.port }}

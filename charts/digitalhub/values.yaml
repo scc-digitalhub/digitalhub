@@ -264,17 +264,30 @@ core:
     awsRegion: "us-west-1"
     # Change the publicUrl value to the one you are using for accessing the minio-API from your browser, in the form "http/s://yourminioapiurl"
     publicUrl: "http://192.168.49.2:30080"
+    sts:
+      enabled: true
+      claim: "minio/policy"
+      policy: "readwritedigitalhub"
   service:
     type: *serviceType
     httpNodePort: "30180"
   postgres:
-    host: database-postgres-cluster
-    database: digitalhub
+    host: core-postgres-cluster
+    database: core
     port: "5432"
     schema: public
-  config:
-    rootUser: minio
-    rootPassword: minio123
+    credentials:
+      username: ""
+      password: ""
+      existingSecret:
+        name: "coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do"
+        usernameKey: "username"
+        passwordKey: "password"
+  databaseProvider:
+    host: "database-postgres-cluster"
+    port: "5432"
+    database: "digitalhub"
+    schema: "public"
   authentication:
     openId:
       enabled: false
@@ -329,36 +342,33 @@ core:
     user: "8877"
   sts:
     enabled: false
-    clientId: &stsClientId "sjcqfiix79hx"
-    clientSecret: &stsClientSecret "s7tznmn3q6nz"
     stsDb:
+      host: core-postgres-cluster
       database: sts
+      port: "5432"
+      schema: public
       platform: postgresql
       driver: org.postgresql.Driver
-    db:
+      credentials:
+        existingSecret:
+          name: "stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do"
+          usernameKey: "username"
+          passwordKey: "password"
+    databaseProvider:
       enabled: true
-      stsUser: *stsClientId
-      stsPassword: *stsClientSecret
-      role: "digitalhub_owner_user"
-    minio:
-      enabled: true
-      claim: "minio/policy"
-      policy: "readwritedigitalhub"
-    postgres:
-      connectionUrl: "jdbc:postgresql://database-postgres-cluster:5432/digitalhub"
-      database: "digitalhub"
-      port: "5432"
-    stsCredsDuration: 86400   # This is the max time for the sts credentials duration. The duration for minio and postgres credentials MUST be equal or lower to this value.
+      credentials:
+        username: ""
+        password: ""
+        existingSecret:
+          name: "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
+          usernameKey: "username"
+          passwordKey: "password"
     credentials:
-      duration: 86400   # Setting this value sets the time in seconds for the sts credentials, both for the db and minio. Set this to empty string if you wish to set them one by one below.
-      credentialRoles: "digitalhub_owner_user"
-      clientId: *stsClientId
-      clientSecret: *stsClientSecret
-      minio:
-        duration: 86400
-      db:
-        duration: 86400
-      jwtIssuerUri: ""   # Set this value to the endpoint of the issuer used in your environment
+      roles: "digitalhub_owner_user"
+    jwt:
+      issuerUri: "http://digitalhub-core:8080"
+    
+
   kubeai:
     enabled: true
     serviceName: "kubeai"

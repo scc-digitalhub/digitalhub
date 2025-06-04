@@ -6,7 +6,7 @@ data:
   DH_ENDPOINT: "{{ include "core.endpoint" . }}"
   K8S_NAMESPACE: {{ .Release.Namespace }}
   JDBC_PLATFORM: postgresql
-  JDBC_URL: "jdbc:postgresql://core-postgres-cluster:5432/core"
+  JDBC_URL: {{ printf "%s%s:%s/%s" "jdbc:postgresql://" .Values.postgres.host .Values.postgres.port .Values.postgres.database }}
   JDBC_DRIVER: org.postgresql.Driver
   JDBC_DIALECT: org.hibernate.dialect.PostgreSQLDialect
 {{- if not .Values.sts.enabled }}
@@ -104,31 +104,19 @@ data:
   {{- toYaml . | nindent 2 }}
 {{- end }}
 {{- if .Values.sts.enabled }}
-  DB_CREDENTIALS_PROVIDER: {{ .Values.sts.db.enabled | quote }}
-  {{- if .Values.sts.db.enabled }}
-  DB_CREDENTIALS_DATABASE: {{ .Values.postgres.database }}
+  {{- if .Values.sts.databaseProvider.enabled }}
+  DB_CREDENTIALS_PROVIDER: {{ .Values.sts.databaseProvider.enabled | quote }}
+  DB_CREDENTIALS_DATABASE: {{ .Values.databaseProvider.database }}
   DB_CREDENTIALS_ENDPOINT:  http://{{ .Release.Name }}-core-sts:8080
-  DB_CREDENTIALS_CLAIM: {{ .Values.sts.db.claim }}
-  DB_CREDENTIALS_ROLE: {{ .Values.sts.db.role }}
-    {{- if .Values.sts.credentials.duration }}
-  DB_CREDENTIALS_DURATION: {{ .Values.sts.credentials.duration | quote }}
-    {{- else }}
-  DB_CREDENTIALS_DURATION: {{ .Values.sts.credentials.db.duration | quote }}
-    {{- end }}
-  DB_CREDENTIALS_USER: {{ .Values.sts.credentials.clientId }}
-  DB_CREDENTIALS_PASSWORD: {{ .Values.sts.credentials.clientSecret }}
+  DB_CREDENTIALS_CLAIM: {{ .Values.sts.jwt.claim }}
+  DB_CREDENTIALS_ROLE: {{ .Values.sts.credentials.roles }}
   {{- end }}
   MINIO_CREDENTIALS_PROVIDER: {{ .Values.sts.minio.enabled | quote }}
   {{- if .Values.sts.minio.enabled }}
-  MINIO_CREDENTIALS_CLAIM: {{ .Values.sts.minio.claim }}
-  MINIO_CREDENTIALS_POLICY: {{ .Values.sts.minio.policy }}
+  MINIO_CREDENTIALS_CLAIM: {{ .Values.minio.sts.claim }}
+  MINIO_CREDENTIALS_POLICY: {{ .Values.minio.sts.policy }}
   MINIO_CREDENTIALS_ENDPOINT: {{ .Values.minio.publicUrl }}
   MINIO_CREDENTIALS_REGION: {{ .Values.minio.awsRegion }}
-    {{- if .Values.sts.credentials.duration }}
-  MINIO_CREDENTIALS_DURATION: {{ .Values.sts.credentials.duration | quote }}
-    {{- else }}
-  MINIO_CREDENTIALS_DURATION: {{ .Values.sts.credentials.minio.duration | quote }}
-    {{- end }}
   {{- end }}  
 {{- end }}
   LUCENE_INDEX_PATH: {{ .Values.lucene.indexPath | quote }}

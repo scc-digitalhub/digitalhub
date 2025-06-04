@@ -59,6 +59,26 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+          {{- if .Values.sts.enabled }}
+            - name: DB_CREDENTIALS_USER
+              {{- if and .Values.sts.client.existingSecret.name .Values.sts.client.existingSecret.usernameKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.sts.client.existingSecret.name }}
+                  key: {{ .Values.sts.client.existingSecret.clientIdKey }}
+              {{- else }}
+              values: {{ .Values.sts.client.clientId }}
+              {{- end }}
+            - name: DB_CREDENTIALS_PASSWORD
+              {{- if and .Values.sts.client.existingSecret.name .Values.sts.client.existingSecret.passwordKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.sts.client.existingSecret.name }}
+                  key: {{ .Values.sts.client.existingSecret.clientSecretKey}}
+              {{- else }}
+              values: {{ .Values.sts.client.clientSecret }}
+              {{- end }}
+          {{- end }}
           {{- if .Values.sts.minio.enabled }}
             - name: MINIO_CREDENTIALS_ACCESS_KEY
               valueFrom:
@@ -83,15 +103,23 @@ spec:
                   key: digitalhubPassword
           {{- end }}
             - name: JDBC_USER
+              {{- if and .Values.postgres.credentials.existingSecret.name .Values.postgres.credentials.existingSecret.usernameKey }}
               valueFrom:
                 secretKeyRef:
-                  name: coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do
-                  key: username
+                  name: {{ .Values.postgres.credentials.existingSecret.name }}
+                  key: {{ .Values.postgres.credentials.existingSecret.usernameKey }}
+              {{- else }}
+              value: {{ .Values.postgres.credentials.username }}
+              {{- end }}
             - name: JDBC_PASS
+              {{- if and .Values.postgres.credentials.existingSecret.name .Values.postgres.credentials.existingSecret.passwordKey }}
               valueFrom:
                 secretKeyRef:
-                  name: coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do
-                  key: password
+                  name: {{ .Values.postgres.credentials.existingSecret.name }}
+                  key: {{ .Values.postgres.credentials.existingSecret.passwordKey }}
+              {{- else }}
+              value: {{ .Values.postgres.credentials.password }}
+              {{- end }}
             {{- if and .Values.events.enabled .Values.events.rabbitmq.enabled }}
             - name: RABBITMQ_USER
               valueFrom:
