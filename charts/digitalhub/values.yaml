@@ -87,11 +87,6 @@ coder:
   username: test
   password: Test12456@!
   email: test@digitalhub.test
-  postgres:
-    coderUserSecret: "coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do"
-    host: coder-postgres-cluster
-    port: "5432"
-    database: coder
   template:
     upgrade:
       enabled: false
