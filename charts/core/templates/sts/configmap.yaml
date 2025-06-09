@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "core.fullname" . }}-sts
 data:
-  CONNECTION_URL: {{ printf "%s%s:%s" "jdbc:postgresql://" .Values.databaseProvider.host .Values.databaseProvider.port | quote }}
+  CONNECTION_URL: {{ printf "%s%s:%s/%s" "jdbc:postgresql://" .Values.databaseProvider.host .Values.databaseProvider.port .Values.databaseProvider.database | quote }}
   POSTGRES_DATABASE: {{ .Values.databaseProvider.database }}
   STS_ENDPOINT: http://{{ include "core.fullname" . }}-sts:{{ .Values.service.port }}
   STS_CREDENTIALS_ROLES: {{ .Values.sts.credentials.roles }}
