@@ -45,18 +45,6 @@ variable "namespace" {
   default     = "digitalhub"
 }
 
-variable "db_name" {
-  description = "Provide the db name"
-  type        = string
-  default     = "digitalhub"
-}
-
-variable "db_secret" {
-  description = "Provide the db secret name with username and password"
-  type        = string
-  default     = "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
-}
-
 variable "service_type" {
   type    = string
   default = "ClusterIP"
