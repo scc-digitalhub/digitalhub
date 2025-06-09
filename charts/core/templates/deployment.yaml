@@ -67,7 +67,7 @@ spec:
                   name: {{ .Values.sts.client.existingSecret.name }}
                   key: {{ .Values.sts.client.existingSecret.clientIdKey }}
               {{- else }}
-              values: {{ .Values.sts.client.clientId }}
+              value: {{ .Values.sts.client.clientId }}
               {{- end }}
             - name: DB_CREDENTIALS_PASSWORD
               {{- if and .Values.sts.client.existingSecret.name .Values.sts.client.existingSecret.passwordKey }}
@@ -76,31 +76,47 @@ spec:
                   name: {{ .Values.sts.client.existingSecret.name }}
                   key: {{ .Values.sts.client.existingSecret.clientSecretKey}}
               {{- else }}
-              values: {{ .Values.sts.client.clientSecret }}
+              value: {{ .Values.sts.client.clientSecret }}
               {{- end }}
           {{- end }}
-          {{- if .Values.sts.minio.enabled }}
+          {{- if .Values.s3.dynamicCreds.enabled }}
             - name: MINIO_CREDENTIALS_ACCESS_KEY
+            {{- if and .Values.s3.existingSecret.name .Values.s3.existingSecret.accessKeyKey }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.minio.digitalhubUserSecret }}
-                  key: digitalhubUser
+                  name: {{ .Values.s3.existingSecret.name }}
+                  key: {{ .Values.s3.existingSecret.accessKeyKey }}
+            {{- else }}
+              value: {{ .Values.s3.accessKey }}
+            {{- end }}
             - name: MINIO_CREDENTIALS_SECRET_KEY
+            {{- if and .Values.s3.existingSecret.name .Values.s3.existingSecret.secretKeyKey }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.minio.digitalhubUserSecret }}
-                  key: digitalhubPassword
+                  name: {{ .Values.s3.existingSecret.name }}
+                  key: {{ .Values.s3.existingSecret.secretKeyKey }}
+            {{- else }}
+              value: {{ .Values.s3.secretKey }}
+            {{- end }}
           {{- else }}
             - name: AWS_ACCESS_KEY
+            {{- if and .Values.s3.existingSecret.name .Values.s3.existingSecret.accessKeyKey }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.minio.digitalhubUserSecret }}
-                  key: digitalhubUser
+                  name: {{ .Values.s3.existingSecret.name }}
+                  key: {{ .Values.s3.existingSecret.accessKeyKey }}
+            {{- else }}
+              value: {{ .Values.s3.secretKey }}
+            {{- end }}
             - name: AWS_SECRET_KEY
+            {{- if and .Values.s3.existingSecret.name .Values.s3.existingSecret.secretKeyKey }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.global.minio.digitalhubUserSecret }}
-                  key: digitalhubPassword
+                  name: {{ .Values.s3.existingSecret.name }}
+                  key: {{ .Values.s3.existingSecret.secretKeyKey }}
+            {{- else }}
+              value: {{ .Values.s3.secretKey }}
+            {{- end }}
           {{- end }}
             - name: JDBC_USER
               {{- if and .Values.postgres.credentials.existingSecret.name .Values.postgres.credentials.existingSecret.usernameKey }}

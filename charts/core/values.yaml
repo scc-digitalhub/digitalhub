@@ -37,8 +37,6 @@ podSecurityContext:
 global:
   externalHostAddress: ""
   externalTls: false
-  minio:
-    digitalhubUserSecret: ""
   registry:
     url: ""
     secretName: ""
@@ -58,19 +56,22 @@ securityContext:
 
 defaultStorageClass: ""
 
-minio:
-  endpoint: "minio"
-  endpointPort: "9000"
-  bucket: "datalake"
+s3:
+  dynamicCreds:
+    enabled: false
+  bucket: ""
+  endpoint: ""
+  port: ""
   protocol: "http"
-  awsDefaultRegion: ""
-  awsRegion: ""
-  # Change the publicUrl value to the one you are using for accessing the minio-API from your browser, in the form "http/s://yourminioapiurl"
-  publicUrl: ""
-  sts:
-    enabled: true
-    claim: "minio/policy"
-    policy: "readwritedigitalhub"
+  region: ""
+  publicUrl: ""   # Change the publicUrl value to the one you are using for accessing the s3-API from your browser, in the form "http/s://yours3apiurl"
+  accessKey: ""
+  secretKey: ""
+  existingSecret:
+    name: ""
+    accessKeyKey: ""
+    secretKeyKey: ""
+
 service:
   port: "8080"
   type: ClusterIP
@@ -160,7 +161,6 @@ databaseProvider:
   host: ""
   port: ""
   database: ""
-  schema: ""
 
 runtime:
   dbt:
@@ -233,7 +233,7 @@ solr:
 lucene:
   indexPath: false
   reindex: never
-  
+
 corsOrigin: ""
 
 registry:
@@ -256,8 +256,8 @@ templates: []
   #   path: test/template3.json
 
 coreAuthCreds:
-  clientId: &coreClientId ""
-  clientSecret: &coreClientSecret ""
+  clientId: ""
+  clientSecret: ""
 
 kanikoArgs: ""
 
@@ -364,7 +364,7 @@ sts:
       existingSecret:
         name: ""
         usernameKey: ""
-        passwordKey: ""  
+        passwordKey: ""
 
   credentials:
     roles: ""

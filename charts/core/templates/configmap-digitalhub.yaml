@@ -3,14 +3,12 @@ kind: ConfigMap
 metadata:
   name: digitalhub-common-env
 data:
-  S3_BUCKET: {{ .Values.minio.bucket }}
-  AWS_ENDPOINT_URL: "{{ .Values.minio.protocol }}://{{ .Values.minio.endpoint }}:{{ .Values.minio.endpointPort }}"
+  S3_BUCKET: {{ .Values.s3.bucket }}
+  AWS_ENDPOINT_URL: "{{ .Values.s3.protocol }}://{{ .Values.s3.endpoint }}:{{ .Values.s3.port }}"
   DB_HOST: {{ .Values.databaseProvider.host }}
   DB_PORT: {{ .Values.databaseProvider.port | quote }}
   DB_DATABASE: {{ .Values.databaseProvider.database }}
-  DB_SCHEMA: {{ .Values.databaseProvider.schema }}
-  DHCORE_WORKFLOW_IMAGE: {{ .Values.runtime.kfp.image }}:{{ .Values.runtime.kfp.tag }}
   DHCORE_ENDPOINT: http://{{ include "core.fullname" . }}:{{ .Values.service.port }}
   DHCORE_ISSUER: http://{{ include "core.fullname" . }}:{{ .Values.service.port }}
-  DHCORE_DEFAULT_FILES_STORE: s3://{{ .Values.minio.bucket }}
-  AWS_REGION: {{ .Values.minio.awsDefaultRegion }}
+  DHCORE_DEFAULT_FILES_STORE: s3://{{ .Values.s3.bucket }}
+  AWS_REGION: {{ .Values.s3.region }}

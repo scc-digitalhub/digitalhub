@@ -8,7 +8,6 @@ data:
   JDBC_PLATFORM: postgresql
   JDBC_URL: {{ printf "%s%s:%s/%s" "jdbc:postgresql://" .Values.postgres.host .Values.postgres.port .Values.postgres.database }}
   JDBC_DRIVER: org.postgresql.Driver
-  JDBC_DIALECT: org.hibernate.dialect.PostgreSQLDialect
 {{- if not .Values.sts.enabled }}
   DH_CONFIG_COMMON_SECRETS: digitalhub-common-creds
 {{- end }}
@@ -33,7 +32,6 @@ data:
   {{- end }}
 {{- end }}
 {{- if .Values.solr.enabled }}
-  ENABLE_SOLR: {{ .Values.solr.enabled | quote }}
   SOLR_URL: {{ .Values.solr.url }}
   SOLR_COLLECTION: {{ .Values.solr.collection.name }}
   {{- if .Values.solr.collection.initialize.enabled }}
@@ -72,10 +70,13 @@ data:
 {{- end }}
   JWT_ACCESS_TOKEN_DURATION: {{ .Values.coreTokens.accessTokenDuration | quote }}
   JWT_REFRESH_TOKEN_DURATION: {{ .Values.coreTokens.refreshTokenDuration | quote }}
-  AWS_DEFAULT_REGION: {{ .Values.minio.awsDefaultRegion }}
-  FILES_DEFAULT_STORE: s3://{{ .Values.minio.bucket }}
-  S3_ENDPOINT_URL: {{ .Values.minio.publicUrl }}
-  S3_BUCKET: {{ .Values.minio.bucket }}
+  S3_CREDENTIALS_PROVIDER: {{ if not .Values.s3.dynamicCreds.enabled }}"true"{{ else }}"false"{{ end }}
+{{- if not .Values.s3.dynamicCreds.enabled }}
+  AWS_DEFAULT_REGION: {{ .Values.s3.region }}
+  FILES_DEFAULT_STORE: s3://{{ .Values.s3.bucket }}
+  S3_ENDPOINT_URL: {{ .Values.s3.publicUrl }}
+  S3_BUCKET: {{ .Values.s3.bucket }}
+{{- end }}
 {{- if .Values.templates }}
   K8S_TEMPLATES: {{ include "core.templates" . | quote }}
 {{- end }}
@@ -111,13 +112,11 @@ data:
   DB_CREDENTIALS_CLAIM: {{ .Values.sts.jwt.claim }}
   DB_CREDENTIALS_ROLE: {{ .Values.sts.credentials.roles }}
   {{- end }}
-  MINIO_CREDENTIALS_PROVIDER: {{ .Values.sts.minio.enabled | quote }}
-  {{- if .Values.sts.minio.enabled }}
-  MINIO_CREDENTIALS_CLAIM: {{ .Values.minio.sts.claim }}
-  MINIO_CREDENTIALS_POLICY: {{ .Values.minio.sts.policy }}
-  MINIO_CREDENTIALS_ENDPOINT: {{ .Values.minio.publicUrl }}
-  MINIO_CREDENTIALS_REGION: {{ .Values.minio.awsRegion }}
-  {{- end }}  
+  MINIO_CREDENTIALS_PROVIDER: {{ if .Values.s3.dynamicCreds.enabled }}"true"{{ else }}"false"{{ end }}
+  {{- if .Values.s3.dynamicCreds.enabled }}
+  MINIO_CREDENTIALS_ENDPOINT: {{ .Values.s3.publicUrl }}
+  MINIO_CREDENTIALS_REGION: {{ .Values.s3.region }}
+  {{- end }}
 {{- end }}
   LUCENE_INDEX_PATH: {{ .Values.lucene.indexPath | quote }}
   LUCENE_REINDEX: {{ .Values.lucene.reindex | quote }}

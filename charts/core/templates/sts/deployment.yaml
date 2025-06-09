@@ -46,7 +46,7 @@ spec:
                   name: {{ .Values.sts.client.existingSecret.name }}
                   key: {{ .Values.sts.client.existingSecret.clientIdKey }}
               {{- else }}
-              values: {{ .Values.sts.client.clientId }}
+              value: {{ .Values.sts.client.clientId }}
               {{- end }}
             - name: STS_CLIENT_SECRET
               {{- if and .Values.sts.client.existingSecret.name .Values.sts.client.existingSecret.clientSecretKey }}
@@ -55,7 +55,7 @@ spec:
                   name: {{ .Values.sts.client.existingSecret.name }}
                   key: {{ .Values.sts.client.existingSecret.clientSecretKey}}
               {{- else }}
-              values: {{ .Values.sts.client.clientSecret }}
+              value: {{ .Values.sts.client.clientSecret }}
               {{- end }}
             - name: CONNECTION_USER
               {{- if and .Values.sts.databaseProvider.credentials.existingSecret.name .Values.sts.databaseProvider.credentials.existingSecret.usernameKey }}
