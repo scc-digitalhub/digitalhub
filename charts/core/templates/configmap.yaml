@@ -116,8 +116,6 @@ data:
   {{- if .Values.s3.dynamicCreds.enabled }}
   MINIO_CREDENTIALS_ENDPOINT: {{ .Values.s3.publicUrl }}
   MINIO_CREDENTIALS_REGION: {{ .Values.s3.region }}
-  MINIO_CREDENTIALS_CLAIM: {{ .Values.s3.claim }}
-  MINIO_CREDENTIALS_POLICY: {{ .Values.s3.policy }}
   {{- end }}
 {{- end }}
   LUCENE_INDEX_PATH: {{ .Values.lucene.indexPath | quote }}
