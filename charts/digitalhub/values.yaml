@@ -386,7 +386,6 @@ core:
       roles: "digitalhub_owner_user"
     jwt:
       issuerUri: "http://digitalhub-core:8080"
-    
 
   kubeai:
     enabled: true
