@@ -52,7 +52,7 @@ variable "minio_endpoint" {
 
 variable "minio_bucket" {
   type        = string
-  description = "Minio buckat name"
+  description = "Minio bucket name"
   default     = "datalake"
 }
 

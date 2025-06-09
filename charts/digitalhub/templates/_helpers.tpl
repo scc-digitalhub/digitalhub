@@ -159,6 +159,11 @@ Variables used in the creation and upgrade of Coder templates
 {{- if eq $template.name "dremio"}}
   {{- $variables = append $variables (printf "minio_digitalhub_user_secret=%s" $root.Values.global.minio.digitalhubUserSecret ) }}
 {{- end }}
+{{- if or (eq $template.name "dremio") (eq $template.name "sqlpad")}}
+  {{- $variables = append $variables (printf "db_secret=%s" $template.postgres.database ) }}
+  {{- $variables = append $variables (printf "postgresql_hostname=%s" $template.postgres.hostname ) }}
+  {{- $variables = append $variables (printf "postgresql_creds_secret=%s" $template.postgres.ownerCredsSecret ) }}
+{{- end }}
 {{- if eq $template.name "jupyter"}}
   {{- $variables = append $variables (printf "image_3_9=%s" $template.image39 ) }}
   {{- $variables = append $variables (printf "image_3_11=%s" $template.image311 ) }}

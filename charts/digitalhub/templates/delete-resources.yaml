@@ -22,9 +22,11 @@ metadata:
   labels:
     {{- include "digitalhub.labels" . | nindent 4 }}
 rules:
+{{- if or ( index .Values "postgres-operator" "databases" "coder" "enabled" ) ( index .Values "postgres-operator" "databases" "core" "enabled" ) ( index .Values "postgres-operator" "databases" "database" "enabled" ) }}
   - apiGroups: ["acid.zalan.do"]
     resources: ["postgresqls"]
     verbs: ["get", "list", "watch", "delete"]
+{{- end }}
   - apiGroups: [""]
     resources: ["services", "configmaps", "persistentvolumeclaims","pods"]
     verbs: ["get", "list", "watch", "delete"]
@@ -88,6 +90,7 @@ spec:
             readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
       restartPolicy: OnFailure
 ---
+{{- if or ( index .Values "postgres-operator" "databases" "coder" "enabled" ) ( index .Values "postgres-operator" "databases" "core" "enabled" ) ( index .Values "postgres-operator" "databases" "database" "enabled" ) }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -116,6 +119,7 @@ spec:
             readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
       restartPolicy: OnFailure
 ---
+{{- end }}
 apiVersion: batch/v1
 kind: Job
 metadata:

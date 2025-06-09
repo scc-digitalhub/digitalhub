@@ -114,12 +114,20 @@ coder:
         image: "dremio/dremio-oss:24.1.0"
         stopAfter: 0h
         extraVars: []
+        postgres:
+          database: "digitalhub"
+          hostname: "database-postgres-cluster"
+          ownerCredsSecret: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
       - name: sqlpad
         nodePort: "30140"
         iconUrl: https://i.ibb.co/TrBDsZM/sqlpad.png
         image: "smartcommunitylab/sqlpad:nonroot"
         stopAfter: 8h
         extraVars: []
+        postgres:
+          database: "digitalhub"
+          hostname: "database-postgres-cluster"
+          ownerCredsSecret: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
       - name: grafana
         nodePort: "30130"
         iconUrl: https://cdn.iconscout.com/icon/free/png-256/free-grafana-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030088.png?f=webp
@@ -255,19 +263,21 @@ postgrest-operator:
 
 core:
   enabled: true
-  minio:
-    endpoint: *minioEndpoint
-    endpointPort: *minioEndpointPort
+  s3:
+    dynamicCreds:
+      enabled: false    # If set to true, you must also set core.sts.enabled to true
     bucket: *minioBucket
+    endpoint: *minioEndpoint
+    port: *minioEndpointPort
     protocol: *minioProtocol
-    awsDefaultRegion: "us-west-1"
-    awsRegion: "us-west-1"
-    # Change the publicUrl value to the one you are using for accessing the minio-API from your browser, in the form "http/s://yourminioapiurl"
-    publicUrl: "http://192.168.49.2:30080"
-    sts:
-      enabled: true
-      claim: "minio/policy"
-      policy: "readwritedigitalhub"
+    region: "us-west-1"
+    publicUrl: "http://192.168.49.2:30080"   # Change the publicUrl value to the one you are using for accessing the minio-API from your browser, in the form "http/s://yourminioapiurl"
+    accessKey: ""
+    secretKey: ""
+    existingSecret:
+      name: "digitalhub-minio-creds"
+      accessKeyKey: "digitalhubUser"
+      secretKeyKey: "digitalhubPassword"
   service:
     type: *serviceType
     httpNodePort: "30180"
@@ -285,6 +295,7 @@ core:
         passwordKey: "password"
   databaseProvider:
     host: "database-postgres-cluster"
+    ownerSecret: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
     port: "5432"
     database: "digitalhub"
     schema: "public"
@@ -342,6 +353,9 @@ core:
     user: "8877"
   sts:
     enabled: false
+    client:
+      clientId: ""
+      clientSecret: ""
     stsDb:
       host: core-postgres-cluster
       database: sts
@@ -367,8 +381,6 @@ core:
       roles: "digitalhub_owner_user"
     jwt:
       issuerUri: "http://digitalhub-core:8080"
-    
-
   kubeai:
     enabled: true
     serviceName: "kubeai"
@@ -379,6 +391,11 @@ kubernetes-resource-manager:
   service:
     type: *serviceType
     nodePort: "30220"
+  resourceSelectors:
+    secrets:
+      # list separated by ,
+      # name of the secret/secrets that should be visible in Kubernetes Resource Manager
+      names: "(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"
 
 dremio-rest-server-operator:
   enabled: true
