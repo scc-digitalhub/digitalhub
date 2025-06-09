@@ -235,7 +235,7 @@ solr:
 lucene:
   indexPath: false
   reindex: never
-  
+
 corsOrigin: ""
 
 registry:
@@ -366,7 +366,7 @@ sts:
       existingSecret:
         name: ""
         usernameKey: ""
-        passwordKey: ""  
+        passwordKey: ""
 
   credentials:
     roles: ""
