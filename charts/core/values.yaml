@@ -57,6 +57,7 @@ securityContext:
 defaultStorageClass: ""
 
 s3:
+  enabled: false
   dynamicCreds:
     enabled: false
   bucket: ""
