@@ -1,0 +1,598 @@
+
+#  additionalConfig --
+additionalConfig:
+  #  additionalConfig.debug --
+  debug:
+    #  additionalConfig.debug.enableLogs --
+    enableLogs: true
+    #  additionalConfig.debug.enableMetrics --
+    enableMetrics: false
+  #  additionalConfig.job --
+  job:
+    #  additionalConfig.job.deadline --
+    deadline: "604800"
+    #  additionalConfig.job.jobSuspend --
+    jobSuspend: false
+  #  additionalConfig.resources --
+  resources:
+    #  additionalConfig.resources.cpuLim --
+    cpuLim: ""
+    #  additionalConfig.resources.cpuReq --
+    cpuReq: ""
+    #  additionalConfig.resources.gpuKey --
+    gpuKey: ""
+    #  additionalConfig.resources.memLim --
+    memLim: ""
+    #  additionalConfig.resources.memReq --
+    memReq: ""
+    #  additionalConfig.resources.pvcLim --
+    pvcLim: ""
+    #  additionalConfig.resources.pvcReq --
+    pvcReq: ""
+  #  additionalConfig.security --
+  security:
+    #  additionalConfig.security.disableRoot --
+    disableRoot: true
+  #  additionalConfig.service --
+  service:
+    #  additionalConfig.service.type --
+    type: NodePort
+
+#  affinity --
+affinity: {}
+
+#  argoWorkflow --
+argoWorkflow:
+  #  argoWorkflow.configmap --
+  #  test test
+  configmap: artifact-repositories
+  #  argoWorkflow.key --
+  key: default-artifact-repository
+  #  argoWorkflow.serviceAccount --
+  serviceAccount: default
+  #  argoWorkflow.user --
+  user: "1000"
+
+#  authentication --
+authentication:
+  #  authentication.basic --
+  basic:
+    #  authentication.basic.enabled --
+    enabled: true
+    #  authentication.basic.password --
+    password: ""
+    #  authentication.basic.username --
+    username: ""
+  #  authentication.openId --
+  openId:
+    #  authentication.openId.enabled --
+    enabled: false
+    #  authentication.openId.externalSecret --
+    externalSecret:
+      #  authentication.openId.externalSecret.key --
+      key: ""
+      #  authentication.openId.externalSecret.name --
+      name: ""
+    #  authentication.openId.issuerUri --
+    issuerUri: ""
+    #  authentication.openId.jwtAudience --
+    jwtAudience: ""
+    #  authentication.openId.jwtClaim --
+    jwtClaim: ""
+    #  authentication.openId.jwtUsername --
+    jwtUsername: ""
+    #  authentication.openId.oidcClientId --
+    oidcClientId: ""
+    #  authentication.openId.scope --
+    scope: ""
+
+#  autoscaling --
+autoscaling:
+  #  autoscaling.enabled --
+  enabled: false
+  #  autoscaling.maxReplicas --
+  maxReplicas: 100
+  #  autoscaling.minReplicas --
+  minReplicas: 1
+  #  autoscaling.targetCPUUtilizationPercentage --
+  targetCPUUtilizationPercentage: 80
+
+#  configmapAdditionalEnv --
+configmapAdditionalEnv: {}
+
+#  coreAuthCreds --
+coreAuthCreds:
+  #  coreAuthCreds.clientId --
+  clientId: ""
+  #  coreAuthCreds.clientSecret --
+  clientSecret: ""
+
+#  coreTokens --
+coreTokens:
+  #  coreTokens.accessTokenDuration --
+  accessTokenDuration: "43200"
+  #  coreTokens.refreshTokenDuration --
+  refreshTokenDuration: "86400"
+
+#  corsOrigin --
+corsOrigin: ""
+
+#  databaseProvider --
+databaseProvider:
+  #  databaseProvider.database --
+  database: ""
+  #  databaseProvider.host --
+  host: ""
+  #  databaseProvider.port --
+  port: ""
+
+#  defaultStorageClass --
+defaultStorageClass: ""
+
+#  fullnameOverride --
+fullnameOverride: ""
+
+#  global --
+global:
+  #  global.externalHostAddress --
+  externalHostAddress: ""
+  #  global.externalTls --
+  externalTls: false
+  #  global.registry --
+  registry:
+    #  global.registry.email --
+    email: ""
+    #  global.registry.password --
+    password: ""
+    #  global.registry.secretName --
+    secretName: ""
+    #  global.registry.url --
+    url: ""
+    #  global.registry.username --
+    username: ""
+
+#  image --
+image:
+  #  image.pullPolicy --
+  pullPolicy: IfNotPresent
+  #  image.repository --
+  repository: ghcr.io/scc-digitalhub/digitalhub-core
+  #  image.tag --
+  tag: ""
+
+#  imagePullSecrets --
+imagePullSecrets: []
+
+#  ingress --
+ingress:
+  #  ingress.annotations --
+  annotations: {}
+  #  ingress.className --
+  className: ""
+  #  ingress.enabled --
+  enabled: false
+  #  ingress.hosts --
+  hosts:
+    - host: core.home
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  #  ingress.tls --
+  tls: []
+
+#  initImage --
+initImage:
+  #  initImage.builderTool --
+  builderTool:
+    #  initImage.builderTool.image --
+    image: ghcr.io/scc-digitalhub/digitalhub-core-builder-tool
+    #  initImage.builderTool.tag --
+    tag: b95c095f
+
+#  kanikoArgs --
+kanikoArgs: ""
+
+#  keystore --
+keystore:
+  #  keystore.existingSecret --
+  existingSecret:
+    #  keystore.existingSecret.keyName --
+    keyName: ""
+    #  keystore.existingSecret.secretName --
+    secretName: ""
+  #  keystore.keystoreKid --
+  keystoreKid: ""
+  #  keystore.keystorePath --
+  keystorePath: /etc/keystore
+
+#  kubeai --
+kubeai:
+  #  kubeai.enabled --
+  enabled: true
+  #  kubeai.port --
+  port: ""
+  #  kubeai.serviceName --
+  serviceName: ""
+
+#  lucene --
+lucene:
+  #  lucene.indexPath --
+  indexPath: false
+  #  lucene.reindex --
+  reindex: never
+
+#  nameOverride --
+nameOverride: ""
+
+#  nodeSelector --
+nodeSelector: {}
+
+#  podAnnotations --
+podAnnotations: {}
+
+#  podLabels --
+podLabels: {}
+
+#  podSecurityContext --
+podSecurityContext:
+  #  podSecurityContext.runAsNonRoot --
+  runAsNonRoot: true
+  #  podSecurityContext.seccompProfile --
+  seccompProfile:
+    #  podSecurityContext.seccompProfile.type --
+    type: RuntimeDefault
+
+#  postgres --
+postgres:
+  #  postgres.credentials --
+  credentials:
+    #  postgres.credentials.existingSecret --
+    existingSecret:
+      #  postgres.credentials.existingSecret.name --
+      name: ""
+      #  postgres.credentials.existingSecret.passwordKey --
+      passwordKey:
+      #  postgres.credentials.existingSecret.usernameKey --
+      usernameKey:
+    #  postgres.credentials.password --
+    password: ""
+    #  postgres.credentials.username --
+    username: ""
+  #  postgres.database --
+  database: ""
+  #  postgres.host --
+  host: ""
+  #  postgres.port --
+  port: ""
+  #  postgres.schema --
+  schema: ""
+
+#  registry --
+registry:
+  #  registry.kaniko --
+  kaniko:
+    #  registry.kaniko.imagePrefix --
+    imagePrefix: ""
+
+#  replicaCount --
+replicaCount: 1
+
+#  resources --
+resources:
+  #  resources.limits --
+  limits:
+    #  resources.limits.cpu --
+    cpu: 1000m
+    #  resources.limits.memory --
+    memory: 512Mi
+  #  resources.requests --
+  requests:
+    #  resources.requests.cpu --
+    cpu: 200m
+    #  resources.requests.memory --
+    memory: 256Mi
+
+#  runtime --
+runtime:
+  #  runtime.dbt --
+  dbt:
+    #  runtime.dbt.image --
+    image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt
+    #  runtime.dbt.tag --
+    tag: 0.11.0
+  #  runtime.huggingFace --
+  huggingFace:
+    #  runtime.huggingFace.image --
+    image: kserve/huggingfaceserver
+    #  runtime.huggingFace.tag --
+    tag: v0.14.0
+  #  runtime.kfp --
+  kfp:
+    #  runtime.kfp.image --
+    image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp
+    #  runtime.kfp.tag --
+    tag: 0.11.0
+  #  runtime.python --
+  python:
+    #  runtime.python.image --
+    image: ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime
+    #  runtime.python.tag3_10 --
+    tag3_10: 3.10-0.11.0
+    #  runtime.python.tag3_11 --
+    tag3_11: 3.11-0.11.0
+    #  runtime.python.tag3_9 --
+    tag3_9: 3.9-0.11.0
+
+#  s3 --
+s3:
+  # s3.enabled -- 
+  enabled: false
+  #  s3.accessKey --
+  accessKey: ""
+  #  s3.bucket --
+  bucket: ""
+  #  s3.dynamicCreds --
+  dynamicCreds:
+    #  s3.dynamicCreds.enabled --
+    enabled: false
+  #  s3.endpoint --
+  endpoint: ""
+  #  s3.existingSecret --
+  existingSecret:
+    #  s3.existingSecret.accessKeyKey --
+    accessKeyKey: ""
+    #  s3.existingSecret.name --
+    name: ""
+    #  s3.existingSecret.secretKeyKey --
+    secretKeyKey: ""
+  #  s3.port --
+  port: ""
+  #  s3.protocol --
+  protocol: http
+  #  s3.publicUrl --
+  publicUrl: ""
+  #  s3.region --
+  region: ""
+  #  s3.secretKey --
+  secretKey: ""
+
+#  securityContext --
+securityContext:
+  #  securityContext.allowPrivilegeEscalation --
+  allowPrivilegeEscalation: false
+  #  securityContext.capabilities --
+  capabilities:
+    #  securityContext.capabilities.drop --
+    drop:
+      - ALL
+  #  securityContext.runAsNonRoot --
+  runAsNonRoot: true
+  #  securityContext.seccompProfile --
+  seccompProfile:
+    #  securityContext.seccompProfile.type --
+    type: RuntimeDefault
+
+#  service --
+service:
+  #  service.httpNodePort --
+  httpNodePort: ""
+  #  service.port --
+  port: "8080"
+  #  service.type --
+  type: ClusterIP
+
+#  serviceAccount --
+serviceAccount:
+  #  serviceAccount.annotations --
+  annotations: {}
+  #  serviceAccount.automount --
+  automount: true
+  #  serviceAccount.create --
+  create: true
+  #  serviceAccount.name --
+  name: core
+
+#  solr --
+solr:
+  #  solr.collection --
+  collection:
+    #  solr.collection.initialize --
+    initialize:
+      #  solr.collection.initialize.enabled --
+      enabled: true
+      #  solr.collection.initialize.image --
+      image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
+      #  solr.collection.initialize.securityJsonSecret --
+      securityJsonSecret: ""
+    #  solr.collection.name --
+    name: ""
+  #  solr.enabled --
+  enabled: false
+  #  solr.fullNameOverride --
+  fullNameOverride: ""
+  #  solr.url --
+  url: ""
+  #  solr.user --
+  user: ""
+
+#  sts --
+sts:
+  #  sts.affinity --
+  affinity: {}
+  #  sts.autoscaling --
+  autoscaling:
+    #  sts.autoscaling.enabled --
+    enabled: false
+    #  sts.autoscaling.maxReplicas --
+    maxReplicas: 100
+    #  sts.autoscaling.minReplicas --
+    minReplicas: 1
+    #  sts.autoscaling.targetCPUUtilizationPercentage --
+    targetCPUUtilizationPercentage: 80
+  #  sts.client --
+  client:
+    #  sts.client.clientId --
+    clientId: ""
+    #  sts.client.clientSecret --
+    clientSecret: ""
+    #  sts.client.existingSecret --
+    existingSecret:
+      #  sts.client.existingSecret.clientIdKey --
+      clientIdKey: ""
+      #  sts.client.existingSecret.clientSecretKey --
+      clientSecretKey: ""
+      #  sts.client.existingSecret.name --
+      name: ""
+  #  sts.credentials --
+  credentials:
+    #  sts.credentials.roles --
+    roles: ""
+  #  sts.databaseProvider --
+  databaseProvider:
+    #  sts.databaseProvider.credentials --
+    credentials:
+      #  sts.databaseProvider.credentials.existingSecret --
+      existingSecret:
+        #  sts.databaseProvider.credentials.existingSecret.name --
+        name: ""
+        #  sts.databaseProvider.credentials.existingSecret.passwordKey --
+        passwordKey: ""
+        #  sts.databaseProvider.credentials.existingSecret.usernameKey --
+        usernameKey: ""
+      #  sts.databaseProvider.credentials.password --
+      password: ""
+      #  sts.databaseProvider.credentials.username --
+      username: ""
+    #  sts.databaseProvider.enabled --
+    enabled: true
+  #  sts.enabled --
+  enabled: false
+  #  sts.fullnameOverride --
+  fullnameOverride: ""
+  #  sts.image --
+  image:
+    #  sts.image.pullPolicy --
+    pullPolicy: IfNotPresent
+    #  sts.image.repository --
+    repository: ghcr.io/scc-digitalhub/db-sts
+    #  sts.image.tag --
+    tag: 0.3.0
+  #  sts.imagePullSecrets --
+  imagePullSecrets: []
+  #  sts.jwt --
+  jwt:
+    #  sts.jwt.audience --
+    audience: sts
+    #  sts.jwt.claim --
+    claim: db/role
+    #  sts.jwt.issuerUri --
+    issuerUri: http://digitalhub-core:8080
+  #  sts.nameOverride --
+  nameOverride: ""
+  #  sts.nodeSelector --
+  nodeSelector: {}
+  #  sts.podAnnotations --
+  podAnnotations: {}
+  #  sts.podLabels --
+  podLabels: {}
+  #  sts.podSecurityContext --
+  podSecurityContext:
+    #  sts.podSecurityContext.runAsNonRoot --
+    runAsNonRoot: true
+    #  sts.podSecurityContext.seccompProfile --
+    seccompProfile:
+      #  sts.podSecurityContext.seccompProfile.type --
+      type: RuntimeDefault
+  #  sts.replicaCount --
+  replicaCount: 1
+  #  sts.resources --
+  resources:
+    #  sts.resources.limits --
+    limits:
+      #  sts.resources.limits.cpu --
+      cpu: 200m
+      #  sts.resources.limits.memory --
+      memory: 256Mi
+    #  sts.resources.requests --
+    requests:
+      #  sts.resources.requests.cpu --
+      cpu: 100m
+      #  sts.resources.requests.memory --
+      memory: 128Mi
+  #  sts.securityContext --
+  securityContext:
+    #  sts.securityContext.allowPrivilegeEscalation --
+    allowPrivilegeEscalation: false
+    #  sts.securityContext.capabilities --
+    capabilities:
+      #  sts.securityContext.capabilities.drop --
+      drop:
+        - ALL
+    #  sts.securityContext.runAsNonRoot --
+    runAsNonRoot: true
+    #  sts.securityContext.seccompProfile --
+    seccompProfile:
+      #  sts.securityContext.seccompProfile.type --
+      type: RuntimeDefault
+  #  sts.service --
+  service:
+    #  sts.service.port --
+    port: 8080
+    #  sts.service.type --
+    type: ClusterIP
+  #  sts.serviceAccount --
+  serviceAccount:
+    #  sts.serviceAccount.annotations --
+    annotations: {}
+    #  sts.serviceAccount.automount --
+    automount: true
+    #  sts.serviceAccount.create --
+    create: true
+    #  sts.serviceAccount.name --
+    name: core-sts
+  #  sts.stsDb --
+  stsDb:
+    #  sts.stsDb.credentials --
+    credentials:
+      #  sts.stsDb.credentials.existingSecret --
+      existingSecret:
+        #  sts.stsDb.credentials.existingSecret.name --
+        name: ""
+        #  sts.stsDb.credentials.existingSecret.passwordKey --
+        passwordKey: ""
+        #  sts.stsDb.credentials.existingSecret.usernameKey --
+        usernameKey: ""
+      #  sts.stsDb.credentials.password --
+      password: ""
+      #  sts.stsDb.credentials.username --
+      username: ""
+    #  sts.stsDb.database --
+    database: ""
+    #  sts.stsDb.driver --
+    driver: ""
+    #  sts.stsDb.host --
+    host: ""
+    #  sts.stsDb.platform --
+    platform: ""
+    #  sts.stsDb.port --
+    port: ""
+    #  sts.stsDb.schema --
+    schema: ""
+  #  sts.tolerations --
+  tolerations: []
+  #  sts.volumeMounts --
+  volumeMounts: []
+  #  sts.volumes --
+  volumes: []
+
+#  templates --
+templates: []
+
+#  tolerations --
+tolerations: []
+
+#  volumeMounts --
+volumeMounts: []
+
+#  volumes --
+volumes: []

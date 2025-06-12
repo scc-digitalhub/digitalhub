@@ -1,0 +1,297 @@
+additionalConfig:
+  debug:
+    enableLogs: true
+    enableMetrics: false
+  job:
+    deadline: "604800"
+    jobSuspend: false
+  resources:
+    cpuLim: ""
+    cpuReq: ""
+    gpuKey: ""
+    memLim: ""
+    memReq: ""
+    pvcLim: ""
+    pvcReq: ""
+  security:
+    disableRoot: true
+  service:
+    type: NodePort
+affinity: {}
+argoWorkflow:
+  configmap: artifact-repositories
+  key: default-artifact-repository
+  serviceAccount: default
+  user: "1000"
+authentication:
+  basic:
+    enabled: true
+    password: ""
+    username: ""
+  openId:
+    enabled: false
+    externalSecret:
+      key: ""
+      name: ""
+    issuerUri: ""
+    jwtAudience: ""
+    jwtClaim: ""
+    jwtUsername: ""
+    oidcClientId: ""
+    scope: ""
+autoscaling:
+  enabled: false
+  maxReplicas: 100
+  minReplicas: 1
+  targetCPUUtilizationPercentage: 80
+configmapAdditionalEnv: {}
+coreAuthCreds:
+  clientId: ""
+  clientSecret: ""
+coreTokens:
+  accessTokenDuration: "43200"
+  refreshTokenDuration: "86400"
+corsOrigin: ""
+databaseProvider:
+  database: ""
+  host: ""
+  port: ""
+defaultStorageClass: ""
+events:
+  enabled: "false"
+  rabbitmq:
+    credentials:
+      existingSecret:
+        name: ""
+        passwordKey: ""
+        usernameKey: ""
+      password: ""
+      username: ""
+    enabled: false
+    host: ""
+    port: ""
+    queue: ""
+    routingKey: ""
+    topic: ""
+    vhost: ""
+fullnameOverride: ""
+global:
+  externalHostAddress: ""
+  externalTls: false
+  registry:
+    email: ""
+    password: ""
+    secretName: ""
+    url: ""
+    username: ""
+image:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/scc-digitalhub/digitalhub-core
+  tag: ""
+imagePullSecrets: []
+ingress:
+  annotations: {}
+  className: ""
+  enabled: false
+  hosts:
+    - host: core.home
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+initImage:
+  builderTool:
+    image: ghcr.io/scc-digitalhub/digitalhub-core-builder-tool
+    tag: b95c095f
+kanikoArgs: ""
+keystore:
+  existingSecret:
+    keyName: ""
+    secretName: ""
+  keystoreKid: ""
+  keystorePath: /etc/keystore
+kubeai:
+  enabled: true
+  port: ""
+  serviceName: ""
+lucene:
+  indexPath: false
+  reindex: never
+nameOverride: ""
+nodeSelector: {}
+podAnnotations: {}
+podLabels: {}
+podSecurityContext:
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+postgres:
+  credentials:
+    existingSecret:
+      name: ""
+      passwordKey: null
+      usernameKey: null
+    password: ""
+    username: ""
+  database: ""
+  host: ""
+  port: ""
+  schema: ""
+registry:
+  kaniko:
+    imagePrefix: ""
+replicaCount: 1
+resources:
+  limits:
+    cpu: 1000m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+runtime:
+  dbt:
+    image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt
+    tag: 0.11.0
+  huggingFace:
+    image: kserve/huggingfaceserver
+    tag: v0.14.0
+  kfp:
+    image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp
+    tag: 0.11.0
+  python:
+    image: ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime
+    tag3_10: 3.10-0.11.0
+    tag3_11: 3.11-0.11.0
+    tag3_9: 3.9-0.11.0
+s3:
+  accessKey: ""
+  bucket: ""
+  dynamicCreds:
+    enabled: false
+  endpoint: ""
+  existingSecret:
+    accessKeyKey: ""
+    name: ""
+    secretKeyKey: ""
+  port: ""
+  protocol: http
+  publicUrl: ""
+  region: ""
+  secretKey: ""
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+service:
+  httpNodePort: ""
+  port: "8080"
+  type: ClusterIP
+serviceAccount:
+  annotations: {}
+  automount: true
+  create: true
+  name: core
+solr:
+  collection:
+    initialize:
+      enabled: true
+      image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
+      securityJsonSecret: ""
+    name: ""
+  enabled: false
+  fullNameOverride: ""
+  url: ""
+  user: ""
+sts:
+  affinity: {}
+  autoscaling:
+    enabled: false
+    maxReplicas: 100
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+  client:
+    clientId: ""
+    clientSecret: ""
+    existingSecret:
+      clientIdKey: ""
+      clientSecretKey: ""
+      name: ""
+  credentials:
+    roles: ""
+  databaseProvider:
+    credentials:
+      existingSecret:
+        name: ""
+        passwordKey: ""
+        usernameKey: ""
+      password: ""
+      username: ""
+    enabled: true
+  enabled: false
+  fullnameOverride: ""
+  image:
+    pullPolicy: IfNotPresent
+    repository: ghcr.io/scc-digitalhub/db-sts
+    tag: 0.3.0
+  imagePullSecrets: []
+  jwt:
+    audience: sts
+    claim: db/role
+    issuerUri: http://digitalhub-core:8080
+  nameOverride: ""
+  nodeSelector: {}
+  podAnnotations: {}
+  podLabels: {}
+  podSecurityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  service:
+    port: 8080
+    type: ClusterIP
+  serviceAccount:
+    annotations: {}
+    automount: true
+    create: true
+    name: core-sts
+  stsDb:
+    credentials:
+      existingSecret:
+        name: ""
+        passwordKey: ""
+        usernameKey: ""
+      password: ""
+      username: ""
+    database: ""
+    driver: ""
+    host: ""
+    platform: ""
+    port: ""
+    schema: ""
+  tolerations: []
+  volumeMounts: []
+  volumes: []
+templates: []
+tolerations: []
+volumeMounts: []
+volumes: []

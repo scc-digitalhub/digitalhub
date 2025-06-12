@@ -1,0 +1,77 @@
+#  env --
+env: {}
+#  existingSecret --
+existingSecret: ""
+#  fullnameOverride --
+fullnameOverride: ""
+#  image --
+image:
+  #  image.pullPolicy --
+  pullPolicy: IfNotPresent
+  #  image.repository --
+  repository: ghcr.io/movetokube/postgres-operator
+  #  image.tag --
+  tag: latest
+#  nameOverride --
+nameOverride: ""
+#  namespaceValues --
+namespaceValues:
+  #  namespaceValues.namespace --
+  namespace: ""
+  #  namespaceValues.namespaced --
+  namespaced: true
+#  nodeSelector --
+nodeSelector: {}
+#  podAnnotations --
+podAnnotations: {}
+#  podLabels --
+podLabels: {}
+#  podSecurityContext --
+podSecurityContext: {}
+#  postgres --
+postgres:
+  #  postgres.cloud_provider --
+  cloud_provider: ""
+  #  postgres.default_database --
+  default_database: postgres
+  #  postgres.host --
+  host: localhost
+  #  postgres.password --
+  password: password
+  #  postgres.uri_args --
+  uri_args: ""
+  #  postgres.user --
+  user: admin
+#  postgresCredsExistingSecrets --
+postgresCredsExistingSecrets: {}
+#  replicaCount --
+replicaCount: 1
+#  resources --
+resources: {}
+#  securityContext --
+securityContext:
+  #  securityContext.allowPrivilegeEscalation --
+  allowPrivilegeEscalation: false
+  #  securityContext.capabilities --
+  capabilities:
+    #  securityContext.capabilities.drop --
+    drop:
+    - ALL
+  #  securityContext.readOnlyRootFilesystem --
+  readOnlyRootFilesystem: true
+  #  securityContext.runAsNonRoot --
+  runAsNonRoot: true
+#  serviceAccount --
+serviceAccount:
+  #  serviceAccount.annotations --
+  annotations: {}
+  #  serviceAccount.name --
+  name: ""
+#  tolerations --
+tolerations: []
+#  volumeMounts --
+volumeMounts: []
+#  volumes --
+volumes: []
+#  watchNamespace --
+watchNamespace: ""

@@ -1,0 +1,94 @@
+deployment:
+  image:
+    pullPolicy: IfNotPresent
+  kubeRbacProxy:
+    args:
+      - "--secure-listen-address=0.0.0.0:8443"
+      - "--upstream=http://127.0.0.1:8080/"
+      - "--logtostderr=true"
+      - "--v=0"
+    image:
+      repository: gcr.io/kubebuilder/kube-rbac-proxy
+      tag: v0.13.1
+    name: kube-rbac-proxy
+    ports:
+      containerPort: 8443
+    resources:
+      limits:
+        cpu: 500m
+        memory: 128Mi
+      requests:
+        cpu: 5m
+        memory: 64Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+  manager:
+    args:
+      - "--health-probe-bind-address=:8081"
+      - "--metrics-bind-address=127.0.0.1:8080"
+      - "--leader-elect"
+    command:
+      - /manager
+    image:
+      repository: ghcr.io/scc-digitalhub/dremio-rest-server-operator
+      tag: ""
+    name: manager
+    resources:
+      limits:
+        cpu: 500m
+        memory: 128Mi
+      requests:
+        cpu: 10m
+        memory: 64Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+fullnameOverride: ""
+imagePullSecrets: []
+ingress:
+  annotations: {}
+  className: ""
+  enabled: false
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+nameOverride: ""
+namespaceValues:
+  namespace: ""
+  namespaced: true
+nodeSelector: {}
+podAnnotations:
+  kubectl.kubernetes.io/default-container: manager
+podLabels:
+  control-plane: controller-manager
+podSecurityContext:
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+replicaCount: 1
+resources: {}
+service:
+  port: 8443
+  type: ClusterIP
+serviceAccount:
+  annotations: {}
+  automount: true
+  create: true
+  name: dremio-rest-server-operator-controller-manager
+tolerations: []
+volumeMounts: []
+volumes: []

@@ -1,0 +1,39 @@
+env: {}
+existingSecret: ""
+fullnameOverride: ""
+image:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/movetokube/postgres-operator
+  tag: latest
+nameOverride: ""
+namespaceValues:
+  namespace: ""
+  namespaced: true
+nodeSelector: {}
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+postgres:
+  cloud_provider: ""
+  default_database: postgres
+  host: localhost
+  password: password
+  uri_args: ""
+  user: admin
+postgresCredsExistingSecrets: {}
+replicaCount: 1
+resources: {}
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+serviceAccount:
+  annotations: {}
+  name: ""
+tolerations: []
+volumeMounts: []
+volumes: []
+watchNamespace: ""
