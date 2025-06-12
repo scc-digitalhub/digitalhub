@@ -1,10 +1,11 @@
-#  affinity --
+#  affinity -- Affinity for pod assignment.
+## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity:
-  #  affinity.nodeAffinity --
+  #  affinity.nodeAffinity -- Constrain which nodes your Pod can be scheduled on based on node labels.
   nodeAffinity:
-    #  affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution --
+    #  affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution -- The scheduler can't schedule the Pod unless the rule is met. This functions like nodeSelector, but with a more expressive syntax.
     requiredDuringSchedulingIgnoredDuringExecution:
-      #  affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms --
+      #  affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms -- Kubernetes only schedules the Pod onto nodes that have each of the labels you specify.
       nodeSelectorTerms:
         - matchExpressions:
             - key: kubernetes.io/arch
@@ -16,241 +17,218 @@ affinity:
               values:
                 - linux
 
-#  autoscaling --
+#  autoscaling -- Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.
 autoscaling:
-  #  autoscaling.enabled --
+  #  autoscaling.enabled -- Enable horizontal scaling
   enabled: false
-  #  autoscaling.maxReplicas --
+  #  autoscaling.maxReplicas -- Set max replicas for autoscaling
   maxReplicas: 100
-  #  autoscaling.minReplicas --
+  #  autoscaling.minReplicas -- Set min replicas for autoscaling
   minReplicas: 1
-  #  autoscaling.targetCPUUtilizationPercentage --
+  #  autoscaling.targetCPUUtilizationPercentage -- Set CPU utilization percentage that trigger the autoscaling 
   targetCPUUtilizationPercentage: 80
 
-#  deployment --
+#  deployment -- Set containers properties
 deployment:
-  #  deployment.kubeRbacProxy --
+  #  deployment.kubeRbacProxy -- DEPRECATED Kube-rbac-proxy secures /metrics endpoint as a manager sidecar, using the service account token mounted into the Pod by default corrects this problem.
   kubeRbacProxy:
-    #  deployment.kubeRbacProxy.args --
+    #  deployment.kubeRbacProxy.args -- DEPRECATED kube-rbac-proxy configure additional arguments to pass to kube-rbac-proxy sidecar container.
     args:
       - "--secure-listen-address=0.0.0.0:8443"
       - "--upstream=http://127.0.0.1:8080/"
       - "--logtostderr=true"
       - "--v=0"
-    #  deployment.kubeRbacProxy.image --
+    #  deployment.kubeRbacProxy.image -- DEPRECATED kube-rbac-proxy container image configuration.
     image:
-      #  deployment.kubeRbacProxy.image.repository --
+      #  deployment.kubeRbacProxy.image.repository -- DEPRECATED kube-rbac-proxy container image repository.
       repository: gcr.io/kubebuilder/kube-rbac-proxy
-      #  deployment.kubeRbacProxy.image.tag --
+      #  deployment.kubeRbacProxy.image.tag -- DEPRECATED kube-rbac-proxy container image tag.
       tag: v0.13.1
-    #  deployment.kubeRbacProxy.name --
+    #  deployment.kubeRbacProxy.name -- DEPRECATED kube-rbac-proxy container name.
     name: kube-rbac-proxy
-    #  deployment.kubeRbacProxy.ports --
+    #  deployment.kubeRbacProxy.ports -- DEPRECATED kube-rbac-proxy container port.
     ports:
-      #  deployment.kubeRbacProxy.ports.containerPort --
+      #  deployment.kubeRbacProxy.ports.containerPort -- DEPRECATED kube-rbac-proxy container port.
       containerPort: 8443
-    #  deployment.kubeRbacProxy.resources --
+    #  deployment.kubeRbacProxy.resources -- DEPRECATED kube-rbac-proxy container resource requests and limits.
     resources:
-      #  deployment.kubeRbacProxy.resources.limits --
       limits:
-        #  deployment.kubeRbacProxy.resources.limits.cpu --
         cpu: 500m
-        #  deployment.kubeRbacProxy.resources.limits.memory --
         memory: 128Mi
-      #  deployment.kubeRbacProxy.resources.requests --
       requests:
-        #  deployment.kubeRbacProxy.resources.requests.cpu --
         cpu: 5m
-        #  deployment.kubeRbacProxy.resources.requests.memory --
         memory: 64Mi
-    #  deployment.kubeRbacProxy.securityContext --
+    #  deployment.kubeRbacProxy.securityContext -- DEPRECATED kube-rbac-proxy [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
     securityContext:
-      #  deployment.kubeRbacProxy.securityContext.allowPrivilegeEscalation --
+      #  deployment.kubeRbacProxy.securityContext.allowPrivilegeEscalation -- DEPRECATED kube-rbac-proxy container allow privilege escalation.
       allowPrivilegeEscalation: false
-      #  deployment.kubeRbacProxy.securityContext.capabilities --
+      #  deployment.kubeRbacProxy.securityContext.capabilities -- DEPRECATED kube-rbac-proxy container configure capabilities.
       capabilities:
-        #  deployment.kubeRbacProxy.securityContext.capabilities.drop --
+        #  deployment.kubeRbacProxy.securityContext.capabilities.drop -- DEPRECATED kube-rbac-proxy container drop capabilities.
         drop:
           - ALL
-      #  deployment.kubeRbacProxy.securityContext.runAsNonRoot --
+      #  deployment.kubeRbacProxy.securityContext.runAsNonRoot -- DEPRECATED kube-rbac-proxy container allow run as root.
       runAsNonRoot: true
-      #  deployment.kubeRbacProxy.securityContext.seccompProfile --
+      #  deployment.kubeRbacProxy.securityContext.seccompProfile -- DEPRECATED kube-rbac-proxy container configure seccompProfile.
       seccompProfile:
-        #  deployment.kubeRbacProxy.securityContext.seccompProfile.type --
+        #  deployment.kubeRbacProxy.securityContext.seccompProfile.type --  DEPRECATED kube-rbac-proxy container configure seccompProfile type.
         type: RuntimeDefault
-  #  deployment.manager --
+  #  deployment.manager -- Manager container is responsible to reconcile minio-operator CR.
   manager:
-    #  deployment.manager.args --
+    #  deployment.manager.args -- Manager configure additional arguments
     args:
       - "--health-probe-bind-address=:8081"
       - "--metrics-bind-address=127.0.0.1:8080"
       - "--leader-elect"
-    #  deployment.manager.command --
+    #  deployment.manager.command -- Ovveride image entrypoint
     command:
       - /manager
-    #  deployment.manager.image --
+    #  deployment.manager.image -- Manager container image configuration.
     image:
-      #  deployment.manager.image.repository --
+      #  deployment.manager.image.repository -- Manager container image repository.
       repository: ghcr.io/scc-digitalhub/minio-operator
-      #  deployment.manager.image.tag --
+      #  deployment.manager.image.tag -- Manager container image tag.
       tag: ""
-    #  deployment.manager.name --
+    #  deployment.manager.name -- Manager container name.
     name: manager
-    #  deployment.manager.resources --
+    #  deployment.manager.resources -- Manager container resource requests and limits.
     resources:
-      #  deployment.manager.resources.limits --
       limits:
-        #  deployment.manager.resources.limits.cpu --
         cpu: 500m
-        #  deployment.manager.resources.limits.memory --
         memory: 512Mi
-      #  deployment.manager.resources.requests --
       requests:
-        #  deployment.manager.resources.requests.cpu --
         cpu: 10m
-        #  deployment.manager.resources.requests.memory --
         memory: 64Mi
-    #  deployment.manager.securityContext --
+    #  deployment.manager.securityContext -- Manager [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
     securityContext:
-      #  deployment.manager.securityContext.allowPrivilegeEscalation --
+      #  deployment.manager.securityContext.allowPrivilegeEscalation -- Manager container allow privilege escalation
       allowPrivilegeEscalation: false
-      #  deployment.manager.securityContext.capabilities --
+      #  deployment.manager.securityContext.capabilities -- Manager container configure capabilities.
       capabilities:
-        #  deployment.manager.securityContext.capabilities.drop --
+        #  deployment.manager.securityContext.capabilities.drop -- Manager container drop capabilities.
         drop:
           - ALL
-      #  deployment.manager.securityContext.runAsNonRoot --
+      #  deployment.manager.securityContext.runAsNonRoot -- Manager container allow run as root.
       runAsNonRoot: true
-      #  deployment.manager.securityContext.seccompProfile --
+      #  deployment.manager.securityContext.seccompProfile -- Manager container configure seccompProfile.
       seccompProfile:
-        #  deployment.manager.securityContext.seccompProfile.type --
+        #  deployment.manager.securityContext.seccompProfile.type -- Manager container configure seccompProfile.
         type: RuntimeDefault
 
-#  fullnameOverride --
+#  fullnameOverride -- String to fully override `minio-operator.fullname` template.
 fullnameOverride: ""
 
-#  global --
+#  global -- Global configurations.
 global:
-  #  global.externalHostAddress --
+  #  global.externalHostAddress -- Minio API URL
   externalHostAddress: ""
   #  global.minio --
   minio:
-    #  global.minio.rootUserSecret --
+    #  global.minio.rootUserSecret -- Minio admin credentials secret name
     rootUserSecret: ""
 
-#  image --
-image:
-  #  image.pullPolicy --
-  pullPolicy: IfNotPresent
-  #  image.repository --
-  repository: nginx
-  #  image.tag --
-  tag: ""
-
-#  imagePullSecrets --
+#  imagePullSecrets -- Image pull secrets
+#  Optionally specify an array of imagePullSecrets.
+#  Secrets must be manually created in the namespace.
+#  ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 
-#  ingress --
+#  ingress -- Ingress configurations.
 ingress:
-  #  ingress.annotations --
+  #  ingress.annotations -- Ingress annotations (values are templated).
   annotations: {}
-  #  ingress.className --
+  #  ingress.className -- Ingress Class Name. MAY be required for Kubernetes versions >= 1.18-
   className: ""
-  #  ingress.enabled --
+  #  ingress.enabled -- Enables Ingress.
   enabled: false
-  #  ingress.hosts --
+  #  ingress.hosts -- Ingress accepted hostnames.
   hosts:
     - host: chart-example.local
       paths:
         - path: /
           pathType: ImplementationSpecific
-  #  ingress.tls --
+  #  ingress.tls -- Ingress TLS configuration.
   tls: []
 
-#  minio --
+#  minio -- Minio instance configuration.
 minio:
-  #  minio.bucket --
+  #  minio.bucket -- Minio Bucket Name.
   bucket: datalake
-  #  minio.emptyBucketOnDelete --
+  #  minio.emptyBucketOnDelete -- Remove all Object inside the bucket before delete.
   emptyBucketOnDelete: true
-  #  minio.endpoint --
+  #  minio.endpoint -- Minio API instance endpoint.
   endpoint: minio
-  #  minio.endpointPort --
+  #  minio.endpointPort -- Minio API instance port.
   endpointPort: "9000"
-  #  minio.minioCredsExistingSecret --
+  #  minio.minioCredsExistingSecret -- Use existing segret for minio credentials.
   minioCredsExistingSecret:
-    #  minio.minioCredsExistingSecret.password --
     password:
-      #  minio.minioCredsExistingSecret.password.secretKey --
+      #  minio.minioCredsExistingSecret.password.secretKey -- Password secret key.
       secretKey: ""
-      #  minio.minioCredsExistingSecret.password.secretName --
+      #  minio.minioCredsExistingSecret.password.secretName -- Password secret name.
       secretName: ""
-    #  minio.minioCredsExistingSecret.username --
     username:
-      #  minio.minioCredsExistingSecret.username.secretKey --
+      #  minio.minioCredsExistingSecret.username.secretKey -- Username secret key
       secretKey: ""
-      #  minio.minioCredsExistingSecret.username.secretName --
+      #  minio.minioCredsExistingSecret.username.secretName -- Username secret name
       secretName: ""
-  #  minio.protocol --
+  #  minio.protocol -- Minio API protocol
   protocol: http
 
-#  nameOverride --
+#  nameOverride -- String to partially override `minio-operator.fullname` template (will maintain the release name)
 nameOverride: ""
 
-#  namespaceValues --
+#  namespaceValues -- Configure operator scope clusterwide or namespaced
 namespaceValues:
-  #  namespaceValues.namespace --
+  #  namespaceValues.namespace -- Namespace name where operator watch for CR
   namespace: ""
-  #  namespaceValues.namespaced --
+  #  namespaceValues.namespaced -- Enable/Disable Cluster wide mode
   namespaced: true
 
-#  nodeSelector --
+#  nodeSelector -- Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/.
 nodeSelector: {}
 
-#  podAnnotations --
+#  podAnnotations -- Annotations to add to each pod.
 podAnnotations: {}
 
-#  podLabels --
+#  podLabels -- Labels to add to each pod.
 podLabels: {}
 
-#  podSecurityContext --
+#  podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 podSecurityContext:
-  #  podSecurityContext.runAsNonRoot --
+  #  podSecurityContext.runAsNonRoot -- Pod allow run as root.
   runAsNonRoot: true
-  #  podSecurityContext.seccompProfile --
+  #  podSecurityContext.seccompProfile -- Pod configure seccompProfile.
   seccompProfile:
-    #  podSecurityContext.seccompProfile.type --
+    #  podSecurityContext.seccompProfile.type -- Pod configure seccompProfile type.
     type: RuntimeDefault
 
-#  replicaCount --
+#  replicaCount -- Desired number of pods.
 replicaCount: 1
 
-#  resources --
-resources: {}
-
-#  service --
+#  service -- Service configurations.
 service:
-  #  service.port --
+  #  service.port -- Service port.
   port: 8443
-  #  service.type --
+  #  service.type -- Service type.
   type: ClusterIP
 
-#  serviceAccount --
+#  serviceAccount -- Service account configuration.
 serviceAccount:
-  #  serviceAccount.annotations --
+  #  serviceAccount.annotations -- Additional Service Account annotations.
   annotations: {}
-  #  serviceAccount.automount --
+  #  serviceAccount.automount -- Automount API credentials for a Service Account.
   automount: true
-  #  serviceAccount.create --
+  #  serviceAccount.create -- If `true` a Service Account will be created.
   create: true
-  #  serviceAccount.name --
+  #  serviceAccount.name -- Service account name.
   name: minio-operator-controller-manager
 
-#  tolerations --
+#  tolerations -- List of node taints to tolerate (requires Kubernetes >= 1.6).
 tolerations: []
 
-#  volumeMounts --
+#  volumeMounts -- Additional volumes.
 volumeMounts: []
 
-#  volumes --
+#  volumes -- Additional volumes to mount.
 volumes: []

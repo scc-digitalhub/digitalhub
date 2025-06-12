@@ -1,92 +1,96 @@
-#  env --
-env: {
-  
-}
-#  existingSecret --
+#  env -- Additional enviroment variable.
+env: {}
+
+#  existingSecret -- Additional environment variable mounted from an existing secret.
 existingSecret: ""
-#  fullnameOverride --
+
+#  fullnameOverride -- String to fully override `postgrest-operator.fullname` template.
 fullnameOverride: ""
-#  image --
+
+#  image -- Container image configuration.
 image:
-  #  image.pullPolicy --
+  #  image.pullPolicy -- Container image pull policy.
   pullPolicy: IfNotPresent
-  #  image.repository --
+  #  image.repository -- Container image repository.
   repository: ghcr.io/movetokube/postgres-operator
-  #  image.tag --
+  #  image.tag -- Container image tag.
   tag: latest
-#  nameOverride --
+
+#  nameOverride -- String to partially override `postgrest-operator.fullname` template (will maintain the release name).
 nameOverride: ""
-#  namespaceValues --
+
+#  namespaceValues -- Configure operator scope clusterwide or namespaced.
 namespaceValues:
-  #  namespaceValues.namespace --
+  #  namespaceValues.namespace -- Namespace name where operator watch for CR.
   namespace: ""
-  #  namespaceValues.namespaced --
+  #  namespaceValues.namespaced -- Enable/Disable Cluster wide mode.
   namespaced: true
-#  nodeSelector --
-nodeSelector: {
-  
-}
-#  podAnnotations --
-podAnnotations: {
-  
-}
-#  podLabels --
-podLabels: {
-  
-}
-#  podSecurityContext --
-podSecurityContext: {
-  
-}
-#  postgres --
+
+#  nodeSelector -- Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/.
+nodeSelector: {}
+
+#  podAnnotations -- Annotations to add to each pod.
+podAnnotations: {}
+
+#  podLabels -- Labels to add to each pod.
+podLabels: {}
+
+#  podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+podSecurityContext: {}
+
+#  postgres -- 
 postgres:
-  #  postgres.cloud_provider --
+  #  postgres.cloud_provider -- Postgres cloud provider, could be AWS, Azure, GCP or empty (default)
   cloud_provider: ""
-  #  postgres.default_database --
+  #  postgres.default_database -- Postgres default database to use
   default_database: postgres
-  #  postgres.host --
+  #  postgres.host -- Postgres hostname
   host: localhost
-  #  postgres.password --
+  #  postgres.password -- Postgres username
   password: password
-  #  postgres.uri_args --
+  #  postgres.uri_args -- Additional connection args to pg driver
   uri_args: ""
-  #  postgres.user --
+  #  postgres.user -- Postgres password
   user: admin
-#  postgresCredsExistingSecrets --
-postgresCredsExistingSecrets: {
-  
-}
-#  replicaCount --
+
+#  postgresCredsExistingSecrets -- Use existing secret for postgres server credentials
+postgresCredsExistingSecrets: {}
+
+#  replicaCount -- Desired number of pods.
 replicaCount: 1
-#  resources --
-resources: {
-  
-}
-#  securityContext --
+
+#  resources -- Container resource requests and limits.
+resources: {}
+
+#  securityContext -- [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 securityContext:
-  #  securityContext.allowPrivilegeEscalation --
+  #  securityContext.allowPrivilegeEscalation -- Container allow privilege escalation
   allowPrivilegeEscalation: false
-  #  securityContext.capabilities --
+  #  securityContext.capabilities -- Container configure capabilities.
   capabilities:
-    #  securityContext.capabilities.drop --
+    #  securityContext.capabilities.drop -- Container drop capabilities.
     drop:
       - ALL
-  #  securityContext.readOnlyRootFilesystem --
+  #  securityContext.readOnlyRootFilesystem -- Container read only filesystem
   readOnlyRootFilesystem: true
-  #  securityContext.runAsNonRoot --
+  #  securityContext.runAsNonRoot -- Container allow run as root.
   runAsNonRoot: true
-#  serviceAccount --
-serviceAccount:
-  #  serviceAccount.annotations --
-  annotations: {}
-  #  serviceAccount.name --
-  name: ""
-#  tolerations --
-tolerations: []
-#  volumeMounts --
-volumeMounts: []
-#  volumes --
-volumes: []
-#  watchNamespace --
-watchNamespace: ""
 
+#  serviceAccount -- Service account configuration.
+serviceAccount:
+  #  serviceAccount.annotations -- Additional Service Account annotations.
+  annotations: {}
+  #  serviceAccount.name -- Service account name.
+  name: ""
+
+#  tolerations -- List of node taints to tolerate (requires Kubernetes >= 1.6).
+tolerations: []
+
+#  volumeMounts -- Additional volumes.
+volumeMounts: []
+
+#  volumes -- Additional volumes to mount.
+volumes: []
+
+#  watchNamespace -- Which namespace to watch in kubernetes, empty string means all namespaces.
+watchNamespace: ""
