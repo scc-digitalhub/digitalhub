@@ -1,0 +1,197 @@
+affinity: {}
+autoscaling:
+  enabled: false
+  maxReplicas: 100
+  minReplicas: 1
+  targetCPUUtilizationPercentage: 80
+env:
+  additionalEnv: {}
+fullnameOverride: ""
+global:
+  externalHostAddress: ""
+  externalTls: false
+image:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/scc-digitalhub/kubernetes-resource-manager
+  tag: ""
+imagePullSecrets: []
+ingress:
+  annotations: {}
+  className: ""
+  enabled: false
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+nameOverride: ""
+namespaceValues:
+  defaultValue: "*"
+  namespace: ""
+nodeSelector: {}
+oidc:
+  access:
+    roles: []
+  audience:
+    clientId: ""
+    externalSecret:
+      key: ""
+      name: ""
+  authType: ""
+  enabled: false
+  issuer: ""
+  redirectUrl: ""
+  roleClaim: ""
+  scope: ""
+podAnnotations: {}
+podSecurityContext:
+  fsGroup: 65532
+  runAsGroup: 65532
+  runAsNonRoot: true
+  runAsUser: 65532
+  seccompProfile:
+    type: RuntimeDefault
+rbac:
+  clusterRole:
+    create: true
+  namespaced: true
+  roles:
+    - apiGroups: db.movetokube.com
+      crd: true
+      resources:
+        - postgresusers
+        - postgres
+      verbs:
+        - get
+        - list
+        - create
+        - delete
+        - patch
+    - apiGroups: operator.dremiorestserver.com
+      crd: true
+      resources:
+        - dremiorestservers
+      verbs:
+        - get
+        - list
+        - create
+        - delete
+        - patch
+    - apiGroups: operator.postgrest.org
+      crd: true
+      resources:
+        - postgrests
+      verbs:
+        - get
+        - list
+        - create
+        - delete
+        - patch
+    - apiGroups: minio.scc-digitalhub.github.io
+      crd: true
+      resources:
+        - buckets
+        - policies
+        - users
+      verbs:
+        - get
+        - list
+        - create
+        - delete
+        - patch
+    - apiGroups: operator.scc-digitalhub.github.io
+      crd: true
+      resources:
+        - apigws
+      verbs:
+        - get
+        - list
+        - create
+        - delete
+        - patch
+    - apiGroups: batch
+      crd: false
+      resources:
+        - jobs
+      verbs:
+        - get
+        - list
+        - delete
+    - apiGroups: apps
+      crd: false
+      resources:
+        - deployments
+        - replicasets
+      verbs:
+        - get
+        - list
+    - apiGroups: ""
+      crd: false
+      resources:
+        - persistentvolumeclaims
+      verbs:
+        - get
+        - list
+        - create
+        - delete
+        - patch
+    - apiGroups: ""
+      crd: false
+      resources:
+        - services
+      verbs:
+        - get
+        - list
+    - apiGroups: ""
+      crd: false
+      resources:
+        - secrets
+      verbs:
+        - get
+        - list
+    - apiGroups: ""
+      resources:
+        - pods
+        - pods/log
+      verbs:
+        - get
+        - list
+        - create
+    - apiGroups: ""
+      resources:
+        - resourcequotas
+      verbs:
+        - get
+        - list
+replicaCount: 1
+resourceSelectors:
+  deployments: app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|app.kubernetes.io/type=workspace|app.kubernetes.io/managed-by=dhcore
+  jobs: app.kubernetes.io/managed-by=dhcore
+  pvcs:
+    labels: app.kubernetes.io/managed-by=krm
+    managedBy: krm
+  secrets:
+    labels: ""
+    names: (digitalhub\-owner|digitalhub\-reader|digitalhub\-writer).*
+    owners: db.movetokube.com/v1alpha1
+  services: app.kubernetes.io/type=service|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore
+resources: {}
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+service:
+  nodePort: "30160"
+  port: 8080
+  type: NodePort
+serviceAccount:
+  annotations: {}
+  create: true
+  name: ""
+storageClasses: default
+tolerations: []

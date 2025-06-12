@@ -1,0 +1,256 @@
+#  affinity --
+affinity:
+  #  affinity.nodeAffinity --
+  nodeAffinity:
+    #  affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution --
+    requiredDuringSchedulingIgnoredDuringExecution:
+      #  affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms --
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+                - amd64
+            - key: kubernetes.io/os
+              operator: In
+              values:
+                - linux
+
+#  autoscaling --
+autoscaling:
+  #  autoscaling.enabled --
+  enabled: false
+  #  autoscaling.maxReplicas --
+  maxReplicas: 100
+  #  autoscaling.minReplicas --
+  minReplicas: 1
+  #  autoscaling.targetCPUUtilizationPercentage --
+  targetCPUUtilizationPercentage: 80
+
+#  deployment --
+deployment:
+  #  deployment.kubeRbacProxy --
+  kubeRbacProxy:
+    #  deployment.kubeRbacProxy.args --
+    args:
+      - "--secure-listen-address=0.0.0.0:8443"
+      - "--upstream=http://127.0.0.1:8080/"
+      - "--logtostderr=true"
+      - "--v=0"
+    #  deployment.kubeRbacProxy.image --
+    image:
+      #  deployment.kubeRbacProxy.image.repository --
+      repository: gcr.io/kubebuilder/kube-rbac-proxy
+      #  deployment.kubeRbacProxy.image.tag --
+      tag: v0.13.1
+    #  deployment.kubeRbacProxy.name --
+    name: kube-rbac-proxy
+    #  deployment.kubeRbacProxy.ports --
+    ports:
+      #  deployment.kubeRbacProxy.ports.containerPort --
+      containerPort: 8443
+    #  deployment.kubeRbacProxy.resources --
+    resources:
+      #  deployment.kubeRbacProxy.resources.limits --
+      limits:
+        #  deployment.kubeRbacProxy.resources.limits.cpu --
+        cpu: 500m
+        #  deployment.kubeRbacProxy.resources.limits.memory --
+        memory: 128Mi
+      #  deployment.kubeRbacProxy.resources.requests --
+      requests:
+        #  deployment.kubeRbacProxy.resources.requests.cpu --
+        cpu: 5m
+        #  deployment.kubeRbacProxy.resources.requests.memory --
+        memory: 64Mi
+    #  deployment.kubeRbacProxy.securityContext --
+    securityContext:
+      #  deployment.kubeRbacProxy.securityContext.allowPrivilegeEscalation --
+      allowPrivilegeEscalation: false
+      #  deployment.kubeRbacProxy.securityContext.capabilities --
+      capabilities:
+        #  deployment.kubeRbacProxy.securityContext.capabilities.drop --
+        drop:
+          - ALL
+      #  deployment.kubeRbacProxy.securityContext.runAsNonRoot --
+      runAsNonRoot: true
+      #  deployment.kubeRbacProxy.securityContext.seccompProfile --
+      seccompProfile:
+        #  deployment.kubeRbacProxy.securityContext.seccompProfile.type --
+        type: RuntimeDefault
+  #  deployment.manager --
+  manager:
+    #  deployment.manager.args --
+    args:
+      - "--health-probe-bind-address=:8081"
+      - "--metrics-bind-address=127.0.0.1:8080"
+      - "--leader-elect"
+    #  deployment.manager.command --
+    command:
+      - /manager
+    #  deployment.manager.image --
+    image:
+      #  deployment.manager.image.repository --
+      repository: ghcr.io/scc-digitalhub/minio-operator
+      #  deployment.manager.image.tag --
+      tag: ""
+    #  deployment.manager.name --
+    name: manager
+    #  deployment.manager.resources --
+    resources:
+      #  deployment.manager.resources.limits --
+      limits:
+        #  deployment.manager.resources.limits.cpu --
+        cpu: 500m
+        #  deployment.manager.resources.limits.memory --
+        memory: 512Mi
+      #  deployment.manager.resources.requests --
+      requests:
+        #  deployment.manager.resources.requests.cpu --
+        cpu: 10m
+        #  deployment.manager.resources.requests.memory --
+        memory: 64Mi
+    #  deployment.manager.securityContext --
+    securityContext:
+      #  deployment.manager.securityContext.allowPrivilegeEscalation --
+      allowPrivilegeEscalation: false
+      #  deployment.manager.securityContext.capabilities --
+      capabilities:
+        #  deployment.manager.securityContext.capabilities.drop --
+        drop:
+          - ALL
+      #  deployment.manager.securityContext.runAsNonRoot --
+      runAsNonRoot: true
+      #  deployment.manager.securityContext.seccompProfile --
+      seccompProfile:
+        #  deployment.manager.securityContext.seccompProfile.type --
+        type: RuntimeDefault
+
+#  fullnameOverride --
+fullnameOverride: ""
+
+#  global --
+global:
+  #  global.externalHostAddress --
+  externalHostAddress: ""
+  #  global.minio --
+  minio:
+    #  global.minio.rootUserSecret --
+    rootUserSecret: ""
+
+#  image --
+image:
+  #  image.pullPolicy --
+  pullPolicy: IfNotPresent
+  #  image.repository --
+  repository: nginx
+  #  image.tag --
+  tag: ""
+
+#  imagePullSecrets --
+imagePullSecrets: []
+
+#  ingress --
+ingress:
+  #  ingress.annotations --
+  annotations: {}
+  #  ingress.className --
+  className: ""
+  #  ingress.enabled --
+  enabled: false
+  #  ingress.hosts --
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  #  ingress.tls --
+  tls: []
+
+#  minio --
+minio:
+  #  minio.bucket --
+  bucket: datalake
+  #  minio.emptyBucketOnDelete --
+  emptyBucketOnDelete: true
+  #  minio.endpoint --
+  endpoint: minio
+  #  minio.endpointPort --
+  endpointPort: "9000"
+  #  minio.minioCredsExistingSecret --
+  minioCredsExistingSecret:
+    #  minio.minioCredsExistingSecret.password --
+    password:
+      #  minio.minioCredsExistingSecret.password.secretKey --
+      secretKey: ""
+      #  minio.minioCredsExistingSecret.password.secretName --
+      secretName: ""
+    #  minio.minioCredsExistingSecret.username --
+    username:
+      #  minio.minioCredsExistingSecret.username.secretKey --
+      secretKey: ""
+      #  minio.minioCredsExistingSecret.username.secretName --
+      secretName: ""
+  #  minio.protocol --
+  protocol: http
+
+#  nameOverride --
+nameOverride: ""
+
+#  namespaceValues --
+namespaceValues:
+  #  namespaceValues.namespace --
+  namespace: ""
+  #  namespaceValues.namespaced --
+  namespaced: true
+
+#  nodeSelector --
+nodeSelector: {}
+
+#  podAnnotations --
+podAnnotations: {}
+
+#  podLabels --
+podLabels: {}
+
+#  podSecurityContext --
+podSecurityContext:
+  #  podSecurityContext.runAsNonRoot --
+  runAsNonRoot: true
+  #  podSecurityContext.seccompProfile --
+  seccompProfile:
+    #  podSecurityContext.seccompProfile.type --
+    type: RuntimeDefault
+
+#  replicaCount --
+replicaCount: 1
+
+#  resources --
+resources: {}
+
+#  service --
+service:
+  #  service.port --
+  port: 8443
+  #  service.type --
+  type: ClusterIP
+
+#  serviceAccount --
+serviceAccount:
+  #  serviceAccount.annotations --
+  annotations: {}
+  #  serviceAccount.automount --
+  automount: true
+  #  serviceAccount.create --
+  create: true
+  #  serviceAccount.name --
+  name: minio-operator-controller-manager
+
+#  tolerations --
+tolerations: []
+
+#  volumeMounts --
+volumeMounts: []
+
+#  volumes --
+volumes: []
