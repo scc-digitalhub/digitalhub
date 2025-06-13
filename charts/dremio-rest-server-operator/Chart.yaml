@@ -4,7 +4,7 @@
 
 apiVersion: v2
 name: dremio-rest-server-operator
-description: A Helm chart for Kubernetes
+description: A Kubernetes operator to start instances of Dremio REST server.
 home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/dremio-rest-server-operator"
 type: application
 version: 0.1.6
@@ -14,3 +14,5 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
+sources:
+  - https://github.com/scc-digitalhub/dremio-rest-server-operator

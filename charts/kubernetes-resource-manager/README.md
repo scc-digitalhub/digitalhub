@@ -4,14 +4,14 @@ SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
 SPDX-License-Identifier: Apache-2.0
 -->
 
-# kubernetes-resource-manager
+# A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources.
 
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/kubernetes-resource-manager/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=kubernetes-resource-manager*)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/kubernetes-resource-manager/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources.*)
 ![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.2.8](https://img.shields.io/badge/Version-0.2.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.3](https://img.shields.io/badge/AppVersion-1.2.3-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
-kubernetes-resource-manager is part of the DigitalHub platform, and depends on external components to support the complete set of functionalities. To bootstrap the platform in its entirety please explore the full documentation at the [link](https://scc-digitalhub.github.io/docs/admin/).
+A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources. is part of the DigitalHub platform, and depends on external components to support the complete set of functionalities. To bootstrap the platform in its entirety please explore the full documentation at the [link](https://scc-digitalhub.github.io/docs/admin/).
 
 ## Quick start
 
@@ -32,13 +32,13 @@ kubernetes-resource-manager is part of the DigitalHub platform, and depends on e
 ```sh
 helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 ```
-5. Install kubernetes-resource-manager with Helm:
+5. Install A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources. with Helm:
 ```sh
-    helm upgrade kubernetes-resource-manager digitalhub/kubernetes-resource-manager -n kubernetes-resource-manager --install --create-namespace --timeout 15m0s
+    helm upgrade A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources. digitalhub/A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources. -n A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources. --install --create-namespace --timeout 15m0s
 ```
 6. Wait until all pods are in Running state
 ```sh
-    kubectl --namespace kubernetes-resource-manager get pods
+    kubectl --namespace A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources. get pods
 ```
 
 ## Values
@@ -46,31 +46,39 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` |  |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| env | object | `{"additionalEnv":{}}` |  |
 | env.additionalEnv | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
+| global | object | `{"externalHostAddress":"","externalTls":false}` |  |
 | global.externalHostAddress | string | `""` |  |
 | global.externalTls | bool | `false` |  |
+| image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/scc-digitalhub/kubernetes-resource-manager","tag":""}` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/scc-digitalhub/kubernetes-resource-manager"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
+| ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
-| ingress.hosts[0].host | string | `"chart-example.local"` |  |
-| ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
+| ingress.hosts | list | `[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]` |  |
 | ingress.tls | list | `[]` |  |
 | nameOverride | string | `""` |  |
+| namespaceValues | object | `{"defaultValue":"*","namespace":""}` |  |
 | namespaceValues.defaultValue | string | `"*"` |  |
 | namespaceValues.namespace | string | `""` |  |
 | nodeSelector | object | `{}` |  |
+| oidc | object | `{"access":{"roles":[]},"audience":{"clientId":"","externalSecret":{"key":"","name":""}},"authType":"","enabled":false,"issuer":"","redirectUrl":"","roleClaim":"","scope":""}` |  |
+| oidc.access | object | `{"roles":[]}` |  |
 | oidc.access.roles | list | `[]` |  |
+| oidc.audience | object | `{"clientId":"","externalSecret":{"key":"","name":""}}` |  |
 | oidc.audience.clientId | string | `""` |  |
+| oidc.audience.externalSecret | object | `{"key":"","name":""}` |  |
 | oidc.audience.externalSecret.key | string | `""` |  |
 | oidc.audience.externalSecret.name | string | `""` |  |
 | oidc.authType | string | `""` |  |
@@ -80,113 +88,43 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 | oidc.roleClaim | string | `""` |  |
 | oidc.scope | string | `""` |  |
 | podAnnotations | object | `{}` |  |
+| podSecurityContext | object | `{"fsGroup":65532,"runAsGroup":65532,"runAsNonRoot":true,"runAsUser":65532,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
 | podSecurityContext.fsGroup | int | `65532` |  |
 | podSecurityContext.runAsGroup | int | `65532` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | podSecurityContext.runAsUser | int | `65532` |  |
+| podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
 | podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
+| rbac | object | `{"clusterRole":{"create":true},"namespaced":true,"roles":[{"apiGroups":"db.movetokube.com","crd":true,"resources":["postgresusers","postgres"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"operator.dremiorestserver.com","crd":true,"resources":["dremiorestservers"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"operator.postgrest.org","crd":true,"resources":["postgrests"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"minio.scc-digitalhub.github.io","crd":true,"resources":["buckets","policies","users"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"operator.scc-digitalhub.github.io","crd":true,"resources":["apigws"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"batch","crd":false,"resources":["jobs"],"verbs":["get","list","delete"]},{"apiGroups":"apps","crd":false,"resources":["deployments","replicasets"],"verbs":["get","list"]},{"apiGroups":"","crd":false,"resources":["persistentvolumeclaims"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"","crd":false,"resources":["services"],"verbs":["get","list"]},{"apiGroups":"","crd":false,"resources":["secrets"],"verbs":["get","list"]},{"apiGroups":"","resources":["pods","pods/log"],"verbs":["get","list","create"]},{"apiGroups":"","resources":["resourcequotas"],"verbs":["get","list"]}]}` |  |
+| rbac.clusterRole | object | `{"create":true}` |  |
 | rbac.clusterRole.create | bool | `true` |  |
 | rbac.namespaced | bool | `true` |  |
-| rbac.roles[0].apiGroups | string | `"db.movetokube.com"` |  |
-| rbac.roles[0].crd | bool | `true` |  |
-| rbac.roles[0].resources[0] | string | `"postgresusers"` |  |
-| rbac.roles[0].resources[1] | string | `"postgres"` |  |
-| rbac.roles[0].verbs[0] | string | `"get"` |  |
-| rbac.roles[0].verbs[1] | string | `"list"` |  |
-| rbac.roles[0].verbs[2] | string | `"create"` |  |
-| rbac.roles[0].verbs[3] | string | `"delete"` |  |
-| rbac.roles[0].verbs[4] | string | `"patch"` |  |
-| rbac.roles[10].apiGroups | string | `""` |  |
-| rbac.roles[10].resources[0] | string | `"pods"` |  |
-| rbac.roles[10].resources[1] | string | `"pods/log"` |  |
-| rbac.roles[10].verbs[0] | string | `"get"` |  |
-| rbac.roles[10].verbs[1] | string | `"list"` |  |
-| rbac.roles[10].verbs[2] | string | `"create"` |  |
-| rbac.roles[11].apiGroups | string | `""` |  |
-| rbac.roles[11].resources[0] | string | `"resourcequotas"` |  |
-| rbac.roles[11].verbs[0] | string | `"get"` |  |
-| rbac.roles[11].verbs[1] | string | `"list"` |  |
-| rbac.roles[1].apiGroups | string | `"operator.dremiorestserver.com"` |  |
-| rbac.roles[1].crd | bool | `true` |  |
-| rbac.roles[1].resources[0] | string | `"dremiorestservers"` |  |
-| rbac.roles[1].verbs[0] | string | `"get"` |  |
-| rbac.roles[1].verbs[1] | string | `"list"` |  |
-| rbac.roles[1].verbs[2] | string | `"create"` |  |
-| rbac.roles[1].verbs[3] | string | `"delete"` |  |
-| rbac.roles[1].verbs[4] | string | `"patch"` |  |
-| rbac.roles[2].apiGroups | string | `"operator.postgrest.org"` |  |
-| rbac.roles[2].crd | bool | `true` |  |
-| rbac.roles[2].resources[0] | string | `"postgrests"` |  |
-| rbac.roles[2].verbs[0] | string | `"get"` |  |
-| rbac.roles[2].verbs[1] | string | `"list"` |  |
-| rbac.roles[2].verbs[2] | string | `"create"` |  |
-| rbac.roles[2].verbs[3] | string | `"delete"` |  |
-| rbac.roles[2].verbs[4] | string | `"patch"` |  |
-| rbac.roles[3].apiGroups | string | `"minio.scc-digitalhub.github.io"` |  |
-| rbac.roles[3].crd | bool | `true` |  |
-| rbac.roles[3].resources[0] | string | `"buckets"` |  |
-| rbac.roles[3].resources[1] | string | `"policies"` |  |
-| rbac.roles[3].resources[2] | string | `"users"` |  |
-| rbac.roles[3].verbs[0] | string | `"get"` |  |
-| rbac.roles[3].verbs[1] | string | `"list"` |  |
-| rbac.roles[3].verbs[2] | string | `"create"` |  |
-| rbac.roles[3].verbs[3] | string | `"delete"` |  |
-| rbac.roles[3].verbs[4] | string | `"patch"` |  |
-| rbac.roles[4].apiGroups | string | `"operator.scc-digitalhub.github.io"` |  |
-| rbac.roles[4].crd | bool | `true` |  |
-| rbac.roles[4].resources[0] | string | `"apigws"` |  |
-| rbac.roles[4].verbs[0] | string | `"get"` |  |
-| rbac.roles[4].verbs[1] | string | `"list"` |  |
-| rbac.roles[4].verbs[2] | string | `"create"` |  |
-| rbac.roles[4].verbs[3] | string | `"delete"` |  |
-| rbac.roles[4].verbs[4] | string | `"patch"` |  |
-| rbac.roles[5].apiGroups | string | `"batch"` |  |
-| rbac.roles[5].crd | bool | `false` |  |
-| rbac.roles[5].resources[0] | string | `"jobs"` |  |
-| rbac.roles[5].verbs[0] | string | `"get"` |  |
-| rbac.roles[5].verbs[1] | string | `"list"` |  |
-| rbac.roles[5].verbs[2] | string | `"delete"` |  |
-| rbac.roles[6].apiGroups | string | `"apps"` |  |
-| rbac.roles[6].crd | bool | `false` |  |
-| rbac.roles[6].resources[0] | string | `"deployments"` |  |
-| rbac.roles[6].resources[1] | string | `"replicasets"` |  |
-| rbac.roles[6].verbs[0] | string | `"get"` |  |
-| rbac.roles[6].verbs[1] | string | `"list"` |  |
-| rbac.roles[7].apiGroups | string | `""` |  |
-| rbac.roles[7].crd | bool | `false` |  |
-| rbac.roles[7].resources[0] | string | `"persistentvolumeclaims"` |  |
-| rbac.roles[7].verbs[0] | string | `"get"` |  |
-| rbac.roles[7].verbs[1] | string | `"list"` |  |
-| rbac.roles[7].verbs[2] | string | `"create"` |  |
-| rbac.roles[7].verbs[3] | string | `"delete"` |  |
-| rbac.roles[7].verbs[4] | string | `"patch"` |  |
-| rbac.roles[8].apiGroups | string | `""` |  |
-| rbac.roles[8].crd | bool | `false` |  |
-| rbac.roles[8].resources[0] | string | `"services"` |  |
-| rbac.roles[8].verbs[0] | string | `"get"` |  |
-| rbac.roles[8].verbs[1] | string | `"list"` |  |
-| rbac.roles[9].apiGroups | string | `""` |  |
-| rbac.roles[9].crd | bool | `false` |  |
-| rbac.roles[9].resources[0] | string | `"secrets"` |  |
-| rbac.roles[9].verbs[0] | string | `"get"` |  |
-| rbac.roles[9].verbs[1] | string | `"list"` |  |
+| rbac.roles | list | `[{"apiGroups":"db.movetokube.com","crd":true,"resources":["postgresusers","postgres"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"operator.dremiorestserver.com","crd":true,"resources":["dremiorestservers"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"operator.postgrest.org","crd":true,"resources":["postgrests"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"minio.scc-digitalhub.github.io","crd":true,"resources":["buckets","policies","users"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"operator.scc-digitalhub.github.io","crd":true,"resources":["apigws"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"batch","crd":false,"resources":["jobs"],"verbs":["get","list","delete"]},{"apiGroups":"apps","crd":false,"resources":["deployments","replicasets"],"verbs":["get","list"]},{"apiGroups":"","crd":false,"resources":["persistentvolumeclaims"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"","crd":false,"resources":["services"],"verbs":["get","list"]},{"apiGroups":"","crd":false,"resources":["secrets"],"verbs":["get","list"]},{"apiGroups":"","resources":["pods","pods/log"],"verbs":["get","list","create"]},{"apiGroups":"","resources":["resourcequotas"],"verbs":["get","list"]}]` |  |
 | replicaCount | int | `1` |  |
+| resourceSelectors | object | `{"deployments":"app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|app.kubernetes.io/type=workspace|app.kubernetes.io/managed-by=dhcore","jobs":"app.kubernetes.io/managed-by=dhcore","pvcs":{"labels":"app.kubernetes.io/managed-by=krm","managedBy":"krm"},"secrets":{"labels":"","names":"(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*","owners":"db.movetokube.com/v1alpha1"},"services":"app.kubernetes.io/type=service|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore"}` |  |
 | resourceSelectors.deployments | string | `"app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|app.kubernetes.io/type=workspace|app.kubernetes.io/managed-by=dhcore"` |  |
 | resourceSelectors.jobs | string | `"app.kubernetes.io/managed-by=dhcore"` |  |
+| resourceSelectors.pvcs | object | `{"labels":"app.kubernetes.io/managed-by=krm","managedBy":"krm"}` |  |
 | resourceSelectors.pvcs.labels | string | `"app.kubernetes.io/managed-by=krm"` |  |
 | resourceSelectors.pvcs.managedBy | string | `"krm"` |  |
+| resourceSelectors.secrets | object | `{"labels":"","names":"(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*","owners":"db.movetokube.com/v1alpha1"}` |  |
 | resourceSelectors.secrets.labels | string | `""` |  |
 | resourceSelectors.secrets.names | string | `"(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"` |  |
 | resourceSelectors.secrets.owners | string | `"db.movetokube.com/v1alpha1"` |  |
 | resourceSelectors.services | string | `"app.kubernetes.io/type=service|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore"` |  |
 | resources | object | `{}` |  |
+| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
 | securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| securityContext.capabilities | object | `{"drop":["ALL"]}` |  |
+| securityContext.capabilities.drop | list | `["ALL"]` |  |
 | securityContext.runAsNonRoot | bool | `true` |  |
+| securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
 | securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
+| service | object | `{"nodePort":"30160","port":8080,"type":"NodePort"}` |  |
 | service.nodePort | string | `"30160"` |  |
 | service.port | int | `8080` |  |
 | service.type | string | `"NodePort"` |  |
+| serviceAccount | object | `{"annotations":{},"create":true,"name":""}` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
