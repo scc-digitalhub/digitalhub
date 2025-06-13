@@ -315,36 +315,6 @@ core:
     schema: public
   #  core.enabled --
   enabled: true
-  #  core.events --
-  events:
-    #  core.events.enabled --
-    enabled: false
-    #  core.events.rabbitmq --
-    rabbitmq:
-      #  core.events.rabbitmq.credentials --
-      credentials:
-        #  core.events.rabbitmq.credentials.existingSecret --
-        existingSecret:
-          #  core.events.rabbitmq.credentials.existingSecret.name --
-          name: digitalhub-rabbitmq-default-user
-          #  core.events.rabbitmq.credentials.existingSecret.passwordKey --
-          passwordKey: password
-          #  core.events.rabbitmq.credentials.existingSecret.usernameKey --
-          usernameKey: username
-      #  core.events.rabbitmq.enabled --
-      enabled: false
-      #  core.events.rabbitmq.host --
-      host: digitalhub-rabbitmq
-      #  core.events.rabbitmq.port --
-      port: "5672"
-      #  core.events.rabbitmq.queue --
-      queue: dhCoreQueue
-      #  core.events.rabbitmq.routingKey --
-      routingKey: entityRoutingKey
-      #  core.events.rabbitmq.topic --
-      topic: entityTopic
-      #  core.events.rabbitmq.vhost --
-      vhost: /
   #  core.kanikoArgs --
   kanikoArgs: ""
   #  core.kubeai --

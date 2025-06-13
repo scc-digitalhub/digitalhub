@@ -18,6 +18,322 @@ Explore the full documentation at the [link](https://scc-digitalhub.github.io/do
 ### Prerequisites
 - [Helm](https://helm.sh/docs/intro/install/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- Working Kubernetes Cluster
+
+### Installation
+
+Once you have set your custom values.yaml file see [Configuration section](#configuration), DigitalHub can be installed as follows:
+
+1) Add Digitalhub repository:
+```sh
+helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
+```
+
+2) Install DigitalHub with Helm and your custom values.
+
+```sh
+helm upgrade digitalhub digitalhub/digitalhub -n digitalhub --install --create-namespace --values PATH_TO_YOUR_VALUES_FILE --timeout 45m0s
+```
+
+5) Wait until all pods are in Running or Completed state
+```sh
+kubectl --namespace digitalhub get pods
+```
+
+Once installed, you should see the references (URLs) for the different tools of the platform, similar to the example below:
+```
+##########################################################
+#   _____   _       _           _ _     _       _        #
+#  (____ \ (_)     (_)_        | | |   | |     | |       #
+#   _   \ \ _  ____ _| |_  ____| | |__ | |_   _| | _     #
+#  | |   | | |/ _  | |  _)/ _  | |  __)| | | | | || \    #
+#  | |__/ /| ( ( | | | |_( ( | | | |   | | |_| | |_) )   #
+#  |_____/ |_|\_|| |_|\___)_||_|_|_|   |_|\____|____/    #
+#            (_____|                                     #
+#                                                        #
+##########################################################
+
+Digitalhub has been installed. Check its status by running:
+  kubectl --namespace digitalhub get pods
+
+Digitalhub componet URLs:
+  - Dashboard: http://192.168.76.2:30110
+  - Jupyter: http://192.168.76.2:30040 (Create jupyter workspace from template in the coder dashboard before use)
+  - Dremio: http://192.168.76.2:30120 (Create dremio workspace from template in the coder dashboard before use)
+  - Sqlpad: http://192.168.76.2:30140 (Create sqlpad workspace from template in the coder dashboard before use)
+  - Grafana: http://192.168.76.2:30130 (Create grafana workspace from template in the coder dashboard before use)
+  - Vscode: http://192.168.76.2:30190 (Create vscode workspace from template in the coder dashboard before use)
+  - Docker Registry: http://192.168.76.2:30150
+  - Minio API: http://192.168.76.2:30080 (Username: minio Password: minio123)
+  - Minio UI: http://192.168.76.2:30090 (Username: minio Password: minio123)
+  - KubeFlow: http://192.168.76.2:30100
+  - Coder: http://192.168.76.2:30170 (Username: test@digitalhub.test Password: Test12456@!)
+  - Core: http://192.168.76.2:30180
+  - Kubernetes Resource Manager: http://192.168.76.2:30160
+```
+
+## Configuration
+
+The DigitalHub Platform provides configuration options in the [DigitalHub values.yaml file](https://github.com/scc-digitalhub/digitalhub/blob/main/charts/digitalhub/values.yaml).
+
+The safest way to set up your custom values is to use a values file in which you will set up the options you are interested in.
+
+Thanks to the Helm hereditary properties, the platform values will change taking the values of your custom file, preserving the integrity of the originals and allowing you to use a shorter set of customized values.
+
+You can use a custom set of values from a file like the example below, in which we install digitalhub with custom values:
+```sh
+helm upgrade -n <YOUR_NAMESPACE> <YOUR_RELEASE> digitalhub/digitalhub --install --create-namespace --timeout 45m0s --values <YOUR_VALUES_FILE_PATH>
+```
+In this example, `--set global.registry.url="MINIKUBE_IP_ADDRESS"` and `--set global.externalHostAddress="MINIKUBE_IP_ADDRESS"` are not specified in the installation command, but they can be specified in your values file:
+
+```yaml
+global:
+  registry:
+    url: "YOUR_ADDRESS"
+  externalHostAddress: &globalExternalUrl "YOUR_ADDRESS"
+```
+
+When deploying in a production environment, the platform setup requires additional steps for its secure and efficient use. In this section we take into account aspects that are required for the platform setup.
+   
+    * Components Configuration
+    * Authentication and Access Control
+
+### Components Configuration
+#### Ingress configuration
+
+The services of the platform can be exposed with Ingress by editing your values file.
+
+For every exposable component, you will find a value field for the ingress, set by default to enabled: false.
+
+After setting enabled to true to activate the Ingress creation, check the component's values.yaml file to see how you should structure your custom values file and set all the neeeded Ingress values.
+
+The example below is for the Core Ingress:
+
+```yaml
+ingress:
+  enabled: true
+  className: "youringressclass"
+  hosts:
+    - host: your.host
+      paths:
+        - pathType: ImplementationSpecific
+          path: /
+  tls:
+  - secretName: yourTlsSecret
+```
+#### Core
+##### Keystore
+
+To set up a Keystore for Core, add the following section to your `values.yaml` file and configure the following fields:
+
+```yaml
+core:
+  keystore:
+    existingSecret:
+      secretName: "keystore-secret" # Name of the secret containing the keystore
+      keyName: "keystore.jwks"    # Name of the key in your keystore secret, should correspond to the keystore file name
+    keystoreKid: ""  # Specify the key that the keystore should pick
+    keystorePath: "/etc/keystore" # Path where your keystore will be saved
+```
+
+In this example, a Keystore will be created in the path `/etc/keystore/keystore.jwks` from a secret called `keystore-secret`.
+The key of the secret, `keystore.jwks`, must contain the base64 encoded keystore.
+##### STS
+
+**WARNING: this feature cannot be used locally as it depends on an Authentication Provider that should be installed in your environment.**
+
+STS allows you to work with temporary credentials to do operations with Core to the Postgres database and the Minio bucket, avoiding the use of persistent ones and reducing the risk of a security breach.
+
+To activate STS, set `core.sts.enabled` to `true`.
+The values to activate Postgres and Minio credentials are, respectively, `core.sts.db.enabled` (set to `true` if activated) and `core.sts.minio.enabled` (set to `true` if activated).
+
+### Credentials duration
+
+You can set the duration of the temporary credentials in two ways.
+
+- Setting `core.sts.credentials.duration` to the time (in seconds) you desire will set the same time for the Postgres and Minio ones
+- If you wish to set them case by case, leave `core.sts.credentials.duration` as an empty string and set the time of `core.sts.credentials.minio.duration` and `core.sts.credentials.db.duration`
+
+**NOTICE: currently, the time limit cannot be major than 28800.**
+
+#### Kubernetes Resource Manager
+
+[Enabling authentication for the Kubernetes Resource Manager](../../authentication/krm.md) is required to use this feature.
+
+Setting up roles can be a great way for assigning permissions to the users of the Kubernetes Resource Manager, setting up limitations to what they can do and the resources they can have access to.
+
+To set up your custom KRM roles and permissions, follow this example and change the fields to your needs in your Values file:
+
+```yaml
+kubernetes-resource-manager:
+  oidc:
+    roleClaim: "krm_roles"    # Name of the role used
+    access:
+      roles:
+        - role: ROLE_MY_ROLE  # Name of the role
+          # Resources associated to the role with permissions
+          resources: k8s_service, k8s_secret::read, mycrd/example.com::write
+```
+
+In this basic example we create a Role called ROLE_MY_ROLE that will have:
+
+- Access to the services
+- Access with read permissions to the secrets
+- Access with write permissions to a custom CRD
+
+You will also have to setup your authentication provider accordingly, so that you can associate the correct role to the correct users.
+#### SOLR (external component)
+
+##### Configuring Basic Auth for Solr
+
+In order to use Solr with an unprivileged with Core, Solr must be configured with the basicAuth plugin (already included in the chart).
+
+This documentation will provide an overview for the Values that you have to set and will help you finding them in the values.yaml file of the platform.
+
+###### Step 1: core.solr.collection
+
+This section provides the necessary configuration for `core`
+
+First, set `core.solr.collection.initialize.enabled` to true. When set to false, this value tells core to initialize everything in Solr by itself, removing the possibility of using BasicAuth. When set to true, instead, a script will initialize the Solr collection and the BasicAuth values will take effect.
+
+Next, set `core.solr.collection.initialize.securityJsonSecret` to the name of the secret that will contain the key security.json.
+Please keep in mind that the value of `core.solr.collection.initialize.securityJsonSecret` MUST be the same of `solr.solrOptions.security.bootstrapSecurityJson.name`.
+
+###### Step 2: solr.solrOptions.security
+
+This section provides the necessary configuration for `solr`
+
+First, choose the name for the BasicAuth secret that will be used by the operator for performing actions between Solr and your K8S environment at `solr.solrOptions.security.basicAuthSecret`.
+
+Then, set the name of the secret containing the security.json key and corresponding data at `solr.solrOptions.security.bootstrapSecurityJson.name`.
+
+Once again, `solr.solrOptions.security.bootstrapSecurityJson.name` value must match the one in `core.solr.collection.initialize.securityJsonSecret`. Furthermore, do not change the value of `solr.solrOptions.security.bootstrapSecurityJson.name` unless you are using an already existing secret with the required format of the Solr BasicAuth Plugin (you can set this at `solr.useExistingSecurityJson`) with a different key name.
+
+##### Step 3: solr.creds
+
+The final step for the configuration of the BasicAuth Plugin is the configuration of the users and the credentials that will be used by Solr.
+
+Please keep in mind that the four users (admin, k8sOper, solr, user) should be left as they are, but you should still change the passwords.
+
+There are two values for the password configuration: `password` and `passwordSha`. The reason is that Solr requires crypted passwords in the format `sha256(sha256(salt || password))`.
+While the first password will be used (as data) in the security json secret in pair with the corresponding user (as key), the corresponding encrypted password will be used directly in the security.json data as required by Solr standard.
+You can either choose to encrypt it yourself or use an online tool to do it, just be sure to encrypt the correct one for every user.
+
+### Authentication and Access Control
+The DigitalHub Platform supports authentication with an external provider.
+
+It is mandatory to set custom values for the platform, so Helm knowledge is required.
+
+This section will show how to set an authentication for the following:
+
+* [Coder](#coder)
+* [Core](#core)
+* [Dashboard](#dashboard)
+* [Kubernetes Resource Manager](#kubernetes-resource-manager)
+* [Minio](#minio)
+
+#### Coder
+To enable the authentication with a provider for Coder, please consult the [official Coder documentation](https://coder.com/docs/admin/auth).
+
+In your provider, the redirect url should correspond to `https://yourcoderurl/api/v2/users/oidc/callback`.
+
+#### Core
+
+To enable the authentication with a provider for Core, you will need to set the values in the file Values.yaml of the chart digitalhub in the Core section.
+
+The example below shows only the values concerning the authentication configuration.
+
+```yaml
+core:
+  authentication:
+    openId:
+      enabled: true
+      issuerUri: "https://yourproviderurl" # Set the issuer url of your provider
+      jwtAudience: "" # Set the audience
+      jwtClaim: "" # Set the claims
+      oidcClientId: "" # Use this if you want to hardcode your clientID
+      scope: "" # Specify the scopes
+      externalSecret: # Use this if you want to get the clientID by secret.
+        name: "" # Name of the secret
+        key: "" # Key of the secret containing the clientID
+```
+
+In your provider, the redirect url should correspond to `https://yourcoreurl/console/auth-callback`.
+
+#### Dashboard
+
+To enable the authentication with a provider for the Dashboard, you will need to set the values in the file Values.yaml of the chart digitalhub in the Dashboard section.
+
+The example below shows only the values concerning the authentication configuration.
+
+```yaml
+dashboard:
+  oidc:
+    enabled: true
+    audience:
+      clientId: "" # Use this if you want to hardcode your clientID
+      externalSecret: # Use this if you want to get the clientID by secret.
+        name: "" # Name of the secret
+        key: "" # Key of the secret containing the clientID
+    config:
+      issuer: "https://yourproviderurl" # Set the issuer url of your provider
+```
+
+#### Kubernetes Resource Manager
+
+To enable the authentication with a provider for Kubernetes Resource Manager, you will need to set the values in the file Values.yaml of the chart digitalhub in the Kubernetes Resource Manager section.
+
+The example below shows only the values concerning the authentication configuration.
+
+```yaml
+kubernetes-resource-manager:
+  oidc:
+    enabled: true
+    audience:
+      clientId: "" # Use this if you want to hardcode your clientID
+      externalSecret: # Use this if you want to get the clientID by secret.
+        name: "" # Name of the secret
+        key: "" # Key of the secret containing the clientID
+    issuer: "https://yourproviderurl" # Set the issuer url of your provider
+    scope: "" # Set the scopes
+    authType: "" # Set the type of authentication
+```
+
+In your provider, the redirect url should correspond to `https://yourkubernetesresourcemanagerurl/console/auth-callback`.
+
+#### Minio
+
+To enable the authentication with a provider for Minio, you will need to set the values in the file Values.yaml of the chart digitalhub in the Minio section.
+
+The example below shows only the values concerning the authentication configuration.
+
+```yaml
+minio:
+  oidc:
+    enabled: true
+    configUrl: "https://yourproviderurl/.well-known/openid-configuration" # Set the url of your provider
+    existingClientSecretName: "" # Name of the secret containing clientID and clientSecret
+    existingClientIdKey: "" # Key of the secret containing the clientID
+    existingClientSecretKey: "" # Key of the secret containing the client secret
+    claimName: ""  # Set the name of the JWT Claim
+    scopes: "" # Set the scopes
+    redirectUri: "https://yourminiourl/oauth_callback" # Set the redirect for the application
+    displayName: "" # Set the name of your provider
+```
+
+Please, consult the [official Minio documentation](https://min.io/docs/minio/linux/reference/minio-server/settings/iam/openid.html#minio-server-envvar-external-identity-management-openid) for more details about the options used above.
+
+In your provider, the redirect url should correspond to `https://yourminiourl/oauth_callback`.
+
+## Values
+
+You can locate the platform full configuration file at [link](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/digitalhub/CONFIGURATION.md).
+
+## Development
+
+### Prerequisites
+- [Helm](https://helm.sh/docs/intro/install/)
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 
 1. Start minikube (change 192.168.49.0 if your network setup is different):
@@ -53,669 +369,6 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 ```
     kubectl -n digitalhub create secret generic digitalhub-common-creds --from-literal=POSTGRES_USER=<DECODED_VALUE> --from-literal=POSTGRES_PASSWORD=<DECODED_VALUE> --from-literal=AWS_ACCESS_KEY_ID=<DECODED_VALUE> --from-literal=AWS_SECRET_ACCESS_KEY=<DECODED_VALUE>
 ```
-
-## Values
-
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| apigw-operator | object | `{"enabled":true}` |  |
-| apigw-operator.enabled | bool | `true` |  |
-| argo-workflows | object | `{"artifactRepositoryRef":{"artifact-repositories":{"annotations":{"workflows.argoproj.io/default-artifact-repository":"artifact-repository"},"artifact-repository":{"archiveLogs":false,"s3":{"accessKeySecret":{"key":"accesskey","name":"argo-minio-creds"},"bucket":"argo","endpoint":"minio:9000","insecure":true,"secretKeySecret":{"key":"secretkey","name":"argo-minio-creds"}}}}},"controller":{"configMap":{"create":true},"podSecurityContext":{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"serviceAccount":{"name":"argo-workflow-controller"},"workflowDefaults":{"spec":{"serviceAccountName":"argo-workflow"}}},"crds":{"install":true},"enabled":true,"server":{"enabled":false},"singleNamespace":true,"workflow":{"serviceAccount":{"create":true,"name":"argo-workflow"}}}` |  |
-| argo-workflows.artifactRepositoryRef | object | `{"artifact-repositories":{"annotations":{"workflows.argoproj.io/default-artifact-repository":"artifact-repository"},"artifact-repository":{"archiveLogs":false,"s3":{"accessKeySecret":{"key":"accesskey","name":"argo-minio-creds"},"bucket":"argo","endpoint":"minio:9000","insecure":true,"secretKeySecret":{"key":"secretkey","name":"argo-minio-creds"}}}}}` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories | object | `{"annotations":{"workflows.argoproj.io/default-artifact-repository":"artifact-repository"},"artifact-repository":{"archiveLogs":false,"s3":{"accessKeySecret":{"key":"accesskey","name":"argo-minio-creds"},"bucket":"argo","endpoint":"minio:9000","insecure":true,"secretKeySecret":{"key":"secretkey","name":"argo-minio-creds"}}}}` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories.annotations | object | `{"workflows.argoproj.io/default-artifact-repository":"artifact-repository"}` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository | object | `{"archiveLogs":false,"s3":{"accessKeySecret":{"key":"accesskey","name":"argo-minio-creds"},"bucket":"argo","endpoint":"minio:9000","insecure":true,"secretKeySecret":{"key":"secretkey","name":"argo-minio-creds"}}}` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.archiveLogs | bool | `false` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3 | object | `{"accessKeySecret":{"key":"accesskey","name":"argo-minio-creds"},"bucket":"argo","endpoint":"minio:9000","insecure":true,"secretKeySecret":{"key":"secretkey","name":"argo-minio-creds"}}` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.accessKeySecret | object | `{"key":"accesskey","name":"argo-minio-creds"}` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.accessKeySecret.key | string | `"accesskey"` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.accessKeySecret.name | string | `"argo-minio-creds"` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.bucket | string | `"argo"` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.endpoint | string | `"minio:9000"` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.insecure | bool | `true` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.secretKeySecret | object | `{"key":"secretkey","name":"argo-minio-creds"}` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.secretKeySecret.key | string | `"secretkey"` |  |
-| argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.secretKeySecret.name | string | `"argo-minio-creds"` |  |
-| argo-workflows.controller | object | `{"configMap":{"create":true},"podSecurityContext":{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"serviceAccount":{"name":"argo-workflow-controller"},"workflowDefaults":{"spec":{"serviceAccountName":"argo-workflow"}}}` |  |
-| argo-workflows.controller.configMap | object | `{"create":true}` |  |
-| argo-workflows.controller.configMap.create | bool | `true` |  |
-| argo-workflows.controller.podSecurityContext | object | `{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| argo-workflows.controller.podSecurityContext.runAsNonRoot | bool | `true` |  |
-| argo-workflows.controller.podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| argo-workflows.controller.podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| argo-workflows.controller.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| argo-workflows.controller.securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| argo-workflows.controller.securityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| argo-workflows.controller.securityContext.capabilities.drop | list | `["ALL"]` |  |
-| argo-workflows.controller.securityContext.runAsNonRoot | bool | `true` |  |
-| argo-workflows.controller.securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| argo-workflows.controller.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| argo-workflows.controller.serviceAccount | object | `{"name":"argo-workflow-controller"}` |  |
-| argo-workflows.controller.serviceAccount.name | string | `"argo-workflow-controller"` |  |
-| argo-workflows.controller.workflowDefaults | object | `{"spec":{"serviceAccountName":"argo-workflow"}}` |  |
-| argo-workflows.controller.workflowDefaults.spec | object | `{"serviceAccountName":"argo-workflow"}` |  |
-| argo-workflows.controller.workflowDefaults.spec.serviceAccountName | string | `"argo-workflow"` |  |
-| argo-workflows.crds | object | `{"install":true}` |  |
-| argo-workflows.crds.install | bool | `true` |  |
-| argo-workflows.enabled | bool | `true` |  |
-| argo-workflows.server | object | `{"enabled":false}` |  |
-| argo-workflows.server.enabled | bool | `false` |  |
-| argo-workflows.singleNamespace | bool | `true` |  |
-| argo-workflows.workflow | object | `{"serviceAccount":{"create":true,"name":"argo-workflow"}}` |  |
-| argo-workflows.workflow.serviceAccount | object | `{"create":true,"name":"argo-workflow"}` |  |
-| argo-workflows.workflow.serviceAccount.create | bool | `true` |  |
-| argo-workflows.workflow.serviceAccount.name | string | `"argo-workflow"` |  |
-| coder | object | `{"coder":{"env":[{"name":"CODER_TELEMETRY","value":"false"},{"name":"CODER_PG_USERNAME","valueFrom":{"secretKeyRef":{"key":"username","name":"coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do"}}},{"name":"CODER_PG_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do"}}},{"name":"CODER_PG_CONNECTION_URL","value":"postgres://$(CODER_PG_USERNAME):$(CODER_PG_PASSWORD)@coder-postgres-cluster:5432/coder"},{"name":"CODER_OAUTH2_GITHUB_DEFAULT_PROVIDER_ENABLE","value":"false"}],"image":{"tag":"v2.21.3"},"ingress":{"enable":false},"service":{"httpNodePort":"30170","type":"NodePort"}},"email":"test@digitalhub.test","enabled":true,"password":"Test12456@!","securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"template":{"customTemplates":[{"extraVars":[],"iconUrl":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png","image":"ghcr.io/scc-digitalhub/jupyter-3-10:0.11.0","image311":"ghcr.io/scc-digitalhub/jupyter-3-11:0.11.0","image39":"ghcr.io/scc-digitalhub/jupyter-3-9:0.11.0","name":"jupyter","nodePort":"30040","privileged":false,"stopAfter":"8h"},{"extraVars":[],"iconUrl":"https://cdn-icons-png.flaticon.com/512/7301/7301969.png","name":"code-toolbox-experimental","nodePort":"30050","privileged":false,"stopAfter":"8h","tolerations":[]},{"extraVars":[],"iconUrl":"https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png","image":"dremio/dremio-oss:24.1.0","name":"dremio","nodePort":"30120","postgres":{"database":"digitalhub","hostname":"database-postgres-cluster","ownerCredsSecret":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"},"stopAfter":"0h"},{"extraVars":[],"iconUrl":"https://i.ibb.co/TrBDsZM/sqlpad.png","image":"smartcommunitylab/sqlpad:nonroot","name":"sqlpad","nodePort":"30140","postgres":{"database":"digitalhub","hostname":"database-postgres-cluster","ownerCredsSecret":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"},"stopAfter":"8h"},{"extraVars":[{"name":"GF_PLUGINS_CHECK_FOR_PLUGIN_UPDATES","value":false},{"name":"GF_ANALYTICS_CHECK_FOR_UPDATES","value":false},{"name":"GF_ANALYTICS_REPORTING_ENABLED","value":false}],"iconUrl":"https://cdn.iconscout.com/icon/free/png-256/free-grafana-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030088.png?f=webp","image":"smartcommunitylab/grafana","name":"grafana","nodePort":"30130","stopAfter":"0h"}],"upgrade":{"enabled":false,"token":""}},"username":"test"}` |  |
-| coder.coder | object | `{"env":[{"name":"CODER_TELEMETRY","value":"false"},{"name":"CODER_PG_USERNAME","valueFrom":{"secretKeyRef":{"key":"username","name":"coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do"}}},{"name":"CODER_PG_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do"}}},{"name":"CODER_PG_CONNECTION_URL","value":"postgres://$(CODER_PG_USERNAME):$(CODER_PG_PASSWORD)@coder-postgres-cluster:5432/coder"},{"name":"CODER_OAUTH2_GITHUB_DEFAULT_PROVIDER_ENABLE","value":"false"}],"image":{"tag":"v2.21.3"},"ingress":{"enable":false},"service":{"httpNodePort":"30170","type":"NodePort"}}` |  |
-| coder.coder.env | list | `[{"name":"CODER_TELEMETRY","value":"false"},{"name":"CODER_PG_USERNAME","valueFrom":{"secretKeyRef":{"key":"username","name":"coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do"}}},{"name":"CODER_PG_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do"}}},{"name":"CODER_PG_CONNECTION_URL","value":"postgres://$(CODER_PG_USERNAME):$(CODER_PG_PASSWORD)@coder-postgres-cluster:5432/coder"},{"name":"CODER_OAUTH2_GITHUB_DEFAULT_PROVIDER_ENABLE","value":"false"}]` |  |
-| coder.coder.image | object | `{"tag":"v2.21.3"}` |  |
-| coder.coder.image.tag | string | `"v2.21.3"` |  |
-| coder.coder.ingress | object | `{"enable":false}` |  |
-| coder.coder.ingress.enable | bool | `false` |  |
-| coder.coder.service | object | `{"httpNodePort":"30170","type":"NodePort"}` |  |
-| coder.coder.service.httpNodePort | string | `"30170"` |  |
-| coder.coder.service.type | string | `"NodePort"` |  |
-| coder.email | string | `"test@digitalhub.test"` |  |
-| coder.enabled | bool | `true` |  |
-| coder.password | string | `"Test12456@!"` |  |
-| coder.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| coder.securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| coder.securityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| coder.securityContext.capabilities.drop | list | `["ALL"]` |  |
-| coder.securityContext.runAsNonRoot | bool | `true` |  |
-| coder.securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| coder.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| coder.template | object | `{"customTemplates":[{"extraVars":[],"iconUrl":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png","image":"ghcr.io/scc-digitalhub/jupyter-3-10:0.11.0","image311":"ghcr.io/scc-digitalhub/jupyter-3-11:0.11.0","image39":"ghcr.io/scc-digitalhub/jupyter-3-9:0.11.0","name":"jupyter","nodePort":"30040","privileged":false,"stopAfter":"8h"},{"extraVars":[],"iconUrl":"https://cdn-icons-png.flaticon.com/512/7301/7301969.png","name":"code-toolbox-experimental","nodePort":"30050","privileged":false,"stopAfter":"8h","tolerations":[]},{"extraVars":[],"iconUrl":"https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png","image":"dremio/dremio-oss:24.1.0","name":"dremio","nodePort":"30120","postgres":{"database":"digitalhub","hostname":"database-postgres-cluster","ownerCredsSecret":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"},"stopAfter":"0h"},{"extraVars":[],"iconUrl":"https://i.ibb.co/TrBDsZM/sqlpad.png","image":"smartcommunitylab/sqlpad:nonroot","name":"sqlpad","nodePort":"30140","postgres":{"database":"digitalhub","hostname":"database-postgres-cluster","ownerCredsSecret":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"},"stopAfter":"8h"},{"extraVars":[{"name":"GF_PLUGINS_CHECK_FOR_PLUGIN_UPDATES","value":false},{"name":"GF_ANALYTICS_CHECK_FOR_UPDATES","value":false},{"name":"GF_ANALYTICS_REPORTING_ENABLED","value":false}],"iconUrl":"https://cdn.iconscout.com/icon/free/png-256/free-grafana-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030088.png?f=webp","image":"smartcommunitylab/grafana","name":"grafana","nodePort":"30130","stopAfter":"0h"}],"upgrade":{"enabled":false,"token":""}}` |  |
-| coder.template.customTemplates | list | `[{"extraVars":[],"iconUrl":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png","image":"ghcr.io/scc-digitalhub/jupyter-3-10:0.11.0","image311":"ghcr.io/scc-digitalhub/jupyter-3-11:0.11.0","image39":"ghcr.io/scc-digitalhub/jupyter-3-9:0.11.0","name":"jupyter","nodePort":"30040","privileged":false,"stopAfter":"8h"},{"extraVars":[],"iconUrl":"https://cdn-icons-png.flaticon.com/512/7301/7301969.png","name":"code-toolbox-experimental","nodePort":"30050","privileged":false,"stopAfter":"8h","tolerations":[]},{"extraVars":[],"iconUrl":"https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png","image":"dremio/dremio-oss:24.1.0","name":"dremio","nodePort":"30120","postgres":{"database":"digitalhub","hostname":"database-postgres-cluster","ownerCredsSecret":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"},"stopAfter":"0h"},{"extraVars":[],"iconUrl":"https://i.ibb.co/TrBDsZM/sqlpad.png","image":"smartcommunitylab/sqlpad:nonroot","name":"sqlpad","nodePort":"30140","postgres":{"database":"digitalhub","hostname":"database-postgres-cluster","ownerCredsSecret":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"},"stopAfter":"8h"},{"extraVars":[{"name":"GF_PLUGINS_CHECK_FOR_PLUGIN_UPDATES","value":false},{"name":"GF_ANALYTICS_CHECK_FOR_UPDATES","value":false},{"name":"GF_ANALYTICS_REPORTING_ENABLED","value":false}],"iconUrl":"https://cdn.iconscout.com/icon/free/png-256/free-grafana-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030088.png?f=webp","image":"smartcommunitylab/grafana","name":"grafana","nodePort":"30130","stopAfter":"0h"}]` |  |
-| coder.template.upgrade | object | `{"enabled":false,"token":""}` |  |
-| coder.template.upgrade.enabled | bool | `false` |  |
-| coder.template.upgrade.token | string | `""` |  |
-| coder.username | string | `"test"` |  |
-| containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":true,"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| containerSecurityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| containerSecurityContext.capabilities.drop | list | `["ALL"]` |  |
-| containerSecurityContext.enabled | bool | `true` |  |
-| containerSecurityContext.runAsNonRoot | bool | `true` |  |
-| containerSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| core | object | `{"additionalConfig":{"debug":{"enableLogs":true,"enableMetrics":false},"resources":{"cpuLim":"","cpuReq":"100m","gpuKey":"nvidia.com/gpu","memLim":"","memReq":"64m","pvcLim":"","pvcReq":"2Gi"},"security":{"disableRoot":true}},"argoWorkflow":{"configmap":"artifact-repositories","key":"artifact-repository","serviceAccount":"argo-workflow","user":"8877"},"authentication":{"openId":{"enabled":false}},"coreAuthCreds":{"clientId":"m04bfbmd03m8sf4u9ucz54ti","clientSecret":"9rb5215z0aqd7fadzxuoyqe3"},"databaseProvider":{"database":"digitalhub","host":"database-postgres-cluster","ownerSecret":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do","port":"5432","schema":"public"},"enabled":true,"events":{"enabled":false,"rabbitmq":{"credentials":{"existingSecret":{"name":"digitalhub-rabbitmq-default-user","passwordKey":"password","usernameKey":"username"}},"enabled":false,"host":"digitalhub-rabbitmq","port":"5672","queue":"dhCoreQueue","routingKey":"entityRoutingKey","topic":"entityTopic","vhost":"/"}},"kanikoArgs":"","kubeai":{"enabled":true,"port":"80","serviceName":"kubeai"},"postgres":{"credentials":{"existingSecret":{"name":"coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"},"password":"","username":""},"database":"core","host":"core-postgres-cluster","port":"5432","schema":"public"},"s3":{"accessKey":"","bucket":"datalake","dynamicCreds":{"enabled":false},"endpoint":"minio","existingSecret":{"accessKeyKey":"digitalhubUser","name":"digitalhub-minio-creds","secretKeyKey":"digitalhubPassword"},"port":"9000","protocol":"http","publicUrl":"http://192.168.49.2:30080","region":"us-west-1","secretKey":""},"service":{"httpNodePort":"30180","type":"NodePort"},"solr":{"collection":{"initialize":{"enabled":true,"image":"smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot","securityJsonSecret":"digitalhub-solrcloud-security-bootstrap"},"name":"dhcore"},"enabled":true,"fullNameOverride":"digitalhub","url":"http://digitalhub-solrcloud-common/solr","user":"user"},"sts":{"client":{"clientId":"","clientSecret":""},"credentials":{"roles":"digitalhub_owner_user"},"databaseProvider":{"credentials":{"existingSecret":{"name":"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"},"password":"","username":""},"enabled":true},"enabled":false,"jwt":{"issuerUri":"http://digitalhub-core:8080"},"stsDb":{"credentials":{"existingSecret":{"name":"stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"}},"database":"sts","driver":"org.postgresql.Driver","host":"core-postgres-cluster","platform":"postgresql","port":"5432","schema":"public"}}}` |  |
-| core.additionalConfig | object | `{"debug":{"enableLogs":true,"enableMetrics":false},"resources":{"cpuLim":"","cpuReq":"100m","gpuKey":"nvidia.com/gpu","memLim":"","memReq":"64m","pvcLim":"","pvcReq":"2Gi"},"security":{"disableRoot":true}}` |  |
-| core.additionalConfig.debug | object | `{"enableLogs":true,"enableMetrics":false}` |  |
-| core.additionalConfig.debug.enableLogs | bool | `true` |  |
-| core.additionalConfig.debug.enableMetrics | bool | `false` |  |
-| core.additionalConfig.resources | object | `{"cpuLim":"","cpuReq":"100m","gpuKey":"nvidia.com/gpu","memLim":"","memReq":"64m","pvcLim":"","pvcReq":"2Gi"}` |  |
-| core.additionalConfig.resources.cpuLim | string | `""` |  |
-| core.additionalConfig.resources.cpuReq | string | `"100m"` |  |
-| core.additionalConfig.resources.gpuKey | string | `"nvidia.com/gpu"` |  |
-| core.additionalConfig.resources.memLim | string | `""` |  |
-| core.additionalConfig.resources.memReq | string | `"64m"` |  |
-| core.additionalConfig.resources.pvcLim | string | `""` |  |
-| core.additionalConfig.resources.pvcReq | string | `"2Gi"` |  |
-| core.additionalConfig.security | object | `{"disableRoot":true}` |  |
-| core.additionalConfig.security.disableRoot | bool | `true` |  |
-| core.argoWorkflow | object | `{"configmap":"artifact-repositories","key":"artifact-repository","serviceAccount":"argo-workflow","user":"8877"}` |  |
-| core.argoWorkflow.configmap | string | `"artifact-repositories"` |  |
-| core.argoWorkflow.key | string | `"artifact-repository"` |  |
-| core.argoWorkflow.serviceAccount | string | `"argo-workflow"` |  |
-| core.argoWorkflow.user | string | `"8877"` |  |
-| core.authentication | object | `{"openId":{"enabled":false}}` |  |
-| core.authentication.openId | object | `{"enabled":false}` |  |
-| core.authentication.openId.enabled | bool | `false` |  |
-| core.coreAuthCreds | object | `{"clientId":"m04bfbmd03m8sf4u9ucz54ti","clientSecret":"9rb5215z0aqd7fadzxuoyqe3"}` |  |
-| core.coreAuthCreds.clientId | string | `"m04bfbmd03m8sf4u9ucz54ti"` |  |
-| core.coreAuthCreds.clientSecret | string | `"9rb5215z0aqd7fadzxuoyqe3"` |  |
-| core.databaseProvider | object | `{"database":"digitalhub","host":"database-postgres-cluster","ownerSecret":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do","port":"5432","schema":"public"}` |  |
-| core.databaseProvider.database | string | `"digitalhub"` |  |
-| core.databaseProvider.host | string | `"database-postgres-cluster"` |  |
-| core.databaseProvider.ownerSecret | string | `"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"` |  |
-| core.databaseProvider.port | string | `"5432"` |  |
-| core.databaseProvider.schema | string | `"public"` |  |
-| core.enabled | bool | `true` |  |
-| core.events | object | `{"enabled":false,"rabbitmq":{"credentials":{"existingSecret":{"name":"digitalhub-rabbitmq-default-user","passwordKey":"password","usernameKey":"username"}},"enabled":false,"host":"digitalhub-rabbitmq","port":"5672","queue":"dhCoreQueue","routingKey":"entityRoutingKey","topic":"entityTopic","vhost":"/"}}` |  |
-| core.events.enabled | bool | `false` |  |
-| core.events.rabbitmq | object | `{"credentials":{"existingSecret":{"name":"digitalhub-rabbitmq-default-user","passwordKey":"password","usernameKey":"username"}},"enabled":false,"host":"digitalhub-rabbitmq","port":"5672","queue":"dhCoreQueue","routingKey":"entityRoutingKey","topic":"entityTopic","vhost":"/"}` |  |
-| core.events.rabbitmq.credentials | object | `{"existingSecret":{"name":"digitalhub-rabbitmq-default-user","passwordKey":"password","usernameKey":"username"}}` |  |
-| core.events.rabbitmq.credentials.existingSecret | object | `{"name":"digitalhub-rabbitmq-default-user","passwordKey":"password","usernameKey":"username"}` |  |
-| core.events.rabbitmq.credentials.existingSecret.name | string | `"digitalhub-rabbitmq-default-user"` |  |
-| core.events.rabbitmq.credentials.existingSecret.passwordKey | string | `"password"` |  |
-| core.events.rabbitmq.credentials.existingSecret.usernameKey | string | `"username"` |  |
-| core.events.rabbitmq.enabled | bool | `false` |  |
-| core.events.rabbitmq.host | string | `"digitalhub-rabbitmq"` |  |
-| core.events.rabbitmq.port | string | `"5672"` |  |
-| core.events.rabbitmq.queue | string | `"dhCoreQueue"` |  |
-| core.events.rabbitmq.routingKey | string | `"entityRoutingKey"` |  |
-| core.events.rabbitmq.topic | string | `"entityTopic"` |  |
-| core.events.rabbitmq.vhost | string | `"/"` |  |
-| core.kanikoArgs | string | `""` |  |
-| core.kubeai | object | `{"enabled":true,"port":"80","serviceName":"kubeai"}` |  |
-| core.kubeai.enabled | bool | `true` |  |
-| core.kubeai.port | string | `"80"` |  |
-| core.kubeai.serviceName | string | `"kubeai"` |  |
-| core.postgres | object | `{"credentials":{"existingSecret":{"name":"coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"},"password":"","username":""},"database":"core","host":"core-postgres-cluster","port":"5432","schema":"public"}` |  |
-| core.postgres.credentials | object | `{"existingSecret":{"name":"coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"},"password":"","username":""}` |  |
-| core.postgres.credentials.existingSecret | object | `{"name":"coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"}` |  |
-| core.postgres.credentials.existingSecret.name | string | `"coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do"` |  |
-| core.postgres.credentials.existingSecret.passwordKey | string | `"password"` |  |
-| core.postgres.credentials.existingSecret.usernameKey | string | `"username"` |  |
-| core.postgres.credentials.password | string | `""` |  |
-| core.postgres.credentials.username | string | `""` |  |
-| core.postgres.database | string | `"core"` |  |
-| core.postgres.host | string | `"core-postgres-cluster"` |  |
-| core.postgres.port | string | `"5432"` |  |
-| core.postgres.schema | string | `"public"` |  |
-| core.s3 | object | `{"accessKey":"","bucket":"datalake","dynamicCreds":{"enabled":false},"endpoint":"minio","existingSecret":{"accessKeyKey":"digitalhubUser","name":"digitalhub-minio-creds","secretKeyKey":"digitalhubPassword"},"port":"9000","protocol":"http","publicUrl":"http://192.168.49.2:30080","region":"us-west-1","secretKey":""}` |  |
-| core.s3.accessKey | string | `""` |  |
-| core.s3.bucket | string | `"datalake"` |  |
-| core.s3.dynamicCreds | object | `{"enabled":false}` |  |
-| core.s3.dynamicCreds.enabled | bool | `false` |  |
-| core.s3.endpoint | string | `"minio"` |  |
-| core.s3.existingSecret | object | `{"accessKeyKey":"digitalhubUser","name":"digitalhub-minio-creds","secretKeyKey":"digitalhubPassword"}` |  |
-| core.s3.existingSecret.accessKeyKey | string | `"digitalhubUser"` |  |
-| core.s3.existingSecret.name | string | `"digitalhub-minio-creds"` |  |
-| core.s3.existingSecret.secretKeyKey | string | `"digitalhubPassword"` |  |
-| core.s3.port | string | `"9000"` |  |
-| core.s3.protocol | string | `"http"` |  |
-| core.s3.publicUrl | string | `"http://192.168.49.2:30080"` |  |
-| core.s3.region | string | `"us-west-1"` |  |
-| core.s3.secretKey | string | `""` |  |
-| core.service | object | `{"httpNodePort":"30180","type":"NodePort"}` |  |
-| core.service.httpNodePort | string | `"30180"` |  |
-| core.service.type | string | `"NodePort"` |  |
-| core.solr | object | `{"collection":{"initialize":{"enabled":true,"image":"smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot","securityJsonSecret":"digitalhub-solrcloud-security-bootstrap"},"name":"dhcore"},"enabled":true,"fullNameOverride":"digitalhub","url":"http://digitalhub-solrcloud-common/solr","user":"user"}` |  |
-| core.solr.collection | object | `{"initialize":{"enabled":true,"image":"smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot","securityJsonSecret":"digitalhub-solrcloud-security-bootstrap"},"name":"dhcore"}` |  |
-| core.solr.collection.initialize | object | `{"enabled":true,"image":"smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot","securityJsonSecret":"digitalhub-solrcloud-security-bootstrap"}` |  |
-| core.solr.collection.initialize.enabled | bool | `true` |  |
-| core.solr.collection.initialize.image | string | `"smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot"` |  |
-| core.solr.collection.initialize.securityJsonSecret | string | `"digitalhub-solrcloud-security-bootstrap"` |  |
-| core.solr.collection.name | string | `"dhcore"` |  |
-| core.solr.enabled | bool | `true` |  |
-| core.solr.fullNameOverride | string | `"digitalhub"` |  |
-| core.solr.url | string | `"http://digitalhub-solrcloud-common/solr"` |  |
-| core.solr.user | string | `"user"` |  |
-| core.sts | object | `{"client":{"clientId":"","clientSecret":""},"credentials":{"roles":"digitalhub_owner_user"},"databaseProvider":{"credentials":{"existingSecret":{"name":"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"},"password":"","username":""},"enabled":true},"enabled":false,"jwt":{"issuerUri":"http://digitalhub-core:8080"},"stsDb":{"credentials":{"existingSecret":{"name":"stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"}},"database":"sts","driver":"org.postgresql.Driver","host":"core-postgres-cluster","platform":"postgresql","port":"5432","schema":"public"}}` |  |
-| core.sts.client | object | `{"clientId":"","clientSecret":""}` |  |
-| core.sts.client.clientId | string | `""` |  |
-| core.sts.client.clientSecret | string | `""` |  |
-| core.sts.credentials | object | `{"roles":"digitalhub_owner_user"}` |  |
-| core.sts.credentials.roles | string | `"digitalhub_owner_user"` |  |
-| core.sts.databaseProvider | object | `{"credentials":{"existingSecret":{"name":"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"},"password":"","username":""},"enabled":true}` |  |
-| core.sts.databaseProvider.credentials | object | `{"existingSecret":{"name":"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"},"password":"","username":""}` |  |
-| core.sts.databaseProvider.credentials.existingSecret | object | `{"name":"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"}` |  |
-| core.sts.databaseProvider.credentials.existingSecret.name | string | `"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"` |  |
-| core.sts.databaseProvider.credentials.existingSecret.passwordKey | string | `"password"` |  |
-| core.sts.databaseProvider.credentials.existingSecret.usernameKey | string | `"username"` |  |
-| core.sts.databaseProvider.credentials.password | string | `""` |  |
-| core.sts.databaseProvider.credentials.username | string | `""` |  |
-| core.sts.databaseProvider.enabled | bool | `true` |  |
-| core.sts.enabled | bool | `false` |  |
-| core.sts.jwt | object | `{"issuerUri":"http://digitalhub-core:8080"}` |  |
-| core.sts.jwt.issuerUri | string | `"http://digitalhub-core:8080"` |  |
-| core.sts.stsDb | object | `{"credentials":{"existingSecret":{"name":"stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"}},"database":"sts","driver":"org.postgresql.Driver","host":"core-postgres-cluster","platform":"postgresql","port":"5432","schema":"public"}` |  |
-| core.sts.stsDb.credentials | object | `{"existingSecret":{"name":"stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"}}` |  |
-| core.sts.stsDb.credentials.existingSecret | object | `{"name":"stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do","passwordKey":"password","usernameKey":"username"}` |  |
-| core.sts.stsDb.credentials.existingSecret.name | string | `"stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do"` |  |
-| core.sts.stsDb.credentials.existingSecret.passwordKey | string | `"password"` |  |
-| core.sts.stsDb.credentials.existingSecret.usernameKey | string | `"username"` |  |
-| core.sts.stsDb.database | string | `"sts"` |  |
-| core.sts.stsDb.driver | string | `"org.postgresql.Driver"` |  |
-| core.sts.stsDb.host | string | `"core-postgres-cluster"` |  |
-| core.sts.stsDb.platform | string | `"postgresql"` |  |
-| core.sts.stsDb.port | string | `"5432"` |  |
-| core.sts.stsDb.schema | string | `"public"` |  |
-| dashboard | object | `{"additional-components":{"apps":[{"description":"","existingSecret":{"clientId":"","name":"","secretKey":""},"ingress":{"annotations":{},"enabled":false,"hosts":[],"ingressClassName":"","path":"/","tls":[]},"name":"","oidcIssuerUrl":"","redirectUrl":"","service":{"name":"","port":""}}],"enabled":false},"affinity":{},"autoscaling":{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80},"fullnameOverride":"","image":{"pullPolicy":"IfNotPresent","repository":"ghcr.io/scc-digitalhub/dh-dashboard","tag":"0.1.4"},"imagePullSecrets":[],"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[{"hosts":[""],"secretName":""}]},"nameOverride":"","nodeSelector":{},"oidc":{"audience":{"clientId":"","externalSecret":{"key":"","name":""}},"config":{"issuer":""},"enabled":false},"podAnnotations":{},"podLabels":{},"podSecurityContext":{"fsGroup":65532,"runAsNonRoot":true,"runAsUser":65532,"seccompProfile":{"type":"RuntimeDefault"}},"replicaCount":1,"resources":{"limits":{"cpu":"1000m","memory":"512Mi"},"requests":{"cpu":"250m","memory":"256Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":65532,"seccompProfile":{"type":"RuntimeDefault"}},"service":{"httpNodePort":"30110","port":"8080","type":"NodePort"},"serviceAccount":{"annotations":{},"automount":true,"create":true,"name":"digitalhub-dashboard"},"tolerations":[],"volumes":null}` |  |
-| dashboard.additional-components | object | `{"apps":[{"description":"","existingSecret":{"clientId":"","name":"","secretKey":""},"ingress":{"annotations":{},"enabled":false,"hosts":[],"ingressClassName":"","path":"/","tls":[]},"name":"","oidcIssuerUrl":"","redirectUrl":"","service":{"name":"","port":""}}],"enabled":false}` |  |
-| dashboard.additional-components.apps | list | `[{"description":"","existingSecret":{"clientId":"","name":"","secretKey":""},"ingress":{"annotations":{},"enabled":false,"hosts":[],"ingressClassName":"","path":"/","tls":[]},"name":"","oidcIssuerUrl":"","redirectUrl":"","service":{"name":"","port":""}}]` |  |
-| dashboard.additional-components.enabled | bool | `false` |  |
-| dashboard.affinity | object | `{}` |  |
-| dashboard.autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` |  |
-| dashboard.autoscaling.enabled | bool | `false` |  |
-| dashboard.autoscaling.maxReplicas | int | `100` |  |
-| dashboard.autoscaling.minReplicas | int | `1` |  |
-| dashboard.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| dashboard.fullnameOverride | string | `""` |  |
-| dashboard.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/scc-digitalhub/dh-dashboard","tag":"0.1.4"}` |  |
-| dashboard.image.pullPolicy | string | `"IfNotPresent"` |  |
-| dashboard.image.repository | string | `"ghcr.io/scc-digitalhub/dh-dashboard"` |  |
-| dashboard.image.tag | string | `"0.1.4"` |  |
-| dashboard.imagePullSecrets | list | `[]` |  |
-| dashboard.ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[{"hosts":[""],"secretName":""}]}` |  |
-| dashboard.ingress.annotations | object | `{}` |  |
-| dashboard.ingress.className | string | `""` |  |
-| dashboard.ingress.enabled | bool | `false` |  |
-| dashboard.ingress.hosts | list | `[{"host":"","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]` |  |
-| dashboard.ingress.tls | list | `[{"hosts":[""],"secretName":""}]` |  |
-| dashboard.nameOverride | string | `""` |  |
-| dashboard.nodeSelector | object | `{}` |  |
-| dashboard.oidc | object | `{"audience":{"clientId":"","externalSecret":{"key":"","name":""}},"config":{"issuer":""},"enabled":false}` |  |
-| dashboard.oidc.audience | object | `{"clientId":"","externalSecret":{"key":"","name":""}}` |  |
-| dashboard.oidc.audience.clientId | string | `""` |  |
-| dashboard.oidc.audience.externalSecret | object | `{"key":"","name":""}` |  |
-| dashboard.oidc.audience.externalSecret.key | string | `""` |  |
-| dashboard.oidc.audience.externalSecret.name | string | `""` |  |
-| dashboard.oidc.config | object | `{"issuer":""}` |  |
-| dashboard.oidc.config.issuer | string | `""` |  |
-| dashboard.oidc.enabled | bool | `false` |  |
-| dashboard.podAnnotations | object | `{}` |  |
-| dashboard.podLabels | object | `{}` |  |
-| dashboard.podSecurityContext | object | `{"fsGroup":65532,"runAsNonRoot":true,"runAsUser":65532,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| dashboard.podSecurityContext.fsGroup | int | `65532` |  |
-| dashboard.podSecurityContext.runAsNonRoot | bool | `true` |  |
-| dashboard.podSecurityContext.runAsUser | int | `65532` |  |
-| dashboard.podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| dashboard.podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| dashboard.replicaCount | int | `1` |  |
-| dashboard.resources | object | `{"limits":{"cpu":"1000m","memory":"512Mi"},"requests":{"cpu":"250m","memory":"256Mi"}}` |  |
-| dashboard.resources.limits | object | `{"cpu":"1000m","memory":"512Mi"}` |  |
-| dashboard.resources.limits.cpu | string | `"1000m"` |  |
-| dashboard.resources.limits.memory | string | `"512Mi"` |  |
-| dashboard.resources.requests | object | `{"cpu":"250m","memory":"256Mi"}` |  |
-| dashboard.resources.requests.cpu | string | `"250m"` |  |
-| dashboard.resources.requests.memory | string | `"256Mi"` |  |
-| dashboard.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":65532,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| dashboard.securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| dashboard.securityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| dashboard.securityContext.capabilities.drop | list | `["ALL"]` |  |
-| dashboard.securityContext.runAsNonRoot | bool | `true` |  |
-| dashboard.securityContext.runAsUser | int | `65532` |  |
-| dashboard.securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| dashboard.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| dashboard.service | object | `{"httpNodePort":"30110","port":"8080","type":"NodePort"}` |  |
-| dashboard.service.httpNodePort | string | `"30110"` |  |
-| dashboard.service.port | string | `"8080"` |  |
-| dashboard.service.type | string | `"NodePort"` |  |
-| dashboard.serviceAccount | object | `{"annotations":{},"automount":true,"create":true,"name":"digitalhub-dashboard"}` |  |
-| dashboard.serviceAccount.annotations | object | `{}` |  |
-| dashboard.serviceAccount.automount | bool | `true` |  |
-| dashboard.serviceAccount.create | bool | `true` |  |
-| dashboard.serviceAccount.name | string | `"digitalhub-dashboard"` |  |
-| dashboard.tolerations | list | `[]` |  |
-| dashboard.volumes | string | `nil` |  |
-| docker-registry | object | `{"className":"nginx","enabled":true,"fullnameOverride":"digitalhub-docker-registry","ingress":{"enabled":false,"hosts":["registry.digitalhub.test"],"path":"/"},"persistence":{"accessMode":"ReadWriteOnce","enabled":true,"size":"128Gi"},"service":{"nodePort":30150,"type":"NodePort"},"updateStrategy":{"type":"Recreate"}}` |  |
-| docker-registry.className | string | `"nginx"` |  |
-| docker-registry.enabled | bool | `true` |  |
-| docker-registry.fullnameOverride | string | `"digitalhub-docker-registry"` |  |
-| docker-registry.ingress | object | `{"enabled":false,"hosts":["registry.digitalhub.test"],"path":"/"}` |  |
-| docker-registry.ingress.enabled | bool | `false` |  |
-| docker-registry.ingress.hosts | list | `["registry.digitalhub.test"]` |  |
-| docker-registry.ingress.path | string | `"/"` |  |
-| docker-registry.persistence | object | `{"accessMode":"ReadWriteOnce","enabled":true,"size":"128Gi"}` |  |
-| docker-registry.persistence.accessMode | string | `"ReadWriteOnce"` |  |
-| docker-registry.persistence.enabled | bool | `true` |  |
-| docker-registry.persistence.size | string | `"128Gi"` |  |
-| docker-registry.service | object | `{"nodePort":30150,"type":"NodePort"}` |  |
-| docker-registry.service.nodePort | int | `30150` |  |
-| docker-registry.service.type | string | `"NodePort"` |  |
-| docker-registry.updateStrategy | object | `{"type":"Recreate"}` |  |
-| docker-registry.updateStrategy.type | string | `"Recreate"` |  |
-| dremio-rest-server-operator | object | `{"enabled":true}` |  |
-| dremio-rest-server-operator.enabled | bool | `true` |  |
-| ext-postgres-operator | object | `{"enabled":true,"image":{"tag":"1.3.5"},"podSecurityContext":{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"postgres":{"cloud_provider":"","default_database":"postgres","host":"database-postgres-cluster","password":"","uri_args":" ","user":""},"postgresCredsExistingSecrets":{"password":{"secretKey":"password","secretName":"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"},"username":{"secretKey":"username","secretName":"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"}},"securityContext":{"seccompProfile":{"type":"RuntimeDefault"}}}` |  |
-| ext-postgres-operator.enabled | bool | `true` |  |
-| ext-postgres-operator.image | object | `{"tag":"1.3.5"}` |  |
-| ext-postgres-operator.image.tag | string | `"1.3.5"` |  |
-| ext-postgres-operator.podSecurityContext | object | `{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| ext-postgres-operator.podSecurityContext.runAsNonRoot | bool | `true` |  |
-| ext-postgres-operator.podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| ext-postgres-operator.podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| ext-postgres-operator.postgres | object | `{"cloud_provider":"","default_database":"postgres","host":"database-postgres-cluster","password":"","uri_args":" ","user":""}` |  |
-| ext-postgres-operator.postgres.cloud_provider | string | `""` |  |
-| ext-postgres-operator.postgres.default_database | string | `"postgres"` |  |
-| ext-postgres-operator.postgres.host | string | `"database-postgres-cluster"` |  |
-| ext-postgres-operator.postgres.password | string | `""` |  |
-| ext-postgres-operator.postgres.uri_args | string | `" "` |  |
-| ext-postgres-operator.postgres.user | string | `""` |  |
-| ext-postgres-operator.postgresCredsExistingSecrets | object | `{"password":{"secretKey":"password","secretName":"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"},"username":{"secretKey":"username","secretName":"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"}}` |  |
-| ext-postgres-operator.postgresCredsExistingSecrets.password | object | `{"secretKey":"password","secretName":"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"}` |  |
-| ext-postgres-operator.postgresCredsExistingSecrets.password.secretKey | string | `"password"` |  |
-| ext-postgres-operator.postgresCredsExistingSecrets.password.secretName | string | `"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"` |  |
-| ext-postgres-operator.postgresCredsExistingSecrets.username | object | `{"secretKey":"username","secretName":"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"}` |  |
-| ext-postgres-operator.postgresCredsExistingSecrets.username.secretKey | string | `"username"` |  |
-| ext-postgres-operator.postgresCredsExistingSecrets.username.secretName | string | `"digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"` |  |
-| ext-postgres-operator.securityContext | object | `{"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| ext-postgres-operator.securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| ext-postgres-operator.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| global | object | `{"basicAuth":{"enabled":false,"password":"","secretName":"","username":""},"cleanup":{"deployments":false,"ingress":false,"jobs":false,"persistentVolumeClaims":false,"pods":false,"statefulsets":false},"crd":{"enabled":true},"externalHostAddress":"192.168.49.2","externalTls":false,"minio":{"argoBucket":"argo","argoPassword":"argo1234","argoSecret":"argo-minio-creds","argoUser":"argo","bucket":"datalake","digitalhubPassword":"digitalhub","digitalhubUser":"digitalhub","digitalhubUserSecret":"digitalhub-minio-creds","endpoint":"minio","endpointPort":"9000","protocol":"http","rootPassword":"minio123","rootUser":"minio","rootUserSecret":"minio"},"registry":{"email":"","password":"","secretName":"","url":"192.168.49.2:30150","username":""},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"service":{"type":"NodePort"},"solr":{"fullNameOverride":"digitalhub"}}` |  |
-| global.basicAuth | object | `{"enabled":false,"password":"","secretName":"","username":""}` |  |
-| global.basicAuth.enabled | bool | `false` |  |
-| global.basicAuth.password | string | `""` |  |
-| global.basicAuth.secretName | string | `""` |  |
-| global.basicAuth.username | string | `""` |  |
-| global.cleanup | object | `{"deployments":false,"ingress":false,"jobs":false,"persistentVolumeClaims":false,"pods":false,"statefulsets":false}` |  |
-| global.cleanup.deployments | bool | `false` |  |
-| global.cleanup.ingress | bool | `false` |  |
-| global.cleanup.jobs | bool | `false` |  |
-| global.cleanup.persistentVolumeClaims | bool | `false` |  |
-| global.cleanup.pods | bool | `false` |  |
-| global.cleanup.statefulsets | bool | `false` |  |
-| global.crd | object | `{"enabled":true}` |  |
-| global.crd.enabled | bool | `true` |  |
-| global.externalHostAddress | string | `"192.168.49.2"` |  |
-| global.externalTls | bool | `false` |  |
-| global.minio | object | `{"argoBucket":"argo","argoPassword":"argo1234","argoSecret":"argo-minio-creds","argoUser":"argo","bucket":"datalake","digitalhubPassword":"digitalhub","digitalhubUser":"digitalhub","digitalhubUserSecret":"digitalhub-minio-creds","endpoint":"minio","endpointPort":"9000","protocol":"http","rootPassword":"minio123","rootUser":"minio","rootUserSecret":"minio"}` |  |
-| global.minio.argoBucket | string | `"argo"` |  |
-| global.minio.argoPassword | string | `"argo1234"` |  |
-| global.minio.argoSecret | string | `"argo-minio-creds"` |  |
-| global.minio.argoUser | string | `"argo"` |  |
-| global.minio.bucket | string | `"datalake"` |  |
-| global.minio.digitalhubPassword | string | `"digitalhub"` |  |
-| global.minio.digitalhubUser | string | `"digitalhub"` |  |
-| global.minio.digitalhubUserSecret | string | `"digitalhub-minio-creds"` |  |
-| global.minio.endpoint | string | `"minio"` |  |
-| global.minio.endpointPort | string | `"9000"` |  |
-| global.minio.protocol | string | `"http"` |  |
-| global.minio.rootPassword | string | `"minio123"` |  |
-| global.minio.rootUser | string | `"minio"` |  |
-| global.minio.rootUserSecret | string | `"minio"` |  |
-| global.registry | object | `{"email":"","password":"","secretName":"","url":"192.168.49.2:30150","username":""}` |  |
-| global.registry.email | string | `""` |  |
-| global.registry.password | string | `""` |  |
-| global.registry.secretName | string | `""` |  |
-| global.registry.url | string | `"192.168.49.2:30150"` |  |
-| global.registry.username | string | `""` |  |
-| global.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| global.securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| global.securityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| global.securityContext.capabilities.drop | list | `["ALL"]` |  |
-| global.securityContext.runAsNonRoot | bool | `true` |  |
-| global.securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| global.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| global.service | object | `{"type":"NodePort"}` |  |
-| global.service.type | string | `"NodePort"` |  |
-| global.solr | object | `{"fullNameOverride":"digitalhub"}` |  |
-| global.solr.fullNameOverride | string | `"digitalhub"` |  |
-| jobs | object | `{"delete":{"securityContext":{"readOnlyRootFilesystem":true}}}` |  |
-| jobs.delete | object | `{"securityContext":{"readOnlyRootFilesystem":true}}` |  |
-| jobs.delete.securityContext | object | `{"readOnlyRootFilesystem":true}` |  |
-| jobs.delete.securityContext.readOnlyRootFilesystem | bool | `true` |  |
-| kubeai | object | `{"crds":{"enabled":true},"enabled":true,"open-webui":{"enabled":false},"resourceProfiles":{"cpu":{"imageName":"cpu","requests":{"cpu":1,"memory":"2Gi"}}}}` |  |
-| kubeai.crds | object | `{"enabled":true}` |  |
-| kubeai.crds.enabled | bool | `true` |  |
-| kubeai.enabled | bool | `true` |  |
-| kubeai.open-webui | object | `{"enabled":false}` |  |
-| kubeai.open-webui.enabled | bool | `false` |  |
-| kubeai.resourceProfiles | object | `{"cpu":{"imageName":"cpu","requests":{"cpu":1,"memory":"2Gi"}}}` |  |
-| kubeai.resourceProfiles.cpu | object | `{"imageName":"cpu","requests":{"cpu":1,"memory":"2Gi"}}` |  |
-| kubeai.resourceProfiles.cpu.imageName | string | `"cpu"` |  |
-| kubeai.resourceProfiles.cpu.requests | object | `{"cpu":1,"memory":"2Gi"}` |  |
-| kubeai.resourceProfiles.cpu.requests.cpu | int | `1` |  |
-| kubeai.resourceProfiles.cpu.requests.memory | string | `"2Gi"` |  |
-| kubernetes-resource-manager | object | `{"enabled":true,"resourceSelectors":{"secrets":{"names":"(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"}},"service":{"nodePort":"30220","type":"NodePort"}}` |  |
-| kubernetes-resource-manager.enabled | bool | `true` |  |
-| kubernetes-resource-manager.resourceSelectors | object | `{"secrets":{"names":"(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"}}` |  |
-| kubernetes-resource-manager.resourceSelectors.secrets | object | `{"names":"(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"}` |  |
-| kubernetes-resource-manager.resourceSelectors.secrets.names | string | `"(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"` |  |
-| kubernetes-resource-manager.service | object | `{"nodePort":"30220","type":"NodePort"}` |  |
-| kubernetes-resource-manager.service.nodePort | string | `"30220"` |  |
-| kubernetes-resource-manager.service.type | string | `"NodePort"` |  |
-| minio | object | `{"buckets":[{"name":"datalake","policy":"none","purge":false},{"name":"argo","policy":"none","purge":false}],"consoleService":{"nodePort":30090,"port":9001,"type":"NodePort"},"containerSecurityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"deploymentUpdate":{"type":"Recreate"},"enabled":true,"fullnameOverride":"minio","ingress":{"enabled":false},"makeBucketJob":{"containerSecurityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"securityContext":{"enabled":true}},"makePolicyJob":{"containerSecurityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"securityContext":{"enabled":true}},"makeUserJob":{"containerSecurityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"securityContext":{"enabled":true}},"mode":"standalone","oidc":{"claimName":"","claimPrefix":"","clientId":"","clientSecret":"","comment":"","configUrl":"","displayName":"","enabled":false,"existingClientIdKey":"","existingClientSecretKey":"","existingClientSecretName":"","redirectUri":"","scopes":""},"persistence":{"enabled":true,"size":"128Gi"},"policies":[{"name":"readwritedigitalhub","statements":[{"actions":["s3:*"],"effect":"Allow","resources":["arn:aws:s3:::datalake/*"]}]},{"name":"readwriteargo","statements":[{"actions":["s3:*"],"effect":"Allow","resources":["arn:aws:s3:::argo/*"]}]}],"postJob":{"securityContext":{"enabled":true,"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}},"replicas":1,"resources":{"requests":{"memory":"0.5Gi"}},"rootPassword":"minio123","rootUser":"minio","securityContext":{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"service":{"nodePort":30080,"port":9000,"type":"NodePort"},"users":[{"accessKey":"digitalhub","policy":"readwritedigitalhub","secretKey":"digitalhub"},{"accessKey":"argo","policy":"readwriteargo","secretKey":"argo1234"}]}` |  |
-| minio-operator | object | `{"enabled":true,"minio":{"accessKey":"minio","bucket":"datalake","endpoint":"minio","endpointPort":"9000","protocol":"http","secretKey":"minio123"}}` |  |
-| minio-operator.enabled | bool | `true` |  |
-| minio-operator.minio | object | `{"accessKey":"minio","bucket":"datalake","endpoint":"minio","endpointPort":"9000","protocol":"http","secretKey":"minio123"}` |  |
-| minio-operator.minio.accessKey | string | `"minio"` |  |
-| minio-operator.minio.bucket | string | `"datalake"` |  |
-| minio-operator.minio.endpoint | string | `"minio"` |  |
-| minio-operator.minio.endpointPort | string | `"9000"` |  |
-| minio-operator.minio.protocol | string | `"http"` |  |
-| minio-operator.minio.secretKey | string | `"minio123"` |  |
-| minio.buckets | list | `[{"name":"datalake","policy":"none","purge":false},{"name":"argo","policy":"none","purge":false}]` |  |
-| minio.consoleService | object | `{"nodePort":30090,"port":9001,"type":"NodePort"}` |  |
-| minio.consoleService.nodePort | int | `30090` |  |
-| minio.consoleService.port | int | `9001` |  |
-| minio.consoleService.type | string | `"NodePort"` |  |
-| minio.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| minio.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| minio.containerSecurityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| minio.containerSecurityContext.capabilities.drop | list | `["ALL"]` |  |
-| minio.containerSecurityContext.runAsNonRoot | bool | `true` |  |
-| minio.containerSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| minio.containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| minio.deploymentUpdate | object | `{"type":"Recreate"}` |  |
-| minio.deploymentUpdate.type | string | `"Recreate"` |  |
-| minio.enabled | bool | `true` |  |
-| minio.fullnameOverride | string | `"minio"` |  |
-| minio.ingress | object | `{"enabled":false}` |  |
-| minio.ingress.enabled | bool | `false` |  |
-| minio.makeBucketJob | object | `{"containerSecurityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"securityContext":{"enabled":true}}` |  |
-| minio.makeBucketJob.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| minio.makeBucketJob.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| minio.makeBucketJob.containerSecurityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| minio.makeBucketJob.containerSecurityContext.capabilities.drop | list | `["ALL"]` |  |
-| minio.makeBucketJob.containerSecurityContext.runAsNonRoot | bool | `true` |  |
-| minio.makeBucketJob.containerSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| minio.makeBucketJob.containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| minio.makeBucketJob.securityContext | object | `{"enabled":true}` |  |
-| minio.makeBucketJob.securityContext.enabled | bool | `true` |  |
-| minio.makePolicyJob | object | `{"containerSecurityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"securityContext":{"enabled":true}}` |  |
-| minio.makePolicyJob.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| minio.makePolicyJob.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| minio.makePolicyJob.containerSecurityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| minio.makePolicyJob.containerSecurityContext.capabilities.drop | list | `["ALL"]` |  |
-| minio.makePolicyJob.containerSecurityContext.runAsNonRoot | bool | `true` |  |
-| minio.makePolicyJob.containerSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| minio.makePolicyJob.containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| minio.makePolicyJob.securityContext | object | `{"enabled":true}` |  |
-| minio.makePolicyJob.securityContext.enabled | bool | `true` |  |
-| minio.makeUserJob | object | `{"containerSecurityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"securityContext":{"enabled":true}}` |  |
-| minio.makeUserJob.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| minio.makeUserJob.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| minio.makeUserJob.containerSecurityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| minio.makeUserJob.containerSecurityContext.capabilities.drop | list | `["ALL"]` |  |
-| minio.makeUserJob.containerSecurityContext.runAsNonRoot | bool | `true` |  |
-| minio.makeUserJob.containerSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| minio.makeUserJob.containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| minio.makeUserJob.securityContext | object | `{"enabled":true}` |  |
-| minio.makeUserJob.securityContext.enabled | bool | `true` |  |
-| minio.mode | string | `"standalone"` |  |
-| minio.oidc | object | `{"claimName":"","claimPrefix":"","clientId":"","clientSecret":"","comment":"","configUrl":"","displayName":"","enabled":false,"existingClientIdKey":"","existingClientSecretKey":"","existingClientSecretName":"","redirectUri":"","scopes":""}` |  |
-| minio.oidc.claimName | string | `""` |  |
-| minio.oidc.claimPrefix | string | `""` |  |
-| minio.oidc.clientId | string | `""` |  |
-| minio.oidc.clientSecret | string | `""` |  |
-| minio.oidc.comment | string | `""` |  |
-| minio.oidc.configUrl | string | `""` |  |
-| minio.oidc.displayName | string | `""` |  |
-| minio.oidc.enabled | bool | `false` |  |
-| minio.oidc.existingClientIdKey | string | `""` |  |
-| minio.oidc.existingClientSecretKey | string | `""` |  |
-| minio.oidc.existingClientSecretName | string | `""` |  |
-| minio.oidc.redirectUri | string | `""` |  |
-| minio.oidc.scopes | string | `""` |  |
-| minio.persistence | object | `{"enabled":true,"size":"128Gi"}` |  |
-| minio.persistence.enabled | bool | `true` |  |
-| minio.persistence.size | string | `"128Gi"` |  |
-| minio.policies | list | `[{"name":"readwritedigitalhub","statements":[{"actions":["s3:*"],"effect":"Allow","resources":["arn:aws:s3:::datalake/*"]}]},{"name":"readwriteargo","statements":[{"actions":["s3:*"],"effect":"Allow","resources":["arn:aws:s3:::argo/*"]}]}]` |  |
-| minio.postJob | object | `{"securityContext":{"enabled":true,"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}}` |  |
-| minio.postJob.securityContext | object | `{"enabled":true,"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| minio.postJob.securityContext.enabled | bool | `true` |  |
-| minio.postJob.securityContext.runAsNonRoot | bool | `true` |  |
-| minio.postJob.securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| minio.postJob.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| minio.replicas | int | `1` |  |
-| minio.resources | object | `{"requests":{"memory":"0.5Gi"}}` |  |
-| minio.resources.requests | object | `{"memory":"0.5Gi"}` |  |
-| minio.resources.requests.memory | string | `"0.5Gi"` |  |
-| minio.rootPassword | string | `"minio123"` |  |
-| minio.rootUser | string | `"minio"` |  |
-| minio.securityContext | object | `{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| minio.securityContext.runAsNonRoot | bool | `true` |  |
-| minio.securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| minio.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| minio.service | object | `{"nodePort":30080,"port":9000,"type":"NodePort"}` |  |
-| minio.service.nodePort | int | `30080` |  |
-| minio.service.port | int | `9000` |  |
-| minio.service.type | string | `"NodePort"` |  |
-| minio.users | list | `[{"accessKey":"digitalhub","policy":"readwritedigitalhub","secretKey":"digitalhub"},{"accessKey":"argo","policy":"readwriteargo","secretKey":"argo1234"}]` |  |
-| mysql-operator | object | `{"enabled":false}` |  |
-| mysql-operator.enabled | bool | `false` |  |
-| nakamasato-mysql-operator | object | `{"enabled":false}` |  |
-| nakamasato-mysql-operator.enabled | bool | `false` |  |
-| open-webui | object | `{"enabled":true,"extraEnvVars":[{"name":"ENABLE_LOGIN_FORM","value":"True"},{"name":"OPENAI_API_KEYS","value":"not-used"},{"name":"SAFE_MODE","value":"True"},{"name":"ENABLE_EVALUATION_ARENA_MODELS","value":"False"},{"name":"DEFAULT_USER_ROLE","value":"user"},{"name":"ENABLE_API_KEY","value":"False"}],"initialize":{"admin":{"existingSecret":{"name":"","passwordKey":"","usernameKey":""},"password":"Test12456@!","username":"test@test.local"},"enabled":true,"image":"smartcommunitylab/k8s-ansible-clusterctl:1.32.5-1.10.1"},"ollama":{"enabled":false},"openaiBaseApiUrl":"http://kubeai/openai/v1","pipelines":{"enabled":false},"service":{"nodePort":"30160","type":"NodePort"}}` |  |
-| open-webui.enabled | bool | `true` |  |
-| open-webui.extraEnvVars | list | `[{"name":"ENABLE_LOGIN_FORM","value":"True"},{"name":"OPENAI_API_KEYS","value":"not-used"},{"name":"SAFE_MODE","value":"True"},{"name":"ENABLE_EVALUATION_ARENA_MODELS","value":"False"},{"name":"DEFAULT_USER_ROLE","value":"user"},{"name":"ENABLE_API_KEY","value":"False"}]` |  |
-| open-webui.initialize | object | `{"admin":{"existingSecret":{"name":"","passwordKey":"","usernameKey":""},"password":"Test12456@!","username":"test@test.local"},"enabled":true,"image":"smartcommunitylab/k8s-ansible-clusterctl:1.32.5-1.10.1"}` |  |
-| open-webui.initialize.admin | object | `{"existingSecret":{"name":"","passwordKey":"","usernameKey":""},"password":"Test12456@!","username":"test@test.local"}` |  |
-| open-webui.initialize.admin.existingSecret | object | `{"name":"","passwordKey":"","usernameKey":""}` |  |
-| open-webui.initialize.admin.existingSecret.name | string | `""` |  |
-| open-webui.initialize.admin.existingSecret.passwordKey | string | `""` |  |
-| open-webui.initialize.admin.existingSecret.usernameKey | string | `""` |  |
-| open-webui.initialize.admin.password | string | `"Test12456@!"` |  |
-| open-webui.initialize.admin.username | string | `"test@test.local"` |  |
-| open-webui.initialize.enabled | bool | `true` |  |
-| open-webui.initialize.image | string | `"smartcommunitylab/k8s-ansible-clusterctl:1.32.5-1.10.1"` |  |
-| open-webui.ollama | object | `{"enabled":false}` |  |
-| open-webui.ollama.enabled | bool | `false` |  |
-| open-webui.openaiBaseApiUrl | string | `"http://kubeai/openai/v1"` |  |
-| open-webui.pipelines | object | `{"enabled":false}` |  |
-| open-webui.pipelines.enabled | bool | `false` |  |
-| open-webui.service | object | `{"nodePort":"30160","type":"NodePort"}` |  |
-| open-webui.service.nodePort | string | `"30160"` |  |
-| open-webui.service.type | string | `"NodePort"` |  |
-| platformPackages | object | `{"deleteOnCompletion":true,"image":"","packages":[{"name":"digitalhub[full]","tag":"0.11.0"},{"name":"digitalhub-runtime-python","tag":"0.11.0"},{"name":"digitalhub-runtime-container","tag":"0.11.0"},{"name":"digitalhub-runtime-dbt","tag":"0.11.0"},{"name":"digitalhub-runtime-kfp","tag":"0.11.0"},{"name":"digitalhub-runtime-modelserve","tag":"0.11.0"}],"preRelease":false,"tag":""}` |  |
-| platformPackages.deleteOnCompletion | bool | `true` |  |
-| platformPackages.image | string | `""` |  |
-| platformPackages.packages | list | `[{"name":"digitalhub[full]","tag":"0.11.0"},{"name":"digitalhub-runtime-python","tag":"0.11.0"},{"name":"digitalhub-runtime-container","tag":"0.11.0"},{"name":"digitalhub-runtime-dbt","tag":"0.11.0"},{"name":"digitalhub-runtime-kfp","tag":"0.11.0"},{"name":"digitalhub-runtime-modelserve","tag":"0.11.0"}]` |  |
-| platformPackages.preRelease | bool | `false` |  |
-| platformPackages.tag | string | `""` |  |
-| postgres-operator | object | `{"databases":{"coder":{"enabled":true,"resources":{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"512m","memory":"1000Mi"}},"volume":{"size":"8Gi"}},"core":{"enabled":true,"resources":{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"512m","memory":"1000Mi"}},"volume":{"size":"8Gi"}},"digitalhub":{"enabled":true,"resources":{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"512m","memory":"1000Mi"}},"volume":{"size":"8Gi"}}},"enabled":true,"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}}` |  |
-| postgres-operator.databases | object | `{"coder":{"enabled":true,"resources":{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"512m","memory":"1000Mi"}},"volume":{"size":"8Gi"}},"core":{"enabled":true,"resources":{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"512m","memory":"1000Mi"}},"volume":{"size":"8Gi"}},"digitalhub":{"enabled":true,"resources":{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"512m","memory":"1000Mi"}},"volume":{"size":"8Gi"}}}` |  |
-| postgres-operator.databases.coder | object | `{"enabled":true,"resources":{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"512m","memory":"1000Mi"}},"volume":{"size":"8Gi"}}` |  |
-| postgres-operator.databases.coder.enabled | bool | `true` |  |
-| postgres-operator.databases.coder.resources | object | `{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"512m","memory":"1000Mi"}}` |  |
-| postgres-operator.databases.coder.resources.limits | object | `{"cpu":"2","memory":"2Gi"}` |  |
-| postgres-operator.databases.coder.resources.limits.cpu | string | `"2"` |  |
-| postgres-operator.databases.coder.resources.limits.memory | string | `"2Gi"` |  |
-| postgres-operator.databases.coder.resources.requests | object | `{"cpu":"512m","memory":"1000Mi"}` |  |
-| postgres-operator.databases.coder.resources.requests.cpu | string | `"512m"` |  |
-| postgres-operator.databases.coder.resources.requests.memory | string | `"1000Mi"` |  |
-| postgres-operator.databases.coder.volume | object | `{"size":"8Gi"}` |  |
-| postgres-operator.databases.coder.volume.size | string | `"8Gi"` |  |
-| postgres-operator.databases.core | object | `{"enabled":true,"resources":{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"512m","memory":"1000Mi"}},"volume":{"size":"8Gi"}}` |  |
-| postgres-operator.databases.core.enabled | bool | `true` |  |
-| postgres-operator.databases.core.resources | object | `{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"512m","memory":"1000Mi"}}` |  |
-| postgres-operator.databases.core.resources.limits | object | `{"cpu":"2","memory":"2Gi"}` |  |
-| postgres-operator.databases.core.resources.limits.cpu | string | `"2"` |  |
-| postgres-operator.databases.core.resources.limits.memory | string | `"2Gi"` |  |
-| postgres-operator.databases.core.resources.requests | object | `{"cpu":"512m","memory":"1000Mi"}` |  |
-| postgres-operator.databases.core.resources.requests.cpu | string | `"512m"` |  |
-| postgres-operator.databases.core.resources.requests.memory | string | `"1000Mi"` |  |
-| postgres-operator.databases.core.volume | object | `{"size":"8Gi"}` |  |
-| postgres-operator.databases.core.volume.size | string | `"8Gi"` |  |
-| postgres-operator.databases.digitalhub | object | `{"enabled":true,"resources":{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"512m","memory":"1000Mi"}},"volume":{"size":"8Gi"}}` |  |
-| postgres-operator.databases.digitalhub.enabled | bool | `true` |  |
-| postgres-operator.databases.digitalhub.resources | object | `{"limits":{"cpu":"2","memory":"2Gi"},"requests":{"cpu":"512m","memory":"1000Mi"}}` |  |
-| postgres-operator.databases.digitalhub.resources.limits | object | `{"cpu":"2","memory":"2Gi"}` |  |
-| postgres-operator.databases.digitalhub.resources.limits.cpu | string | `"2"` |  |
-| postgres-operator.databases.digitalhub.resources.limits.memory | string | `"2Gi"` |  |
-| postgres-operator.databases.digitalhub.resources.requests | object | `{"cpu":"512m","memory":"1000Mi"}` |  |
-| postgres-operator.databases.digitalhub.resources.requests.cpu | string | `"512m"` |  |
-| postgres-operator.databases.digitalhub.resources.requests.memory | string | `"1000Mi"` |  |
-| postgres-operator.databases.digitalhub.volume | object | `{"size":"8Gi"}` |  |
-| postgres-operator.databases.digitalhub.volume.size | string | `"8Gi"` |  |
-| postgres-operator.enabled | bool | `true` |  |
-| postgres-operator.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| postgres-operator.securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| postgres-operator.securityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| postgres-operator.securityContext.capabilities.drop | list | `["ALL"]` |  |
-| postgres-operator.securityContext.runAsNonRoot | bool | `true` |  |
-| postgres-operator.securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| postgres-operator.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| postgrest-operator | object | `{"enabled":true,"postgres":{"default_database":"digitalhub","host":"database-postgres-cluster","port":5432,"postgrest_service_type":"NodePort","uri_args":"sslmode=disable"},"postgresCredsExistingSecrets":{"password":{"secretKey":"password","secretName":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"},"username":{"secretKey":"username","secretName":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"}}}` |  |
-| postgrest-operator.enabled | bool | `true` |  |
-| postgrest-operator.postgres | object | `{"default_database":"digitalhub","host":"database-postgres-cluster","port":5432,"postgrest_service_type":"NodePort","uri_args":"sslmode=disable"}` |  |
-| postgrest-operator.postgres.default_database | string | `"digitalhub"` |  |
-| postgrest-operator.postgres.host | string | `"database-postgres-cluster"` |  |
-| postgrest-operator.postgres.port | int | `5432` |  |
-| postgrest-operator.postgres.postgrest_service_type | string | `"NodePort"` |  |
-| postgrest-operator.postgres.uri_args | string | `"sslmode=disable"` |  |
-| postgrest-operator.postgresCredsExistingSecrets | object | `{"password":{"secretKey":"password","secretName":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"},"username":{"secretKey":"username","secretName":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"}}` |  |
-| postgrest-operator.postgresCredsExistingSecrets.password | object | `{"secretKey":"password","secretName":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"}` |  |
-| postgrest-operator.postgresCredsExistingSecrets.password.secretKey | string | `"password"` |  |
-| postgrest-operator.postgresCredsExistingSecrets.password.secretName | string | `"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"` |  |
-| postgrest-operator.postgresCredsExistingSecrets.username | object | `{"secretKey":"username","secretName":"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"}` |  |
-| postgrest-operator.postgresCredsExistingSecrets.username.secretKey | string | `"username"` |  |
-| postgrest-operator.postgresCredsExistingSecrets.username.secretName | string | `"digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"` |  |
-| securityContext | object | `{"enabled":true,"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| securityContext.enabled | bool | `true` |  |
-| securityContext.runAsNonRoot | bool | `true` |  |
-| securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| solr | object | `{"creds":{"admin":{"password":"thi4iegheeX7euthe7di","passwordSha":"C8QrTZf6jpu+cPKTsLtyEhv1XVXAYZGmStTKXzB80sg= MW5pNXZlaGIyaWhkdW5w"},"k8sOper":{"password":"imPBf@tU(asx9%TZ","passwordSha":"3iPc1JWet22a05UZXCFfo/qRUqwg2iVULyv5RBEqPdM= LSpnG/l2j8AA9vrryMGkkFLO+bYeN7ZUvrU270WAfyA="},"solr":{"password":"aed0ohBie3hai6jo7sho","passwordSha":"i61TpZKyvff3CHnyZ0kMTzkNezkxkilCre93wLkz7jQ= NzlyN3k1cm0xZGt3eWR1MA=="},"user":{"password":"soogh8aiy6vah6Aecai6","passwordSha":"ps9jK0qKXJqZawtFS+SxhB2CdCu90Qgz4riZ0XwzYd4= YWxxZXV3enB1YmE2c2gwdg=="}},"dataStorage":{"capacity":"10Gi","persistent":{"pvc":{"annotations":{},"labels":{},"name":"","storageClassName":""},"reclaimPolicy":"Delete"},"type":"ephemeral"},"enabled":true,"fullnameOverride":"digitalhub","image":{"repository":"solr","tag":"9.7"},"podOptions":{"containerSecurityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"seccompProfile":{"type":"RuntimeDefault"}},"podSecurityContext":{"seccompProfile":{"type":"RuntimeDefault"}}},"replicas":1,"solrOptions":{"security":{"authenticationType":"Basic","basicAuthSecret":"digitalhub-solrcloud-basic-auth","bootstrapSecurityJson":{"key":"security.json","name":"digitalhub-solrcloud-security-bootstrap"},"probesRequireAuth":true}},"useExistingSecurityJson":false}` |  |
-| solr-operator | object | `{"enabled":true,"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"zookeeper-operator":{"crd":{"create":true}}}` |  |
-| solr-operator.enabled | bool | `true` |  |
-| solr-operator.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| solr-operator.securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| solr-operator.securityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| solr-operator.securityContext.capabilities.drop | list | `["ALL"]` |  |
-| solr-operator.securityContext.runAsNonRoot | bool | `true` |  |
-| solr-operator.securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| solr-operator.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| solr-operator.zookeeper-operator | object | `{"crd":{"create":true}}` |  |
-| solr-operator.zookeeper-operator.crd | object | `{"create":true}` |  |
-| solr-operator.zookeeper-operator.crd.create | bool | `true` |  |
-| solr.creds | object | `{"admin":{"password":"thi4iegheeX7euthe7di","passwordSha":"C8QrTZf6jpu+cPKTsLtyEhv1XVXAYZGmStTKXzB80sg= MW5pNXZlaGIyaWhkdW5w"},"k8sOper":{"password":"imPBf@tU(asx9%TZ","passwordSha":"3iPc1JWet22a05UZXCFfo/qRUqwg2iVULyv5RBEqPdM= LSpnG/l2j8AA9vrryMGkkFLO+bYeN7ZUvrU270WAfyA="},"solr":{"password":"aed0ohBie3hai6jo7sho","passwordSha":"i61TpZKyvff3CHnyZ0kMTzkNezkxkilCre93wLkz7jQ= NzlyN3k1cm0xZGt3eWR1MA=="},"user":{"password":"soogh8aiy6vah6Aecai6","passwordSha":"ps9jK0qKXJqZawtFS+SxhB2CdCu90Qgz4riZ0XwzYd4= YWxxZXV3enB1YmE2c2gwdg=="}}` |  |
-| solr.creds.admin | object | `{"password":"thi4iegheeX7euthe7di","passwordSha":"C8QrTZf6jpu+cPKTsLtyEhv1XVXAYZGmStTKXzB80sg= MW5pNXZlaGIyaWhkdW5w"}` |  |
-| solr.creds.admin.password | string | `"thi4iegheeX7euthe7di"` |  |
-| solr.creds.admin.passwordSha | string | `"C8QrTZf6jpu+cPKTsLtyEhv1XVXAYZGmStTKXzB80sg= MW5pNXZlaGIyaWhkdW5w"` |  |
-| solr.creds.k8sOper | object | `{"password":"imPBf@tU(asx9%TZ","passwordSha":"3iPc1JWet22a05UZXCFfo/qRUqwg2iVULyv5RBEqPdM= LSpnG/l2j8AA9vrryMGkkFLO+bYeN7ZUvrU270WAfyA="}` |  |
-| solr.creds.k8sOper.password | string | `"imPBf@tU(asx9%TZ"` |  |
-| solr.creds.k8sOper.passwordSha | string | `"3iPc1JWet22a05UZXCFfo/qRUqwg2iVULyv5RBEqPdM= LSpnG/l2j8AA9vrryMGkkFLO+bYeN7ZUvrU270WAfyA="` |  |
-| solr.creds.solr | object | `{"password":"aed0ohBie3hai6jo7sho","passwordSha":"i61TpZKyvff3CHnyZ0kMTzkNezkxkilCre93wLkz7jQ= NzlyN3k1cm0xZGt3eWR1MA=="}` |  |
-| solr.creds.solr.password | string | `"aed0ohBie3hai6jo7sho"` |  |
-| solr.creds.solr.passwordSha | string | `"i61TpZKyvff3CHnyZ0kMTzkNezkxkilCre93wLkz7jQ= NzlyN3k1cm0xZGt3eWR1MA=="` |  |
-| solr.creds.user | object | `{"password":"soogh8aiy6vah6Aecai6","passwordSha":"ps9jK0qKXJqZawtFS+SxhB2CdCu90Qgz4riZ0XwzYd4= YWxxZXV3enB1YmE2c2gwdg=="}` |  |
-| solr.creds.user.password | string | `"soogh8aiy6vah6Aecai6"` |  |
-| solr.creds.user.passwordSha | string | `"ps9jK0qKXJqZawtFS+SxhB2CdCu90Qgz4riZ0XwzYd4= YWxxZXV3enB1YmE2c2gwdg=="` |  |
-| solr.dataStorage | object | `{"capacity":"10Gi","persistent":{"pvc":{"annotations":{},"labels":{},"name":"","storageClassName":""},"reclaimPolicy":"Delete"},"type":"ephemeral"}` |  |
-| solr.dataStorage.capacity | string | `"10Gi"` |  |
-| solr.dataStorage.persistent | object | `{"pvc":{"annotations":{},"labels":{},"name":"","storageClassName":""},"reclaimPolicy":"Delete"}` |  |
-| solr.dataStorage.persistent.pvc | object | `{"annotations":{},"labels":{},"name":"","storageClassName":""}` |  |
-| solr.dataStorage.persistent.pvc.annotations | object | `{}` |  |
-| solr.dataStorage.persistent.pvc.labels | object | `{}` |  |
-| solr.dataStorage.persistent.pvc.name | string | `""` |  |
-| solr.dataStorage.persistent.pvc.storageClassName | string | `""` |  |
-| solr.dataStorage.persistent.reclaimPolicy | string | `"Delete"` |  |
-| solr.dataStorage.type | string | `"ephemeral"` |  |
-| solr.enabled | bool | `true` |  |
-| solr.fullnameOverride | string | `"digitalhub"` |  |
-| solr.image | object | `{"repository":"solr","tag":"9.7"}` |  |
-| solr.image.repository | string | `"solr"` |  |
-| solr.image.tag | string | `"9.7"` |  |
-| solr.podOptions | object | `{"containerSecurityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"seccompProfile":{"type":"RuntimeDefault"}},"podSecurityContext":{"seccompProfile":{"type":"RuntimeDefault"}}}` |  |
-| solr.podOptions.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| solr.podOptions.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| solr.podOptions.containerSecurityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| solr.podOptions.containerSecurityContext.capabilities.drop | list | `["ALL"]` |  |
-| solr.podOptions.containerSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| solr.podOptions.containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| solr.podOptions.podSecurityContext | object | `{"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| solr.podOptions.podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| solr.podOptions.podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| solr.replicas | int | `1` |  |
-| solr.solrOptions | object | `{"security":{"authenticationType":"Basic","basicAuthSecret":"digitalhub-solrcloud-basic-auth","bootstrapSecurityJson":{"key":"security.json","name":"digitalhub-solrcloud-security-bootstrap"},"probesRequireAuth":true}}` |  |
-| solr.solrOptions.security | object | `{"authenticationType":"Basic","basicAuthSecret":"digitalhub-solrcloud-basic-auth","bootstrapSecurityJson":{"key":"security.json","name":"digitalhub-solrcloud-security-bootstrap"},"probesRequireAuth":true}` |  |
-| solr.solrOptions.security.authenticationType | string | `"Basic"` |  |
-| solr.solrOptions.security.basicAuthSecret | string | `"digitalhub-solrcloud-basic-auth"` |  |
-| solr.solrOptions.security.bootstrapSecurityJson | object | `{"key":"security.json","name":"digitalhub-solrcloud-security-bootstrap"}` |  |
-| solr.solrOptions.security.bootstrapSecurityJson.key | string | `"security.json"` |  |
-| solr.solrOptions.security.bootstrapSecurityJson.name | string | `"digitalhub-solrcloud-security-bootstrap"` |  |
-| solr.solrOptions.security.probesRequireAuth | bool | `true` |  |
-| solr.useExistingSecurityJson | bool | `false` |  |
-| template-controller | object | `{"enabled":true,"objectTemplate":{"enabled":true},"podSecurityContext":{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}}` |  |
-| template-controller.enabled | bool | `true` |  |
-| template-controller.objectTemplate | object | `{"enabled":true}` |  |
-| template-controller.objectTemplate.enabled | bool | `true` |  |
-| template-controller.podSecurityContext | object | `{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| template-controller.podSecurityContext.runAsNonRoot | bool | `true` |  |
-| template-controller.podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| template-controller.podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| template-controller.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| template-controller.securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| template-controller.securityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| template-controller.securityContext.capabilities.drop | list | `["ALL"]` |  |
-| template-controller.securityContext.runAsNonRoot | bool | `true` |  |
-| template-controller.securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| template-controller.securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 
 ## Security Policy
 
