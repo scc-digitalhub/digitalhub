@@ -6,115 +6,115 @@
 additionalConfig:
   #  additionalConfig.debug --
   debug:
-    #  additionalConfig.debug.enableLogs --
+    #  additionalConfig.debug.enableLogs -- Enable/disable logging
     enableLogs: true
-    #  additionalConfig.debug.enableMetrics --
+    #  additionalConfig.debug.enableMetrics -- Enable/disable metrics
     enableMetrics: false
-  #  additionalConfig.job --
+  #  additionalConfig.job -- Jobs configuration
   job:
-    #  additionalConfig.job.deadline --
+    #  additionalConfig.job.deadline -- Set deadline for jobs
     deadline: "604800"
-    #  additionalConfig.job.jobSuspend --
+    #  additionalConfig.job.jobSuspend -- Suspend jobs
     jobSuspend: false
-  #  additionalConfig.resources --
+  #  additionalConfig.resources -- Resources for the pods created by COre
   resources:
-    #  additionalConfig.resources.cpuLim --
+    #  additionalConfig.resources.cpuLim -- CPU limit
     cpuLim: ""
-    #  additionalConfig.resources.cpuReq --
+    #  additionalConfig.resources.cpuReq -- CPU request
     cpuReq: ""
-    #  additionalConfig.resources.gpuKey --
+    #  additionalConfig.resources.gpuKey -- GPU key
     gpuKey: ""
-    #  additionalConfig.resources.memLim --
+    #  additionalConfig.resources.memLim -- Memory limit
     memLim: ""
-    #  additionalConfig.resources.memReq --
+    #  additionalConfig.resources.memReq -- Memory request
     memReq: ""
-    #  additionalConfig.resources.pvcLim --
+    #  additionalConfig.resources.pvcLim -- PVC storage limit
     pvcLim: ""
-    #  additionalConfig.resources.pvcReq --
+    #  additionalConfig.resources.pvcReq -- PVC storage request
     pvcReq: ""
   #  additionalConfig.security --
   security:
-    #  additionalConfig.security.disableRoot --
+    #  additionalConfig.security.disableRoot -- Disable root for pods created by Core
     disableRoot: true
   #  additionalConfig.service --
   service:
-    #  additionalConfig.service.type --
+    #  additionalConfig.service.type -- Service type for pods created by Core
     type: NodePort
 
-#  affinity --
+#  affinity -- Affinity for pod assignment.
 affinity: {}
 
-#  argoWorkflow --
+#  argoWorkflow -- Argoworkflow configuration
 argoWorkflow:
-  #  argoWorkflow.configmap --
+  #  argoWorkflow.configmap -- Name of the configmap containing the artifact repositories that the Argo Workflows should use
   #  test test
   configmap: artifact-repositories
-  #  argoWorkflow.key --
+  #  argoWorkflow.key -- Key of the artifact repository in the configmap
   key: default-artifact-repository
-  #  argoWorkflow.serviceAccount --
+  #  argoWorkflow.serviceAccount -- Service account name.
   serviceAccount: default
   #  argoWorkflow.user --
   user: "1000"
 
-#  authentication --
+#  authentication -- Authentication configuration
 authentication:
-  #  authentication.basic --
+  #  authentication.basic -- Basic Auth values
   basic:
-    #  authentication.basic.enabled --
+    #  authentication.basic.enabled -- Enable/disable basicAuth authentication
     enabled: true
-    #  authentication.basic.password --
+    #  authentication.basic.password -- BasicAuth password
     password: ""
-    #  authentication.basic.username --
+    #  authentication.basic.username -- BasicAuth username
     username: ""
-  #  authentication.openId --
+  #  authentication.openId -- OpenID Auth values
   openId:
-    #  authentication.openId.enabled --
+    #  authentication.openId.enabled -- Enable/disable openId authentication
     enabled: false
-    #  authentication.openId.externalSecret --
+    #  authentication.openId.externalSecret -- Reference to the Core OpenID Secret
     externalSecret:
-      #  authentication.openId.externalSecret.key --
+      #  authentication.openId.externalSecret.key -- Key of the openId clientId
       key: ""
-      #  authentication.openId.externalSecret.name --
+      #  authentication.openId.externalSecret.name -- OpenID secret name
       name: ""
-    #  authentication.openId.issuerUri --
+    #  authentication.openId.issuerUri -- OpenId Issuer url
     issuerUri: ""
-    #  authentication.openId.jwtAudience --
+    #  authentication.openId.jwtAudience -- OpenId JWT Audience
     jwtAudience: ""
-    #  authentication.openId.jwtClaim --
+    #  authentication.openId.jwtClaim -- OpenId JWT claims
     jwtClaim: ""
-    #  authentication.openId.jwtUsername --
+    #  authentication.openId.jwtUsername -- OpenId JWT username
     jwtUsername: ""
-    #  authentication.openId.oidcClientId --
+    #  authentication.openId.oidcClientId -- OpenId JWT clientID
     oidcClientId: ""
-    #  authentication.openId.scope --
+    #  authentication.openId.scope -- OpenId JWT Scopes
     scope: ""
 
-#  autoscaling --
+#  autoscaling -- Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.
 autoscaling:
-  #  autoscaling.enabled --
+  #  autoscaling.enabled -- Enable horizontal scaling
   enabled: false
-  #  autoscaling.maxReplicas --
+  #  autoscaling.maxReplicas -- Set max replicas for autoscaling
   maxReplicas: 100
-  #  autoscaling.minReplicas --
+  #  autoscaling.minReplicas -- Set min replicas for autoscaling
   minReplicas: 1
-  #  autoscaling.targetCPUUtilizationPercentage --
+  #  autoscaling.targetCPUUtilizationPercentage -- Set CPU utilization percentage that trigger the autoscaling 
   targetCPUUtilizationPercentage: 80
 
-#  configmapAdditionalEnv --
+#  configmapAdditionalEnv -- Additional environment variables for the Core configmap, MUST be specified in key/value format
 configmapAdditionalEnv: {}
 
 #  coreAuthCreds --
 coreAuthCreds:
-  #  coreAuthCreds.clientId --
+  #  coreAuthCreds.clientId -- Core clientId
   clientId: ""
-  #  coreAuthCreds.clientSecret --
+  #  coreAuthCreds.clientSecret -- Core clientSecret
   clientSecret: ""
 
 #  coreTokens --
 coreTokens:
-  #  coreTokens.accessTokenDuration --
+  #  coreTokens.accessTokenDuration -- Duration of the access token generated by Core in seconds
   accessTokenDuration: "43200"
-  #  coreTokens.refreshTokenDuration --
+  #  coreTokens.refreshTokenDuration -- Duration of the refresh token generated by Core in seconds
   refreshTokenDuration: "86400"
 
 #  corsOrigin --
@@ -122,17 +122,17 @@ corsOrigin: ""
 
 #  databaseProvider --
 databaseProvider:
-  #  databaseProvider.database --
+  #  databaseProvider.database -- Name of the main database of the platform
   database: ""
-  #  databaseProvider.host --
+  #  databaseProvider.host -- Host of the main database of the platform
   host: ""
-  #  databaseProvider.port --
+  #  databaseProvider.port -- Port of the main database of the platform
   port: ""
 
-#  defaultStorageClass --
+#  defaultStorageClass -- Default storage class that should be used
 defaultStorageClass: ""
 
-#  fullnameOverride --
+#  fullnameOverride -- String to fully override `core.fullname` template.
 fullnameOverride: ""
 
 #  global --
@@ -141,55 +141,55 @@ global:
   externalHostAddress: ""
   #  global.externalTls --
   externalTls: false
-  #  global.registry --
+  #  global.registry -- Values of your registry
   registry:
-    #  global.registry.email --
+    #  global.registry.email -- Registry email
     email: ""
-    #  global.registry.password --
+    #  global.registry.password -- Registry password
     password: ""
-    #  global.registry.secretName --
+    #  global.registry.secretName -- Name of the secret of your registry. It has higher priority.
     secretName: ""
-    #  global.registry.url --
+    #  global.registry.url -- Registry url
     url: ""
-    #  global.registry.username --
+    #  global.registry.username -- Registry username
     username: ""
 
 #  image --
 image:
-  #  image.pullPolicy --
+  #  image.pullPolicy -- Image pull policy
   pullPolicy: IfNotPresent
-  #  image.repository --
+  #  image.repository -- Image repository
   repository: ghcr.io/scc-digitalhub/digitalhub-core
-  #  image.tag --
+  #  image.tag -- Image tag
   tag: ""
 
 #  imagePullSecrets --
 imagePullSecrets: []
 
-#  ingress --
+#  ingress -- Ingress configurations.
 ingress:
-  #  ingress.annotations --
+  #  ingress.annotations -- Ingress annotations (values are templated).
   annotations: {}
-  #  ingress.className --
+  #  ingress.className -- Ingress Class Name. MAY be required for Kubernetes versions >= 1.18-
   className: ""
-  #  ingress.enabled --
+  #  ingress.enabled -- Enables Ingress.
   enabled: false
-  #  ingress.hosts --
+  #  ingress.hosts -- Ingress accepted hostnames.
   hosts:
     - host: core.home
       paths:
         - path: /
           pathType: ImplementationSpecific
-  #  ingress.tls --
+  #  ingress.tls -- Ingress TLS configuration.
   tls: []
 
 #  initImage --
 initImage:
   #  initImage.builderTool --
   builderTool:
-    #  initImage.builderTool.image --
+    #  initImage.builderTool.image -- Cpre builder repository
     image: ghcr.io/scc-digitalhub/digitalhub-core-builder-tool
-    #  initImage.builderTool.tag --
+    #  initImage.builderTool.tag -- Core builder tag
     tag: b95c095f
 
 #  kanikoArgs --
@@ -197,52 +197,52 @@ kanikoArgs: ""
 
 #  keystore --
 keystore:
-  #  keystore.existingSecret --
+  #  keystore.existingSecret -- Reference to the Keystore secret of Core
   existingSecret:
     #  keystore.existingSecret.keyName --
     keyName: ""
-    #  keystore.existingSecret.secretName --
+    #  keystore.existingSecret.secretName -- Name of the keystore secret
     secretName: ""
   #  keystore.keystoreKid --
   keystoreKid: ""
-  #  keystore.keystorePath --
+  #  keystore.keystorePath -- Path in which the Keystore will be mounted
   keystorePath: /etc/keystore
 
 #  kubeai --
 kubeai:
-  #  kubeai.enabled --
+  #  kubeai.enabled -- Enable/disable KubeAI
   enabled: true
-  #  kubeai.port --
+  #  kubeai.port -- KubeAi port
   port: ""
-  #  kubeai.serviceName --
+  #  kubeai.serviceName -- Kubei service name
   serviceName: ""
 
 #  lucene --
 lucene:
-  #  lucene.indexPath --
+  #  lucene.indexPath -- Set the path for Lucene and enables it
   indexPath: false
-  #  lucene.reindex --
+  #  lucene.reindex -- Reindex of Lucene
   reindex: never
 
-#  nameOverride --
+#  nameOverride -- String to partially override `core.fullname` template (will maintain the release name)
 nameOverride: ""
 
 #  nodeSelector --
 nodeSelector: {}
 
-#  podAnnotations --
+#  podAnnotations -- Annotations to add to each pod.
 podAnnotations: {}
 
-#  podLabels --
+#  podLabels -- Labels to add to each pod.
 podLabels: {}
 
-#  podSecurityContext --
+#  podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 podSecurityContext:
-  #  podSecurityContext.runAsNonRoot --
+  #  podSecurityContext.runAsNonRoot -- Pod allow run as root.
   runAsNonRoot: true
-  #  podSecurityContext.seccompProfile --
+  #  podSecurityContext.seccompProfile -- Pod configure seccompProfile.
   seccompProfile:
-    #  podSecurityContext.seccompProfile.type --
+    #  podSecurityContext.seccompProfile.type -- Pod configure seccompProfile type.
     type: RuntimeDefault
 
 #  postgres --
@@ -251,23 +251,23 @@ postgres:
   credentials:
     #  postgres.credentials.existingSecret --
     existingSecret:
-      #  postgres.credentials.existingSecret.name --
+      #  postgres.credentials.existingSecret.name -- Secret containing the Core database admin user credentials
       name: ""
-      #  postgres.credentials.existingSecret.passwordKey --
+      #  postgres.credentials.existingSecret.passwordKey -- Core db admin password key
       passwordKey:
-      #  postgres.credentials.existingSecret.usernameKey --
+      #  postgres.credentials.existingSecret.usernameKey -- Core db admin username key
       usernameKey:
-    #  postgres.credentials.password --
+    #  postgres.credentials.password -- Core db admin password
     password: ""
-    #  postgres.credentials.username --
+    #  postgres.credentials.username -- Core db admin username
     username: ""
-  #  postgres.database --
+  #  postgres.database -- Name of the Core database
   database: ""
-  #  postgres.host --
+  #  postgres.host -- Host of the Core database
   host: ""
-  #  postgres.port --
+  #  postgres.port -- Port of the Core database
   port: ""
-  #  postgres.schema --
+  #  postgres.schema -- Schema of the Core database
   schema: ""
 
 #  registry --
@@ -277,325 +277,338 @@ registry:
     #  registry.kaniko.imagePrefix --
     imagePrefix: ""
 
-#  replicaCount --
+#  replicaCount -- Desired number of pods
 replicaCount: 1
 
-#  resources --
+#  resources -- Pod resource requests and limits.
 resources:
   #  resources.limits --
   limits:
-    #  resources.limits.cpu --
+    #  resources.limits.cpu -- Max cpu request
     cpu: 1000m
-    #  resources.limits.memory --
+    #  resources.limits.memory -- Max memory request
     memory: 512Mi
   #  resources.requests --
   requests:
-    #  resources.requests.cpu --
+    #  resources.requests.cpu -- Min cpu request
     cpu: 200m
-    #  resources.requests.memory --
+    #  resources.requests.memory -- Max cpu request
     memory: 256Mi
 
 #  runtime --
 runtime:
   #  runtime.dbt --
   dbt:
-    #  runtime.dbt.image --
+    #  runtime.dbt.image -- DBT wrapper repository
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt
-    #  runtime.dbt.tag --
+    #  runtime.dbt.tag -- DBT wrapper tag
     tag: 0.11.0
   #  runtime.huggingFace --
   huggingFace:
-    #  runtime.huggingFace.image --
+    #  runtime.huggingFace.image -- HuggingFaceServer repository
     image: kserve/huggingfaceserver
-    #  runtime.huggingFace.tag --
+    #  runtime.huggingFace.tag -- HuggingFaceServer tag
     tag: v0.14.0
   #  runtime.kfp --
   kfp:
-    #  runtime.kfp.image --
+    #  runtime.kfp.image -- KFP wrapper repository
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp
-    #  runtime.kfp.tag --
+    #  runtime.kfp.tag -- KFP wrapper tag
     tag: 0.11.0
   #  runtime.python --
   python:
-    #  runtime.python.image --
+    #  runtime.python.image -- Python runtime repository
     image: ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime
-    #  runtime.python.tag3_10 --
+    #  runtime.python.tag3_10 -- Python runtime 3.10  tag
     tag3_10: 3.10-0.11.0
-    #  runtime.python.tag3_11 --
+    #  runtime.python.tag3_11 -- Python runtime 3.11 tag
     tag3_11: 3.11-0.11.0
-    #  runtime.python.tag3_9 --
+    #  runtime.python.tag3_9 -- Python runtime 3.9 tag
     tag3_9: 3.9-0.11.0
 
 #  s3 --
 s3:
-  # s3.enabled -- 
+  # s3.enabled -- Enable this option if you have an S3 deployment that you want to use with Core
   enabled: false
-  #  s3.accessKey --
+  #  s3.accessKey -- Explicit declaration of the Access key of your S3 instance.
+  #  It has lower priority than the corresponding secret values.
   accessKey: ""
-  #  s3.bucket --
+  #  s3.bucket -- Bucket of your S3 instance
   bucket: ""
   #  s3.dynamicCreds --
   dynamicCreds:
-    #  s3.dynamicCreds.enabled --
+    #  s3.dynamicCreds.enabled -- Set this to true if you want to use dynamic credentials for S3 communication
     enabled: false
-  #  s3.endpoint --
+  #  s3.endpoint -- Endpoint of your S3 instance
   endpoint: ""
-  #  s3.existingSecret --
+  #  s3.existingSecret -- Reference to the secret containing AccessKey and Secret key of your S3 instance.
+  #  These values have higher priority than the explicit declarations.
   existingSecret:
-    #  s3.existingSecret.accessKeyKey --
+    #  s3.existingSecret.accessKeyKey -- Key corresponding to your accessKey in your secret 
     accessKeyKey: ""
-    #  s3.existingSecret.name --
+    #  s3.existingSecret.name -- Secret containing accessKey and secretKey of your s3 instance
     name: ""
-    #  s3.existingSecret.secretKeyKey --
+    #  s3.existingSecret.secretKeyKey -- Key corresponding to your secretKey in your secret 
     secretKeyKey: ""
-  #  s3.port --
+  #  s3.port -- Port of your S3 instance
   port: ""
-  #  s3.protocol --
+  #  s3.protocol -- Protocol of your S3 instance (http/https)
   protocol: http
-  #  s3.publicUrl --
+  #  s3.publicUrl -- Public url of your S3 instance
   publicUrl: ""
-  #  s3.region --
+  #  s3.region -- Region used by your S3 instance
   region: ""
-  #  s3.secretKey --
+  #  s3.secretKey -- Explicit declaration of the Secret key of your S3 instance.
+  #  It has lower priority than the corresponding secret values.
   secretKey: ""
 
-#  securityContext --
+#  securityContext -- Core [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 securityContext:
-  #  securityContext.allowPrivilegeEscalation --
+  #  securityContext.allowPrivilegeEscalation -- Core container allow privilege escalation.
   allowPrivilegeEscalation: false
-  #  securityContext.capabilities --
+  #  securityContext.capabilities -- Core container configure capabilities.
   capabilities:
-    #  securityContext.capabilities.drop --
+    #  securityContext.capabilities.drop -- Core container drop capabilities.
     drop:
       - ALL
-  #  securityContext.runAsNonRoot --
+  #  securityContext.runAsNonRoot -- Core container allow run as root.
   runAsNonRoot: true
-  #  securityContext.seccompProfile --
+  #  securityContext.seccompProfile -- Core container configure seccompProfile.
   seccompProfile:
-    #  securityContext.seccompProfile.type --
+    #  securityContext.seccompProfile.type -- Core container configure seccompProfile type.
     type: RuntimeDefault
 
-#  service --
+#  service -- Service configurations.
 service:
-  #  service.httpNodePort --
+  #  service.httpNodePort -- Service NodePort.
   httpNodePort: ""
-  #  service.port --
+  #  service.port -- Service port.
   port: "8080"
-  #  service.type --
+  #  service.type -- Service type.
   type: ClusterIP
 
-#  serviceAccount --
+#  serviceAccount -- Service account configuration.
 serviceAccount:
-  #  serviceAccount.annotations --
+  #  serviceAccount.annotations -- Additional Service Account annotations.
   annotations: {}
-  #  serviceAccount.automount --
+  #  serviceAccount.automount -- Automount API credentials for a Service Account.
   automount: true
-  #  serviceAccount.create --
+  #  serviceAccount.create -- If `true` a Service Account will be created.
   create: true
-  #  serviceAccount.name --
+  #  serviceAccount.name -- Service account name.
   name: core
 
-#  solr --
+#  solr -- Solr configuration
 solr:
-  #  solr.collection --
+  #  solr.collection -- Solr collection configuration
   collection:
     #  solr.collection.initialize --
     initialize:
-      #  solr.collection.initialize.enabled --
+      #  solr.collection.initialize.enabled -- Enable/Disable Solr collection initialization by script, use it if you have set Basic Auth for Solr
       enabled: true
-      #  solr.collection.initialize.image --
+      #  solr.collection.initialize.image -- Initialization image
       image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
-      #  solr.collection.initialize.securityJsonSecret --
+      #  solr.collection.initialize.securityJsonSecret -- Name of the secret containing the Solr security.json
       securityJsonSecret: ""
-    #  solr.collection.name --
+    #  solr.collection.name -- Name of the Solr collection
     name: ""
-  #  solr.enabled --
+  #  solr.enabled -- Set this value to true this value if you want to use Core with Solr
   enabled: false
   #  solr.fullNameOverride --
   fullNameOverride: ""
   #  solr.url --
   url: ""
-  #  solr.user --
+  #  solr.user -- Specify the solr user
   user: ""
 
 #  sts --
 sts:
-  #  sts.affinity --
+  #  sts.affinity -- Affinity for pod assignment.
   affinity: {}
-  #  sts.autoscaling --
+  #  sts.autoscaling -- Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.
   autoscaling:
-    #  sts.autoscaling.enabled --
+    #  sts.autoscaling.enabled -- Enable horizontal scaling
     enabled: false
-    #  sts.autoscaling.maxReplicas --
+    #  sts.autoscaling.maxReplicas -- Set max replicas for autoscaling
     maxReplicas: 100
-    #  sts.autoscaling.minReplicas --
+    #  sts.autoscaling.minReplicas -- Set min replicas for autoscaling
     minReplicas: 1
-    #  sts.autoscaling.targetCPUUtilizationPercentage --
+    #  sts.autoscaling.targetCPUUtilizationPercentage -- Set CPU utilization percentage that trigger the autoscaling
     targetCPUUtilizationPercentage: 80
   #  sts.client --
   client:
-    #  sts.client.clientId --
+    #  sts.client.clientId -- ClientID used by STS
     clientId: ""
-    #  sts.client.clientSecret --
+    #  sts.client.clientSecret -- ClientSecret used by STS
     clientSecret: ""
     #  sts.client.existingSecret --
     existingSecret:
-      #  sts.client.existingSecret.clientIdKey --
+      #  sts.client.existingSecret.clientIdKey -- Key corresponding to the STS ClientID
       clientIdKey: ""
-      #  sts.client.existingSecret.clientSecretKey --
+      #  sts.client.existingSecret.clientSecretKey -- Key corresponding to the STS ClientSecret
       clientSecretKey: ""
-      #  sts.client.existingSecret.name --
+      #  sts.client.existingSecret.name -- Name of the secret containing STS ClientID and ClientSecret
       name: ""
   #  sts.credentials --
   credentials:
-    #  sts.credentials.roles --
+    #  sts.credentials.roles -- Roles that will be mapped to the user for Database operations. Must correspond to the owner user of the Platform's main database.
     roles: ""
-  #  sts.databaseProvider --
+  #  sts.databaseProvider -- Values for the Platform's main database
   databaseProvider:
-    #  sts.databaseProvider.credentials --
+    #  sts.databaseProvider.credentials -- Credentials of the Platform's main database
     credentials:
-      #  sts.databaseProvider.credentials.existingSecret --
+      #  sts.databaseProvider.credentials.existingSecret -- Reference to the secret containing username and password of the Platform's main database owner user.
+      #  These values have higher priority than the explicit declarations.
       existingSecret:
-        #  sts.databaseProvider.credentials.existingSecret.name --
+        #  sts.databaseProvider.credentials.existingSecret.name -- Name of the secret containing username and password of the Platform's main database owner user
         name: ""
-        #  sts.databaseProvider.credentials.existingSecret.passwordKey --
+        #  sts.databaseProvider.credentials.existingSecret.passwordKey -- Key corresponding to the Platform's main database owner user password
         passwordKey: ""
-        #  sts.databaseProvider.credentials.existingSecret.usernameKey --
+        #  sts.databaseProvider.credentials.existingSecret.usernameKey -- Key corresponding to the Platform's main database owner user username
         usernameKey: ""
-      #  sts.databaseProvider.credentials.password --
+      #  sts.databaseProvider.credentials.password -- Explicit declaration of the Platform's main database owner user password.
+      #  It has lower priority than the corresponding secret values.
       password: ""
-      #  sts.databaseProvider.credentials.username --
+      #  sts.databaseProvider.credentials.username -- Explicit declaration of the Platform's main database owner user username.
+      #  It has lower priority than the corresponding secret values.
       username: ""
-    #  sts.databaseProvider.enabled --
+    #  sts.databaseProvider.enabled -- Enable/Disable dynamic credentials for Postgres operations.
     enabled: true
-  #  sts.enabled --
+  #  sts.enabled -- Enable/Disable STS component for dynamic credentials (Both for Postgres and S3 operations)
   enabled: false
-  #  sts.fullnameOverride --
+  #  sts.fullnameOverride -- String to fully override `core.fullname` template.
   fullnameOverride: ""
   #  sts.image --
   image:
-    #  sts.image.pullPolicy --
+    #  sts.image.pullPolicy -- Image pull policy
     pullPolicy: IfNotPresent
-    #  sts.image.repository --
+    #  sts.image.repository -- STS container image repository.
     repository: ghcr.io/scc-digitalhub/db-sts
-    #  sts.image.tag --
+    #  sts.image.tag -- STS container image tag.
     tag: 0.3.0
-  #  sts.imagePullSecrets --
+  #  sts.imagePullSecrets -- Image pull secrets.
+  #  Optionally specify an array of imagePullSecrets.
+  #  Secrets must be manually created in the namespace.
+  #  ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   imagePullSecrets: []
   #  sts.jwt --
   jwt:
-    #  sts.jwt.audience --
+    #  sts.jwt.audience -- JWT audience, must be sts.
     audience: sts
-    #  sts.jwt.claim --
+    #  sts.jwt.claim -- JWT claim, must be db/role
     claim: db/role
-    #  sts.jwt.issuerUri --
+    #  sts.jwt.issuerUri -- URL of the JWT issuer.
     issuerUri: http://digitalhub-core:8080
-  #  sts.nameOverride --
+  #  sts.nameOverride -- String to partially override `core.fullname` template (will maintain the release name)
   nameOverride: ""
-  #  sts.nodeSelector --
+  #  sts.nodeSelector -- Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/.
   nodeSelector: {}
-  #  sts.podAnnotations --
+  #  sts.podAnnotations -- Annotations to add to each pod.
   podAnnotations: {}
-  #  sts.podLabels --
+  #  sts.podLabels -- Labels to add to each pod.
   podLabels: {}
-  #  sts.podSecurityContext --
+  #  sts.podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
   podSecurityContext:
-    #  sts.podSecurityContext.runAsNonRoot --
+    #  sts.podSecurityContext.runAsNonRoot -- Pod allow run as root.
     runAsNonRoot: true
-    #  sts.podSecurityContext.seccompProfile --
+    #  sts.podSecurityContext.seccompProfile -- Pod configure seccompProfile.
     seccompProfile:
-      #  sts.podSecurityContext.seccompProfile.type --
+      #  sts.podSecurityContext.seccompProfile.type -- Pod configure seccompProfile type.
       type: RuntimeDefault
-  #  sts.replicaCount --
+  #  sts.replicaCount -- Desired number of pods.
   replicaCount: 1
-  #  sts.resources --
+  #  sts.resources -- STS container resource requests and limits.
   resources:
-    #  sts.resources.limits --
+    #  sts.resources.limits -- STS container imits
     limits:
-      #  sts.resources.limits.cpu --
+      #  sts.resources.limits.cpu -- CPU limit
       cpu: 200m
-      #  sts.resources.limits.memory --
+      #  sts.resources.limits.memory -- Memory limit
       memory: 256Mi
-    #  sts.resources.requests --
+    #  sts.resources.requests -- STS container requests
     requests:
-      #  sts.resources.requests.cpu --
+      #  sts.resources.requests.cpu -- CPU request
       cpu: 100m
-      #  sts.resources.requests.memory --
+      #  sts.resources.requests.memory -- Memory request
       memory: 128Mi
-  #  sts.securityContext --
+  #  sts.securityContext -- STS [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
   securityContext:
-    #  sts.securityContext.allowPrivilegeEscalation --
+    #  sts.securityContext.allowPrivilegeEscalation -- STS allow privilege escalation
     allowPrivilegeEscalation: false
-    #  sts.securityContext.capabilities --
+    #  sts.securityContext.capabilities -- STS container configure capabilities
     capabilities:
-      #  sts.securityContext.capabilities.drop --
+      #  sts.securityContext.capabilities.drop -- STS container drop capabilities
       drop:
         - ALL
-    #  sts.securityContext.runAsNonRoot --
+    #  sts.securityContext.runAsNonRoot -- STS container allow run as root
     runAsNonRoot: true
-    #  sts.securityContext.seccompProfile --
+    #  sts.securityContext.seccompProfile -- STS container configure seccompProfile
     seccompProfile:
-      #  sts.securityContext.seccompProfile.type --
+      #  sts.securityContext.seccompProfile.type -- STS container configure seccompProfile type
       type: RuntimeDefault
-  #  sts.service --
+  #  sts.service -- STS service configurations
   service:
-    #  sts.service.port --
+    #  sts.service.port -- STS service port
     port: 8080
-    #  sts.service.type --
+    #  sts.service.type -- STS service type
     type: ClusterIP
-  #  sts.serviceAccount --
+  #  sts.serviceAccount -- STS service account configuration
   serviceAccount:
-    #  sts.serviceAccount.annotations --
+    #  sts.serviceAccount.annotations -- Additional STS Service Account annotations.
     annotations: {}
-    #  sts.serviceAccount.automount --
+    #  sts.serviceAccount.automount -- Automount API credentials for a STS Service Account.
     automount: true
-    #  sts.serviceAccount.create --
+    #  sts.serviceAccount.create -- If `true` a STS Service Account will be created.
     create: true
-    #  sts.serviceAccount.name --
+    #  sts.serviceAccount.name -- STS service account name.
     name: core-sts
-  #  sts.stsDb --
+  #  sts.stsDb -- Values of the STS database
   stsDb:
-    #  sts.stsDb.credentials --
+    #  sts.stsDb.credentials -- Credentials of the STS database
     credentials:
-      #  sts.stsDb.credentials.existingSecret --
+      #  sts.stsDb.credentials.existingSecret -- Reference to the secret containing username and password of the STS database user.
+      #  These values have higher priority than the explicit declarations.
       existingSecret:
-        #  sts.stsDb.credentials.existingSecret.name --
+        #  sts.stsDb.credentials.existingSecret.name -- Name of the secret containing username and password of the STS database user
         name: ""
-        #  sts.stsDb.credentials.existingSecret.passwordKey --
+        #  sts.stsDb.credentials.existingSecret.passwordKey -- Key corresponding to the STS database user password
         passwordKey: ""
-        #  sts.stsDb.credentials.existingSecret.usernameKey --
+        #  sts.stsDb.credentials.existingSecret.usernameKey -- Key corresponding to the STS database user username
         usernameKey: ""
-      #  sts.stsDb.credentials.password --
+      #  sts.stsDb.credentials.password -- Explicit declaration of the STS database user password.
+      #  It has lower priority than the corresponding secret values.
       password: ""
-      #  sts.stsDb.credentials.username --
+      #  sts.stsDb.credentials.username -- Explicit declaration of the STS database user username.
+      #  It has lower priority than the corresponding secret values.
       username: ""
-    #  sts.stsDb.database --
+    #  sts.stsDb.database -- Name of the STS database
     database: ""
-    #  sts.stsDb.driver --
+    #  sts.stsDb.driver -- Driver used by the STS database
     driver: ""
-    #  sts.stsDb.host --
+    #  sts.stsDb.host -- Host of the STS database
     host: ""
-    #  sts.stsDb.platform --
+    #  sts.stsDb.platform -- Which kind of database you are using for STS (For example, postgresql)
     platform: ""
-    #  sts.stsDb.port --
+    #  sts.stsDb.port -- STS Database port
     port: ""
-    #  sts.stsDb.schema --
+    #  sts.stsDb.schema -- STS database schema
     schema: ""
-  #  sts.tolerations --
+  #  sts.tolerations -- List of node taints to tolerate (requires Kubernetes >= 1.6).
   tolerations: []
-  #  sts.volumeMounts --
+  #  sts.volumeMounts -- Additional volumes.
   volumeMounts: []
-  #  sts.volumes --
+  #  sts.volumes -- Additional volumes to mount.
   volumes: []
 
-#  templates --
+#  templates -- Specify Core templates in list format.
+#  Every template should correspond to a key in a configmap dedicated to the templates.
 templates: []
 
-#  tolerations --
+#  tolerations -- List of node taints to tolerate (requires Kubernetes >= 1.6).
 tolerations: []
 
-#  volumeMounts --
+#  volumeMounts -- Additional volumes.
 volumeMounts: []
 
-#  volumes --
+#  volumes -- Additional volumes to mount.
 volumes: []
