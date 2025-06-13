@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 # digitalhub
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-AGPL%20V3-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/digitalhub/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=digitalhub*)
