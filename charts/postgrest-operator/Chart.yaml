@@ -1,6 +1,7 @@
 apiVersion: v2
 name: postgrest-operator
 description: A Helm chart for Kubernetes
+home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/postgrest-operator"
 type: application
 version: 0.1.8
 appVersion: "2.0.5"

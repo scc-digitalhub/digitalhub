@@ -1,6 +1,7 @@
 apiVersion: v2
 name: core
 description: Core backend application for DigitalHub.
+home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/core"
 type: application
 version: 0.3.14
 appVersion: "0.11.0"

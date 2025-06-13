@@ -1,6 +1,7 @@
 apiVersion: v2
 name: dremio-rest-server-operator
 description: A Helm chart for Kubernetes
+home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/dremio-rest-server-operator"
 type: application
 version: 0.1.6
 appVersion: "1.0.3"

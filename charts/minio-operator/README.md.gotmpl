@@ -1,21 +1,43 @@
-# SCC-Digitalhub Community Kubernetes Helm Charts
+{{ template "chart.header" . }}
 
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/repo-template/release.yaml?event=push) [![license](https://img.shields.io/badge/license-AGPL%20V3-blue)](https://github.com/scc-digitalhub/LICENSE) ![Status](https://img.shields.io/badge/status-stable-gold)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-AGPL%20V3-blue)]({{ template "chart.homepage" . }}/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter={{ template "chart.name" . }}*)
+![Status](https://img.shields.io/badge/status-stable-gold) {{ template "chart.badgesSection" . }}
 
-The code is provided as-is with no warranties.
+{{ template "chart.description" . }}
+
+{{ template "chart.name" . }} is part of the DigitalHub platform, and depends on external components to support the complete set of functionalities. To bootstrap the platform in its entirety please explore the full documentation at the [link](https://scc-digitalhub.github.io/docs/admin/).
 
 ## Quick start
 
-[Helm](https://helm.sh) must be installed to use the charts.
-Please refer to Helm's [documentation](https://helm.sh/docs/) to get started.
+### Prerequisites 
+- [Helm](https://helm.sh/docs/intro/install/)
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 
-Once Helm is set up properly, add the repo as follows:
-
-```console
+1. Start minikube (change 192.168.49.0 if your network setup is different):
+```sh
+    minikube start --insecure-registry "192.168.49.0/24" --memory 8192 --cpus 4
+```
+2. Get minikube external IP:
+```sh
+    minikube ip
+```
+4. Add Digitalhub repository:
+```sh
 helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 ```
+5. Install {{ template "chart.name" . }} with Helm:
+```sh
+    helm upgrade {{ template "chart.name" . }} digitalhub/{{ template "chart.name" . }} -n {{ template "chart.name" . }} --install --create-namespace --timeout 15m0s
+```
+6. Wait until all pods are in Running state
+```sh
+    kubectl --namespace {{ template "chart.name" . }} get pods
+```
 
-You can then run `helm search repo digitalhub` to see the charts.
+## Values
+
+{{ template "chart.valuesTable" . }}
 
 ## Security Policy
 

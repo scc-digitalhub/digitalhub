@@ -1,615 +1,919 @@
-global:
-  cleanup:
-    deployments: false
-    statefulsets: false
-    ingress: false
-    pods: false
-    jobs: false
-    persistentVolumeClaims: false
-  service:
-    type: &serviceType "NodePort"
-  crd:
-    enabled: &globalCrd true
-  registry:
-    url: 192.168.49.2:30150
-    username: ""
-    password: ""
-    email: ""
-    secretName: ""
-  basicAuth:
-    enabled: false
-    username: ""
-    password: ""
-    secretName: ""
-  minio:
-    rootUserSecret: minio
-    rootUser: &minioRootUser minio
-    rootPassword: &minioRootPassword minio123
-    digitalhubUserSecret: digitalhub-minio-creds
-    digitalhubUser: &digitalhubUser digitalhub
-    digitalhubPassword: &digitalhubPassword digitalhub
-    argoSecret: &argoSecret argo-minio-creds
-    argoUser: &argoUser argo
-    argoPassword: &argoPassword argo1234
-    endpoint: &minioEndpoint "minio"
-    endpointPort: &minioEndpointPort "9000"
-    bucket: &minioBucket "datalake"
-    argoBucket: &argoBucket "argo"
-    protocol: &minioProtocol "http"
-  solr:
-    fullNameOverride: &solrFullNameOverride digitalhub
-  externalHostAddress: &globalExternalUrl "192.168.49.2"
-  externalTls: false
-  securityContext:
-    runAsNonRoot: true
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-      - ALL
-    seccompProfile:
-      type: "RuntimeDefault"
+#  apigw-operator --
+apigw-operator:
+  #  apigw-operator.enabled --
+  enabled: true
 
-docker-registry:
+#  argo-workflows --
+argo-workflows:
+  #  argo-workflows.artifactRepositoryRef --
+  artifactRepositoryRef:
+    #  argo-workflows.artifactRepositoryRef.artifact-repositories --
+    artifact-repositories:
+      #  argo-workflows.artifactRepositoryRef.artifact-repositories.annotations --
+      annotations:
+        #  argo-workflows.artifactRepositoryRef.artifact-repositories.annotations.workflows.argoproj.io/default-artifact-repository --
+        workflows.argoproj.io/default-artifact-repository: artifact-repository
+      #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository --
+      artifact-repository:
+        #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.archiveLogs --
+        archiveLogs: false
+        #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3 --
+        s3:
+          #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.accessKeySecret --
+          accessKeySecret:
+            #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.accessKeySecret.key --
+            key: accesskey
+            #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.accessKeySecret.name --
+            name: argo-minio-creds
+          #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.bucket --
+          bucket: argo
+          #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.endpoint --
+          endpoint: minio:9000
+          #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.insecure --
+          insecure: true
+          #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.secretKeySecret --
+          secretKeySecret:
+            #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.secretKeySecret.key --
+            key: secretkey
+            #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.secretKeySecret.name --
+            name: argo-minio-creds
+  #  argo-workflows.controller --
+  controller:
+    #  argo-workflows.controller.configMap --
+    configMap:
+      #  argo-workflows.controller.configMap.create --
+      create: true
+    #  argo-workflows.controller.podSecurityContext --
+    podSecurityContext:
+      #  argo-workflows.controller.podSecurityContext.runAsNonRoot --
+      runAsNonRoot: true
+      #  argo-workflows.controller.podSecurityContext.seccompProfile --
+      seccompProfile:
+        #  argo-workflows.controller.podSecurityContext.seccompProfile.type --
+        type: RuntimeDefault
+    #  argo-workflows.controller.securityContext --
+    securityContext:
+      #  argo-workflows.controller.securityContext.allowPrivilegeEscalation --
+      allowPrivilegeEscalation: false
+      #  argo-workflows.controller.securityContext.capabilities --
+      capabilities:
+        #  argo-workflows.controller.securityContext.capabilities.drop --
+        drop:
+          - ALL
+      #  argo-workflows.controller.securityContext.runAsNonRoot --
+      runAsNonRoot: true
+      #  argo-workflows.controller.securityContext.seccompProfile --
+      seccompProfile:
+        #  argo-workflows.controller.securityContext.seccompProfile.type --
+        type: RuntimeDefault
+    #  argo-workflows.controller.serviceAccount --
+    serviceAccount:
+      #  argo-workflows.controller.serviceAccount.name --
+      name: argo-workflow-controller
+    #  argo-workflows.controller.workflowDefaults --
+    workflowDefaults:
+      #  argo-workflows.controller.workflowDefaults.spec --
+      spec:
+        #  argo-workflows.controller.workflowDefaults.spec.serviceAccountName --
+        serviceAccountName: argo-workflow
+  #  argo-workflows.crds --
+  crds:
+    #  argo-workflows.crds.install --
+    install: true
+  #  argo-workflows.enabled --
   enabled: true
-  fullnameOverride: digitalhub-docker-registry
-  className: nginx
-  service:
-    type: *serviceType
-    nodePort: 30150
-  ingress:
+  #  argo-workflows.server --
+  server:
+    #  argo-workflows.server.enabled --
     enabled: false
-    path: /
-    hosts:
-      - registry.digitalhub.test
-  persistence:
-    accessMode: 'ReadWriteOnce'
-    enabled: true
-    size: 128Gi
-  updateStrategy:
-    type: Recreate
-containerSecurityContext:
-  enabled: true
-  runAsNonRoot: true
-  seccompProfile:
-    type: "RuntimeDefault"
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop:
-      - ALL
-securityContext:
-  enabled: true
-  runAsNonRoot: true
-  seccompProfile:
-    type: "RuntimeDefault"
+  #  argo-workflows.singleNamespace --
+  singleNamespace: true
+  #  argo-workflows.workflow --
+  workflow:
+    #  argo-workflows.workflow.serviceAccount --
+    serviceAccount:
+      #  argo-workflows.workflow.serviceAccount.create --
+      create: true
+      #  argo-workflows.workflow.serviceAccount.name --
+      name: argo-workflow
 
+#  coder --
 coder:
-  enabled: true
-  username: test
-  password: Test12456@!
-  email: test@digitalhub.test
-  template:
-    upgrade:
-      enabled: false
-      token: ""
-    customTemplates:
-      - name: jupyter
-        nodePort: "30040"
-        iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-        image: "ghcr.io/scc-digitalhub/jupyter-3-10:0.11.0"
-        image39: "ghcr.io/scc-digitalhub/jupyter-3-9:0.11.0"
-        image311: "ghcr.io/scc-digitalhub/jupyter-3-11:0.11.0"
-        privileged: false
-        stopAfter: 8h   # Sets the time after which the workspace will stop. (0 means the workspace deosn't stop)
-        extraVars: []
-      - name: code-toolbox-experimental
-        nodePort: "30050"
-        iconUrl: https://cdn-icons-png.flaticon.com/512/7301/7301969.png
-        privileged: false
-        stopAfter: 8h
-        tolerations: []
-        extraVars: []
-      - name: dremio
-        nodePort: "30120"
-        iconUrl: https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png
-        image: "dremio/dremio-oss:24.1.0"
-        stopAfter: 0h
-        extraVars: []
-        postgres:
-          database: "digitalhub"
-          hostname: "database-postgres-cluster"
-          ownerCredsSecret: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
-      - name: sqlpad
-        nodePort: "30140"
-        iconUrl: https://i.ibb.co/TrBDsZM/sqlpad.png
-        image: "smartcommunitylab/sqlpad:nonroot"
-        stopAfter: 8h
-        extraVars: []
-        postgres:
-          database: "digitalhub"
-          hostname: "database-postgres-cluster"
-          ownerCredsSecret: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
-      - name: grafana
-        nodePort: "30130"
-        iconUrl: https://cdn.iconscout.com/icon/free/png-256/free-grafana-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030088.png?f=webp
-        image: "smartcommunitylab/grafana"
-        stopAfter: 0h
-        extraVars:
-        - name: GF_PLUGINS_CHECK_FOR_PLUGIN_UPDATES
-          value: false
-        - name: GF_ANALYTICS_CHECK_FOR_UPDATES
-          value: false
-        - name: GF_ANALYTICS_REPORTING_ENABLED
-          value: false
+  #  coder.coder --
   coder:
-    image:
-      tag: v2.21.3
+    #  coder.coder.env --
     env:
       - name: CODER_TELEMETRY
         value: "false"
       - name: CODER_PG_USERNAME
         valueFrom:
+          #  coder.coder.env.valueFrom.secretKeyRef --
           secretKeyRef:
-            name: coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do
+            #  coder.coder.env.valueFrom.secretKeyRef.key --
             key: username
+            #  coder.coder.env.valueFrom.secretKeyRef.name --
+            name: coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do
       - name: CODER_PG_PASSWORD
         valueFrom:
+          #  coder.coder.env.valueFrom.secretKeyRef --
           secretKeyRef:
-            name: coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do
+            #  coder.coder.env.valueFrom.secretKeyRef.key --
             key: password
+            #  coder.coder.env.valueFrom.secretKeyRef.name --
+            name: coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do
       - name: CODER_PG_CONNECTION_URL
-        value: "postgres://$(CODER_PG_USERNAME):$(CODER_PG_PASSWORD)@coder-postgres-cluster:5432/coder"
+        value: postgres://$(CODER_PG_USERNAME):$(CODER_PG_PASSWORD)@coder-postgres-cluster:5432/coder
       - name: CODER_OAUTH2_GITHUB_DEFAULT_PROVIDER_ENABLE
         value: "false"
+    #  coder.coder.image --
+    image:
+      #  coder.coder.image.tag --
+      tag: v2.21.3
+    #  coder.coder.ingress --
     ingress:
+      #  coder.coder.ingress.enable --
       enable: false
+    #  coder.coder.service --
     service:
-      type: *serviceType
+      #  coder.coder.service.httpNodePort --
       httpNodePort: "30170"
+      #  coder.coder.service.type --
+      type: NodePort
+  #  coder.email --
+  email: test@digitalhub.test
+  #  coder.enabled --
+  enabled: true
+  #  coder.password --
+  password: Test12456@!
+  #  coder.securityContext --
   securityContext:
-    runAsNonRoot: true
-    seccompProfile:
-      type: RuntimeDefault
+    #  coder.securityContext.allowPrivilegeEscalation --
     allowPrivilegeEscalation: false
+    #  coder.securityContext.capabilities --
     capabilities:
+      #  coder.securityContext.capabilities.drop --
       drop:
         - ALL
-
-postgres-operator:
-  enabled: true
-  databases:
-    digitalhub:
-      enabled: true
-      volume:
-        size: 8Gi
-      resources:
-        requests:
-          cpu: 512m
-          memory: 1000Mi
-        limits:
-          cpu: "2"
-          memory: 2Gi
-    core:
-      enabled: true
-      volume:
-        size: 8Gi
-      resources:
-        requests:
-          cpu: 512m
-          memory: 1000Mi
-        limits:
-          cpu: "2"
-          memory: 2Gi
-    coder:
-      enabled: true
-      volume:
-        size: 8Gi
-      resources:
-        requests:
-          cpu: 512m
-          memory: 1000Mi
-        limits:
-          cpu: "2"
-          memory: 2Gi
-  securityContext:
+    #  coder.securityContext.runAsNonRoot --
     runAsNonRoot: true
+    #  coder.securityContext.seccompProfile --
     seccompProfile:
+      #  coder.securityContext.seccompProfile.type --
       type: RuntimeDefault
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - ALL
+  #  coder.template --
+  template:
+    #  coder.template.customTemplates --
+    customTemplates:
+      - extraVars: []
+        iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
+        image: ghcr.io/scc-digitalhub/jupyter-3-10:0.11.0
+        image311: ghcr.io/scc-digitalhub/jupyter-3-11:0.11.0
+        image39: ghcr.io/scc-digitalhub/jupyter-3-9:0.11.0
+        name: jupyter
+        nodePort: "30040"
+        privileged: false
+        stopAfter: 8h
+      - extraVars: []
+        iconUrl: https://cdn-icons-png.flaticon.com/512/7301/7301969.png
+        name: code-toolbox-experimental
+        nodePort: "30050"
+        privileged: false
+        stopAfter: 8h
+        tolerations: []
+      - extraVars: []
+        iconUrl: https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png
+        image: dremio/dremio-oss:24.1.0
+        name: dremio
+        nodePort: "30120"
+        postgres:
+          #  coder.template.customTemplates.postgres.database --
+          database: digitalhub
+          #  coder.template.customTemplates.postgres.hostname --
+          hostname: database-postgres-cluster
+          #  coder.template.customTemplates.postgres.ownerCredsSecret --
+          ownerCredsSecret: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+        stopAfter: 0h
+      - extraVars: []
+        iconUrl: https://i.ibb.co/TrBDsZM/sqlpad.png
+        image: smartcommunitylab/sqlpad:nonroot
+        name: sqlpad
+        nodePort: "30140"
+        postgres:
+          #  coder.template.customTemplates.postgres.database --
+          database: digitalhub
+          #  coder.template.customTemplates.postgres.hostname --
+          hostname: database-postgres-cluster
+          #  coder.template.customTemplates.postgres.ownerCredsSecret --
+          ownerCredsSecret: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+        stopAfter: 8h
+      - extraVars:
+          - name: GF_PLUGINS_CHECK_FOR_PLUGIN_UPDATES
+            value: false
+          - name: GF_ANALYTICS_CHECK_FOR_UPDATES
+            value: false
+          - name: GF_ANALYTICS_REPORTING_ENABLED
+            value: false
+        iconUrl: https://cdn.iconscout.com/icon/free/png-256/free-grafana-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030088.png?f=webp
+        image: smartcommunitylab/grafana
+        name: grafana
+        nodePort: "30130"
+        stopAfter: 0h
+    #  coder.template.upgrade --
+    upgrade:
+      #  coder.template.upgrade.enabled --
+      enabled: false
+      #  coder.template.upgrade.token --
+      token: ""
+  #  coder.username --
+  username: test
 
-ext-postgres-operator:
+#  containerSecurityContext --
+containerSecurityContext:
+  #  containerSecurityContext.allowPrivilegeEscalation --
+  allowPrivilegeEscalation: false
+  #  containerSecurityContext.capabilities --
+  capabilities:
+    #  containerSecurityContext.capabilities.drop --
+    drop:
+      - ALL
+  #  containerSecurityContext.enabled --
   enabled: true
-  image:
-    tag: "1.3.5"
-  postgres:
-    host: database-postgres-cluster
-    user: ""
-    password: ""
-    uri_args: " "
-    cloud_provider: ""
-    default_database: "postgres"
-  postgresCredsExistingSecrets:
-    username:
-      secretName: "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
-      secretKey: "username"
-    password:
-      secretName: "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
-      secretKey: "password"
-  podSecurityContext:
-    runAsNonRoot: true
-    seccompProfile:
-      type: "RuntimeDefault"
-  securityContext:
-    seccompProfile:
-      type: "RuntimeDefault"
+  #  containerSecurityContext.runAsNonRoot --
+  runAsNonRoot: true
+  #  containerSecurityContext.seccompProfile --
+  seccompProfile:
+    #  containerSecurityContext.seccompProfile.type --
+    type: RuntimeDefault
 
-postgrest-operator:
-  enabled: true
-  postgres:
-    host: database-postgres-cluster
-    port: 5432
-    uri_args: "sslmode=disable"
-    default_database: "digitalhub"
-    postgrest_service_type: NodePort
-  postgresCredsExistingSecrets:
-    username:
-      secretName: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
-      secretKey: "username"
-    password:
-      secretName: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
-      secretKey: "password"
-
+#  core --
 core:
-  enabled: true
-  s3:
-    dynamicCreds:
-      enabled: false    # If set to true, you must also set core.sts.enabled to true
-    bucket: *minioBucket
-    endpoint: *minioEndpoint
-    port: *minioEndpointPort
-    protocol: *minioProtocol
-    region: "us-west-1"
-    publicUrl: "http://192.168.49.2:30080"   # Change the publicUrl value to the one you are using for accessing the minio-API from your browser, in the form "http/s://yourminioapiurl"
-    accessKey: ""
-    secretKey: ""
-    existingSecret:
-      name: "digitalhub-minio-creds"
-      accessKeyKey: "digitalhubUser"
-      secretKeyKey: "digitalhubPassword"
-  service:
-    type: *serviceType
-    httpNodePort: "30180"
-  postgres:
-    host: core-postgres-cluster
-    database: core
-    port: "5432"
-    schema: public
-    credentials:
-      username: ""
-      password: ""
-      existingSecret:
-        name: "coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do"
-        usernameKey: "username"
-        passwordKey: "password"
-  databaseProvider:
-    host: "database-postgres-cluster"
-    ownerSecret: "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
-    port: "5432"
-    database: "digitalhub"
-    schema: "public"
-  authentication:
-    openId:
-      enabled: false
-  events:
-    enabled: false
-    rabbitmq:
-      enabled: false
-      host: "digitalhub-rabbitmq"
-      port: "5672"
-      vhost: "/"
-      queue: "dhCoreQueue"
-      topic: "entityTopic"
-      routingKey: "entityRoutingKey"
-      credentials:
-        existingSecret:
-          name: "digitalhub-rabbitmq-default-user"
-          usernameKey: "username"
-          passwordKey: "password"
-  solr:
-    enabled: true
-    url: "http://digitalhub-solrcloud-common/solr"
-    user: user
-    fullNameOverride: *solrFullNameOverride
-    collection:
-      name: "dhcore"
-      initialize:
-        enabled: true
-        securityJsonSecret: digitalhub-solrcloud-security-bootstrap   # Name of the security.json secret
-        image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
-  coreAuthCreds:  # These are example creds, change them to your needs.
-    clientId: "m04bfbmd03m8sf4u9ucz54ti"
-    clientSecret: "9rb5215z0aqd7fadzxuoyqe3"
-  kanikoArgs: ""
-  additionalConfig:  # Configuration of pods created by Core
+  #  core.additionalConfig --
+  additionalConfig:
+    #  core.additionalConfig.debug --
     debug:
-      enableMetrics: false  # Enable/disable metrics. Metrics server deployment is required.
-      enableLogs: true  # Enable/disable logs
-    security:
-      disableRoot: true  # Enable/disable pods running as root
-    resources:  # Set resources requests/limits
-      cpuReq: "100m"
+      #  core.additionalConfig.debug.enableLogs --
+      enableLogs: true
+      #  core.additionalConfig.debug.enableMetrics --
+      enableMetrics: false
+    #  core.additionalConfig.resources --
+    resources:
+      #  core.additionalConfig.resources.cpuLim --
       cpuLim: ""
-      memReq: "64m"
+      #  core.additionalConfig.resources.cpuReq --
+      cpuReq: 100m
+      #  core.additionalConfig.resources.gpuKey --
+      gpuKey: nvidia.com/gpu
+      #  core.additionalConfig.resources.memLim --
       memLim: ""
-      pvcReq: "2Gi"
+      #  core.additionalConfig.resources.memReq --
+      memReq: 64m
+      #  core.additionalConfig.resources.pvcLim --
       pvcLim: ""
-      gpuKey: "nvidia.com/gpu"
+      #  core.additionalConfig.resources.pvcReq --
+      pvcReq: 2Gi
+    #  core.additionalConfig.security --
+    security:
+      #  core.additionalConfig.security.disableRoot --
+      disableRoot: true
+  #  core.argoWorkflow --
   argoWorkflow:
+    #  core.argoWorkflow.configmap --
     configmap: artifact-repositories
+    #  core.argoWorkflow.key --
     key: artifact-repository
+    #  core.argoWorkflow.serviceAccount --
     serviceAccount: argo-workflow
+    #  core.argoWorkflow.user --
     user: "8877"
-  sts:
+  #  core.authentication --
+  authentication:
+    #  core.authentication.openId --
+    openId:
+      #  core.authentication.openId.enabled --
+      enabled: false
+  #  core.coreAuthCreds --
+  coreAuthCreds:
+    #  core.coreAuthCreds.clientId --
+    clientId: m04bfbmd03m8sf4u9ucz54ti
+    #  core.coreAuthCreds.clientSecret --
+    clientSecret: 9rb5215z0aqd7fadzxuoyqe3
+  #  core.databaseProvider --
+  databaseProvider:
+    #  core.databaseProvider.database --
+    database: digitalhub
+    #  core.databaseProvider.host --
+    host: database-postgres-cluster
+    #  core.databaseProvider.ownerSecret --
+    ownerSecret: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+    #  core.databaseProvider.port --
+    port: "5432"
+    #  core.databaseProvider.schema --
+    schema: public
+  #  core.enabled --
+  enabled: true
+  #  core.events --
+  events:
+    #  core.events.enabled --
     enabled: false
-    client:
-      clientId: ""
-      clientSecret: ""
-    stsDb:
-      host: core-postgres-cluster
-      database: sts
-      port: "5432"
-      schema: public
-      platform: postgresql
-      driver: org.postgresql.Driver
+    #  core.events.rabbitmq --
+    rabbitmq:
+      #  core.events.rabbitmq.credentials --
       credentials:
+        #  core.events.rabbitmq.credentials.existingSecret --
         existingSecret:
-          name: "stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do"
-          usernameKey: "username"
-          passwordKey: "password"
-    databaseProvider:
-      enabled: true
-      credentials:
-        username: ""
-        password: ""
-        existingSecret:
-          name: "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
-          usernameKey: "username"
-          passwordKey: "password"
-    credentials:
-      roles: "digitalhub_owner_user"
-    jwt:
-      issuerUri: "http://digitalhub-core:8080"
+          #  core.events.rabbitmq.credentials.existingSecret.name --
+          name: digitalhub-rabbitmq-default-user
+          #  core.events.rabbitmq.credentials.existingSecret.passwordKey --
+          passwordKey: password
+          #  core.events.rabbitmq.credentials.existingSecret.usernameKey --
+          usernameKey: username
+      #  core.events.rabbitmq.enabled --
+      enabled: false
+      #  core.events.rabbitmq.host --
+      host: digitalhub-rabbitmq
+      #  core.events.rabbitmq.port --
+      port: "5672"
+      #  core.events.rabbitmq.queue --
+      queue: dhCoreQueue
+      #  core.events.rabbitmq.routingKey --
+      routingKey: entityRoutingKey
+      #  core.events.rabbitmq.topic --
+      topic: entityTopic
+      #  core.events.rabbitmq.vhost --
+      vhost: /
+  #  core.kanikoArgs --
+  kanikoArgs: ""
+  #  core.kubeai --
   kubeai:
+    #  core.kubeai.enabled --
     enabled: true
-    serviceName: "kubeai"
+    #  core.kubeai.port --
     port: "80"
-
-kubernetes-resource-manager:
-  enabled: true
+    #  core.kubeai.serviceName --
+    serviceName: kubeai
+  #  core.postgres --
+  postgres:
+    #  core.postgres.credentials --
+    credentials:
+      #  core.postgres.credentials.existingSecret --
+      existingSecret:
+        #  core.postgres.credentials.existingSecret.name --
+        name: coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do
+        #  core.postgres.credentials.existingSecret.passwordKey --
+        passwordKey: password
+        #  core.postgres.credentials.existingSecret.usernameKey --
+        usernameKey: username
+      #  core.postgres.credentials.password --
+      password: ""
+      #  core.postgres.credentials.username --
+      username: ""
+    #  core.postgres.database --
+    database: core
+    #  core.postgres.host --
+    host: core-postgres-cluster
+    #  core.postgres.port --
+    port: "5432"
+    #  core.postgres.schema --
+    schema: public
+  #  core.s3 --
+  s3:
+    #  core.s3.accessKey --
+    accessKey: ""
+    #  core.s3.bucket --
+    bucket: datalake
+    #  core.s3.dynamicCreds --
+    dynamicCreds:
+      #  core.s3.dynamicCreds.enabled --
+      enabled: false
+    #  core.s3.endpoint --
+    endpoint: minio
+    #  core.s3.existingSecret --
+    existingSecret:
+      #  core.s3.existingSecret.accessKeyKey --
+      accessKeyKey: digitalhubUser
+      #  core.s3.existingSecret.name --
+      name: digitalhub-minio-creds
+      #  core.s3.existingSecret.secretKeyKey --
+      secretKeyKey: digitalhubPassword
+    #  core.s3.port --
+    port: "9000"
+    #  core.s3.protocol --
+    protocol: http
+    #  core.s3.publicUrl --
+    publicUrl: http://192.168.49.2:30080
+    #  core.s3.region --
+    region: us-west-1
+    #  core.s3.secretKey --
+    secretKey: ""
+  #  core.service --
   service:
-    type: *serviceType
-    nodePort: "30220"
-  resourceSelectors:
-    secrets:
-      # list separated by ,
-      # name of the secret/secrets that should be visible in Kubernetes Resource Manager
-      names: "(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"
-
-dremio-rest-server-operator:
-  enabled: true
-
-apigw-operator:
-  enabled: true
-
-jobs:
-  delete:
-    securityContext:
-      readOnlyRootFilesystem: true
-
-nakamasato-mysql-operator:
-  enabled: false
-
-mysql-operator:
-  enabled: false
-
-template-controller:
-  enabled: true
-  objectTemplate:
+    #  core.service.httpNodePort --
+    httpNodePort: "30180"
+    #  core.service.type --
+    type: NodePort
+  #  core.solr --
+  solr:
+    #  core.solr.collection --
+    collection:
+      #  core.solr.collection.initialize --
+      initialize:
+        #  core.solr.collection.initialize.enabled --
+        enabled: true
+        #  core.solr.collection.initialize.image --
+        image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
+        #  core.solr.collection.initialize.securityJsonSecret --
+        securityJsonSecret: digitalhub-solrcloud-security-bootstrap
+      #  core.solr.collection.name --
+      name: dhcore
+    #  core.solr.enabled --
     enabled: true
-  podSecurityContext:
-    runAsNonRoot: true
-    seccompProfile:
-      type: RuntimeDefault
-  securityContext:
-    runAsNonRoot: true
-    seccompProfile:
-      type: "RuntimeDefault"
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - ALL
-
-dashboard:
-  replicaCount: 1
-  image:
-    repository: ghcr.io/scc-digitalhub/dh-dashboard
-    pullPolicy: IfNotPresent
-    tag: "0.1.4"
-  imagePullSecrets: []
-  nameOverride: ""
-  fullnameOverride: ""
-  serviceAccount:
-    create: true
-    automount: true
-    annotations: {}
-    name: "digitalhub-dashboard"
-  podAnnotations: {}
-  podLabels: {}
-  podSecurityContext:
-    runAsUser: 65532
-    fsGroup: 65532
-    runAsNonRoot: true
-    seccompProfile:
-      type: "RuntimeDefault"
-  securityContext:
-    runAsUser: 65532
-    runAsNonRoot: true
-    seccompProfile:
-      type: "RuntimeDefault"
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - ALL
-  service:
-    type: *serviceType
-    port: "8080"
-    httpNodePort: "30110"
-  ingress:
+    #  core.solr.fullNameOverride --
+    fullNameOverride: digitalhub
+    #  core.solr.url --
+    url: http://digitalhub-solrcloud-common/solr
+    #  core.solr.user --
+    user: user
+  #  core.sts --
+  sts:
+    #  core.sts.client --
+    client:
+      #  core.sts.client.clientId --
+      clientId: ""
+      #  core.sts.client.clientSecret --
+      clientSecret: ""
+    #  core.sts.credentials --
+    credentials:
+      #  core.sts.credentials.roles --
+      roles: digitalhub_owner_user
+    #  core.sts.databaseProvider --
+    databaseProvider:
+      #  core.sts.databaseProvider.credentials --
+      credentials:
+        #  core.sts.databaseProvider.credentials.existingSecret --
+        existingSecret:
+          #  core.sts.databaseProvider.credentials.existingSecret.name --
+          name: digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+          #  core.sts.databaseProvider.credentials.existingSecret.passwordKey --
+          passwordKey: password
+          #  core.sts.databaseProvider.credentials.existingSecret.usernameKey --
+          usernameKey: username
+        #  core.sts.databaseProvider.credentials.password --
+        password: ""
+        #  core.sts.databaseProvider.credentials.username --
+        username: ""
+      #  core.sts.databaseProvider.enabled --
+      enabled: true
+    #  core.sts.enabled --
     enabled: false
-    className: ""
+    #  core.sts.jwt --
+    jwt:
+      #  core.sts.jwt.issuerUri --
+      issuerUri: http://digitalhub-core:8080
+    #  core.sts.stsDb --
+    stsDb:
+      #  core.sts.stsDb.credentials --
+      credentials:
+        #  core.sts.stsDb.credentials.existingSecret --
+        existingSecret:
+          #  core.sts.stsDb.credentials.existingSecret.name --
+          name: stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do
+          #  core.sts.stsDb.credentials.existingSecret.passwordKey --
+          passwordKey: password
+          #  core.sts.stsDb.credentials.existingSecret.usernameKey --
+          usernameKey: username
+      #  core.sts.stsDb.database --
+      database: sts
+      #  core.sts.stsDb.driver --
+      driver: org.postgresql.Driver
+      #  core.sts.stsDb.host --
+      host: core-postgres-cluster
+      #  core.sts.stsDb.platform --
+      platform: postgresql
+      #  core.sts.stsDb.port --
+      port: "5432"
+      #  core.sts.stsDb.schema --
+      schema: public
+
+#  dashboard --
+dashboard:
+  #  dashboard.additional-components --
+  additional-components:
+    #  dashboard.additional-components.apps --
+    apps:
+      - description: ""
+        existingSecret:
+          #  dashboard.additional-components.apps.existingSecret.clientId --
+          clientId: ""
+          #  dashboard.additional-components.apps.existingSecret.name --
+          name: ""
+          #  dashboard.additional-components.apps.existingSecret.secretKey --
+          secretKey: ""
+        ingress:
+          #  dashboard.additional-components.apps.ingress.annotations --
+          annotations: {}
+          #  dashboard.additional-components.apps.ingress.enabled --
+          enabled: false
+          #  dashboard.additional-components.apps.ingress.hosts --
+          hosts: []
+          #  dashboard.additional-components.apps.ingress.ingressClassName --
+          ingressClassName: ""
+          #  dashboard.additional-components.apps.ingress.path --
+          path: /
+          #  dashboard.additional-components.apps.ingress.tls --
+          tls: []
+        name: ""
+        oidcIssuerUrl: ""
+        redirectUrl: ""
+        service:
+          #  dashboard.additional-components.apps.service.name --
+          name: ""
+          #  dashboard.additional-components.apps.service.port --
+          port: ""
+    #  dashboard.additional-components.enabled --
+    enabled: false
+  #  dashboard.affinity --
+  affinity: {}
+  #  dashboard.autoscaling --
+  autoscaling:
+    #  dashboard.autoscaling.enabled --
+    enabled: false
+    #  dashboard.autoscaling.maxReplicas --
+    maxReplicas: 100
+    #  dashboard.autoscaling.minReplicas --
+    minReplicas: 1
+    #  dashboard.autoscaling.targetCPUUtilizationPercentage --
+    targetCPUUtilizationPercentage: 80
+  #  dashboard.fullnameOverride --
+  fullnameOverride: ""
+  #  dashboard.image --
+  image:
+    #  dashboard.image.pullPolicy --
+    pullPolicy: IfNotPresent
+    #  dashboard.image.repository --
+    repository: ghcr.io/scc-digitalhub/dh-dashboard
+    #  dashboard.image.tag --
+    tag: 0.1.4
+  #  dashboard.imagePullSecrets --
+  imagePullSecrets: []
+  #  dashboard.ingress --
+  ingress:
+    #  dashboard.ingress.annotations --
     annotations: {}
+    #  dashboard.ingress.className --
+    className: ""
+    #  dashboard.ingress.enabled --
+    enabled: false
+    #  dashboard.ingress.hosts --
     hosts:
       - host: ""
         paths:
-          - pathType: ImplementationSpecific
-            path: /
+          - path: /
+            pathType: ImplementationSpecific
+    #  dashboard.ingress.tls --
     tls:
-    - secretName: ""
-      hosts:
-        - ""
-  resources:
-    limits:
-      cpu: 1000m
-      memory: 512Mi
-    requests:
-      cpu: 250m
-      memory: 256Mi
-  autoscaling:
-    enabled: false
-    minReplicas: 1
-    maxReplicas: 100
-    targetCPUUtilizationPercentage: 80
-  volumes:
+      - hosts:
+          - ""
+        secretName: ""
+  #  dashboard.nameOverride --
+  nameOverride: ""
+  #  dashboard.nodeSelector --
   nodeSelector: {}
-  tolerations: []
-  affinity: {}
+  #  dashboard.oidc --
   oidc:
-    enabled: false
+    #  dashboard.oidc.audience --
     audience:
+      #  dashboard.oidc.audience.clientId --
       clientId: ""
+      #  dashboard.oidc.audience.externalSecret --
       externalSecret:
-        name: ""
+        #  dashboard.oidc.audience.externalSecret.key --
         key: ""
+        #  dashboard.oidc.audience.externalSecret.name --
+        name: ""
+    #  dashboard.oidc.config --
     config:
+      #  dashboard.oidc.config.issuer --
       issuer: ""
-  additional-components:
+    #  dashboard.oidc.enabled --
     enabled: false
-    apps:
-      - name: ""
-        description: ""
-        service:
-          name: ""
-          port: ""
-        ingress:
-          enabled: false
-          annotations: {}
-          ingressClassName: ""
-          hosts: []
-          path: /
-          tls: []
-        redirectUrl: ""
-        oidcIssuerUrl: ""
-        existingSecret:
-          name: ""
-          clientId: ""
-          secretKey: ""
-
-solr-operator:
-  enabled: true
-  zookeeper-operator:
-    crd:
-      create: *globalCrd
-  securityContext:
+  #  dashboard.podAnnotations --
+  podAnnotations: {}
+  #  dashboard.podLabels --
+  podLabels: {}
+  #  dashboard.podSecurityContext --
+  podSecurityContext:
+    #  dashboard.podSecurityContext.fsGroup --
+    fsGroup: 65532
+    #  dashboard.podSecurityContext.runAsNonRoot --
     runAsNonRoot: true
+    #  dashboard.podSecurityContext.runAsUser --
+    runAsUser: 65532
+    #  dashboard.podSecurityContext.seccompProfile --
     seccompProfile:
+      #  dashboard.podSecurityContext.seccompProfile.type --
       type: RuntimeDefault
+  #  dashboard.replicaCount --
+  replicaCount: 1
+  #  dashboard.resources --
+  resources:
+    #  dashboard.resources.limits --
+    limits:
+      #  dashboard.resources.limits.cpu --
+      cpu: 1000m
+      #  dashboard.resources.limits.memory --
+      memory: 512Mi
+    #  dashboard.resources.requests --
+    requests:
+      #  dashboard.resources.requests.cpu --
+      cpu: 250m
+      #  dashboard.resources.requests.memory --
+      memory: 256Mi
+  #  dashboard.securityContext --
+  securityContext:
+    #  dashboard.securityContext.allowPrivilegeEscalation --
     allowPrivilegeEscalation: false
+    #  dashboard.securityContext.capabilities --
     capabilities:
+      #  dashboard.securityContext.capabilities.drop --
       drop:
         - ALL
+    #  dashboard.securityContext.runAsNonRoot --
+    runAsNonRoot: true
+    #  dashboard.securityContext.runAsUser --
+    runAsUser: 65532
+    #  dashboard.securityContext.seccompProfile --
+    seccompProfile:
+      #  dashboard.securityContext.seccompProfile.type --
+      type: RuntimeDefault
+  #  dashboard.service --
+  service:
+    #  dashboard.service.httpNodePort --
+    httpNodePort: "30110"
+    #  dashboard.service.port --
+    port: "8080"
+    #  dashboard.service.type --
+    type: NodePort
+  #  dashboard.serviceAccount --
+  serviceAccount:
+    #  dashboard.serviceAccount.annotations --
+    annotations: {}
+    #  dashboard.serviceAccount.automount --
+    automount: true
+    #  dashboard.serviceAccount.create --
+    create: true
+    #  dashboard.serviceAccount.name --
+    name: digitalhub-dashboard
+  #  dashboard.tolerations --
+  tolerations: []
+  #  dashboard.volumes --
+  volumes:
 
-solr:
+#  docker-registry --
+docker-registry:
+  #  docker-registry.className --
+  className: nginx
+  #  docker-registry.enabled --
   enabled: true
-  image:
-    repository: "solr"
-    tag: "9.7"
-  replicas: 1
-  fullnameOverride: *solrFullNameOverride
-  # The following options are meant to be used when running solr with an unprivileged user.
-  # If you want to use these options, be sure to also set core.solr.collection.initialize to true in this values file.
-  # For more informations about what these options do, check the Solr official documentation.
-  useExistingSecurityJson: false   # Set this to true if you already have a solr installation with a configured securityJson (creds settings won't affect your environment)
-  solrOptions:
-    security:
-      authenticationType: Basic
-      probesRequireAuth: true
-      basicAuthSecret: digitalhub-solrcloud-basic-auth   # Specify the required basicAuth secret
-      bootstrapSecurityJson:
-        name: digitalhub-solrcloud-security-bootstrap   # Name of the secret with the configured security.json
-        key: security.json   # Key in the secret corresponding to the security.json
-  creds:
-    # Solr requires cripted passwords in the format sha256(sha256(salt || password)).
-    # You can either generate the encripted password yourself or using some online tools, but it must be specified alongside the not-encrypted password.
-    # Be sure to double check if they match.
-    admin:   # Do not remove this user, required by the operator
-      password: "thi4iegheeX7euthe7di"   # Example random password
-      passwordSha: "C8QrTZf6jpu+cPKTsLtyEhv1XVXAYZGmStTKXzB80sg= MW5pNXZlaGIyaWhkdW5w"   # Encrypted password
-    k8sOper:   # Do not remove this user, required by the operator
-      password: "imPBf@tU(asx9%TZ"
-      passwordSha: "3iPc1JWet22a05UZXCFfo/qRUqwg2iVULyv5RBEqPdM= LSpnG/l2j8AA9vrryMGkkFLO+bYeN7ZUvrU270WAfyA="
-    solr:   # Do not remove this user, required by the operator
-      password: "aed0ohBie3hai6jo7sho"
-      passwordSha: "i61TpZKyvff3CHnyZ0kMTzkNezkxkilCre93wLkz7jQ= NzlyN3k1cm0xZGt3eWR1MA=="
-    user:   # Unprivileged user
-      password: "soogh8aiy6vah6Aecai6"
-      passwordSha: "ps9jK0qKXJqZawtFS+SxhB2CdCu90Qgz4riZ0XwzYd4= YWxxZXV3enB1YmE2c2gwdg=="
-  dataStorage:
-    # Either persistent or ephemeral
-    type: "ephemeral"
-    capacity: "10Gi"
-    # Options for persistent storage. Only used if type = "persistent"
-    persistent:
-      reclaimPolicy: "Delete"
-      pvc:
-        name: ""
-        labels: {}
-        annotations: {}
-        storageClassName: ""
-  podOptions:
-    podSecurityContext:
-      seccompProfile:
-        type: "RuntimeDefault"
-    containerSecurityContext:
-      seccompProfile:
-        type: "RuntimeDefault"
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-
-minio:
-  enabled: true
-  rootUser: *minioRootUser
-  rootPassword: *minioRootPassword
-  mode: standalone
-  replicas: 1
+  #  docker-registry.fullnameOverride --
+  fullnameOverride: digitalhub-docker-registry
+  #  docker-registry.ingress --
   ingress:
+    #  docker-registry.ingress.enabled --
     enabled: false
+    #  docker-registry.ingress.hosts --
+    hosts:
+      - registry.digitalhub.test
+    #  docker-registry.ingress.path --
+    path: /
+  #  docker-registry.persistence --
   persistence:
+    #  docker-registry.persistence.accessMode --
+    accessMode: ReadWriteOnce
+    #  docker-registry.persistence.enabled --
     enabled: true
+    #  docker-registry.persistence.size --
     size: 128Gi
+  #  docker-registry.service --
+  service:
+    #  docker-registry.service.nodePort --
+    nodePort: 30150
+    #  docker-registry.service.type --
+    type: NodePort
+  #  docker-registry.updateStrategy --
+  updateStrategy:
+    #  docker-registry.updateStrategy.type --
+    type: Recreate
+
+#  dremio-rest-server-operator --
+dremio-rest-server-operator:
+  #  dremio-rest-server-operator.enabled --
+  enabled: true
+
+#  ext-postgres-operator --
+ext-postgres-operator:
+  #  ext-postgres-operator.enabled --
+  enabled: true
+  #  ext-postgres-operator.image --
+  image:
+    #  ext-postgres-operator.image.tag --
+    tag: 1.3.5
+  #  ext-postgres-operator.podSecurityContext --
+  podSecurityContext:
+    #  ext-postgres-operator.podSecurityContext.runAsNonRoot --
+    runAsNonRoot: true
+    #  ext-postgres-operator.podSecurityContext.seccompProfile --
+    seccompProfile:
+      #  ext-postgres-operator.podSecurityContext.seccompProfile.type --
+      type: RuntimeDefault
+  #  ext-postgres-operator.postgres --
+  postgres:
+    #  ext-postgres-operator.postgres.cloud_provider --
+    cloud_provider: ""
+    #  ext-postgres-operator.postgres.default_database --
+    default_database: postgres
+    #  ext-postgres-operator.postgres.host --
+    host: database-postgres-cluster
+    #  ext-postgres-operator.postgres.password --
+    password: ""
+    #  ext-postgres-operator.postgres.uri_args --
+    uri_args: " "
+    #  ext-postgres-operator.postgres.user --
+    user: ""
+  #  ext-postgres-operator.postgresCredsExistingSecrets --
+  postgresCredsExistingSecrets:
+    #  ext-postgres-operator.postgresCredsExistingSecrets.password --
+    password:
+      #  ext-postgres-operator.postgresCredsExistingSecrets.password.secretKey --
+      secretKey: password
+      #  ext-postgres-operator.postgresCredsExistingSecrets.password.secretName --
+      secretName: digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+    #  ext-postgres-operator.postgresCredsExistingSecrets.username --
+    username:
+      #  ext-postgres-operator.postgresCredsExistingSecrets.username.secretKey --
+      secretKey: username
+      #  ext-postgres-operator.postgresCredsExistingSecrets.username.secretName --
+      secretName: digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+  #  ext-postgres-operator.securityContext --
+  securityContext:
+    #  ext-postgres-operator.securityContext.seccompProfile --
+    seccompProfile:
+      #  ext-postgres-operator.securityContext.seccompProfile.type --
+      type: RuntimeDefault
+
+#  global --
+global:
+  #  global.basicAuth --
+  basicAuth:
+    #  global.basicAuth.enabled --
+    enabled: false
+    #  global.basicAuth.password --
+    password: ""
+    #  global.basicAuth.secretName --
+    secretName: ""
+    #  global.basicAuth.username --
+    username: ""
+  #  global.cleanup --
+  cleanup:
+    #  global.cleanup.deployments --
+    deployments: false
+    #  global.cleanup.ingress --
+    ingress: false
+    #  global.cleanup.jobs --
+    jobs: false
+    #  global.cleanup.persistentVolumeClaims --
+    persistentVolumeClaims: false
+    #  global.cleanup.pods --
+    pods: false
+    #  global.cleanup.statefulsets --
+    statefulsets: false
+  #  global.crd --
+  crd:
+    #  global.crd.enabled --
+    enabled: true
+  #  global.externalHostAddress --
+  externalHostAddress: 192.168.49.2
+  #  global.externalTls --
+  externalTls: false
+  #  global.minio --
+  minio:
+    #  global.minio.argoBucket --
+    argoBucket: argo
+    #  global.minio.argoPassword --
+    argoPassword: argo1234
+    #  global.minio.argoSecret --
+    argoSecret: argo-minio-creds
+    #  global.minio.argoUser --
+    argoUser: argo
+    #  global.minio.bucket --
+    bucket: datalake
+    #  global.minio.digitalhubPassword --
+    digitalhubPassword: digitalhub
+    #  global.minio.digitalhubUser --
+    digitalhubUser: digitalhub
+    #  global.minio.digitalhubUserSecret --
+    digitalhubUserSecret: digitalhub-minio-creds
+    #  global.minio.endpoint --
+    endpoint: minio
+    #  global.minio.endpointPort --
+    endpointPort: "9000"
+    #  global.minio.protocol --
+    protocol: http
+    #  global.minio.rootPassword --
+    rootPassword: minio123
+    #  global.minio.rootUser --
+    rootUser: minio
+    #  global.minio.rootUserSecret --
+    rootUserSecret: minio
+  #  global.registry --
+  registry:
+    #  global.registry.email --
+    email: ""
+    #  global.registry.password --
+    password: ""
+    #  global.registry.secretName --
+    secretName: ""
+    #  global.registry.url --
+    url: 192.168.49.2:30150
+    #  global.registry.username --
+    username: ""
+  #  global.securityContext --
+  securityContext:
+    #  global.securityContext.allowPrivilegeEscalation --
+    allowPrivilegeEscalation: false
+    #  global.securityContext.capabilities --
+    capabilities:
+      #  global.securityContext.capabilities.drop --
+      drop:
+        - ALL
+    #  global.securityContext.runAsNonRoot --
+    runAsNonRoot: true
+    #  global.securityContext.seccompProfile --
+    seccompProfile:
+      #  global.securityContext.seccompProfile.type --
+      type: RuntimeDefault
+  #  global.service --
+  service:
+    #  global.service.type --
+    type: NodePort
+  #  global.solr --
+  solr:
+    #  global.solr.fullNameOverride --
+    fullNameOverride: digitalhub
+
+#  jobs --
+jobs:
+  #  jobs.delete --
+  delete:
+    #  jobs.delete.securityContext --
+    securityContext:
+      #  jobs.delete.securityContext.readOnlyRootFilesystem --
+      readOnlyRootFilesystem: true
+
+#  kubeai --
+kubeai:
+  #  kubeai.crds --
+  crds:
+    #  kubeai.crds.enabled --
+    enabled: true
+  #  kubeai.enabled --
+  enabled: true
+  #  kubeai.open-webui --
+  open-webui:
+    #  kubeai.open-webui.enabled --
+    enabled: false
+  #  kubeai.resourceProfiles --
+  resourceProfiles:
+    #  kubeai.resourceProfiles.cpu --
+    cpu:
+      #  kubeai.resourceProfiles.cpu.imageName --
+      imageName: cpu
+      #  kubeai.resourceProfiles.cpu.requests --
+      requests:
+        #  kubeai.resourceProfiles.cpu.requests.cpu --
+        cpu: 1
+        #  kubeai.resourceProfiles.cpu.requests.memory --
+        memory: 2Gi
+
+#  kubernetes-resource-manager --
+kubernetes-resource-manager:
+  #  kubernetes-resource-manager.enabled --
+  enabled: true
+  #  kubernetes-resource-manager.resourceSelectors --
+  resourceSelectors:
+    #  kubernetes-resource-manager.resourceSelectors.secrets --
+    secrets:
+      #  kubernetes-resource-manager.resourceSelectors.secrets.names --
+      names: (digitalhub\-owner|digitalhub\-reader|digitalhub\-writer).*
+  #  kubernetes-resource-manager.service --
+  service:
+    #  kubernetes-resource-manager.service.nodePort --
+    nodePort: "30220"
+    #  kubernetes-resource-manager.service.type --
+    type: NodePort
+
+#  minio --
+minio:
+  #  minio.buckets --
   buckets:
     - name: datalake
       policy: none
@@ -617,230 +921,598 @@ minio:
     - name: argo
       policy: none
       purge: false
-  resources:
-    requests:
-      memory: 0.5Gi
-  service:
-    type: *serviceType
-    port: 9000
-    nodePort: 30080
+  #  minio.consoleService --
   consoleService:
-    type: *serviceType
-    port: 9001
+    #  minio.consoleService.nodePort --
     nodePort: 30090
-  fullnameOverride: minio
-  oidc:
-    enabled: false
-    configUrl: ""
-    clientId: ""
-    clientSecret: ""
-    # Provide existing client secret from the Kubernetes Secret resource, existing secret will have priority over `clientId` and/or `clientSecret``
-    existingClientSecretName: ""
-    existingClientIdKey: ""
-    existingClientSecretKey: ""
-    claimName: ""
-    scopes: ""
-    redirectUri: ""
-    # Can leave empty
-    claimPrefix: ""
-    comment: ""
-    displayName: ""
+    #  minio.consoleService.port --
+    port: 9001
+    #  minio.consoleService.type --
+    type: NodePort
+  #  minio.containerSecurityContext --
+  containerSecurityContext:
+    #  minio.containerSecurityContext.allowPrivilegeEscalation --
+    allowPrivilegeEscalation: false
+    #  minio.containerSecurityContext.capabilities --
+    capabilities:
+      #  minio.containerSecurityContext.capabilities.drop --
+      drop:
+        - ALL
+    #  minio.containerSecurityContext.runAsNonRoot --
+    runAsNonRoot: true
+    #  minio.containerSecurityContext.seccompProfile --
+    seccompProfile:
+      #  minio.containerSecurityContext.seccompProfile.type --
+      type: RuntimeDefault
+  #  minio.deploymentUpdate --
   deploymentUpdate:
+    #  minio.deploymentUpdate.type --
     type: Recreate
-  users:
-    - accessKey: *digitalhubUser
-      secretKey: *digitalhubPassword
-      policy: readwritedigitalhub
-    - accessKey: *argoUser
-      secretKey: *argoPassword
-      policy: readwriteargo
+  #  minio.enabled --
+  enabled: true
+  #  minio.fullnameOverride --
+  fullnameOverride: minio
+  #  minio.ingress --
+  ingress:
+    #  minio.ingress.enabled --
+    enabled: false
+  #  minio.makeBucketJob --
+  makeBucketJob:
+    #  minio.makeBucketJob.containerSecurityContext --
+    containerSecurityContext:
+      #  minio.makeBucketJob.containerSecurityContext.allowPrivilegeEscalation --
+      allowPrivilegeEscalation: false
+      #  minio.makeBucketJob.containerSecurityContext.capabilities --
+      capabilities:
+        #  minio.makeBucketJob.containerSecurityContext.capabilities.drop --
+        drop:
+          - ALL
+      #  minio.makeBucketJob.containerSecurityContext.runAsNonRoot --
+      runAsNonRoot: true
+      #  minio.makeBucketJob.containerSecurityContext.seccompProfile --
+      seccompProfile:
+        #  minio.makeBucketJob.containerSecurityContext.seccompProfile.type --
+        type: RuntimeDefault
+    #  minio.makeBucketJob.securityContext --
+    securityContext:
+      #  minio.makeBucketJob.securityContext.enabled --
+      enabled: true
+  #  minio.makePolicyJob --
+  makePolicyJob:
+    #  minio.makePolicyJob.containerSecurityContext --
+    containerSecurityContext:
+      #  minio.makePolicyJob.containerSecurityContext.allowPrivilegeEscalation --
+      allowPrivilegeEscalation: false
+      #  minio.makePolicyJob.containerSecurityContext.capabilities --
+      capabilities:
+        #  minio.makePolicyJob.containerSecurityContext.capabilities.drop --
+        drop:
+          - ALL
+      #  minio.makePolicyJob.containerSecurityContext.runAsNonRoot --
+      runAsNonRoot: true
+      #  minio.makePolicyJob.containerSecurityContext.seccompProfile --
+      seccompProfile:
+        #  minio.makePolicyJob.containerSecurityContext.seccompProfile.type --
+        type: RuntimeDefault
+    #  minio.makePolicyJob.securityContext --
+    securityContext:
+      #  minio.makePolicyJob.securityContext.enabled --
+      enabled: true
+  #  minio.makeUserJob --
+  makeUserJob:
+    #  minio.makeUserJob.containerSecurityContext --
+    containerSecurityContext:
+      #  minio.makeUserJob.containerSecurityContext.allowPrivilegeEscalation --
+      allowPrivilegeEscalation: false
+      #  minio.makeUserJob.containerSecurityContext.capabilities --
+      capabilities:
+        #  minio.makeUserJob.containerSecurityContext.capabilities.drop --
+        drop:
+          - ALL
+      #  minio.makeUserJob.containerSecurityContext.runAsNonRoot --
+      runAsNonRoot: true
+      #  minio.makeUserJob.containerSecurityContext.seccompProfile --
+      seccompProfile:
+        #  minio.makeUserJob.containerSecurityContext.seccompProfile.type --
+        type: RuntimeDefault
+    #  minio.makeUserJob.securityContext --
+    securityContext:
+      #  minio.makeUserJob.securityContext.enabled --
+      enabled: true
+  #  minio.mode --
+  mode: standalone
+  #  minio.oidc --
+  oidc:
+    #  minio.oidc.claimName --
+    claimName: ""
+    #  minio.oidc.claimPrefix --
+    claimPrefix: ""
+    #  minio.oidc.clientId --
+    clientId: ""
+    #  minio.oidc.clientSecret --
+    clientSecret: ""
+    #  minio.oidc.comment --
+    comment: ""
+    #  minio.oidc.configUrl --
+    configUrl: ""
+    #  minio.oidc.displayName --
+    displayName: ""
+    #  minio.oidc.enabled --
+    enabled: false
+    #  minio.oidc.existingClientIdKey --
+    existingClientIdKey: ""
+    #  minio.oidc.existingClientSecretKey --
+    existingClientSecretKey: ""
+    #  minio.oidc.existingClientSecretName --
+    existingClientSecretName: ""
+    #  minio.oidc.redirectUri --
+    redirectUri: ""
+    #  minio.oidc.scopes --
+    scopes: ""
+  #  minio.persistence --
+  persistence:
+    #  minio.persistence.enabled --
+    enabled: true
+    #  minio.persistence.size --
+    size: 128Gi
+  #  minio.policies --
   policies:
     - name: readwritedigitalhub
       statements:
-        - effect: Allow
+        - actions:
+            - s3:*
+          effect: Allow
           resources:
-            - 'arn:aws:s3:::datalake/*'
-          actions:
-            - "s3:*"
+            - arn:aws:s3:::datalake/*
     - name: readwriteargo
       statements:
-        - effect: Allow
+        - actions:
+            - s3:*
+          effect: Allow
           resources:
-            - 'arn:aws:s3:::argo/*'
-          actions:
-            - "s3:*"
-  securityContext:
-    runAsNonRoot: true
-    seccompProfile:
-      type: "RuntimeDefault"
-  containerSecurityContext:
-    runAsNonRoot: true
-    seccompProfile:
-      type: "RuntimeDefault"
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-      - ALL
+            - arn:aws:s3:::argo/*
+  #  minio.postJob --
   postJob:
+    #  minio.postJob.securityContext --
     securityContext:
+      #  minio.postJob.securityContext.enabled --
       enabled: true
+      #  minio.postJob.securityContext.runAsNonRoot --
       runAsNonRoot: true
+      #  minio.postJob.securityContext.seccompProfile --
       seccompProfile:
-        type: "RuntimeDefault"
-  makePolicyJob:
-    securityContext:
-      enabled: true
-    containerSecurityContext:
-      runAsNonRoot: true
-      seccompProfile:
-        type: "RuntimeDefault"
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-  makeBucketJob:
-    securityContext:
-      enabled: true
-    containerSecurityContext:
-      runAsNonRoot: true
-      seccompProfile:
-        type: "RuntimeDefault"
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-  makeUserJob:
-    securityContext:
-      enabled: true
-    containerSecurityContext:
-      runAsNonRoot: true
-      seccompProfile:
-        type: "RuntimeDefault"
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
+        #  minio.postJob.securityContext.seccompProfile.type --
+        type: RuntimeDefault
+  #  minio.replicas --
+  replicas: 1
+  #  minio.resources --
+  resources:
+    #  minio.resources.requests --
+    requests:
+      #  minio.resources.requests.memory --
+      memory: 0.5Gi
+  #  minio.rootPassword --
+  rootPassword: minio123
+  #  minio.rootUser --
+  rootUser: minio
+  #  minio.securityContext --
+  securityContext:
+    #  minio.securityContext.runAsNonRoot --
+    runAsNonRoot: true
+    #  minio.securityContext.seccompProfile --
+    seccompProfile:
+      #  minio.securityContext.seccompProfile.type --
+      type: RuntimeDefault
+  #  minio.service --
+  service:
+    #  minio.service.nodePort --
+    nodePort: 30080
+    #  minio.service.port --
+    port: 9000
+    #  minio.service.type --
+    type: NodePort
+  #  minio.users --
+  users:
+    - accessKey: digitalhub
+      policy: readwritedigitalhub
+      secretKey: digitalhub
+    - accessKey: argo
+      policy: readwriteargo
+      secretKey: argo1234
 
+#  minio-operator --
 minio-operator:
+  #  minio-operator.enabled --
   enabled: true
+  #  minio-operator.minio --
   minio:
-    accessKey: *minioRootUser
-    secretKey: *minioRootPassword
-    endpoint: *minioEndpoint
-    endpointPort: *minioEndpointPort
-    bucket: *minioBucket
-    protocol: *minioProtocol
+    #  minio-operator.minio.accessKey --
+    accessKey: minio
+    #  minio-operator.minio.bucket --
+    bucket: datalake
+    #  minio-operator.minio.endpoint --
+    endpoint: minio
+    #  minio-operator.minio.endpointPort --
+    endpointPort: "9000"
+    #  minio-operator.minio.protocol --
+    protocol: http
+    #  minio-operator.minio.secretKey --
+    secretKey: minio123
 
-platformPackages:
-  preRelease: false   ## Used for installing pre release packages
-  deleteOnCompletion: true  ## Leave this to true if you want to delete the test projects created with helm test
-  image: ""
-  tag: ""
-  packages:
-  - name: "digitalhub[full]"
-    tag: "0.11.0"
-  - name: "digitalhub-runtime-python"
-    tag: "0.11.0"
-  - name: "digitalhub-runtime-container"
-    tag: "0.11.0"
-  - name: "digitalhub-runtime-dbt"
-    tag: "0.11.0"
-  - name: "digitalhub-runtime-kfp"
-    tag: "0.11.0"
-  - name: "digitalhub-runtime-modelserve"
-    tag: "0.11.0"
+#  mysql-operator --
+mysql-operator:
+  #  mysql-operator.enabled --
+  enabled: false
 
-argo-workflows:
-  enabled: true
-  crds:
-    install: *globalCrd
-  singleNamespace: true
-  workflow:
-    serviceAccount:
-      create: true
-      name: argo-workflow
-  controller:
-    configMap:
-      create: true
-    serviceAccount:
-      name: argo-workflow-controller
-    workflowDefaults:
-      spec:
-        serviceAccountName: argo-workflow
-    podSecurityContext:
-      runAsNonRoot: true
-      seccompProfile:
-        type: "RuntimeDefault"
-    securityContext:
-      runAsNonRoot: true
-      seccompProfile:
-        type: "RuntimeDefault"
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-          - ALL
-  server:
-    enabled: false
-  artifactRepositoryRef:
-    artifact-repositories:
-      annotations:
-        workflows.argoproj.io/default-artifact-repository: artifact-repository
-      artifact-repository:
-        archiveLogs: false
-        s3:
-          accessKeySecret:
-            name: *argoSecret
-            key: accesskey
-          secretKeySecret:
-            name: *argoSecret
-            key: secretkey
-          insecure: true
-          bucket: *argoBucket
-          endpoint: minio:9000
+#  nakamasato-mysql-operator --
+nakamasato-mysql-operator:
+  #  nakamasato-mysql-operator.enabled --
+  enabled: false
 
-kubeai:
-  enabled: true
-  crds:
-    enabled: *globalCrd
-  open-webui:
-    enabled: false
-  resourceProfiles:
-    cpu:
-      imageName: "cpu"
-      requests:
-        cpu: 1
-        memory: "2Gi"
-
+#  open-webui --
 open-webui:
+  #  open-webui.enabled --
   enabled: true
-  ollama:
-    enabled: false
-  pipelines:
-    enabled: false
-  openaiBaseApiUrl: "http://kubeai/openai/v1"
+  #  open-webui.extraEnvVars --
   extraEnvVars:
     - name: ENABLE_LOGIN_FORM
       value: "True"
     - name: OPENAI_API_KEYS
-      value: "not-used"
+      value: not-used
     - name: SAFE_MODE
       value: "True"
     - name: ENABLE_EVALUATION_ARENA_MODELS
       value: "False"
     - name: DEFAULT_USER_ROLE
-      value: "user"
+      value: user
     - name: ENABLE_API_KEY
       value: "False"
-  service:
-    type: *serviceType
-    nodePort: "30160"
+  #  open-webui.initialize --
   initialize:
-    enabled: true
-    image: smartcommunitylab/k8s-ansible-clusterctl:1.32.5-1.10.1
+    #  open-webui.initialize.admin --
     admin:
-      username: test@test.local
-      password: Test12456@!
+      #  open-webui.initialize.admin.existingSecret --
       existingSecret:
+        #  open-webui.initialize.admin.existingSecret.name --
         name: ""
-        usernameKey: ""
+        #  open-webui.initialize.admin.existingSecret.passwordKey --
         passwordKey: ""
+        #  open-webui.initialize.admin.existingSecret.usernameKey --
+        usernameKey: ""
+      #  open-webui.initialize.admin.password --
+      password: Test12456@!
+      #  open-webui.initialize.admin.username --
+      username: test@test.local
+    #  open-webui.initialize.enabled --
+    enabled: true
+    #  open-webui.initialize.image --
+    image: smartcommunitylab/k8s-ansible-clusterctl:1.32.5-1.10.1
+  #  open-webui.ollama --
+  ollama:
+    #  open-webui.ollama.enabled --
+    enabled: false
+  #  open-webui.openaiBaseApiUrl --
+  openaiBaseApiUrl: http://kubeai/openai/v1
+  #  open-webui.pipelines --
+  pipelines:
+    #  open-webui.pipelines.enabled --
+    enabled: false
+  #  open-webui.service --
+  service:
+    #  open-webui.service.nodePort --
+    nodePort: "30160"
+    #  open-webui.service.type --
+    type: NodePort
+
+#  platformPackages --
+platformPackages:
+  #  platformPackages.deleteOnCompletion --
+  deleteOnCompletion: true
+  #  platformPackages.image --
+  image: ""
+  #  platformPackages.packages --
+  packages:
+    - name: digitalhub[full]
+      tag: 0.11.0
+    - name: digitalhub-runtime-python
+      tag: 0.11.0
+    - name: digitalhub-runtime-container
+      tag: 0.11.0
+    - name: digitalhub-runtime-dbt
+      tag: 0.11.0
+    - name: digitalhub-runtime-kfp
+      tag: 0.11.0
+    - name: digitalhub-runtime-modelserve
+      tag: 0.11.0
+  #  platformPackages.preRelease --
+  preRelease: false
+  #  platformPackages.tag --
+  tag: ""
+
+#  postgres-operator --
+postgres-operator:
+  #  postgres-operator.databases --
+  databases:
+    #  postgres-operator.databases.coder --
+    coder:
+      #  postgres-operator.databases.coder.enabled --
+      enabled: true
+      #  postgres-operator.databases.coder.resources --
+      resources:
+        #  postgres-operator.databases.coder.resources.limits --
+        limits:
+          #  postgres-operator.databases.coder.resources.limits.cpu --
+          cpu: "2"
+          #  postgres-operator.databases.coder.resources.limits.memory --
+          memory: 2Gi
+        #  postgres-operator.databases.coder.resources.requests --
+        requests:
+          #  postgres-operator.databases.coder.resources.requests.cpu --
+          cpu: 512m
+          #  postgres-operator.databases.coder.resources.requests.memory --
+          memory: 1000Mi
+      #  postgres-operator.databases.coder.volume --
+      volume:
+        #  postgres-operator.databases.coder.volume.size --
+        size: 8Gi
+    #  postgres-operator.databases.core --
+    core:
+      #  postgres-operator.databases.core.enabled --
+      enabled: true
+      #  postgres-operator.databases.core.resources --
+      resources:
+        #  postgres-operator.databases.core.resources.limits --
+        limits:
+          #  postgres-operator.databases.core.resources.limits.cpu --
+          cpu: "2"
+          #  postgres-operator.databases.core.resources.limits.memory --
+          memory: 2Gi
+        #  postgres-operator.databases.core.resources.requests --
+        requests:
+          #  postgres-operator.databases.core.resources.requests.cpu --
+          cpu: 512m
+          #  postgres-operator.databases.core.resources.requests.memory --
+          memory: 1000Mi
+      #  postgres-operator.databases.core.volume --
+      volume:
+        #  postgres-operator.databases.core.volume.size --
+        size: 8Gi
+    #  postgres-operator.databases.digitalhub --
+    digitalhub:
+      #  postgres-operator.databases.digitalhub.enabled --
+      enabled: true
+      #  postgres-operator.databases.digitalhub.resources --
+      resources:
+        #  postgres-operator.databases.digitalhub.resources.limits --
+        limits:
+          #  postgres-operator.databases.digitalhub.resources.limits.cpu --
+          cpu: "2"
+          #  postgres-operator.databases.digitalhub.resources.limits.memory --
+          memory: 2Gi
+        #  postgres-operator.databases.digitalhub.resources.requests --
+        requests:
+          #  postgres-operator.databases.digitalhub.resources.requests.cpu --
+          cpu: 512m
+          #  postgres-operator.databases.digitalhub.resources.requests.memory --
+          memory: 1000Mi
+      #  postgres-operator.databases.digitalhub.volume --
+      volume:
+        #  postgres-operator.databases.digitalhub.volume.size --
+        size: 8Gi
+  #  postgres-operator.enabled --
+  enabled: true
+  #  postgres-operator.securityContext --
+  securityContext:
+    #  postgres-operator.securityContext.allowPrivilegeEscalation --
+    allowPrivilegeEscalation: false
+    #  postgres-operator.securityContext.capabilities --
+    capabilities:
+      #  postgres-operator.securityContext.capabilities.drop --
+      drop:
+        - ALL
+    #  postgres-operator.securityContext.runAsNonRoot --
+    runAsNonRoot: true
+    #  postgres-operator.securityContext.seccompProfile --
+    seccompProfile:
+      #  postgres-operator.securityContext.seccompProfile.type --
+      type: RuntimeDefault
+
+#  postgrest-operator --
+postgrest-operator:
+  #  postgrest-operator.enabled --
+  enabled: true
+  #  postgrest-operator.postgres --
+  postgres:
+    #  postgrest-operator.postgres.default_database --
+    default_database: digitalhub
+    #  postgrest-operator.postgres.host --
+    host: database-postgres-cluster
+    #  postgrest-operator.postgres.port --
+    port: 5432
+    #  postgrest-operator.postgres.postgrest_service_type --
+    postgrest_service_type: NodePort
+    #  postgrest-operator.postgres.uri_args --
+    uri_args: sslmode=disable
+  #  postgrest-operator.postgresCredsExistingSecrets --
+  postgresCredsExistingSecrets:
+    #  postgrest-operator.postgresCredsExistingSecrets.password --
+    password:
+      #  postgrest-operator.postgresCredsExistingSecrets.password.secretKey --
+      secretKey: password
+      #  postgrest-operator.postgresCredsExistingSecrets.password.secretName --
+      secretName: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+    #  postgrest-operator.postgresCredsExistingSecrets.username --
+    username:
+      #  postgrest-operator.postgresCredsExistingSecrets.username.secretKey --
+      secretKey: username
+      #  postgrest-operator.postgresCredsExistingSecrets.username.secretName --
+      secretName: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+
+#  securityContext --
+securityContext:
+  #  securityContext.enabled --
+  enabled: true
+  #  securityContext.runAsNonRoot --
+  runAsNonRoot: true
+  #  securityContext.seccompProfile --
+  seccompProfile:
+    #  securityContext.seccompProfile.type --
+    type: RuntimeDefault
+
+#  solr --
+solr:
+  #  solr.creds --
+  creds:
+    #  solr.creds.admin --
+    admin:
+      #  solr.creds.admin.password --
+      password: thi4iegheeX7euthe7di
+      #  solr.creds.admin.passwordSha --
+      passwordSha: C8QrTZf6jpu+cPKTsLtyEhv1XVXAYZGmStTKXzB80sg= MW5pNXZlaGIyaWhkdW5w
+    #  solr.creds.k8sOper --
+    k8sOper:
+      #  solr.creds.k8sOper.password --
+      password: imPBf@tU(asx9%TZ
+      #  solr.creds.k8sOper.passwordSha --
+      passwordSha: 3iPc1JWet22a05UZXCFfo/qRUqwg2iVULyv5RBEqPdM= LSpnG/l2j8AA9vrryMGkkFLO+bYeN7ZUvrU270WAfyA=
+    #  solr.creds.solr --
+    solr:
+      #  solr.creds.solr.password --
+      password: aed0ohBie3hai6jo7sho
+      #  solr.creds.solr.passwordSha --
+      passwordSha: i61TpZKyvff3CHnyZ0kMTzkNezkxkilCre93wLkz7jQ= NzlyN3k1cm0xZGt3eWR1MA==
+    #  solr.creds.user --
+    user:
+      #  solr.creds.user.password --
+      password: soogh8aiy6vah6Aecai6
+      #  solr.creds.user.passwordSha --
+      passwordSha: ps9jK0qKXJqZawtFS+SxhB2CdCu90Qgz4riZ0XwzYd4= YWxxZXV3enB1YmE2c2gwdg==
+  #  solr.dataStorage --
+  dataStorage:
+    #  solr.dataStorage.capacity --
+    capacity: 10Gi
+    #  solr.dataStorage.persistent --
+    persistent:
+      #  solr.dataStorage.persistent.pvc --
+      pvc:
+        #  solr.dataStorage.persistent.pvc.annotations --
+        annotations: {}
+        #  solr.dataStorage.persistent.pvc.labels --
+        labels: {}
+        #  solr.dataStorage.persistent.pvc.name --
+        name: ""
+        #  solr.dataStorage.persistent.pvc.storageClassName --
+        storageClassName: ""
+      #  solr.dataStorage.persistent.reclaimPolicy --
+      reclaimPolicy: Delete
+    #  solr.dataStorage.type --
+    type: ephemeral
+  #  solr.enabled --
+  enabled: true
+  #  solr.fullnameOverride --
+  fullnameOverride: digitalhub
+  #  solr.image --
+  image:
+    #  solr.image.repository --
+    repository: solr
+    #  solr.image.tag --
+    tag: "9.7"
+  #  solr.podOptions --
+  podOptions:
+    #  solr.podOptions.containerSecurityContext --
+    containerSecurityContext:
+      #  solr.podOptions.containerSecurityContext.allowPrivilegeEscalation --
+      allowPrivilegeEscalation: false
+      #  solr.podOptions.containerSecurityContext.capabilities --
+      capabilities:
+        #  solr.podOptions.containerSecurityContext.capabilities.drop --
+        drop:
+          - ALL
+      #  solr.podOptions.containerSecurityContext.seccompProfile --
+      seccompProfile:
+        #  solr.podOptions.containerSecurityContext.seccompProfile.type --
+        type: RuntimeDefault
+    #  solr.podOptions.podSecurityContext --
+    podSecurityContext:
+      #  solr.podOptions.podSecurityContext.seccompProfile --
+      seccompProfile:
+        #  solr.podOptions.podSecurityContext.seccompProfile.type --
+        type: RuntimeDefault
+  #  solr.replicas --
+  replicas: 1
+  #  solr.solrOptions --
+  solrOptions:
+    #  solr.solrOptions.security --
+    security:
+      #  solr.solrOptions.security.authenticationType --
+      authenticationType: Basic
+      #  solr.solrOptions.security.basicAuthSecret --
+      basicAuthSecret: digitalhub-solrcloud-basic-auth
+      #  solr.solrOptions.security.bootstrapSecurityJson --
+      bootstrapSecurityJson:
+        #  solr.solrOptions.security.bootstrapSecurityJson.key --
+        key: security.json
+        #  solr.solrOptions.security.bootstrapSecurityJson.name --
+        name: digitalhub-solrcloud-security-bootstrap
+      #  solr.solrOptions.security.probesRequireAuth --
+      probesRequireAuth: true
+  #  solr.useExistingSecurityJson --
+  useExistingSecurityJson: false
+
+#  solr-operator --
+solr-operator:
+  #  solr-operator.enabled --
+  enabled: true
+  #  solr-operator.securityContext --
+  securityContext:
+    #  solr-operator.securityContext.allowPrivilegeEscalation --
+    allowPrivilegeEscalation: false
+    #  solr-operator.securityContext.capabilities --
+    capabilities:
+      #  solr-operator.securityContext.capabilities.drop --
+      drop:
+        - ALL
+    #  solr-operator.securityContext.runAsNonRoot --
+    runAsNonRoot: true
+    #  solr-operator.securityContext.seccompProfile --
+    seccompProfile:
+      #  solr-operator.securityContext.seccompProfile.type --
+      type: RuntimeDefault
+  #  solr-operator.zookeeper-operator --
+  zookeeper-operator:
+    #  solr-operator.zookeeper-operator.crd --
+    crd:
+      #  solr-operator.zookeeper-operator.crd.create --
+      create: true
+
+#  template-controller --
+template-controller:
+  #  template-controller.enabled --
+  enabled: true
+  #  template-controller.objectTemplate --
+  objectTemplate:
+    #  template-controller.objectTemplate.enabled --
+    enabled: true
+  #  template-controller.podSecurityContext --
+  podSecurityContext:
+    #  template-controller.podSecurityContext.runAsNonRoot --
+    runAsNonRoot: true
+    #  template-controller.podSecurityContext.seccompProfile --
+    seccompProfile:
+      #  template-controller.podSecurityContext.seccompProfile.type --
+      type: RuntimeDefault
+  #  template-controller.securityContext --
+  securityContext:
+    #  template-controller.securityContext.allowPrivilegeEscalation --
+    allowPrivilegeEscalation: false
+    #  template-controller.securityContext.capabilities --
+    capabilities:
+      #  template-controller.securityContext.capabilities.drop --
+      drop:
+        - ALL
+    #  template-controller.securityContext.runAsNonRoot --
+    runAsNonRoot: true
+    #  template-controller.securityContext.seccompProfile --
+    seccompProfile:
+      #  template-controller.securityContext.seccompProfile.type --
+      type: RuntimeDefault

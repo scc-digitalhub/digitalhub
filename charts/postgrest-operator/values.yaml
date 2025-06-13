@@ -1,71 +1,60 @@
-# Default values for postgrest-operator.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+#  affinity -- Affinity for pod assignment.
+## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity:
+  #  affinity.nodeAffinity -- Constrain which nodes your Pod can be scheduled on based on node labels.
+  nodeAffinity:
+    #  affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution -- The scheduler can't schedule the Pod unless the rule is met. This functions like nodeSelector, but with a more expressive syntax.
+    requiredDuringSchedulingIgnoredDuringExecution:
+      #  affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms -- Kubernetes only schedules the Pod onto nodes that have each of the labels you specify.
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+                - amd64
+            - key: kubernetes.io/os
+              operator: In
+              values:
+                - linux
 
-# Values affecting the namespace
-namespaceValues:
-  namespaced: true
-  namespace: ""
+#  autoscaling -- Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.
+autoscaling:
+  #  autoscaling.enabled -- Enable horizontal scaling
+  enabled: false
+  #  autoscaling.maxReplicas -- Set max replicas for autoscaling
+  maxReplicas: 100
+  #  autoscaling.minReplicas -- Set min replicas for autoscaling
+  minReplicas: 1
+  #  autoscaling.targetCPUUtilizationPercentage -- Set CPU utilization percentage that trigger the autoscaling 
+  targetCPUUtilizationPercentage: 80
 
-# Secret containing the postgrest url
-postgrestString:
-  existingSecret: ""
-  databaseUrlKey: ""
-
-# Secret containing username and password of postgres
-postgresCredsExistingSecrets:
-  username:
-    secretName: ""
-    secretKey: ""
-  password:
-    secretName: ""
-    secretKey: ""
-
-# Credentials used for the postgres connection
-postgresCreds:
-  username: username
-  password: password
-
-# Values used for builnding the postgres uri
-postgres:
-  host: localhost
-  uri_args: sslmode=disable
-  port: 5432
-  default_database: postgres
-  postgrest_image: postgrest/postgrest
-  postgrest_image_tag: v11.1.0
-  postgrest_service_type: ClusterIP
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-# Values for the deployment
+#  deployment -- Set containers properties
 deployment:
-  replicaCount: 1
-  podSecurityContext:
-    runAsNonRoot: true
-    seccompProfile:
-      type: "RuntimeDefault"
+  #  deployment.image -- Pod image configuration
   image:
+    #  deployment.image.pullPolicy -- Pod image pullPolicy applied to all containers
     pullPolicy: IfNotPresent
+  #  deployment.kubeRbacProxy -- DEPRECATED Kube-rbac-proxy secures /metrics endpoint as a manager sidecar, using the service account token mounted into the Pod by default corrects this problem.
   kubeRbacProxy:
-    name: kube-rbac-proxy
-    securityContext:
-      runAsNonRoot: true
-      seccompProfile:
-        type: "RuntimeDefault"
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-      readOnlyRootFilesystem: true
+    #  deployment.kubeRbacProxy.args -- DEPRECATED kube-rbac-proxy configure additional arguments to pass to kube-rbac-proxy sidecar container.
+    args:
+      - "--secure-listen-address=0.0.0.0:8443"
+      - "--upstream=http://127.0.0.1:8080/"
+      - "--logtostderr=true"
+      - "--v=0"
+    #  deployment.kubeRbacProxy.image -- DEPRECATED kube-rbac-proxy container image configuration.
     image:
+      #  deployment.kubeRbacProxy.image.repository -- DEPRECATED kube-rbac-proxy container image repository.
       repository: gcr.io/kubebuilder/kube-rbac-proxy
-      # Overrides the image tag whose default is the chart appVersion.
+      #  deployment.kubeRbacProxy.image.tag -- DEPRECATED kube-rbac-proxy container image tag.
       tag: v0.13.1
+    #  deployment.kubeRbacProxy.name -- DEPRECATED kube-rbac-proxy container name.
+    name: kube-rbac-proxy
+    #  deployment.kubeRbacProxy.ports -- DEPRECATED kube-rbac-proxy container port.
     ports:
+      #  deployment.kubeRbacProxy.ports.containerPort -- DEPRECATED kube-rbac-proxy container port.
       containerPort: 8443
+    #  deployment.kubeRbacProxy.resources -- DEPRECATED kube-rbac-proxy container resource requests and limits.
     resources:
       limits:
         cpu: 500m
@@ -73,95 +62,170 @@ deployment:
       requests:
         cpu: 5m
         memory: 64Mi
-    args:
-    - --secure-listen-address=0.0.0.0:8443
-    - --upstream=http://127.0.0.1:8080/
-    - --logtostderr=true
-    - --v=0
-  manager:
-    name: manager
+    #  deployment.kubeRbacProxy.securityContext -- DEPRECATED kube-rbac-proxy [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
     securityContext:
-      runAsNonRoot: true
-      seccompProfile:
-        type: "RuntimeDefault"
+      #  deployment.kubeRbacProxy.securityContext.allowPrivilegeEscalation -- DEPRECATED kube-rbac-proxy container allow privilege escalation.
       allowPrivilegeEscalation: false
+      #  deployment.kubeRbacProxy.securityContext.capabilities -- DEPRECATED kube-rbac-proxy container configure capabilities.
       capabilities:
+        #  deployment.kubeRbacProxy.securityContext.capabilities.drop -- DEPRECATED kube-rbac-proxy container drop capabilities.
         drop:
-        - ALL
+          - ALL
+      #  deployment.kubeRbacProxy.securityContext.readOnlyRootFilesystem -- DEPRECATED kube-rbac-proxy container read only filesystem
+      readOnlyRootFilesystem: true
+      #  deployment.kubeRbacProxy.securityContext.runAsNonRoot --
+      runAsNonRoot: true
+      #  deployment.kubeRbacProxy.securityContext.seccompProfile -- DEPRECATED kube-rbac-proxy container configure seccompProfile.
+      seccompProfile:
+        #  deployment.kubeRbacProxy.securityContext.seccompProfile.type --  DEPRECATED kube-rbac-proxy container configure seccompProfile type.
+        type: RuntimeDefault
+  #  deployment.manager -- Manager container is responsible to reconcile minio-operator CR.
+  manager:
+    #  deployment.manager.args -- Manager configure additional arguments
+    args:
+      - "--health-probe-bind-address=:8081"
+      - "--metrics-bind-address=127.0.0.1:8080"
+      - "--leader-elect"
+    #  deployment.manager.command -- Ovveride image entrypoint
+    command:
+      - /manager
+    #  deployment.manager.image -- Manager container image configuration.
     image:
+      #  deployment.manager.image.repository -- Manager container image repository.
       repository: ghcr.io/scc-digitalhub/postgrest-operator
-      # Overrides the image tag whose default is the chart appVersion.
+      #  deployment.manager.image.tag -- Manager container image tag.
       tag: ""
+    #  deployment.manager.name -- Manager container name.
+    name: manager
+    #  deployment.manager.resources -- Manager container resource requests and limits.
     resources:
       limits:
         cpu: 500m
-        memory: 128Mi
+        memory: 512Mi
       requests:
         cpu: 10m
         memory: 64Mi
-    args:
-    - --health-probe-bind-address=:8081
-    - --metrics-bind-address=127.0.0.1:8080
-    - --leader-elect
-    command:
-    - /manager
+    #  deployment.manager.securityContext -- Manager [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+    securityContext:
+      #  deployment.manager.securityContext.allowPrivilegeEscalation -- Manager container allow privilege escalation
+      allowPrivilegeEscalation: false
+      #  deployment.manager.securityContext.capabilities -- Manager container configure capabilities.
+      capabilities:
+        #  deployment.manager.securityContext.capabilities.drop -- Manager container drop capabilities.
+        drop:
+          - ALL
+      #  deployment.manager.securityContext.runAsNonRoot -- Manager container allow run as root.
+      runAsNonRoot: true
+      #  deployment.manager.securityContext.seccompProfile -- Manager container configure seccompProfile.
+      seccompProfile:
+        #  deployment.manager.securityContext.seccompProfile.type -- Manager container configure seccompProfile.
+        type: RuntimeDefault
+  #  deployment.podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+  podSecurityContext:
+    #  deployment.podSecurityContext.runAsNonRoot -- Pod allow run as root.
+    runAsNonRoot: true
+    #  deployment.podSecurityContext.seccompProfile -- Pod configure seccompProfile.
+    seccompProfile:
+      #  deployment.podSecurityContext.seccompProfile.type -- Pod configure seccompProfile type.
+      type: RuntimeDefault
+  #  deployment.replicaCount -- Desired number of pods.
+  replicaCount: 1
 
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Automatically mount a ServiceAccount's API credentials?
-  automount: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: "postgrest-operator-controller-manager"
+#  fullnameOverride -- String to fully override `postgrest-operator.fullname` template.
+fullnameOverride: ""
 
+#  imagePullSecrets -- Image pull secrets
+#  Optionally specify an array of imagePullSecrets.
+#  Secrets must be manually created in the namespace.
+#  ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+
+#  nameOverride -- String to partially override `postgrest-operator.fullname` template (will maintain the release name)
+nameOverride: ""
+
+#  namespaceValues -- Configure operator scope clusterwide or namespaced.
+namespaceValues:
+  #  namespaceValues.namespace -- Namespace name where operator watch for CR.
+  namespace: ""
+  #  namespaceValues.namespaced -- Enable/Disable Cluster wide mode.
+  namespaced: true
+
+#  nodeSelector -- Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/.
+nodeSelector: {}
+
+#  podAnnotations -- Annotations to add to each pod.
 podAnnotations:
   kubectl.kubernetes.io/default-container: manager
+
+#  podLabels -- Labels to add to each pod.
 podLabels:
   control-plane: controller-manager
 
+#  postgres -- Postgres instance configuration
+postgres:
+  #  postgres.default_database -- Default postgres database name
+  default_database: postgres
+  #  postgres.host -- Postgres server host
+  host: localhost
+  #  postgres.port -- Postgres server port
+  port: 5432
+  #  postgres.postgrest_image -- Postgrest image url
+  postgrest_image: postgrest/postgrest
+  #  postgres.postgrest_image_tag -- Postgrest image tag
+  postgrest_image_tag: v11.1.0
+  #  postgres.postgrest_service_type -- Postgrest service type
+  postgrest_service_type: ClusterIP
+  #  postgres.uri_args -- Postgrest additional arguments
+  uri_args: sslmode=disable
+
+#  postgresCreds -- Postgres root credentials
+postgresCreds:
+  #  postgresCreds.password -- Postgres root password
+  password: password
+  #  postgresCreds.username -- Postgres root password
+  username: username
+
+#  postgresCredsExistingSecrets -- Use existing secret for postgres server credentials
+postgresCredsExistingSecrets:
+  password:
+    #  postgresCredsExistingSecrets.password.secretKey -- Password secret key
+    secretKey: ""
+    #  postgresCredsExistingSecrets.password.secretName -- Password secret name
+    secretName: ""
+  username:
+    #  postgresCredsExistingSecrets.username.secretKey -- Username secret key
+    secretKey: ""
+    #  postgresCredsExistingSecrets.username.secretName -- Username secret name
+    secretName: ""
+
+#  postgrestString -- Use connection uri (postgres[ql]://[username[:password]@][host[:port],]/database[?parameter_list])
+postgrestString:
+  #  postgrestString.databaseUrlKey -- URI secret key
+  databaseUrlKey: ""
+  #  postgrestString.existingSecret -- URI secret name
+  existingSecret: ""
+
+#  service --
 service:
+  #  service.port -- Service port.
   port: 8443
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+#  serviceAccount --
+serviceAccount:
+  #  serviceAccount.annotations -- Additional Service Account annotations.
+  annotations: {}
+  #  serviceAccount.automount -- Automount API credentials for a Service Account.
+  automount: true
+  #  serviceAccount.create -- If `true` a Service Account will be created.
+  create: true
+  #  serviceAccount.name -- Service account name.
+  name: postgrest-operator-controller-manager
 
-# Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
-
-# Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
-
-nodeSelector: {}
-
+#  tolerations -- List of node taints to tolerate (requires Kubernetes >= 1.6).
 tolerations: []
 
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/arch
-          operator: In
-          values:
-          - amd64
-          - arm64
-          - ppc64le
-          - s390x
-        - key: kubernetes.io/os
-          operator: In
-          values:
-          - linux
+#  volumeMounts -- Additional volumes.
+volumeMounts: []
+
+#  volumes -- Additional volumes to mount.
+volumes: []
