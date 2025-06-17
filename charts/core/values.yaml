@@ -16,7 +16,7 @@ additionalConfig:
     deadline: "604800"
     #  additionalConfig.job.jobSuspend -- Suspend jobs
     jobSuspend: false
-  #  additionalConfig.resources -- Resources for the pods created by COre
+  #  additionalConfig.resources -- Resources for the pods created by Core
   resources:
     #  additionalConfig.resources.cpuLim -- CPU limit
     cpuLim: ""
@@ -47,7 +47,6 @@ affinity: {}
 #  argoWorkflow -- Argoworkflow configuration
 argoWorkflow:
   #  argoWorkflow.configmap -- Name of the configmap containing the artifact repositories that the Argo Workflows should use
-  #  test test
   configmap: artifact-repositories
   #  argoWorkflow.key -- Key of the artifact repository in the configmap
   key: default-artifact-repository
@@ -210,7 +209,7 @@ keystore:
 
 #  kubeai --
 kubeai:
-  #  kubeai.enabled -- Enable/disable KubeAI
+  #  kubeai.enabled -- Enable/Disable KubeAI
   enabled: true
   #  kubeai.port -- KubeAi port
   port: ""
@@ -251,15 +250,15 @@ postgres:
   credentials:
     #  postgres.credentials.existingSecret --
     existingSecret:
-      #  postgres.credentials.existingSecret.name -- Secret containing the Core database admin user credentials
+      #  postgres.credentials.existingSecret.name -- Secret containing the Core database user credentials
       name: ""
-      #  postgres.credentials.existingSecret.passwordKey -- Core db admin password key
+      #  postgres.credentials.existingSecret.passwordKey -- Core db user password key
       passwordKey:
-      #  postgres.credentials.existingSecret.usernameKey -- Core db admin username key
+      #  postgres.credentials.existingSecret.usernameKey -- Core db user username key
       usernameKey:
-    #  postgres.credentials.password -- Core db admin password
+    #  postgres.credentials.password -- Core db user password
     password: ""
-    #  postgres.credentials.username -- Core db admin username
+    #  postgres.credentials.username -- Core db user username
     username: ""
   #  postgres.database -- Name of the Core database
   database: ""
@@ -328,8 +327,6 @@ runtime:
 
 #  s3 --
 s3:
-  # s3.enabled -- Enable this option if you have an S3 deployment that you want to use with Core
-  enabled: false
   #  s3.accessKey -- Explicit declaration of the Access key of your S3 instance.
   #  It has lower priority than the corresponding secret values.
   accessKey: ""
@@ -339,6 +336,8 @@ s3:
   dynamicCreds:
     #  s3.dynamicCreds.enabled -- Set this to true if you want to use dynamic credentials for S3 communication
     enabled: false
+  # s3.enabled -- Enable this option if you have an S3 deployment that you want to use with Core
+  enabled: false
   #  s3.endpoint -- Endpoint of your S3 instance
   endpoint: ""
   #  s3.existingSecret -- Reference to the secret containing AccessKey and Secret key of your S3 instance.
@@ -348,7 +347,7 @@ s3:
     accessKeyKey: ""
     #  s3.existingSecret.name -- Secret containing accessKey and secretKey of your s3 instance
     name: ""
-    #  s3.existingSecret.secretKeyKey -- Key corresponding to your secretKey in your secret 
+    #  s3.existingSecret.secretKeyKey -- Key corresponding to your secretKey in your secret
     secretKeyKey: ""
   #  s3.port -- Port of your S3 instance
   port: ""
@@ -412,7 +411,7 @@ solr:
       securityJsonSecret: ""
     #  solr.collection.name -- Name of the Solr collection
     name: ""
-  #  solr.enabled -- Set this value to true this value if you want to use Core with Solr
+  #  solr.enabled -- Set this value to true if you want to use Core with Solr
   enabled: false
   #  solr.fullNameOverride --
   fullNameOverride: ""
@@ -451,9 +450,10 @@ sts:
       name: ""
   #  sts.credentials --
   credentials:
-    #  sts.credentials.roles -- Roles that will be mapped to the user for Database operations. Must correspond to the owner user of the Platform's main database.
+    #  sts.credentials.roles -- Roles that will be mapped to the user for Database operations.
+    #  Must correspond to the owner user of the Platform's main database.
     roles: ""
-  #  sts.databaseProvider -- Values for the Platform's main database
+  #  sts.databaseProvider -- Values of the Platform's main database
   databaseProvider:
     #  sts.databaseProvider.credentials -- Credentials of the Platform's main database
     credentials:
@@ -533,7 +533,7 @@ sts:
       memory: 128Mi
   #  sts.securityContext -- STS [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
   securityContext:
-    #  sts.securityContext.allowPrivilegeEscalation -- STS allow privilege escalation
+    #  sts.securityContext.allowPrivilegeEscalation -- STS container allow privilege escalation
     allowPrivilegeEscalation: false
     #  sts.securityContext.capabilities -- STS container configure capabilities
     capabilities:
