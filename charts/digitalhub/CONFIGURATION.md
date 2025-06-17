@@ -6,9 +6,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 ## Values
 
-## Values
-
-<table height="400px" >
+<table>
 	<thead>
 		<th>Key</th>
 		<th>Type</th>
@@ -24,13 +22,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -56,8 +55,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "artifactRepositoryRef": {
     "artifact-repositories": {
@@ -128,8 +128,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -141,8 +141,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "artifact-repositories": {
     "annotations": {
@@ -166,8 +167,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -179,8 +180,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "annotations": {
     "workflows.argoproj.io/default-artifact-repository": "artifact-repository"
@@ -202,8 +204,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -215,13 +217,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "workflows.argoproj.io/default-artifact-repository": "artifact-repository"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -233,8 +236,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "archiveLogs": false,
   "s3": {
@@ -251,8 +255,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -278,8 +282,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "accessKeySecret": {
     "key": "accesskey",
@@ -293,8 +298,8 @@ object
     "name": "argo-minio-creds"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -306,14 +311,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "key": "accesskey",
   "name": "argo-minio-creds"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -395,14 +401,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "key": "secretkey",
   "name": "argo-minio-creds"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -442,8 +449,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "configMap": {
     "create": true
@@ -475,8 +483,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -488,13 +496,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "create": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -520,16 +529,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "runAsNonRoot": true,
   "seccompProfile": {
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -555,13 +565,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -587,8 +598,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -601,8 +613,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -628,15 +640,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -648,13 +661,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -680,13 +694,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -712,13 +727,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "name": "argo-workflow-controller"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -744,15 +760,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "spec": {
     "serviceAccountName": "argo-workflow"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -764,13 +781,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "serviceAccountName": "argo-workflow"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -796,13 +814,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "install": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -842,13 +861,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -888,16 +908,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "serviceAccount": {
     "create": true,
     "name": "argo-workflow"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -909,14 +930,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "create": true,
   "name": "argo-workflow"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -956,8 +978,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "coder": {
     "env": [
@@ -1095,8 +1118,8 @@ object
   },
   "username": "test"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1108,8 +1131,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "env": [
     {
@@ -1154,8 +1178,8 @@ object
     "type": "NodePort"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1167,8 +1191,9 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "name": "CODER_TELEMETRY",
@@ -1201,8 +1226,8 @@ list
     "value": "false"
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1214,13 +1239,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "tag": "v2.21.3"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1246,13 +1272,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enable": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1278,14 +1305,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "httpNodePort": "30170",
   "type": "NodePort"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1367,8 +1395,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -1381,8 +1410,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1408,15 +1437,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1428,13 +1458,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1460,13 +1491,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1492,8 +1524,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "customTemplates": [
     {
@@ -1569,8 +1602,8 @@ object
     "token": ""
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1582,8 +1615,9 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "extraVars": [],
@@ -1653,8 +1687,8 @@ list
     "stopAfter": "0h"
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1666,14 +1700,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false,
   "token": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1727,8 +1762,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -1742,8 +1778,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1769,15 +1805,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1789,13 +1826,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1835,13 +1873,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1867,8 +1906,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "additionalConfig": {
     "debug": {
@@ -2009,8 +2049,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2022,8 +2062,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "debug": {
     "enableLogs": true,
@@ -2042,8 +2083,8 @@ object
     "disableRoot": true
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2055,14 +2096,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enableLogs": true,
   "enableMetrics": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2102,8 +2144,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpuLim": "",
   "cpuReq": "100m",
@@ -2113,8 +2156,8 @@ object
   "pvcLim": "",
   "pvcReq": "2Gi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2224,13 +2267,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "disableRoot": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2256,16 +2300,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "configmap": "artifact-repositories",
   "key": "artifact-repository",
   "serviceAccount": "argo-workflow",
   "user": "8877"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2333,15 +2378,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "openId": {
     "enabled": false
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2353,13 +2399,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2385,14 +2432,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "clientId": "m04bfbmd03m8sf4u9ucz54ti",
   "clientSecret": "9rb5215z0aqd7fadzxuoyqe3"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2432,8 +2480,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "database": "digitalhub",
   "host": "database-postgres-cluster",
@@ -2441,8 +2490,8 @@ object
   "port": "5432",
   "schema": "public"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2552,15 +2601,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "port": "80",
   "serviceName": "kubeai"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2614,8 +2664,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "credentials": {
     "existingSecret": {
@@ -2631,8 +2682,8 @@ object
   "port": "5432",
   "schema": "public"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2644,8 +2695,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "existingSecret": {
     "name": "coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do",
@@ -2655,8 +2707,8 @@ object
   "password": "",
   "username": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2668,15 +2720,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "name": "coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do",
   "passwordKey": "password",
   "usernameKey": "username"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2814,8 +2867,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "accessKey": "",
   "bucket": "datalake",
@@ -2834,8 +2888,8 @@ object
   "region": "us-west-1",
   "secretKey": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2875,13 +2929,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2921,15 +2976,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "accessKeyKey": "digitalhubUser",
   "name": "digitalhub-minio-creds",
   "secretKeyKey": "digitalhubPassword"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3053,14 +3109,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "httpNodePort": "30180",
   "type": "NodePort"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3100,8 +3157,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "collection": {
     "initialize": {
@@ -3116,8 +3174,8 @@ object
   "url": "http://digitalhub-solrcloud-common/solr",
   "user": "user"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3129,8 +3187,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "initialize": {
     "enabled": true,
@@ -3139,8 +3198,8 @@ object
   },
   "name": "dhcore"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3152,15 +3211,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "image": "smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot",
   "securityJsonSecret": "digitalhub-solrcloud-security-bootstrap"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3284,8 +3344,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "client": {
     "clientId": "",
@@ -3326,8 +3387,8 @@ object
     "schema": "public"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3339,14 +3400,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "clientId": "",
   "clientSecret": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3386,13 +3448,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "roles": "digitalhub_owner_user"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3418,8 +3481,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "credentials": {
     "existingSecret": {
@@ -3432,8 +3496,8 @@ object
   },
   "enabled": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3445,8 +3509,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "existingSecret": {
     "name": "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do",
@@ -3456,8 +3521,8 @@ object
   "password": "",
   "username": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3469,15 +3534,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "name": "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do",
   "passwordKey": "password",
   "usernameKey": "username"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3587,13 +3653,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "issuerUri": "http://digitalhub-core:8080"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3619,8 +3686,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "credentials": {
     "existingSecret": {
@@ -3636,8 +3704,8 @@ object
   "port": "5432",
   "schema": "public"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3649,8 +3717,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "existingSecret": {
     "name": "stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do",
@@ -3658,8 +3727,8 @@ object
     "usernameKey": "username"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3671,15 +3740,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "name": "stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do",
   "passwordKey": "password",
   "usernameKey": "username"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3817,8 +3887,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "additional-components": {
     "apps": [
@@ -3949,8 +4020,8 @@ object
   "tolerations": [],
   "volumes": null
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3962,8 +4033,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "apps": [
     {
@@ -3992,8 +4064,8 @@ object
   ],
   "enabled": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4005,8 +4077,9 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "description": "",
@@ -4032,8 +4105,8 @@ list
     }
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4059,11 +4132,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4075,16 +4149,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false,
   "maxReplicas": 100,
   "minReplicas": 1,
   "targetCPUUtilizationPercentage": 80
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4166,15 +4241,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "pullPolicy": "IfNotPresent",
   "repository": "ghcr.io/scc-digitalhub/dh-dashboard",
   "tag": "0.1.4"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4228,11 +4304,12 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4244,8 +4321,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "annotations": {},
   "className": "",
@@ -4270,8 +4348,8 @@ object
     }
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4283,11 +4361,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4327,8 +4406,9 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "host": "",
@@ -4340,8 +4420,8 @@ list
     ]
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4353,8 +4433,9 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "hosts": [
@@ -4363,8 +4444,8 @@ list
     "secretName": ""
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4390,11 +4471,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4406,8 +4488,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "audience": {
     "clientId": "",
@@ -4421,8 +4504,8 @@ object
   },
   "enabled": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4434,8 +4517,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "clientId": "",
   "externalSecret": {
@@ -4443,8 +4527,8 @@ object
     "name": ""
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4470,14 +4554,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "key": "",
   "name": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4517,13 +4602,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "issuer": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4563,11 +4649,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4579,11 +4666,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4595,8 +4683,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "fsGroup": 65532,
   "runAsNonRoot": true,
@@ -4605,8 +4694,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4660,13 +4749,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4706,8 +4796,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "limits": {
     "cpu": "1000m",
@@ -4718,8 +4809,8 @@ object
     "memory": "256Mi"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4731,14 +4822,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": "1000m",
   "memory": "512Mi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4778,14 +4870,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": "250m",
   "memory": "256Mi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4825,8 +4918,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -4840,8 +4934,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4867,15 +4961,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4887,13 +4982,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4933,13 +5029,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4965,15 +5062,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "httpNodePort": "30110",
   "port": "8080",
   "type": "NodePort"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5027,16 +5125,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "annotations": {},
   "automount": true,
   "create": true,
   "name": "digitalhub-dashboard"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5048,11 +5147,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5106,11 +5206,12 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5136,8 +5237,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "className": "nginx",
   "enabled": true,
@@ -5162,8 +5264,8 @@ object
     "type": "Recreate"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5217,8 +5319,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false,
   "hosts": [
@@ -5226,8 +5329,8 @@ object
   ],
   "path": "/"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5253,13 +5356,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "registry.digitalhub.test"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5285,15 +5389,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "accessMode": "ReadWriteOnce",
   "enabled": true,
   "size": "128Gi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5347,14 +5452,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "nodePort": 30150,
   "type": "NodePort"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5394,13 +5500,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "Recreate"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5426,13 +5533,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5458,8 +5566,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "image": {
@@ -5495,8 +5604,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5522,13 +5631,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "tag": "1.3.5"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5554,16 +5664,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "runAsNonRoot": true,
   "seccompProfile": {
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5589,13 +5700,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5621,8 +5733,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cloud_provider": "",
   "default_database": "postgres",
@@ -5631,8 +5744,8 @@ object
   "uri_args": " ",
   "user": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5728,8 +5841,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "password": {
     "secretKey": "password",
@@ -5740,8 +5854,8 @@ object
     "secretName": "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5753,14 +5867,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "secretKey": "password",
   "secretName": "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5800,14 +5915,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "secretKey": "username",
   "secretName": "digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5847,15 +5963,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "seccompProfile": {
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5867,13 +5984,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5899,8 +6017,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "basicAuth": {
     "enabled": false,
@@ -5963,8 +6082,8 @@ object
     "fullNameOverride": "digitalhub"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -5976,16 +6095,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false,
   "password": "",
   "secretName": "",
   "username": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6053,8 +6173,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "deployments": false,
   "ingress": false,
@@ -6063,8 +6184,8 @@ object
   "pods": false,
   "statefulsets": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6160,13 +6281,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6220,8 +6342,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "argoBucket": "argo",
   "argoPassword": "argo1234",
@@ -6238,8 +6361,8 @@ object
   "rootUser": "minio",
   "rootUserSecret": "minio"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6447,8 +6570,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "email": "",
   "password": "",
@@ -6456,8 +6580,8 @@ object
   "url": "192.168.49.2:30150",
   "username": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6539,8 +6663,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -6553,8 +6678,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6580,15 +6705,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6600,13 +6726,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6632,13 +6759,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6664,13 +6792,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "NodePort"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6696,13 +6825,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "fullNameOverride": "digitalhub"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6728,8 +6858,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "delete": {
     "securityContext": {
@@ -6737,8 +6868,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6750,15 +6881,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "securityContext": {
     "readOnlyRootFilesystem": true
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6770,13 +6902,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "readOnlyRootFilesystem": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6802,8 +6935,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "crds": {
     "enabled": true
@@ -6822,8 +6956,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6835,13 +6969,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6881,13 +7016,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6913,8 +7049,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": {
     "imageName": "cpu",
@@ -6924,8 +7061,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6937,8 +7074,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "imageName": "cpu",
   "requests": {
@@ -6946,8 +7084,8 @@ object
     "memory": "2Gi"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -6973,14 +7111,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": 1,
   "memory": "2Gi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7020,8 +7159,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "resourceSelectors": {
@@ -7034,8 +7174,8 @@ object
     "type": "NodePort"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7061,15 +7201,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "secrets": {
     "names": "(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7081,13 +7222,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "names": "(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7113,14 +7255,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "nodePort": "30220",
   "type": "NodePort"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7160,8 +7303,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "buckets": [
     {
@@ -7342,8 +7486,8 @@ object
     }
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7355,8 +7499,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "minio": {
@@ -7368,8 +7513,8 @@ object
     "secretKey": "minio123"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7395,8 +7540,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "accessKey": "minio",
   "bucket": "datalake",
@@ -7405,8 +7551,8 @@ object
   "protocol": "http",
   "secretKey": "minio123"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7502,8 +7648,9 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "name": "datalake",
@@ -7516,8 +7663,8 @@ list
     "purge": false
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7529,15 +7676,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "nodePort": 30090,
   "port": 9001,
   "type": "NodePort"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7591,8 +7739,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -7605,8 +7754,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7632,15 +7781,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7652,13 +7802,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7684,13 +7835,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7716,13 +7868,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "Recreate"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7776,13 +7929,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7808,8 +7962,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "containerSecurityContext": {
     "allowPrivilegeEscalation": false,
@@ -7827,8 +7982,8 @@ object
     "enabled": true
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7840,8 +7995,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -7854,8 +8010,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7881,15 +8037,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7901,13 +8058,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7933,13 +8091,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7965,13 +8124,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -7997,8 +8157,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "containerSecurityContext": {
     "allowPrivilegeEscalation": false,
@@ -8016,8 +8177,8 @@ object
     "enabled": true
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8029,8 +8190,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -8043,8 +8205,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8070,15 +8232,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8090,13 +8253,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8122,13 +8286,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8154,13 +8319,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8186,8 +8352,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "containerSecurityContext": {
     "allowPrivilegeEscalation": false,
@@ -8205,8 +8372,8 @@ object
     "enabled": true
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8218,8 +8385,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -8232,8 +8400,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8259,15 +8427,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8279,13 +8448,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8311,13 +8481,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8343,13 +8514,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8389,8 +8561,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "claimName": "",
   "claimPrefix": "",
@@ -8406,8 +8579,8 @@ object
   "redirectUri": "",
   "scopes": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8601,14 +8774,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "size": "128Gi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8648,8 +8822,9 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "name": "readwritedigitalhub",
@@ -8680,8 +8855,8 @@ list
     ]
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8693,8 +8868,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "securityContext": {
     "enabled": true,
@@ -8704,8 +8880,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8717,8 +8893,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "runAsNonRoot": true,
@@ -8726,8 +8903,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8767,13 +8944,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8813,15 +8991,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "requests": {
     "memory": "0.5Gi"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8833,13 +9012,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "memory": "0.5Gi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8893,16 +9073,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "runAsNonRoot": true,
   "seccompProfile": {
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8928,13 +9109,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -8960,15 +9142,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "nodePort": 30080,
   "port": 9000,
   "type": "NodePort"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9022,8 +9205,9 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "accessKey": "digitalhub",
@@ -9036,8 +9220,8 @@ list
     "secretKey": "argo1234"
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9049,13 +9233,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9081,13 +9266,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9113,8 +9299,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "extraEnvVars": [
@@ -9168,8 +9355,8 @@ object
     "type": "NodePort"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9195,8 +9382,9 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "name": "ENABLE_LOGIN_FORM",
@@ -9223,8 +9411,8 @@ list
     "value": "False"
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9236,8 +9424,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "admin": {
     "existingSecret": {
@@ -9251,8 +9440,8 @@ object
   "enabled": true,
   "image": "smartcommunitylab/k8s-ansible-clusterctl:1.32.5-1.10.1"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9264,8 +9453,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "existingSecret": {
     "name": "",
@@ -9275,8 +9465,8 @@ object
   "password": "Test12456@!",
   "username": "test@test.local"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9288,15 +9478,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "name": "",
   "passwordKey": "",
   "usernameKey": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9406,13 +9597,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9452,13 +9644,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9484,14 +9677,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "nodePort": "30160",
   "type": "NodePort"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9531,8 +9725,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "deleteOnCompletion": true,
   "image": "",
@@ -9565,8 +9760,8 @@ object
   "preRelease": false,
   "tag": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9606,8 +9801,9 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "name": "digitalhub[full]",
@@ -9634,8 +9830,8 @@ list
     "tag": "0.11.0"
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9675,8 +9871,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "databases": {
     "coder": {
@@ -9742,8 +9939,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9755,8 +9952,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "coder": {
     "enabled": true,
@@ -9807,8 +10005,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9820,8 +10018,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "resources": {
@@ -9838,8 +10037,8 @@ object
     "size": "8Gi"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9865,8 +10064,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "limits": {
     "cpu": "2",
@@ -9877,8 +10077,8 @@ object
     "memory": "1000Mi"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9890,14 +10090,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": "2",
   "memory": "2Gi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9937,14 +10138,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": "512m",
   "memory": "1000Mi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -9984,13 +10186,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "size": "8Gi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10016,8 +10219,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "resources": {
@@ -10034,8 +10238,8 @@ object
     "size": "8Gi"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10061,8 +10265,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "limits": {
     "cpu": "2",
@@ -10073,8 +10278,8 @@ object
     "memory": "1000Mi"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10086,14 +10291,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": "2",
   "memory": "2Gi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10133,14 +10339,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": "512m",
   "memory": "1000Mi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10180,13 +10387,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "size": "8Gi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10212,8 +10420,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "resources": {
@@ -10230,8 +10439,8 @@ object
     "size": "8Gi"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10257,8 +10466,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "limits": {
     "cpu": "2",
@@ -10269,8 +10479,8 @@ object
     "memory": "1000Mi"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10282,14 +10492,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": "2",
   "memory": "2Gi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10329,14 +10540,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": "512m",
   "memory": "1000Mi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10376,13 +10588,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "size": "8Gi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10422,8 +10635,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -10436,8 +10650,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10463,15 +10677,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10483,13 +10698,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10515,13 +10731,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10547,8 +10764,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "postgres": {
@@ -10569,8 +10787,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10596,8 +10814,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "default_database": "digitalhub",
   "host": "database-postgres-cluster",
@@ -10605,8 +10824,8 @@ object
   "postgrest_service_type": "NodePort",
   "uri_args": "sslmode=disable"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10688,8 +10907,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "password": {
     "secretKey": "password",
@@ -10700,8 +10920,8 @@ object
     "secretName": "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10713,14 +10933,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "secretKey": "password",
   "secretName": "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10760,14 +10981,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "secretKey": "username",
   "secretName": "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10807,8 +11029,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "runAsNonRoot": true,
@@ -10816,8 +11039,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10857,13 +11080,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10889,8 +11113,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "creds": {
     "admin": {
@@ -10961,8 +11186,8 @@ object
   },
   "useExistingSecurityJson": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -10974,8 +11199,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "securityContext": {
@@ -10996,8 +11222,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11023,8 +11249,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -11037,8 +11264,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11064,15 +11291,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11084,13 +11312,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11116,13 +11345,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11148,15 +11378,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "crd": {
     "create": true
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11168,13 +11399,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "create": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11200,8 +11432,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "admin": {
     "password": "thi4iegheeX7euthe7di",
@@ -11220,8 +11453,8 @@ object
     "passwordSha": "ps9jK0qKXJqZawtFS+SxhB2CdCu90Qgz4riZ0XwzYd4= YWxxZXV3enB1YmE2c2gwdg=="
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11233,14 +11466,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "password": "thi4iegheeX7euthe7di",
   "passwordSha": "C8QrTZf6jpu+cPKTsLtyEhv1XVXAYZGmStTKXzB80sg= MW5pNXZlaGIyaWhkdW5w"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11280,14 +11514,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "password": "imPBf@tU(asx9%TZ",
   "passwordSha": "3iPc1JWet22a05UZXCFfo/qRUqwg2iVULyv5RBEqPdM= LSpnG/l2j8AA9vrryMGkkFLO+bYeN7ZUvrU270WAfyA="
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11327,14 +11562,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "password": "aed0ohBie3hai6jo7sho",
   "passwordSha": "i61TpZKyvff3CHnyZ0kMTzkNezkxkilCre93wLkz7jQ= NzlyN3k1cm0xZGt3eWR1MA=="
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11374,14 +11610,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "password": "soogh8aiy6vah6Aecai6",
   "passwordSha": "ps9jK0qKXJqZawtFS+SxhB2CdCu90Qgz4riZ0XwzYd4= YWxxZXV3enB1YmE2c2gwdg=="
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11421,8 +11658,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "capacity": "10Gi",
   "persistent": {
@@ -11436,8 +11674,8 @@ object
   },
   "type": "ephemeral"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11463,8 +11701,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "pvc": {
     "annotations": {},
@@ -11474,8 +11713,8 @@ object
   },
   "reclaimPolicy": "Delete"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11487,16 +11726,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "annotations": {},
   "labels": {},
   "name": "",
   "storageClassName": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11508,11 +11748,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11524,11 +11765,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11624,14 +11866,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "repository": "solr",
   "tag": "9.7"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11671,8 +11914,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "containerSecurityContext": {
     "allowPrivilegeEscalation": false,
@@ -11691,8 +11935,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11704,8 +11948,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -11717,8 +11962,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11744,15 +11989,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11764,13 +12010,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11782,13 +12029,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11814,15 +12062,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "seccompProfile": {
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11834,13 +12083,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11880,8 +12130,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "security": {
     "authenticationType": "Basic",
@@ -11893,8 +12144,8 @@ object
     "probesRequireAuth": true
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11906,8 +12157,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "authenticationType": "Basic",
   "basicAuthSecret": "digitalhub-solrcloud-basic-auth",
@@ -11917,8 +12169,8 @@ object
   },
   "probesRequireAuth": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -11958,14 +12210,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "key": "security.json",
   "name": "digitalhub-solrcloud-security-bootstrap"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -12033,8 +12286,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "objectTemplate": {
@@ -12059,8 +12313,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -12086,13 +12340,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -12118,16 +12373,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "runAsNonRoot": true,
   "seccompProfile": {
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -12153,13 +12409,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -12185,8 +12442,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -12199,8 +12457,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -12226,15 +12484,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -12246,13 +12505,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -12278,13 +12538,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>

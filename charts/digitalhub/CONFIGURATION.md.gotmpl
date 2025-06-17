@@ -21,11 +21,12 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 {{- else if (eq $notationType "email") }}
 <a href="mailto:{{ $defaultValue }}" style="color: green;">"{{ $defaultValue }}"</a>
 {{- else if or (eq .Type "object") (eq .Type "list") }}
+<details>
+<summary>+Expand</summary>
 <pre lang="{{ $notationType }}">
-<details><summary>+Expand</summary>
 {{ $defaultValue }}
-</details>
 </pre>
+</details>
 {{- else }}
 <pre lang="{{ $notationType }}">
 {{ $defaultValue }}
@@ -46,7 +47,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 {{ end }}
 
 {{ define "chart.valuesTableHtml" }}
-<table height="400px" >
+<table>
 	<thead>
 		<th>Key</th>
 		<th>Type</th>
@@ -68,4 +69,4 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 </table>
 {{ end }}
 
-{{ template "chart.valuesSectionHtml" . }}
+{{ template "chart.valuesTableHtml" . }}

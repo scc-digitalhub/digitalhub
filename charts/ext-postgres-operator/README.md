@@ -46,9 +46,7 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 
 ## Values
 
-## Values
-
-<table height="400px" >
+<table>
 	<thead>
 		<th>Key</th>
 		<th>Type</th>
@@ -64,11 +62,12 @@ object
 			<td>Additional enviroment variable.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -108,15 +107,16 @@ object
 			<td>Container image configuration.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "pullPolicy": "IfNotPresent",
   "repository": "ghcr.io/movetokube/postgres-operator",
   "tag": "latest"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -184,14 +184,15 @@ object
 			<td>Configure operator scope clusterwide or namespaced.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "namespace": "",
   "namespaced": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -231,11 +232,12 @@ object
 			<td>Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -247,11 +249,12 @@ object
 			<td>Annotations to add to each pod.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -263,11 +266,12 @@ object
 			<td>Labels to add to each pod.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -279,11 +283,12 @@ object
 			<td>[Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -295,8 +300,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cloud_provider": "",
   "default_database": "postgres",
@@ -305,8 +311,8 @@ object
   "uri_args": "",
   "user": "admin"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -402,11 +408,12 @@ object
 			<td>Use existing secret for postgres server credentials</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -432,11 +439,12 @@ object
 			<td>Container resource requests and limits.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -448,8 +456,9 @@ object
 			<td>[Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -460,8 +469,8 @@ object
   "readOnlyRootFilesystem": true,
   "runAsNonRoot": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -487,15 +496,16 @@ object
 			<td>Container configure capabilities.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -507,13 +517,14 @@ list
 			<td>Container drop capabilities.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -553,14 +564,15 @@ object
 			<td>Service account configuration.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "annotations": {},
   "name": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -572,11 +584,12 @@ object
 			<td>Additional Service Account annotations.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -602,11 +615,12 @@ list
 			<td>List of node taints to tolerate (requires Kubernetes >= 1.6).</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -618,11 +632,12 @@ list
 			<td>Additional volumes.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -634,11 +649,12 @@ list
 			<td>Additional volumes to mount.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>

@@ -43,9 +43,7 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 
 ## Values
 
-## Values
-
-<table height="400px" >
+<table>
 	<thead>
 		<th>Key</th>
 		<th>Type</th>
@@ -61,8 +59,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "debug": {
     "enableLogs": true,
@@ -88,8 +87,8 @@ object
     "type": "NodePort"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -101,14 +100,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enableLogs": true,
   "enableMetrics": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -148,14 +148,15 @@ object
 			<td>Jobs configuration</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "deadline": "604800",
   "jobSuspend": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -195,8 +196,9 @@ object
 			<td>Resources for the pods created by COre</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpuLim": "",
   "cpuReq": "",
@@ -206,8 +208,8 @@ object
   "pvcLim": "",
   "pvcReq": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -317,13 +319,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "disableRoot": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -349,13 +352,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "NodePort"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -381,11 +385,12 @@ object
 			<td>Affinity for pod assignment.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -397,16 +402,17 @@ object
 			<td>Argoworkflow configuration</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "configmap": "artifact-repositories",
   "key": "default-artifact-repository",
   "serviceAccount": "default",
   "user": "1000"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -474,8 +480,9 @@ object
 			<td>Authentication configuration</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "basic": {
     "enabled": true,
@@ -496,8 +503,8 @@ object
     "scope": ""
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -509,15 +516,16 @@ object
 			<td>Basic Auth values</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "password": "",
   "username": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -571,8 +579,9 @@ object
 			<td>OpenID Auth values</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false,
   "externalSecret": {
@@ -586,8 +595,8 @@ object
   "oidcClientId": "",
   "scope": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -613,14 +622,15 @@ object
 			<td>Reference to the Core OpenID Secret</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "key": "",
   "name": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -744,16 +754,17 @@ object
 			<td>Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false,
   "maxReplicas": 100,
   "minReplicas": 1,
   "targetCPUUtilizationPercentage": 80
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -821,11 +832,12 @@ object
 			<td>Additional environment variables for the Core configmap, MUST be specified in key/value format</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -837,14 +849,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "clientId": "",
   "clientSecret": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -884,14 +897,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "accessTokenDuration": "43200",
   "refreshTokenDuration": "86400"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -945,15 +959,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "database": "",
   "host": "",
   "port": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1035,8 +1050,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "externalHostAddress": "",
   "externalTls": false,
@@ -1048,8 +1064,8 @@ object
     "username": ""
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1089,8 +1105,9 @@ object
 			<td>Values of your registry</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "email": "",
   "password": "",
@@ -1098,8 +1115,8 @@ object
   "url": "",
   "username": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1181,15 +1198,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "pullPolicy": "IfNotPresent",
   "repository": "ghcr.io/scc-digitalhub/digitalhub-core",
   "tag": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1243,11 +1261,12 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1259,8 +1278,9 @@ object
 			<td>Ingress configurations.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "annotations": {},
   "className": "",
@@ -1278,8 +1298,8 @@ object
   ],
   "tls": []
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1291,11 +1311,12 @@ object
 			<td>Ingress annotations (values are templated).</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1335,8 +1356,9 @@ list
 			<td>Ingress accepted hostnames.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "host": "core.home",
@@ -1348,8 +1370,8 @@ list
     ]
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1361,11 +1383,12 @@ list
 			<td>Ingress TLS configuration.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1377,16 +1400,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "builderTool": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-core-builder-tool",
     "tag": "b95c095f"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1398,14 +1422,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-core-builder-tool",
   "tag": "b95c095f"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1459,8 +1484,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "existingSecret": {
     "keyName": "",
@@ -1469,8 +1495,8 @@ object
   "keystoreKid": "",
   "keystorePath": "/etc/keystore"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1482,14 +1508,15 @@ object
 			<td>Reference to the Keystore secret of Core</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "keyName": "",
   "secretName": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1557,15 +1584,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "port": "",
   "serviceName": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1619,14 +1647,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "indexPath": false,
   "reindex": "never"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1680,11 +1709,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1696,11 +1726,12 @@ object
 			<td>Annotations to add to each pod.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1712,11 +1743,12 @@ object
 			<td>Labels to add to each pod.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1728,16 +1760,17 @@ object
 			<td>[Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "runAsNonRoot": true,
   "seccompProfile": {
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1763,13 +1796,14 @@ object
 			<td>Pod configure seccompProfile.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1795,8 +1829,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "credentials": {
     "existingSecret": {
@@ -1812,8 +1847,8 @@ object
   "port": "",
   "schema": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1825,8 +1860,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "existingSecret": {
     "name": "",
@@ -1836,8 +1872,8 @@ object
   "password": "",
   "username": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1849,15 +1885,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "name": "",
   "passwordKey": null,
   "usernameKey": null
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1995,15 +2032,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "kaniko": {
     "imagePrefix": ""
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2015,13 +2053,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "imagePrefix": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2061,8 +2100,9 @@ object
 			<td>Pod resource requests and limits.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "limits": {
     "cpu": "1000m",
@@ -2073,8 +2113,8 @@ object
     "memory": "256Mi"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2086,14 +2126,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": "1000m",
   "memory": "512Mi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2133,14 +2174,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": "200m",
   "memory": "256Mi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2180,8 +2222,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "dbt": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt",
@@ -2202,8 +2245,8 @@ object
     "tag3_9": "3.9-0.11.0"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2215,14 +2258,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt",
   "tag": "0.11.0"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2262,14 +2306,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "image": "kserve/huggingfaceserver",
   "tag": "v0.14.0"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2309,14 +2354,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp",
   "tag": "0.11.0"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2356,16 +2402,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime",
   "tag3_10": "3.10-0.11.0",
   "tag3_11": "3.11-0.11.0",
   "tag3_9": "3.9-0.11.0"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2433,8 +2480,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "accessKey": "",
   "bucket": "",
@@ -2454,8 +2502,8 @@ object
   "region": "",
   "secretKey": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2495,13 +2543,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2555,15 +2604,16 @@ object
 			<td>Reference to the secret containing AccessKey and Secret key of your S3 instance.  These values have higher priority than the explicit declarations.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "accessKeyKey": "",
   "name": "",
   "secretKeyKey": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2687,8 +2737,9 @@ object
 			<td>Core [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -2701,8 +2752,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2728,15 +2779,16 @@ object
 			<td>Core container configure capabilities.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2748,13 +2800,14 @@ list
 			<td>Core container drop capabilities.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2780,13 +2833,14 @@ object
 			<td>Core container configure seccompProfile.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2812,15 +2866,16 @@ object
 			<td>Service configurations.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "httpNodePort": "",
   "port": "8080",
   "type": "ClusterIP"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2874,16 +2929,17 @@ object
 			<td>Service account configuration.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "annotations": {},
   "automount": true,
   "create": true,
   "name": "core"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2895,11 +2951,12 @@ object
 			<td>Additional Service Account annotations.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2953,8 +3010,9 @@ object
 			<td>Solr configuration</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "collection": {
     "initialize": {
@@ -2969,8 +3027,8 @@ object
   "url": "",
   "user": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -2982,8 +3040,9 @@ object
 			<td>Solr collection configuration</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "initialize": {
     "enabled": true,
@@ -2992,8 +3051,8 @@ object
   },
   "name": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3005,15 +3064,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": true,
   "image": "smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot",
   "securityJsonSecret": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3137,8 +3197,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "affinity": {},
   "autoscaling": {
@@ -3248,8 +3309,8 @@ object
   "volumeMounts": [],
   "volumes": []
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3261,11 +3322,12 @@ object
 			<td>Affinity for pod assignment.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3277,16 +3339,17 @@ object
 			<td>Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false,
   "maxReplicas": 100,
   "minReplicas": 1,
   "targetCPUUtilizationPercentage": 80
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3354,8 +3417,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "clientId": "",
   "clientSecret": "",
@@ -3365,8 +3429,8 @@ object
     "name": ""
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3406,15 +3470,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "clientIdKey": "",
   "clientSecretKey": "",
   "name": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3468,13 +3533,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "roles": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3500,8 +3566,9 @@ object
 			<td>Values for the Platform's main database</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "credentials": {
     "existingSecret": {
@@ -3514,8 +3581,8 @@ object
   },
   "enabled": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3527,8 +3594,9 @@ object
 			<td>Credentials of the Platform's main database</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "existingSecret": {
     "name": "",
@@ -3538,8 +3606,8 @@ object
   "password": "",
   "username": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3551,15 +3619,16 @@ object
 			<td>Reference to the secret containing username and password of the Platform's main database owner user.  These values have higher priority than the explicit declarations.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "name": "",
   "passwordKey": "",
   "usernameKey": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3683,15 +3752,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "pullPolicy": "IfNotPresent",
   "repository": "ghcr.io/scc-digitalhub/db-sts",
   "tag": "0.3.0"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3745,11 +3815,12 @@ list
 			<td>Image pull secrets.  Optionally specify an array of imagePullSecrets.  Secrets must be manually created in the namespace.  ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3761,15 +3832,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "audience": "sts",
   "claim": "db/role",
   "issuerUri": "http://digitalhub-core:8080"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3837,11 +3909,12 @@ object
 			<td>Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3853,11 +3926,12 @@ object
 			<td>Annotations to add to each pod.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3869,11 +3943,12 @@ object
 			<td>Labels to add to each pod.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3885,16 +3960,17 @@ object
 			<td>[Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "runAsNonRoot": true,
   "seccompProfile": {
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3920,13 +3996,14 @@ object
 			<td>Pod configure seccompProfile.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3966,8 +4043,9 @@ object
 			<td>STS container resource requests and limits.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "limits": {
     "cpu": "200m",
@@ -3978,8 +4056,8 @@ object
     "memory": "128Mi"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -3991,14 +4069,15 @@ object
 			<td>STS container imits</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": "200m",
   "memory": "256Mi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4038,14 +4117,15 @@ object
 			<td>STS container requests</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "cpu": "100m",
   "memory": "128Mi"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4085,8 +4165,9 @@ object
 			<td>STS [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -4099,8 +4180,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4126,15 +4207,16 @@ object
 			<td>STS container configure capabilities</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4146,13 +4228,14 @@ list
 			<td>STS container drop capabilities</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4178,13 +4261,14 @@ object
 			<td>STS container configure seccompProfile</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4210,14 +4294,15 @@ object
 			<td>STS service configurations</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "port": 8080,
   "type": "ClusterIP"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4257,16 +4342,17 @@ object
 			<td>STS service account configuration</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "annotations": {},
   "automount": true,
   "create": true,
   "name": "core-sts"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4278,11 +4364,12 @@ object
 			<td>Additional STS Service Account annotations.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4336,8 +4423,9 @@ object
 			<td>Values of the STS database</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "credentials": {
     "existingSecret": {
@@ -4355,8 +4443,8 @@ object
   "port": "",
   "schema": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4368,8 +4456,9 @@ object
 			<td>Credentials of the STS database</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "existingSecret": {
     "name": "",
@@ -4379,8 +4468,8 @@ object
   "password": "",
   "username": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4392,15 +4481,16 @@ object
 			<td>Reference to the secret containing username and password of the STS database user.  These values have higher priority than the explicit declarations.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "name": "",
   "passwordKey": "",
   "usernameKey": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4566,11 +4656,12 @@ list
 			<td>List of node taints to tolerate (requires Kubernetes >= 1.6).</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4582,11 +4673,12 @@ list
 			<td>Additional volumes.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4598,11 +4690,12 @@ list
 			<td>Additional volumes to mount.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4614,11 +4707,12 @@ list
 			<td>Specify Core templates in list format.  Every template should correspond to a key in a configmap dedicated to the templates.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4630,11 +4724,12 @@ list
 			<td>List of node taints to tolerate (requires Kubernetes >= 1.6).</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4646,11 +4741,12 @@ list
 			<td>Additional volumes.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -4662,11 +4758,12 @@ list
 			<td>Additional volumes to mount.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>

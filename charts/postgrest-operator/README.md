@@ -43,9 +43,7 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 
 ## Values
 
-## Values
-
-<table height="400px" >
+<table>
 	<thead>
 		<th>Key</th>
 		<th>Type</th>
@@ -61,8 +59,9 @@ object
 			<td>Affinity for pod assignment. # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "nodeAffinity": {
     "requiredDuringSchedulingIgnoredDuringExecution": {
@@ -89,8 +88,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -102,8 +101,9 @@ object
 			<td>Constrain which nodes your Pod can be scheduled on based on node labels.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "requiredDuringSchedulingIgnoredDuringExecution": {
     "nodeSelectorTerms": [
@@ -128,8 +128,8 @@ object
     ]
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -141,8 +141,9 @@ object
 			<td>The scheduler can't schedule the Pod unless the rule is met. This functions like nodeSelector, but with a more expressive syntax.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "nodeSelectorTerms": [
     {
@@ -165,8 +166,8 @@ object
     }
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -178,8 +179,9 @@ list
 			<td>Kubernetes only schedules the Pod onto nodes that have each of the labels you specify.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "matchExpressions": [
@@ -200,8 +202,8 @@ list
     ]
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -213,16 +215,17 @@ object
 			<td>Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false,
   "maxReplicas": 100,
   "minReplicas": 1,
   "targetCPUUtilizationPercentage": 80
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -290,8 +293,9 @@ object
 			<td>Set containers properties</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "image": {
     "pullPolicy": "IfNotPresent"
@@ -380,8 +384,8 @@ object
   },
   "replicaCount": 1
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -393,13 +397,14 @@ object
 			<td>Pod image configuration</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "pullPolicy": "IfNotPresent"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -425,8 +430,9 @@ object
 			<td>DEPRECATED Kube-rbac-proxy secures /metrics endpoint as a manager sidecar, using the service account token mounted into the Pod by default corrects this problem.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "args": [
     "--secure-listen-address=0.0.0.0:8443",
@@ -466,8 +472,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -479,16 +485,17 @@ list
 			<td>DEPRECATED kube-rbac-proxy configure additional arguments to pass to kube-rbac-proxy sidecar container.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "--secure-listen-address=0.0.0.0:8443",
   "--upstream=http://127.0.0.1:8080/",
   "--logtostderr=true",
   "--v=0"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -500,14 +507,15 @@ object
 			<td>DEPRECATED kube-rbac-proxy container image configuration.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "repository": "gcr.io/kubebuilder/kube-rbac-proxy",
   "tag": "v0.13.1"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -561,13 +569,14 @@ object
 			<td>DEPRECATED kube-rbac-proxy container port.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "containerPort": 8443
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -593,8 +602,9 @@ object
 			<td>DEPRECATED kube-rbac-proxy container resource requests and limits.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "limits": {
     "cpu": "500m",
@@ -605,8 +615,8 @@ object
     "memory": "64Mi"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -618,8 +628,9 @@ object
 			<td>DEPRECATED kube-rbac-proxy [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -633,8 +644,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -660,15 +671,16 @@ object
 			<td>DEPRECATED kube-rbac-proxy container configure capabilities.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -680,13 +692,14 @@ list
 			<td>DEPRECATED kube-rbac-proxy container drop capabilities.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -726,13 +739,14 @@ object
 			<td>DEPRECATED kube-rbac-proxy container configure seccompProfile.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -758,8 +772,9 @@ object
 			<td>Manager container is responsible to reconcile minio-operator CR.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "args": [
     "--health-probe-bind-address=:8081",
@@ -797,8 +812,8 @@ object
     }
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -810,15 +825,16 @@ list
 			<td>Manager configure additional arguments</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "--health-probe-bind-address=:8081",
   "--metrics-bind-address=127.0.0.1:8080",
   "--leader-elect"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -830,13 +846,14 @@ list
 			<td>Ovveride image entrypoint</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "/manager"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -848,14 +865,15 @@ object
 			<td>Manager container image configuration.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "repository": "ghcr.io/scc-digitalhub/postgrest-operator",
   "tag": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -909,8 +927,9 @@ object
 			<td>Manager container resource requests and limits.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "limits": {
     "cpu": "500m",
@@ -921,8 +940,8 @@ object
     "memory": "64Mi"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -934,8 +953,9 @@ object
 			<td>Manager [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -948,8 +968,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -975,15 +995,16 @@ object
 			<td>Manager container configure capabilities.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -995,13 +1016,14 @@ list
 			<td>Manager container drop capabilities.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1027,13 +1049,14 @@ object
 			<td>Manager container configure seccompProfile.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1059,16 +1082,17 @@ object
 			<td>[Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "runAsNonRoot": true,
   "seccompProfile": {
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1094,13 +1118,14 @@ object
 			<td>Pod configure seccompProfile.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1154,11 +1179,12 @@ list
 			<td>Image pull secrets  Optionally specify an array of imagePullSecrets.  Secrets must be manually created in the namespace.  ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1184,14 +1210,15 @@ object
 			<td>Configure operator scope clusterwide or namespaced.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "namespace": "",
   "namespaced": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1231,11 +1258,12 @@ object
 			<td>Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1247,13 +1275,14 @@ object
 			<td>Annotations to add to each pod.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "kubectl.kubernetes.io/default-container": "manager"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1265,13 +1294,14 @@ object
 			<td>Labels to add to each pod.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "control-plane": "controller-manager"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1283,8 +1313,9 @@ object
 			<td>Postgres instance configuration</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "default_database": "postgres",
   "host": "localhost",
@@ -1294,8 +1325,8 @@ object
   "postgrest_service_type": "ClusterIP",
   "uri_args": "sslmode=disable"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1405,14 +1436,15 @@ object
 			<td>Postgres root credentials</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "password": "password",
   "username": "username"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1452,8 +1484,9 @@ object
 			<td>Use existing secret for postgres server credentials</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "password": {
     "secretKey": "",
@@ -1464,8 +1497,8 @@ object
     "secretName": ""
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1533,14 +1566,15 @@ object
 			<td>Use connection uri (postgres[ql]://[username[:password]@][host[:port],]/database[?parameter_list])</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "databaseUrlKey": "",
   "existingSecret": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1580,13 +1614,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "port": 8443
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1612,16 +1647,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "annotations": {},
   "automount": true,
   "create": true,
   "name": "postgrest-operator-controller-manager"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1633,11 +1669,12 @@ object
 			<td>Additional Service Account annotations.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1691,11 +1728,12 @@ list
 			<td>List of node taints to tolerate (requires Kubernetes >= 1.6).</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1707,11 +1745,12 @@ list
 			<td>Additional volumes.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1723,11 +1762,12 @@ list
 			<td>Additional volumes to mount.</td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>

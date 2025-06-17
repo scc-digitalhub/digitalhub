@@ -43,9 +43,7 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 
 ## Values
 
-## Values
-
-<table height="400px" >
+<table>
 	<thead>
 		<th>Key</th>
 		<th>Type</th>
@@ -61,11 +59,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -77,16 +76,17 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "enabled": false,
   "maxReplicas": 100,
   "minReplicas": 1,
   "targetCPUUtilizationPercentage": 80
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -154,13 +154,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "additionalEnv": {}
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -172,11 +173,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -202,14 +204,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "externalHostAddress": "",
   "externalTls": false
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -249,15 +252,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "pullPolicy": "IfNotPresent",
   "repository": "ghcr.io/scc-digitalhub/kubernetes-resource-manager",
   "tag": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -311,11 +315,12 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -327,8 +332,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "annotations": {},
   "className": "",
@@ -346,8 +352,8 @@ object
   ],
   "tls": []
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -359,11 +365,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -403,8 +410,9 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "host": "chart-example.local",
@@ -416,8 +424,8 @@ list
     ]
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -429,11 +437,12 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -459,14 +468,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "defaultValue": "*",
   "namespace": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -506,11 +516,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -522,8 +533,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "access": {
     "roles": []
@@ -542,8 +554,8 @@ object
   "roleClaim": "",
   "scope": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -555,13 +567,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "roles": []
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -573,11 +586,12 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -589,8 +603,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "clientId": "",
   "externalSecret": {
@@ -598,8 +613,8 @@ object
     "name": ""
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -625,14 +640,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "key": "",
   "name": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -756,11 +772,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -772,8 +789,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "fsGroup": 65532,
   "runAsGroup": 65532,
@@ -783,8 +801,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -852,13 +870,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -884,8 +903,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "clusterRole": {
     "create": true
@@ -1049,8 +1069,8 @@ object
     }
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1062,13 +1082,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "create": true
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1108,8 +1129,9 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   {
     "apiGroups": "db.movetokube.com",
@@ -1267,8 +1289,8 @@ list
     ]
   }
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1294,8 +1316,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "deployments": "app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|app.kubernetes.io/type=workspace|app.kubernetes.io/managed-by=dhcore",
   "jobs": "app.kubernetes.io/managed-by=dhcore",
@@ -1310,8 +1333,8 @@ object
   },
   "services": "app.kubernetes.io/type=service|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1351,14 +1374,15 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "labels": "app.kubernetes.io/managed-by=krm",
   "managedBy": "krm"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1398,15 +1422,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "labels": "",
   "names": "(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*",
   "owners": "db.movetokube.com/v1alpha1"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1474,11 +1499,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1490,8 +1516,9 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "allowPrivilegeEscalation": false,
   "capabilities": {
@@ -1504,8 +1531,8 @@ object
     "type": "RuntimeDefault"
   }
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1531,15 +1558,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "drop": [
     "ALL"
   ]
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1551,13 +1579,14 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 [
   "ALL"
 ]
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1583,13 +1612,14 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "type": "RuntimeDefault"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1615,15 +1645,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "nodePort": "30160",
   "port": 8080,
   "type": "NodePort"
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1677,15 +1708,16 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {
   "annotations": {},
   "create": true,
   "name": ""
 }
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1697,11 +1729,12 @@ object
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 {}
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>
@@ -1755,11 +1788,12 @@ list
 			<td></td>
       <td>
 				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
 <pre lang="json">
-<details><summary>+Expand</summary>
 []
-</details>
 </pre>
+</details>
 </div>
 			</td>
 		</tr>

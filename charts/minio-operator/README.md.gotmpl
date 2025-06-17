@@ -57,11 +57,12 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 {{- else if (eq $notationType "email") }}
 <a href="mailto:{{ $defaultValue }}" style="color: green;">"{{ $defaultValue }}"</a>
 {{- else if or (eq .Type "object") (eq .Type "list") }}
+<details>
+<summary>+Expand</summary>
 <pre lang="{{ $notationType }}">
-<details><summary>+Expand</summary>
 {{ $defaultValue }}
-</details>
 </pre>
+</details>
 {{- else }}
 <pre lang="{{ $notationType }}">
 {{ $defaultValue }}
@@ -82,7 +83,7 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 {{ end }}
 
 {{ define "chart.valuesTableHtml" }}
-<table height="400px" >
+<table>
 	<thead>
 		<th>Key</th>
 		<th>Type</th>
@@ -104,7 +105,7 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 </table>
 {{ end }}
 
-{{ template "chart.valuesSectionHtml" . }}
+{{ template "chart.valuesTableHtml" . }}
 
 ## Security Policy
 
