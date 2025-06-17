@@ -43,93 +43,1728 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 
 ## Values
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| affinity | object | `{}` |  |
-| autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` |  |
-| autoscaling.enabled | bool | `false` |  |
-| autoscaling.maxReplicas | int | `100` |  |
-| autoscaling.minReplicas | int | `1` |  |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| env | object | `{"additionalEnv":{}}` |  |
-| env.additionalEnv | object | `{}` |  |
-| fullnameOverride | string | `""` |  |
-| global | object | `{"externalHostAddress":"","externalTls":false}` |  |
-| global.externalHostAddress | string | `""` |  |
-| global.externalTls | bool | `false` |  |
-| image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/scc-digitalhub/kubernetes-resource-manager","tag":""}` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"ghcr.io/scc-digitalhub/kubernetes-resource-manager"` |  |
-| image.tag | string | `""` |  |
-| imagePullSecrets | list | `[]` |  |
-| ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` |  |
-| ingress.annotations | object | `{}` |  |
-| ingress.className | string | `""` |  |
-| ingress.enabled | bool | `false` |  |
-| ingress.hosts | list | `[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]` |  |
-| ingress.tls | list | `[]` |  |
-| nameOverride | string | `""` |  |
-| namespaceValues | object | `{"defaultValue":"*","namespace":""}` |  |
-| namespaceValues.defaultValue | string | `"*"` |  |
-| namespaceValues.namespace | string | `""` |  |
-| nodeSelector | object | `{}` |  |
-| oidc | object | `{"access":{"roles":[]},"audience":{"clientId":"","externalSecret":{"key":"","name":""}},"authType":"","enabled":false,"issuer":"","redirectUrl":"","roleClaim":"","scope":""}` |  |
-| oidc.access | object | `{"roles":[]}` |  |
-| oidc.access.roles | list | `[]` |  |
-| oidc.audience | object | `{"clientId":"","externalSecret":{"key":"","name":""}}` |  |
-| oidc.audience.clientId | string | `""` |  |
-| oidc.audience.externalSecret | object | `{"key":"","name":""}` |  |
-| oidc.audience.externalSecret.key | string | `""` |  |
-| oidc.audience.externalSecret.name | string | `""` |  |
-| oidc.authType | string | `""` |  |
-| oidc.enabled | bool | `false` |  |
-| oidc.issuer | string | `""` |  |
-| oidc.redirectUrl | string | `""` |  |
-| oidc.roleClaim | string | `""` |  |
-| oidc.scope | string | `""` |  |
-| podAnnotations | object | `{}` |  |
-| podSecurityContext | object | `{"fsGroup":65532,"runAsGroup":65532,"runAsNonRoot":true,"runAsUser":65532,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| podSecurityContext.fsGroup | int | `65532` |  |
-| podSecurityContext.runAsGroup | int | `65532` |  |
-| podSecurityContext.runAsNonRoot | bool | `true` |  |
-| podSecurityContext.runAsUser | int | `65532` |  |
-| podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| rbac | object | `{"clusterRole":{"create":true},"namespaced":true,"roles":[{"apiGroups":"db.movetokube.com","crd":true,"resources":["postgresusers","postgres"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"operator.dremiorestserver.com","crd":true,"resources":["dremiorestservers"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"operator.postgrest.org","crd":true,"resources":["postgrests"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"minio.scc-digitalhub.github.io","crd":true,"resources":["buckets","policies","users"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"operator.scc-digitalhub.github.io","crd":true,"resources":["apigws"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"batch","crd":false,"resources":["jobs"],"verbs":["get","list","delete"]},{"apiGroups":"apps","crd":false,"resources":["deployments","replicasets"],"verbs":["get","list"]},{"apiGroups":"","crd":false,"resources":["persistentvolumeclaims"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"","crd":false,"resources":["services"],"verbs":["get","list"]},{"apiGroups":"","crd":false,"resources":["secrets"],"verbs":["get","list"]},{"apiGroups":"","resources":["pods","pods/log"],"verbs":["get","list","create"]},{"apiGroups":"","resources":["resourcequotas"],"verbs":["get","list"]}]}` |  |
-| rbac.clusterRole | object | `{"create":true}` |  |
-| rbac.clusterRole.create | bool | `true` |  |
-| rbac.namespaced | bool | `true` |  |
-| rbac.roles | list | `[{"apiGroups":"db.movetokube.com","crd":true,"resources":["postgresusers","postgres"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"operator.dremiorestserver.com","crd":true,"resources":["dremiorestservers"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"operator.postgrest.org","crd":true,"resources":["postgrests"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"minio.scc-digitalhub.github.io","crd":true,"resources":["buckets","policies","users"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"operator.scc-digitalhub.github.io","crd":true,"resources":["apigws"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"batch","crd":false,"resources":["jobs"],"verbs":["get","list","delete"]},{"apiGroups":"apps","crd":false,"resources":["deployments","replicasets"],"verbs":["get","list"]},{"apiGroups":"","crd":false,"resources":["persistentvolumeclaims"],"verbs":["get","list","create","delete","patch"]},{"apiGroups":"","crd":false,"resources":["services"],"verbs":["get","list"]},{"apiGroups":"","crd":false,"resources":["secrets"],"verbs":["get","list"]},{"apiGroups":"","resources":["pods","pods/log"],"verbs":["get","list","create"]},{"apiGroups":"","resources":["resourcequotas"],"verbs":["get","list"]}]` |  |
-| replicaCount | int | `1` |  |
-| resourceSelectors | object | `{"deployments":"app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|app.kubernetes.io/type=workspace|app.kubernetes.io/managed-by=dhcore","jobs":"app.kubernetes.io/managed-by=dhcore","pvcs":{"labels":"app.kubernetes.io/managed-by=krm","managedBy":"krm"},"secrets":{"labels":"","names":"(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*","owners":"db.movetokube.com/v1alpha1"},"services":"app.kubernetes.io/type=service|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore"}` |  |
-| resourceSelectors.deployments | string | `"app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|app.kubernetes.io/type=workspace|app.kubernetes.io/managed-by=dhcore"` |  |
-| resourceSelectors.jobs | string | `"app.kubernetes.io/managed-by=dhcore"` |  |
-| resourceSelectors.pvcs | object | `{"labels":"app.kubernetes.io/managed-by=krm","managedBy":"krm"}` |  |
-| resourceSelectors.pvcs.labels | string | `"app.kubernetes.io/managed-by=krm"` |  |
-| resourceSelectors.pvcs.managedBy | string | `"krm"` |  |
-| resourceSelectors.secrets | object | `{"labels":"","names":"(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*","owners":"db.movetokube.com/v1alpha1"}` |  |
-| resourceSelectors.secrets.labels | string | `""` |  |
-| resourceSelectors.secrets.names | string | `"(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"` |  |
-| resourceSelectors.secrets.owners | string | `"db.movetokube.com/v1alpha1"` |  |
-| resourceSelectors.services | string | `"app.kubernetes.io/type=service|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore"` |  |
-| resources | object | `{}` |  |
-| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` |  |
-| securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| securityContext.capabilities | object | `{"drop":["ALL"]}` |  |
-| securityContext.capabilities.drop | list | `["ALL"]` |  |
-| securityContext.runAsNonRoot | bool | `true` |  |
-| securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` |  |
-| securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| service | object | `{"nodePort":"30160","port":8080,"type":"NodePort"}` |  |
-| service.nodePort | string | `"30160"` |  |
-| service.port | int | `8080` |  |
-| service.type | string | `"NodePort"` |  |
-| serviceAccount | object | `{"annotations":{},"create":true,"name":""}` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.create | bool | `true` |  |
-| serviceAccount.name | string | `""` |  |
-| storageClasses | string | `"default"` |  |
-| tolerations | list | `[]` |  |
+## Values
+
+<table height="400px" >
+	<thead>
+		<th>Key</th>
+		<th>Type</th>
+    <th>Description</th>
+		<th>Default</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td id="affinity"><a href="./values.yaml#L6">affinity</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling"><a href="./values.yaml#L9">autoscaling</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "enabled": false,
+  "maxReplicas": 100,
+  "minReplicas": 1,
+  "targetCPUUtilizationPercentage": 80
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--enabled"><a href="./values.yaml#L11">autoscaling.enabled</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--maxReplicas"><a href="./values.yaml#L13">autoscaling.maxReplicas</a></td>
+			<td>
+int
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+100
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--minReplicas"><a href="./values.yaml#L15">autoscaling.minReplicas</a></td>
+			<td>
+int
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+1
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--targetCPUUtilizationPercentage"><a href="./values.yaml#L17">autoscaling.targetCPUUtilizationPercentage</a></td>
+			<td>
+int
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+80
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="env"><a href="./values.yaml#L20">env</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "additionalEnv": {}
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="env--additionalEnv"><a href="./values.yaml#L22">env.additionalEnv</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="fullnameOverride"><a href="./values.yaml#L25">fullnameOverride</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global"><a href="./values.yaml#L28">global</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "externalHostAddress": "",
+  "externalTls": false
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--externalHostAddress"><a href="./values.yaml#L30">global.externalHostAddress</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--externalTls"><a href="./values.yaml#L32">global.externalTls</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image"><a href="./values.yaml#L35">image</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "pullPolicy": "IfNotPresent",
+  "repository": "ghcr.io/scc-digitalhub/kubernetes-resource-manager",
+  "tag": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image--pullPolicy"><a href="./values.yaml#L37">image.pullPolicy</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"IfNotPresent"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image--repository"><a href="./values.yaml#L39">image.repository</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ghcr.io/scc-digitalhub/kubernetes-resource-manager"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image--tag"><a href="./values.yaml#L41">image.tag</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="imagePullSecrets"><a href="./values.yaml#L44">imagePullSecrets</a></td>
+			<td>
+list
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress"><a href="./values.yaml#L47">ingress</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "annotations": {},
+  "className": "",
+  "enabled": false,
+  "hosts": [
+    {
+      "host": "chart-example.local",
+      "paths": [
+        {
+          "path": "/",
+          "pathType": "ImplementationSpecific"
+        }
+      ]
+    }
+  ],
+  "tls": []
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--annotations"><a href="./values.yaml#L49">ingress.annotations</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--className"><a href="./values.yaml#L51">ingress.className</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--enabled"><a href="./values.yaml#L53">ingress.enabled</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--hosts"><a href="./values.yaml#L55">ingress.hosts</a></td>
+			<td>
+list
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  {
+    "host": "chart-example.local",
+    "paths": [
+      {
+        "path": "/",
+        "pathType": "ImplementationSpecific"
+      }
+    ]
+  }
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--tls"><a href="./values.yaml#L61">ingress.tls</a></td>
+			<td>
+list
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="nameOverride"><a href="./values.yaml#L64">nameOverride</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="namespaceValues"><a href="./values.yaml#L67">namespaceValues</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "defaultValue": "*",
+  "namespace": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="namespaceValues--defaultValue"><a href="./values.yaml#L69">namespaceValues.defaultValue</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"*"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="namespaceValues--namespace"><a href="./values.yaml#L71">namespaceValues.namespace</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="nodeSelector"><a href="./values.yaml#L74">nodeSelector</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc"><a href="./values.yaml#L77">oidc</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "access": {
+    "roles": []
+  },
+  "audience": {
+    "clientId": "",
+    "externalSecret": {
+      "key": "",
+      "name": ""
+    }
+  },
+  "authType": "",
+  "enabled": false,
+  "issuer": "",
+  "redirectUrl": "",
+  "roleClaim": "",
+  "scope": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--access"><a href="./values.yaml#L79">oidc.access</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "roles": []
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--access--roles"><a href="./values.yaml#L81">oidc.access.roles</a></td>
+			<td>
+list
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--audience"><a href="./values.yaml#L83">oidc.audience</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "clientId": "",
+  "externalSecret": {
+    "key": "",
+    "name": ""
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--audience--clientId"><a href="./values.yaml#L85">oidc.audience.clientId</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--audience--externalSecret"><a href="./values.yaml#L87">oidc.audience.externalSecret</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "key": "",
+  "name": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--audience--externalSecret--key"><a href="./values.yaml#L89">oidc.audience.externalSecret.key</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--audience--externalSecret--name"><a href="./values.yaml#L91">oidc.audience.externalSecret.name</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--authType"><a href="./values.yaml#L93">oidc.authType</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--enabled"><a href="./values.yaml#L95">oidc.enabled</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--issuer"><a href="./values.yaml#L97">oidc.issuer</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--redirectUrl"><a href="./values.yaml#L99">oidc.redirectUrl</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--roleClaim"><a href="./values.yaml#L101">oidc.roleClaim</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--scope"><a href="./values.yaml#L103">oidc.scope</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podAnnotations"><a href="./values.yaml#L106">podAnnotations</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext"><a href="./values.yaml#L109">podSecurityContext</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "fsGroup": 65532,
+  "runAsGroup": 65532,
+  "runAsNonRoot": true,
+  "runAsUser": 65532,
+  "seccompProfile": {
+    "type": "RuntimeDefault"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext--fsGroup"><a href="./values.yaml#L111">podSecurityContext.fsGroup</a></td>
+			<td>
+int
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+65532
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext--runAsGroup"><a href="./values.yaml#L113">podSecurityContext.runAsGroup</a></td>
+			<td>
+int
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+65532
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext--runAsNonRoot"><a href="./values.yaml#L115">podSecurityContext.runAsNonRoot</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext--runAsUser"><a href="./values.yaml#L117">podSecurityContext.runAsUser</a></td>
+			<td>
+int
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+65532
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext--seccompProfile"><a href="./values.yaml#L119">podSecurityContext.seccompProfile</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "type": "RuntimeDefault"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext--seccompProfile--type"><a href="./values.yaml#L121">podSecurityContext.seccompProfile.type</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"RuntimeDefault"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="rbac"><a href="./values.yaml#L124">rbac</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "clusterRole": {
+    "create": true
+  },
+  "namespaced": true,
+  "roles": [
+    {
+      "apiGroups": "db.movetokube.com",
+      "crd": true,
+      "resources": [
+        "postgresusers",
+        "postgres"
+      ],
+      "verbs": [
+        "get",
+        "list",
+        "create",
+        "delete",
+        "patch"
+      ]
+    },
+    {
+      "apiGroups": "operator.dremiorestserver.com",
+      "crd": true,
+      "resources": [
+        "dremiorestservers"
+      ],
+      "verbs": [
+        "get",
+        "list",
+        "create",
+        "delete",
+        "patch"
+      ]
+    },
+    {
+      "apiGroups": "operator.postgrest.org",
+      "crd": true,
+      "resources": [
+        "postgrests"
+      ],
+      "verbs": [
+        "get",
+        "list",
+        "create",
+        "delete",
+        "patch"
+      ]
+    },
+    {
+      "apiGroups": "minio.scc-digitalhub.github.io",
+      "crd": true,
+      "resources": [
+        "buckets",
+        "policies",
+        "users"
+      ],
+      "verbs": [
+        "get",
+        "list",
+        "create",
+        "delete",
+        "patch"
+      ]
+    },
+    {
+      "apiGroups": "operator.scc-digitalhub.github.io",
+      "crd": true,
+      "resources": [
+        "apigws"
+      ],
+      "verbs": [
+        "get",
+        "list",
+        "create",
+        "delete",
+        "patch"
+      ]
+    },
+    {
+      "apiGroups": "batch",
+      "crd": false,
+      "resources": [
+        "jobs"
+      ],
+      "verbs": [
+        "get",
+        "list",
+        "delete"
+      ]
+    },
+    {
+      "apiGroups": "apps",
+      "crd": false,
+      "resources": [
+        "deployments",
+        "replicasets"
+      ],
+      "verbs": [
+        "get",
+        "list"
+      ]
+    },
+    {
+      "apiGroups": "",
+      "crd": false,
+      "resources": [
+        "persistentvolumeclaims"
+      ],
+      "verbs": [
+        "get",
+        "list",
+        "create",
+        "delete",
+        "patch"
+      ]
+    },
+    {
+      "apiGroups": "",
+      "crd": false,
+      "resources": [
+        "services"
+      ],
+      "verbs": [
+        "get",
+        "list"
+      ]
+    },
+    {
+      "apiGroups": "",
+      "crd": false,
+      "resources": [
+        "secrets"
+      ],
+      "verbs": [
+        "get",
+        "list"
+      ]
+    },
+    {
+      "apiGroups": "",
+      "resources": [
+        "pods",
+        "pods/log"
+      ],
+      "verbs": [
+        "get",
+        "list",
+        "create"
+      ]
+    },
+    {
+      "apiGroups": "",
+      "resources": [
+        "resourcequotas"
+      ],
+      "verbs": [
+        "get",
+        "list"
+      ]
+    }
+  ]
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="rbac--clusterRole"><a href="./values.yaml#L126">rbac.clusterRole</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "create": true
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="rbac--clusterRole--create"><a href="./values.yaml#L128">rbac.clusterRole.create</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="rbac--namespaced"><a href="./values.yaml#L130">rbac.namespaced</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="rbac--roles"><a href="./values.yaml#L132">rbac.roles</a></td>
+			<td>
+list
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  {
+    "apiGroups": "db.movetokube.com",
+    "crd": true,
+    "resources": [
+      "postgresusers",
+      "postgres"
+    ],
+    "verbs": [
+      "get",
+      "list",
+      "create",
+      "delete",
+      "patch"
+    ]
+  },
+  {
+    "apiGroups": "operator.dremiorestserver.com",
+    "crd": true,
+    "resources": [
+      "dremiorestservers"
+    ],
+    "verbs": [
+      "get",
+      "list",
+      "create",
+      "delete",
+      "patch"
+    ]
+  },
+  {
+    "apiGroups": "operator.postgrest.org",
+    "crd": true,
+    "resources": [
+      "postgrests"
+    ],
+    "verbs": [
+      "get",
+      "list",
+      "create",
+      "delete",
+      "patch"
+    ]
+  },
+  {
+    "apiGroups": "minio.scc-digitalhub.github.io",
+    "crd": true,
+    "resources": [
+      "buckets",
+      "policies",
+      "users"
+    ],
+    "verbs": [
+      "get",
+      "list",
+      "create",
+      "delete",
+      "patch"
+    ]
+  },
+  {
+    "apiGroups": "operator.scc-digitalhub.github.io",
+    "crd": true,
+    "resources": [
+      "apigws"
+    ],
+    "verbs": [
+      "get",
+      "list",
+      "create",
+      "delete",
+      "patch"
+    ]
+  },
+  {
+    "apiGroups": "batch",
+    "crd": false,
+    "resources": [
+      "jobs"
+    ],
+    "verbs": [
+      "get",
+      "list",
+      "delete"
+    ]
+  },
+  {
+    "apiGroups": "apps",
+    "crd": false,
+    "resources": [
+      "deployments",
+      "replicasets"
+    ],
+    "verbs": [
+      "get",
+      "list"
+    ]
+  },
+  {
+    "apiGroups": "",
+    "crd": false,
+    "resources": [
+      "persistentvolumeclaims"
+    ],
+    "verbs": [
+      "get",
+      "list",
+      "create",
+      "delete",
+      "patch"
+    ]
+  },
+  {
+    "apiGroups": "",
+    "crd": false,
+    "resources": [
+      "services"
+    ],
+    "verbs": [
+      "get",
+      "list"
+    ]
+  },
+  {
+    "apiGroups": "",
+    "crd": false,
+    "resources": [
+      "secrets"
+    ],
+    "verbs": [
+      "get",
+      "list"
+    ]
+  },
+  {
+    "apiGroups": "",
+    "resources": [
+      "pods",
+      "pods/log"
+    ],
+    "verbs": [
+      "get",
+      "list",
+      "create"
+    ]
+  },
+  {
+    "apiGroups": "",
+    "resources": [
+      "resourcequotas"
+    ],
+    "verbs": [
+      "get",
+      "list"
+    ]
+  }
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="replicaCount"><a href="./values.yaml#L242">replicaCount</a></td>
+			<td>
+int
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+1
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resourceSelectors"><a href="./values.yaml#L245">resourceSelectors</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "deployments": "app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|app.kubernetes.io/type=workspace|app.kubernetes.io/managed-by=dhcore",
+  "jobs": "app.kubernetes.io/managed-by=dhcore",
+  "pvcs": {
+    "labels": "app.kubernetes.io/managed-by=krm",
+    "managedBy": "krm"
+  },
+  "secrets": {
+    "labels": "",
+    "names": "(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*",
+    "owners": "db.movetokube.com/v1alpha1"
+  },
+  "services": "app.kubernetes.io/type=service|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resourceSelectors--deployments"><a href="./values.yaml#L247">resourceSelectors.deployments</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|app.kubernetes.io/type=workspace|app.kubernetes.io/managed-by=dhcore"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resourceSelectors--jobs"><a href="./values.yaml#L249">resourceSelectors.jobs</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"app.kubernetes.io/managed-by=dhcore"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resourceSelectors--pvcs"><a href="./values.yaml#L251">resourceSelectors.pvcs</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "labels": "app.kubernetes.io/managed-by=krm",
+  "managedBy": "krm"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resourceSelectors--pvcs--labels"><a href="./values.yaml#L253">resourceSelectors.pvcs.labels</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"app.kubernetes.io/managed-by=krm"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resourceSelectors--pvcs--managedBy"><a href="./values.yaml#L255">resourceSelectors.pvcs.managedBy</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"krm"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resourceSelectors--secrets"><a href="./values.yaml#L257">resourceSelectors.secrets</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "labels": "",
+  "names": "(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*",
+  "owners": "db.movetokube.com/v1alpha1"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resourceSelectors--secrets--labels"><a href="./values.yaml#L259">resourceSelectors.secrets.labels</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resourceSelectors--secrets--names"><a href="./values.yaml#L261">resourceSelectors.secrets.names</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resourceSelectors--secrets--owners"><a href="./values.yaml#L263">resourceSelectors.secrets.owners</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"db.movetokube.com/v1alpha1"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resourceSelectors--services"><a href="./values.yaml#L265">resourceSelectors.services</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"app.kubernetes.io/type=service|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resources"><a href="./values.yaml#L268">resources</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext"><a href="./values.yaml#L271">securityContext</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "allowPrivilegeEscalation": false,
+  "capabilities": {
+    "drop": [
+      "ALL"
+    ]
+  },
+  "runAsNonRoot": true,
+  "seccompProfile": {
+    "type": "RuntimeDefault"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L273">securityContext.allowPrivilegeEscalation</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--capabilities"><a href="./values.yaml#L275">securityContext.capabilities</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "drop": [
+    "ALL"
+  ]
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--capabilities--drop"><a href="./values.yaml#L277">securityContext.capabilities.drop</a></td>
+			<td>
+list
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  "ALL"
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L280">securityContext.runAsNonRoot</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--seccompProfile"><a href="./values.yaml#L282">securityContext.seccompProfile</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "type": "RuntimeDefault"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--seccompProfile--type"><a href="./values.yaml#L284">securityContext.seccompProfile.type</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"RuntimeDefault"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="service"><a href="./values.yaml#L287">service</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "nodePort": "30160",
+  "port": 8080,
+  "type": "NodePort"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="service--nodePort"><a href="./values.yaml#L289">service.nodePort</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"30160"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="service--port"><a href="./values.yaml#L291">service.port</a></td>
+			<td>
+int
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+8080
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="service--type"><a href="./values.yaml#L293">service.type</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"NodePort"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount"><a href="./values.yaml#L296">serviceAccount</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "annotations": {},
+  "create": true,
+  "name": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L298">serviceAccount.annotations</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount--create"><a href="./values.yaml#L300">serviceAccount.create</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount--name"><a href="./values.yaml#L302">serviceAccount.name</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="storageClasses"><a href="./values.yaml#L305">storageClasses</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"default"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="tolerations"><a href="./values.yaml#L308">tolerations</a></td>
+			<td>
+list
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 ## Security Policy
 

@@ -22,7 +22,7 @@ Explore the full documentation at the [link](https://scc-digitalhub.github.io/do
 
 ### Installation
 
-Once you have set your custom values.yaml file see [Configuration section](#configuration), DigitalHub can be installed as follows:
+Once you have set your custom values.yaml file, see [Configuration section](#configuration) for more informations, DigitalHub platform can be installed as follows:
 
 1) Add Digitalhub repository:
 ```sh
@@ -147,7 +147,7 @@ STS allows you to work with temporary credentials to do operations with Core to 
 To activate STS, set `core.sts.enabled` to `true`.
 The values to activate Postgres and Minio credentials are, respectively, `core.sts.db.enabled` (set to `true` if activated) and `core.sts.minio.enabled` (set to `true` if activated).
 
-### Credentials duration
+###### Credentials duration
 
 You can set the duration of the temporary credentials in two ways.
 

@@ -42,95 +42,1719 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 
 ## Values
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| affinity | object | `{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/arch","operator":"In","values":["amd64"]},{"key":"kubernetes.io/os","operator":"In","values":["linux"]}]}]}}}` | Affinity for pod assignment. # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity |
-| affinity.nodeAffinity | object | `{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/arch","operator":"In","values":["amd64"]},{"key":"kubernetes.io/os","operator":"In","values":["linux"]}]}]}}` | Constrain which nodes your Pod can be scheduled on based on node labels. |
-| affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution | object | `{"nodeSelectorTerms":[{"matchExpressions":[{"key":"kubernetes.io/arch","operator":"In","values":["amd64"]},{"key":"kubernetes.io/os","operator":"In","values":["linux"]}]}]}` | The scheduler can't schedule the Pod unless the rule is met. This functions like nodeSelector, but with a more expressive syntax. |
-| affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms | list | `[{"matchExpressions":[{"key":"kubernetes.io/arch","operator":"In","values":["amd64"]},{"key":"kubernetes.io/os","operator":"In","values":["linux"]}]}]` | Kubernetes only schedules the Pod onto nodes that have each of the labels you specify. |
-| autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage. |
-| autoscaling.enabled | bool | `false` | Enable horizontal scaling |
-| autoscaling.maxReplicas | int | `100` | Set max replicas for autoscaling |
-| autoscaling.minReplicas | int | `1` | Set min replicas for autoscaling |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` | Set CPU utilization percentage that trigger the autoscaling  |
-| deployment | object | `{"kubeRbacProxy":{"args":["--secure-listen-address=0.0.0.0:8443","--upstream=http://127.0.0.1:8080/","--logtostderr=true","--v=0"],"image":{"repository":"gcr.io/kubebuilder/kube-rbac-proxy","tag":"v0.13.1"},"name":"kube-rbac-proxy","ports":{"containerPort":8443},"resources":{"limits":{"cpu":"500m","memory":"128Mi"},"requests":{"cpu":"5m","memory":"64Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}},"manager":{"args":["--health-probe-bind-address=:8081","--metrics-bind-address=127.0.0.1:8080","--leader-elect"],"command":["/manager"],"image":{"repository":"ghcr.io/scc-digitalhub/minio-operator","tag":""},"name":"manager","resources":{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"10m","memory":"64Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}}}` | Set containers properties |
-| deployment.kubeRbacProxy | object | `{"args":["--secure-listen-address=0.0.0.0:8443","--upstream=http://127.0.0.1:8080/","--logtostderr=true","--v=0"],"image":{"repository":"gcr.io/kubebuilder/kube-rbac-proxy","tag":"v0.13.1"},"name":"kube-rbac-proxy","ports":{"containerPort":8443},"resources":{"limits":{"cpu":"500m","memory":"128Mi"},"requests":{"cpu":"5m","memory":"64Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}}` | DEPRECATED Kube-rbac-proxy secures /metrics endpoint as a manager sidecar, using the service account token mounted into the Pod by default corrects this problem. |
-| deployment.kubeRbacProxy.args | list | `["--secure-listen-address=0.0.0.0:8443","--upstream=http://127.0.0.1:8080/","--logtostderr=true","--v=0"]` | DEPRECATED kube-rbac-proxy configure additional arguments to pass to kube-rbac-proxy sidecar container. |
-| deployment.kubeRbacProxy.image | object | `{"repository":"gcr.io/kubebuilder/kube-rbac-proxy","tag":"v0.13.1"}` | DEPRECATED kube-rbac-proxy container image configuration. |
-| deployment.kubeRbacProxy.image.repository | string | `"gcr.io/kubebuilder/kube-rbac-proxy"` | DEPRECATED kube-rbac-proxy container image repository. |
-| deployment.kubeRbacProxy.image.tag | string | `"v0.13.1"` | DEPRECATED kube-rbac-proxy container image tag. |
-| deployment.kubeRbacProxy.name | string | `"kube-rbac-proxy"` | DEPRECATED kube-rbac-proxy container name. |
-| deployment.kubeRbacProxy.ports | object | `{"containerPort":8443}` | DEPRECATED kube-rbac-proxy container port. |
-| deployment.kubeRbacProxy.ports.containerPort | int | `8443` | DEPRECATED kube-rbac-proxy container port. |
-| deployment.kubeRbacProxy.resources | object | `{"limits":{"cpu":"500m","memory":"128Mi"},"requests":{"cpu":"5m","memory":"64Mi"}}` | DEPRECATED kube-rbac-proxy container resource requests and limits. |
-| deployment.kubeRbacProxy.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` | DEPRECATED kube-rbac-proxy [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) |
-| deployment.kubeRbacProxy.securityContext.allowPrivilegeEscalation | bool | `false` | DEPRECATED kube-rbac-proxy container allow privilege escalation. |
-| deployment.kubeRbacProxy.securityContext.capabilities | object | `{"drop":["ALL"]}` | DEPRECATED kube-rbac-proxy container configure capabilities. |
-| deployment.kubeRbacProxy.securityContext.capabilities.drop | list | `["ALL"]` | DEPRECATED kube-rbac-proxy container drop capabilities. |
-| deployment.kubeRbacProxy.securityContext.runAsNonRoot | bool | `true` | DEPRECATED kube-rbac-proxy container allow run as root. |
-| deployment.kubeRbacProxy.securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` | DEPRECATED kube-rbac-proxy container configure seccompProfile. |
-| deployment.kubeRbacProxy.securityContext.seccompProfile.type | string | `"RuntimeDefault"` | DEPRECATED kube-rbac-proxy container configure seccompProfile type. |
-| deployment.manager | object | `{"args":["--health-probe-bind-address=:8081","--metrics-bind-address=127.0.0.1:8080","--leader-elect"],"command":["/manager"],"image":{"repository":"ghcr.io/scc-digitalhub/minio-operator","tag":""},"name":"manager","resources":{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"10m","memory":"64Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}}` | Manager container is responsible to reconcile minio-operator CR. |
-| deployment.manager.args | list | `["--health-probe-bind-address=:8081","--metrics-bind-address=127.0.0.1:8080","--leader-elect"]` | Manager configure additional arguments |
-| deployment.manager.command | list | `["/manager"]` | Ovveride image entrypoint |
-| deployment.manager.image | object | `{"repository":"ghcr.io/scc-digitalhub/minio-operator","tag":""}` | Manager container image configuration. |
-| deployment.manager.image.repository | string | `"ghcr.io/scc-digitalhub/minio-operator"` | Manager container image repository. |
-| deployment.manager.image.tag | string | `""` | Manager container image tag. |
-| deployment.manager.name | string | `"manager"` | Manager container name. |
-| deployment.manager.resources | object | `{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"10m","memory":"64Mi"}}` | Manager container resource requests and limits. |
-| deployment.manager.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` | Manager [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) |
-| deployment.manager.securityContext.allowPrivilegeEscalation | bool | `false` | Manager container allow privilege escalation |
-| deployment.manager.securityContext.capabilities | object | `{"drop":["ALL"]}` | Manager container configure capabilities. |
-| deployment.manager.securityContext.capabilities.drop | list | `["ALL"]` | Manager container drop capabilities. |
-| deployment.manager.securityContext.runAsNonRoot | bool | `true` | Manager container allow run as root. |
-| deployment.manager.securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` | Manager container configure seccompProfile. |
-| deployment.manager.securityContext.seccompProfile.type | string | `"RuntimeDefault"` | Manager container configure seccompProfile. |
-| fullnameOverride | string | `""` | String to fully override `minio-operator.fullname` template. |
-| global | object | `{"externalHostAddress":"","minio":{"rootUserSecret":""}}` | Global configurations. |
-| global.externalHostAddress | string | `""` | Minio API URL |
-| global.minio | object | `{"rootUserSecret":""}` |  |
-| global.minio.rootUserSecret | string | `""` | Minio admin credentials secret name |
-| imagePullSecrets | list | `[]` | Image pull secrets  Optionally specify an array of imagePullSecrets.  Secrets must be manually created in the namespace.  ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
-| ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Ingress configurations. |
-| ingress.annotations | object | `{}` | Ingress annotations (values are templated). |
-| ingress.className | string | `""` | Ingress Class Name. MAY be required for Kubernetes versions >= 1.18- |
-| ingress.enabled | bool | `false` | Enables Ingress. |
-| ingress.hosts | list | `[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]` | Ingress accepted hostnames. |
-| ingress.tls | list | `[]` | Ingress TLS configuration. |
-| minio | object | `{"bucket":"datalake","emptyBucketOnDelete":true,"endpoint":"minio","endpointPort":"9000","minioCredsExistingSecret":{"password":{"secretKey":"","secretName":""},"username":{"secretKey":"","secretName":""}},"protocol":"http"}` | Minio instance configuration. |
-| minio.bucket | string | `"datalake"` | Minio Bucket Name. |
-| minio.emptyBucketOnDelete | bool | `true` | Remove all Object inside the bucket before delete. |
-| minio.endpoint | string | `"minio"` | Minio API instance endpoint. |
-| minio.endpointPort | string | `"9000"` | Minio API instance port. |
-| minio.minioCredsExistingSecret | object | `{"password":{"secretKey":"","secretName":""},"username":{"secretKey":"","secretName":""}}` | Use existing segret for minio credentials. |
-| minio.minioCredsExistingSecret.password.secretKey | string | `""` | Password secret key. |
-| minio.minioCredsExistingSecret.password.secretName | string | `""` | Password secret name. |
-| minio.minioCredsExistingSecret.username.secretKey | string | `""` | Username secret key |
-| minio.minioCredsExistingSecret.username.secretName | string | `""` | Username secret name |
-| minio.protocol | string | `"http"` | Minio API protocol |
-| nameOverride | string | `""` | String to partially override `minio-operator.fullname` template (will maintain the release name) |
-| namespaceValues | object | `{"namespace":"","namespaced":true}` | Configure operator scope clusterwide or namespaced |
-| namespaceValues.namespace | string | `""` | Namespace name where operator watch for CR |
-| namespaceValues.namespaced | bool | `true` | Enable/Disable Cluster wide mode |
-| nodeSelector | object | `{}` | Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/. |
-| podAnnotations | object | `{}` | Annotations to add to each pod. |
-| podLabels | object | `{}` | Labels to add to each pod. |
-| podSecurityContext | object | `{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` | [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) |
-| podSecurityContext.runAsNonRoot | bool | `true` | Pod allow run as root. |
-| podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` | Pod configure seccompProfile. |
-| podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` | Pod configure seccompProfile type. |
-| replicaCount | int | `1` | Desired number of pods. |
-| service | object | `{"port":8443,"type":"ClusterIP"}` | Service configurations. |
-| service.port | int | `8443` | Service port. |
-| service.type | string | `"ClusterIP"` | Service type. |
-| serviceAccount | object | `{"annotations":{},"automount":true,"create":true,"name":"minio-operator-controller-manager"}` | Service account configuration. |
-| serviceAccount.annotations | object | `{}` | Additional Service Account annotations. |
-| serviceAccount.automount | bool | `true` | Automount API credentials for a Service Account. |
-| serviceAccount.create | bool | `true` | If `true` a Service Account will be created. |
-| serviceAccount.name | string | `"minio-operator-controller-manager"` | Service account name. |
-| tolerations | list | `[]` | List of node taints to tolerate (requires Kubernetes >= 1.6). |
-| volumeMounts | list | `[]` | Additional volumes. |
-| volumes | list | `[]` | Additional volumes to mount. |
+## Values
+
+<table height="400px" >
+	<thead>
+		<th>Key</th>
+		<th>Type</th>
+    <th>Description</th>
+		<th>Default</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td id="affinity"><a href="./values.yaml#L7">affinity</a></td>
+			<td>
+object
+</td>
+			<td>Affinity for pod assignment. # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "nodeAffinity": {
+    "requiredDuringSchedulingIgnoredDuringExecution": {
+      "nodeSelectorTerms": [
+        {
+          "matchExpressions": [
+            {
+              "key": "kubernetes.io/arch",
+              "operator": "In",
+              "values": [
+                "amd64"
+              ]
+            },
+            {
+              "key": "kubernetes.io/os",
+              "operator": "In",
+              "values": [
+                "linux"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="affinity--nodeAffinity"><a href="./values.yaml#L9">affinity.nodeAffinity</a></td>
+			<td>
+object
+</td>
+			<td>Constrain which nodes your Pod can be scheduled on based on node labels.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "requiredDuringSchedulingIgnoredDuringExecution": {
+    "nodeSelectorTerms": [
+      {
+        "matchExpressions": [
+          {
+            "key": "kubernetes.io/arch",
+            "operator": "In",
+            "values": [
+              "amd64"
+            ]
+          },
+          {
+            "key": "kubernetes.io/os",
+            "operator": "In",
+            "values": [
+              "linux"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="affinity--nodeAffinity--requiredDuringSchedulingIgnoredDuringExecution"><a href="./values.yaml#L11">affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution</a></td>
+			<td>
+object
+</td>
+			<td>The scheduler can't schedule the Pod unless the rule is met. This functions like nodeSelector, but with a more expressive syntax.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "nodeSelectorTerms": [
+    {
+      "matchExpressions": [
+        {
+          "key": "kubernetes.io/arch",
+          "operator": "In",
+          "values": [
+            "amd64"
+          ]
+        },
+        {
+          "key": "kubernetes.io/os",
+          "operator": "In",
+          "values": [
+            "linux"
+          ]
+        }
+      ]
+    }
+  ]
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="affinity--nodeAffinity--requiredDuringSchedulingIgnoredDuringExecution--nodeSelectorTerms"><a href="./values.yaml#L13">affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms</a></td>
+			<td>
+list
+</td>
+			<td>Kubernetes only schedules the Pod onto nodes that have each of the labels you specify.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  {
+    "matchExpressions": [
+      {
+        "key": "kubernetes.io/arch",
+        "operator": "In",
+        "values": [
+          "amd64"
+        ]
+      },
+      {
+        "key": "kubernetes.io/os",
+        "operator": "In",
+        "values": [
+          "linux"
+        ]
+      }
+    ]
+  }
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling"><a href="./values.yaml#L25">autoscaling</a></td>
+			<td>
+object
+</td>
+			<td>Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "enabled": false,
+  "maxReplicas": 100,
+  "minReplicas": 1,
+  "targetCPUUtilizationPercentage": 80
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--enabled"><a href="./values.yaml#L27">autoscaling.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable horizontal scaling</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--maxReplicas"><a href="./values.yaml#L29">autoscaling.maxReplicas</a></td>
+			<td>
+int
+</td>
+			<td>Set max replicas for autoscaling</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+100
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--minReplicas"><a href="./values.yaml#L31">autoscaling.minReplicas</a></td>
+			<td>
+int
+</td>
+			<td>Set min replicas for autoscaling</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+1
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--targetCPUUtilizationPercentage"><a href="./values.yaml#L33">autoscaling.targetCPUUtilizationPercentage</a></td>
+			<td>
+int
+</td>
+			<td>Set CPU utilization percentage that trigger the autoscaling </td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+80
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment"><a href="./values.yaml#L36">deployment</a></td>
+			<td>
+object
+</td>
+			<td>Set containers properties</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "kubeRbacProxy": {
+    "args": [
+      "--secure-listen-address=0.0.0.0:8443",
+      "--upstream=http://127.0.0.1:8080/",
+      "--logtostderr=true",
+      "--v=0"
+    ],
+    "image": {
+      "repository": "gcr.io/kubebuilder/kube-rbac-proxy",
+      "tag": "v0.13.1"
+    },
+    "name": "kube-rbac-proxy",
+    "ports": {
+      "containerPort": 8443
+    },
+    "resources": {
+      "limits": {
+        "cpu": "500m",
+        "memory": "128Mi"
+      },
+      "requests": {
+        "cpu": "5m",
+        "memory": "64Mi"
+      }
+    },
+    "securityContext": {
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "runAsNonRoot": true,
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    }
+  },
+  "manager": {
+    "args": [
+      "--health-probe-bind-address=:8081",
+      "--metrics-bind-address=127.0.0.1:8080",
+      "--leader-elect"
+    ],
+    "command": [
+      "/manager"
+    ],
+    "image": {
+      "repository": "ghcr.io/scc-digitalhub/minio-operator",
+      "tag": ""
+    },
+    "name": "manager",
+    "resources": {
+      "limits": {
+        "cpu": "500m",
+        "memory": "512Mi"
+      },
+      "requests": {
+        "cpu": "10m",
+        "memory": "64Mi"
+      }
+    },
+    "securityContext": {
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "runAsNonRoot": true,
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    }
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy"><a href="./values.yaml#L38">deployment.kubeRbacProxy</a></td>
+			<td>
+object
+</td>
+			<td>DEPRECATED Kube-rbac-proxy secures /metrics endpoint as a manager sidecar, using the service account token mounted into the Pod by default corrects this problem.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "args": [
+    "--secure-listen-address=0.0.0.0:8443",
+    "--upstream=http://127.0.0.1:8080/",
+    "--logtostderr=true",
+    "--v=0"
+  ],
+  "image": {
+    "repository": "gcr.io/kubebuilder/kube-rbac-proxy",
+    "tag": "v0.13.1"
+  },
+  "name": "kube-rbac-proxy",
+  "ports": {
+    "containerPort": 8443
+  },
+  "resources": {
+    "limits": {
+      "cpu": "500m",
+      "memory": "128Mi"
+    },
+    "requests": {
+      "cpu": "5m",
+      "memory": "64Mi"
+    }
+  },
+  "securityContext": {
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "runAsNonRoot": true,
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--args"><a href="./values.yaml#L40">deployment.kubeRbacProxy.args</a></td>
+			<td>
+list
+</td>
+			<td>DEPRECATED kube-rbac-proxy configure additional arguments to pass to kube-rbac-proxy sidecar container.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  "--secure-listen-address=0.0.0.0:8443",
+  "--upstream=http://127.0.0.1:8080/",
+  "--logtostderr=true",
+  "--v=0"
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--image"><a href="./values.yaml#L46">deployment.kubeRbacProxy.image</a></td>
+			<td>
+object
+</td>
+			<td>DEPRECATED kube-rbac-proxy container image configuration.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "repository": "gcr.io/kubebuilder/kube-rbac-proxy",
+  "tag": "v0.13.1"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--image--repository"><a href="./values.yaml#L48">deployment.kubeRbacProxy.image.repository</a></td>
+			<td>
+string
+</td>
+			<td>DEPRECATED kube-rbac-proxy container image repository.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"gcr.io/kubebuilder/kube-rbac-proxy"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--image--tag"><a href="./values.yaml#L50">deployment.kubeRbacProxy.image.tag</a></td>
+			<td>
+string
+</td>
+			<td>DEPRECATED kube-rbac-proxy container image tag.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"v0.13.1"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--name"><a href="./values.yaml#L52">deployment.kubeRbacProxy.name</a></td>
+			<td>
+string
+</td>
+			<td>DEPRECATED kube-rbac-proxy container name.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"kube-rbac-proxy"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--ports"><a href="./values.yaml#L54">deployment.kubeRbacProxy.ports</a></td>
+			<td>
+object
+</td>
+			<td>DEPRECATED kube-rbac-proxy container port.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "containerPort": 8443
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--ports--containerPort"><a href="./values.yaml#L56">deployment.kubeRbacProxy.ports.containerPort</a></td>
+			<td>
+int
+</td>
+			<td>DEPRECATED kube-rbac-proxy container port.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+8443
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--resources"><a href="./values.yaml#L58">deployment.kubeRbacProxy.resources</a></td>
+			<td>
+object
+</td>
+			<td>DEPRECATED kube-rbac-proxy container resource requests and limits.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "limits": {
+    "cpu": "500m",
+    "memory": "128Mi"
+  },
+  "requests": {
+    "cpu": "5m",
+    "memory": "64Mi"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--securityContext"><a href="./values.yaml#L66">deployment.kubeRbacProxy.securityContext</a></td>
+			<td>
+object
+</td>
+			<td>DEPRECATED kube-rbac-proxy [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "allowPrivilegeEscalation": false,
+  "capabilities": {
+    "drop": [
+      "ALL"
+    ]
+  },
+  "runAsNonRoot": true,
+  "seccompProfile": {
+    "type": "RuntimeDefault"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L68">deployment.kubeRbacProxy.securityContext.allowPrivilegeEscalation</a></td>
+			<td>
+bool
+</td>
+			<td>DEPRECATED kube-rbac-proxy container allow privilege escalation.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--securityContext--capabilities"><a href="./values.yaml#L70">deployment.kubeRbacProxy.securityContext.capabilities</a></td>
+			<td>
+object
+</td>
+			<td>DEPRECATED kube-rbac-proxy container configure capabilities.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "drop": [
+    "ALL"
+  ]
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--securityContext--capabilities--drop"><a href="./values.yaml#L72">deployment.kubeRbacProxy.securityContext.capabilities.drop</a></td>
+			<td>
+list
+</td>
+			<td>DEPRECATED kube-rbac-proxy container drop capabilities.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  "ALL"
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--securityContext--runAsNonRoot"><a href="./values.yaml#L75">deployment.kubeRbacProxy.securityContext.runAsNonRoot</a></td>
+			<td>
+bool
+</td>
+			<td>DEPRECATED kube-rbac-proxy container allow run as root.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--securityContext--seccompProfile"><a href="./values.yaml#L77">deployment.kubeRbacProxy.securityContext.seccompProfile</a></td>
+			<td>
+object
+</td>
+			<td>DEPRECATED kube-rbac-proxy container configure seccompProfile.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "type": "RuntimeDefault"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--kubeRbacProxy--securityContext--seccompProfile--type"><a href="./values.yaml#L79">deployment.kubeRbacProxy.securityContext.seccompProfile.type</a></td>
+			<td>
+string
+</td>
+			<td>DEPRECATED kube-rbac-proxy container configure seccompProfile type.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"RuntimeDefault"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager"><a href="./values.yaml#L81">deployment.manager</a></td>
+			<td>
+object
+</td>
+			<td>Manager container is responsible to reconcile minio-operator CR.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "args": [
+    "--health-probe-bind-address=:8081",
+    "--metrics-bind-address=127.0.0.1:8080",
+    "--leader-elect"
+  ],
+  "command": [
+    "/manager"
+  ],
+  "image": {
+    "repository": "ghcr.io/scc-digitalhub/minio-operator",
+    "tag": ""
+  },
+  "name": "manager",
+  "resources": {
+    "limits": {
+      "cpu": "500m",
+      "memory": "512Mi"
+    },
+    "requests": {
+      "cpu": "10m",
+      "memory": "64Mi"
+    }
+  },
+  "securityContext": {
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "runAsNonRoot": true,
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--args"><a href="./values.yaml#L83">deployment.manager.args</a></td>
+			<td>
+list
+</td>
+			<td>Manager configure additional arguments</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  "--health-probe-bind-address=:8081",
+  "--metrics-bind-address=127.0.0.1:8080",
+  "--leader-elect"
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--command"><a href="./values.yaml#L88">deployment.manager.command</a></td>
+			<td>
+list
+</td>
+			<td>Ovveride image entrypoint</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  "/manager"
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--image"><a href="./values.yaml#L91">deployment.manager.image</a></td>
+			<td>
+object
+</td>
+			<td>Manager container image configuration.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "repository": "ghcr.io/scc-digitalhub/minio-operator",
+  "tag": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--image--repository"><a href="./values.yaml#L93">deployment.manager.image.repository</a></td>
+			<td>
+string
+</td>
+			<td>Manager container image repository.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ghcr.io/scc-digitalhub/minio-operator"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--image--tag"><a href="./values.yaml#L95">deployment.manager.image.tag</a></td>
+			<td>
+string
+</td>
+			<td>Manager container image tag.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--name"><a href="./values.yaml#L97">deployment.manager.name</a></td>
+			<td>
+string
+</td>
+			<td>Manager container name.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"manager"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--resources"><a href="./values.yaml#L99">deployment.manager.resources</a></td>
+			<td>
+object
+</td>
+			<td>Manager container resource requests and limits.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "limits": {
+    "cpu": "500m",
+    "memory": "512Mi"
+  },
+  "requests": {
+    "cpu": "10m",
+    "memory": "64Mi"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--securityContext"><a href="./values.yaml#L107">deployment.manager.securityContext</a></td>
+			<td>
+object
+</td>
+			<td>Manager [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "allowPrivilegeEscalation": false,
+  "capabilities": {
+    "drop": [
+      "ALL"
+    ]
+  },
+  "runAsNonRoot": true,
+  "seccompProfile": {
+    "type": "RuntimeDefault"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L109">deployment.manager.securityContext.allowPrivilegeEscalation</a></td>
+			<td>
+bool
+</td>
+			<td>Manager container allow privilege escalation</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--securityContext--capabilities"><a href="./values.yaml#L111">deployment.manager.securityContext.capabilities</a></td>
+			<td>
+object
+</td>
+			<td>Manager container configure capabilities.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "drop": [
+    "ALL"
+  ]
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--securityContext--capabilities--drop"><a href="./values.yaml#L113">deployment.manager.securityContext.capabilities.drop</a></td>
+			<td>
+list
+</td>
+			<td>Manager container drop capabilities.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  "ALL"
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--securityContext--runAsNonRoot"><a href="./values.yaml#L116">deployment.manager.securityContext.runAsNonRoot</a></td>
+			<td>
+bool
+</td>
+			<td>Manager container allow run as root.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--securityContext--seccompProfile"><a href="./values.yaml#L118">deployment.manager.securityContext.seccompProfile</a></td>
+			<td>
+object
+</td>
+			<td>Manager container configure seccompProfile.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "type": "RuntimeDefault"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment--manager--securityContext--seccompProfile--type"><a href="./values.yaml#L120">deployment.manager.securityContext.seccompProfile.type</a></td>
+			<td>
+string
+</td>
+			<td>Manager container configure seccompProfile.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"RuntimeDefault"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="fullnameOverride"><a href="./values.yaml#L123">fullnameOverride</a></td>
+			<td>
+string
+</td>
+			<td>String to fully override `minio-operator.fullname` template.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global"><a href="./values.yaml#L126">global</a></td>
+			<td>
+object
+</td>
+			<td>Global configurations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "externalHostAddress": "",
+  "minio": {
+    "rootUserSecret": ""
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--externalHostAddress"><a href="./values.yaml#L128">global.externalHostAddress</a></td>
+			<td>
+string
+</td>
+			<td>Minio API URL</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--minio"><a href="./values.yaml#L130">global.minio</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "rootUserSecret": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--minio--rootUserSecret"><a href="./values.yaml#L132">global.minio.rootUserSecret</a></td>
+			<td>
+string
+</td>
+			<td>Minio admin credentials secret name</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="imagePullSecrets"><a href="./values.yaml#L138">imagePullSecrets</a></td>
+			<td>
+list
+</td>
+			<td>Image pull secrets  Optionally specify an array of imagePullSecrets.  Secrets must be manually created in the namespace.  ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress"><a href="./values.yaml#L141">ingress</a></td>
+			<td>
+object
+</td>
+			<td>Ingress configurations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "annotations": {},
+  "className": "",
+  "enabled": false,
+  "hosts": [
+    {
+      "host": "chart-example.local",
+      "paths": [
+        {
+          "path": "/",
+          "pathType": "ImplementationSpecific"
+        }
+      ]
+    }
+  ],
+  "tls": []
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--annotations"><a href="./values.yaml#L143">ingress.annotations</a></td>
+			<td>
+object
+</td>
+			<td>Ingress annotations (values are templated).</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--className"><a href="./values.yaml#L145">ingress.className</a></td>
+			<td>
+string
+</td>
+			<td>Ingress Class Name. MAY be required for Kubernetes versions >= 1.18-</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--enabled"><a href="./values.yaml#L147">ingress.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enables Ingress.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--hosts"><a href="./values.yaml#L149">ingress.hosts</a></td>
+			<td>
+list
+</td>
+			<td>Ingress accepted hostnames.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  {
+    "host": "chart-example.local",
+    "paths": [
+      {
+        "path": "/",
+        "pathType": "ImplementationSpecific"
+      }
+    ]
+  }
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--tls"><a href="./values.yaml#L155">ingress.tls</a></td>
+			<td>
+list
+</td>
+			<td>Ingress TLS configuration.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="minio"><a href="./values.yaml#L158">minio</a></td>
+			<td>
+object
+</td>
+			<td>Minio instance configuration.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "bucket": "datalake",
+  "emptyBucketOnDelete": true,
+  "endpoint": "minio",
+  "endpointPort": "9000",
+  "minioCredsExistingSecret": {
+    "password": {
+      "secretKey": "",
+      "secretName": ""
+    },
+    "username": {
+      "secretKey": "",
+      "secretName": ""
+    }
+  },
+  "protocol": "http"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="minio--bucket"><a href="./values.yaml#L160">minio.bucket</a></td>
+			<td>
+string
+</td>
+			<td>Minio Bucket Name.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"datalake"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="minio--emptyBucketOnDelete"><a href="./values.yaml#L162">minio.emptyBucketOnDelete</a></td>
+			<td>
+bool
+</td>
+			<td>Remove all Object inside the bucket before delete.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="minio--endpoint"><a href="./values.yaml#L164">minio.endpoint</a></td>
+			<td>
+string
+</td>
+			<td>Minio API instance endpoint.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"minio"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="minio--endpointPort"><a href="./values.yaml#L166">minio.endpointPort</a></td>
+			<td>
+string
+</td>
+			<td>Minio API instance port.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"9000"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="minio--minioCredsExistingSecret"><a href="./values.yaml#L168">minio.minioCredsExistingSecret</a></td>
+			<td>
+object
+</td>
+			<td>Use existing segret for minio credentials.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "password": {
+    "secretKey": "",
+    "secretName": ""
+  },
+  "username": {
+    "secretKey": "",
+    "secretName": ""
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="minio--minioCredsExistingSecret--password--secretKey"><a href="./values.yaml#L171">minio.minioCredsExistingSecret.password.secretKey</a></td>
+			<td>
+string
+</td>
+			<td>Password secret key.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="minio--minioCredsExistingSecret--password--secretName"><a href="./values.yaml#L173">minio.minioCredsExistingSecret.password.secretName</a></td>
+			<td>
+string
+</td>
+			<td>Password secret name.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="minio--minioCredsExistingSecret--username--secretKey"><a href="./values.yaml#L176">minio.minioCredsExistingSecret.username.secretKey</a></td>
+			<td>
+string
+</td>
+			<td>Username secret key</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="minio--minioCredsExistingSecret--username--secretName"><a href="./values.yaml#L178">minio.minioCredsExistingSecret.username.secretName</a></td>
+			<td>
+string
+</td>
+			<td>Username secret name</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="minio--protocol"><a href="./values.yaml#L180">minio.protocol</a></td>
+			<td>
+string
+</td>
+			<td>Minio API protocol</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"http"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="nameOverride"><a href="./values.yaml#L183">nameOverride</a></td>
+			<td>
+string
+</td>
+			<td>String to partially override `minio-operator.fullname` template (will maintain the release name)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="namespaceValues"><a href="./values.yaml#L186">namespaceValues</a></td>
+			<td>
+object
+</td>
+			<td>Configure operator scope clusterwide or namespaced</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "namespace": "",
+  "namespaced": true
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="namespaceValues--namespace"><a href="./values.yaml#L188">namespaceValues.namespace</a></td>
+			<td>
+string
+</td>
+			<td>Namespace name where operator watch for CR</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="namespaceValues--namespaced"><a href="./values.yaml#L190">namespaceValues.namespaced</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/Disable Cluster wide mode</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="nodeSelector"><a href="./values.yaml#L193">nodeSelector</a></td>
+			<td>
+object
+</td>
+			<td>Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podAnnotations"><a href="./values.yaml#L196">podAnnotations</a></td>
+			<td>
+object
+</td>
+			<td>Annotations to add to each pod.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podLabels"><a href="./values.yaml#L199">podLabels</a></td>
+			<td>
+object
+</td>
+			<td>Labels to add to each pod.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext"><a href="./values.yaml#L202">podSecurityContext</a></td>
+			<td>
+object
+</td>
+			<td>[Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "runAsNonRoot": true,
+  "seccompProfile": {
+    "type": "RuntimeDefault"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext--runAsNonRoot"><a href="./values.yaml#L204">podSecurityContext.runAsNonRoot</a></td>
+			<td>
+bool
+</td>
+			<td>Pod allow run as root.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext--seccompProfile"><a href="./values.yaml#L206">podSecurityContext.seccompProfile</a></td>
+			<td>
+object
+</td>
+			<td>Pod configure seccompProfile.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "type": "RuntimeDefault"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext--seccompProfile--type"><a href="./values.yaml#L208">podSecurityContext.seccompProfile.type</a></td>
+			<td>
+string
+</td>
+			<td>Pod configure seccompProfile type.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"RuntimeDefault"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="replicaCount"><a href="./values.yaml#L211">replicaCount</a></td>
+			<td>
+int
+</td>
+			<td>Desired number of pods.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+1
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="service"><a href="./values.yaml#L214">service</a></td>
+			<td>
+object
+</td>
+			<td>Service configurations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "port": 8443,
+  "type": "ClusterIP"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="service--port"><a href="./values.yaml#L216">service.port</a></td>
+			<td>
+int
+</td>
+			<td>Service port.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+8443
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="service--type"><a href="./values.yaml#L218">service.type</a></td>
+			<td>
+string
+</td>
+			<td>Service type.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ClusterIP"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount"><a href="./values.yaml#L221">serviceAccount</a></td>
+			<td>
+object
+</td>
+			<td>Service account configuration.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "annotations": {},
+  "automount": true,
+  "create": true,
+  "name": "minio-operator-controller-manager"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L223">serviceAccount.annotations</a></td>
+			<td>
+object
+</td>
+			<td>Additional Service Account annotations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount--automount"><a href="./values.yaml#L225">serviceAccount.automount</a></td>
+			<td>
+bool
+</td>
+			<td>Automount API credentials for a Service Account.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount--create"><a href="./values.yaml#L227">serviceAccount.create</a></td>
+			<td>
+bool
+</td>
+			<td>If `true` a Service Account will be created.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount--name"><a href="./values.yaml#L229">serviceAccount.name</a></td>
+			<td>
+string
+</td>
+			<td>Service account name.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"minio-operator-controller-manager"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="tolerations"><a href="./values.yaml#L232">tolerations</a></td>
+			<td>
+list
+</td>
+			<td>List of node taints to tolerate (requires Kubernetes >= 1.6).</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="volumeMounts"><a href="./values.yaml#L235">volumeMounts</a></td>
+			<td>
+list
+</td>
+			<td>Additional volumes.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="volumes"><a href="./values.yaml#L238">volumes</a></td>
+			<td>
+list
+</td>
+			<td>Additional volumes to mount.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 ## Security Policy
 

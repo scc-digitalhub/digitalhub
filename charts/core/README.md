@@ -43,283 +43,4635 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 
 ## Values
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| additionalConfig | object | `{"debug":{"enableLogs":true,"enableMetrics":false},"job":{"deadline":"604800","jobSuspend":false},"resources":{"cpuLim":"","cpuReq":"","gpuKey":"","memLim":"","memReq":"","pvcLim":"","pvcReq":""},"security":{"disableRoot":true},"service":{"type":"NodePort"}}` |  |
-| additionalConfig.debug | object | `{"enableLogs":true,"enableMetrics":false}` |  |
-| additionalConfig.debug.enableLogs | bool | `true` | Enable/disable logging |
-| additionalConfig.debug.enableMetrics | bool | `false` | Enable/disable metrics |
-| additionalConfig.job | object | `{"deadline":"604800","jobSuspend":false}` | Jobs configuration |
-| additionalConfig.job.deadline | string | `"604800"` | Set deadline for jobs |
-| additionalConfig.job.jobSuspend | bool | `false` | Suspend jobs |
-| additionalConfig.resources | object | `{"cpuLim":"","cpuReq":"","gpuKey":"","memLim":"","memReq":"","pvcLim":"","pvcReq":""}` | Resources for the pods created by COre |
-| additionalConfig.resources.cpuLim | string | `""` | CPU limit |
-| additionalConfig.resources.cpuReq | string | `""` | CPU request |
-| additionalConfig.resources.gpuKey | string | `""` | GPU key |
-| additionalConfig.resources.memLim | string | `""` | Memory limit |
-| additionalConfig.resources.memReq | string | `""` | Memory request |
-| additionalConfig.resources.pvcLim | string | `""` | PVC storage limit |
-| additionalConfig.resources.pvcReq | string | `""` | PVC storage request |
-| additionalConfig.security | object | `{"disableRoot":true}` |  |
-| additionalConfig.security.disableRoot | bool | `true` | Disable root for pods created by Core |
-| additionalConfig.service | object | `{"type":"NodePort"}` |  |
-| additionalConfig.service.type | string | `"NodePort"` | Service type for pods created by Core |
-| affinity | object | `{}` | Affinity for pod assignment. |
-| argoWorkflow | object | `{"configmap":"artifact-repositories","key":"default-artifact-repository","serviceAccount":"default","user":"1000"}` | Argoworkflow configuration |
-| argoWorkflow.configmap | string | `"artifact-repositories"` | Name of the configmap containing the artifact repositories that the Argo Workflows should use  test test |
-| argoWorkflow.key | string | `"default-artifact-repository"` | Key of the artifact repository in the configmap |
-| argoWorkflow.serviceAccount | string | `"default"` | Service account name. |
-| argoWorkflow.user | string | `"1000"` |  |
-| authentication | object | `{"basic":{"enabled":true,"password":"","username":""},"openId":{"enabled":false,"externalSecret":{"key":"","name":""},"issuerUri":"","jwtAudience":"","jwtClaim":"","jwtUsername":"","oidcClientId":"","scope":""}}` | Authentication configuration |
-| authentication.basic | object | `{"enabled":true,"password":"","username":""}` | Basic Auth values |
-| authentication.basic.enabled | bool | `true` | Enable/disable basicAuth authentication |
-| authentication.basic.password | string | `""` | BasicAuth password |
-| authentication.basic.username | string | `""` | BasicAuth username |
-| authentication.openId | object | `{"enabled":false,"externalSecret":{"key":"","name":""},"issuerUri":"","jwtAudience":"","jwtClaim":"","jwtUsername":"","oidcClientId":"","scope":""}` | OpenID Auth values |
-| authentication.openId.enabled | bool | `false` | Enable/disable openId authentication |
-| authentication.openId.externalSecret | object | `{"key":"","name":""}` | Reference to the Core OpenID Secret |
-| authentication.openId.externalSecret.key | string | `""` | Key of the openId clientId |
-| authentication.openId.externalSecret.name | string | `""` | OpenID secret name |
-| authentication.openId.issuerUri | string | `""` | OpenId Issuer url |
-| authentication.openId.jwtAudience | string | `""` | OpenId JWT Audience |
-| authentication.openId.jwtClaim | string | `""` | OpenId JWT claims |
-| authentication.openId.jwtUsername | string | `""` | OpenId JWT username |
-| authentication.openId.oidcClientId | string | `""` | OpenId JWT clientID |
-| authentication.openId.scope | string | `""` | OpenId JWT Scopes |
-| autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage. |
-| autoscaling.enabled | bool | `false` | Enable horizontal scaling |
-| autoscaling.maxReplicas | int | `100` | Set max replicas for autoscaling |
-| autoscaling.minReplicas | int | `1` | Set min replicas for autoscaling |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` | Set CPU utilization percentage that trigger the autoscaling  |
-| configmapAdditionalEnv | object | `{}` | Additional environment variables for the Core configmap, MUST be specified in key/value format |
-| coreAuthCreds | object | `{"clientId":"","clientSecret":""}` |  |
-| coreAuthCreds.clientId | string | `""` | Core clientId |
-| coreAuthCreds.clientSecret | string | `""` | Core clientSecret |
-| coreTokens | object | `{"accessTokenDuration":"43200","refreshTokenDuration":"86400"}` |  |
-| coreTokens.accessTokenDuration | string | `"43200"` | Duration of the access token generated by Core in seconds |
-| coreTokens.refreshTokenDuration | string | `"86400"` | Duration of the refresh token generated by Core in seconds |
-| corsOrigin | string | `""` |  |
-| databaseProvider | object | `{"database":"","host":"","port":""}` |  |
-| databaseProvider.database | string | `""` | Name of the main database of the platform |
-| databaseProvider.host | string | `""` | Host of the main database of the platform |
-| databaseProvider.port | string | `""` | Port of the main database of the platform |
-| defaultStorageClass | string | `""` | Default storage class that should be used |
-| fullnameOverride | string | `""` | String to fully override `core.fullname` template. |
-| global | object | `{"externalHostAddress":"","externalTls":false,"registry":{"email":"","password":"","secretName":"","url":"","username":""}}` |  |
-| global.externalHostAddress | string | `""` |  |
-| global.externalTls | bool | `false` |  |
-| global.registry | object | `{"email":"","password":"","secretName":"","url":"","username":""}` | Values of your registry |
-| global.registry.email | string | `""` | Registry email |
-| global.registry.password | string | `""` | Registry password |
-| global.registry.secretName | string | `""` | Name of the secret of your registry. It has higher priority. |
-| global.registry.url | string | `""` | Registry url |
-| global.registry.username | string | `""` | Registry username |
-| image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/scc-digitalhub/digitalhub-core","tag":""}` |  |
-| image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
-| image.repository | string | `"ghcr.io/scc-digitalhub/digitalhub-core"` | Image repository |
-| image.tag | string | `""` | Image tag |
-| imagePullSecrets | list | `[]` |  |
-| ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"core.home","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Ingress configurations. |
-| ingress.annotations | object | `{}` | Ingress annotations (values are templated). |
-| ingress.className | string | `""` | Ingress Class Name. MAY be required for Kubernetes versions >= 1.18- |
-| ingress.enabled | bool | `false` | Enables Ingress. |
-| ingress.hosts | list | `[{"host":"core.home","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]` | Ingress accepted hostnames. |
-| ingress.tls | list | `[]` | Ingress TLS configuration. |
-| initImage | object | `{"builderTool":{"image":"ghcr.io/scc-digitalhub/digitalhub-core-builder-tool","tag":"b95c095f"}}` |  |
-| initImage.builderTool | object | `{"image":"ghcr.io/scc-digitalhub/digitalhub-core-builder-tool","tag":"b95c095f"}` |  |
-| initImage.builderTool.image | string | `"ghcr.io/scc-digitalhub/digitalhub-core-builder-tool"` | Cpre builder repository |
-| initImage.builderTool.tag | string | `"b95c095f"` | Core builder tag |
-| kanikoArgs | string | `""` |  |
-| keystore | object | `{"existingSecret":{"keyName":"","secretName":""},"keystoreKid":"","keystorePath":"/etc/keystore"}` |  |
-| keystore.existingSecret | object | `{"keyName":"","secretName":""}` | Reference to the Keystore secret of Core |
-| keystore.existingSecret.keyName | string | `""` |  |
-| keystore.existingSecret.secretName | string | `""` | Name of the keystore secret |
-| keystore.keystoreKid | string | `""` |  |
-| keystore.keystorePath | string | `"/etc/keystore"` | Path in which the Keystore will be mounted |
-| kubeai | object | `{"enabled":true,"port":"","serviceName":""}` |  |
-| kubeai.enabled | bool | `true` | Enable/disable KubeAI |
-| kubeai.port | string | `""` | KubeAi port |
-| kubeai.serviceName | string | `""` | Kubei service name |
-| lucene | object | `{"indexPath":false,"reindex":"never"}` |  |
-| lucene.indexPath | bool | `false` | Set the path for Lucene and enables it |
-| lucene.reindex | string | `"never"` | Reindex of Lucene |
-| nameOverride | string | `""` | String to partially override `core.fullname` template (will maintain the release name) |
-| nodeSelector | object | `{}` |  |
-| podAnnotations | object | `{}` | Annotations to add to each pod. |
-| podLabels | object | `{}` | Labels to add to each pod. |
-| podSecurityContext | object | `{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` | [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) |
-| podSecurityContext.runAsNonRoot | bool | `true` | Pod allow run as root. |
-| podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` | Pod configure seccompProfile. |
-| podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` | Pod configure seccompProfile type. |
-| postgres | object | `{"credentials":{"existingSecret":{"name":"","passwordKey":null,"usernameKey":null},"password":"","username":""},"database":"","host":"","port":"","schema":""}` |  |
-| postgres.credentials | object | `{"existingSecret":{"name":"","passwordKey":null,"usernameKey":null},"password":"","username":""}` |  |
-| postgres.credentials.existingSecret | object | `{"name":"","passwordKey":null,"usernameKey":null}` |  |
-| postgres.credentials.existingSecret.name | string | `""` | Secret containing the Core database admin user credentials |
-| postgres.credentials.existingSecret.passwordKey | string | `nil` | Core db admin password key |
-| postgres.credentials.existingSecret.usernameKey | string | `nil` | Core db admin username key |
-| postgres.credentials.password | string | `""` | Core db admin password |
-| postgres.credentials.username | string | `""` | Core db admin username |
-| postgres.database | string | `""` | Name of the Core database |
-| postgres.host | string | `""` | Host of the Core database |
-| postgres.port | string | `""` | Port of the Core database |
-| postgres.schema | string | `""` | Schema of the Core database |
-| registry | object | `{"kaniko":{"imagePrefix":""}}` |  |
-| registry.kaniko | object | `{"imagePrefix":""}` |  |
-| registry.kaniko.imagePrefix | string | `""` |  |
-| replicaCount | int | `1` | Desired number of pods |
-| resources | object | `{"limits":{"cpu":"1000m","memory":"512Mi"},"requests":{"cpu":"200m","memory":"256Mi"}}` | Pod resource requests and limits. |
-| resources.limits | object | `{"cpu":"1000m","memory":"512Mi"}` |  |
-| resources.limits.cpu | string | `"1000m"` | Max cpu request |
-| resources.limits.memory | string | `"512Mi"` | Max memory request |
-| resources.requests | object | `{"cpu":"200m","memory":"256Mi"}` |  |
-| resources.requests.cpu | string | `"200m"` | Min cpu request |
-| resources.requests.memory | string | `"256Mi"` | Max cpu request |
-| runtime | object | `{"dbt":{"image":"ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt","tag":"0.11.0"},"huggingFace":{"image":"kserve/huggingfaceserver","tag":"v0.14.0"},"kfp":{"image":"ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp","tag":"0.11.0"},"python":{"image":"ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime","tag3_10":"3.10-0.11.0","tag3_11":"3.11-0.11.0","tag3_9":"3.9-0.11.0"}}` |  |
-| runtime.dbt | object | `{"image":"ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt","tag":"0.11.0"}` |  |
-| runtime.dbt.image | string | `"ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt"` | DBT wrapper repository |
-| runtime.dbt.tag | string | `"0.11.0"` | DBT wrapper tag |
-| runtime.huggingFace | object | `{"image":"kserve/huggingfaceserver","tag":"v0.14.0"}` |  |
-| runtime.huggingFace.image | string | `"kserve/huggingfaceserver"` | HuggingFaceServer repository |
-| runtime.huggingFace.tag | string | `"v0.14.0"` | HuggingFaceServer tag |
-| runtime.kfp | object | `{"image":"ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp","tag":"0.11.0"}` |  |
-| runtime.kfp.image | string | `"ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp"` | KFP wrapper repository |
-| runtime.kfp.tag | string | `"0.11.0"` | KFP wrapper tag |
-| runtime.python | object | `{"image":"ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime","tag3_10":"3.10-0.11.0","tag3_11":"3.11-0.11.0","tag3_9":"3.9-0.11.0"}` |  |
-| runtime.python.image | string | `"ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime"` | Python runtime repository |
-| runtime.python.tag3_10 | string | `"3.10-0.11.0"` | Python runtime 3.10  tag |
-| runtime.python.tag3_11 | string | `"3.11-0.11.0"` | Python runtime 3.11 tag |
-| runtime.python.tag3_9 | string | `"3.9-0.11.0"` | Python runtime 3.9 tag |
-| s3 | object | `{"accessKey":"","bucket":"","dynamicCreds":{"enabled":false},"enabled":false,"endpoint":"","existingSecret":{"accessKeyKey":"","name":"","secretKeyKey":""},"port":"","protocol":"http","publicUrl":"","region":"","secretKey":""}` |  |
-| s3.accessKey | string | `""` | Explicit declaration of the Access key of your S3 instance.  It has lower priority than the corresponding secret values. |
-| s3.bucket | string | `""` | Bucket of your S3 instance |
-| s3.dynamicCreds | object | `{"enabled":false}` |  |
-| s3.dynamicCreds.enabled | bool | `false` | Set this to true if you want to use dynamic credentials for S3 communication |
-| s3.enabled | bool | `false` | Enable this option if you have an S3 deployment that you want to use with Core |
-| s3.endpoint | string | `""` | Endpoint of your S3 instance |
-| s3.existingSecret | object | `{"accessKeyKey":"","name":"","secretKeyKey":""}` | Reference to the secret containing AccessKey and Secret key of your S3 instance.  These values have higher priority than the explicit declarations. |
-| s3.existingSecret.accessKeyKey | string | `""` | Key corresponding to your accessKey in your secret  |
-| s3.existingSecret.name | string | `""` | Secret containing accessKey and secretKey of your s3 instance |
-| s3.existingSecret.secretKeyKey | string | `""` | Key corresponding to your secretKey in your secret  |
-| s3.port | string | `""` | Port of your S3 instance |
-| s3.protocol | string | `"http"` | Protocol of your S3 instance (http/https) |
-| s3.publicUrl | string | `""` | Public url of your S3 instance |
-| s3.region | string | `""` | Region used by your S3 instance |
-| s3.secretKey | string | `""` | Explicit declaration of the Secret key of your S3 instance.  It has lower priority than the corresponding secret values. |
-| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` | Core [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) |
-| securityContext.allowPrivilegeEscalation | bool | `false` | Core container allow privilege escalation. |
-| securityContext.capabilities | object | `{"drop":["ALL"]}` | Core container configure capabilities. |
-| securityContext.capabilities.drop | list | `["ALL"]` | Core container drop capabilities. |
-| securityContext.runAsNonRoot | bool | `true` | Core container allow run as root. |
-| securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` | Core container configure seccompProfile. |
-| securityContext.seccompProfile.type | string | `"RuntimeDefault"` | Core container configure seccompProfile type. |
-| service | object | `{"httpNodePort":"","port":"8080","type":"ClusterIP"}` | Service configurations. |
-| service.httpNodePort | string | `""` | Service NodePort. |
-| service.port | string | `"8080"` | Service port. |
-| service.type | string | `"ClusterIP"` | Service type. |
-| serviceAccount | object | `{"annotations":{},"automount":true,"create":true,"name":"core"}` | Service account configuration. |
-| serviceAccount.annotations | object | `{}` | Additional Service Account annotations. |
-| serviceAccount.automount | bool | `true` | Automount API credentials for a Service Account. |
-| serviceAccount.create | bool | `true` | If `true` a Service Account will be created. |
-| serviceAccount.name | string | `"core"` | Service account name. |
-| solr | object | `{"collection":{"initialize":{"enabled":true,"image":"smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot","securityJsonSecret":""},"name":""},"enabled":false,"fullNameOverride":"","url":"","user":""}` | Solr configuration |
-| solr.collection | object | `{"initialize":{"enabled":true,"image":"smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot","securityJsonSecret":""},"name":""}` | Solr collection configuration |
-| solr.collection.initialize | object | `{"enabled":true,"image":"smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot","securityJsonSecret":""}` |  |
-| solr.collection.initialize.enabled | bool | `true` | Enable/Disable Solr collection initialization by script, use it if you have set Basic Auth for Solr |
-| solr.collection.initialize.image | string | `"smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot"` | Initialization image |
-| solr.collection.initialize.securityJsonSecret | string | `""` | Name of the secret containing the Solr security.json |
-| solr.collection.name | string | `""` | Name of the Solr collection |
-| solr.enabled | bool | `false` | Set this value to true this value if you want to use Core with Solr |
-| solr.fullNameOverride | string | `""` |  |
-| solr.url | string | `""` |  |
-| solr.user | string | `""` | Specify the solr user |
-| sts | object | `{"affinity":{},"autoscaling":{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80},"client":{"clientId":"","clientSecret":"","existingSecret":{"clientIdKey":"","clientSecretKey":"","name":""}},"credentials":{"roles":""},"databaseProvider":{"credentials":{"existingSecret":{"name":"","passwordKey":"","usernameKey":""},"password":"","username":""},"enabled":true},"enabled":false,"fullnameOverride":"","image":{"pullPolicy":"IfNotPresent","repository":"ghcr.io/scc-digitalhub/db-sts","tag":"0.3.0"},"imagePullSecrets":[],"jwt":{"audience":"sts","claim":"db/role","issuerUri":"http://digitalhub-core:8080"},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podLabels":{},"podSecurityContext":{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"replicaCount":1,"resources":{"limits":{"cpu":"200m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"128Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}},"service":{"port":8080,"type":"ClusterIP"},"serviceAccount":{"annotations":{},"automount":true,"create":true,"name":"core-sts"},"stsDb":{"credentials":{"existingSecret":{"name":"","passwordKey":"","usernameKey":""},"password":"","username":""},"database":"","driver":"","host":"","platform":"","port":"","schema":""},"tolerations":[],"volumeMounts":[],"volumes":[]}` |  |
-| sts.affinity | object | `{}` | Affinity for pod assignment. |
-| sts.autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage. |
-| sts.autoscaling.enabled | bool | `false` | Enable horizontal scaling |
-| sts.autoscaling.maxReplicas | int | `100` | Set max replicas for autoscaling |
-| sts.autoscaling.minReplicas | int | `1` | Set min replicas for autoscaling |
-| sts.autoscaling.targetCPUUtilizationPercentage | int | `80` | Set CPU utilization percentage that trigger the autoscaling |
-| sts.client | object | `{"clientId":"","clientSecret":"","existingSecret":{"clientIdKey":"","clientSecretKey":"","name":""}}` |  |
-| sts.client.clientId | string | `""` | ClientID used by STS |
-| sts.client.clientSecret | string | `""` | ClientSecret used by STS |
-| sts.client.existingSecret | object | `{"clientIdKey":"","clientSecretKey":"","name":""}` |  |
-| sts.client.existingSecret.clientIdKey | string | `""` | Key corresponding to the STS ClientID |
-| sts.client.existingSecret.clientSecretKey | string | `""` | Key corresponding to the STS ClientSecret |
-| sts.client.existingSecret.name | string | `""` | Name of the secret containing STS ClientID and ClientSecret |
-| sts.credentials | object | `{"roles":""}` |  |
-| sts.credentials.roles | string | `""` | Roles that will be mapped to the user for Database operations. Must correspond to the owner user of the Platform's main database. |
-| sts.databaseProvider | object | `{"credentials":{"existingSecret":{"name":"","passwordKey":"","usernameKey":""},"password":"","username":""},"enabled":true}` | Values for the Platform's main database |
-| sts.databaseProvider.credentials | object | `{"existingSecret":{"name":"","passwordKey":"","usernameKey":""},"password":"","username":""}` | Credentials of the Platform's main database |
-| sts.databaseProvider.credentials.existingSecret | object | `{"name":"","passwordKey":"","usernameKey":""}` | Reference to the secret containing username and password of the Platform's main database owner user.  These values have higher priority than the explicit declarations. |
-| sts.databaseProvider.credentials.existingSecret.name | string | `""` | Name of the secret containing username and password of the Platform's main database owner user |
-| sts.databaseProvider.credentials.existingSecret.passwordKey | string | `""` | Key corresponding to the Platform's main database owner user password |
-| sts.databaseProvider.credentials.existingSecret.usernameKey | string | `""` | Key corresponding to the Platform's main database owner user username |
-| sts.databaseProvider.credentials.password | string | `""` | Explicit declaration of the Platform's main database owner user password.  It has lower priority than the corresponding secret values. |
-| sts.databaseProvider.credentials.username | string | `""` | Explicit declaration of the Platform's main database owner user username.  It has lower priority than the corresponding secret values. |
-| sts.databaseProvider.enabled | bool | `true` | Enable/Disable dynamic credentials for Postgres operations. |
-| sts.enabled | bool | `false` | Enable/Disable STS component for dynamic credentials (Both for Postgres and S3 operations) |
-| sts.fullnameOverride | string | `""` | String to fully override `core.fullname` template. |
-| sts.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/scc-digitalhub/db-sts","tag":"0.3.0"}` |  |
-| sts.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
-| sts.image.repository | string | `"ghcr.io/scc-digitalhub/db-sts"` | STS container image repository. |
-| sts.image.tag | string | `"0.3.0"` | STS container image tag. |
-| sts.imagePullSecrets | list | `[]` | Image pull secrets.  Optionally specify an array of imagePullSecrets.  Secrets must be manually created in the namespace.  ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/ |
-| sts.jwt | object | `{"audience":"sts","claim":"db/role","issuerUri":"http://digitalhub-core:8080"}` |  |
-| sts.jwt.audience | string | `"sts"` | JWT audience, must be sts. |
-| sts.jwt.claim | string | `"db/role"` | JWT claim, must be db/role |
-| sts.jwt.issuerUri | string | `"http://digitalhub-core:8080"` | URL of the JWT issuer. |
-| sts.nameOverride | string | `""` | String to partially override `core.fullname` template (will maintain the release name) |
-| sts.nodeSelector | object | `{}` | Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/. |
-| sts.podAnnotations | object | `{}` | Annotations to add to each pod. |
-| sts.podLabels | object | `{}` | Labels to add to each pod. |
-| sts.podSecurityContext | object | `{"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` | [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) |
-| sts.podSecurityContext.runAsNonRoot | bool | `true` | Pod allow run as root. |
-| sts.podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` | Pod configure seccompProfile. |
-| sts.podSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` | Pod configure seccompProfile type. |
-| sts.replicaCount | int | `1` | Desired number of pods. |
-| sts.resources | object | `{"limits":{"cpu":"200m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | STS container resource requests and limits. |
-| sts.resources.limits | object | `{"cpu":"200m","memory":"256Mi"}` | STS container imits |
-| sts.resources.limits.cpu | string | `"200m"` | CPU limit |
-| sts.resources.limits.memory | string | `"256Mi"` | Memory limit |
-| sts.resources.requests | object | `{"cpu":"100m","memory":"128Mi"}` | STS container requests |
-| sts.resources.requests.cpu | string | `"100m"` | CPU request |
-| sts.resources.requests.memory | string | `"128Mi"` | Memory request |
-| sts.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` | STS [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) |
-| sts.securityContext.allowPrivilegeEscalation | bool | `false` | STS allow privilege escalation |
-| sts.securityContext.capabilities | object | `{"drop":["ALL"]}` | STS container configure capabilities |
-| sts.securityContext.capabilities.drop | list | `["ALL"]` | STS container drop capabilities |
-| sts.securityContext.runAsNonRoot | bool | `true` | STS container allow run as root |
-| sts.securityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` | STS container configure seccompProfile |
-| sts.securityContext.seccompProfile.type | string | `"RuntimeDefault"` | STS container configure seccompProfile type |
-| sts.service | object | `{"port":8080,"type":"ClusterIP"}` | STS service configurations |
-| sts.service.port | int | `8080` | STS service port |
-| sts.service.type | string | `"ClusterIP"` | STS service type |
-| sts.serviceAccount | object | `{"annotations":{},"automount":true,"create":true,"name":"core-sts"}` | STS service account configuration |
-| sts.serviceAccount.annotations | object | `{}` | Additional STS Service Account annotations. |
-| sts.serviceAccount.automount | bool | `true` | Automount API credentials for a STS Service Account. |
-| sts.serviceAccount.create | bool | `true` | If `true` a STS Service Account will be created. |
-| sts.serviceAccount.name | string | `"core-sts"` | STS service account name. |
-| sts.stsDb | object | `{"credentials":{"existingSecret":{"name":"","passwordKey":"","usernameKey":""},"password":"","username":""},"database":"","driver":"","host":"","platform":"","port":"","schema":""}` | Values of the STS database |
-| sts.stsDb.credentials | object | `{"existingSecret":{"name":"","passwordKey":"","usernameKey":""},"password":"","username":""}` | Credentials of the STS database |
-| sts.stsDb.credentials.existingSecret | object | `{"name":"","passwordKey":"","usernameKey":""}` | Reference to the secret containing username and password of the STS database user.  These values have higher priority than the explicit declarations. |
-| sts.stsDb.credentials.existingSecret.name | string | `""` | Name of the secret containing username and password of the STS database user |
-| sts.stsDb.credentials.existingSecret.passwordKey | string | `""` | Key corresponding to the STS database user password |
-| sts.stsDb.credentials.existingSecret.usernameKey | string | `""` | Key corresponding to the STS database user username |
-| sts.stsDb.credentials.password | string | `""` | Explicit declaration of the STS database user password.  It has lower priority than the corresponding secret values. |
-| sts.stsDb.credentials.username | string | `""` | Explicit declaration of the STS database user username.  It has lower priority than the corresponding secret values. |
-| sts.stsDb.database | string | `""` | Name of the STS database |
-| sts.stsDb.driver | string | `""` | Driver used by the STS database |
-| sts.stsDb.host | string | `""` | Host of the STS database |
-| sts.stsDb.platform | string | `""` | Which kind of database you are using for STS (For example, postgresql) |
-| sts.stsDb.port | string | `""` | STS Database port |
-| sts.stsDb.schema | string | `""` | STS database schema |
-| sts.tolerations | list | `[]` | List of node taints to tolerate (requires Kubernetes >= 1.6). |
-| sts.volumeMounts | list | `[]` | Additional volumes. |
-| sts.volumes | list | `[]` | Additional volumes to mount. |
-| templates | list | `[]` | Specify Core templates in list format.  Every template should correspond to a key in a configmap dedicated to the templates. |
-| tolerations | list | `[]` | List of node taints to tolerate (requires Kubernetes >= 1.6). |
-| volumeMounts | list | `[]` | Additional volumes. |
-| volumes | list | `[]` | Additional volumes to mount. |
+## Values
+
+<table height="400px" >
+	<thead>
+		<th>Key</th>
+		<th>Type</th>
+    <th>Description</th>
+		<th>Default</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td id="additionalConfig"><a href="./values.yaml#L6">additionalConfig</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "debug": {
+    "enableLogs": true,
+    "enableMetrics": false
+  },
+  "job": {
+    "deadline": "604800",
+    "jobSuspend": false
+  },
+  "resources": {
+    "cpuLim": "",
+    "cpuReq": "",
+    "gpuKey": "",
+    "memLim": "",
+    "memReq": "",
+    "pvcLim": "",
+    "pvcReq": ""
+  },
+  "security": {
+    "disableRoot": true
+  },
+  "service": {
+    "type": "NodePort"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--debug"><a href="./values.yaml#L8">additionalConfig.debug</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "enableLogs": true,
+  "enableMetrics": false
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--debug--enableLogs"><a href="./values.yaml#L10">additionalConfig.debug.enableLogs</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/disable logging</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--debug--enableMetrics"><a href="./values.yaml#L12">additionalConfig.debug.enableMetrics</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/disable metrics</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--job"><a href="./values.yaml#L14">additionalConfig.job</a></td>
+			<td>
+object
+</td>
+			<td>Jobs configuration</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "deadline": "604800",
+  "jobSuspend": false
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--job--deadline"><a href="./values.yaml#L16">additionalConfig.job.deadline</a></td>
+			<td>
+string
+</td>
+			<td>Set deadline for jobs</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"604800"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--job--jobSuspend"><a href="./values.yaml#L18">additionalConfig.job.jobSuspend</a></td>
+			<td>
+bool
+</td>
+			<td>Suspend jobs</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--resources"><a href="./values.yaml#L20">additionalConfig.resources</a></td>
+			<td>
+object
+</td>
+			<td>Resources for the pods created by COre</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "cpuLim": "",
+  "cpuReq": "",
+  "gpuKey": "",
+  "memLim": "",
+  "memReq": "",
+  "pvcLim": "",
+  "pvcReq": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--resources--cpuLim"><a href="./values.yaml#L22">additionalConfig.resources.cpuLim</a></td>
+			<td>
+string
+</td>
+			<td>CPU limit</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--resources--cpuReq"><a href="./values.yaml#L24">additionalConfig.resources.cpuReq</a></td>
+			<td>
+string
+</td>
+			<td>CPU request</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--resources--gpuKey"><a href="./values.yaml#L26">additionalConfig.resources.gpuKey</a></td>
+			<td>
+string
+</td>
+			<td>GPU key</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--resources--memLim"><a href="./values.yaml#L28">additionalConfig.resources.memLim</a></td>
+			<td>
+string
+</td>
+			<td>Memory limit</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--resources--memReq"><a href="./values.yaml#L30">additionalConfig.resources.memReq</a></td>
+			<td>
+string
+</td>
+			<td>Memory request</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--resources--pvcLim"><a href="./values.yaml#L32">additionalConfig.resources.pvcLim</a></td>
+			<td>
+string
+</td>
+			<td>PVC storage limit</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--resources--pvcReq"><a href="./values.yaml#L34">additionalConfig.resources.pvcReq</a></td>
+			<td>
+string
+</td>
+			<td>PVC storage request</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--security"><a href="./values.yaml#L36">additionalConfig.security</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "disableRoot": true
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--security--disableRoot"><a href="./values.yaml#L38">additionalConfig.security.disableRoot</a></td>
+			<td>
+bool
+</td>
+			<td>Disable root for pods created by Core</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--service"><a href="./values.yaml#L40">additionalConfig.service</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "type": "NodePort"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="additionalConfig--service--type"><a href="./values.yaml#L42">additionalConfig.service.type</a></td>
+			<td>
+string
+</td>
+			<td>Service type for pods created by Core</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"NodePort"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="affinity"><a href="./values.yaml#L45">affinity</a></td>
+			<td>
+object
+</td>
+			<td>Affinity for pod assignment.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="argoWorkflow"><a href="./values.yaml#L48">argoWorkflow</a></td>
+			<td>
+object
+</td>
+			<td>Argoworkflow configuration</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "configmap": "artifact-repositories",
+  "key": "default-artifact-repository",
+  "serviceAccount": "default",
+  "user": "1000"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="argoWorkflow--configmap"><a href="./values.yaml#L51">argoWorkflow.configmap</a></td>
+			<td>
+string
+</td>
+			<td>Name of the configmap containing the artifact repositories that the Argo Workflows should use  test test</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"artifact-repositories"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="argoWorkflow--key"><a href="./values.yaml#L53">argoWorkflow.key</a></td>
+			<td>
+string
+</td>
+			<td>Key of the artifact repository in the configmap</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"default-artifact-repository"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="argoWorkflow--serviceAccount"><a href="./values.yaml#L55">argoWorkflow.serviceAccount</a></td>
+			<td>
+string
+</td>
+			<td>Service account name.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"default"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="argoWorkflow--user"><a href="./values.yaml#L57">argoWorkflow.user</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"1000"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication"><a href="./values.yaml#L60">authentication</a></td>
+			<td>
+object
+</td>
+			<td>Authentication configuration</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "basic": {
+    "enabled": true,
+    "password": "",
+    "username": ""
+  },
+  "openId": {
+    "enabled": false,
+    "externalSecret": {
+      "key": "",
+      "name": ""
+    },
+    "issuerUri": "",
+    "jwtAudience": "",
+    "jwtClaim": "",
+    "jwtUsername": "",
+    "oidcClientId": "",
+    "scope": ""
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--basic"><a href="./values.yaml#L62">authentication.basic</a></td>
+			<td>
+object
+</td>
+			<td>Basic Auth values</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "enabled": true,
+  "password": "",
+  "username": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--basic--enabled"><a href="./values.yaml#L64">authentication.basic.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/disable basicAuth authentication</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--basic--password"><a href="./values.yaml#L66">authentication.basic.password</a></td>
+			<td>
+string
+</td>
+			<td>BasicAuth password</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--basic--username"><a href="./values.yaml#L68">authentication.basic.username</a></td>
+			<td>
+string
+</td>
+			<td>BasicAuth username</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--openId"><a href="./values.yaml#L70">authentication.openId</a></td>
+			<td>
+object
+</td>
+			<td>OpenID Auth values</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "enabled": false,
+  "externalSecret": {
+    "key": "",
+    "name": ""
+  },
+  "issuerUri": "",
+  "jwtAudience": "",
+  "jwtClaim": "",
+  "jwtUsername": "",
+  "oidcClientId": "",
+  "scope": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--openId--enabled"><a href="./values.yaml#L72">authentication.openId.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/disable openId authentication</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--openId--externalSecret"><a href="./values.yaml#L74">authentication.openId.externalSecret</a></td>
+			<td>
+object
+</td>
+			<td>Reference to the Core OpenID Secret</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "key": "",
+  "name": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--openId--externalSecret--key"><a href="./values.yaml#L76">authentication.openId.externalSecret.key</a></td>
+			<td>
+string
+</td>
+			<td>Key of the openId clientId</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--openId--externalSecret--name"><a href="./values.yaml#L78">authentication.openId.externalSecret.name</a></td>
+			<td>
+string
+</td>
+			<td>OpenID secret name</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--openId--issuerUri"><a href="./values.yaml#L80">authentication.openId.issuerUri</a></td>
+			<td>
+string
+</td>
+			<td>OpenId Issuer url</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--openId--jwtAudience"><a href="./values.yaml#L82">authentication.openId.jwtAudience</a></td>
+			<td>
+string
+</td>
+			<td>OpenId JWT Audience</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--openId--jwtClaim"><a href="./values.yaml#L84">authentication.openId.jwtClaim</a></td>
+			<td>
+string
+</td>
+			<td>OpenId JWT claims</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--openId--jwtUsername"><a href="./values.yaml#L86">authentication.openId.jwtUsername</a></td>
+			<td>
+string
+</td>
+			<td>OpenId JWT username</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--openId--oidcClientId"><a href="./values.yaml#L88">authentication.openId.oidcClientId</a></td>
+			<td>
+string
+</td>
+			<td>OpenId JWT clientID</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="authentication--openId--scope"><a href="./values.yaml#L90">authentication.openId.scope</a></td>
+			<td>
+string
+</td>
+			<td>OpenId JWT Scopes</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling"><a href="./values.yaml#L93">autoscaling</a></td>
+			<td>
+object
+</td>
+			<td>Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "enabled": false,
+  "maxReplicas": 100,
+  "minReplicas": 1,
+  "targetCPUUtilizationPercentage": 80
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--enabled"><a href="./values.yaml#L95">autoscaling.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable horizontal scaling</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--maxReplicas"><a href="./values.yaml#L97">autoscaling.maxReplicas</a></td>
+			<td>
+int
+</td>
+			<td>Set max replicas for autoscaling</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+100
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--minReplicas"><a href="./values.yaml#L99">autoscaling.minReplicas</a></td>
+			<td>
+int
+</td>
+			<td>Set min replicas for autoscaling</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+1
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--targetCPUUtilizationPercentage"><a href="./values.yaml#L101">autoscaling.targetCPUUtilizationPercentage</a></td>
+			<td>
+int
+</td>
+			<td>Set CPU utilization percentage that trigger the autoscaling </td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+80
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="configmapAdditionalEnv"><a href="./values.yaml#L104">configmapAdditionalEnv</a></td>
+			<td>
+object
+</td>
+			<td>Additional environment variables for the Core configmap, MUST be specified in key/value format</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="coreAuthCreds"><a href="./values.yaml#L107">coreAuthCreds</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "clientId": "",
+  "clientSecret": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="coreAuthCreds--clientId"><a href="./values.yaml#L109">coreAuthCreds.clientId</a></td>
+			<td>
+string
+</td>
+			<td>Core clientId</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="coreAuthCreds--clientSecret"><a href="./values.yaml#L111">coreAuthCreds.clientSecret</a></td>
+			<td>
+string
+</td>
+			<td>Core clientSecret</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="coreTokens"><a href="./values.yaml#L114">coreTokens</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "accessTokenDuration": "43200",
+  "refreshTokenDuration": "86400"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="coreTokens--accessTokenDuration"><a href="./values.yaml#L116">coreTokens.accessTokenDuration</a></td>
+			<td>
+string
+</td>
+			<td>Duration of the access token generated by Core in seconds</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"43200"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="coreTokens--refreshTokenDuration"><a href="./values.yaml#L118">coreTokens.refreshTokenDuration</a></td>
+			<td>
+string
+</td>
+			<td>Duration of the refresh token generated by Core in seconds</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"86400"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="corsOrigin"><a href="./values.yaml#L121">corsOrigin</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="databaseProvider"><a href="./values.yaml#L124">databaseProvider</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "database": "",
+  "host": "",
+  "port": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="databaseProvider--database"><a href="./values.yaml#L126">databaseProvider.database</a></td>
+			<td>
+string
+</td>
+			<td>Name of the main database of the platform</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="databaseProvider--host"><a href="./values.yaml#L128">databaseProvider.host</a></td>
+			<td>
+string
+</td>
+			<td>Host of the main database of the platform</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="databaseProvider--port"><a href="./values.yaml#L130">databaseProvider.port</a></td>
+			<td>
+string
+</td>
+			<td>Port of the main database of the platform</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="defaultStorageClass"><a href="./values.yaml#L133">defaultStorageClass</a></td>
+			<td>
+string
+</td>
+			<td>Default storage class that should be used</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="fullnameOverride"><a href="./values.yaml#L136">fullnameOverride</a></td>
+			<td>
+string
+</td>
+			<td>String to fully override `core.fullname` template.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global"><a href="./values.yaml#L139">global</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "externalHostAddress": "",
+  "externalTls": false,
+  "registry": {
+    "email": "",
+    "password": "",
+    "secretName": "",
+    "url": "",
+    "username": ""
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--externalHostAddress"><a href="./values.yaml#L141">global.externalHostAddress</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--externalTls"><a href="./values.yaml#L143">global.externalTls</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--registry"><a href="./values.yaml#L145">global.registry</a></td>
+			<td>
+object
+</td>
+			<td>Values of your registry</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "email": "",
+  "password": "",
+  "secretName": "",
+  "url": "",
+  "username": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--registry--email"><a href="./values.yaml#L147">global.registry.email</a></td>
+			<td>
+string
+</td>
+			<td>Registry email</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--registry--password"><a href="./values.yaml#L149">global.registry.password</a></td>
+			<td>
+string
+</td>
+			<td>Registry password</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--registry--secretName"><a href="./values.yaml#L151">global.registry.secretName</a></td>
+			<td>
+string
+</td>
+			<td>Name of the secret of your registry. It has higher priority.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--registry--url"><a href="./values.yaml#L153">global.registry.url</a></td>
+			<td>
+string
+</td>
+			<td>Registry url</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--registry--username"><a href="./values.yaml#L155">global.registry.username</a></td>
+			<td>
+string
+</td>
+			<td>Registry username</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image"><a href="./values.yaml#L158">image</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "pullPolicy": "IfNotPresent",
+  "repository": "ghcr.io/scc-digitalhub/digitalhub-core",
+  "tag": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image--pullPolicy"><a href="./values.yaml#L160">image.pullPolicy</a></td>
+			<td>
+string
+</td>
+			<td>Image pull policy</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"IfNotPresent"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image--repository"><a href="./values.yaml#L162">image.repository</a></td>
+			<td>
+string
+</td>
+			<td>Image repository</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ghcr.io/scc-digitalhub/digitalhub-core"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image--tag"><a href="./values.yaml#L164">image.tag</a></td>
+			<td>
+string
+</td>
+			<td>Image tag</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="imagePullSecrets"><a href="./values.yaml#L167">imagePullSecrets</a></td>
+			<td>
+list
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress"><a href="./values.yaml#L170">ingress</a></td>
+			<td>
+object
+</td>
+			<td>Ingress configurations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "annotations": {},
+  "className": "",
+  "enabled": false,
+  "hosts": [
+    {
+      "host": "core.home",
+      "paths": [
+        {
+          "path": "/",
+          "pathType": "ImplementationSpecific"
+        }
+      ]
+    }
+  ],
+  "tls": []
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--annotations"><a href="./values.yaml#L172">ingress.annotations</a></td>
+			<td>
+object
+</td>
+			<td>Ingress annotations (values are templated).</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--className"><a href="./values.yaml#L174">ingress.className</a></td>
+			<td>
+string
+</td>
+			<td>Ingress Class Name. MAY be required for Kubernetes versions >= 1.18-</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--enabled"><a href="./values.yaml#L176">ingress.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enables Ingress.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--hosts"><a href="./values.yaml#L178">ingress.hosts</a></td>
+			<td>
+list
+</td>
+			<td>Ingress accepted hostnames.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  {
+    "host": "core.home",
+    "paths": [
+      {
+        "path": "/",
+        "pathType": "ImplementationSpecific"
+      }
+    ]
+  }
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="ingress--tls"><a href="./values.yaml#L184">ingress.tls</a></td>
+			<td>
+list
+</td>
+			<td>Ingress TLS configuration.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="initImage"><a href="./values.yaml#L187">initImage</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "builderTool": {
+    "image": "ghcr.io/scc-digitalhub/digitalhub-core-builder-tool",
+    "tag": "b95c095f"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="initImage--builderTool"><a href="./values.yaml#L189">initImage.builderTool</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "image": "ghcr.io/scc-digitalhub/digitalhub-core-builder-tool",
+  "tag": "b95c095f"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="initImage--builderTool--image"><a href="./values.yaml#L191">initImage.builderTool.image</a></td>
+			<td>
+string
+</td>
+			<td>Cpre builder repository</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ghcr.io/scc-digitalhub/digitalhub-core-builder-tool"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="initImage--builderTool--tag"><a href="./values.yaml#L193">initImage.builderTool.tag</a></td>
+			<td>
+string
+</td>
+			<td>Core builder tag</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"b95c095f"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="kanikoArgs"><a href="./values.yaml#L196">kanikoArgs</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="keystore"><a href="./values.yaml#L199">keystore</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "existingSecret": {
+    "keyName": "",
+    "secretName": ""
+  },
+  "keystoreKid": "",
+  "keystorePath": "/etc/keystore"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="keystore--existingSecret"><a href="./values.yaml#L201">keystore.existingSecret</a></td>
+			<td>
+object
+</td>
+			<td>Reference to the Keystore secret of Core</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "keyName": "",
+  "secretName": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="keystore--existingSecret--keyName"><a href="./values.yaml#L203">keystore.existingSecret.keyName</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="keystore--existingSecret--secretName"><a href="./values.yaml#L205">keystore.existingSecret.secretName</a></td>
+			<td>
+string
+</td>
+			<td>Name of the keystore secret</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="keystore--keystoreKid"><a href="./values.yaml#L207">keystore.keystoreKid</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="keystore--keystorePath"><a href="./values.yaml#L209">keystore.keystorePath</a></td>
+			<td>
+string
+</td>
+			<td>Path in which the Keystore will be mounted</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"/etc/keystore"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="kubeai"><a href="./values.yaml#L212">kubeai</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "enabled": true,
+  "port": "",
+  "serviceName": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="kubeai--enabled"><a href="./values.yaml#L214">kubeai.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/disable KubeAI</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="kubeai--port"><a href="./values.yaml#L216">kubeai.port</a></td>
+			<td>
+string
+</td>
+			<td>KubeAi port</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="kubeai--serviceName"><a href="./values.yaml#L218">kubeai.serviceName</a></td>
+			<td>
+string
+</td>
+			<td>Kubei service name</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="lucene"><a href="./values.yaml#L221">lucene</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "indexPath": false,
+  "reindex": "never"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="lucene--indexPath"><a href="./values.yaml#L223">lucene.indexPath</a></td>
+			<td>
+bool
+</td>
+			<td>Set the path for Lucene and enables it</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="lucene--reindex"><a href="./values.yaml#L225">lucene.reindex</a></td>
+			<td>
+string
+</td>
+			<td>Reindex of Lucene</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"never"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="nameOverride"><a href="./values.yaml#L228">nameOverride</a></td>
+			<td>
+string
+</td>
+			<td>String to partially override `core.fullname` template (will maintain the release name)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="nodeSelector"><a href="./values.yaml#L231">nodeSelector</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podAnnotations"><a href="./values.yaml#L234">podAnnotations</a></td>
+			<td>
+object
+</td>
+			<td>Annotations to add to each pod.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podLabels"><a href="./values.yaml#L237">podLabels</a></td>
+			<td>
+object
+</td>
+			<td>Labels to add to each pod.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext"><a href="./values.yaml#L240">podSecurityContext</a></td>
+			<td>
+object
+</td>
+			<td>[Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "runAsNonRoot": true,
+  "seccompProfile": {
+    "type": "RuntimeDefault"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext--runAsNonRoot"><a href="./values.yaml#L242">podSecurityContext.runAsNonRoot</a></td>
+			<td>
+bool
+</td>
+			<td>Pod allow run as root.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext--seccompProfile"><a href="./values.yaml#L244">podSecurityContext.seccompProfile</a></td>
+			<td>
+object
+</td>
+			<td>Pod configure seccompProfile.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "type": "RuntimeDefault"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext--seccompProfile--type"><a href="./values.yaml#L246">podSecurityContext.seccompProfile.type</a></td>
+			<td>
+string
+</td>
+			<td>Pod configure seccompProfile type.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"RuntimeDefault"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres"><a href="./values.yaml#L249">postgres</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "credentials": {
+    "existingSecret": {
+      "name": "",
+      "passwordKey": null,
+      "usernameKey": null
+    },
+    "password": "",
+    "username": ""
+  },
+  "database": "",
+  "host": "",
+  "port": "",
+  "schema": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--credentials"><a href="./values.yaml#L251">postgres.credentials</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "existingSecret": {
+    "name": "",
+    "passwordKey": null,
+    "usernameKey": null
+  },
+  "password": "",
+  "username": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--credentials--existingSecret"><a href="./values.yaml#L253">postgres.credentials.existingSecret</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "name": "",
+  "passwordKey": null,
+  "usernameKey": null
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--credentials--existingSecret--name"><a href="./values.yaml#L255">postgres.credentials.existingSecret.name</a></td>
+			<td>
+string
+</td>
+			<td>Secret containing the Core database admin user credentials</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--credentials--existingSecret--passwordKey"><a href="./values.yaml#L257">postgres.credentials.existingSecret.passwordKey</a></td>
+			<td>
+string
+</td>
+			<td>Core db admin password key</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+null
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--credentials--existingSecret--usernameKey"><a href="./values.yaml#L259">postgres.credentials.existingSecret.usernameKey</a></td>
+			<td>
+string
+</td>
+			<td>Core db admin username key</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+null
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--credentials--password"><a href="./values.yaml#L261">postgres.credentials.password</a></td>
+			<td>
+string
+</td>
+			<td>Core db admin password</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--credentials--username"><a href="./values.yaml#L263">postgres.credentials.username</a></td>
+			<td>
+string
+</td>
+			<td>Core db admin username</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--database"><a href="./values.yaml#L265">postgres.database</a></td>
+			<td>
+string
+</td>
+			<td>Name of the Core database</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--host"><a href="./values.yaml#L267">postgres.host</a></td>
+			<td>
+string
+</td>
+			<td>Host of the Core database</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--port"><a href="./values.yaml#L269">postgres.port</a></td>
+			<td>
+string
+</td>
+			<td>Port of the Core database</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--schema"><a href="./values.yaml#L271">postgres.schema</a></td>
+			<td>
+string
+</td>
+			<td>Schema of the Core database</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="registry"><a href="./values.yaml#L274">registry</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "kaniko": {
+    "imagePrefix": ""
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="registry--kaniko"><a href="./values.yaml#L276">registry.kaniko</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "imagePrefix": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="registry--kaniko--imagePrefix"><a href="./values.yaml#L278">registry.kaniko.imagePrefix</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="replicaCount"><a href="./values.yaml#L281">replicaCount</a></td>
+			<td>
+int
+</td>
+			<td>Desired number of pods</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+1
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resources"><a href="./values.yaml#L284">resources</a></td>
+			<td>
+object
+</td>
+			<td>Pod resource requests and limits.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "limits": {
+    "cpu": "1000m",
+    "memory": "512Mi"
+  },
+  "requests": {
+    "cpu": "200m",
+    "memory": "256Mi"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resources--limits"><a href="./values.yaml#L286">resources.limits</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "cpu": "1000m",
+  "memory": "512Mi"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resources--limits--cpu"><a href="./values.yaml#L288">resources.limits.cpu</a></td>
+			<td>
+string
+</td>
+			<td>Max cpu request</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"1000m"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resources--limits--memory"><a href="./values.yaml#L290">resources.limits.memory</a></td>
+			<td>
+string
+</td>
+			<td>Max memory request</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"512Mi"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resources--requests"><a href="./values.yaml#L292">resources.requests</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "cpu": "200m",
+  "memory": "256Mi"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resources--requests--cpu"><a href="./values.yaml#L294">resources.requests.cpu</a></td>
+			<td>
+string
+</td>
+			<td>Min cpu request</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"200m"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resources--requests--memory"><a href="./values.yaml#L296">resources.requests.memory</a></td>
+			<td>
+string
+</td>
+			<td>Max cpu request</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"256Mi"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime"><a href="./values.yaml#L299">runtime</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "dbt": {
+    "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt",
+    "tag": "0.11.0"
+  },
+  "huggingFace": {
+    "image": "kserve/huggingfaceserver",
+    "tag": "v0.14.0"
+  },
+  "kfp": {
+    "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp",
+    "tag": "0.11.0"
+  },
+  "python": {
+    "image": "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime",
+    "tag3_10": "3.10-0.11.0",
+    "tag3_11": "3.11-0.11.0",
+    "tag3_9": "3.9-0.11.0"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--dbt"><a href="./values.yaml#L301">runtime.dbt</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt",
+  "tag": "0.11.0"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--dbt--image"><a href="./values.yaml#L303">runtime.dbt.image</a></td>
+			<td>
+string
+</td>
+			<td>DBT wrapper repository</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--dbt--tag"><a href="./values.yaml#L305">runtime.dbt.tag</a></td>
+			<td>
+string
+</td>
+			<td>DBT wrapper tag</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"0.11.0"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--huggingFace"><a href="./values.yaml#L307">runtime.huggingFace</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "image": "kserve/huggingfaceserver",
+  "tag": "v0.14.0"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--huggingFace--image"><a href="./values.yaml#L309">runtime.huggingFace.image</a></td>
+			<td>
+string
+</td>
+			<td>HuggingFaceServer repository</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"kserve/huggingfaceserver"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--huggingFace--tag"><a href="./values.yaml#L311">runtime.huggingFace.tag</a></td>
+			<td>
+string
+</td>
+			<td>HuggingFaceServer tag</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"v0.14.0"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--kfp"><a href="./values.yaml#L313">runtime.kfp</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp",
+  "tag": "0.11.0"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--kfp--image"><a href="./values.yaml#L315">runtime.kfp.image</a></td>
+			<td>
+string
+</td>
+			<td>KFP wrapper repository</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--kfp--tag"><a href="./values.yaml#L317">runtime.kfp.tag</a></td>
+			<td>
+string
+</td>
+			<td>KFP wrapper tag</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"0.11.0"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--python"><a href="./values.yaml#L319">runtime.python</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "image": "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime",
+  "tag3_10": "3.10-0.11.0",
+  "tag3_11": "3.11-0.11.0",
+  "tag3_9": "3.9-0.11.0"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--python--image"><a href="./values.yaml#L321">runtime.python.image</a></td>
+			<td>
+string
+</td>
+			<td>Python runtime repository</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--python--tag3_10"><a href="./values.yaml#L323">runtime.python.tag3_10</a></td>
+			<td>
+string
+</td>
+			<td>Python runtime 3.10  tag</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"3.10-0.11.0"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--python--tag3_11"><a href="./values.yaml#L325">runtime.python.tag3_11</a></td>
+			<td>
+string
+</td>
+			<td>Python runtime 3.11 tag</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"3.11-0.11.0"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="runtime--python--tag3_9"><a href="./values.yaml#L327">runtime.python.tag3_9</a></td>
+			<td>
+string
+</td>
+			<td>Python runtime 3.9 tag</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"3.9-0.11.0"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3"><a href="./values.yaml#L330">s3</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "accessKey": "",
+  "bucket": "",
+  "dynamicCreds": {
+    "enabled": false
+  },
+  "enabled": false,
+  "endpoint": "",
+  "existingSecret": {
+    "accessKeyKey": "",
+    "name": "",
+    "secretKeyKey": ""
+  },
+  "port": "",
+  "protocol": "http",
+  "publicUrl": "",
+  "region": "",
+  "secretKey": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--accessKey"><a href="./values.yaml#L335">s3.accessKey</a></td>
+			<td>
+string
+</td>
+			<td>Explicit declaration of the Access key of your S3 instance.  It has lower priority than the corresponding secret values.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--bucket"><a href="./values.yaml#L337">s3.bucket</a></td>
+			<td>
+string
+</td>
+			<td>Bucket of your S3 instance</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--dynamicCreds"><a href="./values.yaml#L339">s3.dynamicCreds</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "enabled": false
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--dynamicCreds--enabled"><a href="./values.yaml#L341">s3.dynamicCreds.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Set this to true if you want to use dynamic credentials for S3 communication</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--enabled"><a href="./values.yaml#L332">s3.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable this option if you have an S3 deployment that you want to use with Core</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--endpoint"><a href="./values.yaml#L343">s3.endpoint</a></td>
+			<td>
+string
+</td>
+			<td>Endpoint of your S3 instance</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--existingSecret"><a href="./values.yaml#L346">s3.existingSecret</a></td>
+			<td>
+object
+</td>
+			<td>Reference to the secret containing AccessKey and Secret key of your S3 instance.  These values have higher priority than the explicit declarations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "accessKeyKey": "",
+  "name": "",
+  "secretKeyKey": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--existingSecret--accessKeyKey"><a href="./values.yaml#L348">s3.existingSecret.accessKeyKey</a></td>
+			<td>
+string
+</td>
+			<td>Key corresponding to your accessKey in your secret </td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--existingSecret--name"><a href="./values.yaml#L350">s3.existingSecret.name</a></td>
+			<td>
+string
+</td>
+			<td>Secret containing accessKey and secretKey of your s3 instance</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--existingSecret--secretKeyKey"><a href="./values.yaml#L352">s3.existingSecret.secretKeyKey</a></td>
+			<td>
+string
+</td>
+			<td>Key corresponding to your secretKey in your secret </td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--port"><a href="./values.yaml#L354">s3.port</a></td>
+			<td>
+string
+</td>
+			<td>Port of your S3 instance</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--protocol"><a href="./values.yaml#L356">s3.protocol</a></td>
+			<td>
+string
+</td>
+			<td>Protocol of your S3 instance (http/https)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"http"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--publicUrl"><a href="./values.yaml#L358">s3.publicUrl</a></td>
+			<td>
+string
+</td>
+			<td>Public url of your S3 instance</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--region"><a href="./values.yaml#L360">s3.region</a></td>
+			<td>
+string
+</td>
+			<td>Region used by your S3 instance</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="s3--secretKey"><a href="./values.yaml#L363">s3.secretKey</a></td>
+			<td>
+string
+</td>
+			<td>Explicit declaration of the Secret key of your S3 instance.  It has lower priority than the corresponding secret values.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext"><a href="./values.yaml#L366">securityContext</a></td>
+			<td>
+object
+</td>
+			<td>Core [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "allowPrivilegeEscalation": false,
+  "capabilities": {
+    "drop": [
+      "ALL"
+    ]
+  },
+  "runAsNonRoot": true,
+  "seccompProfile": {
+    "type": "RuntimeDefault"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L368">securityContext.allowPrivilegeEscalation</a></td>
+			<td>
+bool
+</td>
+			<td>Core container allow privilege escalation.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--capabilities"><a href="./values.yaml#L370">securityContext.capabilities</a></td>
+			<td>
+object
+</td>
+			<td>Core container configure capabilities.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "drop": [
+    "ALL"
+  ]
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--capabilities--drop"><a href="./values.yaml#L372">securityContext.capabilities.drop</a></td>
+			<td>
+list
+</td>
+			<td>Core container drop capabilities.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  "ALL"
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L375">securityContext.runAsNonRoot</a></td>
+			<td>
+bool
+</td>
+			<td>Core container allow run as root.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--seccompProfile"><a href="./values.yaml#L377">securityContext.seccompProfile</a></td>
+			<td>
+object
+</td>
+			<td>Core container configure seccompProfile.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "type": "RuntimeDefault"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--seccompProfile--type"><a href="./values.yaml#L379">securityContext.seccompProfile.type</a></td>
+			<td>
+string
+</td>
+			<td>Core container configure seccompProfile type.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"RuntimeDefault"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="service"><a href="./values.yaml#L382">service</a></td>
+			<td>
+object
+</td>
+			<td>Service configurations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "httpNodePort": "",
+  "port": "8080",
+  "type": "ClusterIP"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="service--httpNodePort"><a href="./values.yaml#L384">service.httpNodePort</a></td>
+			<td>
+string
+</td>
+			<td>Service NodePort.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="service--port"><a href="./values.yaml#L386">service.port</a></td>
+			<td>
+string
+</td>
+			<td>Service port.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"8080"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="service--type"><a href="./values.yaml#L388">service.type</a></td>
+			<td>
+string
+</td>
+			<td>Service type.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ClusterIP"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount"><a href="./values.yaml#L391">serviceAccount</a></td>
+			<td>
+object
+</td>
+			<td>Service account configuration.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "annotations": {},
+  "automount": true,
+  "create": true,
+  "name": "core"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L393">serviceAccount.annotations</a></td>
+			<td>
+object
+</td>
+			<td>Additional Service Account annotations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount--automount"><a href="./values.yaml#L395">serviceAccount.automount</a></td>
+			<td>
+bool
+</td>
+			<td>Automount API credentials for a Service Account.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount--create"><a href="./values.yaml#L397">serviceAccount.create</a></td>
+			<td>
+bool
+</td>
+			<td>If `true` a Service Account will be created.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount--name"><a href="./values.yaml#L399">serviceAccount.name</a></td>
+			<td>
+string
+</td>
+			<td>Service account name.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"core"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="solr"><a href="./values.yaml#L402">solr</a></td>
+			<td>
+object
+</td>
+			<td>Solr configuration</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "collection": {
+    "initialize": {
+      "enabled": true,
+      "image": "smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot",
+      "securityJsonSecret": ""
+    },
+    "name": ""
+  },
+  "enabled": false,
+  "fullNameOverride": "",
+  "url": "",
+  "user": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="solr--collection"><a href="./values.yaml#L404">solr.collection</a></td>
+			<td>
+object
+</td>
+			<td>Solr collection configuration</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "initialize": {
+    "enabled": true,
+    "image": "smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot",
+    "securityJsonSecret": ""
+  },
+  "name": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="solr--collection--initialize"><a href="./values.yaml#L406">solr.collection.initialize</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "enabled": true,
+  "image": "smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot",
+  "securityJsonSecret": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="solr--collection--initialize--enabled"><a href="./values.yaml#L408">solr.collection.initialize.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/Disable Solr collection initialization by script, use it if you have set Basic Auth for Solr</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="solr--collection--initialize--image"><a href="./values.yaml#L410">solr.collection.initialize.image</a></td>
+			<td>
+string
+</td>
+			<td>Initialization image</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="solr--collection--initialize--securityJsonSecret"><a href="./values.yaml#L412">solr.collection.initialize.securityJsonSecret</a></td>
+			<td>
+string
+</td>
+			<td>Name of the secret containing the Solr security.json</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="solr--collection--name"><a href="./values.yaml#L414">solr.collection.name</a></td>
+			<td>
+string
+</td>
+			<td>Name of the Solr collection</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="solr--enabled"><a href="./values.yaml#L416">solr.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Set this value to true this value if you want to use Core with Solr</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="solr--fullNameOverride"><a href="./values.yaml#L418">solr.fullNameOverride</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="solr--url"><a href="./values.yaml#L420">solr.url</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="solr--user"><a href="./values.yaml#L422">solr.user</a></td>
+			<td>
+string
+</td>
+			<td>Specify the solr user</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts"><a href="./values.yaml#L425">sts</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "affinity": {},
+  "autoscaling": {
+    "enabled": false,
+    "maxReplicas": 100,
+    "minReplicas": 1,
+    "targetCPUUtilizationPercentage": 80
+  },
+  "client": {
+    "clientId": "",
+    "clientSecret": "",
+    "existingSecret": {
+      "clientIdKey": "",
+      "clientSecretKey": "",
+      "name": ""
+    }
+  },
+  "credentials": {
+    "roles": ""
+  },
+  "databaseProvider": {
+    "credentials": {
+      "existingSecret": {
+        "name": "",
+        "passwordKey": "",
+        "usernameKey": ""
+      },
+      "password": "",
+      "username": ""
+    },
+    "enabled": true
+  },
+  "enabled": false,
+  "fullnameOverride": "",
+  "image": {
+    "pullPolicy": "IfNotPresent",
+    "repository": "ghcr.io/scc-digitalhub/db-sts",
+    "tag": "0.3.0"
+  },
+  "imagePullSecrets": [],
+  "jwt": {
+    "audience": "sts",
+    "claim": "db/role",
+    "issuerUri": "http://digitalhub-core:8080"
+  },
+  "nameOverride": "",
+  "nodeSelector": {},
+  "podAnnotations": {},
+  "podLabels": {},
+  "podSecurityContext": {
+    "runAsNonRoot": true,
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "replicaCount": 1,
+  "resources": {
+    "limits": {
+      "cpu": "200m",
+      "memory": "256Mi"
+    },
+    "requests": {
+      "cpu": "100m",
+      "memory": "128Mi"
+    }
+  },
+  "securityContext": {
+    "allowPrivilegeEscalation": false,
+    "capabilities": {
+      "drop": [
+        "ALL"
+      ]
+    },
+    "runAsNonRoot": true,
+    "seccompProfile": {
+      "type": "RuntimeDefault"
+    }
+  },
+  "service": {
+    "port": 8080,
+    "type": "ClusterIP"
+  },
+  "serviceAccount": {
+    "annotations": {},
+    "automount": true,
+    "create": true,
+    "name": "core-sts"
+  },
+  "stsDb": {
+    "credentials": {
+      "existingSecret": {
+        "name": "",
+        "passwordKey": "",
+        "usernameKey": ""
+      },
+      "password": "",
+      "username": ""
+    },
+    "database": "",
+    "driver": "",
+    "host": "",
+    "platform": "",
+    "port": "",
+    "schema": ""
+  },
+  "tolerations": [],
+  "volumeMounts": [],
+  "volumes": []
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--affinity"><a href="./values.yaml#L427">sts.affinity</a></td>
+			<td>
+object
+</td>
+			<td>Affinity for pod assignment.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--autoscaling"><a href="./values.yaml#L429">sts.autoscaling</a></td>
+			<td>
+object
+</td>
+			<td>Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "enabled": false,
+  "maxReplicas": 100,
+  "minReplicas": 1,
+  "targetCPUUtilizationPercentage": 80
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--autoscaling--enabled"><a href="./values.yaml#L431">sts.autoscaling.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable horizontal scaling</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--autoscaling--maxReplicas"><a href="./values.yaml#L433">sts.autoscaling.maxReplicas</a></td>
+			<td>
+int
+</td>
+			<td>Set max replicas for autoscaling</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+100
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--autoscaling--minReplicas"><a href="./values.yaml#L435">sts.autoscaling.minReplicas</a></td>
+			<td>
+int
+</td>
+			<td>Set min replicas for autoscaling</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+1
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--autoscaling--targetCPUUtilizationPercentage"><a href="./values.yaml#L437">sts.autoscaling.targetCPUUtilizationPercentage</a></td>
+			<td>
+int
+</td>
+			<td>Set CPU utilization percentage that trigger the autoscaling</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+80
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--client"><a href="./values.yaml#L439">sts.client</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "clientId": "",
+  "clientSecret": "",
+  "existingSecret": {
+    "clientIdKey": "",
+    "clientSecretKey": "",
+    "name": ""
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--client--clientId"><a href="./values.yaml#L441">sts.client.clientId</a></td>
+			<td>
+string
+</td>
+			<td>ClientID used by STS</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--client--clientSecret"><a href="./values.yaml#L443">sts.client.clientSecret</a></td>
+			<td>
+string
+</td>
+			<td>ClientSecret used by STS</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--client--existingSecret"><a href="./values.yaml#L445">sts.client.existingSecret</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "clientIdKey": "",
+  "clientSecretKey": "",
+  "name": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--client--existingSecret--clientIdKey"><a href="./values.yaml#L447">sts.client.existingSecret.clientIdKey</a></td>
+			<td>
+string
+</td>
+			<td>Key corresponding to the STS ClientID</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--client--existingSecret--clientSecretKey"><a href="./values.yaml#L449">sts.client.existingSecret.clientSecretKey</a></td>
+			<td>
+string
+</td>
+			<td>Key corresponding to the STS ClientSecret</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--client--existingSecret--name"><a href="./values.yaml#L451">sts.client.existingSecret.name</a></td>
+			<td>
+string
+</td>
+			<td>Name of the secret containing STS ClientID and ClientSecret</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--credentials"><a href="./values.yaml#L453">sts.credentials</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "roles": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--credentials--roles"><a href="./values.yaml#L455">sts.credentials.roles</a></td>
+			<td>
+string
+</td>
+			<td>Roles that will be mapped to the user for Database operations. Must correspond to the owner user of the Platform's main database.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--databaseProvider"><a href="./values.yaml#L457">sts.databaseProvider</a></td>
+			<td>
+object
+</td>
+			<td>Values for the Platform's main database</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "credentials": {
+    "existingSecret": {
+      "name": "",
+      "passwordKey": "",
+      "usernameKey": ""
+    },
+    "password": "",
+    "username": ""
+  },
+  "enabled": true
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--databaseProvider--credentials"><a href="./values.yaml#L459">sts.databaseProvider.credentials</a></td>
+			<td>
+object
+</td>
+			<td>Credentials of the Platform's main database</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "existingSecret": {
+    "name": "",
+    "passwordKey": "",
+    "usernameKey": ""
+  },
+  "password": "",
+  "username": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--databaseProvider--credentials--existingSecret"><a href="./values.yaml#L462">sts.databaseProvider.credentials.existingSecret</a></td>
+			<td>
+object
+</td>
+			<td>Reference to the secret containing username and password of the Platform's main database owner user.  These values have higher priority than the explicit declarations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "name": "",
+  "passwordKey": "",
+  "usernameKey": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--databaseProvider--credentials--existingSecret--name"><a href="./values.yaml#L464">sts.databaseProvider.credentials.existingSecret.name</a></td>
+			<td>
+string
+</td>
+			<td>Name of the secret containing username and password of the Platform's main database owner user</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--databaseProvider--credentials--existingSecret--passwordKey"><a href="./values.yaml#L466">sts.databaseProvider.credentials.existingSecret.passwordKey</a></td>
+			<td>
+string
+</td>
+			<td>Key corresponding to the Platform's main database owner user password</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--databaseProvider--credentials--existingSecret--usernameKey"><a href="./values.yaml#L468">sts.databaseProvider.credentials.existingSecret.usernameKey</a></td>
+			<td>
+string
+</td>
+			<td>Key corresponding to the Platform's main database owner user username</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--databaseProvider--credentials--password"><a href="./values.yaml#L471">sts.databaseProvider.credentials.password</a></td>
+			<td>
+string
+</td>
+			<td>Explicit declaration of the Platform's main database owner user password.  It has lower priority than the corresponding secret values.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--databaseProvider--credentials--username"><a href="./values.yaml#L474">sts.databaseProvider.credentials.username</a></td>
+			<td>
+string
+</td>
+			<td>Explicit declaration of the Platform's main database owner user username.  It has lower priority than the corresponding secret values.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--databaseProvider--enabled"><a href="./values.yaml#L476">sts.databaseProvider.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/Disable dynamic credentials for Postgres operations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--enabled"><a href="./values.yaml#L478">sts.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/Disable STS component for dynamic credentials (Both for Postgres and S3 operations)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--fullnameOverride"><a href="./values.yaml#L480">sts.fullnameOverride</a></td>
+			<td>
+string
+</td>
+			<td>String to fully override `core.fullname` template.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--image"><a href="./values.yaml#L482">sts.image</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "pullPolicy": "IfNotPresent",
+  "repository": "ghcr.io/scc-digitalhub/db-sts",
+  "tag": "0.3.0"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--image--pullPolicy"><a href="./values.yaml#L484">sts.image.pullPolicy</a></td>
+			<td>
+string
+</td>
+			<td>Image pull policy</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"IfNotPresent"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--image--repository"><a href="./values.yaml#L486">sts.image.repository</a></td>
+			<td>
+string
+</td>
+			<td>STS container image repository.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ghcr.io/scc-digitalhub/db-sts"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--image--tag"><a href="./values.yaml#L488">sts.image.tag</a></td>
+			<td>
+string
+</td>
+			<td>STS container image tag.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"0.3.0"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--imagePullSecrets"><a href="./values.yaml#L493">sts.imagePullSecrets</a></td>
+			<td>
+list
+</td>
+			<td>Image pull secrets.  Optionally specify an array of imagePullSecrets.  Secrets must be manually created in the namespace.  ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--jwt"><a href="./values.yaml#L495">sts.jwt</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "audience": "sts",
+  "claim": "db/role",
+  "issuerUri": "http://digitalhub-core:8080"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--jwt--audience"><a href="./values.yaml#L497">sts.jwt.audience</a></td>
+			<td>
+string
+</td>
+			<td>JWT audience, must be sts.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"sts"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--jwt--claim"><a href="./values.yaml#L499">sts.jwt.claim</a></td>
+			<td>
+string
+</td>
+			<td>JWT claim, must be db/role</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"db/role"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--jwt--issuerUri"><a href="./values.yaml#L501">sts.jwt.issuerUri</a></td>
+			<td>
+string
+</td>
+			<td>URL of the JWT issuer.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"http://digitalhub-core:8080"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--nameOverride"><a href="./values.yaml#L503">sts.nameOverride</a></td>
+			<td>
+string
+</td>
+			<td>String to partially override `core.fullname` template (will maintain the release name)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--nodeSelector"><a href="./values.yaml#L505">sts.nodeSelector</a></td>
+			<td>
+object
+</td>
+			<td>Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--podAnnotations"><a href="./values.yaml#L507">sts.podAnnotations</a></td>
+			<td>
+object
+</td>
+			<td>Annotations to add to each pod.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--podLabels"><a href="./values.yaml#L509">sts.podLabels</a></td>
+			<td>
+object
+</td>
+			<td>Labels to add to each pod.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--podSecurityContext"><a href="./values.yaml#L511">sts.podSecurityContext</a></td>
+			<td>
+object
+</td>
+			<td>[Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "runAsNonRoot": true,
+  "seccompProfile": {
+    "type": "RuntimeDefault"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--podSecurityContext--runAsNonRoot"><a href="./values.yaml#L513">sts.podSecurityContext.runAsNonRoot</a></td>
+			<td>
+bool
+</td>
+			<td>Pod allow run as root.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--podSecurityContext--seccompProfile"><a href="./values.yaml#L515">sts.podSecurityContext.seccompProfile</a></td>
+			<td>
+object
+</td>
+			<td>Pod configure seccompProfile.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "type": "RuntimeDefault"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--podSecurityContext--seccompProfile--type"><a href="./values.yaml#L517">sts.podSecurityContext.seccompProfile.type</a></td>
+			<td>
+string
+</td>
+			<td>Pod configure seccompProfile type.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"RuntimeDefault"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--replicaCount"><a href="./values.yaml#L519">sts.replicaCount</a></td>
+			<td>
+int
+</td>
+			<td>Desired number of pods.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+1
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--resources"><a href="./values.yaml#L521">sts.resources</a></td>
+			<td>
+object
+</td>
+			<td>STS container resource requests and limits.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "limits": {
+    "cpu": "200m",
+    "memory": "256Mi"
+  },
+  "requests": {
+    "cpu": "100m",
+    "memory": "128Mi"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--resources--limits"><a href="./values.yaml#L523">sts.resources.limits</a></td>
+			<td>
+object
+</td>
+			<td>STS container imits</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "cpu": "200m",
+  "memory": "256Mi"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--resources--limits--cpu"><a href="./values.yaml#L525">sts.resources.limits.cpu</a></td>
+			<td>
+string
+</td>
+			<td>CPU limit</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"200m"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--resources--limits--memory"><a href="./values.yaml#L527">sts.resources.limits.memory</a></td>
+			<td>
+string
+</td>
+			<td>Memory limit</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"256Mi"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--resources--requests"><a href="./values.yaml#L529">sts.resources.requests</a></td>
+			<td>
+object
+</td>
+			<td>STS container requests</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "cpu": "100m",
+  "memory": "128Mi"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--resources--requests--cpu"><a href="./values.yaml#L531">sts.resources.requests.cpu</a></td>
+			<td>
+string
+</td>
+			<td>CPU request</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"100m"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--resources--requests--memory"><a href="./values.yaml#L533">sts.resources.requests.memory</a></td>
+			<td>
+string
+</td>
+			<td>Memory request</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"128Mi"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--securityContext"><a href="./values.yaml#L535">sts.securityContext</a></td>
+			<td>
+object
+</td>
+			<td>STS [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "allowPrivilegeEscalation": false,
+  "capabilities": {
+    "drop": [
+      "ALL"
+    ]
+  },
+  "runAsNonRoot": true,
+  "seccompProfile": {
+    "type": "RuntimeDefault"
+  }
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L537">sts.securityContext.allowPrivilegeEscalation</a></td>
+			<td>
+bool
+</td>
+			<td>STS allow privilege escalation</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--securityContext--capabilities"><a href="./values.yaml#L539">sts.securityContext.capabilities</a></td>
+			<td>
+object
+</td>
+			<td>STS container configure capabilities</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "drop": [
+    "ALL"
+  ]
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--securityContext--capabilities--drop"><a href="./values.yaml#L541">sts.securityContext.capabilities.drop</a></td>
+			<td>
+list
+</td>
+			<td>STS container drop capabilities</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  "ALL"
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--securityContext--runAsNonRoot"><a href="./values.yaml#L544">sts.securityContext.runAsNonRoot</a></td>
+			<td>
+bool
+</td>
+			<td>STS container allow run as root</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--securityContext--seccompProfile"><a href="./values.yaml#L546">sts.securityContext.seccompProfile</a></td>
+			<td>
+object
+</td>
+			<td>STS container configure seccompProfile</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "type": "RuntimeDefault"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--securityContext--seccompProfile--type"><a href="./values.yaml#L548">sts.securityContext.seccompProfile.type</a></td>
+			<td>
+string
+</td>
+			<td>STS container configure seccompProfile type</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"RuntimeDefault"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--service"><a href="./values.yaml#L550">sts.service</a></td>
+			<td>
+object
+</td>
+			<td>STS service configurations</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "port": 8080,
+  "type": "ClusterIP"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--service--port"><a href="./values.yaml#L552">sts.service.port</a></td>
+			<td>
+int
+</td>
+			<td>STS service port</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+8080
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--service--type"><a href="./values.yaml#L554">sts.service.type</a></td>
+			<td>
+string
+</td>
+			<td>STS service type</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ClusterIP"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--serviceAccount"><a href="./values.yaml#L556">sts.serviceAccount</a></td>
+			<td>
+object
+</td>
+			<td>STS service account configuration</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "annotations": {},
+  "automount": true,
+  "create": true,
+  "name": "core-sts"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--serviceAccount--annotations"><a href="./values.yaml#L558">sts.serviceAccount.annotations</a></td>
+			<td>
+object
+</td>
+			<td>Additional STS Service Account annotations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--serviceAccount--automount"><a href="./values.yaml#L560">sts.serviceAccount.automount</a></td>
+			<td>
+bool
+</td>
+			<td>Automount API credentials for a STS Service Account.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--serviceAccount--create"><a href="./values.yaml#L562">sts.serviceAccount.create</a></td>
+			<td>
+bool
+</td>
+			<td>If `true` a STS Service Account will be created.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--serviceAccount--name"><a href="./values.yaml#L564">sts.serviceAccount.name</a></td>
+			<td>
+string
+</td>
+			<td>STS service account name.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"core-sts"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb"><a href="./values.yaml#L566">sts.stsDb</a></td>
+			<td>
+object
+</td>
+			<td>Values of the STS database</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "credentials": {
+    "existingSecret": {
+      "name": "",
+      "passwordKey": "",
+      "usernameKey": ""
+    },
+    "password": "",
+    "username": ""
+  },
+  "database": "",
+  "driver": "",
+  "host": "",
+  "platform": "",
+  "port": "",
+  "schema": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb--credentials"><a href="./values.yaml#L568">sts.stsDb.credentials</a></td>
+			<td>
+object
+</td>
+			<td>Credentials of the STS database</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "existingSecret": {
+    "name": "",
+    "passwordKey": "",
+    "usernameKey": ""
+  },
+  "password": "",
+  "username": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb--credentials--existingSecret"><a href="./values.yaml#L571">sts.stsDb.credentials.existingSecret</a></td>
+			<td>
+object
+</td>
+			<td>Reference to the secret containing username and password of the STS database user.  These values have higher priority than the explicit declarations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "name": "",
+  "passwordKey": "",
+  "usernameKey": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb--credentials--existingSecret--name"><a href="./values.yaml#L573">sts.stsDb.credentials.existingSecret.name</a></td>
+			<td>
+string
+</td>
+			<td>Name of the secret containing username and password of the STS database user</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb--credentials--existingSecret--passwordKey"><a href="./values.yaml#L575">sts.stsDb.credentials.existingSecret.passwordKey</a></td>
+			<td>
+string
+</td>
+			<td>Key corresponding to the STS database user password</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb--credentials--existingSecret--usernameKey"><a href="./values.yaml#L577">sts.stsDb.credentials.existingSecret.usernameKey</a></td>
+			<td>
+string
+</td>
+			<td>Key corresponding to the STS database user username</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb--credentials--password"><a href="./values.yaml#L580">sts.stsDb.credentials.password</a></td>
+			<td>
+string
+</td>
+			<td>Explicit declaration of the STS database user password.  It has lower priority than the corresponding secret values.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb--credentials--username"><a href="./values.yaml#L583">sts.stsDb.credentials.username</a></td>
+			<td>
+string
+</td>
+			<td>Explicit declaration of the STS database user username.  It has lower priority than the corresponding secret values.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb--database"><a href="./values.yaml#L585">sts.stsDb.database</a></td>
+			<td>
+string
+</td>
+			<td>Name of the STS database</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb--driver"><a href="./values.yaml#L587">sts.stsDb.driver</a></td>
+			<td>
+string
+</td>
+			<td>Driver used by the STS database</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb--host"><a href="./values.yaml#L589">sts.stsDb.host</a></td>
+			<td>
+string
+</td>
+			<td>Host of the STS database</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb--platform"><a href="./values.yaml#L591">sts.stsDb.platform</a></td>
+			<td>
+string
+</td>
+			<td>Which kind of database you are using for STS (For example, postgresql)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb--port"><a href="./values.yaml#L593">sts.stsDb.port</a></td>
+			<td>
+string
+</td>
+			<td>STS Database port</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--stsDb--schema"><a href="./values.yaml#L595">sts.stsDb.schema</a></td>
+			<td>
+string
+</td>
+			<td>STS database schema</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--tolerations"><a href="./values.yaml#L597">sts.tolerations</a></td>
+			<td>
+list
+</td>
+			<td>List of node taints to tolerate (requires Kubernetes >= 1.6).</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--volumeMounts"><a href="./values.yaml#L599">sts.volumeMounts</a></td>
+			<td>
+list
+</td>
+			<td>Additional volumes.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--volumes"><a href="./values.yaml#L601">sts.volumes</a></td>
+			<td>
+list
+</td>
+			<td>Additional volumes to mount.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="templates"><a href="./values.yaml#L605">templates</a></td>
+			<td>
+list
+</td>
+			<td>Specify Core templates in list format.  Every template should correspond to a key in a configmap dedicated to the templates.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="tolerations"><a href="./values.yaml#L608">tolerations</a></td>
+			<td>
+list
+</td>
+			<td>List of node taints to tolerate (requires Kubernetes >= 1.6).</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="volumeMounts"><a href="./values.yaml#L611">volumeMounts</a></td>
+			<td>
+list
+</td>
+			<td>Additional volumes.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="volumes"><a href="./values.yaml#L614">volumes</a></td>
+			<td>
+list
+</td>
+			<td>Additional volumes to mount.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 ## Security Policy
 

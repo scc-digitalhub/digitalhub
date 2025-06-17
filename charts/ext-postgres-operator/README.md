@@ -46,46 +46,618 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 
 ## Values
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| env | object | `{}` | Additional enviroment variable. |
-| existingSecret | string | `""` | Additional environment variable mounted from an existing secret. |
-| fullnameOverride | string | `""` | String to fully override `postgrest-operator.fullname` template. |
-| image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/movetokube/postgres-operator","tag":"latest"}` | Container image configuration. |
-| image.pullPolicy | string | `"IfNotPresent"` | Container image pull policy. |
-| image.repository | string | `"ghcr.io/movetokube/postgres-operator"` | Container image repository. |
-| image.tag | string | `"latest"` | Container image tag. |
-| nameOverride | string | `""` | String to partially override `postgrest-operator.fullname` template (will maintain the release name). |
-| namespaceValues | object | `{"namespace":"","namespaced":true}` | Configure operator scope clusterwide or namespaced. |
-| namespaceValues.namespace | string | `""` | Namespace name where operator watch for CR. |
-| namespaceValues.namespaced | bool | `true` | Enable/Disable Cluster wide mode. |
-| nodeSelector | object | `{}` | Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/. |
-| podAnnotations | object | `{}` | Annotations to add to each pod. |
-| podLabels | object | `{}` | Labels to add to each pod. |
-| podSecurityContext | object | `{}` | [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) |
-| postgres | object | `{"cloud_provider":"","default_database":"postgres","host":"localhost","password":"password","uri_args":"","user":"admin"}` |  |
-| postgres.cloud_provider | string | `""` | Postgres cloud provider, could be AWS, Azure, GCP or empty (default) |
-| postgres.default_database | string | `"postgres"` | Postgres default database to use |
-| postgres.host | string | `"localhost"` | Postgres hostname |
-| postgres.password | string | `"password"` | Postgres username |
-| postgres.uri_args | string | `""` | Additional connection args to pg driver |
-| postgres.user | string | `"admin"` | Postgres password |
-| postgresCredsExistingSecrets | object | `{}` | Use existing secret for postgres server credentials |
-| replicaCount | int | `1` | Desired number of pods. |
-| resources | object | `{}` | Container resource requests and limits. |
-| securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true}` | [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) |
-| securityContext.allowPrivilegeEscalation | bool | `false` | Container allow privilege escalation |
-| securityContext.capabilities | object | `{"drop":["ALL"]}` | Container configure capabilities. |
-| securityContext.capabilities.drop | list | `["ALL"]` | Container drop capabilities. |
-| securityContext.readOnlyRootFilesystem | bool | `true` | Container read only filesystem |
-| securityContext.runAsNonRoot | bool | `true` | Container allow run as root. |
-| serviceAccount | object | `{"annotations":{},"name":""}` | Service account configuration. |
-| serviceAccount.annotations | object | `{}` | Additional Service Account annotations. |
-| serviceAccount.name | string | `""` | Service account name. |
-| tolerations | list | `[]` | List of node taints to tolerate (requires Kubernetes >= 1.6). |
-| volumeMounts | list | `[]` | Additional volumes. |
-| volumes | list | `[]` | Additional volumes to mount. |
-| watchNamespace | string | `""` | Which namespace to watch in kubernetes, empty string means all namespaces. |
+## Values
+
+<table height="400px" >
+	<thead>
+		<th>Key</th>
+		<th>Type</th>
+    <th>Description</th>
+		<th>Default</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td id="env"><a href="./values.yaml#L6">env</a></td>
+			<td>
+object
+</td>
+			<td>Additional enviroment variable.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="existingSecret"><a href="./values.yaml#L9">existingSecret</a></td>
+			<td>
+string
+</td>
+			<td>Additional environment variable mounted from an existing secret.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="fullnameOverride"><a href="./values.yaml#L12">fullnameOverride</a></td>
+			<td>
+string
+</td>
+			<td>String to fully override `postgrest-operator.fullname` template.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image"><a href="./values.yaml#L15">image</a></td>
+			<td>
+object
+</td>
+			<td>Container image configuration.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "pullPolicy": "IfNotPresent",
+  "repository": "ghcr.io/movetokube/postgres-operator",
+  "tag": "latest"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image--pullPolicy"><a href="./values.yaml#L17">image.pullPolicy</a></td>
+			<td>
+string
+</td>
+			<td>Container image pull policy.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"IfNotPresent"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image--repository"><a href="./values.yaml#L19">image.repository</a></td>
+			<td>
+string
+</td>
+			<td>Container image repository.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ghcr.io/movetokube/postgres-operator"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image--tag"><a href="./values.yaml#L21">image.tag</a></td>
+			<td>
+string
+</td>
+			<td>Container image tag.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"latest"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="nameOverride"><a href="./values.yaml#L24">nameOverride</a></td>
+			<td>
+string
+</td>
+			<td>String to partially override `postgrest-operator.fullname` template (will maintain the release name).</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="namespaceValues"><a href="./values.yaml#L27">namespaceValues</a></td>
+			<td>
+object
+</td>
+			<td>Configure operator scope clusterwide or namespaced.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "namespace": "",
+  "namespaced": true
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="namespaceValues--namespace"><a href="./values.yaml#L29">namespaceValues.namespace</a></td>
+			<td>
+string
+</td>
+			<td>Namespace name where operator watch for CR.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="namespaceValues--namespaced"><a href="./values.yaml#L31">namespaceValues.namespaced</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/Disable Cluster wide mode.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="nodeSelector"><a href="./values.yaml#L34">nodeSelector</a></td>
+			<td>
+object
+</td>
+			<td>Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podAnnotations"><a href="./values.yaml#L37">podAnnotations</a></td>
+			<td>
+object
+</td>
+			<td>Annotations to add to each pod.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podLabels"><a href="./values.yaml#L40">podLabels</a></td>
+			<td>
+object
+</td>
+			<td>Labels to add to each pod.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="podSecurityContext"><a href="./values.yaml#L43">podSecurityContext</a></td>
+			<td>
+object
+</td>
+			<td>[Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres"><a href="./values.yaml#L46">postgres</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "cloud_provider": "",
+  "default_database": "postgres",
+  "host": "localhost",
+  "password": "password",
+  "uri_args": "",
+  "user": "admin"
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--cloud_provider"><a href="./values.yaml#L48">postgres.cloud_provider</a></td>
+			<td>
+string
+</td>
+			<td>Postgres cloud provider, could be AWS, Azure, GCP or empty (default)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--default_database"><a href="./values.yaml#L50">postgres.default_database</a></td>
+			<td>
+string
+</td>
+			<td>Postgres default database to use</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"postgres"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--host"><a href="./values.yaml#L52">postgres.host</a></td>
+			<td>
+string
+</td>
+			<td>Postgres hostname</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"localhost"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--password"><a href="./values.yaml#L54">postgres.password</a></td>
+			<td>
+string
+</td>
+			<td>Postgres username</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"password"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--uri_args"><a href="./values.yaml#L56">postgres.uri_args</a></td>
+			<td>
+string
+</td>
+			<td>Additional connection args to pg driver</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgres--user"><a href="./values.yaml#L58">postgres.user</a></td>
+			<td>
+string
+</td>
+			<td>Postgres password</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"admin"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="postgresCredsExistingSecrets"><a href="./values.yaml#L61">postgresCredsExistingSecrets</a></td>
+			<td>
+object
+</td>
+			<td>Use existing secret for postgres server credentials</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="replicaCount"><a href="./values.yaml#L64">replicaCount</a></td>
+			<td>
+int
+</td>
+			<td>Desired number of pods.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+1
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="resources"><a href="./values.yaml#L67">resources</a></td>
+			<td>
+object
+</td>
+			<td>Container resource requests and limits.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext"><a href="./values.yaml#L70">securityContext</a></td>
+			<td>
+object
+</td>
+			<td>[Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "allowPrivilegeEscalation": false,
+  "capabilities": {
+    "drop": [
+      "ALL"
+    ]
+  },
+  "readOnlyRootFilesystem": true,
+  "runAsNonRoot": true
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L72">securityContext.allowPrivilegeEscalation</a></td>
+			<td>
+bool
+</td>
+			<td>Container allow privilege escalation</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--capabilities"><a href="./values.yaml#L74">securityContext.capabilities</a></td>
+			<td>
+object
+</td>
+			<td>Container configure capabilities.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "drop": [
+    "ALL"
+  ]
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--capabilities--drop"><a href="./values.yaml#L76">securityContext.capabilities.drop</a></td>
+			<td>
+list
+</td>
+			<td>Container drop capabilities.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[
+  "ALL"
+]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--readOnlyRootFilesystem"><a href="./values.yaml#L79">securityContext.readOnlyRootFilesystem</a></td>
+			<td>
+bool
+</td>
+			<td>Container read only filesystem</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L81">securityContext.runAsNonRoot</a></td>
+			<td>
+bool
+</td>
+			<td>Container allow run as root.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount"><a href="./values.yaml#L84">serviceAccount</a></td>
+			<td>
+object
+</td>
+			<td>Service account configuration.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{
+  "annotations": {},
+  "name": ""
+}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L86">serviceAccount.annotations</a></td>
+			<td>
+object
+</td>
+			<td>Additional Service Account annotations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+{}
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="serviceAccount--name"><a href="./values.yaml#L88">serviceAccount.name</a></td>
+			<td>
+string
+</td>
+			<td>Service account name.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="tolerations"><a href="./values.yaml#L91">tolerations</a></td>
+			<td>
+list
+</td>
+			<td>List of node taints to tolerate (requires Kubernetes >= 1.6).</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="volumeMounts"><a href="./values.yaml#L94">volumeMounts</a></td>
+			<td>
+list
+</td>
+			<td>Additional volumes.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="volumes"><a href="./values.yaml#L97">volumes</a></td>
+			<td>
+list
+</td>
+			<td>Additional volumes to mount.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+<details><summary>+Expand</summary>
+[]
+</details>
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="watchNamespace"><a href="./values.yaml#L100">watchNamespace</a></td>
+			<td>
+string
+</td>
+			<td>Which namespace to watch in kubernetes, empty string means all namespaces.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 ## Security Policy
 
