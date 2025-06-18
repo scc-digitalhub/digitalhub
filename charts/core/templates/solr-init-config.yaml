@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-{{- if and .Values.solr.collection.initialize.enabled .Values.solr.enabled }}
+{{ if and .Values.solr.collection.initialize.enabled .Values.solr.enabled -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
