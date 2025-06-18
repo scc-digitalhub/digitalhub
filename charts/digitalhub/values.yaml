@@ -798,6 +798,14 @@ global:
     rootUser: minio
     #  global.minio.rootUserSecret -- S3 admin secret
     rootUserSecret: minio
+  #  global.podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+  podSecurityContext:
+    #  global.podSecurityContext.runAsNonRoot -- Pod allow run as root.
+    runAsNonRoot: true
+    #  global.podSecurityContext.seccompProfile -- Pod configure seccompProfile.
+    seccompProfile:
+      #  global.podSecurityContext.seccompProfile.type -- Pod configure seccompProfile type.
+      type: RuntimeDefault
   #  global.registry -- Values of your registry
   registry:
     #  global.registry.email -- Registry email

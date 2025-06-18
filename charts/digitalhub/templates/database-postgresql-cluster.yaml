@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-{{- if ( index .Values "postgres-operator" "databases" "digitalhub" "enabled" ) }}
+{{ if ( index .Values "postgres-operator" "databases" "digitalhub" "enabled" ) -}}
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
