@@ -2,6 +2,13 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+#  global --
+global:
+  #  global.externalHostAddress --
+  externalHostAddress: ""
+  #  global.externalTls --
+  externalTls: false
+
 #  affinity --
 affinity: {}
 
@@ -24,13 +31,6 @@ env:
 #  fullnameOverride --
 fullnameOverride: ""
 
-#  global --
-global:
-  #  global.externalHostAddress --
-  externalHostAddress: ""
-  #  global.externalTls --
-  externalTls: false
-
 #  image --
 image:
   #  image.pullPolicy --
@@ -45,12 +45,12 @@ imagePullSecrets: []
 
 #  ingress --
 ingress:
+  #  ingress.enabled --
+  enabled: false
   #  ingress.annotations --
   annotations: {}
   #  ingress.className --
   className: ""
-  #  ingress.enabled --
-  enabled: false
   #  ingress.hosts --
   hosts:
     - host: chart-example.local
@@ -75,6 +75,8 @@ nodeSelector: {}
 
 #  oidc --
 oidc:
+  #  oidc.enabled --
+  enabled: false
   #  oidc.access --
   access:
     #  oidc.access.roles --
@@ -91,8 +93,6 @@ oidc:
       name: ""
   #  oidc.authType --
   authType: ""
-  #  oidc.enabled --
-  enabled: false
   #  oidc.issuer --
   issuer: ""
   #  oidc.redirectUrl --

@@ -52,7 +52,316 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 	</thead>
 	<tbody>
 		<tr>
-			<td id="deployment"><a href="./values.yaml#L6">deployment</a></td>
+			<td id="affinity"><a href="./values.yaml#L7">affinity</a></td>
+			<td>
+object
+</td>
+			<td>Affinity for pod assignment. # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{
+  "nodeAffinity": {
+    "requiredDuringSchedulingIgnoredDuringExecution": {
+      "nodeSelectorTerms": [
+        {
+          "matchExpressions": [
+            {
+              "key": "kubernetes.io/arch",
+              "operator": "In",
+              "values": [
+                "amd64",
+                "arm64",
+                "ppc64le",
+                "s390x"
+              ]
+            },
+            {
+              "key": "kubernetes.io/os",
+              "operator": "In",
+              "values": [
+                "linux"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="affinity--nodeAffinity"><a href="./values.yaml#L9">affinity.nodeAffinity</a></td>
+			<td>
+object
+</td>
+			<td>Constrain which nodes your Pod can be scheduled on based on node labels.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{
+  "requiredDuringSchedulingIgnoredDuringExecution": {
+    "nodeSelectorTerms": [
+      {
+        "matchExpressions": [
+          {
+            "key": "kubernetes.io/arch",
+            "operator": "In",
+            "values": [
+              "amd64",
+              "arm64",
+              "ppc64le",
+              "s390x"
+            ]
+          },
+          {
+            "key": "kubernetes.io/os",
+            "operator": "In",
+            "values": [
+              "linux"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="affinity--nodeAffinity--requiredDuringSchedulingIgnoredDuringExecution"><a href="./values.yaml#L11">affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution</a></td>
+			<td>
+object
+</td>
+			<td>The scheduler can't schedule the Pod unless the rule is met. This functions like nodeSelector, but with a more expressive syntax.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{
+  "nodeSelectorTerms": [
+    {
+      "matchExpressions": [
+        {
+          "key": "kubernetes.io/arch",
+          "operator": "In",
+          "values": [
+            "amd64",
+            "arm64",
+            "ppc64le",
+            "s390x"
+          ]
+        },
+        {
+          "key": "kubernetes.io/os",
+          "operator": "In",
+          "values": [
+            "linux"
+          ]
+        }
+      ]
+    }
+  ]
+}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="affinity--nodeAffinity--requiredDuringSchedulingIgnoredDuringExecution--nodeSelectorTerms"><a href="./values.yaml#L13">affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms</a></td>
+			<td>
+list
+</td>
+			<td>Kubernetes only schedules the Pod onto nodes that have each of the labels you specify.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+[
+  {
+    "matchExpressions": [
+      {
+        "key": "kubernetes.io/arch",
+        "operator": "In",
+        "values": [
+          "amd64",
+          "arm64",
+          "ppc64le",
+          "s390x"
+        ]
+      },
+      {
+        "key": "kubernetes.io/os",
+        "operator": "In",
+        "values": [
+          "linux"
+        ]
+      }
+    ]
+  }
+]
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling"><a href="./values.yaml#L28">autoscaling</a></td>
+			<td>
+object
+</td>
+			<td>Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{
+  "enabled": false,
+  "maxReplicas": 100,
+  "minReplicas": 1,
+  "targetCPUUtilizationPercentage": 80
+}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--enabled"><a href="./values.yaml#L30">autoscaling.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable horizontal scaling</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--maxReplicas"><a href="./values.yaml#L32">autoscaling.maxReplicas</a></td>
+			<td>
+int
+</td>
+			<td>Set max replicas for autoscaling</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+100
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--minReplicas"><a href="./values.yaml#L34">autoscaling.minReplicas</a></td>
+			<td>
+int
+</td>
+			<td>Set min replicas for autoscaling</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+1
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="autoscaling--targetCPUUtilizationPercentage"><a href="./values.yaml#L36">autoscaling.targetCPUUtilizationPercentage</a></td>
+			<td>
+int
+</td>
+			<td>Set CPU utilization percentage that trigger the autoscaling </td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+80
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="conf"><a href="./values.yaml#L40">conf</a></td>
+			<td>
+object
+</td>
+			<td>Dremio Rest Server configuration</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{
+  "drsImage": "ghcr.io/scc-digitalhub/dremio-rest-server",
+  "drsImageTag": "0.0.9",
+  "drsServiceType": "ClusterIP"
+}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="conf--drsImage"><a href="./values.yaml#L42">conf.drsImage</a></td>
+			<td>
+string
+</td>
+			<td>Dremio Rest Server container image repository.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ghcr.io/scc-digitalhub/dremio-rest-server"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="conf--drsImageTag"><a href="./values.yaml#L44">conf.drsImageTag</a></td>
+			<td>
+string
+</td>
+			<td>Dremio Rest Server container image tag.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"0.0.9"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="conf--drsServiceType"><a href="./values.yaml#L46">conf.drsServiceType</a></td>
+			<td>
+string
+</td>
+			<td>Dremio Rest Server service type.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"ClusterIP"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="deployment"><a href="./values.yaml#L49">deployment</a></td>
 			<td>
 object
 </td>
@@ -148,7 +457,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--image"><a href="./values.yaml#L8">deployment.image</a></td>
+			<td id="deployment--image"><a href="./values.yaml#L51">deployment.image</a></td>
 			<td>
 object
 </td>
@@ -167,7 +476,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--image--pullPolicy"><a href="./values.yaml#L10">deployment.image.pullPolicy</a></td>
+			<td id="deployment--image--pullPolicy"><a href="./values.yaml#L53">deployment.image.pullPolicy</a></td>
 			<td>
 string
 </td>
@@ -181,7 +490,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy"><a href="./values.yaml#L12">deployment.kubeRbacProxy</a></td>
+			<td id="deployment--kubeRbacProxy"><a href="./values.yaml#L55">deployment.kubeRbacProxy</a></td>
 			<td>
 object
 </td>
@@ -235,7 +544,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--args"><a href="./values.yaml#L14">deployment.kubeRbacProxy.args</a></td>
+			<td id="deployment--kubeRbacProxy--args"><a href="./values.yaml#L57">deployment.kubeRbacProxy.args</a></td>
 			<td>
 list
 </td>
@@ -257,7 +566,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--image"><a href="./values.yaml#L20">deployment.kubeRbacProxy.image</a></td>
+			<td id="deployment--kubeRbacProxy--image"><a href="./values.yaml#L63">deployment.kubeRbacProxy.image</a></td>
 			<td>
 object
 </td>
@@ -277,7 +586,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--image--repository"><a href="./values.yaml#L22">deployment.kubeRbacProxy.image.repository</a></td>
+			<td id="deployment--kubeRbacProxy--image--repository"><a href="./values.yaml#L65">deployment.kubeRbacProxy.image.repository</a></td>
 			<td>
 string
 </td>
@@ -291,7 +600,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--image--tag"><a href="./values.yaml#L24">deployment.kubeRbacProxy.image.tag</a></td>
+			<td id="deployment--kubeRbacProxy--image--tag"><a href="./values.yaml#L67">deployment.kubeRbacProxy.image.tag</a></td>
 			<td>
 string
 </td>
@@ -305,7 +614,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--name"><a href="./values.yaml#L26">deployment.kubeRbacProxy.name</a></td>
+			<td id="deployment--kubeRbacProxy--name"><a href="./values.yaml#L69">deployment.kubeRbacProxy.name</a></td>
 			<td>
 string
 </td>
@@ -319,7 +628,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--ports"><a href="./values.yaml#L28">deployment.kubeRbacProxy.ports</a></td>
+			<td id="deployment--kubeRbacProxy--ports"><a href="./values.yaml#L71">deployment.kubeRbacProxy.ports</a></td>
 			<td>
 object
 </td>
@@ -338,7 +647,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--ports--containerPort"><a href="./values.yaml#L30">deployment.kubeRbacProxy.ports.containerPort</a></td>
+			<td id="deployment--kubeRbacProxy--ports--containerPort"><a href="./values.yaml#L73">deployment.kubeRbacProxy.ports.containerPort</a></td>
 			<td>
 int
 </td>
@@ -352,7 +661,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--resources"><a href="./values.yaml#L32">deployment.kubeRbacProxy.resources</a></td>
+			<td id="deployment--kubeRbacProxy--resources"><a href="./values.yaml#L75">deployment.kubeRbacProxy.resources</a></td>
 			<td>
 object
 </td>
@@ -378,7 +687,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--securityContext"><a href="./values.yaml#L40">deployment.kubeRbacProxy.securityContext</a></td>
+			<td id="deployment--kubeRbacProxy--securityContext"><a href="./values.yaml#L83">deployment.kubeRbacProxy.securityContext</a></td>
 			<td>
 object
 </td>
@@ -406,7 +715,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L42">deployment.kubeRbacProxy.securityContext.allowPrivilegeEscalation</a></td>
+			<td id="deployment--kubeRbacProxy--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L85">deployment.kubeRbacProxy.securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -420,7 +729,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--securityContext--capabilities"><a href="./values.yaml#L44">deployment.kubeRbacProxy.securityContext.capabilities</a></td>
+			<td id="deployment--kubeRbacProxy--securityContext--capabilities"><a href="./values.yaml#L87">deployment.kubeRbacProxy.securityContext.capabilities</a></td>
 			<td>
 object
 </td>
@@ -441,7 +750,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--securityContext--capabilities--drop"><a href="./values.yaml#L46">deployment.kubeRbacProxy.securityContext.capabilities.drop</a></td>
+			<td id="deployment--kubeRbacProxy--securityContext--capabilities--drop"><a href="./values.yaml#L89">deployment.kubeRbacProxy.securityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
@@ -460,7 +769,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--securityContext--runAsNonRoot"><a href="./values.yaml#L49">deployment.kubeRbacProxy.securityContext.runAsNonRoot</a></td>
+			<td id="deployment--kubeRbacProxy--securityContext--runAsNonRoot"><a href="./values.yaml#L92">deployment.kubeRbacProxy.securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -474,7 +783,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--securityContext--seccompProfile"><a href="./values.yaml#L51">deployment.kubeRbacProxy.securityContext.seccompProfile</a></td>
+			<td id="deployment--kubeRbacProxy--securityContext--seccompProfile"><a href="./values.yaml#L94">deployment.kubeRbacProxy.securityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -493,7 +802,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--kubeRbacProxy--securityContext--seccompProfile--type"><a href="./values.yaml#L53">deployment.kubeRbacProxy.securityContext.seccompProfile.type</a></td>
+			<td id="deployment--kubeRbacProxy--securityContext--seccompProfile--type"><a href="./values.yaml#L96">deployment.kubeRbacProxy.securityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -507,7 +816,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager"><a href="./values.yaml#L55">deployment.manager</a></td>
+			<td id="deployment--manager"><a href="./values.yaml#L98">deployment.manager</a></td>
 			<td>
 object
 </td>
@@ -560,7 +869,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--args"><a href="./values.yaml#L57">deployment.manager.args</a></td>
+			<td id="deployment--manager--args"><a href="./values.yaml#L100">deployment.manager.args</a></td>
 			<td>
 list
 </td>
@@ -581,7 +890,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--command"><a href="./values.yaml#L62">deployment.manager.command</a></td>
+			<td id="deployment--manager--command"><a href="./values.yaml#L105">deployment.manager.command</a></td>
 			<td>
 list
 </td>
@@ -600,7 +909,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--image"><a href="./values.yaml#L65">deployment.manager.image</a></td>
+			<td id="deployment--manager--image"><a href="./values.yaml#L108">deployment.manager.image</a></td>
 			<td>
 object
 </td>
@@ -620,7 +929,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--image--repository"><a href="./values.yaml#L67">deployment.manager.image.repository</a></td>
+			<td id="deployment--manager--image--repository"><a href="./values.yaml#L110">deployment.manager.image.repository</a></td>
 			<td>
 string
 </td>
@@ -634,7 +943,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--image--tag"><a href="./values.yaml#L69">deployment.manager.image.tag</a></td>
+			<td id="deployment--manager--image--tag"><a href="./values.yaml#L112">deployment.manager.image.tag</a></td>
 			<td>
 string
 </td>
@@ -648,7 +957,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--name"><a href="./values.yaml#L71">deployment.manager.name</a></td>
+			<td id="deployment--manager--name"><a href="./values.yaml#L114">deployment.manager.name</a></td>
 			<td>
 string
 </td>
@@ -662,7 +971,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--resources"><a href="./values.yaml#L73">deployment.manager.resources</a></td>
+			<td id="deployment--manager--resources"><a href="./values.yaml#L116">deployment.manager.resources</a></td>
 			<td>
 object
 </td>
@@ -688,7 +997,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--securityContext"><a href="./values.yaml#L81">deployment.manager.securityContext</a></td>
+			<td id="deployment--manager--securityContext"><a href="./values.yaml#L124">deployment.manager.securityContext</a></td>
 			<td>
 object
 </td>
@@ -716,7 +1025,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L83">deployment.manager.securityContext.allowPrivilegeEscalation</a></td>
+			<td id="deployment--manager--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L126">deployment.manager.securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -730,7 +1039,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--securityContext--capabilities"><a href="./values.yaml#L85">deployment.manager.securityContext.capabilities</a></td>
+			<td id="deployment--manager--securityContext--capabilities"><a href="./values.yaml#L128">deployment.manager.securityContext.capabilities</a></td>
 			<td>
 object
 </td>
@@ -751,7 +1060,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--securityContext--capabilities--drop"><a href="./values.yaml#L87">deployment.manager.securityContext.capabilities.drop</a></td>
+			<td id="deployment--manager--securityContext--capabilities--drop"><a href="./values.yaml#L130">deployment.manager.securityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
@@ -770,7 +1079,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--securityContext--runAsNonRoot"><a href="./values.yaml#L90">deployment.manager.securityContext.runAsNonRoot</a></td>
+			<td id="deployment--manager--securityContext--runAsNonRoot"><a href="./values.yaml#L133">deployment.manager.securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -784,7 +1093,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--securityContext--seccompProfile"><a href="./values.yaml#L92">deployment.manager.securityContext.seccompProfile</a></td>
+			<td id="deployment--manager--securityContext--seccompProfile"><a href="./values.yaml#L135">deployment.manager.securityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -803,7 +1112,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="deployment--manager--securityContext--seccompProfile--type"><a href="./values.yaml#L94">deployment.manager.securityContext.seccompProfile.type</a></td>
+			<td id="deployment--manager--securityContext--seccompProfile--type"><a href="./values.yaml#L137">deployment.manager.securityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -817,7 +1126,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="fullnameOverride"><a href="./values.yaml#L97">fullnameOverride</a></td>
+			<td id="fullnameOverride"><a href="./values.yaml#L140">fullnameOverride</a></td>
 			<td>
 string
 </td>
@@ -831,7 +1140,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="imagePullSecrets"><a href="./values.yaml#L103">imagePullSecrets</a></td>
+			<td id="imagePullSecrets"><a href="./values.yaml#L146">imagePullSecrets</a></td>
 			<td>
 list
 </td>
@@ -848,7 +1157,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress"><a href="./values.yaml#L106">ingress</a></td>
+			<td id="ingress"><a href="./values.yaml#L149">ingress</a></td>
 			<td>
 object
 </td>
@@ -881,7 +1190,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--annotations"><a href="./values.yaml#L108">ingress.annotations</a></td>
+			<td id="ingress--annotations"><a href="./values.yaml#L153">ingress.annotations</a></td>
 			<td>
 object
 </td>
@@ -898,7 +1207,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--className"><a href="./values.yaml#L110">ingress.className</a></td>
+			<td id="ingress--className"><a href="./values.yaml#L155">ingress.className</a></td>
 			<td>
 string
 </td>
@@ -912,7 +1221,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--enabled"><a href="./values.yaml#L112">ingress.enabled</a></td>
+			<td id="ingress--enabled"><a href="./values.yaml#L151">ingress.enabled</a></td>
 			<td>
 bool
 </td>
@@ -926,7 +1235,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--hosts"><a href="./values.yaml#L114">ingress.hosts</a></td>
+			<td id="ingress--hosts"><a href="./values.yaml#L157">ingress.hosts</a></td>
 			<td>
 list
 </td>
@@ -953,7 +1262,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--tls"><a href="./values.yaml#L120">ingress.tls</a></td>
+			<td id="ingress--tls"><a href="./values.yaml#L163">ingress.tls</a></td>
 			<td>
 list
 </td>
@@ -970,7 +1279,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="nameOverride"><a href="./values.yaml#L123">nameOverride</a></td>
+			<td id="nameOverride"><a href="./values.yaml#L166">nameOverride</a></td>
 			<td>
 string
 </td>
@@ -984,7 +1293,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="namespaceValues"><a href="./values.yaml#L126">namespaceValues</a></td>
+			<td id="namespaceValues"><a href="./values.yaml#L169">namespaceValues</a></td>
 			<td>
 object
 </td>
@@ -1004,7 +1313,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="namespaceValues--namespace"><a href="./values.yaml#L128">namespaceValues.namespace</a></td>
+			<td id="namespaceValues--namespace"><a href="./values.yaml#L171">namespaceValues.namespace</a></td>
 			<td>
 string
 </td>
@@ -1018,7 +1327,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="namespaceValues--namespaced"><a href="./values.yaml#L130">namespaceValues.namespaced</a></td>
+			<td id="namespaceValues--namespaced"><a href="./values.yaml#L173">namespaceValues.namespaced</a></td>
 			<td>
 bool
 </td>
@@ -1032,7 +1341,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="nodeSelector"><a href="./values.yaml#L133">nodeSelector</a></td>
+			<td id="nodeSelector"><a href="./values.yaml#L176">nodeSelector</a></td>
 			<td>
 object
 </td>
@@ -1049,7 +1358,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podAnnotations"><a href="./values.yaml#L136">podAnnotations</a></td>
+			<td id="podAnnotations"><a href="./values.yaml#L179">podAnnotations</a></td>
 			<td>
 object
 </td>
@@ -1068,7 +1377,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podLabels"><a href="./values.yaml#L141">podLabels</a></td>
+			<td id="podLabels"><a href="./values.yaml#L184">podLabels</a></td>
 			<td>
 object
 </td>
@@ -1087,7 +1396,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podLabels--control-plane"><a href="./values.yaml#L143">podLabels.control-plane</a></td>
+			<td id="podLabels--control-plane"><a href="./values.yaml#L186">podLabels.control-plane</a></td>
 			<td>
 string
 </td>
@@ -1101,7 +1410,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext"><a href="./values.yaml#L146">podSecurityContext</a></td>
+			<td id="podSecurityContext"><a href="./values.yaml#L189">podSecurityContext</a></td>
 			<td>
 object
 </td>
@@ -1123,7 +1432,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--runAsNonRoot"><a href="./values.yaml#L148">podSecurityContext.runAsNonRoot</a></td>
+			<td id="podSecurityContext--runAsNonRoot"><a href="./values.yaml#L191">podSecurityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -1137,7 +1446,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--seccompProfile"><a href="./values.yaml#L150">podSecurityContext.seccompProfile</a></td>
+			<td id="podSecurityContext--seccompProfile"><a href="./values.yaml#L193">podSecurityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -1156,7 +1465,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--seccompProfile--type"><a href="./values.yaml#L152">podSecurityContext.seccompProfile.type</a></td>
+			<td id="podSecurityContext--seccompProfile--type"><a href="./values.yaml#L195">podSecurityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -1170,7 +1479,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="replicaCount"><a href="./values.yaml#L155">replicaCount</a></td>
+			<td id="replicaCount"><a href="./values.yaml#L198">replicaCount</a></td>
 			<td>
 int
 </td>
@@ -1184,7 +1493,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="resources"><a href="./values.yaml#L158">resources</a></td>
+			<td id="resources"><a href="./values.yaml#L201">resources</a></td>
 			<td>
 object
 </td>
@@ -1201,7 +1510,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="service"><a href="./values.yaml#L161">service</a></td>
+			<td id="service"><a href="./values.yaml#L204">service</a></td>
 			<td>
 object
 </td>
@@ -1221,7 +1530,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="service--port"><a href="./values.yaml#L163">service.port</a></td>
+			<td id="service--port"><a href="./values.yaml#L206">service.port</a></td>
 			<td>
 int
 </td>
@@ -1235,7 +1544,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="service--type"><a href="./values.yaml#L165">service.type</a></td>
+			<td id="service--type"><a href="./values.yaml#L208">service.type</a></td>
 			<td>
 string
 </td>
@@ -1249,7 +1558,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount"><a href="./values.yaml#L168">serviceAccount</a></td>
+			<td id="serviceAccount"><a href="./values.yaml#L211">serviceAccount</a></td>
 			<td>
 object
 </td>
@@ -1271,7 +1580,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--annotations"><a href="./values.yaml#L170">serviceAccount.annotations</a></td>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L213">serviceAccount.annotations</a></td>
 			<td>
 object
 </td>
@@ -1288,7 +1597,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--automount"><a href="./values.yaml#L172">serviceAccount.automount</a></td>
+			<td id="serviceAccount--automount"><a href="./values.yaml#L215">serviceAccount.automount</a></td>
 			<td>
 bool
 </td>
@@ -1302,7 +1611,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--create"><a href="./values.yaml#L174">serviceAccount.create</a></td>
+			<td id="serviceAccount--create"><a href="./values.yaml#L217">serviceAccount.create</a></td>
 			<td>
 bool
 </td>
@@ -1316,7 +1625,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--name"><a href="./values.yaml#L176">serviceAccount.name</a></td>
+			<td id="serviceAccount--name"><a href="./values.yaml#L219">serviceAccount.name</a></td>
 			<td>
 string
 </td>
@@ -1330,7 +1639,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="tolerations"><a href="./values.yaml#L179">tolerations</a></td>
+			<td id="tolerations"><a href="./values.yaml#L222">tolerations</a></td>
 			<td>
 list
 </td>
@@ -1347,7 +1656,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="volumeMounts"><a href="./values.yaml#L182">volumeMounts</a></td>
+			<td id="volumeMounts"><a href="./values.yaml#L225">volumeMounts</a></td>
 			<td>
 list
 </td>
@@ -1364,7 +1673,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="volumes"><a href="./values.yaml#L185">volumes</a></td>
+			<td id="volumes"><a href="./values.yaml#L228">volumes</a></td>
 			<td>
 list
 </td>

@@ -2,6 +2,25 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+#  global --
+global:
+  #  global.externalHostAddress --
+  externalHostAddress: ""
+  #  global.externalTls --
+  externalTls: false
+  #  global.registry -- Values of your registry
+  registry:
+    #  global.registry.email -- Registry email
+    email: ""
+    #  global.registry.password -- Registry password
+    password: ""
+    #  global.registry.secretName -- Name of the secret of your registry. It has higher priority.
+    secretName: ""
+    #  global.registry.url -- Registry url
+    url: ""
+    #  global.registry.username -- Registry username
+    username: ""
+
 #  additionalConfig --
 additionalConfig:
   #  additionalConfig.debug --
@@ -134,25 +153,6 @@ defaultStorageClass: ""
 #  fullnameOverride -- String to fully override `core.fullname` template.
 fullnameOverride: ""
 
-#  global --
-global:
-  #  global.externalHostAddress --
-  externalHostAddress: ""
-  #  global.externalTls --
-  externalTls: false
-  #  global.registry -- Values of your registry
-  registry:
-    #  global.registry.email -- Registry email
-    email: ""
-    #  global.registry.password -- Registry password
-    password: ""
-    #  global.registry.secretName -- Name of the secret of your registry. It has higher priority.
-    secretName: ""
-    #  global.registry.url -- Registry url
-    url: ""
-    #  global.registry.username -- Registry username
-    username: ""
-
 #  image --
 image:
   #  image.pullPolicy -- Image pull policy
@@ -167,12 +167,12 @@ imagePullSecrets: []
 
 #  ingress -- Ingress configurations.
 ingress:
+  #  ingress.enabled -- Enables Ingress.
+  enabled: false
   #  ingress.annotations -- Ingress annotations (values are templated).
   annotations: {}
   #  ingress.className -- Ingress Class Name. MAY be required for Kubernetes versions >= 1.18-
   className: ""
-  #  ingress.enabled -- Enables Ingress.
-  enabled: false
   #  ingress.hosts -- Ingress accepted hostnames.
   hosts:
     - host: core.home
@@ -327,6 +327,8 @@ runtime:
 
 #  s3 --
 s3:
+  # s3.enabled -- Enable this option if you have an S3 deployment that you want to use with Core
+  enabled: false
   #  s3.accessKey -- Explicit declaration of the Access key of your S3 instance.
   #  It has lower priority than the corresponding secret values.
   accessKey: ""
@@ -336,8 +338,6 @@ s3:
   dynamicCreds:
     #  s3.dynamicCreds.enabled -- Set this to true if you want to use dynamic credentials for S3 communication
     enabled: false
-  # s3.enabled -- Enable this option if you have an S3 deployment that you want to use with Core
-  enabled: false
   #  s3.endpoint -- Endpoint of your S3 instance
   endpoint: ""
   #  s3.existingSecret -- Reference to the secret containing AccessKey and Secret key of your S3 instance.
@@ -399,6 +399,8 @@ serviceAccount:
 
 #  solr -- Solr configuration
 solr:
+  #  solr.enabled -- Set this value to true if you want to use Core with Solr
+  enabled: false
   #  solr.collection -- Solr collection configuration
   collection:
     #  solr.collection.initialize --
@@ -411,8 +413,6 @@ solr:
       securityJsonSecret: ""
     #  solr.collection.name -- Name of the Solr collection
     name: ""
-  #  solr.enabled -- Set this value to true if you want to use Core with Solr
-  enabled: false
   #  solr.fullNameOverride --
   fullNameOverride: ""
   #  solr.url --
@@ -422,6 +422,8 @@ solr:
 
 #  sts --
 sts:
+  #  sts.enabled -- Enable/Disable STS component for dynamic credentials (Both for Postgres and S3 operations)
+  enabled: false
   #  sts.affinity -- Affinity for pod assignment.
   affinity: {}
   #  sts.autoscaling -- Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.
@@ -455,6 +457,8 @@ sts:
     roles: ""
   #  sts.databaseProvider -- Values of the Platform's main database
   databaseProvider:
+    #  sts.databaseProvider.enabled -- Enable/Disable dynamic credentials for Postgres operations.
+    enabled: true
     #  sts.databaseProvider.credentials -- Credentials of the Platform's main database
     credentials:
       #  sts.databaseProvider.credentials.existingSecret -- Reference to the secret containing username and password of the Platform's main database owner user.
@@ -472,10 +476,6 @@ sts:
       #  sts.databaseProvider.credentials.username -- Explicit declaration of the Platform's main database owner user username.
       #  It has lower priority than the corresponding secret values.
       username: ""
-    #  sts.databaseProvider.enabled -- Enable/Disable dynamic credentials for Postgres operations.
-    enabled: true
-  #  sts.enabled -- Enable/Disable STS component for dynamic credentials (Both for Postgres and S3 operations)
-  enabled: false
   #  sts.fullnameOverride -- String to fully override `core.fullname` template.
   fullnameOverride: ""
   #  sts.image --

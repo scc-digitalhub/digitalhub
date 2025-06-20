@@ -4,14 +4,14 @@ SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
 SPDX-License-Identifier: Apache-2.0
 -->
 
-# A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources.
+# kubernetes-resource-manager
 
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/kubernetes-resource-manager/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources.*)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/kubernetes-resource-manager/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=kubernetes-resource-manager*)
 ![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.2.8](https://img.shields.io/badge/Version-0.2.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.3](https://img.shields.io/badge/AppVersion-1.2.3-informational?style=flat-square)
 
-A Helm chart for Kubernetes
+A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources.
 
-A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources. is part of the DigitalHub platform, and depends on external components to support the complete set of functionalities. To bootstrap the platform in its entirety please explore the full documentation at the [link](https://scc-digitalhub.github.io/docs/admin/).
+kubernetes-resource-manager is part of the DigitalHub platform, and depends on external components to support the complete set of functionalities. To bootstrap the platform in its entirety please explore the full documentation at the [link](https://scc-digitalhub.github.io/docs/admin/).
 
 ## Quick start
 
@@ -32,13 +32,13 @@ A manager for resources in Kubernetes. The tool allows for monitoring and managi
 ```sh
 helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 ```
-5. Install A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources. with Helm:
+5. Install kubernetes-resource-manager with Helm:
 ```sh
-    helm upgrade A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources. digitalhub/A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources. -n A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources. --install --create-namespace --timeout 15m0s
+    helm upgrade kubernetes-resource-manager digitalhub/kubernetes-resource-manager -n kubernetes-resource-manager --install --create-namespace --timeout 15m0s
 ```
 6. Wait until all pods are in Running state
 ```sh
-    kubectl --namespace A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources. get pods
+    kubectl --namespace kubernetes-resource-manager get pods
 ```
 
 ## Values
@@ -52,7 +52,7 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 	</thead>
 	<tbody>
 		<tr>
-			<td id="affinity"><a href="./values.yaml#L6">affinity</a></td>
+			<td id="affinity"><a href="./values.yaml#L13">affinity</a></td>
 			<td>
 object
 </td>
@@ -69,7 +69,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="autoscaling"><a href="./values.yaml#L9">autoscaling</a></td>
+			<td id="autoscaling"><a href="./values.yaml#L16">autoscaling</a></td>
 			<td>
 object
 </td>
@@ -91,7 +91,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="autoscaling--enabled"><a href="./values.yaml#L11">autoscaling.enabled</a></td>
+			<td id="autoscaling--enabled"><a href="./values.yaml#L18">autoscaling.enabled</a></td>
 			<td>
 bool
 </td>
@@ -105,7 +105,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="autoscaling--maxReplicas"><a href="./values.yaml#L13">autoscaling.maxReplicas</a></td>
+			<td id="autoscaling--maxReplicas"><a href="./values.yaml#L20">autoscaling.maxReplicas</a></td>
 			<td>
 int
 </td>
@@ -119,7 +119,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="autoscaling--minReplicas"><a href="./values.yaml#L15">autoscaling.minReplicas</a></td>
+			<td id="autoscaling--minReplicas"><a href="./values.yaml#L22">autoscaling.minReplicas</a></td>
 			<td>
 int
 </td>
@@ -133,7 +133,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="autoscaling--targetCPUUtilizationPercentage"><a href="./values.yaml#L17">autoscaling.targetCPUUtilizationPercentage</a></td>
+			<td id="autoscaling--targetCPUUtilizationPercentage"><a href="./values.yaml#L24">autoscaling.targetCPUUtilizationPercentage</a></td>
 			<td>
 int
 </td>
@@ -147,7 +147,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="env"><a href="./values.yaml#L20">env</a></td>
+			<td id="env"><a href="./values.yaml#L27">env</a></td>
 			<td>
 object
 </td>
@@ -166,7 +166,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="env--additionalEnv"><a href="./values.yaml#L22">env.additionalEnv</a></td>
+			<td id="env--additionalEnv"><a href="./values.yaml#L29">env.additionalEnv</a></td>
 			<td>
 object
 </td>
@@ -183,7 +183,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="fullnameOverride"><a href="./values.yaml#L25">fullnameOverride</a></td>
+			<td id="fullnameOverride"><a href="./values.yaml#L32">fullnameOverride</a></td>
 			<td>
 string
 </td>
@@ -197,7 +197,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="global"><a href="./values.yaml#L28">global</a></td>
+			<td id="global"><a href="./values.yaml#L6">global</a></td>
 			<td>
 object
 </td>
@@ -217,7 +217,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="global--externalHostAddress"><a href="./values.yaml#L30">global.externalHostAddress</a></td>
+			<td id="global--externalHostAddress"><a href="./values.yaml#L8">global.externalHostAddress</a></td>
 			<td>
 string
 </td>
@@ -231,7 +231,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="global--externalTls"><a href="./values.yaml#L32">global.externalTls</a></td>
+			<td id="global--externalTls"><a href="./values.yaml#L10">global.externalTls</a></td>
 			<td>
 bool
 </td>
@@ -358,7 +358,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--annotations"><a href="./values.yaml#L49">ingress.annotations</a></td>
+			<td id="ingress--annotations"><a href="./values.yaml#L51">ingress.annotations</a></td>
 			<td>
 object
 </td>
@@ -375,7 +375,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--className"><a href="./values.yaml#L51">ingress.className</a></td>
+			<td id="ingress--className"><a href="./values.yaml#L53">ingress.className</a></td>
 			<td>
 string
 </td>
@@ -389,7 +389,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--enabled"><a href="./values.yaml#L53">ingress.enabled</a></td>
+			<td id="ingress--enabled"><a href="./values.yaml#L49">ingress.enabled</a></td>
 			<td>
 bool
 </td>
@@ -560,7 +560,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--access"><a href="./values.yaml#L79">oidc.access</a></td>
+			<td id="oidc--access"><a href="./values.yaml#L81">oidc.access</a></td>
 			<td>
 object
 </td>
@@ -579,7 +579,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--access--roles"><a href="./values.yaml#L81">oidc.access.roles</a></td>
+			<td id="oidc--access--roles"><a href="./values.yaml#L83">oidc.access.roles</a></td>
 			<td>
 list
 </td>
@@ -596,7 +596,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--audience"><a href="./values.yaml#L83">oidc.audience</a></td>
+			<td id="oidc--audience"><a href="./values.yaml#L85">oidc.audience</a></td>
 			<td>
 object
 </td>
@@ -619,7 +619,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--audience--clientId"><a href="./values.yaml#L85">oidc.audience.clientId</a></td>
+			<td id="oidc--audience--clientId"><a href="./values.yaml#L87">oidc.audience.clientId</a></td>
 			<td>
 string
 </td>
@@ -633,7 +633,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--audience--externalSecret"><a href="./values.yaml#L87">oidc.audience.externalSecret</a></td>
+			<td id="oidc--audience--externalSecret"><a href="./values.yaml#L89">oidc.audience.externalSecret</a></td>
 			<td>
 object
 </td>
@@ -653,7 +653,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--audience--externalSecret--key"><a href="./values.yaml#L89">oidc.audience.externalSecret.key</a></td>
+			<td id="oidc--audience--externalSecret--key"><a href="./values.yaml#L91">oidc.audience.externalSecret.key</a></td>
 			<td>
 string
 </td>
@@ -667,7 +667,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--audience--externalSecret--name"><a href="./values.yaml#L91">oidc.audience.externalSecret.name</a></td>
+			<td id="oidc--audience--externalSecret--name"><a href="./values.yaml#L93">oidc.audience.externalSecret.name</a></td>
 			<td>
 string
 </td>
@@ -681,7 +681,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--authType"><a href="./values.yaml#L93">oidc.authType</a></td>
+			<td id="oidc--authType"><a href="./values.yaml#L95">oidc.authType</a></td>
 			<td>
 string
 </td>
@@ -695,7 +695,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--enabled"><a href="./values.yaml#L95">oidc.enabled</a></td>
+			<td id="oidc--enabled"><a href="./values.yaml#L79">oidc.enabled</a></td>
 			<td>
 bool
 </td>

@@ -142,12 +142,12 @@ imagePullSecrets: []
 
 #  ingress -- Ingress configurations.
 ingress:
+  #  ingress.enabled -- Enables Ingress.
+  enabled: false
   #  ingress.annotations -- Ingress annotations (values are templated).
   annotations: {}
   #  ingress.className -- Ingress Class Name. MAY be required for Kubernetes versions >= 1.18-
   className: ""
-  #  ingress.enabled -- Enables Ingress.
-  enabled: false
   #  ingress.hosts -- Ingress accepted hostnames.
   hosts:
     - host: chart-example.local

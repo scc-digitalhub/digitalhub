@@ -1182,7 +1182,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--annotations"><a href="./values.yaml#L146">ingress.annotations</a></td>
+			<td id="ingress--annotations"><a href="./values.yaml#L148">ingress.annotations</a></td>
 			<td>
 object
 </td>
@@ -1199,7 +1199,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--className"><a href="./values.yaml#L148">ingress.className</a></td>
+			<td id="ingress--className"><a href="./values.yaml#L150">ingress.className</a></td>
 			<td>
 string
 </td>
@@ -1213,7 +1213,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--enabled"><a href="./values.yaml#L150">ingress.enabled</a></td>
+			<td id="ingress--enabled"><a href="./values.yaml#L146">ingress.enabled</a></td>
 			<td>
 bool
 </td>

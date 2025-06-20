@@ -12,17 +12,17 @@ affinity:
       #  affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms -- Kubernetes only schedules the Pod onto nodes that have each of the labels you specify.
       nodeSelectorTerms:
         - matchExpressions:
-          - key: kubernetes.io/arch
-            operator: In
-            values:
-            - amd64
-            - arm64
-            - ppc64le
-            - s390x
-          - key: kubernetes.io/os
-            operator: In
-            values:
-            - linux
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+                - amd64
+                - arm64
+                - ppc64le
+                - s390x
+            - key: kubernetes.io/os
+              operator: In
+              values:
+                - linux
 
 # autoscaling -- Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.
 autoscaling:
@@ -147,12 +147,12 @@ imagePullSecrets: []
 
 #  ingress -- Ingress configurations.
 ingress:
+  #  ingress.enabled -- Enables Ingress.
+  enabled: false
   #  ingress.annotations -- Ingress annotations (values are templated).
   annotations: {}
   #  ingress.className -- Ingress Class Name. MAY be required for Kubernetes versions >= 1.18-
   className: ""
-  #  ingress.enabled -- Enables Ingress.
-  enabled: false
   #  ingress.hosts -- Ingress accepted hostnames.
   hosts:
     - host: chart-example.local
