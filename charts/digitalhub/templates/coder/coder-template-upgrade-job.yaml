@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-{{- if and .Values.coder.enabled .Values.coder.template.upgrade.enabled .Values.coder.template.upgrade.token}}
+{{ if and .Values.coder.enabled .Values.coder.template.upgrade.enabled .Values.coder.template.upgrade.token -}}
 apiVersion: batch/v1
 kind: Job
 metadata:

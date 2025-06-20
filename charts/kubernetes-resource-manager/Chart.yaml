@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 apiVersion: v2
-name: A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources.
-description: A Helm chart for Kubernetes
+name: kubernetes-resource-manager
+description: A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources.
 home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/kubernetes-resource-manager"
 type: application
 version: 0.2.8

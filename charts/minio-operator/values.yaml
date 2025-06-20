@@ -44,6 +44,8 @@ deployment:
       - "--v=0"
     #  deployment.kubeRbacProxy.image -- DEPRECATED kube-rbac-proxy container image configuration.
     image:
+      #  deployment.kubeRbacProxy.image.pullPolicy -- DEPRECATED kube-rbac-proxy container image pull policy.
+      pullPolicy: IfNotPresent
       #  deployment.kubeRbacProxy.image.repository -- DEPRECATED kube-rbac-proxy container image repository.
       repository: gcr.io/kubebuilder/kube-rbac-proxy
       #  deployment.kubeRbacProxy.image.tag -- DEPRECATED kube-rbac-proxy container image tag.
@@ -89,6 +91,8 @@ deployment:
       - /manager
     #  deployment.manager.image -- Manager container image configuration.
     image:
+      #  deployment.manager.image.pullPolicy -- Manager container image pull policy.
+      pullPolicy: IfNotPresent
       #  deployment.manager.image.repository -- Manager container image repository.
       repository: ghcr.io/scc-digitalhub/minio-operator
       #  deployment.manager.image.tag -- Manager container image tag.

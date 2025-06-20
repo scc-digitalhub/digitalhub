@@ -2,6 +2,49 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+#  affinity -- Affinity for pod assignment.
+## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity:
+  #  affinity.nodeAffinity -- Constrain which nodes your Pod can be scheduled on based on node labels.
+  nodeAffinity:
+    #  affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution -- The scheduler can't schedule the Pod unless the rule is met. This functions like nodeSelector, but with a more expressive syntax.
+    requiredDuringSchedulingIgnoredDuringExecution:
+      #  affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms -- Kubernetes only schedules the Pod onto nodes that have each of the labels you specify.
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/arch
+            operator: In
+            values:
+            - amd64
+            - arm64
+            - ppc64le
+            - s390x
+          - key: kubernetes.io/os
+            operator: In
+            values:
+            - linux
+
+# autoscaling -- Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.
+autoscaling:
+  # autoscaling.enabled -- Enable horizontal scaling
+  enabled: false
+  # autoscaling.maxReplicas -- Set max replicas for autoscaling
+  maxReplicas: 100
+  # autoscaling.minReplicas -- Set min replicas for autoscaling
+  minReplicas: 1
+  # autoscaling.targetCPUUtilizationPercentage -- Set CPU utilization percentage that trigger the autoscaling 
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# conf -- Dremio Rest Server configuration
+conf:
+  # conf.drsImage -- Dremio Rest Server container image repository.
+  drsImage: ghcr.io/scc-digitalhub/dremio-rest-server
+  # conf.drsImageTag -- Dremio Rest Server container image tag.
+  drsImageTag: 0.0.9
+  # conf.drsServiceType -- Dremio Rest Server service type.
+  drsServiceType: ClusterIP
+
 #  deployment -- DEPRECATED Kube-rbac-proxy secures /metrics endpoint as a manager sidecar, using the service account token mounted into the Pod by default corrects this problem.
 deployment:
   #  deployment.image -- Pod image configuration

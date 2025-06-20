@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-{{- if (index .Values "template-controller" "objectTemplate" "enabled") }}
+{{ if (index .Values "template-controller" "objectTemplate" "enabled") -}}
 apiVersion: v1
 kind: ServiceAccount
 metadata:

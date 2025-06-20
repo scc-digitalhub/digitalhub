@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-{{- if not .Values.core.sts.enabled -}}
+{{ if not .Values.core.sts.enabled -}}
 {{- if ( index .Values "template-controller" "objectTemplate" "enabled" ) }}
 apiVersion: templates.kluctl.io/v1alpha1
 kind: ObjectTemplate

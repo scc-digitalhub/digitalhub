@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-{{- $clusterRoleName := include "kubernetes-resource-manager.fullname" . }}
+{{ $clusterRoleName := include "kubernetes-resource-manager.fullname" . -}}
 {{- if .Values.rbac.clusterRole.create }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole

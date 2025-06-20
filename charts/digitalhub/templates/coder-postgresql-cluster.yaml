@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-{{- if and .Values.coder.enabled ( index .Values "postgres-operator" "databases" "coder" "enabled" ) }}
+{{ if and .Values.coder.enabled ( index .Values "postgres-operator" "databases" "coder" "enabled" ) -}}
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:

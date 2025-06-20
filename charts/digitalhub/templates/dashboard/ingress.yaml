@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-{{- if .Values.dashboard.ingress.enabled -}}
+{{ if .Values.dashboard.ingress.enabled -}}
 {{- $svcPort := .Values.dashboard.service.port -}}
 {{- $svcName := (include "digitalhub.fullname" .)  -}}
 {{- if and .Values.dashboard.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
