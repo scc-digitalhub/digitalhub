@@ -1390,16 +1390,16 @@ solr:
   podOptions:
     #  solr.podOptions.containerSecurityContext -- [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
     containerSecurityContext:
-      #  solr.podOptions.containerSecurityContext.allowPrivilegeEscalation -- Container allow privilege escalation.
+      #  solr.podOptions.containerSecurityContext.allowPrivilegeEscalation -- Pod allow privilege escalation.
       allowPrivilegeEscalation: false
-      #  solr.podOptions.containerSecurityContext.capabilities -- Container configure capabilities.
+      #  solr.podOptions.containerSecurityContext.capabilities -- Pod configure capabilities.
       capabilities:
-        #  solr.podOptions.containerSecurityContext.capabilities.drop -- Container drop capabilities.
+        #  solr.podOptions.containerSecurityContext.capabilities.drop -- Pod drop capabilities.
         drop:
           - ALL
-      #  solr.podOptions.containerSecurityContext.seccompProfile -- Container configure seccompProfile.
+      #  solr.podOptions.containerSecurityContext.seccompProfile -- Pod configure seccompProfile.
       seccompProfile:
-        #  solr.podOptions.containerSecurityContext.seccompProfile.type -- Container configure seccompProfile type.
+        #  solr.podOptions.containerSecurityContext.seccompProfile.type -- Pod configure seccompProfile type.
         type: RuntimeDefault
     #  solr.podOptions.podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
     podSecurityContext:

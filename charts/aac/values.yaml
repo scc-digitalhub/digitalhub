@@ -11,7 +11,7 @@ image:
   aacCommand2: "org.springframework.boot.loader.JarLauncher"
   aacCommand3: "-Dspring-boot.run.arguments=--logging.level.ROOT=DEBUG"
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 5.x-94ad08c
+  tag: 5.3.0-beta1
 
 imagePullSecrets: []
 nameOverride: ""
