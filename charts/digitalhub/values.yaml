@@ -31,7 +31,7 @@ global:
   #  global.crd --
   crd:
     #  global.crd.enabled -- Enable/Disable CRDs installations
-    enabled: true
+    enabled: &globalCrd true
   #  global.externalHostAddress --
   externalHostAddress: 192.168.49.2
   #  global.externalTls --
@@ -39,31 +39,31 @@ global:
   #  global.minio --
   minio:
     #  global.minio.argoBucket -- Name of the Argo bucket
-    argoBucket: "argo"
+    argoBucket: &argoBucket "argo"
     #  global.minio.argoPassword -- Password of the Argo bucket user
-    argoPassword: argo1234
+    argoPassword: &argoPassword argo1234
     #  global.minio.argoSecret -- Secret of the Argo bucket user
-    argoSecret: argo-minio-creds
+    argoSecret: &argoSecret argo-minio-creds
     #  global.minio.argoUser -- Username of the Argo bucket user
-    argoUser: argo
+    argoUser: &argoUser argo
     #  global.minio.bucket -- Name of the Platform's main bucket
-    bucket: "datalake"
+    bucket: &minioBucket "datalake"
     #  global.minio.digitalhubPassword -- Password of the Platform's main bucket user
-    digitalhubPassword: digitalhub
+    digitalhubPassword: &digitalhubPassword digitalhub
     #  global.minio.digitalhubUser -- Username of the Platform's main bucket user
-    digitalhubUser: digitalhub
+    digitalhubUser: &digitalhubUser digitalhub
     #  global.minio.digitalhubUserSecret -- Secret of the Platform's main bucket user
     digitalhubUserSecret: digitalhub-minio-creds
     #  global.minio.endpoint -- Endpoint of your S3 instance
-    endpoint: "minio"
+    endpoint: &minioEndpoint "minio"
     #  global.minio.endpointPort -- Port of your S3 instance
-    endpointPort: "9000"
+    endpointPort: &minioEndpointPort "9000"
     #  global.minio.protocol -- Protocol of your S3 instance (http/https)
-    protocol: "http"
+    protocol: &minioProtocol "http"
     #  global.minio.rootPassword -- S3 admin password
-    rootPassword: minio123
+    rootPassword: &minioRootPassword minio123
     #  global.minio.rootUser -- S3 admin username
-    rootUser: minio
+    rootUser: &minioRootUser minio
     #  global.minio.rootUserSecret -- S3 admin secret
     rootUserSecret: minio
   #  global.podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
@@ -104,7 +104,7 @@ global:
   #  global.service --
   service:
     #  global.service.type -- Service type used by the Platform's applications
-    type: "NodePort"
+    type: &serviceType "NodePort"
   #  global.solr --
   solr:
     #  global.solr.fullNameOverride --
@@ -139,9 +139,9 @@ argo-workflows:
             #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.accessKeySecret.key -- Key for the accesKey
             key: accesskey
             #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.accessKeySecret.name -- Name of the secret containing your S3 accessKey for the Argo bucket
-            name: argo-minio-creds
+            name: *argoSecret
           #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.bucket -- Name of your bucket for Argo
-          bucket: argo
+          bucket: *argoBucket
           #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.endpoint -- Endpoint of your S3 instance
           endpoint: minio:9000
           #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.insecure -- Insecure will disable TLS. Primarily used for minio installs not configured with TLS
@@ -151,7 +151,7 @@ argo-workflows:
             #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.secretKeySecret.key -- Key for the secretKey
             key: secretkey
             #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.secretKeySecret.name -- Name of the secret containing your S3 secretKey for the Argo bucket
-            name: argo-minio-creds
+            name: *argoSecret
   #  argo-workflows.controller -- Controller configuration
   controller:
     #  argo-workflows.controller.configMap --
@@ -255,7 +255,7 @@ coder:
       #  coder.coder.service.httpNodePort -- Service NodePort
       httpNodePort: "30170"
       #  coder.coder.service.type -- Service type
-      type: NodePort
+      type: *serviceType
   #  coder.email -- Coder admin email
   email: test@digitalhub.test
   #  coder.password -- Coder admin password
@@ -452,13 +452,13 @@ core:
     #  It has lower priority than the corresponding secret values.
     accessKey: ""
     #  core.s3.bucket -- Bucket of your S3 instance
-    bucket: datalake
+    bucket: *minioBucket
     #  core.s3.dynamicCreds --
     dynamicCreds:
       #  core.s3.dynamicCreds.enabled -- Set this to true if you want to use dynamic credentials for S3 communication
       enabled: false
     #  core.s3.endpoint -- Endpoint of your S3 instance
-    endpoint: minio
+    endpoint: *minioEndpoint
     #  core.s3.existingSecret -- Reference to the secret containing AccessKey and Secret key of your S3 instance.
     #  These values have higher priority than the explicit declarations.
     existingSecret:
@@ -471,7 +471,7 @@ core:
     #  core.s3.port -- Port of your S3 instance
     port: "9000"
     #  core.s3.protocol -- Protocol of your S3 instance (http/https)
-    protocol: http
+    protocol: *minioProtocol
     #  core.s3.publicUrl -- Public url of your S3 instance
     publicUrl: http://192.168.49.2:30080
     #  core.s3.region -- Region used by your S3 instance
@@ -484,7 +484,7 @@ core:
     #  core.service.httpNodePort -- Service NodePort.
     httpNodePort: "30180"
     #  core.service.type -- Service type.
-    type: NodePort
+    type: *serviceType
   #  core.solr -- Solr configuration
   solr:
     #  core.solr.enabled -- Set this value to true if you want to use Core with Solr
@@ -731,7 +731,7 @@ dashboard:
     #  dashboard.service.port -- Service port
     port: "8080"
     #  dashboard.service.type -- Service type
-    type: NodePort
+    type: *serviceType
   #  dashboard.serviceAccount -- Dashboard service account configuration
   serviceAccount:
     #  dashboard.serviceAccount.annotations -- Additional Dashboard Service Account annotations.
@@ -777,7 +777,7 @@ docker-registry:
     #  docker-registry.service.nodePort -- Service NodePort.
     nodePort: 30150
     #  docker-registry.service.type -- Service type.
-    type: NodePort
+    type: *serviceType
   #  docker-registry.updateStrategy -- [Deployment update strategy](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy)
   updateStrategy:
     #  docker-registry.updateStrategy.type -- Strategy type
@@ -881,7 +881,7 @@ kubernetes-resource-manager:
     #  kubernetes-resource-manager.service.nodePort -- Service nodePort
     nodePort: "30220"
     #  kubernetes-resource-manager.service.type -- Service type
-    type: NodePort
+    type: *serviceType
 
 #  minio -- MinIO configuration.
 #  For a complete list of all the Values, as well as the specific documentation, please check the [MinIO chart repository](https://github.com/minio/minio/tree/master/helm/minio)
@@ -903,7 +903,7 @@ minio:
     #  minio.consoleService.port -- Service port
     port: 9001
     #  minio.consoleService.type -- Service type
-    type: NodePort
+    type: *serviceType
   #  minio.containerSecurityContext -- MinIO [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
   containerSecurityContext:
     #  minio.containerSecurityContext.allowPrivilegeEscalation -- MinIO container allow privilege escalation
@@ -1067,9 +1067,9 @@ minio:
       #  minio.resources.requests.memory -- Memory request
       memory: 0.5Gi
   #  minio.rootPassword -- MinIO admin password
-  rootPassword: minio123
+  rootPassword: *minioRootPassword
   #  minio.rootUser -- MinIO admin username
-  rootUser: minio
+  rootUser: *minioRootUser
   #  minio.securityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
   securityContext:
     #  minio.securityContext.runAsNonRoot -- Pod allow run as root.
@@ -1085,15 +1085,15 @@ minio:
     #  minio.service.port -- Service port
     port: 9000
     #  minio.service.type -- Service type
-    type: NodePort
+    type: *serviceType
   #  minio.users -- Users that will be created in MinIO in list format
   users:
-    - accessKey: digitalhub
+    - accessKey: *digitalhubUser
       policy: readwritedigitalhub
-      secretKey: digitalhub
-    - accessKey: argo
+      secretKey: *digitalhubPassword
+    - accessKey: *argoUser
       policy: readwriteargo
-      secretKey: argo1234
+      secretKey: *argoPassword
 
 #  minio-operator -- MinIO operator (for KRM) configuration
 minio-operator:
@@ -1102,17 +1102,17 @@ minio-operator:
   #  minio-operator.minio --
   minio:
     #  minio-operator.minio.accessKey -- MinIO admin accessKey
-    accessKey: minio
+    accessKey: *minioRootUser
     #  minio-operator.minio.bucket -- MinIO bucket name
-    bucket: datalake
+    bucket: *minioBucket
     #  minio-operator.minio.endpoint -- MinIO endpoint
-    endpoint: minio
+    endpoint: *minioEndpoint
     #  minio-operator.minio.endpointPort -- MinIO endpoint port
-    endpointPort: "9000"
+    endpointPort: *minioEndpointPort
     #  minio-operator.minio.protocol -- MinIO protocol (http/https)
-    protocol: http
+    protocol: *minioProtocol
     #  minio-operator.minio.secretKey -- MinIO admin secret key
-    secretKey: minio123
+    secretKey: *minioRootPassword
 
 #  open-webui -- OpenWebUI configuration
 #  For a complete list of all the Values, as well as the specific documentation, please check the [OpenWebUI chart repository](https://github.com/open-webui/helm-charts/tree/main/charts/open-webui)
@@ -1173,7 +1173,7 @@ open-webui:
     #  open-webui.service.nodePort -- Service nodePort
     nodePort: "30160"
     #  open-webui.service.type -- Service type
-    type: NodePort
+    type: *serviceType
 
 #  platformPackages -- Platform's packages configuration.
 #  Used for the tests and Code-Toolbox Coder template.
@@ -1309,7 +1309,7 @@ postgrest-operator:
     #  postgrest-operator.postgres.port -- Postgres server port
     port: 5432
     #  postgrest-operator.postgres.postgrest_service_type -- Postgrest service type
-    postgrest_service_type: NodePort
+    postgrest_service_type: *serviceType
     #  postgrest-operator.postgres.uri_args -- Postgrest additional arguments
     uri_args: sslmode=disable
   #  postgrest-operator.postgresCredsExistingSecrets -- Use existing secret for postgres server credentials
@@ -1455,7 +1455,7 @@ solr-operator:
     #  solr-operator.zookeeper-operator.crd --
     crd:
       #  solr-operator.zookeeper-operator.crd.create -- Install Solr CRDs
-      create: true
+      create: *globalCrd
 
 #  template-controller -- Template Controller configuration
 #  For a complete list of all the Values, as well as the specific documentation, please check the [Template Controller Helm Chart repository](https://github.com/kluctl/template-controller/tree/main/deploy/charts/template-controller)
