@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # kubernetes-resource-manager
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/kubernetes-resource-manager/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=kubernetes-resource-manager*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.2.8](https://img.shields.io/badge/Version-0.2.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.3](https://img.shields.io/badge/AppVersion-1.2.3-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.2.9](https://img.shields.io/badge/Version-0.2.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.3](https://img.shields.io/badge/AppVersion-1.2.3-informational?style=flat-square)
 
 A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources.
 
@@ -52,11 +52,11 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 	</thead>
 	<tbody>
 		<tr>
-			<td id="affinity"><a href="./values.yaml#L13">affinity</a></td>
+			<td id="affinity"><a href="./values.yaml#L14">affinity</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Affinity for pod assignment. # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -69,11 +69,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="autoscaling"><a href="./values.yaml#L16">autoscaling</a></td>
+			<td id="autoscaling"><a href="./values.yaml#L17">autoscaling</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -91,11 +91,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="autoscaling--enabled"><a href="./values.yaml#L18">autoscaling.enabled</a></td>
+			<td id="autoscaling--enabled"><a href="./values.yaml#L19">autoscaling.enabled</a></td>
 			<td>
 bool
 </td>
-			<td></td>
+			<td>Enable horizontal scaling</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -105,11 +105,11 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="autoscaling--maxReplicas"><a href="./values.yaml#L20">autoscaling.maxReplicas</a></td>
+			<td id="autoscaling--maxReplicas"><a href="./values.yaml#L21">autoscaling.maxReplicas</a></td>
 			<td>
 int
 </td>
-			<td></td>
+			<td>Set max replicas for autoscaling</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -119,11 +119,11 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="autoscaling--minReplicas"><a href="./values.yaml#L22">autoscaling.minReplicas</a></td>
+			<td id="autoscaling--minReplicas"><a href="./values.yaml#L23">autoscaling.minReplicas</a></td>
 			<td>
 int
 </td>
-			<td></td>
+			<td>Set min replicas for autoscaling</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -133,11 +133,11 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="autoscaling--targetCPUUtilizationPercentage"><a href="./values.yaml#L24">autoscaling.targetCPUUtilizationPercentage</a></td>
+			<td id="autoscaling--targetCPUUtilizationPercentage"><a href="./values.yaml#L25">autoscaling.targetCPUUtilizationPercentage</a></td>
 			<td>
 int
 </td>
-			<td></td>
+			<td>Set CPU utilization percentage that trigger the autoscaling</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -147,7 +147,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="env"><a href="./values.yaml#L27">env</a></td>
+			<td id="env"><a href="./values.yaml#L28">env</a></td>
 			<td>
 object
 </td>
@@ -166,11 +166,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="env--additionalEnv"><a href="./values.yaml#L29">env.additionalEnv</a></td>
+			<td id="env--additionalEnv"><a href="./values.yaml#L30">env.additionalEnv</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Additional variables that will be passed to KRM container</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -183,11 +183,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="fullnameOverride"><a href="./values.yaml#L32">fullnameOverride</a></td>
+			<td id="fullnameOverride"><a href="./values.yaml#L33">fullnameOverride</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>String to fully override `postgrest-operator.fullname` template.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -201,7 +201,7 @@ string
 			<td>
 object
 </td>
-			<td></td>
+			<td>Global values</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -245,7 +245,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="image"><a href="./values.yaml#L35">image</a></td>
+			<td id="image"><a href="./values.yaml#L36">image</a></td>
 			<td>
 object
 </td>
@@ -266,11 +266,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="image--pullPolicy"><a href="./values.yaml#L37">image.pullPolicy</a></td>
+			<td id="image--pullPolicy"><a href="./values.yaml#L38">image.pullPolicy</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>Image pull policy</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -280,11 +280,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="image--repository"><a href="./values.yaml#L39">image.repository</a></td>
+			<td id="image--repository"><a href="./values.yaml#L40">image.repository</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>KRM container image repository.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -294,11 +294,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="image--tag"><a href="./values.yaml#L41">image.tag</a></td>
+			<td id="image--tag"><a href="./values.yaml#L42">image.tag</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>KRM container image tag.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -308,11 +308,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="imagePullSecrets"><a href="./values.yaml#L44">imagePullSecrets</a></td>
+			<td id="imagePullSecrets"><a href="./values.yaml#L48">imagePullSecrets</a></td>
 			<td>
 list
 </td>
-			<td></td>
+			<td>Image pull secrets  Optionally specify an array of imagePullSecrets.  Secrets must be manually created in the namespace.  ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -325,7 +325,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress"><a href="./values.yaml#L47">ingress</a></td>
+			<td id="ingress"><a href="./values.yaml#L51">ingress</a></td>
 			<td>
 object
 </td>
@@ -358,11 +358,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--annotations"><a href="./values.yaml#L51">ingress.annotations</a></td>
+			<td id="ingress--annotations"><a href="./values.yaml#L55">ingress.annotations</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Ingress annotations (values are templated).</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -375,11 +375,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--className"><a href="./values.yaml#L53">ingress.className</a></td>
+			<td id="ingress--className"><a href="./values.yaml#L57">ingress.className</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>Ingress Class Name. MAY be required for Kubernetes versions >= 1.18-</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -389,11 +389,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--enabled"><a href="./values.yaml#L49">ingress.enabled</a></td>
+			<td id="ingress--enabled"><a href="./values.yaml#L53">ingress.enabled</a></td>
 			<td>
 bool
 </td>
-			<td></td>
+			<td>Enable/Disable ingress</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -403,7 +403,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--hosts"><a href="./values.yaml#L55">ingress.hosts</a></td>
+			<td id="ingress--hosts"><a href="./values.yaml#L59">ingress.hosts</a></td>
 			<td>
 list
 </td>
@@ -430,11 +430,11 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--tls"><a href="./values.yaml#L61">ingress.tls</a></td>
+			<td id="ingress--tls"><a href="./values.yaml#L65">ingress.tls</a></td>
 			<td>
 list
 </td>
-			<td></td>
+			<td>Ingress TLS configuration.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -447,11 +447,11 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="nameOverride"><a href="./values.yaml#L64">nameOverride</a></td>
+			<td id="nameOverride"><a href="./values.yaml#L68">nameOverride</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>String to partially override `postgrest-operator.fullname` template (will maintain the release name)</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -461,11 +461,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="namespaceValues"><a href="./values.yaml#L67">namespaceValues</a></td>
+			<td id="namespaceValues"><a href="./values.yaml#L71">namespaceValues</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Configure operator scope clusterwide or namespaced.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -481,11 +481,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="namespaceValues--defaultValue"><a href="./values.yaml#L69">namespaceValues.defaultValue</a></td>
+			<td id="namespaceValues--defaultValue"><a href="./values.yaml#L73">namespaceValues.defaultValue</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>Enable/Disable Cluster wide mode.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -495,11 +495,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="namespaceValues--namespace"><a href="./values.yaml#L71">namespaceValues.namespace</a></td>
+			<td id="namespaceValues--namespace"><a href="./values.yaml#L75">namespaceValues.namespace</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>Namespace name where operator watch for CR.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -509,11 +509,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="nodeSelector"><a href="./values.yaml#L74">nodeSelector</a></td>
+			<td id="nodeSelector"><a href="./values.yaml#L78">nodeSelector</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -526,11 +526,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc"><a href="./values.yaml#L77">oidc</a></td>
+			<td id="oidc"><a href="./values.yaml#L81">oidc</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>OIDC authentication configuration</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -560,7 +560,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--access"><a href="./values.yaml#L81">oidc.access</a></td>
+			<td id="oidc--access"><a href="./values.yaml#L85">oidc.access</a></td>
 			<td>
 object
 </td>
@@ -579,7 +579,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--access--roles"><a href="./values.yaml#L83">oidc.access.roles</a></td>
+			<td id="oidc--access--roles"><a href="./values.yaml#L87">oidc.access.roles</a></td>
 			<td>
 list
 </td>
@@ -596,7 +596,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--audience"><a href="./values.yaml#L85">oidc.audience</a></td>
+			<td id="oidc--audience"><a href="./values.yaml#L89">oidc.audience</a></td>
 			<td>
 object
 </td>
@@ -619,11 +619,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--audience--clientId"><a href="./values.yaml#L87">oidc.audience.clientId</a></td>
+			<td id="oidc--audience--clientId"><a href="./values.yaml#L91">oidc.audience.clientId</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>OIDC provider client ID</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -633,11 +633,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--audience--externalSecret"><a href="./values.yaml#L89">oidc.audience.externalSecret</a></td>
+			<td id="oidc--audience--externalSecret"><a href="./values.yaml#L93">oidc.audience.externalSecret</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Read client ID from existing secrets</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -653,7 +653,35 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--audience--externalSecret--key"><a href="./values.yaml#L91">oidc.audience.externalSecret.key</a></td>
+			<td id="oidc--audience--externalSecret--key"><a href="./values.yaml#L95">oidc.audience.externalSecret.key</a></td>
+			<td>
+string
+</td>
+			<td>Existing secret key</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--audience--externalSecret--name"><a href="./values.yaml#L97">oidc.audience.externalSecret.name</a></td>
+			<td>
+string
+</td>
+			<td>Existing secret name</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="oidc--authType"><a href="./values.yaml#L99">oidc.authType</a></td>
 			<td>
 string
 </td>
@@ -667,39 +695,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--audience--externalSecret--name"><a href="./values.yaml#L93">oidc.audience.externalSecret.name</a></td>
-			<td>
-string
-</td>
-			<td></td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="oidc--authType"><a href="./values.yaml#L95">oidc.authType</a></td>
-			<td>
-string
-</td>
-			<td></td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="oidc--enabled"><a href="./values.yaml#L79">oidc.enabled</a></td>
+			<td id="oidc--enabled"><a href="./values.yaml#L83">oidc.enabled</a></td>
 			<td>
 bool
 </td>
-			<td></td>
+			<td>Enable/Disable OIDC authentication</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -709,11 +709,11 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--issuer"><a href="./values.yaml#L97">oidc.issuer</a></td>
+			<td id="oidc--issuer"><a href="./values.yaml#L101">oidc.issuer</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>OIDC issuer</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -723,11 +723,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--redirectUrl"><a href="./values.yaml#L99">oidc.redirectUrl</a></td>
+			<td id="oidc--redirectUrl"><a href="./values.yaml#L103">oidc.redirectUrl</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>OIDC issuer</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -737,11 +737,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--roleClaim"><a href="./values.yaml#L101">oidc.roleClaim</a></td>
+			<td id="oidc--roleClaim"><a href="./values.yaml#L105">oidc.roleClaim</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>OIDC role claim</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -751,11 +751,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="oidc--scope"><a href="./values.yaml#L103">oidc.scope</a></td>
+			<td id="oidc--scope"><a href="./values.yaml#L107">oidc.scope</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>OIDC scope</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -765,11 +765,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="podAnnotations"><a href="./values.yaml#L106">podAnnotations</a></td>
+			<td id="podAnnotations"><a href="./values.yaml#L110">podAnnotations</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Annotations to add to each pod.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -782,11 +782,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext"><a href="./values.yaml#L109">podSecurityContext</a></td>
+			<td id="podSecurityContext"><a href="./values.yaml#L113">podSecurityContext</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Pod security context options</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -807,11 +807,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--fsGroup"><a href="./values.yaml#L111">podSecurityContext.fsGroup</a></td>
+			<td id="podSecurityContext--fsGroup"><a href="./values.yaml#L115">podSecurityContext.fsGroup</a></td>
 			<td>
 int
 </td>
-			<td></td>
+			<td>Configure group id used to mount volumes</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -821,11 +821,11 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--runAsGroup"><a href="./values.yaml#L113">podSecurityContext.runAsGroup</a></td>
+			<td id="podSecurityContext--runAsGroup"><a href="./values.yaml#L117">podSecurityContext.runAsGroup</a></td>
 			<td>
 int
 </td>
-			<td></td>
+			<td>Run pod containers as specified group</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -835,11 +835,11 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--runAsNonRoot"><a href="./values.yaml#L115">podSecurityContext.runAsNonRoot</a></td>
+			<td id="podSecurityContext--runAsNonRoot"><a href="./values.yaml#L119">podSecurityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
-			<td></td>
+			<td>Permit pod containers to run as root</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -849,11 +849,11 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--runAsUser"><a href="./values.yaml#L117">podSecurityContext.runAsUser</a></td>
+			<td id="podSecurityContext--runAsUser"><a href="./values.yaml#L121">podSecurityContext.runAsUser</a></td>
 			<td>
 int
 </td>
-			<td></td>
+			<td>Run pod containers as specified user</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -863,11 +863,11 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--seccompProfile"><a href="./values.yaml#L119">podSecurityContext.seccompProfile</a></td>
+			<td id="podSecurityContext--seccompProfile"><a href="./values.yaml#L123">podSecurityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Pod configure seccompProfile.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -882,11 +882,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--seccompProfile--type"><a href="./values.yaml#L121">podSecurityContext.seccompProfile.type</a></td>
+			<td id="podSecurityContext--seccompProfile--type"><a href="./values.yaml#L125">podSecurityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>Pod configure seccompProfile type.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -896,11 +896,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="rbac"><a href="./values.yaml#L124">rbac</a></td>
+			<td id="rbac"><a href="./values.yaml#L129">rbac</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>RBAC configuration for kubernetes and KRM</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -1075,11 +1075,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="rbac--clusterRole"><a href="./values.yaml#L126">rbac.clusterRole</a></td>
+			<td id="rbac--clusterRole"><a href="./values.yaml#L131">rbac.clusterRole</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Role configuration</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -1094,11 +1094,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="rbac--clusterRole--create"><a href="./values.yaml#L128">rbac.clusterRole.create</a></td>
+			<td id="rbac--clusterRole--create"><a href="./values.yaml#L133">rbac.clusterRole.create</a></td>
 			<td>
 bool
 </td>
-			<td></td>
+			<td>Create cluster role</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1108,11 +1108,11 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="rbac--namespaced"><a href="./values.yaml#L130">rbac.namespaced</a></td>
+			<td id="rbac--namespaced"><a href="./values.yaml#L135">rbac.namespaced</a></td>
 			<td>
 bool
 </td>
-			<td></td>
+			<td>Create namespaced cluster role</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1122,11 +1122,11 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="rbac--roles"><a href="./values.yaml#L132">rbac.roles</a></td>
+			<td id="rbac--roles"><a href="./values.yaml#L140">rbac.roles</a></td>
 			<td>
 list
 </td>
-			<td></td>
+			<td>Define roles for KRM service account and template crd.allowed list for KRM.  kubernetes.crd.allowed and kubernetes.crd.denied are meant to be mutually exclusive:   you either specify one or the other (or leave both empty).   Defining allowed will let the resource manager handle only the CRDs listed in it, while denied will allow all CRDs not listed in it. Leaving both empty lets the resource manager handle all CRDs.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -1295,11 +1295,11 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="replicaCount"><a href="./values.yaml#L242">replicaCount</a></td>
+			<td id="replicaCount"><a href="./values.yaml#L250">replicaCount</a></td>
 			<td>
 int
 </td>
-			<td></td>
+			<td>Desired number of pods.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1309,11 +1309,11 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors"><a href="./values.yaml#L245">resourceSelectors</a></td>
+			<td id="resourceSelectors"><a href="./values.yaml#L253">resourceSelectors</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Configure the resources that you want to see in your KRM instance</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -1339,11 +1339,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--deployments"><a href="./values.yaml#L247">resourceSelectors.deployments</a></td>
+			<td id="resourceSelectors--deployments"><a href="./values.yaml#L255">resourceSelectors.deployments</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>Selector label for Deployments objects</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1353,11 +1353,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--jobs"><a href="./values.yaml#L249">resourceSelectors.jobs</a></td>
+			<td id="resourceSelectors--jobs"><a href="./values.yaml#L257">resourceSelectors.jobs</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>Selector label for Jobs objects</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1367,11 +1367,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--pvcs"><a href="./values.yaml#L251">resourceSelectors.pvcs</a></td>
+			<td id="resourceSelectors--pvcs"><a href="./values.yaml#L259">resourceSelectors.pvcs</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Selector label for PVC objects</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -1387,7 +1387,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--pvcs--labels"><a href="./values.yaml#L253">resourceSelectors.pvcs.labels</a></td>
+			<td id="resourceSelectors--pvcs--labels"><a href="./values.yaml#L261">resourceSelectors.pvcs.labels</a></td>
 			<td>
 string
 </td>
@@ -1401,7 +1401,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--pvcs--managedBy"><a href="./values.yaml#L255">resourceSelectors.pvcs.managedBy</a></td>
+			<td id="resourceSelectors--pvcs--managedBy"><a href="./values.yaml#L263">resourceSelectors.pvcs.managedBy</a></td>
 			<td>
 string
 </td>
@@ -1415,7 +1415,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--secrets"><a href="./values.yaml#L257">resourceSelectors.secrets</a></td>
+			<td id="resourceSelectors--secrets"><a href="./values.yaml#L265">resourceSelectors.secrets</a></td>
 			<td>
 object
 </td>
@@ -1436,11 +1436,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--secrets--labels"><a href="./values.yaml#L259">resourceSelectors.secrets.labels</a></td>
+			<td id="resourceSelectors--secrets--labels"><a href="./values.yaml#L267">resourceSelectors.secrets.labels</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>Selector label for Secrets objects</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1450,7 +1450,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--secrets--names"><a href="./values.yaml#L261">resourceSelectors.secrets.names</a></td>
+			<td id="resourceSelectors--secrets--names"><a href="./values.yaml#L269">resourceSelectors.secrets.names</a></td>
 			<td>
 string
 </td>
@@ -1464,7 +1464,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--secrets--owners"><a href="./values.yaml#L263">resourceSelectors.secrets.owners</a></td>
+			<td id="resourceSelectors--secrets--owners"><a href="./values.yaml#L271">resourceSelectors.secrets.owners</a></td>
 			<td>
 string
 </td>
@@ -1478,11 +1478,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--services"><a href="./values.yaml#L265">resourceSelectors.services</a></td>
+			<td id="resourceSelectors--services"><a href="./values.yaml#L273">resourceSelectors.services</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>Selector label for Services objects</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1492,11 +1492,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resources"><a href="./values.yaml#L268">resources</a></td>
+			<td id="resources"><a href="./values.yaml#L276">resources</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Pod resource requests and limits.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -1509,11 +1509,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext"><a href="./values.yaml#L271">securityContext</a></td>
+			<td id="securityContext"><a href="./values.yaml#L279">securityContext</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>[Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -1537,11 +1537,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L273">securityContext.allowPrivilegeEscalation</a></td>
+			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L281">securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
-			<td></td>
+			<td>Container allow privilege escalation.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1551,11 +1551,11 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--capabilities"><a href="./values.yaml#L275">securityContext.capabilities</a></td>
+			<td id="securityContext--capabilities"><a href="./values.yaml#L283">securityContext.capabilities</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Container configure capabilities.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -1572,11 +1572,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--capabilities--drop"><a href="./values.yaml#L277">securityContext.capabilities.drop</a></td>
+			<td id="securityContext--capabilities--drop"><a href="./values.yaml#L285">securityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
-			<td></td>
+			<td>Container drop capabilities.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -1591,11 +1591,11 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L280">securityContext.runAsNonRoot</a></td>
+			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L288">securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
-			<td></td>
+			<td>Pod allow run as root.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1605,7 +1605,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--seccompProfile"><a href="./values.yaml#L282">securityContext.seccompProfile</a></td>
+			<td id="securityContext--seccompProfile"><a href="./values.yaml#L290">securityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -1624,11 +1624,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--seccompProfile--type"><a href="./values.yaml#L284">securityContext.seccompProfile.type</a></td>
+			<td id="securityContext--seccompProfile--type"><a href="./values.yaml#L292">securityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>Pod configure seccompProfile type.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1638,7 +1638,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="service"><a href="./values.yaml#L287">service</a></td>
+			<td id="service"><a href="./values.yaml#L295">service</a></td>
 			<td>
 object
 </td>
@@ -1659,11 +1659,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="service--nodePort"><a href="./values.yaml#L289">service.nodePort</a></td>
+			<td id="service--nodePort"><a href="./values.yaml#L297">service.nodePort</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>Set the port number when service type is NodePort</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1673,11 +1673,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="service--port"><a href="./values.yaml#L291">service.port</a></td>
+			<td id="service--port"><a href="./values.yaml#L299">service.port</a></td>
 			<td>
 int
 </td>
-			<td></td>
+			<td>Service port.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1687,11 +1687,11 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="service--type"><a href="./values.yaml#L293">service.type</a></td>
+			<td id="service--type"><a href="./values.yaml#L301">service.type</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>Service Type</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1701,7 +1701,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount"><a href="./values.yaml#L296">serviceAccount</a></td>
+			<td id="serviceAccount"><a href="./values.yaml#L304">serviceAccount</a></td>
 			<td>
 object
 </td>
@@ -1722,11 +1722,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--annotations"><a href="./values.yaml#L298">serviceAccount.annotations</a></td>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L306">serviceAccount.annotations</a></td>
 			<td>
 object
 </td>
-			<td></td>
+			<td>Additional Service Account annotations.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -1739,11 +1739,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--create"><a href="./values.yaml#L300">serviceAccount.create</a></td>
+			<td id="serviceAccount--create"><a href="./values.yaml#L308">serviceAccount.create</a></td>
 			<td>
 bool
 </td>
-			<td></td>
+			<td>If `true` a Service Account will be created.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1753,11 +1753,11 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--name"><a href="./values.yaml#L302">serviceAccount.name</a></td>
+			<td id="serviceAccount--name"><a href="./values.yaml#L310">serviceAccount.name</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>Service account name.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1767,11 +1767,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="storageClasses"><a href="./values.yaml#L305">storageClasses</a></td>
+			<td id="storageClasses"><a href="./values.yaml#L313">storageClasses</a></td>
 			<td>
 string
 </td>
-			<td></td>
+			<td>PVC storage class</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -1781,11 +1781,11 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="tolerations"><a href="./values.yaml#L308">tolerations</a></td>
+			<td id="tolerations"><a href="./values.yaml#L316">tolerations</a></td>
 			<td>
 list
 </td>
-			<td></td>
+			<td>List of node taints to tolerate (requires Kubernetes >= 1.6).</td>
       <td>
 				<div style="max-width: 300px;">
 <details>

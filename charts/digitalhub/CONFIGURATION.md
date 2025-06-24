@@ -11590,7 +11590,7 @@ object
 			<td>
 bool
 </td>
-			<td>Container allow privilege escalation.</td>
+			<td>Pod allow privilege escalation.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -11604,7 +11604,7 @@ false
 			<td>
 object
 </td>
-			<td>Container configure capabilities.</td>
+			<td>Pod configure capabilities.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -11625,7 +11625,7 @@ object
 			<td>
 list
 </td>
-			<td>Container drop capabilities.</td>
+			<td>Pod drop capabilities.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -11644,7 +11644,7 @@ list
 			<td>
 object
 </td>
-			<td>Container configure seccompProfile.</td>
+			<td>Pod configure seccompProfile.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -11663,7 +11663,7 @@ object
 			<td>
 string
 </td>
-			<td>Container configure seccompProfile type.</td>
+			<td>Pod configure seccompProfile type.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">

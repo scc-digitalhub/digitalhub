@@ -1,6 +1,6 @@
 # SCC-Digitalhub Community Kubernetes Helm Charts
 
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/repo-template/release.yaml?event=push) [![license](https://img.shields.io/badge/license-AGPL%20V3-blue)](https://github.com/scc-digitalhub/LICENSE) ![Status](https://img.shields.io/badge/status-stable-gold)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-AGPL%20V3-blue)](https://github.com/scc-digitalhub/LICENSE) ![Status](https://img.shields.io/badge/status-stable-gold)
 
 The code is provided as-is with no warranties.
 

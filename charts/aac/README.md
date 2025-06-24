@@ -1,6 +1,6 @@
 # aac
 
-![Version: 0.1.14](https://img.shields.io/badge/Version-0.1.14-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.0.0](https://img.shields.io/badge/AppVersion-5.0.0-informational?style=flat-square)
+![Version: 0.1.15](https://img.shields.io/badge/Version-0.1.15-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -50,7 +50,7 @@ A Helm chart for Kubernetes
 | image.aacCommand3 | string | `"-Dspring-boot.run.arguments=--logging.level.ROOT=DEBUG"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/scc-digitalhub/aac"` |  |
-| image.tag | string | `"5.x-94ad08c"` |  |
+| image.tag | string | `"5.3.0-beta1"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
