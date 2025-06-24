@@ -1,6 +1,11 @@
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: Apache-2.0
+
 apiVersion: v2
 name: apigw-operator
-description: A Helm chart for Kubernetes
+description: A Kubernetes operator to launch ingresses for services.
+home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/apigw-operator"
 type: application
 version: 0.1.9
 appVersion: "1.1.2"
@@ -9,3 +14,5 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
+sources:
+  - https://github.com/scc-digitalhub/apigw-operator

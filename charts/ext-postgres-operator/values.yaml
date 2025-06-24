@@ -1,98 +1,100 @@
-# Default values for chart.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: Apache-2.0
 
-# Values affecting the namespace
-namespaceValues:
-  namespaced: true
-  namespace: ""
-
-replicaCount: 1
-
-image:
-  repository: ghcr.io/movetokube/postgres-operator
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
-
-# Override chart name, defaults to Chart.name
-nameOverride: ""
-# Full chart name override
-fullnameOverride: ""
-
-serviceAccount:
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
-podAnnotations: {}
-
-# Additionnal labels to add to the pod.
-podLabels: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext:
-  runAsNonRoot: true
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop:
-    - ALL
-  readOnlyRootFilesystem: true
-
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-# Which namespace to watch in kubernetes, empty string means all namespaces
-watchNamespace: ""
-
-# Define connection to postgres database server
-postgres:
-  # postgres hostname
-  host: "localhost"
-  # postgres admin user and password
-  user: "admin"
-  password: "password"
-  # additional connection args to pg driver
-  uri_args: ""
-  # postgres cloud provider, could be AWS, Azure, GCP or empty (default)
-  cloud_provider: ""
-  # default database to use
-  default_database: "postgres"
-
-# Volumes to add to the pod.
-volumes: []
-
-# Volumes to mount onto the pod.
-volumeMounts: []
-
-# Existing secret where values to connect to Postgres are defined.
-# If not set a new secret will be created, filled with information under the postgres key above.
-existingSecret: ""
-
-postgresCredsExistingSecrets: {}
-  # username:
-  #   secretName: "" 
-  #   secretKey: ""
-  # password:
-  #   secretName: "" 
-  #   secretKey: ""
-
-# Additionnal environment variables to add to the pod (map of key / value)
+#  env -- Additional enviroment variable.
 env: {}
 
+#  existingSecret -- Additional environment variable mounted from an existing secret.
+existingSecret: ""
+
+#  fullnameOverride -- String to fully override `postgrest-operator.fullname` template.
+fullnameOverride: ""
+
+#  image -- Container image configuration.
+image:
+  #  image.pullPolicy -- Container image pull policy.
+  pullPolicy: IfNotPresent
+  #  image.repository -- Container image repository.
+  repository: ghcr.io/movetokube/postgres-operator
+  #  image.tag -- Container image tag.
+  tag: latest
+
+#  nameOverride -- String to partially override `postgrest-operator.fullname` template (will maintain the release name).
+nameOverride: ""
+
+#  namespaceValues -- Configure operator scope clusterwide or namespaced.
+namespaceValues:
+  #  namespaceValues.namespace -- Namespace name where operator watch for CR.
+  namespace: ""
+  #  namespaceValues.namespaced -- Enable/Disable Cluster wide mode.
+  namespaced: true
+
+#  nodeSelector -- Node labels for pod assignment. Ref: https://kubernetes.io/docs/user-guide/node-selection/.
 nodeSelector: {}
 
+#  podAnnotations -- Annotations to add to each pod.
+podAnnotations: {}
+
+#  podLabels -- Labels to add to each pod.
+podLabels: {}
+
+#  podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+podSecurityContext: {}
+
+#  postgres -- 
+postgres:
+  #  postgres.cloud_provider -- Postgres cloud provider, could be AWS, Azure, GCP or empty (default)
+  cloud_provider: ""
+  #  postgres.default_database -- Postgres default database to use
+  default_database: postgres
+  #  postgres.host -- Postgres hostname
+  host: localhost
+  #  postgres.password -- Postgres username
+  password: password
+  #  postgres.uri_args -- Additional connection args to pg driver
+  uri_args: ""
+  #  postgres.user -- Postgres password
+  user: admin
+
+#  postgresCredsExistingSecrets -- Use existing secret for postgres server credentials
+postgresCredsExistingSecrets: {}
+
+#  replicaCount -- Desired number of pods.
+replicaCount: 1
+
+#  resources -- Container resource requests and limits.
+resources: {}
+
+#  securityContext -- [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+securityContext:
+  #  securityContext.allowPrivilegeEscalation -- Container allow privilege escalation
+  allowPrivilegeEscalation: false
+  #  securityContext.capabilities -- Container configure capabilities.
+  capabilities:
+    #  securityContext.capabilities.drop -- Container drop capabilities.
+    drop:
+      - ALL
+  #  securityContext.readOnlyRootFilesystem -- Container read only filesystem
+  readOnlyRootFilesystem: true
+  #  securityContext.runAsNonRoot -- Container allow run as root.
+  runAsNonRoot: true
+
+#  serviceAccount -- Service account configuration.
+serviceAccount:
+  #  serviceAccount.annotations -- Additional Service Account annotations.
+  annotations: {}
+  #  serviceAccount.name -- Service account name.
+  name: ""
+
+#  tolerations -- List of node taints to tolerate (requires Kubernetes >= 1.6).
 tolerations: []
+
+#  volumeMounts -- Additional volumes.
+volumeMounts: []
+
+#  volumes -- Additional volumes to mount.
+volumes: []
+
+#  watchNamespace -- Which namespace to watch in kubernetes, empty string means all namespaces.
+watchNamespace: ""

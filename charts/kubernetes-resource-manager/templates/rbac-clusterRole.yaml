@@ -1,4 +1,8 @@
-{{- $clusterRoleName := include "kubernetes-resource-manager.fullname" . }}
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: Apache-2.0
+
+{{ $clusterRoleName := include "kubernetes-resource-manager.fullname" . -}}
 {{- if .Values.rbac.clusterRole.create }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole

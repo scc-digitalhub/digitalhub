@@ -1,4 +1,8 @@
-{{- if .Values.dashboard.ingress.enabled -}}
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+{{ if .Values.dashboard.ingress.enabled -}}
 {{- $svcPort := .Values.dashboard.service.port -}}
 {{- $svcName := (include "digitalhub.fullname" .)  -}}
 {{- if and .Values.dashboard.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}

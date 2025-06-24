@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: Apache-2.0
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -19,18 +23,6 @@ data:
   RUNTIME_PYTHON_IMAGE_3_10: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_10 }}
   RUNTIME_PYTHON_IMAGE_3_11: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_11 }}
   RUNTIME_HUGGINGFACE_SERVE_IMAGE: {{ .Values.runtime.huggingFace.image }}:{{ .Values.runtime.huggingFace.tag }}
-{{- if .Values.events.enabled }}
-  ENABLE_EVENTS: {{ .Values.events.enabled | quote }} 
-  {{- if .Values.events.rabbitmq.enabled }}
-  RABBITMQ_ENABLE: {{ .Values.events.rabbitmq.enabled | quote }}
-  RABBITMQ_HOST: {{ .Values.events.rabbitmq.host }}
-  RABBITMQ_PORT: {{ .Values.events.rabbitmq.port | quote }}
-  RABBITMQ_VHOST: {{ .Values.events.rabbitmq.vhost }}
-  RABBITMQ_QUEUE: {{ .Values.events.rabbitmq.queue }}
-  RABBITMQ_TOPIC: {{ .Values.events.rabbitmq.topic }}
-  RABBITMQ_ROUTING_KEY: {{ .Values.events.rabbitmq.routingKey }}
-  {{- end }}
-{{- end }}
 {{- if .Values.solr.enabled }}
   SOLR_URL: {{ .Values.solr.url }}
   SOLR_COLLECTION: {{ .Values.solr.collection.name }}

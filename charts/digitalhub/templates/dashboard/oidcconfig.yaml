@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 {{ if and .Values.dashboard.oidc.enabled .Values.dashboard.oidc.audience.externalSecret.name -}}
 apiVersion: templates.kluctl.io/v1alpha1
 kind: ObjectTemplate

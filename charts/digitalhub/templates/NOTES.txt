@@ -1,4 +1,4 @@
-{{- $externalUrl := .Values.global.externalHostAddress -}}
+{{ $externalUrl := .Values.global.externalHostAddress -}}
 ##########################################################
 #   _____   _       _           _ _     _       _        #
 #  (____ \ (_)     (_)_        | | |   | |     | |       #

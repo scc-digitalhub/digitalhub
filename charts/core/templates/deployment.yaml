@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: Apache-2.0
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -136,18 +140,6 @@ spec:
               {{- else }}
               value: {{ .Values.postgres.credentials.password }}
               {{- end }}
-            {{- if and .Values.events.enabled .Values.events.rabbitmq.enabled }}
-            - name: RABBITMQ_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.events.rabbitmq.credentials.existingSecret.name | default (printf "%s-rabbitmq-creds" (include "core.fullname" .)) }}
-                  key: {{ .Values.events.rabbitmq.credentials.existingSecret.usernameKey | default "username" }}
-            - name: RABBITMQ_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.events.rabbitmq.credentials.existingSecret.name | default (printf "%s-rabbitmq-creds" (include "core.fullname" .)) }}
-                  key: {{ .Values.events.rabbitmq.credentials.existingSecret.passwordKey | default "password" }}
-            {{- end }}
             {{- if .Values.authentication.openId.enabled }}
             - name: DH_AUTH_OIDC_CLIENT_ID
               {{- if .Values.authentication.openId.externalSecret.name  }}

@@ -1,4 +1,8 @@
-{{- if and .Values.core.enabled ( index .Values "postgres-operator" "databases" "core" "enabled" ) }}
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+{{ if and .Values.core.enabled ( index .Values "postgres-operator" "databases" "core" "enabled" ) -}}
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:

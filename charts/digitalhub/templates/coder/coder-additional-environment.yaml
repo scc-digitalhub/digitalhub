@@ -1,4 +1,8 @@
-{{- if .Values.coder.enabled }}
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+{{ if .Values.coder.enabled -}}
 {{- range .Values.coder.template.customTemplates }}
 {{- if .extraVars  }}
 apiVersion: v1

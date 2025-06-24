@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -39,7 +43,7 @@ spec:
           securityContext:
             {{- toYaml .Values.deployment.kubeRbacProxy.securityContext | nindent 12 }}
           image: "{{ .Values.deployment.kubeRbacProxy.image.repository }}:{{ .Values.deployment.kubeRbacProxy.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.deployment.kubeRbacProxy.image.pullPolicy }}
           ports:
             - name: https
               containerPort: {{ .Values.deployment.kubeRbacProxy.ports.containerPort }}
@@ -56,7 +60,7 @@ spec:
           securityContext:
             {{- toYaml .Values.deployment.manager.securityContext | nindent 12 }}
           image: "{{ .Values.deployment.manager.image.repository }}:{{ .Values.deployment.manager.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.deployment.manager.image.pullPolicy }}
           command:
             {{- toYaml .Values.deployment.manager.command | nindent 12 }}
           resources:

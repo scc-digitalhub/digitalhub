@@ -1,4 +1,8 @@
-{{- if .Values.sts.enabled -}}
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: Apache-2.0
+
+{{ if .Values.sts.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:

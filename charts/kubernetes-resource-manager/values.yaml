@@ -1,243 +1,308 @@
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: Apache-2.0
+
+#  global --
 global:
+  #  global.externalHostAddress --
   externalHostAddress: ""
+  #  global.externalTls --
   externalTls: false
-storageClasses: default
-replicaCount: 1
-namespaceValues:
-  namespace: ""
-  defaultValue: "*"
 
-image:
-  repository: ghcr.io/scc-digitalhub/kubernetes-resource-manager
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+#  affinity --
+affinity: {}
 
-imagePullSecrets: []
-nameOverride: ""
+#  autoscaling --
+autoscaling:
+  #  autoscaling.enabled --
+  enabled: false
+  #  autoscaling.maxReplicas --
+  maxReplicas: 100
+  #  autoscaling.minReplicas --
+  minReplicas: 1
+  #  autoscaling.targetCPUUtilizationPercentage --
+  targetCPUUtilizationPercentage: 80
+
+#  env --
+env:
+  #  env.additionalEnv --
+  additionalEnv: {}
+
+#  fullnameOverride --
 fullnameOverride: ""
 
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
+#  image --
+image:
+  #  image.pullPolicy --
+  pullPolicy: IfNotPresent
+  #  image.repository --
+  repository: ghcr.io/scc-digitalhub/kubernetes-resource-manager
+  #  image.tag --
+  tag: ""
 
-podAnnotations: {}
+#  imagePullSecrets --
+imagePullSecrets: []
 
-podSecurityContext:
-  runAsNonRoot: true
-  seccompProfile:
-    type: "RuntimeDefault"
-  runAsUser: 65532
-  runAsGroup: 65532
-  fsGroup: 65532
-
-rbac:
-  namespaced: true
-  clusterRole:
-    create: true
-  roles:
-    - apiGroups: "db.movetokube.com"
-      crd: true
-      resources:
-      - postgresusers
-      - postgres
-      verbs:
-      - get
-      - list
-      - create
-      - delete
-      - patch
-    - apiGroups: "operator.dremiorestserver.com"
-      crd: true
-      resources:
-      - dremiorestservers
-      verbs:
-      - get
-      - list
-      - create
-      - delete
-      - patch
-    - apiGroups: "operator.postgrest.org"
-      crd: true
-      resources:
-      - postgrests
-      verbs:
-      - get
-      - list
-      - create
-      - delete
-      - patch
-    - apiGroups: "minio.scc-digitalhub.github.io"
-      crd: true
-      resources:
-      - buckets
-      - policies
-      - users
-      verbs:
-      - get
-      - list
-      - create
-      - delete
-      - patch
-    - apiGroups: "operator.scc-digitalhub.github.io"
-      crd: true
-      resources:
-      - apigws
-      verbs:
-      - get
-      - list
-      - create
-      - delete
-      - patch
-    - apiGroups: "batch"
-      crd: false
-      resources:
-      - jobs
-      verbs:
-      - get
-      - list
-      - delete
-    - apiGroups: "apps"
-      crd: false
-      resources:
-      - deployments
-      - replicasets
-      verbs:
-      - get
-      - list
-    - apiGroups: ""
-      crd: false
-      resources:
-      - persistentvolumeclaims
-      verbs:
-      - get
-      - list
-      - create
-      - delete
-      - patch
-    - apiGroups: ""
-      crd: false
-      resources:
-      - services
-      verbs:
-      - get
-      - list
-    - apiGroups: ""
-      crd: false
-      resources:
-      - secrets
-      verbs:
-      - get
-      - list
-    - apiGroups: ""
-      resources:
-      - "pods"
-      - "pods/log"
-      verbs:
-      - "get"
-      - "list"
-      - "create"
-    - apiGroups: ""
-      resources:
-      - "resourcequotas"
-      verbs:
-      - "get"
-      - "list"
-
-securityContext:
-  runAsNonRoot: true
-  seccompProfile:
-    type: "RuntimeDefault"
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop:
-    - ALL
-
-service:
-  type: NodePort
-  port: 8080
-  nodePort: "30160"
-
+#  ingress --
 ingress:
+  #  ingress.enabled --
   enabled: false
-  className: ""
+  #  ingress.annotations --
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  #  ingress.className --
+  className: ""
+  #  ingress.hosts --
   hosts:
     - host: chart-example.local
       paths:
         - path: /
           pathType: ImplementationSpecific
+  #  ingress.tls --
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+#  nameOverride --
+nameOverride: ""
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+#  namespaceValues --
+namespaceValues:
+  #  namespaceValues.defaultValue --
+  defaultValue: "*"
+  #  namespaceValues.namespace --
+  namespace: ""
 
+#  nodeSelector --
 nodeSelector: {}
 
-tolerations: []
-
-affinity: {}
-
+#  oidc --
 oidc:
+  #  oidc.enabled --
   enabled: false
-  audience:
-    clientId: ""
-    externalSecret:
-      name: ""
-      key: ""
-  issuer: ""
-  roleClaim: ""
-  scope: ""
-  authType: ""
-  redirectUrl: ""
+  #  oidc.access --
   access:
+    #  oidc.access.roles --
     roles: []
+  #  oidc.audience --
+  audience:
+    #  oidc.audience.clientId --
+    clientId: ""
+    #  oidc.audience.externalSecret --
+    externalSecret:
+      #  oidc.audience.externalSecret.key --
+      key: ""
+      #  oidc.audience.externalSecret.name --
+      name: ""
+  #  oidc.authType --
+  authType: ""
+  #  oidc.issuer --
+  issuer: ""
+  #  oidc.redirectUrl --
+  redirectUrl: ""
+  #  oidc.roleClaim --
+  roleClaim: ""
+  #  oidc.scope --
+  scope: ""
 
+#  podAnnotations --
+podAnnotations: {}
+
+#  podSecurityContext --
+podSecurityContext:
+  #  podSecurityContext.fsGroup --
+  fsGroup: 65532
+  #  podSecurityContext.runAsGroup --
+  runAsGroup: 65532
+  #  podSecurityContext.runAsNonRoot --
+  runAsNonRoot: true
+  #  podSecurityContext.runAsUser --
+  runAsUser: 65532
+  #  podSecurityContext.seccompProfile --
+  seccompProfile:
+    #  podSecurityContext.seccompProfile.type --
+    type: RuntimeDefault
+
+#  rbac --
+rbac:
+  #  rbac.clusterRole --
+  clusterRole:
+    #  rbac.clusterRole.create --
+    create: true
+  #  rbac.namespaced --
+  namespaced: true
+  #  rbac.roles --
+  roles:
+    - apiGroups: db.movetokube.com
+      crd: true
+      resources:
+        - postgresusers
+        - postgres
+      verbs:
+        - get
+        - list
+        - create
+        - delete
+        - patch
+    - apiGroups: operator.dremiorestserver.com
+      crd: true
+      resources:
+        - dremiorestservers
+      verbs:
+        - get
+        - list
+        - create
+        - delete
+        - patch
+    - apiGroups: operator.postgrest.org
+      crd: true
+      resources:
+        - postgrests
+      verbs:
+        - get
+        - list
+        - create
+        - delete
+        - patch
+    - apiGroups: minio.scc-digitalhub.github.io
+      crd: true
+      resources:
+        - buckets
+        - policies
+        - users
+      verbs:
+        - get
+        - list
+        - create
+        - delete
+        - patch
+    - apiGroups: operator.scc-digitalhub.github.io
+      crd: true
+      resources:
+        - apigws
+      verbs:
+        - get
+        - list
+        - create
+        - delete
+        - patch
+    - apiGroups: batch
+      crd: false
+      resources:
+        - jobs
+      verbs:
+        - get
+        - list
+        - delete
+    - apiGroups: apps
+      crd: false
+      resources:
+        - deployments
+        - replicasets
+      verbs:
+        - get
+        - list
+    - apiGroups: ""
+      crd: false
+      resources:
+        - persistentvolumeclaims
+      verbs:
+        - get
+        - list
+        - create
+        - delete
+        - patch
+    - apiGroups: ""
+      crd: false
+      resources:
+        - services
+      verbs:
+        - get
+        - list
+    - apiGroups: ""
+      crd: false
+      resources:
+        - secrets
+      verbs:
+        - get
+        - list
+    - apiGroups: ""
+      resources:
+        - pods
+        - pods/log
+      verbs:
+        - get
+        - list
+        - create
+    - apiGroups: ""
+      resources:
+        - resourcequotas
+      verbs:
+        - get
+        - list
+
+#  replicaCount --
+replicaCount: 1
+
+#  resourceSelectors --
 resourceSelectors:
-  # list separated by |
-  services: "app.kubernetes.io/type=service|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore"
-  # list separated by |
-  deployments: "app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|app.kubernetes.io/type=workspace|app.kubernetes.io/managed-by=dhcore"
-  # list separated by |
-  jobs: "app.kubernetes.io/managed-by=dhcore"
+  #  resourceSelectors.deployments --
+  deployments: app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|app.kubernetes.io/type=workspace|app.kubernetes.io/managed-by=dhcore
+  #  resourceSelectors.jobs --
+  jobs: app.kubernetes.io/managed-by=dhcore
+  #  resourceSelectors.pvcs --
   pvcs:
-    # list separated by |
-    labels: "app.kubernetes.io/managed-by=krm"
-    # string
-    managedBy: "krm"
+    #  resourceSelectors.pvcs.labels --
+    labels: app.kubernetes.io/managed-by=krm
+    #  resourceSelectors.pvcs.managedBy --
+    managedBy: krm
+  #  resourceSelectors.secrets --
   secrets:
-    # list separated by |
+    #  resourceSelectors.secrets.labels --
     labels: ""
-    # list separated by ,
-    owners: "db.movetokube.com/v1alpha1"
-    # list separated by ,
-    names: "(digitalhub\\-owner|digitalhub\\-reader|digitalhub\\-writer).*"
+    #  resourceSelectors.secrets.names --
+    names: (digitalhub\-owner|digitalhub\-reader|digitalhub\-writer).*
+    #  resourceSelectors.secrets.owners --
+    owners: db.movetokube.com/v1alpha1
+  #  resourceSelectors.services --
+  services: app.kubernetes.io/type=service|app.kubernetes.io/managed-by=postgrest-operator|app.kubernetes.io/managed-by=dremiorestserver-operator|com.coder.resource=true|app.kubernetes.io/managed-by=dhcore
 
-env:
-  additionalEnv: {}
+#  resources --
+resources: {}
+
+#  securityContext --
+securityContext:
+  #  securityContext.allowPrivilegeEscalation --
+  allowPrivilegeEscalation: false
+  #  securityContext.capabilities --
+  capabilities:
+    #  securityContext.capabilities.drop --
+    drop:
+      - ALL
+  #  securityContext.runAsNonRoot --
+  runAsNonRoot: true
+  #  securityContext.seccompProfile --
+  seccompProfile:
+    #  securityContext.seccompProfile.type --
+    type: RuntimeDefault
+
+#  service --
+service:
+  #  service.nodePort --
+  nodePort: "30160"
+  #  service.port --
+  port: 8080
+  #  service.type --
+  type: NodePort
+
+#  serviceAccount --
+serviceAccount:
+  #  serviceAccount.annotations --
+  annotations: {}
+  #  serviceAccount.create --
+  create: true
+  #  serviceAccount.name --
+  name: ""
+
+#  storageClasses --
+storageClasses: default
+
+#  tolerations --
+tolerations: []

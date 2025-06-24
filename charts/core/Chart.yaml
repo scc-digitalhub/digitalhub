@@ -1,6 +1,11 @@
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: Apache-2.0
+
 apiVersion: v2
 name: core
-description: Core backend application for DigitalHub.
+description: DigitalHub Core is part of the DigitalHub platform, and depends on external components to support the complete set of functionalities.
+home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/core"
 type: application
 version: 0.3.15
 appVersion: "0.11.0"
@@ -9,3 +14,5 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
+sources:
+  - https://github.com/scc-digitalhub/digitalhub-core

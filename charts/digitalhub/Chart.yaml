@@ -1,7 +1,12 @@
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 apiVersion: v2
 name: digitalhub
 description: The Digital Hub is an open-source platform for interoperability of data and services, built by integrating several open-source projects to manage, elaborate, expose and serve data through modern standards.
 type: application
+home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/digitalhub"
 maintainers:
   - name: ffais
     url: https://github.com/ffais

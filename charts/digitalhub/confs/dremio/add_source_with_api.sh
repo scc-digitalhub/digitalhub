@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 TOKEN=$(curl -s -X POST "http://${DREMIO_URL}:9047/apiv2/login" --header 'Content-Type: application/json' --data-raw "{\"userName\": \"${DREMIO_CODER_EMAIL}\",\"password\": \"${ADMIN_PASSWORD}\"}" | jq -r .token)
 
 echo "add postgres"

@@ -1,4 +1,8 @@
-{{- $files := .Files }}
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+{{ $files := .Files -}}
 {{- range $key, $value := .Files }}
 {{- if hasPrefix "confs/tests/python-test/" $key }}
 {{- $testName := ($key | trimPrefix "confs/tests/python-test/" | trimSuffix ".py") }}

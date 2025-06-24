@@ -1,4 +1,8 @@
-{{- if and (index .Values "open-webui" "initialize" "enabled") (index .Values "open-webui" "enabled") }}
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+{{ if and (index .Values "open-webui" "initialize" "enabled") (index .Values "open-webui" "enabled") -}}
 kind: ConfigMap
 apiVersion: v1
 metadata:
@@ -28,7 +32,7 @@ spec:
   backoffLimit: 1
   template:
     spec:
-      {{- with .Values.podSecurityContext }}
+      {{- with .Values.global.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
