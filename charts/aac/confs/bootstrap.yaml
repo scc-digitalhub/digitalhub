@@ -5,6 +5,8 @@ realms:
   - name: {{ $realm.name }}
     slug: {{ $realm.slug }}
     public: {{ $realm.public }}
+    roles:
+      {{- toYaml $realm.roles | nindent 6 }}
     identityProviders: 
       {{- toYaml $realm.identityProviders | nindent 6 }}
     {{- if $realm.services }}
