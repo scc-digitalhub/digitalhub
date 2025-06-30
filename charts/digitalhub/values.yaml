@@ -1119,6 +1119,10 @@ minio-operator:
 open-webui:
   #  open-webui.enabled -- Enable/Disable OpenWebUI
   enabled: true
+  #  open-webui.extraEnvFrom -- Additional variables that will be passed to OpenWebUI from secrets or configmap
+  #  - secretRef:
+  #     name: my-secret
+  extraEnvFrom: []
   #  open-webui.extraEnvVars -- Additional variables that will be passed to OpenWebUI
   extraEnvVars:
     - name: ENABLE_LOGIN_FORM
@@ -1133,30 +1137,19 @@ open-webui:
       value: user
     - name: ENABLE_API_KEY
       value: "False"
-  #  open-webui.initialize -- OpenWebUI init job configuration.
-  #  This Job configures the admin user.
-  initialize:
-    #  open-webui.initialize.enabled -- Enable/Disable OpenWebUI
-    enabled: true
-    #  open-webui.initialize.admin -- OpenWebUI admin configuration
-    admin:
-      #  open-webui.initialize.admin.existingSecret -- Secret containing OpenWebUI admin user and password.
-      #  These values have higher priority than the explicit declarations.
-      existingSecret:
-        #  open-webui.initialize.admin.existingSecret.name -- Name of the secret
-        name: ""
-        #  open-webui.initialize.admin.existingSecret.passwordKey -- Key of the password
-        passwordKey: ""
-        #  open-webui.initialize.admin.existingSecret.usernameKey -- Key of the username
-        usernameKey: ""
-      #  open-webui.initialize.admin.password -- OpenWebUI admin password
-      #  It has lower priority than the corresponding secret values.
-      password: Test12456@!
-      #  open-webui.initialize.admin.username -- OpenWebUI admin username
-      #  It has lower priority than the corresponding secret values.
-      username: test@test.local
-    #  open-webui.initialize.image -- Job container image
-    image: smartcommunitylab/k8s-ansible-clusterctl:1.32.5-1.10.1
+    #  Overrides the randomly generated string used for JSON Web Token. (for production enviroments use 'extraEnvFrom' to load this variable from secrets)
+    - name: WEBUI_SECRET_KEY
+      value: "WEBUI_SECRET_KEY"
+    # Initialize default admin account. (for production enviroments use 'extraEnvFrom' to load this variable from secrets)
+    - name: ADMIN_USER_EMAIL
+      value: "admin@cluster.local"
+    # Initialize default admin account. (for production enviroments use 'extraEnvFrom' to load this variable from secrets)
+    - name: ADMIN_USER_PASSWORD
+      value: "admin"
+    - name: SPACE_ID
+      value: test
+  #  open-webui.initialize.image -- Job container image
+  image: smartcommunitylab/k8s-ansible-clusterctl:1.32.5-1.10.1
   #  open-webui.ollama --
   ollama:
     #  open-webui.ollama.enabled -- Enable/Disable ollama for OpenWebUI
@@ -1171,9 +1164,26 @@ open-webui:
   #  open-webui.service -- Service configuration
   service:
     #  open-webui.service.nodePort -- Service nodePort
-    nodePort: "30160"
+    nodePort: "30200"
     #  open-webui.service.type -- Service type
     type: *serviceType
+  podSecurityContext:
+    fsGroupChangePolicy: Always
+    sysctls: []
+    supplementalGroups: []
+    fsGroup: 1001
+  containerSecurityContext:
+    runAsUser: 1001
+    runAsGroup: 1001
+    runAsNonRoot: true
+    privileged: false
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: false
+    capabilities:
+      drop:
+        - ALL
+    seccompProfile:
+      type: "RuntimeDefault"
 
 #  platformPackages -- Platform's packages configuration.
 #  Used for the tests and Code-Toolbox Coder template.

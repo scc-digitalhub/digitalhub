@@ -24,4 +24,5 @@ Digitalhub componet URLs:
   - Coder: http://{{ $externalUrl }}:{{ .Values.coder.coder.service.httpNodePort }} (Username: {{ .Values.coder.email }} Password: {{ .Values.coder.password }})
   - Core: http://{{ $externalUrl }}:{{ .Values.core.service.httpNodePort }}
   - Kubernetes Resource Manager: http://{{ $externalUrl }}:{{ index .Values "kubernetes-resource-manager" "service" "nodePort" }}
+  - Open WebUI: http://{{ $externalUrl }}:{{ index .Values "open-webui" "service" "nodePort" }}
 {{ end }}
