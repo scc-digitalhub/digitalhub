@@ -1046,9 +1046,9 @@ object
       {
         "extraVars": [],
         "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png",
-        "image": "ghcr.io/scc-digitalhub/jupyter-3-10:0.11.0",
-        "image311": "ghcr.io/scc-digitalhub/jupyter-3-11:0.11.0",
-        "image39": "ghcr.io/scc-digitalhub/jupyter-3-9:0.11.0",
+        "image": "ghcr.io/scc-digitalhub/jupyter-3-10:0.12.0",
+        "image311": "ghcr.io/scc-digitalhub/jupyter-3-11:0.12.0",
+        "image39": "ghcr.io/scc-digitalhub/jupyter-3-9:0.12.0",
         "name": "jupyter",
         "nodePort": "30040",
         "privileged": false,
@@ -1532,9 +1532,9 @@ object
     {
       "extraVars": [],
       "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png",
-      "image": "ghcr.io/scc-digitalhub/jupyter-3-10:0.11.0",
-      "image311": "ghcr.io/scc-digitalhub/jupyter-3-11:0.11.0",
-      "image39": "ghcr.io/scc-digitalhub/jupyter-3-9:0.11.0",
+      "image": "ghcr.io/scc-digitalhub/jupyter-3-10:0.12.0",
+      "image311": "ghcr.io/scc-digitalhub/jupyter-3-11:0.12.0",
+      "image39": "ghcr.io/scc-digitalhub/jupyter-3-9:0.12.0",
       "name": "jupyter",
       "nodePort": "30040",
       "privileged": false,
@@ -1622,9 +1622,9 @@ list
   {
     "extraVars": [],
     "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png",
-    "image": "ghcr.io/scc-digitalhub/jupyter-3-10:0.11.0",
-    "image311": "ghcr.io/scc-digitalhub/jupyter-3-11:0.11.0",
-    "image39": "ghcr.io/scc-digitalhub/jupyter-3-9:0.11.0",
+    "image": "ghcr.io/scc-digitalhub/jupyter-3-10:0.12.0",
+    "image311": "ghcr.io/scc-digitalhub/jupyter-3-11:0.12.0",
+    "image39": "ghcr.io/scc-digitalhub/jupyter-3-9:0.12.0",
     "name": "jupyter",
     "nodePort": "30040",
     "privileged": false,
@@ -9322,27 +9322,27 @@ object
   "packages": [
     {
       "name": "digitalhub[full]",
-      "tag": "0.11.0"
+      "tag": "0.12.0"
     },
     {
       "name": "digitalhub-runtime-python",
-      "tag": "0.11.0"
+      "tag": "0.12.0"
     },
     {
       "name": "digitalhub-runtime-container",
-      "tag": "0.11.0"
+      "tag": "0.12.0"
     },
     {
       "name": "digitalhub-runtime-dbt",
-      "tag": "0.11.0"
+      "tag": "0.12.0"
     },
     {
       "name": "digitalhub-runtime-kfp",
-      "tag": "0.11.0"
+      "tag": "0.12.0"
     },
     {
       "name": "digitalhub-runtime-modelserve",
-      "tag": "0.11.0"
+      "tag": "0.12.0"
     }
   ],
   "preRelease": false,
@@ -9395,27 +9395,27 @@ list
 [
   {
     "name": "digitalhub[full]",
-    "tag": "0.11.0"
+    "tag": "0.12.0"
   },
   {
     "name": "digitalhub-runtime-python",
-    "tag": "0.11.0"
+    "tag": "0.12.0"
   },
   {
     "name": "digitalhub-runtime-container",
-    "tag": "0.11.0"
+    "tag": "0.12.0"
   },
   {
     "name": "digitalhub-runtime-dbt",
-    "tag": "0.11.0"
+    "tag": "0.12.0"
   },
   {
     "name": "digitalhub-runtime-kfp",
-    "tag": "0.11.0"
+    "tag": "0.12.0"
   },
   {
     "name": "digitalhub-runtime-modelserve",
-    "tag": "0.11.0"
+    "tag": "0.12.0"
   }
 ]
 </pre>
