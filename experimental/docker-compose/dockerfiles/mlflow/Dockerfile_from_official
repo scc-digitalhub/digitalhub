@@ -1,4 +1,0 @@
-ARG TAG
-FROM ghcr.io/mlflow/mlflow:$TAG
-
-RUN pip install --no-cache psycopg2-binary boto3

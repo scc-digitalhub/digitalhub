@@ -896,7 +896,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="rbac"><a href="./values.yaml#L129">rbac</a></td>
+			<td id="rbac"><a href="./values.yaml#L128">rbac</a></td>
 			<td>
 object
 </td>
@@ -1075,7 +1075,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="rbac--clusterRole"><a href="./values.yaml#L131">rbac.clusterRole</a></td>
+			<td id="rbac--clusterRole"><a href="./values.yaml#L130">rbac.clusterRole</a></td>
 			<td>
 object
 </td>
@@ -1094,7 +1094,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="rbac--clusterRole--create"><a href="./values.yaml#L133">rbac.clusterRole.create</a></td>
+			<td id="rbac--clusterRole--create"><a href="./values.yaml#L132">rbac.clusterRole.create</a></td>
 			<td>
 bool
 </td>
@@ -1108,7 +1108,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="rbac--namespaced"><a href="./values.yaml#L135">rbac.namespaced</a></td>
+			<td id="rbac--namespaced"><a href="./values.yaml#L134">rbac.namespaced</a></td>
 			<td>
 bool
 </td>
@@ -1122,11 +1122,11 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="rbac--roles"><a href="./values.yaml#L140">rbac.roles</a></td>
+			<td id="rbac--roles"><a href="./values.yaml#L139">rbac.roles</a></td>
 			<td>
 list
 </td>
-			<td>Define roles for KRM service account and template crd.allowed list for KRM.  kubernetes.crd.allowed and kubernetes.crd.denied are meant to be mutually exclusive:   you either specify one or the other (or leave both empty).   Defining allowed will let the resource manager handle only the CRDs listed in it, while denied will allow all CRDs not listed in it. Leaving both empty lets the resource manager handle all CRDs.</td>
+			<td>Define roles for KRM service account and template crd.allowed list for KRM.  kubernetes.crd.allowed and kubernetes.crd.denied are meant to be mutually exclusive:  you either specify one or the other (or leave both empty).  Defining allowed will let the resource manager handle only the CRDs listed in it, while denied will allow all CRDs not listed in it. Leaving both empty lets the resource manager handle all CRDs.</td>
       <td>
 				<div style="max-width: 300px;">
 <details>
@@ -1295,7 +1295,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="replicaCount"><a href="./values.yaml#L250">replicaCount</a></td>
+			<td id="replicaCount"><a href="./values.yaml#L249">replicaCount</a></td>
 			<td>
 int
 </td>
@@ -1309,7 +1309,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors"><a href="./values.yaml#L253">resourceSelectors</a></td>
+			<td id="resourceSelectors"><a href="./values.yaml#L252">resourceSelectors</a></td>
 			<td>
 object
 </td>
@@ -1339,7 +1339,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--deployments"><a href="./values.yaml#L255">resourceSelectors.deployments</a></td>
+			<td id="resourceSelectors--deployments"><a href="./values.yaml#L254">resourceSelectors.deployments</a></td>
 			<td>
 string
 </td>
@@ -1353,7 +1353,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--jobs"><a href="./values.yaml#L257">resourceSelectors.jobs</a></td>
+			<td id="resourceSelectors--jobs"><a href="./values.yaml#L256">resourceSelectors.jobs</a></td>
 			<td>
 string
 </td>
@@ -1367,7 +1367,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--pvcs"><a href="./values.yaml#L259">resourceSelectors.pvcs</a></td>
+			<td id="resourceSelectors--pvcs"><a href="./values.yaml#L258">resourceSelectors.pvcs</a></td>
 			<td>
 object
 </td>
@@ -1387,7 +1387,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--pvcs--labels"><a href="./values.yaml#L261">resourceSelectors.pvcs.labels</a></td>
+			<td id="resourceSelectors--pvcs--labels"><a href="./values.yaml#L260">resourceSelectors.pvcs.labels</a></td>
 			<td>
 string
 </td>
@@ -1401,7 +1401,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--pvcs--managedBy"><a href="./values.yaml#L263">resourceSelectors.pvcs.managedBy</a></td>
+			<td id="resourceSelectors--pvcs--managedBy"><a href="./values.yaml#L262">resourceSelectors.pvcs.managedBy</a></td>
 			<td>
 string
 </td>
@@ -1415,7 +1415,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--secrets"><a href="./values.yaml#L265">resourceSelectors.secrets</a></td>
+			<td id="resourceSelectors--secrets"><a href="./values.yaml#L264">resourceSelectors.secrets</a></td>
 			<td>
 object
 </td>
@@ -1436,7 +1436,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--secrets--labels"><a href="./values.yaml#L267">resourceSelectors.secrets.labels</a></td>
+			<td id="resourceSelectors--secrets--labels"><a href="./values.yaml#L266">resourceSelectors.secrets.labels</a></td>
 			<td>
 string
 </td>
@@ -1450,7 +1450,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--secrets--names"><a href="./values.yaml#L269">resourceSelectors.secrets.names</a></td>
+			<td id="resourceSelectors--secrets--names"><a href="./values.yaml#L268">resourceSelectors.secrets.names</a></td>
 			<td>
 string
 </td>
@@ -1464,7 +1464,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--secrets--owners"><a href="./values.yaml#L271">resourceSelectors.secrets.owners</a></td>
+			<td id="resourceSelectors--secrets--owners"><a href="./values.yaml#L270">resourceSelectors.secrets.owners</a></td>
 			<td>
 string
 </td>
@@ -1478,7 +1478,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resourceSelectors--services"><a href="./values.yaml#L273">resourceSelectors.services</a></td>
+			<td id="resourceSelectors--services"><a href="./values.yaml#L272">resourceSelectors.services</a></td>
 			<td>
 string
 </td>
@@ -1492,7 +1492,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resources"><a href="./values.yaml#L276">resources</a></td>
+			<td id="resources"><a href="./values.yaml#L275">resources</a></td>
 			<td>
 object
 </td>
@@ -1509,7 +1509,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext"><a href="./values.yaml#L279">securityContext</a></td>
+			<td id="securityContext"><a href="./values.yaml#L278">securityContext</a></td>
 			<td>
 object
 </td>
@@ -1537,7 +1537,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L281">securityContext.allowPrivilegeEscalation</a></td>
+			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L280">securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -1551,7 +1551,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--capabilities"><a href="./values.yaml#L283">securityContext.capabilities</a></td>
+			<td id="securityContext--capabilities"><a href="./values.yaml#L282">securityContext.capabilities</a></td>
 			<td>
 object
 </td>
@@ -1572,7 +1572,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--capabilities--drop"><a href="./values.yaml#L285">securityContext.capabilities.drop</a></td>
+			<td id="securityContext--capabilities--drop"><a href="./values.yaml#L284">securityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
@@ -1591,7 +1591,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L288">securityContext.runAsNonRoot</a></td>
+			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L287">securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -1605,7 +1605,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--seccompProfile"><a href="./values.yaml#L290">securityContext.seccompProfile</a></td>
+			<td id="securityContext--seccompProfile"><a href="./values.yaml#L289">securityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -1624,7 +1624,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--seccompProfile--type"><a href="./values.yaml#L292">securityContext.seccompProfile.type</a></td>
+			<td id="securityContext--seccompProfile--type"><a href="./values.yaml#L291">securityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -1638,7 +1638,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="service"><a href="./values.yaml#L295">service</a></td>
+			<td id="service"><a href="./values.yaml#L294">service</a></td>
 			<td>
 object
 </td>
@@ -1659,7 +1659,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="service--nodePort"><a href="./values.yaml#L297">service.nodePort</a></td>
+			<td id="service--nodePort"><a href="./values.yaml#L296">service.nodePort</a></td>
 			<td>
 string
 </td>
@@ -1673,7 +1673,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="service--port"><a href="./values.yaml#L299">service.port</a></td>
+			<td id="service--port"><a href="./values.yaml#L298">service.port</a></td>
 			<td>
 int
 </td>
@@ -1687,7 +1687,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="service--type"><a href="./values.yaml#L301">service.type</a></td>
+			<td id="service--type"><a href="./values.yaml#L300">service.type</a></td>
 			<td>
 string
 </td>
@@ -1701,7 +1701,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount"><a href="./values.yaml#L304">serviceAccount</a></td>
+			<td id="serviceAccount"><a href="./values.yaml#L303">serviceAccount</a></td>
 			<td>
 object
 </td>
@@ -1722,7 +1722,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--annotations"><a href="./values.yaml#L306">serviceAccount.annotations</a></td>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L305">serviceAccount.annotations</a></td>
 			<td>
 object
 </td>
@@ -1739,7 +1739,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--create"><a href="./values.yaml#L308">serviceAccount.create</a></td>
+			<td id="serviceAccount--create"><a href="./values.yaml#L307">serviceAccount.create</a></td>
 			<td>
 bool
 </td>
@@ -1753,7 +1753,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--name"><a href="./values.yaml#L310">serviceAccount.name</a></td>
+			<td id="serviceAccount--name"><a href="./values.yaml#L309">serviceAccount.name</a></td>
 			<td>
 string
 </td>
@@ -1767,7 +1767,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="storageClasses"><a href="./values.yaml#L313">storageClasses</a></td>
+			<td id="storageClasses"><a href="./values.yaml#L312">storageClasses</a></td>
 			<td>
 string
 </td>
@@ -1781,7 +1781,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="tolerations"><a href="./values.yaml#L316">tolerations</a></td>
+			<td id="tolerations"><a href="./values.yaml#L315">tolerations</a></td>
 			<td>
 list
 </td>

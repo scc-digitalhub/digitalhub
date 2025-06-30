@@ -1,5 +1,0 @@
-prop_replace 'nifi.security.user.oidc.discovery.url'     "${OIDC_CONFIGURATION}"
-prop_replace 'nifi.security.user.oidc.connect.timeout'   "${NIFI_CONNECT_TIMEOUT:-5 secs}"
-prop_replace 'nifi.security.user.oidc.read.timeout'      "${NIFI_READ_TIMEOUT:-5 secs}"
-prop_replace 'nifi.security.user.oidc.client.id'         "${NIFI_CLIENT_ID}"
-prop_replace 'nifi.security.user.oidc.client.secret'     "${NIFI_CLIENT_SECRET}"

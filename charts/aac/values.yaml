@@ -2,87 +2,22 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
-
-image:
-  repository: ghcr.io/scc-digitalhub/aac
-  pullPolicy: IfNotPresent
-  aacCommand1: "java"
-  aacCommand2: "org.springframework.boot.loader.JarLauncher"
-  aacCommand3: "-Dspring-boot.run.arguments=--logging.level.ROOT=DEBUG"
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: 5.3.0-beta1
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Automatically mount a ServiceAccount's API credentials?
-  automount: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: aac
-
-podAnnotations: {}
-podLabels: {}
-
-podSecurityContext:
-  runAsUser: 805
-  runAsGroup: 805
-  fsGroup: 805
-
 global:
   externalHostAddress: ""
 
-securityContext:
-  runAsNonRoot: true
-  runAsUser: 805
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop:
-      - ALL
+adminCreds:
+  username: "admin"
+  password: "admin"
 
-service:
-  type: ClusterIP
-  port: "8080"
-  httpNodePort: ""
+adminExistingCreds:
+  existingSecret: ""
+  userKey: ""
+  passKey: ""
 
-ingress:
-  enabled: false
-  className: ""
-  hosts:
-    - host: ""
-      paths:
-        - pathType: ImplementationSpecific
-          path: /
-  tls:
-  - secretName: ""
-    hosts:
-      - ""
-  annotations: {}
+affinity: {}
 
-resources:
-  limits:
-    cpu: 1000m
-    memory: 512Mi
-  requests:
-    cpu: 200m
-    memory: 256Mi
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+appCreds:
+  existingSecret: ""
 
 autoscaling:
   enabled: false
@@ -91,23 +26,10 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-# Additional volumes on the output Deployment definition.
-volumes:
-  - name: aac-volume
-    secret:
-      secretName: aac-bootstrap-secret
+bootstrap: []
 
-# Additional volumeMounts on the output Deployment definition.
-volumeMounts:
-- name: aac-volume
-  mountPath: /home/aac/bootstrap.yaml
-  subPath: bootstrap.yaml
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
+bootstrapCreds:
+  existingSecret: ""
 
 # AAC Config Map
 config:
@@ -127,6 +49,38 @@ config:
   keystorePath: ""
   cacheJwks: "public, max-age=3600, must-revalidate, no-transform"
 
+fullnameOverride: ""
+
+image:
+  repository: ghcr.io/scc-digitalhub/aac
+  pullPolicy: IfNotPresent
+  aacCommand1: "java"
+  aacCommand2: "org.springframework.boot.loader.JarLauncher"
+  aacCommand3: "-Dspring-boot.run.arguments=--logging.level.ROOT=DEBUG"
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: 5.3.0-beta1
+
+imagePullSecrets: []
+
+ingress:
+  enabled: false
+  className: ""
+  hosts:
+    - host: ""
+      paths:
+        - pathType: ImplementationSpecific
+          path: /
+  tls:
+    - secretName: ""
+      hosts:
+        - ""
+  annotations: {}
+
+jdbcExistingCreds:
+  existingSecret: ""
+  userKey: ""
+  passwordKey: ""
+
 # Secrets
 
 # AAC default H2 database credentials. Do not set them if you are using an external one.
@@ -134,34 +88,31 @@ jdbcH2creds:
   user: ""
   password: ""
 
-bootstrapCreds:
-  existingSecret: ""
-
-adminExistingCreds:
-  existingSecret: ""
-  userKey: ""
-  passKey: ""
-
-appCreds:
-  existingSecret: ""
+keystore:
+  secretName: ""
+  keyName: ""
 
 mailCreds:
   existingSecret: ""
   passwordKey: ""
   usernameKey: ""
 
-jdbcExistingCreds:
-  existingSecret: ""
-  userKey: ""
-  passwordKey: ""
-
 mailSecret:
   user: test@user.it
   password: testPassword
 
-adminCreds:
-  username: "admin"
-  password: "admin"
+nameOverride: ""
+
+nodeSelector: {}
+
+podAnnotations: {}
+
+podLabels: {}
+
+podSecurityContext:
+  runAsUser: 805
+  runAsGroup: 805
+  fsGroup: 805
 
 postgresOperator:
   installed: false
@@ -170,7 +121,25 @@ postgresOperator:
   user: ""
   database: ""
 
-bootstrap: []
+replicaCount: 1
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
 
 secrets:
   annotations: {}
@@ -183,6 +152,40 @@ secrets:
   reflector:
     enabled: false
 
-keystore:
-  secretName: ""
-  keyName: ""
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 805
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+
+service:
+  type: ClusterIP
+  port: "8080"
+  httpNodePort: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: aac
+
+tolerations: []
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts:
+  - name: aac-volume
+    mountPath: /home/aac/bootstrap.yaml
+    subPath: bootstrap.yaml
+
+# Additional volumes on the output Deployment definition.
+volumes:
+  - name: aac-volume
+    secret:
+      secretName: aac-bootstrap-secret

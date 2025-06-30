@@ -32,7 +32,7 @@ env:
 #  fullnameOverride -- String to fully override `postgrest-operator.fullname` template.
 fullnameOverride: ""
 
-#  image -- 
+#  image --
 image:
   #  image.pullPolicy -- Image pull policy
   pullPolicy: IfNotPresent
@@ -95,7 +95,7 @@ oidc:
       key: ""
       #  oidc.audience.externalSecret.name -- Existing secret name
       name: ""
-  #  oidc.authType -- 
+  #  oidc.authType --
   authType: ""
   #  oidc.issuer -- OIDC issuer
   issuer: ""
@@ -125,7 +125,6 @@ podSecurityContext:
     type: RuntimeDefault
 
 #  rbac -- RBAC configuration for kubernetes and KRM
-
 rbac:
   #  rbac.clusterRole -- Role configuration
   clusterRole:
@@ -134,8 +133,8 @@ rbac:
   #  rbac.namespaced -- Create namespaced cluster role
   namespaced: true
   #  rbac.roles -- Define roles for KRM service account and template crd.allowed list for KRM.
-  #  kubernetes.crd.allowed and kubernetes.crd.denied are meant to be mutually exclusive: 
-  #  you either specify one or the other (or leave both empty). 
+  #  kubernetes.crd.allowed and kubernetes.crd.denied are meant to be mutually exclusive:
+  #  you either specify one or the other (or leave both empty).
   #  Defining allowed will let the resource manager handle only the CRDs listed in it, while denied will allow all CRDs not listed in it. Leaving both empty lets the resource manager handle all CRDs.
   roles:
     - apiGroups: db.movetokube.com
