@@ -7,7 +7,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 # digitalhub
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-AGPL%20V3-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/digitalhub/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=digitalhub*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.12.0-beta6](https://img.shields.io/badge/Version-0.12.0--beta6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0](https://img.shields.io/badge/AppVersion-0.12.0-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.12.0-beta7](https://img.shields.io/badge/Version-0.12.0--beta7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0](https://img.shields.io/badge/AppVersion-0.12.0-informational?style=flat-square)
 
 The Digital Hub is an open-source platform for interoperability of data and services, built by integrating several open-source projects to manage, elaborate, expose and serve data through modern standards.
 
