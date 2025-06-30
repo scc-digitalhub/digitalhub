@@ -74,7 +74,7 @@ Digitalhub componet URLs:
 
 ## Configuration
 
-The DigitalHub Platform provides configuration options in the [DigitalHub values.yaml file](https://github.com/scc-digitalhub/digitalhub/blob/main/charts/digitalhub/values.yaml).
+The DigitalHub Platform provides configuration options in the [DigitalHub values.yaml file](values.yaml).
 
 The safest way to set up your custom values is to use a values file in which you will set up the options you are interested in.
 
@@ -327,7 +327,7 @@ In your provider, the redirect url should correspond to `https://yourminiourl/oa
 
 ## Values
 
-You can locate the platform full configuration file at [link](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/digitalhub/CONFIGURATION.md).
+You can locate the platform full configuration file at [link](CONFIGURATION.md).
 
 ## Development
 
