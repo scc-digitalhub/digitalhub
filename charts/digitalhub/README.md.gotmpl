@@ -15,7 +15,7 @@ Explore the full documentation at the [link](https://scc-digitalhub.github.io/do
 
 ## Quick start
 
-### Prerequisites 
+### Prerequisites
 - [Helm](https://helm.sh/docs/intro/install/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
 - Working Kubernetes Cluster
@@ -94,7 +94,7 @@ global:
 ```
 
 When deploying in a production environment, the platform setup requires additional steps for its secure and efficient use. In this section we take into account aspects that are required for the platform setup.
-    
+
     * Components Configuration
     * Authentication and Access Control
 
@@ -115,7 +115,7 @@ ingress:
   className: "youringressclass"
   hosts:
     - host: your.host
-      paths: 
+      paths:
         - pathType: ImplementationSpecific
           path: /
   tls:
@@ -167,7 +167,7 @@ To set up your custom KRM roles and permissions, follow this example and change 
 ```yaml
 kubernetes-resource-manager:
   oidc:
-    roleClaim: "krm_roles"    # Name of the role used 
+    roleClaim: "krm_roles"    # Name of the role used
     access:
       roles:
         - role: ROLE_MY_ROLE  # Name of the role
@@ -281,7 +281,7 @@ dashboard:
 
 #### Kubernetes Resource Manager
 
-To enable the authentication with a provider for Kubernetes Resource Manager, you will need to set the values in the file Values.yaml of the chart digitalhub in the Kubernetes Resource Manager section. 
+To enable the authentication with a provider for Kubernetes Resource Manager, you will need to set the values in the file Values.yaml of the chart digitalhub in the Kubernetes Resource Manager section.
 
 The example below shows only the values concerning the authentication configuration.
 
@@ -303,7 +303,7 @@ In your provider, the redirect url should correspond to `https://yourkubernetesr
 
 #### Minio
 
-To enable the authentication with a provider for Minio, you will need to set the values in the file Values.yaml of the chart digitalhub in the Minio section. 
+To enable the authentication with a provider for Minio, you will need to set the values in the file Values.yaml of the chart digitalhub in the Minio section.
 
 The example below shows only the values concerning the authentication configuration.
 
@@ -331,7 +331,7 @@ You can locate the platform full configuration file at [link](CONFIGURATION.md).
 
 ## Development
 
-### Prerequisites 
+### Prerequisites
 - [Helm](https://helm.sh/docs/intro/install/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
@@ -363,7 +363,7 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 ```
 8. Decode secret values
 ```sh
-    echo -n "<BASE64_VALUES_FROM_SECRET>" | base64 -d 
+    echo -n "<BASE64_VALUES_FROM_SECRET>" | base64 -d
 ```
 9. Create secret with previously decoded values
 ```
