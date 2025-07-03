@@ -9,6 +9,17 @@ repos:
       - id: helmlint
     repo: https://github.com/gruntwork-io/pre-commit
     rev: v0.1.29
+  - repo: https://github.com/ffais/yaml-sort
+    rev: v0.1.4
+    hooks:
+      - id: yaml-sort
+        files: (values\.yaml)$
+        args:
+          - sort
+          - --input-file=values.yaml
+          - --search-dir=charts/
+          - --space-top-key=true
+          - --custom-sort=global,enabled
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.14.2
     hooks:
@@ -16,6 +27,7 @@ repos:
         args:
           - --chart-search-root=charts
           - --template-files=README.md.gotmpl
+          - --sort-values-order=file
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.14.2
     hooks:
@@ -25,3 +37,4 @@ repos:
           - --chart-search-root=charts/digitalhub
           - --template-files=CONFIGURATION.md.gotmpl
           - --output-file=CONFIGURATION.md
+          - --sort-values-order=file
