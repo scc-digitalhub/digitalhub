@@ -1,0 +1,143 @@
+<!--
+SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
+{{ template "chart.header" . }}
+
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)]({{ template "chart.homepage" . }}/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter={{ template "chart.name" . }}*)
+![Status](https://img.shields.io/badge/status-stable-gold) {{ template "chart.badgesSection" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.name" . }} is part of the DigitalHub platform, and depends on external components to support the complete set of functionalities. To bootstrap the platform in its entirety please explore the full documentation at the [link](https://scc-digitalhub.github.io/docs/admin/).
+
+## Quick start
+
+### Prerequisites
+- [Helm](https://helm.sh/docs/intro/install/)
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+
+1. Start minikube (change 192.168.49.0 if your network setup is different):
+```sh
+    minikube start --insecure-registry "192.168.49.0/24" --memory 8192 --cpus 4
+```
+2. Get minikube external IP:
+```sh
+    minikube ip
+```
+4. Add Digitalhub repository:
+```sh
+helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
+```
+5. Install {{ template "chart.name" . }} with Helm:
+```sh
+    helm upgrade {{ template "chart.name" . }} digitalhub/{{ template "chart.name" . }} -n {{ template "chart.name" . }} --install --create-namespace --timeout 15m0s
+```
+6. Wait until all pods are in Running state
+```sh
+    kubectl --namespace {{ template "chart.name" . }} get pods
+```
+
+## Values
+
+{{ define "chart.valueDefaultColumnRender" }}
+{{- $defaultValue := (default .Default .AutoDefault)  -}}
+{{- $notationType := .NotationType }}
+{{- if (and (hasPrefix "`" $defaultValue) (hasSuffix "`" $defaultValue) ) -}}
+{{- $defaultValue = (toPrettyJson (fromJson (trimAll "`" (default .Default .AutoDefault) ) ) ) -}}
+{{- $notationType = "json" }}
+{{- end -}}
+{{- if (eq $notationType "tpl" ) }}
+<pre lang="{{ $notationType }}">
+{{ .Key }}: |
+{{- $defaultValue | nindent 2 }}
+</pre>
+{{- else if (eq $notationType "email") }}
+<a href="mailto:{{ $defaultValue }}" style="color: green;">"{{ $defaultValue }}"</a>
+{{- else if or (eq .Type "object") (eq .Type "list") }}
+<details>
+<summary>+Expand</summary>
+<pre lang="{{ $notationType }}">
+{{ $defaultValue }}
+</pre>
+</details>
+{{- else }}
+<pre lang="{{ $notationType }}">
+{{ $defaultValue }}
+</pre>
+{{- end }}
+{{ end }}
+
+{{ define "chart.typeColumnRender" }}
+{{- if (eq .Type "string/email") }}
+<a href="#stringemail" title="{{- template "chart.valuetypes.email" -}}">{{.Type}}</a>
+{{- else if (eq .Type "k8s/storage/persistent-volume/access-modes" )}}
+<a target="_blank"
+    href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes"
+    >{{- .Type }}</a>
+{{- else }}
+{{ .Type }}
+{{- end }}
+{{ end }}
+
+{{ define "chart.valuesTableHtml" }}
+<table>
+	<thead>
+		<th>Key</th>
+		<th>Type</th>
+    <th>Description</th>
+		<th>Default</th>
+	</thead>
+	<tbody>
+	{{- range .Values }}
+		<tr>
+			<td id="{{ .Key | replace "." "--" }}"><a href="./values.yaml#L{{ .LineNumber }}">{{ .Key }}</a></td>
+			<td>{{- template "chart.typeColumnRender" . -}}</td>
+			<td>{{ if .Description }}{{ .Description }}{{ else }}{{ .AutoDescription }}{{ end }}</td>
+      <td>
+				<div style="max-width: 300px;">{{ template "chart.valueDefaultColumnRender" . }}</div>
+			</td>
+		</tr>
+	{{- end }}
+	</tbody>
+</table>
+{{ end }}
+
+{{ template "chart.valuesTableHtml" . }}
+
+## Security Policy
+
+The current release is the supported version. Security fixes are released together with all other fixes in each new release.
+
+If you discover a security vulnerability in this project, please do not open a public issue.
+
+Instead, report it privately by emailing us at digitalhub@fbk.eu. Include as much detail as possible to help us understand and address the issue quickly and responsibly.
+
+## Contributing
+
+To report a bug or request a feature, please first check the existing issues to avoid duplicates. If none exist, open a new issue with a clear title and a detailed description, including any steps to reproduce if it's a bug.
+
+To contribute code, start by forking the repository. Clone your fork locally and create a new branch for your changes. Make sure your commits follow the [Conventional Commits v1.0](https://www.conventionalcommits.org/en/v1.0.0/) specification to keep history readable and consistent.
+
+Once your changes are ready, push your branch to your fork and open a pull request against the main branch. Be sure to include a summary of what you changed and why. If your pull request addresses an issue, mention it in the description (e.g., “Closes #123”).
+
+Please note that new contributors may be asked to sign a Contributor License Agreement (CLA) before their pull requests can be merged. This helps us ensure compliance with open source licensing standards.
+
+We appreciate contributions and help in improving the project!
+
+## Authors
+
+This project is developed and maintained by **DSLab – Fondazione Bruno Kessler**, with contributions from the open source community. A complete list of contributors is available in the project’s commit history and pull requests.
+
+For questions or inquiries, please contact: [digitalhub@fbk.eu](mailto:digitalhub@fbk.eu)
+
+## Copyright and license
+
+Copyright © 2025 DSLab – Fondazione Bruno Kessler and individual contributors.
+
+
+This project is licensed under the Apache License, Version 2.0.
+You may not use this file except in compliance with the License. Ownership of contributions remains with the original authors and is governed by the terms of the Apache 2.0 License, including the requirement to grant a license to the project.
