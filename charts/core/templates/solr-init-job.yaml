@@ -21,8 +21,8 @@ spec:
           image: {{ .Values.solr.collection.initialize.image }}
           command: ["/bin/sh", "-c"]
           args:
-            {{- if and .Values.solr.existingSecurityJsonSecret.secretName .Values.solr.existingSecurityJsonSecret.adminKey }}
-            - until [ "$(curl --user {{ .Values.solr.existingSecurityJsonSecret.adminKey }}:$SOLR_ADMIN_PWD -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
+            {{- if and .Values.solr.credentials.existingSecurityJsonSecret.secretName .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}
+            - until [ "$(curl --user {{ .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}:$SOLR_ADMIN_PWD -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
             {{- else }}
             - until [ "$(curl --user admin:$SOLR_ADMIN_PWD -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
             {{- end }}
@@ -32,9 +32,9 @@ spec:
             - name: "SOLR_ADMIN_PWD"
               valueFrom:
                 secretKeyRef:
-                {{- if and .Values.solr.existingSecurityJsonSecret.secretName .Values.solr.existingSecurityJsonSecret.adminKey }}
-                  name: {{ .Values.solr.existingSecurityJsonSecret.secretName }}
-                  key: {{ .Values.solr.existingSecurityJsonSecret.adminKey }}
+                {{- if and .Values.solr.credentials.existingSecurityJsonSecret.secretName .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}
+                  name: {{ .Values.solr.credentials.existingSecurityJsonSecret.secretName }}
+                  key: {{ .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}
                 {{- else }}
                   name: {{ .Values.solr.collection.initialize.securityJsonSecret }}
                   key: admin
@@ -52,9 +52,9 @@ spec:
             - name: "SOLR_ADMIN_PWD"
               valueFrom:
                 secretKeyRef:
-                {{- if and .Values.solr.existingSecurityJsonSecret.secretName .Values.solr.existingSecurityJsonSecret.adminKey }}
-                  name: {{ .Values.solr.existingSecurityJsonSecret.secretName }}
-                  key: {{ .Values.solr.existingSecurityJsonSecret.adminKey }}
+                {{- if and .Values.solr.credentials.existingSecurityJsonSecret.secretName .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}
+                  name: {{ .Values.solr.credentials.existingSecurityJsonSecret.secretName }}
+                  key: {{ .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}
                 {{- else }}
                   name: {{ .Values.solr.collection.initialize.securityJsonSecret }}
                   key: admin

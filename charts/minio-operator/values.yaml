@@ -4,11 +4,11 @@
 
 #  global -- Global configurations.
 global:
-  #  global.externalHostAddress -- Minio API URL
+  #  global.externalHostAddress -- S3 API URL
   externalHostAddress: ""
-  #  global.minio --
+  #  global.s3 --
   s3:
-    #  global.minio.rootUserSecret -- Minio admin credentials secret name
+    #  global.s3.rootUserSecret -- s3 admin credentials secret name
     rootUserSecret: ""
 
 #  affinity -- Affinity for pod assignment.

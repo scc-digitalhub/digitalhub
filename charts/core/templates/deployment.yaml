@@ -36,7 +36,7 @@ spec:
       serviceAccountName: {{ include "core.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- if .Values.solr.enabled }}
+      {{- if and .Values.solr.enabled .Values.solr.collection.initialize.enabled }}
       initContainers:
         - name: wait-solr
           image: {{ .Values.solr.collection.initialize.image }}
@@ -185,16 +185,20 @@ spec:
                   name: core-auth-creds
                   key: clientSecret
               {{- end }}
-            {{- if or .Values.solr.collection.initialize.securityJsonSecret .Values.solr.existingSecurityJsonSecret.secretName }}
+            {{- if or .Values.solr.collection.initialize.securityJsonSecret .Values.solr.credentials.existingSecurityJsonSecret.secretName .Values.solr.credentials.existingCollectionSecret.secretName }}
             - name: SOLR_PASSWORD
               valueFrom:
                 secretKeyRef:
-                {{- if and .Values.solr.existingSecurityJsonSecret.secretName .Values.solr.existingSecurityJsonSecret.adminKey  }}
-                  name: {{ .Values.solr.existingSecurityJsonSecret.secretName }}
-                {{- else }}
+              {{- if and .Values.solr.credentials.existingSecurityJsonSecret.secretName .Values.solr.credentials.existingSecurityJsonSecret.adminKey  }}
+                  name: {{ .Values.solr.credentials.existingSecurityJsonSecret.secretName }}
+                  key: {{ .Values.solr.credentials.user }}
+              {{- else if .Values.solr.credentials.existingCollectionSecret.secretName .Values.solr.credentials.existingCollectionSecret.passwordKey }}
+                  name: {{ .Values.solr.credentials.existingCollectionSecret.secretName }}
+                  key: {{ .Values.solr.credentials.existingCollectionSecret.passwordKey }}
+              {{- else }}
                   name: {{ .Values.solr.collection.initialize.securityJsonSecret }}
-                {{- end }}
-                  key: {{ .Values.solr.user }}
+                  key: {{ .Values.solr.credentials.user }}
+              {{- end }}
             {{- end }}
           envFrom:
           - configMapRef:

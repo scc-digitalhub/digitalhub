@@ -10,8 +10,8 @@ metadata:
 data:
   solr.sh: |
     #!/bin/sh
-  {{- if and .Values.solr.existingSecurityJsonSecret.secretName .Values.solr.existingSecurityJsonSecret.adminKey }}
-    curl --user "{{ .Values.solr.existingSecurityJsonSecret.adminKey }}:$SOLR_ADMIN_PWD" -s "{{ .Values.solr.url }}/admin/collections?action=CREATE&name={{ .Values.solr.collection.name }}&numShards=1&replicationFactor=1&maxShardsPerNode=1&collection.configName=_default"
+  {{- if and .Values.solr.credentials.existingSecurityJsonSecret.secretName .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}
+    curl --user "{{ .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}:$SOLR_ADMIN_PWD" -s "{{ .Values.solr.url }}/admin/collections?action=CREATE&name={{ .Values.solr.collection.name }}&numShards=1&replicationFactor=1&maxShardsPerNode=1&collection.configName=_default"
   {{- else }}
     curl --user "admin:$SOLR_ADMIN_PWD" -s "{{ .Values.solr.url }}/admin/collections?action=CREATE&name={{ .Values.solr.collection.name }}&numShards=1&replicationFactor=1&maxShardsPerNode=1&collection.configName=_default"
   {{- end }}

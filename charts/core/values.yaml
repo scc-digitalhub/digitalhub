@@ -422,7 +422,7 @@ solr:
   enabled: false
   #  solr.collection -- Solr collection configuration
   collection:
-    #  solr.collection.initialize -- Ch
+    #  solr.collection.initialize --
     initialize:
       #  solr.collection.initialize.enabled -- Enable/Disable Solr collection initialization by script, use it if you want the collection to be initialized by Core
       enabled: true
@@ -432,18 +432,28 @@ solr:
       securityJsonSecret: ""
     #  solr.collection.name -- Name of the Solr collection
     name: ""
-  #  solr.existingSecurityJsonSecret -- Configuration for an existing security json secret for Solr
-  existingSecurityJsonSecret:
-    #  solr.existingSecurityJsonSecret.adminKey -- Key of the admin user
-    adminKey: ""
-    #  solr.existingSecurityJsonSecret.secretName -- Name of the secret
-    secretName: ""
+  #  solr.credentials -- Credentials configuration
+  credentials:
+    #  solr.credentials.existingCollectionSecret -- Collection credentials secret configuration
+    #  WARNING: this feature is intended ONLY for instances in which you don't have access to the security.json secret.
+    #  Uses a secret that contains a user with access to a specific collection. (The user MUST be also present in the security.json secret)
+    existingCollectionSecret:
+      #  solr.credentials.existingCollectionSecret.passwordKey -- Password key
+      passwordKey: ""
+      #  solr.credentials.existingCollectionSecret.secretName -- Secret name
+      secretName: ""
+    #  solr.credentials.existingSecurityJsonSecret -- Configuration for an existing security json secret for Solr
+    existingSecurityJsonSecret:
+      #  solr.credentials.existingSecurityJsonSecret.adminKey -- Key of the admin user
+      adminKey: ""
+      #  solr.credentials.existingSecurityJsonSecret.secretName -- Name of the secret
+      secretName: ""
+    #  solr.credentials.user -- Specify the solr user
+    user: ""
   #  solr.fullNameOverride --
   fullNameOverride: ""
   #  solr.url --
   url: ""
-  #  solr.user -- Specify the solr user
-  user: ""
 
 #  sts --
 sts:
