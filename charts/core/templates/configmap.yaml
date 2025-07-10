@@ -61,7 +61,7 @@ data:
   JWT_ACCESS_TOKEN_DURATION: {{ .Values.coreTokens.accessTokenDuration | quote }}
   JWT_REFRESH_TOKEN_DURATION: {{ .Values.coreTokens.refreshTokenDuration | quote }}
   S3_CREDENTIALS_PROVIDER: {{ if and .Values.s3.enabled (not .Values.s3.dynamicCreds.enabled) }}"true"{{ else }}"false"{{ end }}
-{{- if not .Values.s3.enabled }}
+{{- if .Values.s3.enabled }}
   AWS_DEFAULT_REGION: {{ .Values.s3.region }}
   FILES_DEFAULT_STORE: s3://{{ .Values.s3.bucket }}
   S3_ENDPOINT_URL: {{ .Values.s3.publicUrl }}
