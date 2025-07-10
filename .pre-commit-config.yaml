@@ -10,7 +10,7 @@ repos:
     repo: https://github.com/gruntwork-io/pre-commit
     rev: v0.1.29
   - repo: https://github.com/ffais/yaml-sort
-    rev: v0.1.4
+    rev: v0.1.5
     hooks:
       - id: yaml-sort
         files: (values\.yaml)$
