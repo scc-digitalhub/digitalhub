@@ -72,6 +72,10 @@ spec:
             {{- else }}
             - name: "DHCORE_ENDPOINT"
               value: http://{{ $.Release.Name }}-core:8080
+            - name: "DHCORE_USER"
+              value: {{ $.Values.core.authentication.basic.username }}
+            - name: "DHCORE_PASSWORD"
+              value: {{ $.Values.core.authentication.basic.password }}
             {{- end }}
           envFrom:
           - configMapRef:
@@ -87,7 +91,7 @@ spec:
           configMap:
             name: {{ include "digitalhub.fullname" $ }}-python-script-test
         - name: git-volume
-          emptyDir: {}      
+          emptyDir: {}
       securityContext:
         runAsUser: 0
         fsGroup: 0

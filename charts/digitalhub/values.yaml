@@ -390,6 +390,14 @@ core:
     user: "8877"
   #  core.authentication -- Core authentication configuration
   authentication:
+    #  authentication.basic -- Basic Auth values
+    basic:
+      #  authentication.basic.enabled -- Enable/disable basicAuth authentication
+      enabled: true
+      #  authentication.basic.password -- BasicAuth password
+      password: "corepwd"
+      #  authentication.basic.username -- BasicAuth username
+      username: "corepwd"
     #  core.authentication.openId -- OpenID Auth values
     openId:
       #  core.authentication.openId.enabled -- Enable/disable openId authentication
