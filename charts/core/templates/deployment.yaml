@@ -42,8 +42,17 @@ spec:
           image: {{ .Values.solr.collection.initialize.image }}
           command: ["/bin/sh", "-c"]
           args:
-          {{- if not .Values.solr.collection.initialize.enabled }}
+          {{- if not (and .Values.solr.collection.initialize.securityJsonSecret .Values.solr.existingSecurityJsonSecret.secretName) }}
             - until [ "$(curl -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
+          {{- else }}
+          {{- if and .Values.solr.existingSecurityJsonSecret.secretName .Values.solr.existingSecurityJsonSecret.adminKey }}
+            - until [ "$(curl --user {{ .Values.solr.existingSecurityJsonSecret.adminKey }}:$SOLR_ADMIN_PWD -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
+          env:
+            - name: "SOLR_ADMIN_PWD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.solr.existingSecurityJsonSecret.secretName }}
+                  key: {{ .Values.solr.existingSecurityJsonSecret.adminKey }}
           {{- else }}
             - until [ "$(curl --user admin:$SOLR_ADMIN_PWD -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
           env:
@@ -52,6 +61,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.solr.collection.initialize.securityJsonSecret }}
                   key: admin
+          {{- end }}
           {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -152,21 +162,39 @@ spec:
               {{- end }}
             {{- end }}
             - name: JWT_CLIENT_ID
+              {{- if and .Values.coreAuthCreds.existingSecret.secretName .Values.coreAuthCreds.existingSecret.clientIdKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.coreAuthCreds.existingSecret.secretName }}
+                  key: {{ .Values.coreAuthCreds.existingSecret.clientIdKey }}
+              {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: core-auth-creds
                   key: clientId
+              {{- end }}
             - name: JWT_CLIENT_SECRET
+              {{- if and .Values.coreAuthCreds.existingSecret.secretName .Values.coreAuthCreds.existingSecret.clientSecretKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.coreAuthCreds.existingSecret.secretName }}
+                  key: {{ .Values.coreAuthCreds.existingSecret.clientSecretKey }}
+              {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: core-auth-creds
                   key: clientSecret
-            {{- if .Values.solr.collection.initialize.enabled }}
+              {{- end }}
+            {{- if or .Values.solr.collection.initialize.securityJsonSecret .Values.solr.existingSecurityJsonSecret.secretName }}
             - name: SOLR_PASSWORD
               valueFrom:
                 secretKeyRef:
+                {{- if and .Values.solr.existingSecurityJsonSecret.secretName .Values.solr.existingSecurityJsonSecret.adminKey  }}
+                  name: {{ .Values.solr.existingSecurityJsonSecret.secretName }}
+                {{- else }}
                   name: {{ .Values.solr.collection.initialize.securityJsonSecret }}
-                  key: user
+                {{- end }}
+                  key: {{ .Values.solr.user }}
             {{- end }}
           envFrom:
           - configMapRef:

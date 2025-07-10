@@ -118,6 +118,17 @@ autoscaling:
   #  autoscaling.targetCPUUtilizationPercentage -- Set CPU utilization percentage that trigger the autoscaling
   targetCPUUtilizationPercentage: 80
 
+#  commonCredsSecret -- A secret that should be used when not using STS. It should contain the following populated keys:
+#  DB_USERNAME: Username of the Postgres main db owner
+#  DB_PASSWORD: Password of the Postgres main db owner
+#  AWS_ACCESS_KEY_ID: Access key of the S3 Platform's main bucket user
+#  AWS_SECRET_ACCESS_KEY: Secret key of the S3 Platform's main bucket user
+#  DB_URL: Connection string to the platform's main db
+#  DHCORE_CLIENT_ID: Core clientId
+commonCredsSecret:
+  #  commonCredsSecret.existingCommonCredsSecret -- Secret name
+  secretName: ""
+
 #  configmapAdditionalEnv -- Additional environment variables for the Core configmap, MUST be specified in key/value format
 configmapAdditionalEnv: {}
 
@@ -127,6 +138,14 @@ coreAuthCreds:
   clientId: ""
   #  coreAuthCreds.clientSecret -- Core clientSecret
   clientSecret: ""
+  #  coreAuthCreds.existingSecret -- Existing secret containing Core clientID and clientSecret
+  existingSecret:
+    #  coreAuthCreds.existingSecret.clientIdKey -- Key of the clientID
+    clientIdKey: ""
+    #  coreAuthCreds.existingSecret.clientSecretKey -- Key of the clientSecret
+    clientSecretKey: ""
+    #  coreAuthCreds.existingSecret.secretName -- Name of the secret with Core clientId and clientSecret
+    secretName: ""
 
 #  coreTokens --
 coreTokens:
@@ -403,9 +422,9 @@ solr:
   enabled: false
   #  solr.collection -- Solr collection configuration
   collection:
-    #  solr.collection.initialize --
+    #  solr.collection.initialize -- Ch
     initialize:
-      #  solr.collection.initialize.enabled -- Enable/Disable Solr collection initialization by script, use it if you have set Basic Auth for Solr
+      #  solr.collection.initialize.enabled -- Enable/Disable Solr collection initialization by script, use it if you want the collection to be initialized by Core
       enabled: true
       #  solr.collection.initialize.image -- Initialization image
       image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
@@ -413,6 +432,12 @@ solr:
       securityJsonSecret: ""
     #  solr.collection.name -- Name of the Solr collection
     name: ""
+  #  solr.existingSecurityJsonSecret -- Configuration for an existing security json secret for Solr
+  existingSecurityJsonSecret:
+    #  solr.existingSecurityJsonSecret.adminKey -- Key of the admin user
+    adminKey: ""
+    #  solr.existingSecurityJsonSecret.secretName -- Name of the secret
+    secretName: ""
   #  solr.fullNameOverride --
   fullNameOverride: ""
   #  solr.url --
