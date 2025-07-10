@@ -6,13 +6,13 @@ global:
   externalHostAddress: ""
 
 adminCreds:
-  username: "admin"
   password: "admin"
+  username: "admin"
 
 adminExistingCreds:
   existingSecret: ""
-  userKey: ""
   passKey: ""
+  userKey: ""
 
 affinity: {}
 
@@ -21,8 +21,8 @@ appCreds:
 
 autoscaling:
   enabled: false
-  minReplicas: 1
   maxReplicas: 100
+  minReplicas: 1
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
@@ -33,30 +33,30 @@ bootstrapCreds:
 
 # AAC Config Map
 config:
+  applicationExtUrl: ""
+  bootstrap: file:///home/aac/bootstrap.yaml
+  bootstrapApply: "true"
+  cacheJwks: "public, max-age=3600, must-revalidate, no-transform"
   jdbcDialect: org.hibernate.dialect.H2Dialect
   jdbcDriver: org.h2.Driver
-  bootstrapApply: "true"
-  bootstrap: file:///home/aac/bootstrap.yaml
-  logLevel: DEBUG
   jdbcUrl: "jdbc:h2:file:./data/db"
+  keystorePath: ""
+  logLevel: DEBUG
+  mailDebug: "false"
   mailHost: ""
   mailPort: 465
   mailProtocol: smtps
-  mailTls: "false"
   mailSender: ""
-  mailDebug: "false"
-  applicationExtUrl: ""
-  keystorePath: ""
-  cacheJwks: "public, max-age=3600, must-revalidate, no-transform"
+  mailTls: "false"
 
 fullnameOverride: ""
 
 image:
-  repository: ghcr.io/scc-digitalhub/aac
-  pullPolicy: IfNotPresent
   aacCommand1: "java"
   aacCommand2: "org.springframework.boot.loader.JarLauncher"
   aacCommand3: "-Dspring-boot.run.arguments=--logging.level.ROOT=DEBUG"
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/scc-digitalhub/aac
   # Overrides the image tag whose default is the chart appVersion.
   tag: 5.3.0-beta1
 
@@ -64,33 +64,33 @@ imagePullSecrets: []
 
 ingress:
   enabled: false
+  annotations: {}
   className: ""
   hosts:
     - host: ""
       paths:
-        - pathType: ImplementationSpecific
-          path: /
+        - path: /
+          pathType: ImplementationSpecific
   tls:
-    - secretName: ""
-      hosts:
+    - hosts:
         - ""
-  annotations: {}
+      secretName: ""
 
 jdbcExistingCreds:
   existingSecret: ""
-  userKey: ""
   passwordKey: ""
+  userKey: ""
 
 # Secrets
 
 # AAC default H2 database credentials. Do not set them if you are using an external one.
 jdbcH2creds:
-  user: ""
   password: ""
+  user: ""
 
 keystore:
-  secretName: ""
   keyName: ""
+  secretName: ""
 
 mailCreds:
   existingSecret: ""
@@ -98,8 +98,8 @@ mailCreds:
   usernameKey: ""
 
 mailSecret:
-  user: test@user.it
   password: testPassword
+  user: test@user.it
 
 nameOverride: ""
 
@@ -110,16 +110,16 @@ podAnnotations: {}
 podLabels: {}
 
 podSecurityContext:
-  runAsUser: 805
-  runAsGroup: 805
   fsGroup: 805
+  runAsGroup: 805
+  runAsUser: 805
 
 postgresOperator:
+  adminUser: ""
+  database: ""
   installed: false
   psqlClusterName: ""
-  adminUser: ""
   user: ""
-  database: ""
 
 replicaCount: 1
 
@@ -153,25 +153,25 @@ secrets:
     enabled: false
 
 securityContext:
-  runAsNonRoot: true
-  runAsUser: 805
   allowPrivilegeEscalation: false
   capabilities:
     drop:
       - ALL
+  runAsNonRoot: true
+  runAsUser: 805
 
 service:
-  type: ClusterIP
-  port: "8080"
   httpNodePort: ""
+  port: "8080"
+  type: ClusterIP
 
 serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Automatically mount a ServiceAccount's API credentials?
-  automount: true
   # Annotations to add to the service account
   annotations: {}
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Specifies whether a service account should be created
+  create: true
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: aac
@@ -180,8 +180,8 @@ tolerations: []
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-  - name: aac-volume
-    mountPath: /home/aac/bootstrap.yaml
+  - mountPath: /home/aac/bootstrap.yaml
+    name: aac-volume
     subPath: bootstrap.yaml
 
 # Additional volumes on the output Deployment definition.

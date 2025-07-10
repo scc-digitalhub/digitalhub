@@ -137,89 +137,29 @@ rbac:
   #  you either specify one or the other (or leave both empty).
   #  Defining allowed will let the resource manager handle only the CRDs listed in it, while denied will allow all CRDs not listed in it. Leaving both empty lets the resource manager handle all CRDs.
   roles:
-    - apiGroups: db.movetokube.com
-      crd: true
-      resources:
-        - postgresusers
-        - postgres
-      verbs:
-        - get
-        - list
-        - create
-        - delete
-        - patch
-    - apiGroups: operator.dremiorestserver.com
-      crd: true
-      resources:
-        - dremiorestservers
-      verbs:
-        - get
-        - list
-        - create
-        - delete
-        - patch
-    - apiGroups: operator.postgrest.org
-      crd: true
-      resources:
-        - postgrests
-      verbs:
-        - get
-        - list
-        - create
-        - delete
-        - patch
-    - apiGroups: minio.scc-digitalhub.github.io
-      crd: true
-      resources:
-        - buckets
-        - policies
-        - users
-      verbs:
-        - get
-        - list
-        - create
-        - delete
-        - patch
-    - apiGroups: operator.scc-digitalhub.github.io
-      crd: true
-      resources:
-        - apigws
-      verbs:
-        - get
-        - list
-        - create
-        - delete
-        - patch
-    - apiGroups: batch
-      crd: false
-      resources:
-        - jobs
-      verbs:
-        - get
-        - list
-        - delete
-    - apiGroups: apps
-      crd: false
-      resources:
-        - deployments
-        - replicasets
-      verbs:
-        - get
-        - list
     - apiGroups: ""
       crd: false
       resources:
         - persistentvolumeclaims
       verbs:
-        - get
-        - list
         - create
         - delete
+        - get
+        - list
         - patch
     - apiGroups: ""
       crd: false
       resources:
-        - services
+        - pods
+        - pods/log
+      verbs:
+        - create
+        - get
+        - list
+    - apiGroups: ""
+      crd: false
+      resources:
+        - resourcequotas
       verbs:
         - get
         - list
@@ -231,19 +171,81 @@ rbac:
         - get
         - list
     - apiGroups: ""
+      crd: false
       resources:
-        - pods
-        - pods/log
+        - services
       verbs:
         - get
         - list
+    - apiGroups: apps
+      crd: false
+      resources:
+        - deployments
+        - replicasets
+      verbs:
+        - get
+        - list
+    - apiGroups: batch
+      crd: false
+      resources:
+        - jobs
+      verbs:
+        - delete
+        - get
+        - list
+    - apiGroups: db.movetokube.com
+      crd: true
+      resources:
+        - postgres
+        - postgresusers
+      verbs:
         - create
-    - apiGroups: ""
-      resources:
-        - resourcequotas
-      verbs:
+        - delete
         - get
         - list
+        - patch
+    - apiGroups: minio.scc-digitalhub.github.io
+      crd: true
+      resources:
+        - buckets
+        - policies
+        - users
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+    - apiGroups: operator.dremiorestserver.com
+      crd: true
+      resources:
+        - dremiorestservers
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+    - apiGroups: operator.postgrest.org
+      crd: true
+      resources:
+        - postgrests
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+    - apiGroups: operator.scc-digitalhub.github.io
+      crd: true
+      resources:
+        - apigws
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
 
 #  replicaCount -- Desired number of pods.
 replicaCount: 1

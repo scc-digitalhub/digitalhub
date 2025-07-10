@@ -7,7 +7,7 @@ build_chart () {
   IFS='/'
   read -ra newarr <<< "$f"
   chart="${newarr[1]}"
-    if ! [[ ${array[*]} =~ $chart ]]; then 
+    if ! [[ ${array[*]} =~ $chart ]]; then
       echo "Packing $f)"
       helm package "$f" -d charts/digitalhub/charts
     fi

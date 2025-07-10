@@ -42,7 +42,7 @@ podLabels: {}
 #  podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 podSecurityContext: {}
 
-#  postgres -- 
+#  postgres --
 postgres:
   #  postgres.cloud_provider -- Postgres cloud provider, could be AWS, Azure, GCP or empty (default)
   cloud_provider: ""

@@ -103,7 +103,7 @@ spec:
                 {{- else }}
                   name: {{ .Values.global.minio.rootUserSecret}}
                   key: rootPassword
-                {{- end }}     
+                {{- end }}
           envFrom:
             - configMapRef:
                 name: {{ .Chart.Name }}-configmap

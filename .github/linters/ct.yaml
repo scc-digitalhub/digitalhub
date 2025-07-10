@@ -8,7 +8,7 @@ chart-repos:
   - digitalhub=https://scc-digitalhub.github.io/digitalhub/
   - zalando=https://opensource.zalando.com/postgres-operator/charts/postgres-operator
 helm-extra-args: --timeout 600s
-excluded-charts: 
+excluded-charts:
   - ext-postgres-operator
 additional-commands:
   - sh -ec "if [ -f '{{ .Path }}/ci/lint.sh' ]; then shellcheck '{{ .Path }}/ci/lint.sh'; bash '{{ .Path }}/ci/lint.sh'; fi"

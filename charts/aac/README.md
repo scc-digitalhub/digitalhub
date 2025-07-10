@@ -15,6 +15,7 @@ A Helm chart for Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| global.externalHostAddress | string | `""` |  |
 | adminCreds.password | string | `"admin"` |  |
 | adminCreds.username | string | `"admin"` |  |
 | adminExistingCreds.existingSecret | string | `""` |  |
@@ -44,7 +45,6 @@ A Helm chart for Kubernetes
 | config.mailSender | string | `""` |  |
 | config.mailTls | string | `"false"` |  |
 | fullnameOverride | string | `""` |  |
-| global.externalHostAddress | string | `""` |  |
 | image.aacCommand1 | string | `"java"` |  |
 | image.aacCommand2 | string | `"org.springframework.boot.loader.JarLauncher"` |  |
 | image.aacCommand3 | string | `"-Dspring-boot.run.arguments=--logging.level.ROOT=DEBUG"` |  |
@@ -52,9 +52,9 @@ A Helm chart for Kubernetes
 | image.repository | string | `"ghcr.io/scc-digitalhub/aac"` |  |
 | image.tag | string | `"5.3.0-beta1"` |  |
 | imagePullSecrets | list | `[]` |  |
+| ingress.enabled | bool | `false` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
-| ingress.enabled | bool | `false` |  |
 | ingress.hosts[0].host | string | `""` |  |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |

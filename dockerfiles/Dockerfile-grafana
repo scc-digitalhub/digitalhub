@@ -9,6 +9,6 @@ RUN groupadd -f appuser \
     && mkdir -p /home/appuser /usr/app /var/lib/grafana \
     && chown -R appuser:appuser /usr/app /home/appuser /var/lib/grafana
 
-WORKDIR /home/appuser/app 
+WORKDIR /home/appuser/app
 
 USER appuser

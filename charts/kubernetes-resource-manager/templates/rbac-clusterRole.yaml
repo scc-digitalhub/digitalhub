@@ -18,7 +18,7 @@ rules:
   verbs:
   - list
   - get
-- apiGroups: 
+- apiGroups:
   - "storage.k8s.io"
   resources:
   - storageclasses

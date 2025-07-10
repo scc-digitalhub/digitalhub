@@ -7,7 +7,7 @@ realms:
     public: {{ $realm.public }}
     roles:
       {{- toYaml $realm.roles | nindent 6 }}
-    identityProviders: 
+    identityProviders:
       {{- toYaml $realm.identityProviders | nindent 6 }}
     {{- if $realm.services }}
     services:
@@ -51,7 +51,7 @@ realms:
         {{- if $service.claimMapping }}
         claimMapping:
           {{- toYaml $service.claimMapping | nindent 10 }}
-        {{- end }}    
+        {{- end }}
         {{- end }}
         {{- end }}
     {{- end }}
@@ -78,7 +78,7 @@ realms:
         {{- end }}
         {{- end }}
         {{- if $clientApp.resourceIds }}
-        resourceIds: 
+        resourceIds:
         {{- range $clientApp.resourceIds }}
           - {{ . }}
         {{- end }}
@@ -114,21 +114,21 @@ realms:
         authority: {{ $user.authority }}
         provider: {{ $user.provider }}
         name: {{ $user.name }}
-        surname: {{ $user.surname }}       
-        confirmed: {{ $user.confirmed }}    
+        surname: {{ $user.surname }}
+        confirmed: {{ $user.confirmed }}
     {{- end }}
     {{- end }}
     {{- if $realm.credentials }}
     credentials:
     {{- range $credential := $realm.credentials }}
-      - type: {{ $credential.type }} 
-        authority: {{ $credential.authority }} 
-        provider: {{ $credential.provider }} 
-        username: {{ $credential.username }} 
-        userId: {{ $credential.userId }} 
-        password: {{ $credential.password }}               
-        id: {{ $credential.id }} 
+      - type: {{ $credential.type }}
+        authority: {{ $credential.authority }}
+        provider: {{ $credential.provider }}
+        username: {{ $credential.username }}
+        userId: {{ $credential.userId }}
+        password: {{ $credential.password }}
+        id: {{ $credential.id }}
     {{- end }}
     {{- end }}
 {{- end }}
-{{- end }}  
+{{- end }}

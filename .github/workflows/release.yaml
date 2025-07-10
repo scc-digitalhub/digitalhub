@@ -70,7 +70,7 @@ jobs:
           helm repo add coder-v2 https://helm.coder.com/v2
           helm repo add minio https://charts.min.io/
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-          
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.7.0
         env:

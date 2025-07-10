@@ -15,7 +15,7 @@ source $HOME/.local/bin/env
 
 uv venv --system-site-packages python${PYTHON_VERSION} --python ${PYTHON_VERSION} --allow-existing
 source python${PYTHON_VERSION}/bin/activate
-    
+
 if ! command -v jupyter-lab > /dev/null 2>&1; then
   printf "Installing jupyterlab!\n"
   uv pip install -q jupyterlab \

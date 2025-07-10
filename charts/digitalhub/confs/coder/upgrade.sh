@@ -17,6 +17,6 @@ coder login --use-token-as-session
 echo "Upgrading {{ .name }} template"
 mkdir /home/coder/{{ .name }}/
 cp /home/coder/custom-template/{{ .name }}-main.tf /home/coder/{{ .name }}/main.tf
-coder templates push --activate -d /home/coder/{{ .name }} {{ .name }} --variable {{ include "digitalhub.coderTemplateVariables" (list $ . ) }} -y 
+coder templates push --activate -d /home/coder/{{ .name }} {{ .name }} --variable {{ include "digitalhub.coderTemplateVariables" (list $ . ) }} -y
 coder template edit --default-ttl {{ .stopAfter }} --icon "{{ .iconUrl }}" {{ .name }}
 {{- end }}

@@ -276,7 +276,7 @@ int
 			<td>
 int
 </td>
-			<td>Set CPU utilization percentage that trigger the autoscaling </td>
+			<td>Set CPU utilization percentage that trigger the autoscaling</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -303,9 +303,9 @@ object
   "ingressClassName": "",
   "kubeRbacProxy": {
     "args": [
+      "--logtostderr=true",
       "--secure-listen-address=0.0.0.0:8443",
       "--upstream=http://127.0.0.1:8080/",
-      "--logtostderr=true",
       "--v=0"
     ],
     "image": {
@@ -342,8 +342,8 @@ object
   "manager": {
     "args": [
       "--health-probe-bind-address=:8081",
-      "--metrics-bind-address=127.0.0.1:8080",
-      "--leader-elect"
+      "--leader-elect",
+      "--metrics-bind-address=127.0.0.1:8080"
     ],
     "command": [
       "/manager"
@@ -446,9 +446,9 @@ object
 <pre lang="json">
 {
   "args": [
+    "--logtostderr=true",
     "--secure-listen-address=0.0.0.0:8443",
     "--upstream=http://127.0.0.1:8080/",
-    "--logtostderr=true",
     "--v=0"
   ],
   "image": {
@@ -499,9 +499,9 @@ list
 <summary>+Expand</summary>
 <pre lang="json">
 [
+  "--logtostderr=true",
   "--secure-listen-address=0.0.0.0:8443",
   "--upstream=http://127.0.0.1:8080/",
-  "--logtostderr=true",
   "--v=0"
 ]
 </pre>
@@ -773,8 +773,8 @@ object
 {
   "args": [
     "--health-probe-bind-address=:8081",
-    "--metrics-bind-address=127.0.0.1:8080",
-    "--leader-elect"
+    "--leader-elect",
+    "--metrics-bind-address=127.0.0.1:8080"
   ],
   "command": [
     "/manager"
@@ -825,8 +825,8 @@ list
 <pre lang="json">
 [
   "--health-probe-bind-address=:8081",
-  "--metrics-bind-address=127.0.0.1:8080",
-  "--leader-elect"
+  "--leader-elect",
+  "--metrics-bind-address=127.0.0.1:8080"
 ]
 </pre>
 </details>
@@ -1182,6 +1182,20 @@ object
 			</td>
 		</tr>
 		<tr>
+			<td id="ingress--enabled"><a href="./values.yaml#L146">ingress.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enables Ingress.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
 			<td id="ingress--annotations"><a href="./values.yaml#L148">ingress.annotations</a></td>
 			<td>
 object
@@ -1208,20 +1222,6 @@ string
 				<div style="max-width: 300px;">
 <pre lang="json">
 ""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="ingress--enabled"><a href="./values.yaml#L146">ingress.enabled</a></td>
-			<td>
-bool
-</td>
-			<td>Enables Ingress.</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-false
 </pre>
 </div>
 			</td>

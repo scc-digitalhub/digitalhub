@@ -51,6 +51,75 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 	</thead>
 	<tbody>
 		<tr>
+			<td id="global"><a href="./values.yaml#L6">global</a></td>
+			<td>
+object
+</td>
+			<td>Global configurations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{
+  "externalHostAddress": "",
+  "minio": {
+    "rootUserSecret": ""
+  }
+}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--externalHostAddress"><a href="./values.yaml#L8">global.externalHostAddress</a></td>
+			<td>
+string
+</td>
+			<td>Minio API URL</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--minio"><a href="./values.yaml#L10">global.minio</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{
+  "rootUserSecret": ""
+}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--minio--rootUserSecret"><a href="./values.yaml#L12">global.minio.rootUserSecret</a></td>
+			<td>
+string
+</td>
+			<td>Minio admin credentials secret name</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
 			<td id="affinity"><a href="./values.yaml#L16">affinity</a></td>
 			<td>
 object
@@ -275,7 +344,7 @@ int
 			<td>
 int
 </td>
-			<td>Set CPU utilization percentage that trigger the autoscaling </td>
+			<td>Set CPU utilization percentage that trigger the autoscaling</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -298,9 +367,9 @@ object
 {
   "kubeRbacProxy": {
     "args": [
+      "--logtostderr=true",
       "--secure-listen-address=0.0.0.0:8443",
       "--upstream=http://127.0.0.1:8080/",
-      "--logtostderr=true",
       "--v=0"
     ],
     "image": {
@@ -338,8 +407,8 @@ object
   "manager": {
     "args": [
       "--health-probe-bind-address=:8081",
-      "--metrics-bind-address=127.0.0.1:8080",
-      "--leader-elect"
+      "--leader-elect",
+      "--metrics-bind-address=127.0.0.1:8080"
     ],
     "command": [
       "/manager"
@@ -392,9 +461,9 @@ object
 <pre lang="json">
 {
   "args": [
+    "--logtostderr=true",
     "--secure-listen-address=0.0.0.0:8443",
     "--upstream=http://127.0.0.1:8080/",
-    "--logtostderr=true",
     "--v=0"
   ],
   "image": {
@@ -446,9 +515,9 @@ list
 <summary>+Expand</summary>
 <pre lang="json">
 [
+  "--logtostderr=true",
   "--secure-listen-address=0.0.0.0:8443",
   "--upstream=http://127.0.0.1:8080/",
-  "--logtostderr=true",
   "--v=0"
 ]
 </pre>
@@ -735,8 +804,8 @@ object
 {
   "args": [
     "--health-probe-bind-address=:8081",
-    "--metrics-bind-address=127.0.0.1:8080",
-    "--leader-elect"
+    "--leader-elect",
+    "--metrics-bind-address=127.0.0.1:8080"
   ],
   "command": [
     "/manager"
@@ -788,8 +857,8 @@ list
 <pre lang="json">
 [
   "--health-probe-bind-address=:8081",
-  "--metrics-bind-address=127.0.0.1:8080",
-  "--leader-elect"
+  "--leader-elect",
+  "--metrics-bind-address=127.0.0.1:8080"
 ]
 </pre>
 </details>
@@ -1062,75 +1131,6 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="global"><a href="./values.yaml#L6">global</a></td>
-			<td>
-object
-</td>
-			<td>Global configurations.</td>
-      <td>
-				<div style="max-width: 300px;">
-<details>
-<summary>+Expand</summary>
-<pre lang="json">
-{
-  "externalHostAddress": "",
-  "minio": {
-    "rootUserSecret": ""
-  }
-}
-</pre>
-</details>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="global--externalHostAddress"><a href="./values.yaml#L8">global.externalHostAddress</a></td>
-			<td>
-string
-</td>
-			<td>Minio API URL</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="global--minio"><a href="./values.yaml#L10">global.minio</a></td>
-			<td>
-object
-</td>
-			<td></td>
-      <td>
-				<div style="max-width: 300px;">
-<details>
-<summary>+Expand</summary>
-<pre lang="json">
-{
-  "rootUserSecret": ""
-}
-</pre>
-</details>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="global--minio--rootUserSecret"><a href="./values.yaml#L12">global.minio.rootUserSecret</a></td>
-			<td>
-string
-</td>
-			<td>Minio admin credentials secret name</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
 			<td id="imagePullSecrets"><a href="./values.yaml#L142">imagePullSecrets</a></td>
 			<td>
 list
@@ -1181,6 +1181,20 @@ object
 			</td>
 		</tr>
 		<tr>
+			<td id="ingress--enabled"><a href="./values.yaml#L147">ingress.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enables Ingress.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
 			<td id="ingress--annotations"><a href="./values.yaml#L149">ingress.annotations</a></td>
 			<td>
 object
@@ -1207,20 +1221,6 @@ string
 				<div style="max-width: 300px;">
 <pre lang="json">
 ""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="ingress--enabled"><a href="./values.yaml#L147">ingress.enabled</a></td>
-			<td>
-bool
-</td>
-			<td>Enables Ingress.</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-false
 </pre>
 </div>
 			</td>

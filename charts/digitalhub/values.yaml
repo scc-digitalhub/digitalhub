@@ -16,6 +16,8 @@ global:
     username: ""
   #  global.cleanup -- Clean up configuration (used for the helm uninstall command)
   cleanup:
+    #  global.cleanup.enabled -- Enable cleanup Job
+    enabled: false
     #  global.cleanup.deployments -- Enable/Disables Deployments deletion
     deployments: false
     #  global.cleanup.ingress -- Enable/Disables Ingresses deletion
@@ -220,16 +222,10 @@ coder:
   coder:
     #  coder.coder.env -- Additional environment variables for Coder
     env:
-      - name: CODER_TELEMETRY
+      - name: CODER_OAUTH2_GITHUB_DEFAULT_PROVIDER_ENABLE
         value: "false"
-      - name: CODER_PG_USERNAME
-        valueFrom:
-          #  coder.coder.env.valueFrom.secretKeyRef -- Secret containing username and password of the Coder database owner
-          secretKeyRef:
-            #  coder.coder.env.valueFrom.secretKeyRef.key -- Key for the username
-            key: username
-            #  coder.coder.env.valueFrom.secretKeyRef.name -- Name of the secret
-            name: coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do
+      - name: CODER_PG_CONNECTION_URL
+        value: postgres://$(CODER_PG_USERNAME):$(CODER_PG_PASSWORD)@coder-postgres-cluster:5432/coder
       - name: CODER_PG_PASSWORD
         valueFrom:
           #  coder.coder.env.valueFrom.secretKeyRef -- Secret containing username and password of the Coder database owner
@@ -238,9 +234,15 @@ coder:
             key: password
             #  coder.coder.env.valueFrom.secretKeyRef.name -- Name of the secret
             name: coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do
-      - name: CODER_PG_CONNECTION_URL
-        value: postgres://$(CODER_PG_USERNAME):$(CODER_PG_PASSWORD)@coder-postgres-cluster:5432/coder
-      - name: CODER_OAUTH2_GITHUB_DEFAULT_PROVIDER_ENABLE
+      - name: CODER_PG_USERNAME
+        valueFrom:
+          #  coder.coder.env.valueFrom.secretKeyRef -- Secret containing username and password of the Coder database owner
+          secretKeyRef:
+            #  coder.coder.env.valueFrom.secretKeyRef.key -- Key for the username
+            key: username
+            #  coder.coder.env.valueFrom.secretKeyRef.name -- Name of the secret
+            name: coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do
+      - name: CODER_TELEMETRY
         value: "false"
     #  coder.coder.image --
     image:
@@ -282,15 +284,18 @@ coder:
     #  For Code-Toolbox, you can also pass the Tolerations in order to use the GPU resources.
     #  Use the stopAfter value to stop every workspace after a certain amount of time.
     customTemplates:
-      - extraVars: []
-        iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-        image: ghcr.io/scc-digitalhub/jupyter-3-10:0.12.0
-        image311: ghcr.io/scc-digitalhub/jupyter-3-11:0.12.0
-        image39: ghcr.io/scc-digitalhub/jupyter-3-9:0.12.0
-        name: jupyter
-        nodePort: "30040"
-        privileged: false
-        stopAfter: 8h
+      - extraVars:
+          - name: GF_ANALYTICS_CHECK_FOR_UPDATES
+            value: false
+          - name: GF_ANALYTICS_REPORTING_ENABLED
+            value: false
+          - name: GF_PLUGINS_CHECK_FOR_PLUGIN_UPDATES
+            value: false
+        iconUrl: https://cdn.iconscout.com/icon/free/png-256/free-grafana-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030088.png?f=webp
+        image: smartcommunitylab/grafana
+        name: grafana
+        nodePort: "30130"
+        stopAfter: 0h
       - extraVars: []
         iconUrl: https://cdn-icons-png.flaticon.com/512/7301/7301969.png
         name: code-toolbox-experimental
@@ -324,18 +329,15 @@ coder:
           #  coder.template.customTemplates.postgres.ownerCredsSecret -- Name of the Platform's main database secret containing the owner user username and password
           ownerCredsSecret: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
         stopAfter: 8h
-      - extraVars:
-          - name: GF_PLUGINS_CHECK_FOR_PLUGIN_UPDATES
-            value: false
-          - name: GF_ANALYTICS_CHECK_FOR_UPDATES
-            value: false
-          - name: GF_ANALYTICS_REPORTING_ENABLED
-            value: false
-        iconUrl: https://cdn.iconscout.com/icon/free/png-256/free-grafana-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030088.png?f=webp
-        image: smartcommunitylab/grafana
-        name: grafana
-        nodePort: "30130"
-        stopAfter: 0h
+      - extraVars: []
+        iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
+        image: ghcr.io/scc-digitalhub/jupyter-3-10:0.12.0
+        image311: ghcr.io/scc-digitalhub/jupyter-3-11:0.12.0
+        image39: ghcr.io/scc-digitalhub/jupyter-3-9:0.12.0
+        name: jupyter
+        nodePort: "30040"
+        privileged: false
+        stopAfter: 8h
     #  coder.template.upgrade -- Coder templates upgrade process configuration
     upgrade:
       #  coder.template.upgrade.enabled -- Enable/Disable the upgrade job for the Coder templates
@@ -898,10 +900,10 @@ minio:
   enabled: true
   #  minio.buckets -- List of buckets
   buckets:
-    - name: datalake
+    - name: argo
       policy: none
       purge: false
-    - name: argo
+    - name: datalake
       policy: none
       purge: false
   #  minio.consoleService -- MinIO console service configuration
@@ -1040,13 +1042,6 @@ minio:
     size: 128Gi
   #  minio.policies -- List of MinIO policies
   policies:
-    - name: readwritedigitalhub
-      statements:
-        - actions:
-            - s3:*
-          effect: Allow
-          resources:
-            - arn:aws:s3:::datalake/*
     - name: readwriteargo
       statements:
         - actions:
@@ -1054,6 +1049,13 @@ minio:
           effect: Allow
           resources:
             - arn:aws:s3:::argo/*
+    - name: readwritedigitalhub
+      statements:
+        - actions:
+            - s3:*
+          effect: Allow
+          resources:
+            - arn:aws:s3:::datalake/*
   #  minio.postJob -- Security context for the post-install/upgrade Job
   postJob:
     #  minio.postJob.securityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
@@ -1096,12 +1098,12 @@ minio:
     type: *serviceType
   #  minio.users -- Users that will be created in MinIO in list format
   users:
-    - accessKey: *digitalhubUser
-      policy: readwritedigitalhub
-      secretKey: *digitalhubPassword
     - accessKey: *argoUser
       policy: readwriteargo
       secretKey: *argoPassword
+    - accessKey: *digitalhubUser
+      policy: readwritedigitalhub
+      secretKey: *digitalhubPassword
 
 #  minio-operator -- MinIO operator (for KRM) configuration
 minio-operator:
@@ -1127,24 +1129,24 @@ minio-operator:
 open-webui:
   #  open-webui.enabled -- Enable/Disable OpenWebUI
   enabled: true
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    privileged: false
+    readOnlyRootFilesystem: false
+    runAsGroup: 1001
+    runAsNonRoot: true
+    runAsUser: 1001
+    seccompProfile:
+      type: "RuntimeDefault"
   #  open-webui.extraEnvFrom -- Additional variables that will be passed to OpenWebUI from secrets or configmap
   #  - secretRef:
   #     name: my-secret
   extraEnvFrom: []
   #  open-webui.extraEnvVars -- Additional variables that will be passed to OpenWebUI
   extraEnvVars:
-    - name: ENABLE_LOGIN_FORM
-      value: "True"
-    - name: OPENAI_API_KEYS
-      value: not-used
-    - name: SAFE_MODE
-      value: "True"
-    - name: ENABLE_EVALUATION_ARENA_MODELS
-      value: "False"
-    - name: DEFAULT_USER_ROLE
-      value: user
-    - name: ENABLE_API_KEY
-      value: "False"
     #  Overrides the randomly generated string used for JSON Web Token. (for production enviroments use 'extraEnvFrom' to load this variable from secrets)
     - name: WEBUI_SECRET_KEY
       value: "WEBUI_SECRET_KEY"
@@ -1154,6 +1156,18 @@ open-webui:
     # Initialize default admin account. (for production enviroments use 'extraEnvFrom' to load this variable from secrets)
     - name: ADMIN_USER_PASSWORD
       value: "admin"
+    - name: DEFAULT_USER_ROLE
+      value: user
+    - name: ENABLE_API_KEY
+      value: "False"
+    - name: ENABLE_EVALUATION_ARENA_MODELS
+      value: "False"
+    - name: ENABLE_LOGIN_FORM
+      value: "True"
+    - name: OPENAI_API_KEYS
+      value: not-used
+    - name: SAFE_MODE
+      value: "True"
     - name: SPACE_ID
       value: test
   #  open-webui.ollama --
@@ -1167,29 +1181,17 @@ open-webui:
   pipelines:
     #  open-webui.pipelines.enabled -- Enable/Disable pipelines
     enabled: false
+  podSecurityContext:
+    fsGroup: 1001
+    fsGroupChangePolicy: Always
+    supplementalGroups: []
+    sysctls: []
   #  open-webui.service -- Service configuration
   service:
     #  open-webui.service.nodePort -- Service nodePort
-    nodePort: "30200"
+    nodePort: "30220"
     #  open-webui.service.type -- Service type
     type: *serviceType
-  podSecurityContext:
-    fsGroupChangePolicy: Always
-    sysctls: []
-    supplementalGroups: []
-    fsGroup: 1001
-  containerSecurityContext:
-    runAsUser: 1001
-    runAsGroup: 1001
-    runAsNonRoot: true
-    privileged: false
-    allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: false
-    capabilities:
-      drop:
-        - ALL
-    seccompProfile:
-      type: "RuntimeDefault"
 
 #  platformPackages -- Platform's packages configuration.
 #  Used for the tests and Code-Toolbox Coder template.
@@ -1204,10 +1206,6 @@ platformPackages:
   #  WARNING:
   #  For the most stable experience, these values should NOT be modified.
   packages:
-    - name: digitalhub[full]
-      tag: 0.12.0
-    - name: digitalhub-runtime-python
-      tag: 0.12.0
     - name: digitalhub-runtime-container
       tag: 0.12.0
     - name: digitalhub-runtime-dbt
@@ -1215,6 +1213,10 @@ platformPackages:
     - name: digitalhub-runtime-kfp
       tag: 0.12.0
     - name: digitalhub-runtime-modelserve
+      tag: 0.12.0
+    - name: digitalhub-runtime-python
+      tag: 0.12.0
+    - name: digitalhub[full]
       tag: 0.12.0
   #  platformPackages.preRelease -- If set to true, the latest version of the packages will be used (even beta ones).
   #  WARNING:

@@ -20,7 +20,7 @@ spec:
         - name: wait-solr
           image: {{ .Values.solr.collection.initialize.image }}
           command: ["/bin/sh", "-c"]
-          args: 
+          args:
             - until [ "$(curl --user admin:$SOLR_ADMIN_PWD -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}

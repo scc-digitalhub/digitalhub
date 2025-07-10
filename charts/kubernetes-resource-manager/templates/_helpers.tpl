@@ -104,9 +104,8 @@ Create default access URL
 {{- range $i, $apiGroup := .Values.rbac.roles }}
 {{- range $j, $res := $apiGroup.resources }}
 {{- if $apiGroup.crd }}
-{{- if ne $i 0 }},{{ end }}
-{{- if ne $j 0 }},{{ end }}
-{{- printf "%s.%s" $res $apiGroup.apiGroups }}
+{{- printf "%s.%s" $res $apiGroup.apiGroups -}}
+{{- if or (ne $i 0) (ne $j 0) }},{{ end }}
 {{- end }}
 {{- end }}
 {{- end }}

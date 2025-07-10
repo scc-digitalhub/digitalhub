@@ -62,7 +62,7 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-Create registry auth values 
+Create registry auth values
 */}}
 {{- define "digitalhub.registryAuth" -}}
 {{- if and .Values.global.registry.username .Values.global.registry.password }}

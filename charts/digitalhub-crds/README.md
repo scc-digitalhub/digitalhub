@@ -25,9 +25,9 @@ This Helm Chart is a collection of all digitalhub CRDs, this chart is used in th
 | image.repository | string | `"nginx"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
+| ingress.enabled | bool | `false` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
-| ingress.enabled | bool | `false` |  |
 | ingress.hosts[0].host | string | `"chart-example.local"` |  |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |

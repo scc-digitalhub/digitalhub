@@ -13,4 +13,3 @@ data:
   {{- end }}
   {{- end }}
   run.sh: | {{- tpl (.Files.Get "confs/code-toolbox/run.sh") . | nindent 4 }}
-  

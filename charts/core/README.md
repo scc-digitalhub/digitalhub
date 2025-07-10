@@ -52,6 +52,154 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 	</thead>
 	<tbody>
 		<tr>
+			<td id="global"><a href="./values.yaml#L6">global</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{
+  "externalHostAddress": "",
+  "externalTls": false,
+  "registry": {
+    "email": "",
+    "password": "",
+    "secretName": "",
+    "url": "",
+    "username": ""
+  }
+}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--externalHostAddress"><a href="./values.yaml#L8">global.externalHostAddress</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--externalTls"><a href="./values.yaml#L10">global.externalTls</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--registry"><a href="./values.yaml#L12">global.registry</a></td>
+			<td>
+object
+</td>
+			<td>Values of your registry</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{
+  "email": "",
+  "password": "",
+  "secretName": "",
+  "url": "",
+  "username": ""
+}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--registry--email"><a href="./values.yaml#L14">global.registry.email</a></td>
+			<td>
+string
+</td>
+			<td>Registry email</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--registry--password"><a href="./values.yaml#L16">global.registry.password</a></td>
+			<td>
+string
+</td>
+			<td>Registry password</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--registry--secretName"><a href="./values.yaml#L18">global.registry.secretName</a></td>
+			<td>
+string
+</td>
+			<td>Name of the secret of your registry. It has higher priority.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--registry--url"><a href="./values.yaml#L20">global.registry.url</a></td>
+			<td>
+string
+</td>
+			<td>Registry url</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="global--registry--username"><a href="./values.yaml#L22">global.registry.username</a></td>
+			<td>
+string
+</td>
+			<td>Registry username</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
 			<td id="additionalConfig"><a href="./values.yaml#L25">additionalConfig</a></td>
 			<td>
 object
@@ -1043,154 +1191,6 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="global"><a href="./values.yaml#L6">global</a></td>
-			<td>
-object
-</td>
-			<td></td>
-      <td>
-				<div style="max-width: 300px;">
-<details>
-<summary>+Expand</summary>
-<pre lang="json">
-{
-  "externalHostAddress": "",
-  "externalTls": false,
-  "registry": {
-    "email": "",
-    "password": "",
-    "secretName": "",
-    "url": "",
-    "username": ""
-  }
-}
-</pre>
-</details>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="global--externalHostAddress"><a href="./values.yaml#L8">global.externalHostAddress</a></td>
-			<td>
-string
-</td>
-			<td></td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="global--externalTls"><a href="./values.yaml#L10">global.externalTls</a></td>
-			<td>
-bool
-</td>
-			<td></td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-false
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="global--registry"><a href="./values.yaml#L12">global.registry</a></td>
-			<td>
-object
-</td>
-			<td>Values of your registry</td>
-      <td>
-				<div style="max-width: 300px;">
-<details>
-<summary>+Expand</summary>
-<pre lang="json">
-{
-  "email": "",
-  "password": "",
-  "secretName": "",
-  "url": "",
-  "username": ""
-}
-</pre>
-</details>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="global--registry--email"><a href="./values.yaml#L14">global.registry.email</a></td>
-			<td>
-string
-</td>
-			<td>Registry email</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="global--registry--password"><a href="./values.yaml#L16">global.registry.password</a></td>
-			<td>
-string
-</td>
-			<td>Registry password</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="global--registry--secretName"><a href="./values.yaml#L18">global.registry.secretName</a></td>
-			<td>
-string
-</td>
-			<td>Name of the secret of your registry. It has higher priority.</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="global--registry--url"><a href="./values.yaml#L20">global.registry.url</a></td>
-			<td>
-string
-</td>
-			<td>Registry url</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="global--registry--username"><a href="./values.yaml#L22">global.registry.username</a></td>
-			<td>
-string
-</td>
-			<td>Registry username</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
 			<td id="image"><a href="./values.yaml#L157">image</a></td>
 			<td>
 object
@@ -1304,6 +1304,20 @@ object
 			</td>
 		</tr>
 		<tr>
+			<td id="ingress--enabled"><a href="./values.yaml#L171">ingress.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enables Ingress.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
 			<td id="ingress--annotations"><a href="./values.yaml#L173">ingress.annotations</a></td>
 			<td>
 object
@@ -1330,20 +1344,6 @@ string
 				<div style="max-width: 300px;">
 <pre lang="json">
 ""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="ingress--enabled"><a href="./values.yaml#L171">ingress.enabled</a></td>
-			<td>
-bool
-</td>
-			<td>Enables Ingress.</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-false
 </pre>
 </div>
 			</td>
@@ -2508,6 +2508,20 @@ object
 			</td>
 		</tr>
 		<tr>
+			<td id="s3--enabled"><a href="./values.yaml#L331">s3.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable this option if you have an S3 deployment that you want to use with Core</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
 			<td id="s3--accessKey"><a href="./values.yaml#L334">s3.accessKey</a></td>
 			<td>
 string
@@ -2560,20 +2574,6 @@ object
 bool
 </td>
 			<td>Set this to true if you want to use dynamic credentials for S3 communication</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-false
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="s3--enabled"><a href="./values.yaml#L331">s3.enabled</a></td>
-			<td>
-bool
-</td>
-			<td>Enable this option if you have an S3 deployment that you want to use with Core</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -3033,6 +3033,20 @@ object
 			</td>
 		</tr>
 		<tr>
+			<td id="solr--enabled"><a href="./values.yaml#L403">solr.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Set this value to true if you want to use Core with Solr</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
 			<td id="solr--collection"><a href="./values.yaml#L405">solr.collection</a></td>
 			<td>
 object
@@ -3129,20 +3143,6 @@ string
 				<div style="max-width: 300px;">
 <pre lang="json">
 ""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="solr--enabled"><a href="./values.yaml#L403">solr.enabled</a></td>
-			<td>
-bool
-</td>
-			<td>Set this value to true if you want to use Core with Solr</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-false
 </pre>
 </div>
 			</td>
@@ -3311,6 +3311,20 @@ object
 }
 </pre>
 </details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="sts--enabled"><a href="./values.yaml#L426">sts.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/Disable STS component for dynamic credentials (Both for Postgres and S3 operations)</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
 </div>
 			</td>
 		</tr>
@@ -3587,6 +3601,20 @@ object
 			</td>
 		</tr>
 		<tr>
+			<td id="sts--databaseProvider--enabled"><a href="./values.yaml#L461">sts.databaseProvider.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/Disable dynamic credentials for Postgres operations.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
 			<td id="sts--databaseProvider--credentials"><a href="./values.yaml#L463">sts.databaseProvider.credentials</a></td>
 			<td>
 object
@@ -3698,34 +3726,6 @@ string
 				<div style="max-width: 300px;">
 <pre lang="json">
 ""
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="sts--databaseProvider--enabled"><a href="./values.yaml#L461">sts.databaseProvider.enabled</a></td>
-			<td>
-bool
-</td>
-			<td>Enable/Disable dynamic credentials for Postgres operations.</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-true
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="sts--enabled"><a href="./values.yaml#L426">sts.enabled</a></td>
-			<td>
-bool
-</td>
-			<td>Enable/Disable STS component for dynamic credentials (Both for Postgres and S3 operations)</td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-false
 </pre>
 </div>
 			</td>

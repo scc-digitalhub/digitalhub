@@ -17,7 +17,7 @@ spec:
     matchLabels:
       {{- include "core-sts.selectorLabels" . | nindent 6 }}
   template:
-    metadata: 
+    metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/sts/configmap.yaml") . | sha256sum }}
       {{- with .Values.sts.podAnnotations }}

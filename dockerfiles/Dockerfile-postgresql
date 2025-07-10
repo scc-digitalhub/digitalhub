@@ -6,7 +6,7 @@ LABEL org.opencontainers.image.source=https://github.com/scc-digitalhub/digitalh
 
 USER root
 
-RUN apt-get update && apt-get install -y curl gnupg ca-certificates lsb-release \                               
+RUN apt-get update && apt-get install -y curl gnupg ca-certificates lsb-release \
  && curl -sSL https://packagecloud.io/timescale/timescaledb/gpgkey | gpg --dearmor -o /etc/apt/trusted.gpg.d/timescale.gpg \
  && echo "deb https://packagecloud.io/timescale/timescaledb/debian/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/timescaledb.list \
  && apt-get update

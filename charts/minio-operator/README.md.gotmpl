@@ -14,7 +14,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 ## Quick start
 
-### Prerequisites 
+### Prerequisites
 - [Helm](https://helm.sh/docs/intro/install/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
@@ -74,7 +74,7 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 {{- if (eq .Type "string/email") }}
 <a href="#stringemail" title="{{- template "chart.valuetypes.email" -}}">{{.Type}}</a>
 {{- else if (eq .Type "k8s/storage/persistent-volume/access-modes" )}}
-<a target="_blank" 
+<a target="_blank"
     href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes"
     >{{- .Type }}</a>
 {{- else }}

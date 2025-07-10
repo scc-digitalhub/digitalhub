@@ -7,7 +7,7 @@ RUN groupadd -f appuser \
     && chown -R appuser:appuser /home/appuser \
     && chown -R appuser:appuser /usr/app
 
-WORKDIR /home/appuser/app 
+WORKDIR /home/appuser/app
 
 RUN mkdir -p /var/lib/sqlpad && chown -R appuser:appuser /var/lib/sqlpad
 

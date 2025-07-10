@@ -32,7 +32,7 @@ autoscaling:
   maxReplicas: 100
   # autoscaling.minReplicas -- Set min replicas for autoscaling
   minReplicas: 1
-  # autoscaling.targetCPUUtilizationPercentage -- Set CPU utilization percentage that trigger the autoscaling 
+  # autoscaling.targetCPUUtilizationPercentage -- Set CPU utilization percentage that trigger the autoscaling
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
@@ -55,9 +55,9 @@ deployment:
   kubeRbacProxy:
     #  deployment.kubeRbacProxy.args -- DEPRECATED kube-rbac-proxy configure additional arguments to pass to kube-rbac-proxy sidecar container.
     args:
+      - "--logtostderr=true"
       - "--secure-listen-address=0.0.0.0:8443"
       - "--upstream=http://127.0.0.1:8080/"
-      - "--logtostderr=true"
       - "--v=0"
     #  deployment.kubeRbacProxy.image -- DEPRECATED kube-rbac-proxy container image configuration.
     image:
@@ -99,8 +99,8 @@ deployment:
     #  deployment.manager.args -- Manager configure additional arguments
     args:
       - "--health-probe-bind-address=:8081"
-      - "--metrics-bind-address=127.0.0.1:8080"
       - "--leader-elect"
+      - "--metrics-bind-address=127.0.0.1:8080"
     #  deployment.manager.command -- Ovveride image entrypoint
     command:
       - /manager

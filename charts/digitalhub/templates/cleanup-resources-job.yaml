@@ -4,6 +4,7 @@
 
 # Delete all resources
 ---
+{{- if .Values.global.cleanup.enabled }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -146,7 +147,7 @@ spec:
         - name: delete-coder
           image: "bitnami/kubectl:latest"
           command: ["/bin/sh"]
-          args: ["-c", "kubectl -n {{ .Release.Namespace }} delete statefulsets,deploy,svc,cm -l app.kubernetes.io/part-of=coder && kubectl -n {{ .Release.Namespace }} delete --all pvc && kubectl -n {{ .Release.Namespace }} delete --all ingresses && sleep 1m"]
+          args: ["-c", "kubectl -n {{ .Release.Namespace }} delete statefulsets,deploy,svc,cm -l app.kubernetes.io/part-of=coder && kubectl -n {{ .Release.Namespace }} delete pvc -l app.kubernetes.io/part-of=coder && kubectl -n {{ .Release.Namespace }} delete ingresses -l app.kubernetes.io/part-of=coder && sleep 1m"]
           securityContext:
             {{- toYaml .Values.global.securityContext | nindent 12}}
             readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
@@ -185,4 +186,5 @@ spec:
           securityContext:
             {{- toYaml .Values.global.securityContext | nindent 12}}
       restartPolicy: OnFailure
+{{- end }}
 {{- end }}
