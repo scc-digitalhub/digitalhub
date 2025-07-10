@@ -7,7 +7,7 @@ global:
   #  global.externalHostAddress -- Minio API URL
   externalHostAddress: ""
   #  global.minio --
-  minio:
+  s3:
     #  global.minio.rootUserSecret -- Minio admin credentials secret name
     rootUserSecret: ""
 
