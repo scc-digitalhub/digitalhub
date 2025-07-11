@@ -155,7 +155,7 @@ spec:
 ---
 {{- $resource := list -}}
 {{- range $k, $v := .Values.global.cleanup }}
-{{- if $v }}
+{{- if and $v (ne $k "enabled") }}
 {{- $resource = append $resource $k -}}
 {{- end }}
 {{- end }}
@@ -163,7 +163,7 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: delete-pvc-ingress
+  name: delete-selected-resources
   annotations:
     "helm.sh/hook": post-delete
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
@@ -173,13 +173,13 @@ metadata:
 spec:
   template:
     metadata:
-      name: delete-pvc-ingress
+      name: delete-selected-resources
       labels:
         {{- include "digitalhub.labels" . | nindent 8 }}
     spec:
       serviceAccountName: delete-resources
       containers:
-        - name: delete-pvc-ingress
+        - name: delete-selected-resources
           image: "bitnami/kubectl:latest"
           command: ["/bin/sh"]
           args: ["-c", "{{ range $resource }}kubectl -n {{ $.Release.Namespace }} delete --all {{ . }} && {{ end }} sleep 1m"]
