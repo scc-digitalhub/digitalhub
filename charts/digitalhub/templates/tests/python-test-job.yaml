@@ -52,15 +52,29 @@ spec:
               value: "True"
             {{- if $.Values.core.authentication.openId.enabled }}
             - name: "CORE_CLIENT_ID"
+              {{- if and $.Values.core.coreAuthCreds.existingSecret.secretName $.Values.core.coreAuthCreds.existingSecret.clientIdKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.core.coreAuthCreds.existingSecret.secretName }}
+                  key: {{ $.Values.core.coreAuthCreds.existingSecret.clientIdKey }}
+              {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: "core-auth-creds"
                   key: "clientId"
+              {{- end }}
             - name: "CORE_CLIENT_SECRET"
+              {{- if and $.Values.core.coreAuthCreds.existingSecret.secretName $.Values.core.coreAuthCreds.existingSecret.clientSecretKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.core.coreAuthCreds.existingSecret.secretName }}
+                  key: {{ $.Values.core.coreAuthCreds.existingSecret.clientSecretKey }}
+              {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: "core-auth-creds"
                   key: "clientSecret"
+              {{- end }}
             {{- if $.Values.core.ingress.enabled }}
             {{- with (index $.Values.core.ingress.hosts 0) }}
             - name: "DHCORE_ENDPOINT"
