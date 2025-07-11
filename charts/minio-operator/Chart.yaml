@@ -7,7 +7,7 @@ name: minio-operator
 description: A Kubernetes operator to handle instances of buckets, users and policies on MinIO.
 type: application
 home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/minio-operator"
-version: 0.1.7
+version: 0.1.8
 appVersion: "1.0.1"
 maintainers:
   - name: ffais

@@ -13,7 +13,7 @@ data:
   JDBC_URL: {{ printf "%s%s:%s/%s" "jdbc:postgresql://" .Values.postgres.host .Values.postgres.port .Values.postgres.database }}
   JDBC_DRIVER: org.postgresql.Driver
 {{- if not .Values.sts.enabled }}
-  DH_CONFIG_COMMON_SECRETS: digitalhub-common-creds
+  DH_CONFIG_COMMON_SECRETS: {{ .Values.commonCredsSecret.secretName }}
 {{- end }}
   DH_CONFIG_COMMON_MAPS: digitalhub-common-env
   LOG_LEVEL: INFO
@@ -26,8 +26,8 @@ data:
 {{- if .Values.solr.enabled }}
   SOLR_URL: {{ .Values.solr.url }}
   SOLR_COLLECTION: {{ .Values.solr.collection.name }}
-  {{- if .Values.solr.collection.initialize.enabled }}
-  SOLR_USER: {{ .Values.solr.user }}
+  {{- if or .Values.solr.collection.initialize.securityJsonSecret .Values.solr.credentials.existingSecurityJsonSecret.secretName .Values.solr.credentials.existingCollectionSecret.secretName }}
+  SOLR_USER: {{ .Values.solr.credentials.user }}
   {{- end }}
 {{- end }}
 {{- if .Values.authentication.basic.enabled }}
