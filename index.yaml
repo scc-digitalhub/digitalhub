@@ -472,6 +472,25 @@ entries:
   core:
   - apiVersion: v2
     appVersion: 0.12.0
+    created: "2025-07-11T13:11:11.848732406Z"
+    description: DigitalHub Core is part of the DigitalHub platform, and depends on
+      external components to support the complete set of functionalities.
+    digest: 83244311124d126364e9edde373cbb58156f3ceb577bb7382ae4221f34274c9d
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/core
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: core
+    sources:
+    - https://github.com/scc-digitalhub/digitalhub-core
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.3.19/core-0.3.19.tgz
+    version: 0.3.19
+  - apiVersion: v2
+    appVersion: 0.12.0
     created: "2025-07-10T07:43:22.604982361Z"
     description: DigitalHub Core is part of the DigitalHub platform, and depends on
       external components to support the complete set of functionalities.
@@ -20598,6 +20617,27 @@ entries:
   kubernetes-resource-manager:
   - apiVersion: v2
     appVersion: 1.2.3
+    created: "2025-07-11T13:11:12.965857544Z"
+    description: A manager for resources in Kubernetes. The tool allows for monitoring
+      and managing some of the standard Kubernetes resources (PersistentVolumeClaim,
+      Services, Deployments, Jobs, and Secrets) as well as for managing a selection
+      of Custom Resources.
+    digest: 35d5bdb5e6b30ca8ab4b20d7c4b75f85fb919b008c1f06e229cfc1e5b5e1d924
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/kubernetes-resource-manager
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: kubernetes-resource-manager
+    sources:
+    - https://github.com/scc-digitalhub/dremio-rest-server-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/kubernetes-resource-manager-0.2.11/kubernetes-resource-manager-0.2.11.tgz
+    version: 0.2.11
+  - apiVersion: v2
+    appVersion: 1.2.3
     created: "2025-06-24T08:58:31.616742093Z"
     description: A manager for resources in Kubernetes. The tool allows for monitoring
       and managing some of the standard Kubernetes resources (PersistentVolumeClaim,
@@ -20963,6 +21003,25 @@ entries:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/kubernetes-resource-manager-0.1.10/kubernetes-resource-manager-0.1.10.tgz
     version: 0.1.10
   minio-operator:
+  - apiVersion: v2
+    appVersion: 1.0.1
+    created: "2025-07-11T13:11:13.202745207Z"
+    description: A Kubernetes operator to handle instances of buckets, users and policies
+      on MinIO.
+    digest: 5e3ce1b4c9e259a59b3ab94029709e60ba873fd801b0100db893bc0c0a5e4ba9
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/minio-operator
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: minio-operator
+    sources:
+    - https://github.com/scc-digitalhub/minio-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/minio-operator-0.1.8/minio-operator-0.1.8.tgz
+    version: 0.1.8
   - apiVersion: v2
     appVersion: 1.0.1
     created: "2025-06-24T08:58:31.718807973Z"
@@ -23061,4 +23120,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-10T07:51:26.231844749Z"
+generated: "2025-07-11T13:11:13.44836664Z"
