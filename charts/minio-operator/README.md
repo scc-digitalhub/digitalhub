@@ -6,7 +6,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 # minio-operator
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-AGPL%20V3-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/minio-operator/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=minio-operator*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.7](https://img.shields.io/badge/Version-0.1.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.1](https://img.shields.io/badge/AppVersion-1.0.1-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.8](https://img.shields.io/badge/Version-0.1.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.1](https://img.shields.io/badge/AppVersion-1.0.1-informational?style=flat-square)
 
 A Kubernetes operator to handle instances of buckets, users and policies on MinIO.
 
@@ -63,7 +63,7 @@ object
 <pre lang="json">
 {
   "externalHostAddress": "",
-  "minio": {
+  "s3": {
     "rootUserSecret": ""
   }
 }
@@ -77,7 +77,7 @@ object
 			<td>
 string
 </td>
-			<td>Minio API URL</td>
+			<td>S3 API URL</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -87,7 +87,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="global--minio"><a href="./values.yaml#L10">global.minio</a></td>
+			<td id="global--s3"><a href="./values.yaml#L10">global.s3</a></td>
 			<td>
 object
 </td>
@@ -106,11 +106,11 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="global--minio--rootUserSecret"><a href="./values.yaml#L12">global.minio.rootUserSecret</a></td>
+			<td id="global--s3--rootUserSecret"><a href="./values.yaml#L12">global.s3.rootUserSecret</a></td>
 			<td>
 string
 </td>
-			<td>Minio admin credentials secret name</td>
+			<td>s3 admin credentials secret name</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
