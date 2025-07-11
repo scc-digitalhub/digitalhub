@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-{{ if not .Values.core.sts.enabled -}}
+{{ if not (and .Values.core.sts.enabled .Values.core.commonCredsSecret.useExistingCommonCredsSecret) -}}
 {{- if ( index .Values "template-controller" "objectTemplate" "enabled" ) }}
 apiVersion: templates.kluctl.io/v1alpha1
 kind: ObjectTemplate
@@ -18,12 +18,12 @@ spec:
           apiVersion: v1
           kind: Secret
           name: {{ .Values.core.databaseProvider.ownerSecret }}
-    - name: miniosecret
+    - name: s3secret
       object:
         ref:
           apiVersion: v1
           kind: Secret
-          name: {{ .Values.global.minio.digitalhubUserSecret }}
+          name: {{ .Values.global.s3.platform.platformUserSecret }}
     - name: coresecret
       object:
         ref:
@@ -39,8 +39,8 @@ spec:
       stringData:
         DB_USERNAME: "{{ "{{" }} matrix.postgressecret.data.username | b64decode {{ "}}" }}"
         DB_PASSWORD: "{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}"
-        AWS_ACCESS_KEY_ID: "{{ "{{" }} matrix.miniosecret.data.digitalhubUser | b64decode {{ "}}" }}"
-        AWS_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.miniosecret.data.digitalhubPassword | b64decode {{ "}}" }}"
+        AWS_ACCESS_KEY_ID: "{{ "{{" }} matrix.s3secret.data.accessKey | b64decode {{ "}}" }}"
+        AWS_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.s3secret.data.accessKey | b64decode {{ "}}" }}"
         DB_URL: "postgresql://{{ "{{" }} matrix.postgressecret.data.username | b64decode {{ "}}" }}:{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}@{{ .Values.core.databaseProvider.host }}:{{ .Values.core.databaseProvider.port }}/{{ .Values.core.databaseProvider.database }}"
         DHCORE_CLIENT_ID: "{{ "{{" }} matrix.coresecret.data.clientId | b64decode {{ "}}" }}"
 {{- end }}
