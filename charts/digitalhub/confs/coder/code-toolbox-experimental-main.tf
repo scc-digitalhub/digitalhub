@@ -78,14 +78,19 @@ variable "stsenabled" {
   default = false
 }
 
-variable "core_auth_creds" {
+variable "core_auth_creds_secret" {
   type    = string
   default = "core-auth-creds"
 }
 
-variable "clientId" {
+variable "client_id_key" {
   type    = string
-  default = "core-auth-creds"
+  default = "clientId"
+}
+
+variable "client_secret_key" {
+  type    = string
+  default = "clientSecret"
 }
 
 variable "dhcore_endpoint" {
@@ -241,7 +246,7 @@ data "http" "exchange_token" {
   # Optional request headers
   request_headers = {
     Content-Type  = "application/x-www-form-urlencoded"
-    Authorization = "Basic ${base64encode("${data.kubernetes_secret.auth.data["clientId"]}:${data.kubernetes_secret.auth.data["clientSecret"]}")}"
+    Authorization = "Basic ${base64encode("${data.kubernetes_secret.auth.data[var.client_id_key]}:${data.kubernetes_secret.auth.data[var.client_secret_key]}")}"
   }
 
   request_body = "grant_type=urn:ietf:params:oauth:grant-type:token-exchange&scope=openid%20offline_access%20credentials&subject_token_type=urn:ietf:params:oauth:token-type:access_token&subject_token=${data.coder_workspace_owner.me.oidc_access_token}"
@@ -266,7 +271,7 @@ data "coder_workspace_owner" "me" {}
 
 data "kubernetes_secret" "auth" {
   metadata {
-    name      = var.core_auth_creds
+    name      = var.core_auth_creds_secret
     namespace = var.namespace
   }
 }
@@ -447,7 +452,7 @@ resource "random_uuid" "check-token-exchange" {
   lifecycle {
     precondition {
       condition     = contains([201, 204, 200], data.http.exchange_token[0].status_code)
-      error_message = "Invalid AAC Token"
+      error_message = "Invalid Token"
     }
   }
 }

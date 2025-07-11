@@ -48,15 +48,15 @@ variable "postgresql_hostname" {
   default     = "database-postgres-cluster"
 }
 
-variable "minio_endpoint" {
+variable "s3_endpoint" {
   type        = string
-  description = "Minio endpoint"
+  description = "S3 endpoint"
   default     = "minio:9000"
 }
 
-variable "minio_bucket" {
+variable "s3_bucket" {
   type        = string
-  description = "Minio bucket name"
+  description = "S3 bucket name"
   default     = "datalake"
 }
 
@@ -69,7 +69,16 @@ variable "postgresql_db_name" {
 variable "postgresql_creds_secret" {
   type        = string
   description = "Postgresql database credentials secret"
-  default     = "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
+}
+
+variable "postgresql_username_key" {
+  type        = string
+  description = "Postgresql database credentials username key"
+}
+
+variable "postgresql_password_key" {
+  type        = string
+  description = "Postgresql database credentials password key"
 }
 
 variable "service_type" {
@@ -105,8 +114,18 @@ variable "external_url" {
   type = string
 }
 
-variable "minio_digitalhub_user_secret" {
+variable "s3_platform_user_secret" {
   type = string
+}
+
+variable "s3_access_key_key" {
+  type = string
+  default = "accessKey"
+}
+
+variable "s3_secret_key_key" {
+  type = string
+  default = "secretKey"
 }
 
 variable "extra_vars" {
@@ -374,12 +393,12 @@ resource "kubernetes_job" "source-init" {
             value = kubernetes_service.dremio-service.metadata.0.name
           }
           env {
-            name  = "MINIO_ENDPOINT"
-            value = var.minio_endpoint
+            name  = "S3_ENDPOINT"
+            value = var.s3_endpoint
           }
           env {
-            name  = "MINIO_BUCKET"
-            value = var.minio_bucket
+            name  = "S3_BUCKET"
+            value = var.s3_bucket
           }
           env {
             name  = "PSQL_HOSTNAME"
@@ -394,7 +413,7 @@ resource "kubernetes_job" "source-init" {
             value_from {
               secret_key_ref {
                 name = var.postgresql_creds_secret
-                key  = "username"
+                key  = var.postgresql_username_key
               }
             }
           }
@@ -403,25 +422,25 @@ resource "kubernetes_job" "source-init" {
             value_from {
               secret_key_ref {
                 name = var.postgresql_creds_secret
-                key  = "password"
+                key  = var.postgresql_password_key
               }
             }
           }
           env {
-            name = "MINIO_USERNAME"
+            name = "S3_USERNAME"
             value_from {
               secret_key_ref {
-                name = var.minio_digitalhub_user_secret
-                key  = "digitalhubUser"
+                name = var.s3_platform_user_secret
+                key  = var.s3_access_key_key
               }
             }
           }
           env {
-            name = "MINIO_PASSWORD"
+            name = "S3_PASSWORD"
             value_from {
               secret_key_ref {
-                name = var.minio_digitalhub_user_secret
-                key  = "digitalhubPassword"
+                name = var.s3_platform_user_secret
+                key  = var.s3_secret_key_key
               }
             }
           }

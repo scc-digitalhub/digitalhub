@@ -26,20 +26,41 @@ spec:
             - name: CODER_URL
               value: "http://coder"
             - name: CODER_FIRST_USER_USERNAME
+              {{- if and .Values.coder.adminUserExistingSecret.secretName .Values.coder.adminUserExistingSecret.usernameKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.coder.adminUserExistingSecret.secretName }}
+                  key: {{ .Values.coder.adminUserExistingSecret.usernameKey }}
+              {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: coder-user
                   key: username
+              {{- end }}
             - name: CODER_FIRST_USER_PASSWORD
+              {{- if and .Values.coder.adminUserExistingSecret.secretName .Values.coder.adminUserExistingSecret.passwordKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.coder.adminUserExistingSecret.secretName }}
+                  key: {{ .Values.coder.adminUserExistingSecret.passwordKey }}
+              {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: coder-user
                   key: password
+              {{- end }}
             - name: CODER_FIRST_USER_EMAIL
+              {{- if and .Values.coder.adminUserExistingSecret.secretName .Values.coder.adminUserExistingSecret.emailKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.coder.adminUserExistingSecret.secretName }}
+                  key: {{ .Values.coder.adminUserExistingSecret.emailKey }}
+              {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: coder-user
                   key: email
+              {{- end }}
             - name: CODER_FIRST_USER_TRIAL
               value: "false"
           volumeMounts:

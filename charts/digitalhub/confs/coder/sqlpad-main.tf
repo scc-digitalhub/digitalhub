@@ -28,22 +28,32 @@ variable "namespace" {
   default     = "digitalhub"
 }
 
-variable "db_host" {
+variable "postgresql_hostname" {
   description = "Provide the db host"
   type        = string
   default     = "database-postgres-cluster"
 }
 
-variable "db_name" {
+variable "postgresql_db_name" {
   description = "Provide the db name"
   type        = string
   default     = "digitalhub"
 }
 
-variable "db_secret" {
+variable "postgresql_creds_secret" {
   description = "Provide the db secret name with username and password"
   type        = string
   default     = "digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do"
+}
+
+variable "postgresql_username_key" {
+  type        = string
+  description = "Postgresql database credentials username key"
+}
+
+variable "postgresql_password_key" {
+  type        = string
+  description = "Postgresql database credentials password key"
 }
 
 variable "service_type" {
@@ -304,15 +314,15 @@ resource "kubernetes_deployment" "sqlpad" {
           }
           env {
             name  = "SQLPAD_CONNECTIONS__pg__name"
-            value = var.db_name
+            value = var.postgresql_db_name
           }
           env {
             name  = "SQLPAD_CONNECTIONS__pg__database"
-            value = var.db_name
+            value = var.postgresql_db_name
           }
           env {
             name  = "SQLPAD_CONNECTIONS__pg__host"
-            value = var.db_host
+            value = var.postgresql_hostname
           }
           env {
             name  = "SQLPAD_CONNECTIONS__pg__multiStatementTransactionEnabled"
@@ -330,8 +340,8 @@ resource "kubernetes_deployment" "sqlpad" {
             name = "SQLPAD_CONNECTIONS__pg__password"
             value_from {
               secret_key_ref {
-                name = var.db_secret
-                key  = "password"
+                name = var.postgresql_creds_secret
+                key  = var.postgresql_password_key
               }
             }
           }
@@ -339,8 +349,8 @@ resource "kubernetes_deployment" "sqlpad" {
             name = "SQLPAD_CONNECTIONS__pg__username"
             value_from {
               secret_key_ref {
-                name = var.db_secret
-                key  = "username"
+                name = var.postgresql_creds_secret
+                key  = var.postgresql_username_key
               }
             }
           }
