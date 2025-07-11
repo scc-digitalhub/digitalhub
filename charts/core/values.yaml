@@ -428,7 +428,9 @@ solr:
       enabled: true
       #  solr.collection.initialize.image -- Initialization image
       image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
-      #  solr.collection.initialize.securityJsonSecret -- Name of the secret containing the Solr security.json
+      #  solr.collection.initialize.securityJsonSecret -- Name of the secret containing the Solr security.json.
+      #  Specify the name of your secret here if you want the Platform installation to create a compatible secret for you.
+      #  WARNING: In production, choose either solr.credentials.existingCollectionSecret or solr.credentials.existingSecurityJsonSecret, depending on your use case, instead of this value.
       securityJsonSecret: ""
     #  solr.collection.name -- Name of the Solr collection
     name: ""

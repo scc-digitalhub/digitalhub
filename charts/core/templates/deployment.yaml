@@ -42,18 +42,15 @@ spec:
           image: {{ .Values.solr.collection.initialize.image }}
           command: ["/bin/sh", "-c"]
           args:
-          {{- if not (and .Values.solr.collection.initialize.securityJsonSecret .Values.solr.existingSecurityJsonSecret.secretName) }}
-            - until [ "$(curl -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
-          {{- else }}
-          {{- if and .Values.solr.existingSecurityJsonSecret.secretName .Values.solr.existingSecurityJsonSecret.adminKey }}
-            - until [ "$(curl --user {{ .Values.solr.existingSecurityJsonSecret.adminKey }}:$SOLR_ADMIN_PWD -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
+          {{- if and .Values.solr.credentials.existingSecurityJsonSecret.secretName .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}
+            - until [ "$(curl --user {{ .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}:$SOLR_ADMIN_PWD -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
           env:
             - name: "SOLR_ADMIN_PWD"
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.solr.existingSecurityJsonSecret.secretName }}
-                  key: {{ .Values.solr.existingSecurityJsonSecret.adminKey }}
-          {{- else }}
+                  name: {{ .Values.solr.credentials.existingSecurityJsonSecret.secretName }}
+                  key: {{ .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}
+          {{- else if .Values.solr.collection.initialize.securityJsonSecret }}
             - until [ "$(curl --user admin:$SOLR_ADMIN_PWD -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
           env:
             - name: "SOLR_ADMIN_PWD"
@@ -61,7 +58,8 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.solr.collection.initialize.securityJsonSecret }}
                   key: admin
-          {{- end }}
+          {{- else }}
+            - until [ "$(curl -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
           {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -192,7 +190,7 @@ spec:
               {{- if and .Values.solr.credentials.existingSecurityJsonSecret.secretName .Values.solr.credentials.existingSecurityJsonSecret.adminKey  }}
                   name: {{ .Values.solr.credentials.existingSecurityJsonSecret.secretName }}
                   key: {{ .Values.solr.credentials.user }}
-              {{- else if .Values.solr.credentials.existingCollectionSecret.secretName .Values.solr.credentials.existingCollectionSecret.passwordKey }}
+              {{- else if and .Values.solr.credentials.existingCollectionSecret.secretName .Values.solr.credentials.existingCollectionSecret.passwordKey }}
                   name: {{ .Values.solr.credentials.existingCollectionSecret.secretName }}
                   key: {{ .Values.solr.credentials.existingCollectionSecret.passwordKey }}
               {{- else }}
