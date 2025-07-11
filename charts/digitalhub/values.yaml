@@ -38,36 +38,6 @@ global:
   externalHostAddress: 192.168.49.2
   #  global.externalTls --
   externalTls: false
-  #  global.minio --
-  minio:
-    #  global.minio.argoBucket -- Name of the Argo bucket
-    argoBucket: &argoBucket "argo"
-    #  global.minio.argoPassword -- Password of the Argo bucket user
-    argoPassword: &argoPassword argo1234
-    #  global.minio.argoSecret -- Secret of the Argo bucket user
-    argoSecret: &argoSecret argo-minio-creds
-    #  global.minio.argoUser -- Username of the Argo bucket user
-    argoUser: &argoUser argo
-    #  global.minio.bucket -- Name of the Platform's main bucket
-    bucket: &minioBucket "datalake"
-    #  global.minio.digitalhubPassword -- Password of the Platform's main bucket user
-    digitalhubPassword: &digitalhubPassword digitalhub
-    #  global.minio.digitalhubUser -- Username of the Platform's main bucket user
-    digitalhubUser: &digitalhubUser digitalhub
-    #  global.minio.digitalhubUserSecret -- Secret of the Platform's main bucket user
-    digitalhubUserSecret: digitalhub-minio-creds
-    #  global.minio.endpoint -- Endpoint of your S3 instance
-    endpoint: &minioEndpoint "minio"
-    #  global.minio.endpointPort -- Port of your S3 instance
-    endpointPort: &minioEndpointPort "9000"
-    #  global.minio.protocol -- Protocol of your S3 instance (http/https)
-    protocol: &minioProtocol "http"
-    #  global.minio.rootPassword -- S3 admin password
-    rootPassword: &minioRootPassword minio123
-    #  global.minio.rootUser -- S3 admin username
-    rootUser: &minioRootUser minio
-    #  global.minio.rootUserSecret -- S3 admin secret
-    rootUserSecret: minio
   #  global.podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
   podSecurityContext:
     #  global.podSecurityContext.runAsNonRoot -- Pod allow run as root.
@@ -88,6 +58,56 @@ global:
     url: 192.168.49.2:30150
     #  global.registry.username -- Registry username
     username: ""
+  #  global.s3 -- S3 configuration
+  s3:
+    # global.s3.argo -- S3 configuration for Argo
+    argo:
+      #  global.s3.argo.accessKey -- Access key of the Argo bucket user
+      accessKey: &argoAccessKey argo
+      #  global.s3.argo.bucket -- Name of the Argo bucket
+      bucket: &argoBucket "argo"
+      existingSecret:
+        #  global.s3.argo.existingSecret.accessKey -- S3 Argo bucket accessKey
+        accessKeyKey: ""
+        #  global.s3.argo.existingSecret.secretKey -- S3 Argo bucket secretKey
+        secretKeyKey: ""
+        #  global.s3.argo.existingSecret.secretName -- Secret of the Argo bucket user
+        secretName: ""
+      #  global.s3.argo.secretKey -- Secret key of the Argo bucket user
+      secretKey: &argoSecretKey argo1234
+      #  global.s3.argo.argoSecret -- Secret of the Argo bucket user
+      secretName: &argoSecret argo-s3-creds
+      #  global.s3.argo.existingSecret -- Set the keys that you use in your S3 Argo bucket user secret
+    #  global.s3.endpoint -- Endpoint of your S3 instance
+    endpoint: &s3Endpoint "minio"
+    #  global.s3.endpointPort -- Port of your S3 instance
+    endpointPort: &s3EndpointPort "9000"
+    # global.s3.platform -- S3 configuration for the platform
+    platform:
+      #  global.s3.platform.accessKey -- Access key of the Platform's main bucket user
+      accessKey: &platformAccessKey digitalhub
+      #  global.s3.platform.bucket -- Name of the Platform's main bucket
+      bucket: &platformBucket "datalake"
+      #  global.s3.platform.existingSecret -- Set the keys that you use in your S3 main bucket user secret
+      existingSecret:
+        #  global.s3.platform.existingSecret.accessKey -- S3 main bucket accessKey
+        accessKeyKey: &platformExistingAccesKey ""
+        #  global.s3.platform.existingSecret.secretKey -- S3 main bucket secretKey
+        secretKeyKey: &platformExistingSecretKey ""
+        #  global.s3.platform.existingSecret.secretName -- Secret of the Platform's main bucket user
+        secretName: &platformExistingSecret ""
+      #  global.s3.platform.platformUserSecret -- Secret of the Platform's main bucket user
+      platformUserSecret: platform-s3-creds
+      #  global.s3.platform.digitalhubPassword -- Secret key of the Platform's main bucket user
+      secretKey: &platformSecretKey digitalhub
+    #  global.s3.protocol -- Protocol of your S3 instance (http/https)
+    protocol: &s3Protocol "http"
+    #  global.s3.rootPassword -- S3 admin password
+    rootPassword: &s3RootPassword minio123
+    #  global.s3.rootUser -- S3 admin username
+    rootUser: &s3RootUser minio
+    #  global.s3.rootUserSecret -- S3 admin secret
+    rootUserSecret: minio
   #  global.securityContext -- Security Context passed to the delete-resources job and the coder init/upgrade templates jobs
   securityContext:
     #  global.securityContext.allowPrivilegeEscalation -- Container allow privilege escalation.
@@ -146,7 +166,7 @@ argo-workflows:
           bucket: *argoBucket
           #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.endpoint -- Endpoint of your S3 instance
           endpoint: minio:9000
-          #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.insecure -- Insecure will disable TLS. Primarily used for minio installs not configured with TLS
+          #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.insecure -- Insecure will disable TLS. Primarily used for S3 installs not configured with TLS
           insecure: true
           #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.secretKeySecret -- Reference to the secret containing your S3 secretKey for the Argo bucket
           secretKeySecret:
@@ -218,6 +238,16 @@ argo-workflows:
 coder:
   #  coder.enabled -- Enable/Disable Coder
   enabled: true
+  #  coder.adminUserExistingSecret -- Existing secret containing Coder's admin username, password and email
+  adminUserExistingSecret:
+    #  coder.adminUserExistingSecret.emailKey -- Email key
+    emailKey: ""
+    #  coder.adminUserExistingSecret.passwordKey -- Password key
+    passwordKey: ""
+    #  coder.adminUserExistingSecret.secretName -- Name of the secret
+    secretName: ""
+    #  coder.adminUserExistingSecret.usernameKey -- Username key
+    usernameKey: ""
   #  coder.coder --
   coder:
     #  coder.coder.env -- Additional environment variables for Coder
@@ -313,8 +343,14 @@ coder:
           database: digitalhub
           #  coder.template.customTemplates.postgres.hostname -- Host of the Platform's main database
           hostname: database-postgres-cluster
-          #  coder.template.customTemplates.postgres.ownerCredsSecret -- Name of the Platform's main database secret containing the owner user username and password
-          ownerCredsSecret: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+          #  coder.template.customTemplates.postgres.ownerCredsSecret -- Set the keys that you use in your Platform's main database secret
+          ownerCredsSecret:
+            #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Password key
+            passwordKey: password
+            #  coder.template.customTemplates.postgres.ownerCredsSecret.secretName -- Name of the Platform's main database secret containing the owner user username and password
+            secretName: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+            #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Username key
+            usernameKey: username
         stopAfter: 0h
       - extraVars: []
         iconUrl: https://i.ibb.co/TrBDsZM/sqlpad.png
@@ -326,8 +362,14 @@ coder:
           database: digitalhub
           #  coder.template.customTemplates.postgres.hostname -- Host of the Platform's main database
           hostname: database-postgres-cluster
-          #  coder.template.customTemplates.postgres.ownerCredsSecret -- Name of the Platform's main database secret containing the owner user username and password
-          ownerCredsSecret: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+          #  coder.template.customTemplates.postgres.ownerCredsSecret -- Set the keys that you use in your Platform's main database secret
+          ownerCredsSecret:
+            #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Password key
+            passwordKey: password
+            #  coder.template.customTemplates.postgres.ownerCredsSecret.secretName -- Name of the Platform's main database secret containing the owner user username and password
+            secretName: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
+            #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Username key
+            usernameKey: username
         stopAfter: 8h
       - extraVars: []
         iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
@@ -399,17 +441,37 @@ core:
       #  authentication.basic.password -- BasicAuth password
       password: "corepwd"
       #  authentication.basic.username -- BasicAuth username
-      username: "corepwd"
+      username: "coreuser"
     #  core.authentication.openId -- OpenID Auth values
     openId:
       #  core.authentication.openId.enabled -- Enable/disable openId authentication
       enabled: false
+  #  core.commonCredsSecret -- A secret that should be used when not using STS. It should contain the following populated keys:
+  #  DB_USERNAME: Username of the Postgres main db owner
+  #  DB_PASSWORD: Password of the Postgres main db owner
+  #  AWS_ACCESS_KEY_ID: Access key of the S3 Platform's main bucket user
+  #  AWS_SECRET_ACCESS_KEY: Secret key of the S3 Platform's main bucket user
+  #  DB_URL: Connection string to the platform's main db
+  #  DHCORE_CLIENT_ID: Core clientId
+  commonCredsSecret:
+    #  core.commonCredsSecret.existingCommonCredsSecret -- Secret name
+    secretName: "digitalhub-common-creds"
+    #  core.commonCredsSecret.useExistingCommonCredsSecret -- Set this to true if you are using an existing secret.
+    useExistingCommonCredsSecret: false
   #  core.coreAuthCreds --
   coreAuthCreds:
     #  core.coreAuthCreds.clientId -- Core clientId
     clientId: m04bfbmd03m8sf4u9ucz54ti
     #  core.coreAuthCreds.clientSecret -- Core clientSecret
     clientSecret: 9rb5215z0aqd7fadzxuoyqe3
+    #  core.coreAuthCreds.existingSecret -- Existing secret containing Core clientID and clientSecret
+    existingSecret:
+      #  core.coreAuthCreds.existingSecret.clientIdKey -- Key of the clientID
+      clientIdKey: ""
+      #  core.coreAuthCreds.existingSecret.clientSecretKey -- Key of the clientSecret
+      clientSecretKey: ""
+      #  core.coreAuthCreds.existingSecret.secretName -- Name of the secret with Core clientId and clientSecret
+      secretName: ""
   #  core.databaseProvider --
   databaseProvider:
     #  core.databaseProvider.database -- Name of the main database of the platform
@@ -460,35 +522,35 @@ core:
     enabled: true
     #  core.s3.accessKey -- Explicit declaration of the Access key of your S3 instance.
     #  It has lower priority than the corresponding secret values.
-    accessKey: ""
+    accessKey: *platformAccessKey
     #  core.s3.bucket -- Bucket of your S3 instance
-    bucket: *minioBucket
+    bucket: *platformBucket
     #  core.s3.dynamicCreds --
     dynamicCreds:
       #  core.s3.dynamicCreds.enabled -- Set this to true if you want to use dynamic credentials for S3 communication
       enabled: false
     #  core.s3.endpoint -- Endpoint of your S3 instance
-    endpoint: *minioEndpoint
+    endpoint: *s3Endpoint
     #  core.s3.existingSecret -- Reference to the secret containing AccessKey and Secret key of your S3 instance.
     #  These values have higher priority than the explicit declarations.
     existingSecret:
       #  core.s3.existingSecret.accessKeyKey -- Key corresponding to your accessKey in your secret
-      accessKeyKey: digitalhubUser
+      accessKeyKey: *platformExistingAccesKey
       #  core.s3.existingSecret.name -- Secret containing accessKey and secretKey of your s3 instance
-      name: digitalhub-minio-creds
+      name: *platformExistingSecret
       #  core.s3.existingSecret.secretKeyKey -- Key corresponding to your secretKey in your secret
-      secretKeyKey: digitalhubPassword
+      secretKeyKey: *platformExistingSecretKey
     #  core.s3.port -- Port of your S3 instance
     port: "9000"
     #  core.s3.protocol -- Protocol of your S3 instance (http/https)
-    protocol: *minioProtocol
+    protocol: *s3Protocol
     #  core.s3.publicUrl -- Public url of your S3 instance
     publicUrl: http://192.168.49.2:30080
     #  core.s3.region -- Region used by your S3 instance
-    region: us-west-1
+    region: us-east-1
     #  core.s3.secretKey -- Explicit declaration of the Secret key of your S3 instance.
     #  It has lower priority than the corresponding secret values.
-    secretKey: ""
+    secretKey: *platformSecretKey
   #  core.service -- Service configurations.
   service:
     #  core.service.httpNodePort -- Service NodePort.
@@ -507,16 +569,34 @@ core:
         enabled: true
         #  core.solr.collection.initialize.image -- Initialization image
         image: smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot
-        #  core.solr.collection.initialize.securityJsonSecret -- Name of the secret containing the Solr security.json
+        #  core.solr.collection.initialize.securityJsonSecret -- Name of the secret containing the Solr security.json.
+        #  Specify the name of your secret here if you want the Platform installation to create a compatible secret for you.
+        #  WARNING: In production, choose either core.solr.credentials.existingCollectionSecret or core.solr.credentials.existingSecurityJsonSecret, depending on your use case, instead of this value.
         securityJsonSecret: digitalhub-solrcloud-security-bootstrap
       #  core.solr.collection.name -- Name of the Solr collection
       name: dhcore
+    #  core.solr.credentials -- Credentials configuration
+    credentials:
+      #  core.solr.credentials.existingCollectionSecret -- Collection credentials secret configuration
+      #  WARNING: this feature is intended ONLY for instances in which you don't have access to the security.json secret.
+      #  Uses a secret that contains a user with access to a specific collection. (The user MUST be also present in the security.json secret)
+      existingCollectionSecret:
+        #  core.solr.credentials.existingCollectionSecret.passwordKey -- Password key
+        passwordKey: ""
+        #  core.solr.credentials.existingCollectionSecret.secretName -- Secret name
+        secretName: ""
+      #  core.solr.credentials.existingSecurityJsonSecret -- Configuration for an existing security json secret for Solr
+      existingSecurityJsonSecret:
+        #  core.solr.credentials.existingSecurityJsonSecret.adminKey -- Key of the admin user
+        adminKey: ""
+        #  core.solr.credentials.existingSecurityJsonSecret.secretName -- Name of the secret
+        secretName: ""
+      #  core.solr.credentials.user -- Specify the solr user
+      user: user
     #  core.solr.fullNameOverride --
     fullNameOverride: digitalhub
     #  core.solr.url --
     url: http://digitalhub-solrcloud-common/solr
-    #  core.solr.user -- Specify the solr user
-    user: user
   #  core.sts --
   sts:
     #  core.sts.enabled -- Enable/Disable STS component for dynamic credentials (Both for Postgres and S3 operations)
@@ -538,10 +618,10 @@ core:
       enabled: true
       #  core.sts.databaseProvider.credentials -- Credentials of the Platform's main database
       credentials:
-        #  core.sts.databaseProvider.credentials.existingSecret -- Reference to the secret containing username and password of the Platform's main database owner user.
+        #  core.sts.databaseProvider.credentials.existingSecret -- Reference to the secret containing username and password of the Platform's main database admin user.
         #  These values have higher priority than the explicit declarations.
         existingSecret:
-          #  core.sts.databaseProvider.credentials.existingSecret.name -- Name of the secret containing username and password of the Platform's main database owner user
+          #  core.sts.databaseProvider.credentials.existingSecret.name -- Name of the secret containing username and password of the Platform's main database admin user
           name: digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do
           #  core.sts.databaseProvider.credentials.existingSecret.passwordKey -- Key corresponding to the Platform's main database owner user password
           passwordKey: password
@@ -1077,9 +1157,9 @@ minio:
       #  minio.resources.requests.memory -- Memory request
       memory: 0.5Gi
   #  minio.rootPassword -- MinIO admin password
-  rootPassword: *minioRootPassword
+  rootPassword: *s3RootPassword
   #  minio.rootUser -- MinIO admin username
-  rootUser: *minioRootUser
+  rootUser: *s3RootUser
   #  minio.securityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
   securityContext:
     #  minio.securityContext.runAsNonRoot -- Pod allow run as root.
@@ -1098,12 +1178,12 @@ minio:
     type: *serviceType
   #  minio.users -- Users that will be created in MinIO in list format
   users:
-    - accessKey: *argoUser
+    - accessKey: *argoAccessKey
       policy: readwriteargo
-      secretKey: *argoPassword
-    - accessKey: *digitalhubUser
+      secretKey: *argoSecretKey
+    - accessKey: *platformAccessKey
       policy: readwritedigitalhub
-      secretKey: *digitalhubPassword
+      secretKey: *platformSecretKey
 
 #  minio-operator -- MinIO operator (for KRM) configuration
 minio-operator:
@@ -1112,17 +1192,17 @@ minio-operator:
   #  minio-operator.minio --
   minio:
     #  minio-operator.minio.accessKey -- MinIO admin accessKey
-    accessKey: *minioRootUser
+    accessKey: *s3RootUser
     #  minio-operator.minio.bucket -- MinIO bucket name
-    bucket: *minioBucket
+    bucket: *platformBucket
     #  minio-operator.minio.endpoint -- MinIO endpoint
-    endpoint: *minioEndpoint
+    endpoint: *s3Endpoint
     #  minio-operator.minio.endpointPort -- MinIO endpoint port
-    endpointPort: *minioEndpointPort
+    endpointPort: *s3EndpointPort
     #  minio-operator.minio.protocol -- MinIO protocol (http/https)
-    protocol: *minioProtocol
+    protocol: *s3Protocol
     #  minio-operator.minio.secretKey -- MinIO admin secret key
-    secretKey: *minioRootPassword
+    secretKey: *s3RootPassword
 
 #  open-webui -- OpenWebUI configuration
 #  For a complete list of all the Values, as well as the specific documentation, please check the [OpenWebUI chart repository](https://github.com/open-webui/helm-charts/tree/main/charts/open-webui)
@@ -1445,8 +1525,6 @@ solr:
         name: digitalhub-solrcloud-security-bootstrap
       #  solr.solrOptions.security.probesRequireAuth --
       probesRequireAuth: true
-  #  solr.useExistingSecurityJson -- Set this to true if you already have a solr installation with a configured securityJson (creds settings won't affect your environment)
-  useExistingSecurityJson: false
 
 #  solr-operator -- Solr Operator configuration
 #  For a complete list of all the Values, as well as the specific documentation, please check the [Solr Operator Helm Chart repository](https://github.com/apache/solr-operator/tree/main/helm/solr-operator)
