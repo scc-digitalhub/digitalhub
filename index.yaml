@@ -3,6 +3,21 @@ entries:
   aac:
   - apiVersion: v2
     appVersion: 5.3.0
+    created: "2025-07-14T12:48:18.825981028Z"
+    description: A Helm chart for Kubernetes
+    digest: b5663993b72e4c41627352afa2beb5a66a32220278df9e39b3f00846808b08e5
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: aac
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/aac-0.1.17/aac-0.1.17.tgz
+    version: 0.1.17
+  - apiVersion: v2
+    appVersion: 5.3.0
     created: "2025-06-25T07:54:45.393848126Z"
     description: A Helm chart for Kubernetes
     digest: 610a63b1d078cf87cc52b16f2abeb2ddf497861e0dc81dbe55c51dc01a0e0e64
@@ -315,6 +330,24 @@ entries:
   apigw-operator:
   - apiVersion: v2
     appVersion: 1.1.2
+    created: "2025-07-14T12:48:19.029327364Z"
+    description: A Kubernetes operator to launch ingresses for services.
+    digest: bcc458fc992cdc352c7dc3b43fd815e1b475babf2d3905627c763c3bcb8a7ad2
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/apigw-operator
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: apigw-operator
+    sources:
+    - https://github.com/scc-digitalhub/apigw-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/apigw-operator-0.1.21/apigw-operator-0.1.21.tgz
+    version: 0.1.21
+  - apiVersion: v2
+    appVersion: 1.1.2
     created: "2025-06-24T08:58:30.803076581Z"
     description: A Kubernetes operator to launch ingresses for services.
     digest: 238a30e003000f302b02dcd6628ceb58bc482e90cc2d0dab52bacf123aefe64b
@@ -470,6 +503,25 @@ entries:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/coder-0.1.0/coder-0.1.0.tgz
     version: 0.1.0
   core:
+  - apiVersion: v2
+    appVersion: 0.12.0
+    created: "2025-07-14T12:48:19.224060677Z"
+    description: DigitalHub Core is part of the DigitalHub platform, and depends on
+      external components to support the complete set of functionalities.
+    digest: a63363ac0c4183298b950cacccf4d0c3b17f2fcd5cfede52623fa83fe1ccaab2
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/core
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: core
+    sources:
+    - https://github.com/scc-digitalhub/digitalhub-core
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.3.20/core-0.3.20.tgz
+    version: 0.3.20
   - apiVersion: v2
     appVersion: 0.12.0
     created: "2025-07-11T13:11:11.848732406Z"
@@ -1955,6 +2007,99 @@ entries:
       data and services, built by integrating several open-source projects to manage,
       elaborate, expose and serve data through modern standards.
     digest: f25464bb5764e263662b738da8576dba02f3dc1e42cda41a48805ca5ed1bf9a6
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/digitalhub
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: digitalhub
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-0.13.0-beta2/digitalhub-0.13.0-beta2.tgz
+    version: 0.13.0-beta2
+  - apiVersion: v2
+    appVersion: 0.13.0
+    created: "2025-07-14T12:48:19.520694171Z"
+    dependencies:
+    - condition: argo-workflows.enabled
+      name: argo-workflows
+      repository: https://argoproj.github.io/argo-helm
+      version: 0.45.1
+    - condition: apigw-operator.enabled
+      name: apigw-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.20
+    - condition: coder.enabled
+      name: coder
+      repository: https://helm.coder.com/v2
+      version: 2.21.3
+    - condition: core.enabled
+      name: core
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.3.19
+    - condition: kubernetes-resource-manager.enabled
+      name: kubernetes-resource-manager
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.2.11
+    - condition: dremio-rest-server-operator.enabled
+      name: dremio-rest-server-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.7
+    - condition: docker-registry.enabled
+      name: docker-registry
+      repository: https://helm.twun.io
+      version: 2.2.3
+    - condition: ext-postgres-operator.enabled
+      name: ext-postgres-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 1.2.7
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.min.io/
+      version: 5.4.0
+    - condition: postgres-operator.enabled
+      name: postgres-operator
+      repository: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+      tags:
+      - operator
+      version: 1.11.0
+    - condition: postgrest-operator.enabled
+      name: postgrest-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.9
+    - condition: template-controller.enabled
+      name: template-controller
+      repository: https://kluctl.github.io/charts
+      tags:
+      - operator
+      version: 0.2.5
+    - condition: solr-operator.enabled
+      name: solr-operator
+      repository: https://solr.apache.org/charts
+      tags:
+      - operator
+      version: 0.9.0
+    - condition: solr.enabled
+      name: solr
+      repository: https://solr.apache.org/charts
+      version: 0.9.0
+    - condition: minio-operator.enabled
+      name: minio-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.8
+    - condition: kubeai.enabled
+      name: kubeai
+      repository: https://ffais.github.io/kubeai/
+      version: 0.21.3
+    - condition: open-webui.enabled
+      name: open-webui
+      repository: https://helm.openwebui.com/
+      version: 6.22.0
+    description: The Digital Hub is an open-source platform for interoperability of
+      data and services, built by integrating several open-source projects to manage,
+      elaborate, expose and serve data through modern standards.
+    digest: 88ff4a9834c074b6d0feb73ea176904811230edec9447821815e6c14d399cacc
     home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/digitalhub
     maintainers:
     - name: ffais
@@ -20788,6 +20933,24 @@ entries:
   dremio-rest-server-operator:
   - apiVersion: v2
     appVersion: 1.0.3
+    created: "2025-07-14T12:48:19.692961841Z"
+    description: A Kubernetes operator to start instances of Dremio REST server.
+    digest: 5c20b702d126b4ade31e5a5689dd57e354f67937cc77af114f8ab3edfe808591
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/dremio-rest-server-operator
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: dremio-rest-server-operator
+    sources:
+    - https://github.com/scc-digitalhub/dremio-rest-server-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/dremio-rest-server-operator-0.1.8/dremio-rest-server-operator-0.1.8.tgz
+    version: 0.1.8
+  - apiVersion: v2
+    appVersion: 1.0.3
     created: "2025-06-24T08:58:31.360673794Z"
     description: A Kubernetes operator to start instances of Dremio REST server.
     digest: 42e7c68745ae34912d9718df9b7caabb64fc6c32969f10a8736229adfe000456
@@ -20987,6 +21150,27 @@ entries:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/kubeflow-pipelines-0.1.0/kubeflow-pipelines-0.1.0.tgz
     version: 0.1.0
   kubernetes-resource-manager:
+  - apiVersion: v2
+    appVersion: 1.2.3
+    created: "2025-07-14T12:48:20.065056079Z"
+    description: A manager for resources in Kubernetes. The tool allows for monitoring
+      and managing some of the standard Kubernetes resources (PersistentVolumeClaim,
+      Services, Deployments, Jobs, and Secrets) as well as for managing a selection
+      of Custom Resources.
+    digest: db89b206f83909f92e8ee4274eebd798629daed29053af1c90f640b5fec69465
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/kubernetes-resource-manager
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: kubernetes-resource-manager
+    sources:
+    - https://github.com/scc-digitalhub/dremio-rest-server-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/kubernetes-resource-manager-0.2.12/kubernetes-resource-manager-0.2.12.tgz
+    version: 0.2.12
   - apiVersion: v2
     appVersion: 1.2.3
     created: "2025-07-11T13:11:12.965857544Z"
@@ -21375,6 +21559,25 @@ entries:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/kubernetes-resource-manager-0.1.10/kubernetes-resource-manager-0.1.10.tgz
     version: 0.1.10
   minio-operator:
+  - apiVersion: v2
+    appVersion: 1.0.1
+    created: "2025-07-14T12:48:20.257190999Z"
+    description: A Kubernetes operator to handle instances of buckets, users and policies
+      on MinIO.
+    digest: 560b9ebcace2aff00f15b396923deba94cbfcb3d721b0edaf6a5afa5d4f00762
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/minio-operator
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: minio-operator
+    sources:
+    - https://github.com/scc-digitalhub/minio-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/minio-operator-0.1.9/minio-operator-0.1.9.tgz
+    version: 0.1.9
   - apiVersion: v2
     appVersion: 1.0.1
     created: "2025-07-11T13:11:13.202745207Z"
@@ -23346,6 +23549,24 @@ entries:
   postgrest-operator:
   - apiVersion: v2
     appVersion: 2.0.5
+    created: "2025-07-14T12:48:20.44005319Z"
+    description: A Kubernetes operator to start instances of PostgREST.
+    digest: 7e2184411c3309e27724927aab19336f131a6f297528a924dbdacdb54fa6da5e
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/postgrest-operator
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: postgrest-operator
+    sources:
+    - https://github.com/scc-digitalhub/postgrest-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.10/postgrest-operator-0.1.10.tgz
+    version: 0.1.10
+  - apiVersion: v2
+    appVersion: 2.0.5
     created: "2025-06-24T08:58:31.861677701Z"
     description: A Kubernetes operator to start instances of PostgREST.
     digest: fbbba1459e0fbc933456fad466773da92d78e07669007d2dfb6d85ce48b409be
@@ -23492,4 +23713,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-14T12:40:38.86213907Z"
+generated: "2025-07-14T12:48:20.441488474Z"
