@@ -9,7 +9,7 @@ curl "http://${DREMIO_URL}:9047/apiv2/bootstrap/firstuser" -X PUT \
       -d '{
          "userName": "'"$DREMIO_CODER_EMAIL"'",
          "password": "'"$ADMIN_PASSWORD"'",
-         "firstName": "digitalhub",
-         "lastName": "digitalhub",
+         "firstName": "platform",
+         "lastName": "platform",
          "email": "'"$DREMIO_CODER_EMAIL"'"
        }'
