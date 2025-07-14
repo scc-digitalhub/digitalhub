@@ -12,7 +12,7 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.13.0-beta2"
+version: "0.13.0-beta3"
 appVersion: "0.13.0"
 dependencies:
 - name: argo-workflows
@@ -20,7 +20,7 @@ dependencies:
   repository: https://argoproj.github.io/argo-helm
   condition: argo-workflows.enabled
 - name: apigw-operator
-  version: "0.1.20"
+  version: "0.1.21"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: apigw-operator.enabled
 - name: coder
@@ -28,15 +28,15 @@ dependencies:
   repository: https://helm.coder.com/v2
   condition: coder.enabled
 - name: core
-  version: "0.3.19"
+  version: "0.3.20"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: kubernetes-resource-manager
-  version: "0.2.11"
+  version: "0.2.12"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: kubernetes-resource-manager.enabled
 - name: dremio-rest-server-operator
-  version: "0.1.7"
+  version: "0.1.8"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: dremio-rest-server-operator.enabled
 - name: docker-registry
@@ -58,7 +58,7 @@ dependencies:
   tags:
     - operator
 - name: postgrest-operator
-  version: "0.1.9"
+  version: "0.1.10"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: postgrest-operator.enabled
 - name: template-controller
@@ -78,7 +78,7 @@ dependencies:
   repository: https://solr.apache.org/charts
   condition: solr.enabled
 - name: minio-operator
-  version: "0.1.8"
+  version: "0.1.9"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: minio-operator.enabled
 - name: kubeai
