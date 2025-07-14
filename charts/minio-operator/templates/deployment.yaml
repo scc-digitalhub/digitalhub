@@ -88,20 +88,20 @@ spec:
               valueFrom:
                 secretKeyRef:
                 {{- if .Values.minio.minioCredsExistingSecret.username.secretName }}
-                  name: {{ .Values.minio.minioCredsExistingSecret.username.secretName}}
-                  key: {{ .Values.minio.minioCredsExistingSecret.username.secretKey}}
+                  name: {{ .Values.minio.minioCredsExistingSecret.username.secretName }}
+                  key: {{ .Values.minio.minioCredsExistingSecret.username.secretKey }}
                 {{- else }}
-                  name: {{ .Values.global.s3.rootUserSecret}}
+                  name: {{ .Values.global.s3.rootUserSecret }}
                   key: rootUser
                 {{- end }}
             - name: MINIO_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
                 {{- if .Values.minio.minioCredsExistingSecret.password.secretName }}
-                  name: {{ .Values.minio.minioCredsExistingSecret.password.secretName}}
-                  key: {{ .Values.minio.minioCredsExistingSecret.password.secretKey}}
+                  name: {{ .Values.minio.minioCredsExistingSecret.password.secretName }}
+                  key: {{ .Values.minio.minioCredsExistingSecret.password.secretKey }}
                 {{- else }}
-                  name: {{ .Values.global.s3.rootUserSecret}}
+                  name: {{ .Values.global.s3.rootUserSecret }}
                   key: rootPassword
                 {{- end }}
           envFrom:

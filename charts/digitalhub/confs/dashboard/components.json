@@ -73,7 +73,7 @@
     "link": "http://{{ .service.name }}:{{ .service.port }}"
   {{- end }}
   },
-{{- end}}
+{{- end }}
 {{- end }}
   {
     "slug": "core",

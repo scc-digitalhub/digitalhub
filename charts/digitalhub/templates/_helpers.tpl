@@ -74,7 +74,7 @@ Create registry auth values
 Calculate dashboard oidc configuration endpoint
 */}}
 {{- define "digitalhub.oidcDashboardEndpoint" -}}
-{{- if .Values.dashboard.ingress.enabled}}
+{{- if .Values.dashboard.ingress.enabled }}
 {{- with (index .Values.dashboard.ingress.hosts 0) }}
 {{- .host -}}
 {{- end }}
@@ -139,7 +139,7 @@ Set packages versions for code-toolbox and tests
 Variables used in the creation and upgrade of Coder templates
 */}}
 {{- define "digitalhub.coderTemplateVariables" -}}
-{{- $variables := list}}
+{{- $variables := list }}
 {{- $root := index . 0 -}}
 {{- $template := index . 1  -}}
 {{- if $template.extraVars -}}
@@ -168,7 +168,7 @@ Variables used in the creation and upgrade of Coder templates
 {{- if or (eq $template.name "dremio") (eq $template.name "sqlpad")}}
   {{- $variables = append $variables (printf "postgresql_db_name=%s" $template.postgres.database ) }}
   {{- $variables = append $variables (printf "postgresql_hostname=%s" $template.postgres.hostname ) }}
-{{- if and $template.postgres.ownerCredsSecret.secretName $template.postgres.ownerCredsSecret.usernameKey}}
+{{- if and $template.postgres.ownerCredsSecret.secretName $template.postgres.ownerCredsSecret.usernameKey }}
   {{- $variables = append $variables (printf "postgresql_creds_secret=%s" $template.postgres.ownerCredsSecret.secretName ) }}
   {{- $variables = append $variables (printf "postgresql_username_key=%s" $template.postgres.ownerCredsSecret.usernameKey ) }}
   {{- $variables = append $variables (printf "postgresql_password_key=%s" $template.postgres.ownerCredsSecret.passwordKey ) }}
@@ -181,7 +181,7 @@ Variables used in the creation and upgrade of Coder templates
 {{- if or (eq $template.name "jupyter") (eq $template.name "code-toolbox-experimental")}}
   {{- $variables = append $variables (printf "privileged=%v" $template.privileged ) }}
   {{- $variables = append $variables (printf "stsenabled=%v" $root.Values.core.sts.enabled ) }}
-{{- if and $root.Values.core.coreAuthCreds.existingSecret.secretName $root.Values.core.coreAuthCreds.existingSecret.clientIdKey $root.Values.core.coreAuthCreds.existingSecret.clientSecretKey}}
+{{- if and $root.Values.core.coreAuthCreds.existingSecret.secretName $root.Values.core.coreAuthCreds.existingSecret.clientIdKey $root.Values.core.coreAuthCreds.existingSecret.clientSecretKey }}
   {{- $variables = append $variables (printf "core_auth_creds_secret=%v" $root.Values.core.coreAuthCreds.existingSecret.secretName ) }}
   {{- $variables = append $variables (printf "client_id_key=%v" $root.Values.core.coreAuthCreds.existingSecret.clientIdKey ) }}
   {{- $variables = append $variables (printf "client_secret_key=%v" $root.Values.core.coreAuthCreds.existingSecret.clientSecretKey ) }}

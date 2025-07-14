@@ -86,7 +86,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.sts.client.existingSecret.name }}
-                  key: {{ .Values.sts.client.existingSecret.clientSecretKey}}
+                  key: {{ .Values.sts.client.existingSecret.clientSecretKey }}
               {{- else }}
               value: {{ .Values.sts.client.clientSecret }}
               {{- end }}
@@ -155,7 +155,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.authentication.openId.externalSecret.name }}
                   key: {{ .Values.authentication.openId.externalSecret.key }}
-              {{- else}}
+              {{- else }}
               value: {{ .Values.authentication.openId.oidcClientId }}
               {{- end }}
             {{- end }}

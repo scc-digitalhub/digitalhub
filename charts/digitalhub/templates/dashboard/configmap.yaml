@@ -8,7 +8,7 @@ metadata:
   name: dashboard-components-json
 data:
   components.json: |-
-{{ tpl (.Files.Get "confs/dashboard/components.json") . | indent 4}}
+{{ tpl (.Files.Get "confs/dashboard/components.json") . | indent 4 }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -16,7 +16,7 @@ metadata:
   name: dashboard-nginx-config
 data:
   nginx.conf: |-
-{{ tpl (.Files.Get "confs/dashboard/nginx.conf") . | indent 4}}
+{{ tpl (.Files.Get "confs/dashboard/nginx.conf") . | indent 4 }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -24,4 +24,4 @@ metadata:
   name: dashboard-monitoring-json
 data:
   monitoring.json: |-
-{{ tpl (.Files.Get "confs/dashboard/monitoring.json") . | indent 4}}
+{{ tpl (.Files.Get "confs/dashboard/monitoring.json") . | indent 4 }}

@@ -70,7 +70,7 @@ Namespace function
 {{- if .Values.namespaceValues.namespace }}
 {{- .Values.namespaceValues.namespace }}
 {{- else }}
-{{- .Release.Namespace}}
+{{- .Release.Namespace }}
 {{- end }}
 {{- end }}
 {{- end }}

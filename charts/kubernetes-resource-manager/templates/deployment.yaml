@@ -58,7 +58,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.oidc.audience.externalSecret.name }}
                   key: {{ .Values.oidc.audience.externalSecret.key }}
-              {{- else}}
+              {{- else }}
               value: {{ .Values.oidc.audience.clientId }}
               {{- end }}
           {{- end }}

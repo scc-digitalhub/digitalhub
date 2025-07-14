@@ -57,7 +57,7 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation,hook-failed
     "helm.sh/hook-weight": "-2"
   labels:
-    {{- include "digitalhub.labels" .  | nindent 4}}
+    {{- include "digitalhub.labels" .  | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -91,7 +91,7 @@ spec:
           command: ["/bin/sh"]
           args: ["-c", "kubectl -n {{ .Release.Namespace }} delete solrclouds --all && sleep 2m"]
           securityContext:
-            {{- toYaml .Values.global.securityContext | nindent 12}}
+            {{- toYaml .Values.global.securityContext | nindent 12 }}
             readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
       restartPolicy: OnFailure
 ---
@@ -120,7 +120,7 @@ spec:
           command: ["/bin/sh"]
           args: ["-c", "kubectl -n {{ .Release.Namespace }} delete postgresql --all && sleep 1m"]
           securityContext:
-            {{- toYaml .Values.global.securityContext | nindent 12}}
+            {{- toYaml .Values.global.securityContext | nindent 12 }}
             readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
       restartPolicy: OnFailure
 ---
@@ -149,7 +149,7 @@ spec:
           command: ["/bin/sh"]
           args: ["-c", "kubectl -n {{ .Release.Namespace }} delete statefulsets,deploy,svc,cm -l app.kubernetes.io/part-of=coder && kubectl -n {{ .Release.Namespace }} delete pvc -l app.kubernetes.io/part-of=coder && kubectl -n {{ .Release.Namespace }} delete ingresses -l app.kubernetes.io/part-of=coder && sleep 1m"]
           securityContext:
-            {{- toYaml .Values.global.securityContext | nindent 12}}
+            {{- toYaml .Values.global.securityContext | nindent 12 }}
             readOnlyRootFilesystem: {{ .Values.jobs.delete.securityContext.readOnlyRootFilesystem }}
       restartPolicy: OnFailure
 ---
@@ -184,7 +184,7 @@ spec:
           command: ["/bin/sh"]
           args: ["-c", "{{ range $resource }}kubectl -n {{ $.Release.Namespace }} delete --all {{ . }} && {{ end }} sleep 1m"]
           securityContext:
-            {{- toYaml .Values.global.securityContext | nindent 12}}
+            {{- toYaml .Values.global.securityContext | nindent 12 }}
       restartPolicy: OnFailure
 {{- end }}
 {{- end }}

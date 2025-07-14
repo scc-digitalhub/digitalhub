@@ -119,7 +119,7 @@ Namespace function
 {{- if .Values.namespaceValues.namespace }}
 {{- .Values.namespaceValues.namespace }}
 {{- else }}
-{{- .Release.Namespace}}
+{{- .Release.Namespace }}
 {{- end }}
 {{- else }}
 {{- .Values.namespaceValues.defaultValue }}
