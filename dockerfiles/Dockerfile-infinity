@@ -1,0 +1,5 @@
+FROM michaelf34/infinity:0.0.76
+RUN groupadd -g 65500 infinity && \
+    useradd -m -u 65500 -g infinity infinity
+RUN mkdir -p /app/.cache && chown infinity:infinity -R /app/.cache
+USER 65500

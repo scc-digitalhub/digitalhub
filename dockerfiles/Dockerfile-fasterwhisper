@@ -1,0 +1,2 @@
+FROM ghcr.io/speaches-ai/speaches:0.8.2-cuda
+USER 1000

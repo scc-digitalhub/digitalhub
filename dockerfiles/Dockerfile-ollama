@@ -1,4 +1,4 @@
 FROM ollama/ollama:0.9.6
-RUN groupadd -g 65500 vllm && \
-    useradd -m -u 65500 -g vllm vllm
+RUN groupadd -g 65500 ollama && \
+    useradd -m -u 65500 -g ollama ollama
 USER 65500
