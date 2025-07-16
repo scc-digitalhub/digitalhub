@@ -232,9 +232,6 @@ initImage:
     #  initImage.builderTool.tag -- Core builder tag
     tag: b95c095f
 
-#  kanikoArgs --
-kanikoArgs: ""
-
 #  keystore --
 keystore:
   #  keystore.existingSecret -- Reference to the Keystore secret of Core

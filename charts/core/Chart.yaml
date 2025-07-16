@@ -7,7 +7,7 @@ name: core
 description: DigitalHub Core is part of the DigitalHub platform, and depends on external components to support the complete set of functionalities.
 home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/core"
 type: application
-version: 0.3.21
+version: 0.3.22
 appVersion: "0.13.0"
 maintainers:
   - name: ffais
