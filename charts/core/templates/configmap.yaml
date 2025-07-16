@@ -45,11 +45,24 @@ data:
   DH_AUTH_JWT_USERNAME: {{ .Values.authentication.openId.jwtUsername }}
 {{- end }}
 {{- if .Values.global.registry.url }}
-  DOCKER_REGISTRY: {{ .Values.global.registry.url }}
-  KANIKO_IMAGE_PREFIX: {{ .Values.registry.kaniko.imagePrefix | default .Release.Namespace }}
-  DOCKER_REGISTRY_SECRET: {{ .Values.global.registry.secretName }}
+  IMAGE_REGISTRY: {{ .Values.global.registry.url }}
+  BUILDER_IMAGE_PREFIX: {{ .Values.registry.kaniko.imagePrefix | default .Release.Namespace }}
+  IMAGE_REGISTRY_SECRET: {{ .Values.global.registry.secretName }}
+  {{- if eq .Values.builder.framework.name "kaniko" }}
+  BUILDER_FRAMEWORK: {{ .Values.builder.framework.name }}
+  KANIKO_IMAGE: {{ .Values.builder.framework.image }}
+  KANIKO_SECRET: {{ .Values.builder.framework.secret }}
+  KANIKO_ARGS: {{ .Values.kanikobuilder.framework.args | quote }}
+  {{- else if eq .Values.builder.framework.name "buildkit" -}}
+  BUILDER_FRAMEWORK: {{ .Values.builder.framework.name }}
+  BUILDKIT_IMAGE: {{ .Values.builder.framework.image }}
+  BUILDKIT_SECRET: {{ .Values.builder.framework.secret }}
+  BUILDKIT_COMMAND: {{ .Values.builder.framework.command }}
+  BUILDKIT_ARGS: {{ .Values.builder.framework.args }}
+  BUILDKIT_CLIENT_SECRET_NAME: {{ index .Values "builder" "framework" "client-secret" "name" }}
+  BUILDKIT_CLIENT_SECRET_MOUNT_PATH: {{ index .Values "builder" "framework" "client-secret" "mount-path" }}
+  {{- end }}
 {{- end }}
-  KANIKO_ARGS: {{ .Values.kanikoArgs | quote }}
   DH_CORS_ORIGINS: {{ .Values.corsOrigin | quote }}
 {{- if and .Values.keystore.existingSecret.secretName .Values.keystore.keystorePath }}
   JWT_KEYSTORE_PATH: "{{ .Values.keystore.keystorePath }}/{{ .Values.keystore.existingSecret.keyName }}"

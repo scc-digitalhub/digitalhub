@@ -118,6 +118,28 @@ autoscaling:
   #  autoscaling.targetCPUUtilizationPercentage -- Set CPU utilization percentage that trigger the autoscaling
   targetCPUUtilizationPercentage: 80
 
+#  builder -- Configure OCI image builder
+builder:
+  framework:
+    #  builder.framework.args -- Override/append arguments defined in the builder image
+    args: ""
+    #  builder.framework.client-secret -- Specify mTLS client secret used by buildkit cli to authenticate to a remote buildkit deamon
+    client-secret:
+      #  builder.framework.client-secret.mount-path: -- Mount path where the certificates are mounted inside the container
+      mount-path: ""
+      #  builder.framework.client-secret.name -- Client certificate secret name
+      name: ""
+    #  builder.framework.command -- Override command defined in the builder image
+    command: ""
+    #  builder.framework.image -- Set builder image
+    image: gcr.io/kaniko-project/executor:latest
+    #  builder.framework.image-prefix -- Sets the prefix that will be added to the image name
+    image-prefix: ""
+    #  builder.framework.name -- Configure which builder use to build OCI image (kaniko or buildkit)
+    name: kaniko
+    #  builder.framework.secret -- Specify the name of the secret that contains the registry credentials
+    secret: ""
+
 #  commonCredsSecret -- A secret that should be used when not using STS. It should contain the following populated keys:
 #  DB_USERNAME: Username of the Postgres main db owner
 #  DB_PASSWORD: Password of the Postgres main db owner
