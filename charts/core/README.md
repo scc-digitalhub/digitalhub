@@ -1872,7 +1872,7 @@ object
 <summary>+Expand</summary>
 <pre lang="json">
 {
-  "indexPath": false,
+  "indexPath": "/tmp/lucene/",
   "reindex": "never"
 }
 </pre>
@@ -1883,13 +1883,13 @@ object
 		<tr>
 			<td id="lucene--indexPath"><a href="./values.yaml#L260">lucene.indexPath</a></td>
 			<td>
-bool
+string
 </td>
 			<td>Set the path for Lucene and enables it</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-false
+"/tmp/lucene/"
 </pre>
 </div>
 			</td>
