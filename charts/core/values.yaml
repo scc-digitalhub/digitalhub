@@ -257,7 +257,7 @@ kubeai:
 #  lucene --
 lucene:
   #  lucene.indexPath -- Set the path for Lucene and enables it
-  indexPath: false
+  indexPath: "/tmp/lucene/"
   #  lucene.reindex -- Reindex of Lucene
   reindex: never
 
