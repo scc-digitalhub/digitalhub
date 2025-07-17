@@ -52,7 +52,7 @@ data:
   BUILDER_FRAMEWORK: {{ .Values.builder.framework.name }}
   KANIKO_IMAGE: {{ .Values.builder.framework.image }}
   KANIKO_SECRET: {{ .Values.builder.framework.secret }}
-  KANIKO_ARGS: {{ .Values.kanikobuilder.framework.args | quote }}
+  KANIKO_ARGS: {{ .Values.builder.framework.args | quote }}
   {{- else if eq .Values.builder.framework.name "buildkit" }}
   BUILDER_FRAMEWORK: {{ .Values.builder.framework.name }}
   BUILDKIT_IMAGE: {{ .Values.builder.framework.image }}
