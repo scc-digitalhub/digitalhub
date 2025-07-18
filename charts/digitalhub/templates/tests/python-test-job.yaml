@@ -26,8 +26,15 @@ spec:
               mountPath: /home/git
               readOnly: false
           securityContext:
-            readOnlyRootFilesystem: false
-            runAsUser: 0
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
+            runAsUser: 1000
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
       containers:
         - name: python
           image: "{{ $.Values.platformPackages.image | default "python" }}:{{ $.Values.platformPackages.tag | default "3.10-slim" }}"
@@ -42,6 +49,9 @@ spec:
               subPath: "init-python-script.sh"
             - name: git-volume
               mountPath: /home/git
+              readOnly: false
+            - name: local
+              mountPath: /.local
               readOnly: false
           env:
             - name: TEST_SCRIPT
@@ -95,8 +105,15 @@ spec:
           - configMapRef:
               name: digitalhub-common-env
           securityContext:
-            readOnlyRootFilesystem: false
-            runAsUser: 0
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
+            runAsUser: 1000
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
       volumes:
         - name: test-volume
           configMap:
@@ -106,10 +123,15 @@ spec:
             name: {{ include "digitalhub.fullname" $ }}-python-script-test
         - name: git-volume
           emptyDir: {}
+        - name: local
+          emptyDir: {}
       securityContext:
-        runAsUser: 0
-        fsGroup: 0
-        runAsGroup: 0
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       restartPolicy: Never
   backoffLimit: 0
 ---
