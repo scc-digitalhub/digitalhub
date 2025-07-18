@@ -324,13 +324,13 @@ resources:
     #  resources.limits.cpu -- Max cpu request
     cpu: 1000m
     #  resources.limits.memory -- Max memory request
-    memory: 512Mi
+    memory: 1024Mi
   #  resources.requests --
   requests:
     #  resources.requests.cpu -- Min cpu request
     cpu: 200m
     #  resources.requests.memory -- Max cpu request
-    memory: 256Mi
+    memory: 512Mi
 
 #  runtime --
 runtime:

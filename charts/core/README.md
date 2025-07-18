@@ -2327,11 +2327,11 @@ object
 {
   "limits": {
     "cpu": "1000m",
-    "memory": "512Mi"
+    "memory": "1024Mi"
   },
   "requests": {
     "cpu": "200m",
-    "memory": "256Mi"
+    "memory": "512Mi"
   }
 }
 </pre>
@@ -2352,7 +2352,7 @@ object
 <pre lang="json">
 {
   "cpu": "1000m",
-  "memory": "512Mi"
+  "memory": "1024Mi"
 }
 </pre>
 </details>
@@ -2382,7 +2382,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"512Mi"
+"1024Mi"
 </pre>
 </div>
 			</td>
@@ -2400,7 +2400,7 @@ object
 <pre lang="json">
 {
   "cpu": "200m",
-  "memory": "256Mi"
+  "memory": "512Mi"
 }
 </pre>
 </details>
@@ -2430,7 +2430,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"256Mi"
+"512Mi"
 </pre>
 </div>
 			</td>
