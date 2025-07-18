@@ -51,16 +51,16 @@ data:
   {{- if eq .Values.builder.framework.name "kaniko" }}
   BUILDER_FRAMEWORK: {{ .Values.builder.framework.name }}
   KANIKO_IMAGE: {{ .Values.builder.framework.image }}
-  KANIKO_SECRET: {{ .Values.builder.framework.secret }}
-  KANIKO_ARGS: {{ .Values.builder.framework.args | quote }}
+  {{ if .Values.builder.framework.secret -}}KANIKO_SECRET: {{ .Values.builder.framework.secret }}{{- end }}
+  {{ if .Values.builder.framework.args -}}KANIKO_ARGS: {{ join "," .Values.builder.framework.args | quote }}{{- end }}
   {{- else if eq .Values.builder.framework.name "buildkit" }}
   BUILDER_FRAMEWORK: {{ .Values.builder.framework.name }}
   BUILDKIT_IMAGE: {{ .Values.builder.framework.image }}
-  BUILDKIT_SECRET: {{ .Values.builder.framework.secret }}
+  {{- if .Values.builder.framework.secret }}BUILDKIT_SECRET: {{ .Values.builder.framework.secret }}{{ end }}
   BUILDKIT_COMMAND: {{ .Values.builder.framework.command }}
-  BUILDKIT_ARGS: {{ .Values.builder.framework.args }}
-  BUILDKIT_CLIENT_SECRET_NAME: {{ index .Values "builder" "framework" "client-secret" "name" }}
-  BUILDKIT_CLIENT_SECRET_MOUNT_PATH: {{ index .Values "builder" "framework" "client-secret" "mount-path" }}
+  BUILDKIT_ARGS: {{ join "," .Values.builder.framework.args | quote }}
+  {{ if index .Values "builder" "framework" "client-secret" "name" -}}BUILDKIT_CLIENT_SECRET_NAME: {{ index .Values "builder" "framework" "client-secret" "name" }}{{- end }}
+  {{ if index .Values "builder" "framework" "client-secret" "mount-path" -}}BUILDKIT_CLIENT_SECRET_MOUNT_PATH: {{ index .Values "builder" "framework" "client-secret" "mount-path" }}{{- end }}
   {{- end }}
 {{- end }}
   DH_CORS_ORIGINS: {{ .Values.corsOrigin | quote }}
