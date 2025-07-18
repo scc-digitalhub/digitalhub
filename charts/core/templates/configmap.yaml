@@ -121,8 +121,6 @@ data:
   MINIO_CREDENTIALS_REGION: {{ .Values.s3.region }}
   {{- end }}
 {{- end }}
-{{- if not .Values.solr.enabled }}
-  LUCENE_INDEX_PATH: {{ .Values.lucene.indexPath | quote }}
+  LUCENE_INDEX_PATH: {{ if .Values.solr.enabled }}"false"{{ else }}{{ .Values.lucene.indexPath | quote }}{{ end }}
   LUCENE_REINDEX: {{ .Values.lucene.reindex | quote }}
-{{- end }}
   K8S_RESOURCE_PVC_STORAGE_CLASS: {{ .Values.defaultStorageClass | quote }}
