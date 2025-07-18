@@ -480,6 +480,10 @@ core:
     ownerSecret: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
     #  core.databaseProvider.port -- Port of the main database of the platform
     port: "5432"
+  #  core.image -- Core image configuration
+  image:
+    #  core.image.tag -- Image tag
+    tag: "0.13.0-beta5"
   #  core.kanikoArgs --
   kanikoArgs: ""
   #  core.kubeai --
@@ -1267,7 +1271,7 @@ open-webui:
   #  open-webui.service -- Service configuration
   service:
     #  open-webui.service.nodePort -- Service nodePort
-    nodePort: "30220"
+    nodePort: "30210"
     #  open-webui.service.type -- Service type
     type: *serviceType
 
