@@ -26,11 +26,11 @@ spec:
             - name: CODER_URL
               value: "http://coder"
             - name: CODER_FIRST_USER_USERNAME
-              {{- if and .Values.coder.adminUserExistingSecret.secretName .Values.coder.adminUserExistingSecret.usernameKey }}
+              {{- if and .Values.coder.existingSecrets.adminUserExistingSecret.secretName .Values.coder.existingSecrets.adminUserExistingSecret.usernameKey }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.coder.adminUserExistingSecret.secretName }}
-                  key: {{ .Values.coder.adminUserExistingSecret.usernameKey }}
+                  name: {{ .Values.coder.existingSecrets.adminUserExistingSecret.secretName }}
+                  key: {{ .Values.coder.existingSecrets.adminUserExistingSecret.usernameKey }}
               {{- else }}
               valueFrom:
                 secretKeyRef:
@@ -38,11 +38,11 @@ spec:
                   key: username
               {{- end }}
             - name: CODER_FIRST_USER_PASSWORD
-              {{- if and .Values.coder.adminUserExistingSecret.secretName .Values.coder.adminUserExistingSecret.passwordKey }}
+              {{- if and .Values.coder.existingSecrets.adminUserExistingSecret.secretName .Values.coder.existingSecrets.adminUserExistingSecret.passwordKey }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.coder.adminUserExistingSecret.secretName }}
-                  key: {{ .Values.coder.adminUserExistingSecret.passwordKey }}
+                  name: {{ .Values.coder.existingSecrets.adminUserExistingSecret.secretName }}
+                  key: {{ .Values.coder.existingSecrets.adminUserExistingSecret.passwordKey }}
               {{- else }}
               valueFrom:
                 secretKeyRef:
@@ -50,11 +50,11 @@ spec:
                   key: password
               {{- end }}
             - name: CODER_FIRST_USER_EMAIL
-              {{- if and .Values.coder.adminUserExistingSecret.secretName .Values.coder.adminUserExistingSecret.emailKey }}
+              {{- if and .Values.coder.existingSecrets.adminUserExistingSecret.secretName .Values.coder.existingSecrets.adminUserExistingSecret.emailKey }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.coder.adminUserExistingSecret.secretName }}
-                  key: {{ .Values.coder.adminUserExistingSecret.emailKey }}
+                  name: {{ .Values.coder.existingSecrets.adminUserExistingSecret.secretName }}
+                  key: {{ .Values.coder.existingSecrets.adminUserExistingSecret.emailKey }}
               {{- else }}
               valueFrom:
                 secretKeyRef:

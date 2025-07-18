@@ -238,16 +238,6 @@ argo-workflows:
 coder:
   #  coder.enabled -- Enable/Disable Coder
   enabled: true
-  #  coder.adminUserExistingSecret -- Existing secret containing Coder's admin username, password and email
-  adminUserExistingSecret:
-    #  coder.adminUserExistingSecret.emailKey -- Email key
-    emailKey: ""
-    #  coder.adminUserExistingSecret.passwordKey -- Password key
-    passwordKey: ""
-    #  coder.adminUserExistingSecret.secretName -- Name of the secret
-    secretName: ""
-    #  coder.adminUserExistingSecret.usernameKey -- Username key
-    usernameKey: ""
   #  coder.coder --
   coder:
     #  coder.coder.env -- Additional environment variables for Coder
@@ -255,23 +245,14 @@ coder:
       - name: CODER_OAUTH2_GITHUB_DEFAULT_PROVIDER_ENABLE
         value: "false"
       - name: CODER_PG_CONNECTION_URL
-        value: postgres://$(CODER_PG_USERNAME):$(CODER_PG_PASSWORD)@coder-postgres-cluster:5432/coder
-      - name: CODER_PG_PASSWORD
         valueFrom:
-          #  coder.coder.env.valueFrom.secretKeyRef -- Secret containing username and password of the Coder database owner
+          #  coder.coder.env.valueFrom.secretKeyRef -- Secret containing the connection url of the Coder postgres database.
           secretKeyRef:
-            #  coder.coder.env.valueFrom.secretKeyRef.key -- Key for the password
-            key: password
+            #  coder.coder.env.valueFrom.secretKeyRef.key -- Key for the url
+            #  The url should be in the format postgres://coderuser:coderpassword@coderhost:coderport/coderdb
+            key: url
             #  coder.coder.env.valueFrom.secretKeyRef.name -- Name of the secret
-            name: coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do
-      - name: CODER_PG_USERNAME
-        valueFrom:
-          #  coder.coder.env.valueFrom.secretKeyRef -- Secret containing username and password of the Coder database owner
-          secretKeyRef:
-            #  coder.coder.env.valueFrom.secretKeyRef.key -- Key for the username
-            key: username
-            #  coder.coder.env.valueFrom.secretKeyRef.name -- Name of the secret
-            name: coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do
+            name: coder-db-url
       - name: CODER_TELEMETRY
         value: "false"
     #  coder.coder.image --
@@ -290,6 +271,23 @@ coder:
       type: *serviceType
   #  coder.email -- Coder admin email
   email: test@digitalhub.test
+  #  coder.existingSecrets -- Coder existing secrets configuration
+  existingSecrets:
+    #  coder.existingSecrets.adminUserExistingSecret -- Existing secret containing Coder's admin username, password and email
+    adminUserExistingSecret:
+      #  coder.existingSecrets.adminUserExistingSecret.emailKey -- Email key
+      emailKey: ""
+      #  coder.existingSecrets.adminUserExistingSecret.passwordKey -- Password key
+      passwordKey: ""
+      #  coder.existingSecrets.adminUserExistingSecret.secretName -- Name of the secret
+      secretName: ""
+      #  coder.existingSecrets.adminUserExistingSecret.usernameKey -- Username key
+      usernameKey: ""
+    #  coder.existingSecrets.existingPostgresConnectionUrlSecret -- Existing postgres connection secret configuration
+    existingPostgresConnectionUrlSecret:
+      #  coder.existingSecrets.existingPostgresConnectionUrlSecret.enabled -- Set this to true if you have an existing secret with the connection url of the Coder postgres database.
+      #  To configure the secret, configure the variable CODER_PG_CONNECTION_URL in coder.coder.env
+      enabled: false
   #  coder.password -- Coder admin password
   password: Test12456@!
   #  coder.securityContext -- Coder [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)

@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+{{ if not .Values.coder.existingSecrets.existingPostgresConnectionUrlSecret.enabled }}
+{{- if ( index .Values "template-controller" "objectTemplate" "enabled" ) }}
+apiVersion: templates.kluctl.io/v1alpha1
+kind: ObjectTemplate
+metadata:
+  name: {{ include "digitalhub.fullname" . }}-coder-pg-url-transformer
+spec:
+  serviceAccountName: secret-transformer
+  prune: true
+  matrix:
+    - name: postgressecret
+      object:
+        ref:
+          apiVersion: v1
+          kind: Secret
+          name: coder.coder-postgres-cluster.credentials.postgresql.acid.zalan.do
+  templates:
+  - object:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: "coder-db-url"
+      stringData:
+        url: "postgresql://{{ "{{" }} matrix.postgressecret.data.username | b64decode {{ "}}" }}:{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}@coder-postgres-cluster:5432/coder"
+{{- end }}
+{{- end }}
