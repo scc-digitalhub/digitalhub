@@ -1910,6 +1910,99 @@ entries:
   digitalhub:
   - apiVersion: v2
     appVersion: 0.13.0
+    created: "2025-07-21T08:40:00.670648549Z"
+    dependencies:
+    - condition: argo-workflows.enabled
+      name: argo-workflows
+      repository: https://argoproj.github.io/argo-helm
+      version: 0.45.1
+    - condition: apigw-operator.enabled
+      name: apigw-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.21
+    - condition: coder.enabled
+      name: coder
+      repository: https://helm.coder.com/v2
+      version: 2.21.3
+    - condition: core.enabled
+      name: core
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.3.24
+    - condition: kubernetes-resource-manager.enabled
+      name: kubernetes-resource-manager
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.2.12
+    - condition: dremio-rest-server-operator.enabled
+      name: dremio-rest-server-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.8
+    - condition: docker-registry.enabled
+      name: docker-registry
+      repository: https://helm.twun.io
+      version: 2.2.3
+    - condition: ext-postgres-operator.enabled
+      name: ext-postgres-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 1.2.7
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.min.io/
+      version: 5.4.0
+    - condition: postgres-operator.enabled
+      name: postgres-operator
+      repository: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+      tags:
+      - operator
+      version: 1.11.0
+    - condition: postgrest-operator.enabled
+      name: postgrest-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.10
+    - condition: template-controller.enabled
+      name: template-controller
+      repository: https://kluctl.github.io/charts
+      tags:
+      - operator
+      version: 0.2.5
+    - condition: solr-operator.enabled
+      name: solr-operator
+      repository: https://solr.apache.org/charts
+      tags:
+      - operator
+      version: 0.9.0
+    - condition: solr.enabled
+      name: solr
+      repository: https://solr.apache.org/charts
+      version: 0.9.0
+    - condition: minio-operator.enabled
+      name: minio-operator
+      repository: https://scc-digitalhub.github.io/digitalhub/
+      version: 0.1.9
+    - condition: kubeai.enabled
+      name: kubeai
+      repository: https://ffais.github.io/kubeai/
+      version: 0.21.4
+    - condition: open-webui.enabled
+      name: open-webui
+      repository: https://helm.openwebui.com/
+      version: 6.22.0
+    description: The Digital Hub is an open-source platform for interoperability of
+      data and services, built by integrating several open-source projects to manage,
+      elaborate, expose and serve data through modern standards.
+    digest: e93f4eb9c62ef9897aeffed70e6a78db744f1d28f3fa51f49cf1955ad33d917a
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/digitalhub
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: digitalhub
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/digitalhub-0.13.0-beta8/digitalhub-0.13.0-beta8.tgz
+    version: 0.13.0-beta8
+  - apiVersion: v2
+    appVersion: 0.13.0
     created: "2025-07-21T08:06:52.715976549Z"
     dependencies:
     - condition: argo-workflows.enabled
@@ -25091,4 +25184,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-21T08:06:52.717018919Z"
+generated: "2025-07-21T08:40:00.671922331Z"
