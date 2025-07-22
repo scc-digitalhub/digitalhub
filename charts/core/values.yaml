@@ -29,6 +29,10 @@ additionalConfig:
     enableLogs: true
     #  additionalConfig.debug.enableMetrics -- Enable/disable metrics
     enableMetrics: false
+  #  additionalConfig.image --
+  image:
+    # additionalConfig.image.pullPolicy -- Configure pull image pull policy for workload scheduled by core
+    pullPolicy: IfNotPresent
   #  additionalConfig.job -- Jobs configuration
   job:
     #  additionalConfig.job.deadline -- Set deadline for jobs
@@ -342,7 +346,7 @@ runtime:
     tag: 0.12.0
   hera:
     #  runtime.hera.image -- hera wrapper repository
-    image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-hera/wrapper-hera:latest
+    image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-hera/wrapper-hera
     #  runtime.hera.tag -- hera wrapper tag
     tag: 0.13.0
   #  runtime.huggingFace --

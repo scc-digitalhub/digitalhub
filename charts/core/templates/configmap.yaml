@@ -98,6 +98,7 @@ data:
   K8S_SERVICE_TYPE: {{ .Values.additionalConfig.service.type | quote }}
   K8S_JOB_DEADLINE: {{ .Values.additionalConfig.job.deadline | quote }}
   K8S_JOB_SUSPEND: {{ .Values.additionalConfig.job.jobSuspend | quote }}
+  K8S_IMAGE_PULL_POLICY: {{ .Values.additionalConfig.image.pullPolicy | quote }}
 {{- if .Values.kubeai.enabled }}
   RUNTIME_KUBEAI_ENDPOINT: {{ printf "%s%s:%s" "http://" .Values.kubeai.serviceName .Values.kubeai.port | quote }}
 {{- end }}
