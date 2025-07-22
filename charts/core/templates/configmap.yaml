@@ -19,6 +19,7 @@ data:
   LOG_LEVEL: INFO
   RUNTIME_DBT_IMAGE: {{ .Values.runtime.dbt.image }}:{{ .Values.runtime.dbt.tag }}
   RUNTIME_KFP_IMAGE: {{ .Values.runtime.kfp.image }}:{{ .Values.runtime.kfp.tag }}
+  RUNTIME_HERA_IMAGE: {{ .Values.runtime.hera.image }}:{{ .Values.runtime.hera.tag }}
   RUNTIME_PYTHON_IMAGE_3_9: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_9 }}
   RUNTIME_PYTHON_IMAGE_3_10: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_10 }}
   RUNTIME_PYTHON_IMAGE_3_11: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_11 }}
