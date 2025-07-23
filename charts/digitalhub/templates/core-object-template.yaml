@@ -40,7 +40,7 @@ spec:
         DB_USERNAME: "{{ "{{" }} matrix.postgressecret.data.username | b64decode {{ "}}" }}"
         DB_PASSWORD: "{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}"
         AWS_ACCESS_KEY_ID: "{{ "{{" }} matrix.s3secret.data.accessKey | b64decode {{ "}}" }}"
-        AWS_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.s3secret.data.accessKey | b64decode {{ "}}" }}"
+        AWS_SECRET_ACCESS_KEY: "{{ "{{" }} matrix.s3secret.data.secretKey | b64decode {{ "}}" }}"
         DB_URL: "postgresql://{{ "{{" }} matrix.postgressecret.data.username | b64decode {{ "}}" }}:{{ "{{" }} matrix.postgressecret.data.password | b64decode {{ "}}" }}@{{ .Values.core.databaseProvider.host }}:{{ .Values.core.databaseProvider.port }}/{{ .Values.core.databaseProvider.database }}"
         DHCORE_CLIENT_ID: "{{ "{{" }} matrix.coresecret.data.clientId | b64decode {{ "}}" }}"
         {{- if .Values.core.authentication.basic.enabled }}

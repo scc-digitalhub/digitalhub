@@ -28,7 +28,7 @@
     "link": "https://{{ . }}"
     {{- end }}
     {{- else }}
-    "link": "http://{{ $externalUrl }}:{{ .Values.minio.consoleService.nodePort }}"
+    "link": "http://{{ $externalUrl }}:{{ index .Values "open-webui" "service" "nodePort" }}"
     {{- end }}
   },
 {{- end }}
