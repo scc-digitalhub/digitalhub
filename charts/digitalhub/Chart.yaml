@@ -28,7 +28,7 @@ dependencies:
   repository: https://helm.coder.com/v2
   condition: coder.enabled
 - name: core
-  version: "0.3.28"
+  version: "0.3.27"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: kubernetes-resource-manager
