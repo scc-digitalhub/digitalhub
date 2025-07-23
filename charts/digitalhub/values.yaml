@@ -258,7 +258,7 @@ coder:
     #  coder.coder.image --
     image:
       #  coder.coder.image.tag -- Coder image tag
-      tag: v2.21.3
+      tag: v2.24.2
     #  coder.coder.ingress -- Coder ingress configuration
     ingress:
       #  coder.coder.ingress.enable -- Enable/Disable Coder ingress
