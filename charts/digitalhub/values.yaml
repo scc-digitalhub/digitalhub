@@ -253,7 +253,7 @@ coder:
             key: url
             #  coder.coder.env.valueFrom.secretKeyRef.name -- Name of the secret
             name: coder-db-url
-      - name: CODER_TELEMETRY
+      - name: CODER_TELEMETRY_ENABLE
         value: "false"
     #  coder.coder.image --
     image:

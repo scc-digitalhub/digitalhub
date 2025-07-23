@@ -2040,7 +2040,7 @@ object
         }
       },
       {
-        "name": "CODER_TELEMETRY",
+        "name": "CODER_TELEMETRY_ENABLE",
         "value": "false"
       }
     ],
@@ -2212,7 +2212,7 @@ object
       }
     },
     {
-      "name": "CODER_TELEMETRY",
+      "name": "CODER_TELEMETRY_ENABLE",
       "value": "false"
     }
   ],
@@ -2258,7 +2258,7 @@ list
     }
   },
   {
-    "name": "CODER_TELEMETRY",
+    "name": "CODER_TELEMETRY_ENABLE",
     "value": "false"
   }
 ]

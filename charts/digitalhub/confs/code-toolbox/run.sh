@@ -4,6 +4,8 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+cp -rT /etc/skel ${HOME}
+
 if command -v uv > /dev/null 2>&1
 then
   echo "uv is already installed"

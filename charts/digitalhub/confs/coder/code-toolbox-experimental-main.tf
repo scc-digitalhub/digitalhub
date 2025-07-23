@@ -212,12 +212,12 @@ data "coder_parameter" "image" {
   option {
     name  = "PyTorch"
     value = "nvcr.io/nvidia/pytorch"
-    icon  = "https://static-00.iconduck.com/assets.00/pytorch-icon-1694x2048-jgwjy3ne.png"
+    icon  = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/PyTorch_logo_icon.svg/250px-PyTorch_logo_icon.svg.png"
   }
   option {
     name  = "TensorFlow"
     value = "nvcr.io/nvidia/tensorflow"
-    icon  = "https://static-00.iconduck.com/assets.00/tensorflow-icon-1911x2048-1m2s54vn.png"
+    icon  = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Tensorflow_logo.svg/115px-Tensorflow_logo.svg.png"
   }
 }
 
@@ -458,7 +458,7 @@ resource "random_uuid" "check-token-exchange" {
 }
 
 resource "kubernetes_secret" "code-toolbox-secret" {
-  count = (var.stsenabled && data.coder_workspace.me.start_count == 1 ) ? 1 : 0
+  count = (var.stsenabled && data.coder_workspace.me.start_count == 1) ? 1 : 0
   metadata {
     name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
@@ -490,6 +490,164 @@ resource "kubernetes_secret" "code-toolbox-secret" {
     "DB_USERNAME"           = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "db_username", null) : null
     "AWS_SESSION_TOKEN"     = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "aws_session_token", null) : null
     "DHCORE_CLIENT_ID"      = data.coder_workspace_owner.me.oidc_access_token != "" ? lookup(jsondecode(data.http.exchange_token[0].response_body), "client_id", null) : null
+  }
+}
+
+resource "kubernetes_config_map" "code-toolbox-configmap" {
+  count = (var.stsenabled && data.coder_workspace.me.start_count == 1) ? 1 : 0
+  metadata {
+    name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+    namespace = var.namespace
+    labels = {
+      "app.kubernetes.io/name"     = "code-toolbox-workspace"
+      "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"  = "coder"
+      "app.kubernetes.io/type"     = "configmap"
+      // Coder specific labels.
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+    }
+    annotations = {
+      "com.coder.user.email" = data.coder_workspace_owner.me.email
+    }
+  }
+
+  data = {
+    "passwd"  = <<EOF
+      root:x:0:0:root:/root:/bin/bash
+      daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+      bin:x:2:2:bin:/bin:/usr/sbin/nologin
+      sys:x:3:3:sys:/dev:/usr/sbin/nologin
+      sync:x:4:65534:sync:/bin:/bin/sync
+      games:x:5:60:games:/usr/games:/usr/sbin/nologin
+      man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+      lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+      mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+      news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+      uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+      proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+      www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+      backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+      list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+      irc:x:39:39:ircd:/run/ircd:/usr/sbin/nologin
+      _apt:x:42:65534::/nonexistent:/usr/sbin/nologin
+      nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+      ubuntu:x:1000:1000:Ubuntu:/home/ubuntu:/bin/bash
+      ${lower(data.coder_workspace_owner.me.name)}:x:10000:10000::/home/${lower(data.coder_workspace_owner.me.name)}:/bin/bash
+    EOF
+    "group"   = <<EOF
+      root:x:0:
+      daemon:x:1:
+      bin:x:2:
+      sys:x:3:
+      adm:x:4:ubuntu
+      tty:x:5:
+      disk:x:6:
+      lp:x:7:
+      mail:x:8:
+      news:x:9:
+      uucp:x:10:
+      man:x:12:
+      proxy:x:13:
+      kmem:x:15:
+      dialout:x:20:ubuntu
+      fax:x:21:
+      voice:x:22:
+      cdrom:x:24:ubuntu
+      floppy:x:25:ubuntu
+      tape:x:26:
+      sudo:x:27:ubuntu
+      audio:x:29:ubuntu
+      dip:x:30:ubuntu
+      www-data:x:33:
+      backup:x:34:
+      operator:x:37:
+      list:x:38:
+      irc:x:39:
+      src:x:40:
+      shadow:x:42:
+      utmp:x:43:
+      video:x:44:ubuntu
+      sasl:x:45:
+      plugdev:x:46:ubuntu
+      staff:x:50:
+      games:x:60:
+      users:x:100:
+      nogroup:x:65534:
+      ubuntu:x:1000:
+      rdma:x:101:
+      _ssh:x:102:
+      ${lower(data.coder_workspace_owner.me.name)}:x:10000:
+    EOF
+    "shadow"  = <<EOF
+      root:*:20237:0:99999:7:::
+      daemon:*:20237:0:99999:7:::
+      bin:*:20237:0:99999:7:::
+      sys:*:20237:0:99999:7:::
+      sync:*:20237:0:99999:7:::
+      games:*:20237:0:99999:7:::
+      man:*:20237:0:99999:7:::
+      lp:*:20237:0:99999:7:::
+      mail:*:20237:0:99999:7:::
+      news:*:20237:0:99999:7:::
+      uucp:*:20237:0:99999:7:::
+      proxy:*:20237:0:99999:7:::
+      www-data:*:20237:0:99999:7:::
+      backup:*:20237:0:99999:7:::
+      list:*:20237:0:99999:7:::
+      irc:*:20237:0:99999:7:::
+      _apt:*:20237:0:99999:7:::
+      nobody:*:20237:0:99999:7:::
+      ubuntu:!:20237:0:99999:7:::
+      ${lower(data.coder_workspace_owner.me.name)}:!:20291:0:99999:7:::
+    EOF
+    "gshadow" = <<EOF
+      root:*::
+      daemon:*::
+      bin:*::
+      sys:*::
+      adm:*::ubuntu
+      tty:*::
+      disk:*::
+      lp:*::
+      mail:*::
+      news:*::
+      uucp:*::
+      man:*::
+      proxy:*::
+      kmem:*::
+      dialout:*::ubuntu
+      fax:*::
+      voice:*::
+      cdrom:*::ubuntu
+      floppy:*::ubuntu
+      tape:*::
+      sudo:*::ubuntu
+      audio:*::ubuntu
+      dip:*::ubuntu
+      www-data:*::
+      backup:*::
+      operator:*::
+      list:*::
+      irc:*::
+      src:*::
+      shadow:*::
+      utmp:*::
+      video:*::ubuntu
+      sasl:*::
+      plugdev:*::ubuntu
+      staff:*::
+      games:*::
+      users:*::
+      nogroup:*::
+      ubuntu:!::
+      rdma:!::
+      _ssh:!::
+      ${lower(data.coder_workspace_owner.me.name)}:!::
+    EOF
   }
 }
 
@@ -557,27 +715,6 @@ resource "kubernetes_deployment" "code-toolbox" {
           run_as_non_root = true
           seccomp_profile {
             type = "RuntimeDefault"
-          }
-        }
-        init_container {
-          name              = "copy-users-file"
-          image             = local.final_image
-          image_pull_policy = "Always"
-          command           = ["bash", "-c", "groupadd -g 10000 ${data.coder_workspace_owner.me.name} && useradd -m -u 10000 -g 10000 ${data.coder_workspace_owner.me.name} && cp /etc/passwd /etc/shadow /etc/group /etc/gshadow /etc-backup/ && cp -raTp /home/${data.coder_workspace_owner.me.name}/ /home/${data.coder_workspace_owner.me.name}-backup/"]
-          volume_mount {
-            mount_path = "/home/${data.coder_workspace_owner.me.name}-backup"
-            name       = "home"
-            sub_path   = data.coder_workspace_owner.me.name
-            read_only  = false
-          }
-          volume_mount {
-            name       = "user"
-            mount_path = "/etc-backup"
-          }
-          security_context {
-            run_as_user                = "0"
-            run_as_group               = "0"
-            allow_privilege_escalation = var.privileged
           }
         }
         container {
@@ -728,8 +865,24 @@ resource "kubernetes_deployment" "code-toolbox" {
         }
         volume {
           name = "user"
-          empty_dir {
-            size_limit = "2Mi"
+          config_map {
+            name = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+            items {
+              key  = "passwd"
+              path = "passwd"
+            }
+            items {
+              key  = "group"
+              path = "group"
+            }
+            items {
+              key  = "shadow"
+              path = "shadow"
+            }
+            items {
+              key  = "gshadow"
+              path = "gshadow"
+            }
           }
         }
         dynamic "volume" {

@@ -17,6 +17,6 @@ coder login
 echo "Installing {{ .name }} template"
 mkdir /home/coder/{{ .name }}/
 cp /home/coder/custom-template/{{ .name }}-main.tf /home/coder/{{ .name }}/main.tf
-coder templates create -d /home/coder/{{ .name }} {{ .name }} --variable {{ include "digitalhub.coderTemplateVariables" (list $ . ) }} -y
+coder templates create --default-ttl {{ .stopAfter }} -d /home/coder/{{ .name }} {{ .name }} --variable {{ include "digitalhub.coderTemplateVariables" (list $ . ) }} -y
 coder template edit --default-ttl {{ .stopAfter }} --icon "{{ .iconUrl }}" {{ .name }}
 {{- end }}
