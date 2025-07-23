@@ -29,6 +29,14 @@ additionalConfig:
     enableLogs: true
     #  additionalConfig.debug.enableMetrics -- Enable/disable metrics
     enableMetrics: false
+  #  additionalConfig.ephemeralVolume -- Ephemeral Volumes configurations
+  ephemeralVolume:
+    # additionalConfig.ephemeral.limits -- Configure max size for the ephemeral storage volumes
+    limits: ""
+    # additionalConfig.ephemeral.requests -- Configure the default size for all ephemeral storage volumes can be overrided by users
+    requests: ""
+    # additionalConfig.ephemeral.storageClass -- Specify the storage class for ephemeral storage
+    storageClass: ""
   #  additionalConfig.image --
   image:
     # additionalConfig.image.pullPolicy -- Configure pull image pull policy for workload scheduled by core
@@ -385,6 +393,8 @@ s3:
   dynamicCreds:
     #  s3.dynamicCreds.enabled -- Set this to true if you want to use dynamic credentials for S3 communication
     enabled: false
+    #  s3.dynamicCreds.policy -- Set the policy to use when genereting credentials support only inline policy in json format
+    policy: ""
   #  s3.endpoint -- Endpoint of your S3 instance
   endpoint: ""
   #  s3.existingSecret -- Reference to the secret containing AccessKey and Secret key of your S3 instance.

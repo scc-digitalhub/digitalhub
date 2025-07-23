@@ -99,6 +99,9 @@ data:
   K8S_JOB_DEADLINE: {{ .Values.additionalConfig.job.deadline | quote }}
   K8S_JOB_SUSPEND: {{ .Values.additionalConfig.job.jobSuspend | quote }}
   K8S_IMAGE_PULL_POLICY: {{ .Values.additionalConfig.image.pullPolicy | quote }}
+  K8S_RESOURCE_EPHEMERAL_STORAGE_CLASS: {{ .Values.additionalConfig.ephemeralVolume.storageClass | quote }}
+  K8S_RESOURCE_EPHEMERAL_LIMIT: {{ .Values.additionalConfig.ephemeralVolume.limits | quote }}
+  K8S_RESOURCE_EPHEMERAL_DEFAULT: {{ .Values.additionalConfig.ephemeralVolume.requests | quote }}
 {{- if .Values.kubeai.enabled }}
   RUNTIME_KUBEAI_ENDPOINT: {{ printf "%s%s:%s" "http://" .Values.kubeai.serviceName .Values.kubeai.port | quote }}
 {{- end }}
@@ -121,6 +124,7 @@ data:
   {{- if .Values.s3.dynamicCreds.enabled }}
   MINIO_CREDENTIALS_ENDPOINT: {{ .Values.s3.publicUrl }}
   MINIO_CREDENTIALS_REGION: {{ .Values.s3.region }}
+  MINIO_CREDENTIALS_POLICY: {{ .Values.s3.dynamicCreds.policy | quote }}
   {{- end }}
 {{- end }}
   LUCENE_INDEX_PATH: {{ if .Values.solr.enabled }}"false"{{ else }}{{ .Values.lucene.indexPath | quote }}{{ end }}
