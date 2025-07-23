@@ -3348,7 +3348,7 @@ object
   "collection": {
     "initialize": {
       "enabled": true,
-      "image": "smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot",
+      "image": "curlimages/curl:8.15.0",
       "securityJsonSecret": ""
     },
     "name": ""
@@ -3401,7 +3401,7 @@ object
 {
   "initialize": {
     "enabled": true,
-    "image": "smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot",
+    "image": "curlimages/curl:8.15.0",
     "securityJsonSecret": ""
   },
   "name": ""
@@ -3424,7 +3424,7 @@ object
 <pre lang="json">
 {
   "enabled": true,
-  "image": "smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot",
+  "image": "curlimages/curl:8.15.0",
   "securityJsonSecret": ""
 }
 </pre>
@@ -3455,7 +3455,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"smartcommunitylab/k8s-ansible:1.30.0-1.7.0-nonroot"
+"curlimages/curl:8.15.0"
 </pre>
 </div>
 			</td>

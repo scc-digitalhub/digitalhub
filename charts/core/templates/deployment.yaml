@@ -63,6 +63,7 @@ spec:
           {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+            runAsUser: 1000
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}

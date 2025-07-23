@@ -16,6 +16,9 @@ spec:
     spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        runAsUser: 1000
+        fsGroup: 1000
+        runAsGroup: 1000
       initContainers:
         - name: wait-solr
           image: {{ .Values.solr.collection.initialize.image }}
@@ -28,6 +31,7 @@ spec:
             {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+            runAsUser: 1000
           env:
             - name: "SOLR_ADMIN_PWD"
               valueFrom:
@@ -45,6 +49,7 @@ spec:
           command: ["/bin/sh", "/script/solr.sh"]
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+            runAsUser: 1000
           volumeMounts:
           - name: init-config
             mountPath: /script
