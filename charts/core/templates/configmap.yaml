@@ -92,8 +92,6 @@ data:
   K8S_RESOURCE_CPU_LIMIT: {{ .Values.additionalConfig.resources.cpuLim | quote }}
   K8S_RESOURCE_MEM_DEFAULT: {{ .Values.additionalConfig.resources.memReq | quote }}
   K8S_RESOURCE_MEM_LIMIT: {{ .Values.additionalConfig.resources.memLim | quote }}
-  K8S_RESOURCE_PVC_DEFAULT: {{ .Values.additionalConfig.resources.pvcReq | quote }}
-  K8S_RESOURCE_PVC_LIMIT: {{ .Values.additionalConfig.resources.pvcLim | quote }}
   K8S_RESOURCE_GPU_KEY: {{ .Values.additionalConfig.resources.gpuKey | quote }}
   K8S_SERVICE_TYPE: {{ .Values.additionalConfig.service.type | quote }}
   K8S_JOB_DEADLINE: {{ .Values.additionalConfig.job.deadline | quote }}
@@ -102,6 +100,9 @@ data:
   K8S_RESOURCE_EPHEMERAL_STORAGE_CLASS: {{ .Values.additionalConfig.ephemeralVolume.storageClass | quote }}
   K8S_RESOURCE_EPHEMERAL_LIMIT: {{ .Values.additionalConfig.ephemeralVolume.limits | quote }}
   K8S_RESOURCE_EPHEMERAL_DEFAULT: {{ .Values.additionalConfig.ephemeralVolume.requests | quote }}
+  K8S_RESOURCE_PVC_STORAGE_CLASS: {{ .Values.additionalConfig.persistenVolumeClaim.storageClass | quote }}
+  K8S_RESOURCE_PVC_LIMIT: {{ .Values.additionalConfig.persistenVolumeClaim.limits | quote }}
+  K8S_RESOURCE_PVC_DEFAULT: {{ .Values.additionalConfig.persistenVolumeClaim.requests | quote }}
 {{- if .Values.kubeai.enabled }}
   RUNTIME_KUBEAI_ENDPOINT: {{ printf "%s%s:%s" "http://" .Values.kubeai.serviceName .Values.kubeai.port | quote }}
 {{- end }}
@@ -129,4 +130,3 @@ data:
 {{- end }}
   LUCENE_INDEX_PATH: {{ if .Values.solr.enabled }}"false"{{ else }}{{ .Values.lucene.indexPath | quote }}{{ end }}
   LUCENE_REINDEX: {{ .Values.lucene.reindex | quote }}
-  K8S_RESOURCE_PVC_STORAGE_CLASS: {{ .Values.defaultStorageClass | quote }}

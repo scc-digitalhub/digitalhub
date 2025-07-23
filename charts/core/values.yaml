@@ -47,6 +47,14 @@ additionalConfig:
     deadline: "604800"
     #  additionalConfig.job.jobSuspend -- Suspend jobs
     jobSuspend: false
+  #  additionalConfig.persistenVolumeClaim -- Persisten Volume Claim configurations
+  persistenVolumeClaim:
+    # additionalConfig.persistenVolumeClaim.limits -- Configure max size for the Persisten Volume Claim volumes
+    limits: ""
+    # additionalConfig.persistenVolumeClaim.requests -- Configure the default size for all Persisten Volume Claim volumes can be overrided by users
+    requests: ""
+    # additionalConfig.persistenVolumeClaim.storageClass -- Specify the storage class for Persisten Volume Claim
+    storageClass: ""
   #  additionalConfig.resources -- Resources for the pods created by Core
   resources:
     #  additionalConfig.resources.cpuLim -- CPU limit
@@ -59,10 +67,6 @@ additionalConfig:
     memLim: ""
     #  additionalConfig.resources.memReq -- Memory request
     memReq: ""
-    #  additionalConfig.resources.pvcLim -- PVC storage limit
-    pvcLim: ""
-    #  additionalConfig.resources.pvcReq -- PVC storage request
-    pvcReq: ""
   #  additionalConfig.security --
   security:
     #  additionalConfig.security.disableRoot -- Disable root for pods created by Core
