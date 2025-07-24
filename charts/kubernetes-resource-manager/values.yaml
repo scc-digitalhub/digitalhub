@@ -204,18 +204,6 @@ rbac:
         - get
         - list
         - patch
-    - apiGroups: minio.scc-digitalhub.github.io
-      crd: true
-      resources:
-        - buckets
-        - policies
-        - users
-      verbs:
-        - create
-        - delete
-        - get
-        - list
-        - patch
     - apiGroups: operator.dremiorestserver.com
       crd: true
       resources:
