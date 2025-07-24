@@ -32,7 +32,7 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: kubernetes-resource-manager
-  version: "0.2.12"
+  version: "0.2.13"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: kubernetes-resource-manager.enabled
 - name: dremio-rest-server-operator
@@ -40,7 +40,7 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: dremio-rest-server-operator.enabled
 - name: docker-registry
-  version: "2.2.3"
+  version: "2.3.0"
   repository: "https://helm.twun.io"
   condition: docker-registry.enabled
 - name: ext-postgres-operator
@@ -77,10 +77,6 @@ dependencies:
   version: "0.9.0"
   repository: https://solr.apache.org/charts
   condition: solr.enabled
-- name: minio-operator
-  version: "0.1.9"
-  repository: https://scc-digitalhub.github.io/digitalhub/
-  condition: minio-operator.enabled
 - name: kubeai
   version: "0.21.4"
   repository: https://ffais.github.io/kubeai/

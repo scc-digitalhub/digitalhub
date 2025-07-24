@@ -263,6 +263,21 @@ coder:
     ingress:
       #  coder.coder.ingress.enable -- Enable/Disable Coder ingress
       enable: false
+    #  coder.coder.securityContext -- Coder [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+    securityContext:
+      #  coder.coder.securityContext.allowPrivilegeEscalation -- Coder container allow privilege escalation
+      allowPrivilegeEscalation: false
+      #  coder.coder.securityContext.capabilities -- Coder container configure capabilities.
+      capabilities:
+        #  coder.coder.securityContext.capabilities.drop -- Coder container drop capabilities.
+        drop:
+          - ALL
+      #  coder.coder.securityContext.runAsNonRoot -- Coder container allow run as root.
+      runAsNonRoot: true
+      #  coder.coder.securityContext.seccompProfile -- Coder container configure seccompProfile.
+      seccompProfile:
+        #  coder.coder.securityContext.seccompProfile.type -- Coder container configure seccompProfile type.
+        type: RuntimeDefault
     #  coder.coder.service -- Service configuration
     service:
       #  coder.coder.service.httpNodePort -- Service NodePort
@@ -290,21 +305,6 @@ coder:
       enabled: false
   #  coder.password -- Coder admin password
   password: Test12456@!
-  #  coder.securityContext -- Coder [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
-  securityContext:
-    #  coder.securityContext.allowPrivilegeEscalation -- Coder container allow privilege escalation
-    allowPrivilegeEscalation: false
-    #  coder.securityContext.capabilities -- Coder container configure capabilities.
-    capabilities:
-      #  coder.securityContext.capabilities.drop -- Coder container drop capabilities.
-      drop:
-        - ALL
-    #  coder.securityContext.runAsNonRoot -- Coder container allow run as root.
-    runAsNonRoot: true
-    #  coder.securityContext.seccompProfile -- Coder container configure seccompProfile.
-    seccompProfile:
-      #  coder.securityContext.seccompProfile.type -- Coder container configure seccompProfile type.
-      type: RuntimeDefault
   #  coder.template -- Coder Templates configuration
   template:
     #  coder.template.customTemplates -- Coder custom templates configuration, specify your templates in list format.
@@ -845,6 +845,21 @@ docker-registry:
   enabled: true
   #  docker-registry.className --
   className: nginx
+  #  docker-registry.containerSecurityContext -- [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+  containerSecurityContext:
+    enabled: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    privileged: false
+    readOnlyRootFilesystem: true
+    runAsGroup: 1000
+    runAsNonRoot: true
+    runAsUser: 1000
+    seLinuxOptions: {}
+    seccompProfile:
+      type: RuntimeDefault
   #  docker-registry.fullnameOverride --
   fullnameOverride: digitalhub-docker-registry
   #  docker-registry.ingress --
@@ -864,6 +879,14 @@ docker-registry:
     accessMode: ReadWriteOnce
     #  docker-registry.persistence.size -- PVC size
     size: 128Gi
+  # docker-registry.securityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+  securityContext:
+    enabled: true
+    fsGroup: 1000
+    fsGroupChangePolicy: Always
+    runAsUser: 1000
+    supplementalGroups: []
+    sysctls: []
   #  docker-registry.service -- Service configurations.
   service:
     #  docker-registry.service.nodePort -- Service NodePort.
