@@ -23071,6 +23071,27 @@ entries:
   kubernetes-resource-manager:
   - apiVersion: v2
     appVersion: 1.2.3
+    created: "2025-07-24T11:51:00.396316011Z"
+    description: A manager for resources in Kubernetes. The tool allows for monitoring
+      and managing some of the standard Kubernetes resources (PersistentVolumeClaim,
+      Services, Deployments, Jobs, and Secrets) as well as for managing a selection
+      of Custom Resources.
+    digest: 13320f3127bcf400c8bce57d8de563c746ff9dcfae419e2ea921b3cb6ac6e11b
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/kubernetes-resource-manager
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: kubernetes-resource-manager
+    sources:
+    - https://github.com/scc-digitalhub/dremio-rest-server-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/kubernetes-resource-manager-0.2.13/kubernetes-resource-manager-0.2.13.tgz
+    version: 0.2.13
+  - apiVersion: v2
+    appVersion: 1.2.3
     created: "2025-07-14T12:48:20.065056079Z"
     description: A manager for resources in Kubernetes. The tool allows for monitoring
       and managing some of the standard Kubernetes resources (PersistentVolumeClaim,
@@ -25632,4 +25653,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-23T14:35:10.092200741Z"
+generated: "2025-07-24T11:51:00.397082129Z"
