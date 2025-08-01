@@ -45,10 +45,10 @@ data:
   DH_AUTH_OIDC_SCOPE: {{ .Values.authentication.openId.scope }}
   DH_AUTH_JWT_USERNAME: {{ .Values.authentication.openId.jwtUsername }}
 {{- end }}
-{{- if .Values.global.registry.url }}
-  IMAGE_REGISTRY: {{ .Values.global.registry.url }}
+{{- if .Values.global.ociRegistry.url }}
+  IMAGE_REGISTRY: {{ .Values.global.ociRegistry.url }}
   BUILDER_IMAGE_PREFIX: {{ .Values.registry.kaniko.imagePrefix | default .Release.Namespace }}
-  IMAGE_REGISTRY_SECRET: {{ .Values.global.registry.secretName }}
+  IMAGE_REGISTRY_SECRET: {{ .Values.global.ociRegistry.secretName }}
   {{- if eq .Values.builder.framework.name "kaniko" }}
   BUILDER_FRAMEWORK: {{ .Values.builder.framework.name }}
   KANIKO_IMAGE: {{ .Values.builder.framework.image }}

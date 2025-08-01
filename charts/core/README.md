@@ -65,7 +65,7 @@ object
 {
   "externalHostAddress": "",
   "externalTls": false,
-  "registry": {
+  "ociRegistry": {
     "email": "",
     "password": "",
     "secretName": "",
@@ -107,7 +107,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="global--registry"><a href="./values.yaml#L12">global.registry</a></td>
+			<td id="global--ociRegistry"><a href="./values.yaml#L12">global.ociRegistry</a></td>
 			<td>
 object
 </td>
@@ -130,7 +130,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="global--registry--email"><a href="./values.yaml#L14">global.registry.email</a></td>
+			<td id="global--ociRegistry--email"><a href="./values.yaml#L14">global.ociRegistry.email</a></td>
 			<td>
 string
 </td>
@@ -144,7 +144,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="global--registry--password"><a href="./values.yaml#L16">global.registry.password</a></td>
+			<td id="global--ociRegistry--password"><a href="./values.yaml#L16">global.ociRegistry.password</a></td>
 			<td>
 string
 </td>
@@ -158,7 +158,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="global--registry--secretName"><a href="./values.yaml#L18">global.registry.secretName</a></td>
+			<td id="global--ociRegistry--secretName"><a href="./values.yaml#L18">global.ociRegistry.secretName</a></td>
 			<td>
 string
 </td>
@@ -172,7 +172,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="global--registry--url"><a href="./values.yaml#L20">global.registry.url</a></td>
+			<td id="global--ociRegistry--url"><a href="./values.yaml#L20">global.ociRegistry.url</a></td>
 			<td>
 string
 </td>
@@ -186,7 +186,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="global--registry--username"><a href="./values.yaml#L22">global.registry.username</a></td>
+			<td id="global--ociRegistry--username"><a href="./values.yaml#L22">global.ociRegistry.username</a></td>
 			<td>
 string
 </td>
@@ -2547,7 +2547,7 @@ object
 {
   "dbt": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt",
-    "tag": "0.12.0"
+    "tag": "0.13.0"
   },
   "hera": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-hera/wrapper-hera",
@@ -2559,13 +2559,13 @@ object
   },
   "kfp": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp",
-    "tag": "0.12.0"
+    "tag": "0.13.0"
   },
   "python": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime",
-    "tag3_10": "3.10-0.12.0",
-    "tag3_11": "3.11-0.12.0",
-    "tag3_9": "3.9-0.12.0"
+    "tag3_10": "3.10-0.13.0",
+    "tag3_11": "3.11-0.13.0",
+    "tag3_9": "3.9-0.13.0"
   }
 }
 </pre>
@@ -2586,7 +2586,7 @@ object
 <pre lang="json">
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt",
-  "tag": "0.12.0"
+  "tag": "0.13.0"
 }
 </pre>
 </details>
@@ -2616,7 +2616,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"0.12.0"
+"0.13.0"
 </pre>
 </div>
 			</td>
@@ -2710,7 +2710,7 @@ object
 <pre lang="json">
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp",
-  "tag": "0.12.0"
+  "tag": "0.13.0"
 }
 </pre>
 </details>
@@ -2740,7 +2740,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"0.12.0"
+"0.13.0"
 </pre>
 </div>
 			</td>
@@ -2758,9 +2758,9 @@ object
 <pre lang="json">
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime",
-  "tag3_10": "3.10-0.12.0",
-  "tag3_11": "3.11-0.12.0",
-  "tag3_9": "3.9-0.12.0"
+  "tag3_10": "3.10-0.13.0",
+  "tag3_11": "3.11-0.13.0",
+  "tag3_9": "3.9-0.13.0"
 }
 </pre>
 </details>
@@ -2790,7 +2790,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.10-0.12.0"
+"3.10-0.13.0"
 </pre>
 </div>
 			</td>
@@ -2804,7 +2804,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.11-0.12.0"
+"3.11-0.13.0"
 </pre>
 </div>
 			</td>
@@ -2818,7 +2818,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.9-0.12.0"
+"3.9-0.13.0"
 </pre>
 </div>
 			</td>
