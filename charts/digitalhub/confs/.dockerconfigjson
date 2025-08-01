@@ -1,1 +1,1 @@
-{"auths":{"{{ .Values.global.registry.url }}":{"username":"{{ .Values.global.registry.username }}","password":"{{ .Values.global.registry.password }}","email":"{{ .Values.global.registry.email }}","auth":"{{ include "digitalhub.registryAuth" . }}"}}}
+{"auths":{"{{ .Values.global.ociRegistry.url }}":{"username":"{{ .Values.global.ociRegistry.username }}","password":"{{ .Values.global.ociRegistry.password }}","email":"{{ .Values.global.ociRegistry.email }}","auth":"{{ include "digitalhub.registryAuth" . }}"}}}

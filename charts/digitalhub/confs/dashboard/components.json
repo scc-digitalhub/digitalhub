@@ -1,21 +1,5 @@
 {{ $externalUrl := .Values.global.externalHostAddress -}}
 [
-{{- if .Values.minio.enabled }}
-  {
-    "slug": "minio",
-    "name": "Minio",
-    "description": "S3-compatible datalake",
-    "order": 3,
-    "port": "",
-    {{- if (index .Values "minio" "consoleIngress" "enabled") }}
-    {{- with (index .Values "minio" "consoleIngress" "hosts" 0) }}
-    "link": "https://{{ . }}"
-    {{- end }}
-    {{- else }}
-    "link": "http://{{ $externalUrl }}:{{ .Values.minio.consoleService.nodePort }}"
-    {{- end }}
-  },
-{{- end }}
 {{- if (index .Values "open-webui" "enabled") }}
   {
     "slug": "open-webui",

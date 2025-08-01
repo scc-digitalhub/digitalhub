@@ -7,7 +7,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 # digitalhub
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-AGPL%20V3-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/digitalhub/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=digitalhub*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.13.0-beta12](https://img.shields.io/badge/Version-0.13.0--beta12-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.13.0](https://img.shields.io/badge/AppVersion-0.13.0-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.13.0-beta13](https://img.shields.io/badge/Version-0.13.0--beta13-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.13.0](https://img.shields.io/badge/AppVersion-0.13.0-informational?style=flat-square)
 
 The Digital Hub is an open-source platform for interoperability of data and services, built by integrating several open-source projects to manage, elaborate, expose and serve data through modern standards.
 
@@ -64,8 +64,6 @@ Digitalhub componet URLs:
   - Grafana: http://192.168.76.2:30130 (Create grafana workspace from template in the coder dashboard before use)
   - Vscode: http://192.168.76.2:30190 (Create vscode workspace from template in the coder dashboard before use)
   - Docker Registry: http://192.168.76.2:30150
-  - Minio API: http://192.168.76.2:30080 (Username: minio Password: minio123)
-  - Minio UI: http://192.168.76.2:30090 (Username: minio Password: minio123)
   - KubeFlow: http://192.168.76.2:30100
   - Coder: http://192.168.76.2:30170 (Username: test@digitalhub.test Password: Test12456@!)
   - Core: http://192.168.76.2:30180
@@ -84,7 +82,7 @@ You can use a custom set of values from a file like the example below, in which 
 ```sh
 helm upgrade -n <YOUR_NAMESPACE> <YOUR_RELEASE> digitalhub/digitalhub --install --create-namespace --timeout 45m0s --values <YOUR_VALUES_FILE_PATH>
 ```
-In this example, `--set global.registry.url="MINIKUBE_IP_ADDRESS"` and `--set global.externalHostAddress="MINIKUBE_IP_ADDRESS"` are not specified in the installation command, but they can be specified in your values file:
+In this example, `--set global.ociRegistry.url="MINIKUBE_IP_ADDRESS"` and `--set global.externalHostAddress="MINIKUBE_IP_ADDRESS"` are not specified in the installation command, but they can be specified in your values file:
 
 ```yaml
 global:
@@ -358,8 +356,7 @@ helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
 ```
 7. Retrieve database and S3 secrets
 ```sh
-    kubectl --namespace digitalhub get secret minio -o yaml
-    kubectl --namespace digitalhub get secret digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do -o yaml
+    kubectl --namespace digitalhub get secret <NAME_OF_YOUR_S3_OR_DATABASE_SECRET> -o yaml
 ```
 8. Decode secret values
 ```sh
