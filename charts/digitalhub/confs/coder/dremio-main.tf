@@ -51,7 +51,7 @@ variable "postgresql_hostname" {
 variable "s3_endpoint" {
   type        = string
   description = "S3 endpoint"
-  default     = "minio:9000"
+  default     = "default     = "seaweedfs-s3:8333""
 }
 
 variable "s3_bucket" {

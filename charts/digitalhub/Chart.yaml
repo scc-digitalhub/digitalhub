@@ -12,7 +12,7 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.13.0-beta12"
+version: "0.13.0-beta13"
 appVersion: "0.13.0"
 dependencies:
 - name: argo-workflows
@@ -28,7 +28,7 @@ dependencies:
   repository: https://helm.coder.com/v2
   condition: coder.enabled
 - name: core
-  version: "0.3.28"
+  version: "0.3.29"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: kubernetes-resource-manager
@@ -47,10 +47,10 @@ dependencies:
   version: "1.2.7"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: ext-postgres-operator.enabled
-- name: minio
-  repository: "https://charts.min.io/"
-  version: "5.4.0"
-  condition: minio.enabled
+- name: seaweedfs
+  version: "4.0.393"
+  repository: https://seaweedfs.github.io/seaweedfs/helm
+  condition: seaweedfs.enabled
 - name: postgres-operator
   version: "1.11.0"
   repository: "https://opensource.zalando.com/postgres-operator/charts/postgres-operator"
@@ -78,7 +78,7 @@ dependencies:
   repository: https://solr.apache.org/charts
   condition: solr.enabled
 - name: kubeai
-  version: "0.21.4"
+  version: "0.21.6"
   repository: https://ffais.github.io/kubeai/
   condition: kubeai.enabled
 - name: open-webui

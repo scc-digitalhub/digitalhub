@@ -63,7 +63,7 @@ global:
     # global.s3.argo -- S3 configuration for Argo
     argo:
       #  global.s3.argo.accessKey -- Access key of the Argo bucket user
-      accessKey: ""
+      accessKey: argo
       #  global.s3.argo.bucket -- Name of the Argo bucket
       bucket: &argoBucket "argo"
       existingSecret:
@@ -74,18 +74,18 @@ global:
         #  global.s3.argo.existingSecret.secretName -- Secret of the Argo bucket user
         secretName: ""
       #  global.s3.argo.secretKey -- Secret key of the Argo bucket user
-      secretKey: ""
+      secretKey: argo1234
       #  global.s3.argo.argoSecret -- Secret of the Argo bucket user
-      secretName: &argoSecret ""
+      secretName: &argoSecret argo-s3-creds
       #  global.s3.argo.existingSecret -- Set the keys that you use in your S3 Argo bucket user secret
     #  global.s3.endpoint -- Endpoint of your S3 instance
-    endpoint: &s3Endpoint ""
+    endpoint: &s3Endpoint "seaweedfs-s3"
     #  global.s3.endpointPort -- Port of your S3 instance
-    endpointPort: &s3EndpointPort ""
+    endpointPort: &s3EndpointPort "8333"
     # global.s3.platform -- S3 configuration for the platform
     platform:
       #  global.s3.platform.accessKey -- Access key of the Platform's main bucket user
-      accessKey: &platformAccessKey ""
+      accessKey: &platformAccessKey digitalhub
       #  global.s3.platform.bucket -- Name of the Platform's main bucket
       bucket: &platformBucket "datalake"
       #  global.s3.platform.existingSecret -- Set the keys that you use in your S3 main bucket user secret
@@ -97,17 +97,15 @@ global:
         #  global.s3.platform.existingSecret.secretName -- Secret of the Platform's main bucket user
         secretName: &platformExistingSecret ""
       #  global.s3.platform.platformUserSecret -- Secret of the Platform's main bucket user
-      platformUserSecret: ""
+      platformUserSecret: platform-s3-creds
       #  global.s3.platform.digitalhubPassword -- Secret key of the Platform's main bucket user
-      secretKey: &platformSecretKey ""
+      secretKey: &platformSecretKey digitalhub
     #  global.s3.protocol -- Protocol of your S3 instance (http/https)
     protocol: &s3Protocol "http"
-    #  global.s3.rootPassword -- S3 admin password
-    rootPassword: ""
-    #  global.s3.rootUser -- S3 admin username
-    rootUser: ""
-    #  global.s3.rootUserSecret -- S3 admin secret
-    rootUserSecret: ""
+    #  global.s3.rootPassword -- S3 admin password, only used in local demo deployment
+    rootPassword: rootpassword
+    #  global.s3.rootUser -- S3 admin username, only used in demo deployment
+    rootUser: rootuser
   #  global.securityContext -- Security Context passed to the delete-resources job and the coder init/upgrade templates jobs
   securityContext:
     #  global.securityContext.allowPrivilegeEscalation -- Container allow privilege escalation.
@@ -159,19 +157,19 @@ argo-workflows:
           #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.accessKeySecret -- Reference to the secret containing your S3 accessKey for the Argo bucket
           accessKeySecret:
             #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.accessKeySecret.key -- Key for the accesKey
-            key: ""
+            key: accesskey
             #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.accessKeySecret.name -- Name of the secret containing your S3 accessKey for the Argo bucket
             name: *argoSecret
           #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.bucket -- Name of your bucket for Argo
           bucket: *argoBucket
           #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.endpoint -- Endpoint of your S3 instance
-          endpoint: ""
+          endpoint: seaweedfs-s3:8333
           #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.insecure -- Insecure will disable TLS. Primarily used for S3 installs not configured with TLS
           insecure: true
           #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.secretKeySecret -- Reference to the secret containing your S3 secretKey for the Argo bucket
           secretKeySecret:
             #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.secretKeySecret.key -- Key for the secretKey
-            key: ""
+            key: secretkey
             #  argo-workflows.artifactRepositoryRef.artifact-repositories.artifact-repository.s3.secretKeySecret.name -- Name of the secret containing your S3 secretKey for the Argo bucket
             name: *argoSecret
   #  argo-workflows.controller -- Controller configuration
@@ -269,7 +267,7 @@ coder:
             #  The url should be in the format postgres://coderuser:coderpassword@coderhost:coderport/coderdb
             key: url
             #  coder.coder.env.valueFrom.secretKeyRef.name -- Name of the secret
-            name: ""
+            name: coder-db-url
       - name: CODER_TELEMETRY_ENABLE
         value: "false"
     #  coder.coder.image --
@@ -302,7 +300,7 @@ coder:
       #  coder.coder.service.type -- Service type
       type: *serviceType
   #  coder.email -- Coder admin email
-  email: ""
+  email: test@digitalhub.test
   #  coder.existingSecrets -- Coder existing secrets configuration
   existingSecrets:
     #  coder.existingSecrets.adminUserExistingSecret -- Existing secret containing Coder's admin username, password and email
@@ -321,7 +319,7 @@ coder:
       #  To configure the secret, configure the variable CODER_PG_CONNECTION_URL in coder.coder.env
       enabled: false
   #  coder.password -- Coder admin password
-  password: ""
+  password: Test12456@!
   #  coder.template -- Coder Templates configuration
   template:
     #  coder.template.customTemplates -- Coder custom templates configuration, specify your templates in list format.
@@ -357,15 +355,15 @@ coder:
           #  coder.template.customTemplates.postgres.database -- Name of the Platform's main database
           database: digitalhub
           #  coder.template.customTemplates.postgres.hostname -- Host of the Platform's main database
-          hostname: ""
+          hostname: database-postgres-cluster
           #  coder.template.customTemplates.postgres.ownerCredsSecret -- Set the keys that you use in your Platform's main database secret
           ownerCredsSecret:
             #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Password key
-            passwordKey: ""
+            passwordKey: password
             #  coder.template.customTemplates.postgres.ownerCredsSecret.secretName -- Name of the Platform's main database secret containing the owner user username and password
-            secretName: ""
+            secretName: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
             #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Username key
-            usernameKey: ""
+            usernameKey: username
         stopAfter: 0h
       - extraVars: []
         iconUrl: https://i.ibb.co/TrBDsZM/sqlpad.png
@@ -376,21 +374,21 @@ coder:
           #  coder.template.customTemplates.postgres.database -- Name of the Platform's main database
           database: digitalhub
           #  coder.template.customTemplates.postgres.hostname -- Host of the Platform's main database
-          hostname: ""
+          hostname: database-postgres-cluster
           #  coder.template.customTemplates.postgres.ownerCredsSecret -- Set the keys that you use in your Platform's main database secret
           ownerCredsSecret:
             #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Password key
-            passwordKey: ""
+            passwordKey: password
             #  coder.template.customTemplates.postgres.ownerCredsSecret.secretName -- Name of the Platform's main database secret containing the owner user username and password
-            secretName: ""
+            secretName: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
             #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Username key
-            usernameKey: ""
+            usernameKey: username
         stopAfter: 8h
       - extraVars: []
         iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-        image: ghcr.io/scc-digitalhub/jupyter-3-10:0.13.0
-        image311: ghcr.io/scc-digitalhub/jupyter-3-11:0.13.0
-        image39: ghcr.io/scc-digitalhub/jupyter-3-9:0.13.0
+        image: ghcr.io/scc-digitalhub/jupyter-3-10:0.13.0b3
+        image311: ghcr.io/scc-digitalhub/jupyter-3-11:0.13.0b3
+        image39: ghcr.io/scc-digitalhub/jupyter-3-9:0.13.0b3
         name: jupyter
         nodePort: "30040"
         privileged: false
@@ -403,7 +401,7 @@ coder:
       #  Must be generated in Coder with the admin account.
       token: ""
   #  coder.username -- Username of the Coder admin user
-  username: ""
+  username: test
 
 #  core -- Core configuration
 core:
@@ -454,9 +452,9 @@ core:
       #  authentication.basic.enabled -- Enable/disable basicAuth authentication
       enabled: true
       #  authentication.basic.password -- BasicAuth password
-      password: ""
+      password: "corepwd"
       #  authentication.basic.username -- BasicAuth username
-      username: ""
+      username: "coreuser"
     #  core.authentication.openId -- OpenID Auth values
     openId:
       #  core.authentication.openId.enabled -- Enable/disable openId authentication
@@ -470,15 +468,15 @@ core:
   #  DHCORE_CLIENT_ID: Core clientId
   commonCredsSecret:
     #  core.commonCredsSecret.existingCommonCredsSecret -- Secret name
-    secretName: ""
+    secretName: "digitalhub-common-creds"
     #  core.commonCredsSecret.useExistingCommonCredsSecret -- Set this to true if you are using an existing secret.
     useExistingCommonCredsSecret: false
   #  core.coreAuthCreds --
   coreAuthCreds:
     #  core.coreAuthCreds.clientId -- Core clientId
-    clientId: ""
+    clientId: m04bfbmd03m8sf4u9ucz54ti
     #  core.coreAuthCreds.clientSecret -- Core clientSecret
-    clientSecret: ""
+    clientSecret: 9rb5215z0aqd7fadzxuoyqe3
     #  core.coreAuthCreds.existingSecret -- Existing secret containing Core clientID and clientSecret
     existingSecret:
       #  core.coreAuthCreds.existingSecret.clientIdKey -- Key of the clientID
@@ -492,9 +490,9 @@ core:
     #  core.databaseProvider.database -- Name of the main database of the platform
     database: digitalhub
     #  core.databaseProvider.host -- Host of the main database of the platform
-    host: ""
+    host: database-postgres-cluster
     #  core.databaseProvider.ownerSecret -- Secret of the main database of the platform containing the owner user credentials
-    ownerSecret: ""
+    ownerSecret: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
     #  core.databaseProvider.port -- Port of the main database of the platform
     port: "5432"
   #  core.image -- Core image configuration
@@ -518,11 +516,11 @@ core:
       #  core.postgres.credentials.existingSecret --
       existingSecret:
         #  core.postgres.credentials.existingSecret.name -- Secret containing the Core database admin user credentials
-        name: ""
+        name: coreuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do
         #  core.postgres.credentials.existingSecret.passwordKey -- Core db user password key
-        passwordKey: ""
+        passwordKey: password
         #  core.postgres.credentials.existingSecret.usernameKey -- Core db user username key
-        usernameKey: ""
+        usernameKey: username
       #  core.postgres.credentials.password -- Core db user password
       password: ""
       #  core.postgres.credentials.username -- Core db user username
@@ -530,7 +528,7 @@ core:
     #  core.postgres.database -- Name of the Core database
     database: core
     #  core.postgres.host -- Host of the Core database
-    host: ""
+    host: core-postgres-cluster
     #  core.postgres.port -- Port of the Core database
     port: "5432"
     #  core.postgres.schema -- Schema of the Core database
@@ -564,7 +562,7 @@ core:
     #  core.s3.protocol -- Protocol of your S3 instance (http/https)
     protocol: *s3Protocol
     #  core.s3.publicUrl -- Public url of your S3 instance
-    publicUrl: ""
+    publicUrl: "http://seaweedfs-s3:8888"
     #  core.s3.region -- Region used by your S3 instance
     region: us-east-1
     #  core.s3.secretKey -- Explicit declaration of the Secret key of your S3 instance.
@@ -579,19 +577,19 @@ core:
   #  core.solr -- Solr configuration
   solr:
     #  core.solr.enabled -- Set this value to true if you want to use Core with Solr
-    enabled: false
+    enabled: true
     #  core.solr.collection -- Solr collection configuration
     collection:
       #  core.solr.collection.initialize --
       initialize:
         #  core.solr.collection.initialize.enabled -- Enable/Disable Solr collection initialization by script, use it if you have set Basic Auth for Solr
-        enabled: false
+        enabled: true
         #  core.solr.collection.initialize.image -- Initialization image
         image: curlimages/curl:8.15.0
         #  core.solr.collection.initialize.securityJsonSecret -- Name of the secret containing the Solr security.json.
         #  Specify the name of your secret here if you want the Platform installation to create a compatible secret for you.
         #  WARNING: In production, choose either core.solr.credentials.existingCollectionSecret or core.solr.credentials.existingSecurityJsonSecret, depending on your use case, instead of this value.
-        securityJsonSecret: ""
+        securityJsonSecret: digitalhub-solrcloud-security-bootstrap
       #  core.solr.collection.name -- Name of the Solr collection
       name: dhcore
     #  core.solr.credentials -- Credentials configuration
@@ -630,7 +628,7 @@ core:
     credentials:
       #  core.sts.credentials.roles -- Roles that will be mapped to the user for Database operations.
       #  Must correspond to the owner user of the Platform's main database.
-      roles: ""
+      roles: digitalhub_owner_user
     #  core.sts.databaseProvider -- Values of the Platform's main database
     databaseProvider:
       #  core.sts.databaseProvider.enabled -- Enable/Disable dynamic credentials for Postgres operations.
@@ -641,11 +639,11 @@ core:
         #  These values have higher priority than the explicit declarations.
         existingSecret:
           #  core.sts.databaseProvider.credentials.existingSecret.name -- Name of the secret containing username and password of the Platform's main database admin user
-          name: ""
+          name: digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do
           #  core.sts.databaseProvider.credentials.existingSecret.passwordKey -- Key corresponding to the Platform's main database owner user password
-          passwordKey: ""
+          passwordKey: password
           #  core.sts.databaseProvider.credentials.existingSecret.usernameKey -- Key corresponding to the Platform's main database owner user username
-          usernameKey: ""
+          usernameKey: username
         #  core.sts.databaseProvider.credentials.password -- Explicit declaration of the Platform's main database owner user password.
         #  It has lower priority than the corresponding secret values.
         password: ""
@@ -654,7 +652,7 @@ core:
         username: ""
     #  core.sts.jwt --
     jwt:
-      #  core.sts.jwt.issuerUri -- URL of the JWT issuer, set this to your Core endpoint.
+      #  core.sts.jwt.issuerUri -- URL of the JWT issuer.
       issuerUri: http://digitalhub-core:8080
     #  core.sts.stsDb -- Values of the STS database
     stsDb:
@@ -664,17 +662,17 @@ core:
         #  These values have higher priority than the explicit declarations.
         existingSecret:
           #  core.sts.stsDb.credentials.existingSecret.name -- Name of the secret containing username and password of the STS database user
-          name: ""
+          name: stsuser.core-postgres-cluster.credentials.postgresql.acid.zalan.do
           #  core.sts.stsDb.credentials.existingSecret.passwordKey -- Key corresponding to the STS database user password
-          passwordKey: ""
+          passwordKey: password
           #  core.sts.stsDb.credentials.existingSecret.usernameKey -- Key corresponding to the STS database user username
-          usernameKey: ""
+          usernameKey: username
       #  core.sts.stsDb.database -- Name of the STS database
       database: sts
       #  core.sts.stsDb.driver -- Driver used by the STS database
       driver: org.postgresql.Driver
       #  core.sts.stsDb.host -- Host of the STS database
-      host: ""
+      host: core-postgres-cluster
       #  core.sts.stsDb.platform -- Which kind of database you are using for STS (For example, postgresql)
       platform: postgresql
       #  core.sts.stsDb.port -- STS Database port
@@ -923,7 +921,7 @@ dremio-rest-server-operator:
 #  ext-postgres-operator -- External Postgres Operator configuration.
 ext-postgres-operator:
   #  ext-postgres-operator.enabled -- Enable/Disable the external Postgres operator
-  enabled: false
+  enabled: true
   #  ext-postgres-operator.image --
   image:
     #  ext-postgres-operator.image.tag -- Container image tag.
@@ -943,7 +941,7 @@ ext-postgres-operator:
     #  ext-postgres-operator.postgres.default_database -- Name of the default database
     default_database: postgres
     #  ext-postgres-operator.postgres.host -- Host of the platform's main database
-    host: ""
+    host: database-postgres-cluster
     #  ext-postgres-operator.postgres.password -- Explicit declaration of the Platform's main database admin user password.
     #  It has lower priority than the corresponding secret values.
     password: ""
@@ -958,15 +956,15 @@ ext-postgres-operator:
     #  ext-postgres-operator.postgresCredsExistingSecrets.password --
     password:
       #  ext-postgres-operator.postgresCredsExistingSecrets.password.secretKey -- Password key
-      secretKey: ""
+      secretKey: password
       #  ext-postgres-operator.postgresCredsExistingSecrets.password.secretName -- Secret name
-      secretName: ""
+      secretName: digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do
     #  ext-postgres-operator.postgresCredsExistingSecrets.username --
     username:
       #  ext-postgres-operator.postgresCredsExistingSecrets.username.secretKey -- Username key
-      secretKey: ""
+      secretKey: username
       #  ext-postgres-operator.postgresCredsExistingSecrets.username.secretName -- Secret name
-      secretName: ""
+      secretName: digitalhubadmin.database-postgres-cluster.credentials.postgresql.acid.zalan.do
   #  ext-postgres-operator.securityContext -- [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
   securityContext:
     #  ext-postgres-operator.securityContext.seccompProfile -- Container configure seccompProfile.
@@ -1007,7 +1005,7 @@ kubernetes-resource-manager:
     #  kubernetes-resource-manager.resourceSelectors.secrets -- Secrets configuration
     secrets:
       #  kubernetes-resource-manager.resourceSelectors.secrets.names -- A filter for the secrets that you want to see based on their name pattern
-      names: ""
+      names: (digitalhub\-owner|digitalhub\-reader|digitalhub\-writer).*
   #  kubernetes-resource-manager.service -- KRM service configuration.
   service:
     #  kubernetes-resource-manager.service.nodePort -- Service nodePort
@@ -1043,10 +1041,10 @@ open-webui:
       value: "WEBUI_SECRET_KEY"
     # Initialize default admin account. (for production enviroments use 'extraEnvFrom' to load this variable from secrets)
     - name: ADMIN_USER_EMAIL
-      value: ""
+      value: "admin@cluster.local"
     # Initialize default admin account. (for production enviroments use 'extraEnvFrom' to load this variable from secrets)
     - name: ADMIN_USER_PASSWORD
-      value: ""
+      value: "admin"
     - name: DEFAULT_USER_ROLE
       value: user
     - name: ENABLE_API_KEY
@@ -1121,13 +1119,13 @@ platformPackages:
 #  postgres-operator -- Postgres operator configuration
 postgres-operator:
   #  postgres-operator.enabled -- Enable/Disable the Postgres operator
-  enabled: false
+  enabled: true
   #  postgres-operator.databases -- The databases that will be created with the Postgres operator
   databases:
     #  postgres-operator.databases.coder -- Coder database configuration
     coder:
       #  postgres-operator.databases.coder.enabled -- Enable/Disable Coder database creation
-      enabled: false
+      enabled: true
       #  postgres-operator.databases.coder.resources -- Resources for the Coder database cluster
       resources:
         #  postgres-operator.databases.coder.resources.limits -- Limits
@@ -1149,7 +1147,7 @@ postgres-operator:
     #  postgres-operator.databases.core -- Core database configuration
     core:
       #  postgres-operator.databases.core.enabled -- Enable/Disable Core database creation
-      enabled: false
+      enabled: true
       #  postgres-operator.databases.core.resources -- Resources for the Core database cluster
       resources:
         #  postgres-operator.databases.core.resources.limits -- Limits
@@ -1171,7 +1169,7 @@ postgres-operator:
     #  postgres-operator.databases.digitalhub -- Platform database configuration
     digitalhub:
       #  postgres-operator.databases.digitalhub.enabled -- Enable/Disable Platform database creation
-      enabled: false
+      enabled: true
       #  postgres-operator.databases.digitalhub.resources -- Resources for the Platform database cluster
       resources:
         #  postgres-operator.databases.digitalhub.resources.limits -- Limits
@@ -1210,13 +1208,13 @@ postgres-operator:
 #  For a complete list of all the Values, as well as the specific documentation, please check the [Postgres Operator Helm Chart repository](https://github.com/zalando/postgres-operator/tree/master/charts/postgres-operator)
 postgrest-operator:
   #  postgrest-operator.enabled -- Enable/Disable Postgrest Operator
-  enabled: false
+  enabled: true
   #  postgrest-operator.postgres -- Postgres instance configuration
   postgres:
     #  postgrest-operator.postgres.default_database -- Default postgres database name
-    default_database: ""
+    default_database: digitalhub
     #  postgrest-operator.postgres.host -- Postgres server host
-    host: ""
+    host: database-postgres-cluster
     #  postgrest-operator.postgres.port -- Postgres server port
     port: 5432
     #  postgrest-operator.postgres.postgrest_service_type -- Postgrest service type
@@ -1228,52 +1226,66 @@ postgrest-operator:
     #  postgrest-operator.postgresCredsExistingSecrets.password --
     password:
       #  postgrest-operator.postgresCredsExistingSecrets.password.secretKey -- Password secret key
-      secretKey: ""
+      secretKey: password
       #  postgrest-operator.postgresCredsExistingSecrets.password.secretName -- Password secret name
-      secretName: ""
+      secretName: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
     #  postgrest-operator.postgresCredsExistingSecrets.username --
     username:
       #  postgrest-operator.postgresCredsExistingSecrets.username.secretKey -- Username secret key
-      secretKey: ""
+      secretKey: username
       #  postgrest-operator.postgresCredsExistingSecrets.username.secretName -- Username secret name
-      secretName: ""
+      secretName: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
 
-#  seaweedfs -- SeaweedFS configuration
 seaweedfs:
-  #  seaweedfs.enabled -- Enable/Disable SeaweedFS
-  enabled: false
+  enabled: true
+  filer:
+    s3:
+      enabled: true
+      # You may specify buckets to be created during the install process.
+      # Buckets may be exposed publicly by setting `anonymousRead` to `true`
+      createBuckets:
+        - name: datalake
+          anonymousRead: false
+        - name: argo
+          anonymousRead: false
+      enableAuth: true
+      existingConfigSecret: seaweed-s3-secret
+  s3:
+    enabled: true
+    enableAuth: true
+    existingConfigSecret: seaweed-s3-secret
 
 #  solr -- Solr configuration
 #  For a complete list of all the Values, as well as the specific documentation, please check the [Solr Helm Chart repository](https://github.com/apache/solr-operator/tree/main/helm/solr)
 solr:
   #  solr.enabled -- Enable/Disable Solr
-  enabled: false
+  enabled: true
   #  solr.creds -- Solr credentials, used to build the security.json
   creds:
     #  solr.creds.admin -- Admin credentials
     admin:
       #  solr.creds.admin.password -- Admin password (Base64)
-      password: ""
+      password: thi4iegheeX7euthe7di
       #  solr.creds.admin.passwordSha -- Admin password (sha256(sha256(salt || password)))
-      passwordSha: ""
+      passwordSha: C8QrTZf6jpu+cPKTsLtyEhv1XVXAYZGmStTKXzB80sg= MW5pNXZlaGIyaWhkdW5w
     #  solr.creds.k8sOper -- K8S Operator credentials
     k8sOper:
       #  solr.creds.k8sOper.password -- Operator password (Base64)
-      password: ""
+      password: imPBf@tU(asx9%TZ
       #  solr.creds.k8sOper.passwordSha -- Operator password (sha256(sha256(salt || password)))
-      passwordSha: ""
+      passwordSha: 3iPc1JWet22a05UZXCFfo/qRUqwg2iVULyv5RBEqPdM= LSpnG/l2j8AA9vrryMGkkFLO+bYeN7ZUvrU270WAfyA=
     #  solr.creds.solr -- Solr user credentials
     solr:
       #  solr.creds.solr.password -- Solr user password (Base64)
-      password: ""
+      password: aed0ohBie3hai6jo7sho
       #  solr.creds.solr.passwordSha -- Solr user password (sha256(sha256(salt || password)))
-      passwordSha: ""
+      passwordSha: i61TpZKyvff3CHnyZ0kMTzkNezkxkilCre93wLkz7jQ= NzlyN3k1cm0xZGt3eWR1MA==
     #  solr.creds.user -- Unprivileged user credentials
     user:
       #  solr.creds.user.password -- Unprivileged user password (Base64)
-      password: ""
+      password: soogh8aiy6vah6Aecai6
       #  solr.creds.user.passwordSha -- Unprivileged user password (sha256(sha256(salt || password)))
-      passwordSha: ""
+      passwordSha: ps9jK0qKXJqZawtFS+SxhB2CdCu90Qgz4riZ0XwzYd4= YWxxZXV3enB1YmE2c2gwdg==
   #  solr.dataStorage -- Solr storage configuration
   dataStorage:
     #  solr.dataStorage.capacity -- Storage size
@@ -1334,13 +1346,13 @@ solr:
       #  solr.solrOptions.security.authenticationType -- Authentication type
       authenticationType: Basic
       #  solr.solrOptions.security.basicAuthSecret -- Specify the required basicAuth secret
-      basicAuthSecret: ""
+      basicAuthSecret: digitalhub-solrcloud-basic-auth
       #  solr.solrOptions.security.bootstrapSecurityJson --
       bootstrapSecurityJson:
         #  solr.solrOptions.security.bootstrapSecurityJson.key -- Key in the secret corresponding to the security.json
         key: security.json
         #  solr.solrOptions.security.bootstrapSecurityJson.name -- Name of the secret with the configured security.json
-        name: ""
+        name: digitalhub-solrcloud-security-bootstrap
       #  solr.solrOptions.security.probesRequireAuth --
       probesRequireAuth: true
 
@@ -1348,7 +1360,7 @@ solr:
 #  For a complete list of all the Values, as well as the specific documentation, please check the [Solr Operator Helm Chart repository](https://github.com/apache/solr-operator/tree/main/helm/solr-operator)
 solr-operator:
   #  solr-operator.enabled -- Enable/Disable Solr Operator
-  enabled: false
+  enabled: true
   #  solr-operator.securityContext -- Solr Operator [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
   securityContext:
     #  solr-operator.securityContext.allowPrivilegeEscalation -- Solr Operator container allow privilege escalation.

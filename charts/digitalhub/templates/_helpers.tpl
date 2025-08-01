@@ -65,8 +65,8 @@ Create the name of the service account to use
 Create registry auth values
 */}}
 {{- define "digitalhub.registryAuth" -}}
-{{- if and .Values.global.registry.username .Values.global.registry.password }}
-{{- printf "%s:%s" .Values.global.registry.username .Values.global.registry.password | b64enc }}
+{{- if and .Values.global.ociRegistry.username .Values.global.ociRegistry.password }}
+{{- printf "%s:%s" .Values.global.ociRegistry.username .Values.global.ociRegistry.password | b64enc }}
 {{- end }}
 {{- end }}
 
