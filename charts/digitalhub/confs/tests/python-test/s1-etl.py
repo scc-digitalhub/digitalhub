@@ -21,9 +21,9 @@ def main():
 
     # Load project
     try:
-      proj = dh.import_project("projects-project-etl.yaml")
+      proj = dh.import_project("projects-tutorial-project.yaml")
     except:
-      proj = dh.load_project("projects-project-etl.yaml")
+      proj = dh.load_project("projects-tutorial-project.yaml")
 
     URL = "https://opendata.comune.bologna.it/api/explore/v2.1/catalog/datasets/rilevazione-flusso-veicoli-tramite-spire-anno-2023/exports/csv?lang=it&timezone=Europe%2FRome&use_labels=true&delimiter=%3B"
     di= proj.new_dataitem(name="url_data_item",kind="table",path=URL)
@@ -31,11 +31,7 @@ def main():
     proj.run('pipeline', action="build", wait=True)
     workflow_run = proj.run('pipeline', action="pipeline", parameters={"url": di.key}, wait=True)
     if(workflow_run.status.state == "COMPLETED"):
-    {{- if .Values.platformPackages.deleteOnCompletion }}
-      dh.delete_project(proj.name)
-    {{- else }}
       sys.exit(0)
-    {{- end }}
     else:
       sys.exit(1)
 
