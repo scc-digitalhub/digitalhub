@@ -8,17 +8,17 @@ global:
   externalHostAddress: ""
   #  global.externalTls --
   externalTls: false
-  #  global.registry -- Values of your registry
-  registry:
-    #  global.registry.email -- Registry email
+  #  global.ociRegistry -- Values of your registry
+  ociRegistry:
+    #  global.ociRegistry.email -- Registry email
     email: ""
-    #  global.registry.password -- Registry password
+    #  global.ociRegistry.password -- Registry password
     password: ""
-    #  global.registry.secretName -- Name of the secret of your registry. It has higher priority.
+    #  global.ociRegistry.secretName -- Name of the secret of your registry. It has higher priority.
     secretName: ""
-    #  global.registry.url -- Registry url
+    #  global.ociRegistry.url -- Registry url
     url: ""
-    #  global.registry.username -- Registry username
+    #  global.ociRegistry.username -- Registry username
     username: ""
 
 #  additionalConfig --
@@ -355,7 +355,7 @@ runtime:
     #  runtime.dbt.image -- DBT wrapper repository
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt
     #  runtime.dbt.tag -- DBT wrapper tag
-    tag: 0.12.0
+    tag: 0.13.0
   hera:
     #  runtime.hera.image -- hera wrapper repository
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-hera/wrapper-hera
@@ -372,17 +372,17 @@ runtime:
     #  runtime.kfp.image -- KFP wrapper repository
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp
     #  runtime.kfp.tag -- KFP wrapper tag
-    tag: 0.12.0
+    tag: 0.13.0
   #  runtime.python --
   python:
     #  runtime.python.image -- Python runtime repository
     image: ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime
     #  runtime.python.tag3_10 -- Python runtime 3.10  tag
-    tag3_10: 3.10-0.12.0
+    tag3_10: 3.10-0.13.0
     #  runtime.python.tag3_11 -- Python runtime 3.11 tag
-    tag3_11: 3.11-0.12.0
+    tag3_11: 3.11-0.13.0
     #  runtime.python.tag3_9 -- Python runtime 3.9 tag
-    tag3_9: 3.9-0.12.0
+    tag3_9: 3.9-0.13.0
 
 #  s3 --
 s3:
