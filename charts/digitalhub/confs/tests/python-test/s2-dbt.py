@@ -21,21 +21,17 @@ def main():
 
     # Load project
     try:
-      proj = dh.import_project("projects-project-dbt-ci.yaml")
+      proj = dh.import_project("projects-tutorial-project.yaml")
     except:
-      proj = dh.load_project("projects-project-dbt-ci.yaml")
+      proj = dh.load_project("projects-tutorial-project.yaml")
 
     url = "https://gist.githubusercontent.com/kevin336/acbb2271e66c10a5b73aacf82ca82784/raw/e38afe62e088394d61ed30884dd50a6826eee0a8/employees.csv"
-    di_url = proj.new_dataitem(name="url_data_item",kind="table",path=url)
+    di_url = proj.new_dataitem(name="url-data-item",kind="table",path=url)
 
-    proj.run('pipeline_dbt', action="build", wait=True)
-    workflow_run = proj.run('pipeline_dbt', action="pipeline", parameters={"di": di_url.key}, wait=True)
+    proj.run('dbt-pipeline', action="build", wait=True)
+    workflow_run = proj.run('dbt-pipeline', action="pipeline", parameters={"employees": di_url.key}, wait=True)
     if(workflow_run.status.state == "COMPLETED"):
-    {{- if .Values.platformPackages.deleteOnCompletion }}
-      dh.delete_project(proj.name)
-    {{- else }}
       sys.exit(0)
-    {{- end }}
     else:
       sys.exit(1)
 

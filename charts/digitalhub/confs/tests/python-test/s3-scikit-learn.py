@@ -21,12 +21,12 @@ def main():
 
     # Load project
     try:
-      proj = dh.import_project("projects-project-ml-ci.yaml")
+      proj = dh.import_project("projects-tutorial-project.yaml")
     except:
-      proj = dh.load_project("projects-project-ml-ci.yaml")
+      proj = dh.load_project("projects-tutorial-project.yaml")
 
-    proj.run('pipeline_ml', action="build", wait=True)
-    workflow_run = proj.run('pipeline_ml', action="pipeline", wait=True)
+    proj.run('ml-pipeline', action="build", wait=True)
+    workflow_run = proj.run('ml-pipeline', action="pipeline", wait=True)
     if(workflow_run.status.state == "COMPLETED"):
     {{- if .Values.platformPackages.deleteOnCompletion }}
       dh.delete_project(proj.name)
