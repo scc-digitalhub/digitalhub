@@ -494,7 +494,7 @@ resource "kubernetes_secret" "code-toolbox-secret" {
 }
 
 resource "kubernetes_config_map" "code-toolbox-configmap" {
-  count = count = data.coder_workspace.me.start_count
+  count = data.coder_workspace.me.start_count
   metadata {
     name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
