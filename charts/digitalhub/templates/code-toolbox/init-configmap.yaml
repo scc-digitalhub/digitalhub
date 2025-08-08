@@ -8,7 +8,7 @@ metadata:
   name: code-toolbox-init
 data:
   {{- range .Values.coder.template.customTemplates }}
-  {{- if eq .name "code-toolbox-experimental" }}
+  {{- if eq .name "code-toolbox" }}
   tolerations.json: {{ .tolerations | toJson | quote }}
   {{- end }}
   {{- end }}

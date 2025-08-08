@@ -153,7 +153,7 @@ Variables used in the creation and upgrade of Coder templates
 {{- $variables = append $variables (printf "node_port=%s" $template.nodePort ) }}
 {{- $variables = append $variables (printf "external_url=%s" (default $root.Values.global.externalHostAddress $root.Subcharts.coder.Values.externalHostAddress) ) }}
 {{- $variables = append $variables (printf "https=%s" (include "digitalhub.coderIngressTlsEnabled" $root) ) }}
-{{- if not (eq $template.name "code-toolbox-experimental")}}
+{{- if not (eq $template.name "code-toolbox")}}
   {{- $variables = append $variables (printf "image=%s" $template.image ) }}
 {{- end }}
 {{- if eq $template.name "dremio"}}
@@ -178,7 +178,7 @@ Variables used in the creation and upgrade of Coder templates
   {{- $variables = append $variables (printf "image_3_9=%s" $template.image39 ) }}
   {{- $variables = append $variables (printf "image_3_11=%s" $template.image311 ) }}
 {{- end }}
-{{- if or (eq $template.name "jupyter") (eq $template.name "code-toolbox-experimental")}}
+{{- if or (eq $template.name "jupyter") (eq $template.name "code-toolbox")}}
   {{- $variables = append $variables (printf "privileged=%v" $template.privileged ) }}
   {{- $variables = append $variables (printf "stsenabled=%v" $root.Values.core.sts.enabled ) }}
 {{- if and $root.Values.core.coreAuthCreds.existingSecret.secretName $root.Values.core.coreAuthCreds.existingSecret.clientIdKey $root.Values.core.coreAuthCreds.existingSecret.clientSecretKey }}
