@@ -341,8 +341,21 @@ resource "kubernetes_job" "source-init" {
       spec {
         init_container {
           name    = "wait-for-dremio"
-          image   = "badouralix/curl-jq"
+          image   = "curlimages/curl:8.15.0"
           command = ["/bin/sh", "-c", "until [ \"$(curl -s -w '%%{http_code}' -o /dev/null \"http://${kubernetes_service.dremio-service.metadata.0.name}:9047/api/v2/buildinfo\")\" -eq 200 ]; do echo \"waiting for dremio to be ready\"; sleep 5; done"]
+          security_context {
+            run_as_user                = "1000"
+            allow_privilege_escalation = false
+            capabilities {
+              drop = [
+                "ALL"
+              ]
+            }
+            run_as_non_root = true
+            seccomp_profile {
+              type = "RuntimeDefault"
+            }
+          }
         }
         init_container {
           name              = "init-dremio-data"
@@ -448,10 +461,29 @@ resource "kubernetes_job" "source-init" {
             name  = "DREMIO_CODER_EMAIL"
             value = data.coder_workspace_owner.me.email
           }
+          security_context {
+            run_as_user                = "1000"
+            allow_privilege_escalation = false
+            capabilities {
+              drop = [
+                "ALL"
+              ]
+            }
+            run_as_non_root = true
+            seccomp_profile {
+              type = "RuntimeDefault"
+            }
+          }
           volume_mount {
             name       = "init-files"
             mount_path = "/init-files"
             read_only  = true
+          }
+        }
+        security_context {
+          run_as_non_root = true
+          seccomp_profile {
+            type = "RuntimeDefault"
           }
         }
         volume {
