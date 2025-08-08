@@ -2280,7 +2280,7 @@ object
       {
         "extraVars": [],
         "iconUrl": "https://cdn-icons-png.flaticon.com/512/7301/7301969.png",
-        "name": "code-toolbox-experimental",
+        "name": "code-toolbox",
         "nodePort": "30050",
         "privileged": false,
         "stopAfter": "8h",
@@ -2318,17 +2318,6 @@ object
             "usernameKey": ""
           }
         },
-        "stopAfter": "8h"
-      },
-      {
-        "extraVars": [],
-        "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png",
-        "image": "ghcr.io/scc-digitalhub/jupyter-3-10:0.13.0",
-        "image311": "ghcr.io/scc-digitalhub/jupyter-3-11:0.13.0",
-        "image39": "ghcr.io/scc-digitalhub/jupyter-3-9:0.13.0",
-        "name": "jupyter",
-        "nodePort": "30040",
-        "privileged": false,
         "stopAfter": "8h"
       }
     ],
@@ -2898,7 +2887,7 @@ object
     {
       "extraVars": [],
       "iconUrl": "https://cdn-icons-png.flaticon.com/512/7301/7301969.png",
-      "name": "code-toolbox-experimental",
+      "name": "code-toolbox",
       "nodePort": "30050",
       "privileged": false,
       "stopAfter": "8h",
@@ -2936,17 +2925,6 @@ object
           "usernameKey": ""
         }
       },
-      "stopAfter": "8h"
-    },
-    {
-      "extraVars": [],
-      "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png",
-      "image": "ghcr.io/scc-digitalhub/jupyter-3-10:0.13.0",
-      "image311": "ghcr.io/scc-digitalhub/jupyter-3-11:0.13.0",
-      "image39": "ghcr.io/scc-digitalhub/jupyter-3-9:0.13.0",
-      "name": "jupyter",
-      "nodePort": "30040",
-      "privileged": false,
       "stopAfter": "8h"
     }
   ],
@@ -2996,7 +2974,7 @@ list
   {
     "extraVars": [],
     "iconUrl": "https://cdn-icons-png.flaticon.com/512/7301/7301969.png",
-    "name": "code-toolbox-experimental",
+    "name": "code-toolbox",
     "nodePort": "30050",
     "privileged": false,
     "stopAfter": "8h",
@@ -3035,17 +3013,6 @@ list
       }
     },
     "stopAfter": "8h"
-  },
-  {
-    "extraVars": [],
-    "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png",
-    "image": "ghcr.io/scc-digitalhub/jupyter-3-10:0.13.0",
-    "image311": "ghcr.io/scc-digitalhub/jupyter-3-11:0.13.0",
-    "image39": "ghcr.io/scc-digitalhub/jupyter-3-9:0.13.0",
-    "name": "jupyter",
-    "nodePort": "30040",
-    "privileged": false,
-    "stopAfter": "8h"
   }
 ]
 </pre>
@@ -3054,7 +3021,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="coder--template--upgrade"><a href="./values.yaml#L399">coder.template.upgrade</a></td>
+			<td id="coder--template--upgrade"><a href="./values.yaml#L390">coder.template.upgrade</a></td>
 			<td>
 object
 </td>
@@ -3074,7 +3041,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="coder--template--upgrade--enabled"><a href="./values.yaml#L401">coder.template.upgrade.enabled</a></td>
+			<td id="coder--template--upgrade--enabled"><a href="./values.yaml#L392">coder.template.upgrade.enabled</a></td>
 			<td>
 bool
 </td>
@@ -3088,7 +3055,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="coder--template--upgrade--token"><a href="./values.yaml#L404">coder.template.upgrade.token</a></td>
+			<td id="coder--template--upgrade--token"><a href="./values.yaml#L395">coder.template.upgrade.token</a></td>
 			<td>
 string
 </td>
@@ -3102,7 +3069,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="coder--username"><a href="./values.yaml#L406">coder.username</a></td>
+			<td id="coder--username"><a href="./values.yaml#L397">coder.username</a></td>
 			<td>
 string
 </td>
@@ -3116,7 +3083,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core"><a href="./values.yaml#L409">core</a></td>
+			<td id="core"><a href="./values.yaml#L400">core</a></td>
 			<td>
 object
 </td>
@@ -3299,7 +3266,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--enabled"><a href="./values.yaml#L411">core.enabled</a></td>
+			<td id="core--enabled"><a href="./values.yaml#L402">core.enabled</a></td>
 			<td>
 bool
 </td>
@@ -3313,7 +3280,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig"><a href="./values.yaml#L413">core.additionalConfig</a></td>
+			<td id="core--additionalConfig"><a href="./values.yaml#L404">core.additionalConfig</a></td>
 			<td>
 object
 </td>
@@ -3347,7 +3314,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig--debug"><a href="./values.yaml#L415">core.additionalConfig.debug</a></td>
+			<td id="core--additionalConfig--debug"><a href="./values.yaml#L406">core.additionalConfig.debug</a></td>
 			<td>
 object
 </td>
@@ -3367,7 +3334,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig--debug--enableLogs"><a href="./values.yaml#L417">core.additionalConfig.debug.enableLogs</a></td>
+			<td id="core--additionalConfig--debug--enableLogs"><a href="./values.yaml#L408">core.additionalConfig.debug.enableLogs</a></td>
 			<td>
 bool
 </td>
@@ -3381,7 +3348,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig--debug--enableMetrics"><a href="./values.yaml#L419">core.additionalConfig.debug.enableMetrics</a></td>
+			<td id="core--additionalConfig--debug--enableMetrics"><a href="./values.yaml#L410">core.additionalConfig.debug.enableMetrics</a></td>
 			<td>
 bool
 </td>
@@ -3395,7 +3362,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig--resources"><a href="./values.yaml#L421">core.additionalConfig.resources</a></td>
+			<td id="core--additionalConfig--resources"><a href="./values.yaml#L412">core.additionalConfig.resources</a></td>
 			<td>
 object
 </td>
@@ -3420,7 +3387,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig--resources--cpuLim"><a href="./values.yaml#L423">core.additionalConfig.resources.cpuLim</a></td>
+			<td id="core--additionalConfig--resources--cpuLim"><a href="./values.yaml#L414">core.additionalConfig.resources.cpuLim</a></td>
 			<td>
 string
 </td>
@@ -3434,7 +3401,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig--resources--cpuReq"><a href="./values.yaml#L425">core.additionalConfig.resources.cpuReq</a></td>
+			<td id="core--additionalConfig--resources--cpuReq"><a href="./values.yaml#L416">core.additionalConfig.resources.cpuReq</a></td>
 			<td>
 string
 </td>
@@ -3448,7 +3415,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig--resources--gpuKey"><a href="./values.yaml#L427">core.additionalConfig.resources.gpuKey</a></td>
+			<td id="core--additionalConfig--resources--gpuKey"><a href="./values.yaml#L418">core.additionalConfig.resources.gpuKey</a></td>
 			<td>
 string
 </td>
@@ -3462,7 +3429,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig--resources--memLim"><a href="./values.yaml#L429">core.additionalConfig.resources.memLim</a></td>
+			<td id="core--additionalConfig--resources--memLim"><a href="./values.yaml#L420">core.additionalConfig.resources.memLim</a></td>
 			<td>
 string
 </td>
@@ -3476,7 +3443,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig--resources--memReq"><a href="./values.yaml#L431">core.additionalConfig.resources.memReq</a></td>
+			<td id="core--additionalConfig--resources--memReq"><a href="./values.yaml#L422">core.additionalConfig.resources.memReq</a></td>
 			<td>
 string
 </td>
@@ -3490,7 +3457,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig--resources--pvcLim"><a href="./values.yaml#L433">core.additionalConfig.resources.pvcLim</a></td>
+			<td id="core--additionalConfig--resources--pvcLim"><a href="./values.yaml#L424">core.additionalConfig.resources.pvcLim</a></td>
 			<td>
 string
 </td>
@@ -3504,7 +3471,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig--resources--pvcReq"><a href="./values.yaml#L435">core.additionalConfig.resources.pvcReq</a></td>
+			<td id="core--additionalConfig--resources--pvcReq"><a href="./values.yaml#L426">core.additionalConfig.resources.pvcReq</a></td>
 			<td>
 string
 </td>
@@ -3518,7 +3485,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig--security"><a href="./values.yaml#L437">core.additionalConfig.security</a></td>
+			<td id="core--additionalConfig--security"><a href="./values.yaml#L428">core.additionalConfig.security</a></td>
 			<td>
 object
 </td>
@@ -3537,7 +3504,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--additionalConfig--security--disableRoot"><a href="./values.yaml#L439">core.additionalConfig.security.disableRoot</a></td>
+			<td id="core--additionalConfig--security--disableRoot"><a href="./values.yaml#L430">core.additionalConfig.security.disableRoot</a></td>
 			<td>
 bool
 </td>
@@ -3551,7 +3518,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="core--argoWorkflow"><a href="./values.yaml#L441">core.argoWorkflow</a></td>
+			<td id="core--argoWorkflow"><a href="./values.yaml#L432">core.argoWorkflow</a></td>
 			<td>
 object
 </td>
@@ -3573,7 +3540,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--argoWorkflow--configmap"><a href="./values.yaml#L443">core.argoWorkflow.configmap</a></td>
+			<td id="core--argoWorkflow--configmap"><a href="./values.yaml#L434">core.argoWorkflow.configmap</a></td>
 			<td>
 string
 </td>
@@ -3587,7 +3554,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--argoWorkflow--key"><a href="./values.yaml#L445">core.argoWorkflow.key</a></td>
+			<td id="core--argoWorkflow--key"><a href="./values.yaml#L436">core.argoWorkflow.key</a></td>
 			<td>
 string
 </td>
@@ -3601,7 +3568,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--argoWorkflow--serviceAccount"><a href="./values.yaml#L447">core.argoWorkflow.serviceAccount</a></td>
+			<td id="core--argoWorkflow--serviceAccount"><a href="./values.yaml#L438">core.argoWorkflow.serviceAccount</a></td>
 			<td>
 string
 </td>
@@ -3615,7 +3582,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--argoWorkflow--user"><a href="./values.yaml#L449">core.argoWorkflow.user</a></td>
+			<td id="core--argoWorkflow--user"><a href="./values.yaml#L440">core.argoWorkflow.user</a></td>
 			<td>
 string
 </td>
@@ -3629,7 +3596,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--authentication"><a href="./values.yaml#L451">core.authentication</a></td>
+			<td id="core--authentication"><a href="./values.yaml#L442">core.authentication</a></td>
 			<td>
 object
 </td>
@@ -3655,7 +3622,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--authentication--openId"><a href="./values.yaml#L461">core.authentication.openId</a></td>
+			<td id="core--authentication--openId"><a href="./values.yaml#L452">core.authentication.openId</a></td>
 			<td>
 object
 </td>
@@ -3674,7 +3641,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--authentication--openId--enabled"><a href="./values.yaml#L463">core.authentication.openId.enabled</a></td>
+			<td id="core--authentication--openId--enabled"><a href="./values.yaml#L454">core.authentication.openId.enabled</a></td>
 			<td>
 bool
 </td>
@@ -3688,7 +3655,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="core--commonCredsSecret"><a href="./values.yaml#L471">core.commonCredsSecret</a></td>
+			<td id="core--commonCredsSecret"><a href="./values.yaml#L462">core.commonCredsSecret</a></td>
 			<td>
 object
 </td>
@@ -3708,7 +3675,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--commonCredsSecret--useExistingCommonCredsSecret"><a href="./values.yaml#L475">core.commonCredsSecret.useExistingCommonCredsSecret</a></td>
+			<td id="core--commonCredsSecret--useExistingCommonCredsSecret"><a href="./values.yaml#L466">core.commonCredsSecret.useExistingCommonCredsSecret</a></td>
 			<td>
 bool
 </td>
@@ -3722,7 +3689,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="core--coreAuthCreds"><a href="./values.yaml#L477">core.coreAuthCreds</a></td>
+			<td id="core--coreAuthCreds"><a href="./values.yaml#L468">core.coreAuthCreds</a></td>
 			<td>
 object
 </td>
@@ -3747,7 +3714,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--coreAuthCreds--clientId"><a href="./values.yaml#L479">core.coreAuthCreds.clientId</a></td>
+			<td id="core--coreAuthCreds--clientId"><a href="./values.yaml#L470">core.coreAuthCreds.clientId</a></td>
 			<td>
 string
 </td>
@@ -3761,7 +3728,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--coreAuthCreds--clientSecret"><a href="./values.yaml#L481">core.coreAuthCreds.clientSecret</a></td>
+			<td id="core--coreAuthCreds--clientSecret"><a href="./values.yaml#L472">core.coreAuthCreds.clientSecret</a></td>
 			<td>
 string
 </td>
@@ -3775,7 +3742,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--coreAuthCreds--existingSecret"><a href="./values.yaml#L483">core.coreAuthCreds.existingSecret</a></td>
+			<td id="core--coreAuthCreds--existingSecret"><a href="./values.yaml#L474">core.coreAuthCreds.existingSecret</a></td>
 			<td>
 object
 </td>
@@ -3796,7 +3763,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--coreAuthCreds--existingSecret--clientIdKey"><a href="./values.yaml#L485">core.coreAuthCreds.existingSecret.clientIdKey</a></td>
+			<td id="core--coreAuthCreds--existingSecret--clientIdKey"><a href="./values.yaml#L476">core.coreAuthCreds.existingSecret.clientIdKey</a></td>
 			<td>
 string
 </td>
@@ -3810,7 +3777,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--coreAuthCreds--existingSecret--clientSecretKey"><a href="./values.yaml#L487">core.coreAuthCreds.existingSecret.clientSecretKey</a></td>
+			<td id="core--coreAuthCreds--existingSecret--clientSecretKey"><a href="./values.yaml#L478">core.coreAuthCreds.existingSecret.clientSecretKey</a></td>
 			<td>
 string
 </td>
@@ -3824,7 +3791,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--coreAuthCreds--existingSecret--secretName"><a href="./values.yaml#L489">core.coreAuthCreds.existingSecret.secretName</a></td>
+			<td id="core--coreAuthCreds--existingSecret--secretName"><a href="./values.yaml#L480">core.coreAuthCreds.existingSecret.secretName</a></td>
 			<td>
 string
 </td>
@@ -3838,7 +3805,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--databaseProvider"><a href="./values.yaml#L491">core.databaseProvider</a></td>
+			<td id="core--databaseProvider"><a href="./values.yaml#L482">core.databaseProvider</a></td>
 			<td>
 object
 </td>
@@ -3860,7 +3827,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--databaseProvider--database"><a href="./values.yaml#L493">core.databaseProvider.database</a></td>
+			<td id="core--databaseProvider--database"><a href="./values.yaml#L484">core.databaseProvider.database</a></td>
 			<td>
 string
 </td>
@@ -3874,7 +3841,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--databaseProvider--host"><a href="./values.yaml#L495">core.databaseProvider.host</a></td>
+			<td id="core--databaseProvider--host"><a href="./values.yaml#L486">core.databaseProvider.host</a></td>
 			<td>
 string
 </td>
@@ -3888,7 +3855,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--databaseProvider--ownerSecret"><a href="./values.yaml#L497">core.databaseProvider.ownerSecret</a></td>
+			<td id="core--databaseProvider--ownerSecret"><a href="./values.yaml#L488">core.databaseProvider.ownerSecret</a></td>
 			<td>
 string
 </td>
@@ -3902,7 +3869,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--databaseProvider--port"><a href="./values.yaml#L499">core.databaseProvider.port</a></td>
+			<td id="core--databaseProvider--port"><a href="./values.yaml#L490">core.databaseProvider.port</a></td>
 			<td>
 string
 </td>
@@ -3916,7 +3883,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--image"><a href="./values.yaml#L501">core.image</a></td>
+			<td id="core--image"><a href="./values.yaml#L492">core.image</a></td>
 			<td>
 object
 </td>
@@ -3935,7 +3902,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--image--tag"><a href="./values.yaml#L503">core.image.tag</a></td>
+			<td id="core--image--tag"><a href="./values.yaml#L494">core.image.tag</a></td>
 			<td>
 string
 </td>
@@ -3949,7 +3916,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--kanikoArgs"><a href="./values.yaml#L505">core.kanikoArgs</a></td>
+			<td id="core--kanikoArgs"><a href="./values.yaml#L496">core.kanikoArgs</a></td>
 			<td>
 string
 </td>
@@ -3963,7 +3930,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--kubeai"><a href="./values.yaml#L507">core.kubeai</a></td>
+			<td id="core--kubeai"><a href="./values.yaml#L498">core.kubeai</a></td>
 			<td>
 object
 </td>
@@ -3984,7 +3951,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--kubeai--enabled"><a href="./values.yaml#L509">core.kubeai.enabled</a></td>
+			<td id="core--kubeai--enabled"><a href="./values.yaml#L500">core.kubeai.enabled</a></td>
 			<td>
 bool
 </td>
@@ -3998,7 +3965,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="core--kubeai--port"><a href="./values.yaml#L511">core.kubeai.port</a></td>
+			<td id="core--kubeai--port"><a href="./values.yaml#L502">core.kubeai.port</a></td>
 			<td>
 string
 </td>
@@ -4012,7 +3979,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--kubeai--serviceName"><a href="./values.yaml#L513">core.kubeai.serviceName</a></td>
+			<td id="core--kubeai--serviceName"><a href="./values.yaml#L504">core.kubeai.serviceName</a></td>
 			<td>
 string
 </td>
@@ -4026,7 +3993,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--postgres"><a href="./values.yaml#L515">core.postgres</a></td>
+			<td id="core--postgres"><a href="./values.yaml#L506">core.postgres</a></td>
 			<td>
 object
 </td>
@@ -4057,7 +4024,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--postgres--credentials"><a href="./values.yaml#L517">core.postgres.credentials</a></td>
+			<td id="core--postgres--credentials"><a href="./values.yaml#L508">core.postgres.credentials</a></td>
 			<td>
 object
 </td>
@@ -4082,7 +4049,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--postgres--credentials--existingSecret"><a href="./values.yaml#L519">core.postgres.credentials.existingSecret</a></td>
+			<td id="core--postgres--credentials--existingSecret"><a href="./values.yaml#L510">core.postgres.credentials.existingSecret</a></td>
 			<td>
 object
 </td>
@@ -4103,7 +4070,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--postgres--credentials--existingSecret--name"><a href="./values.yaml#L521">core.postgres.credentials.existingSecret.name</a></td>
+			<td id="core--postgres--credentials--existingSecret--name"><a href="./values.yaml#L512">core.postgres.credentials.existingSecret.name</a></td>
 			<td>
 string
 </td>
@@ -4117,7 +4084,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--postgres--credentials--existingSecret--passwordKey"><a href="./values.yaml#L523">core.postgres.credentials.existingSecret.passwordKey</a></td>
+			<td id="core--postgres--credentials--existingSecret--passwordKey"><a href="./values.yaml#L514">core.postgres.credentials.existingSecret.passwordKey</a></td>
 			<td>
 string
 </td>
@@ -4131,7 +4098,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--postgres--credentials--existingSecret--usernameKey"><a href="./values.yaml#L525">core.postgres.credentials.existingSecret.usernameKey</a></td>
+			<td id="core--postgres--credentials--existingSecret--usernameKey"><a href="./values.yaml#L516">core.postgres.credentials.existingSecret.usernameKey</a></td>
 			<td>
 string
 </td>
@@ -4145,7 +4112,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--postgres--credentials--password"><a href="./values.yaml#L527">core.postgres.credentials.password</a></td>
+			<td id="core--postgres--credentials--password"><a href="./values.yaml#L518">core.postgres.credentials.password</a></td>
 			<td>
 string
 </td>
@@ -4159,7 +4126,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--postgres--credentials--username"><a href="./values.yaml#L529">core.postgres.credentials.username</a></td>
+			<td id="core--postgres--credentials--username"><a href="./values.yaml#L520">core.postgres.credentials.username</a></td>
 			<td>
 string
 </td>
@@ -4173,7 +4140,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--postgres--database"><a href="./values.yaml#L531">core.postgres.database</a></td>
+			<td id="core--postgres--database"><a href="./values.yaml#L522">core.postgres.database</a></td>
 			<td>
 string
 </td>
@@ -4187,7 +4154,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--postgres--host"><a href="./values.yaml#L533">core.postgres.host</a></td>
+			<td id="core--postgres--host"><a href="./values.yaml#L524">core.postgres.host</a></td>
 			<td>
 string
 </td>
@@ -4201,7 +4168,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--postgres--port"><a href="./values.yaml#L535">core.postgres.port</a></td>
+			<td id="core--postgres--port"><a href="./values.yaml#L526">core.postgres.port</a></td>
 			<td>
 string
 </td>
@@ -4215,7 +4182,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--postgres--schema"><a href="./values.yaml#L537">core.postgres.schema</a></td>
+			<td id="core--postgres--schema"><a href="./values.yaml#L528">core.postgres.schema</a></td>
 			<td>
 string
 </td>
@@ -4229,7 +4196,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3"><a href="./values.yaml#L539">core.s3</a></td>
+			<td id="core--s3"><a href="./values.yaml#L530">core.s3</a></td>
 			<td>
 object
 </td>
@@ -4264,7 +4231,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--accessKey"><a href="./values.yaml#L544">core.s3.accessKey</a></td>
+			<td id="core--s3--accessKey"><a href="./values.yaml#L535">core.s3.accessKey</a></td>
 			<td>
 string
 </td>
@@ -4278,7 +4245,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--bucket"><a href="./values.yaml#L546">core.s3.bucket</a></td>
+			<td id="core--s3--bucket"><a href="./values.yaml#L537">core.s3.bucket</a></td>
 			<td>
 string
 </td>
@@ -4292,7 +4259,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--dynamicCreds"><a href="./values.yaml#L548">core.s3.dynamicCreds</a></td>
+			<td id="core--s3--dynamicCreds"><a href="./values.yaml#L539">core.s3.dynamicCreds</a></td>
 			<td>
 object
 </td>
@@ -4311,7 +4278,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--dynamicCreds--enabled"><a href="./values.yaml#L550">core.s3.dynamicCreds.enabled</a></td>
+			<td id="core--s3--dynamicCreds--enabled"><a href="./values.yaml#L541">core.s3.dynamicCreds.enabled</a></td>
 			<td>
 bool
 </td>
@@ -4325,7 +4292,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--endpoint"><a href="./values.yaml#L552">core.s3.endpoint</a></td>
+			<td id="core--s3--endpoint"><a href="./values.yaml#L543">core.s3.endpoint</a></td>
 			<td>
 string
 </td>
@@ -4339,7 +4306,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--existingSecret"><a href="./values.yaml#L555">core.s3.existingSecret</a></td>
+			<td id="core--s3--existingSecret"><a href="./values.yaml#L546">core.s3.existingSecret</a></td>
 			<td>
 object
 </td>
@@ -4360,7 +4327,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--existingSecret--accessKeyKey"><a href="./values.yaml#L557">core.s3.existingSecret.accessKeyKey</a></td>
+			<td id="core--s3--existingSecret--accessKeyKey"><a href="./values.yaml#L548">core.s3.existingSecret.accessKeyKey</a></td>
 			<td>
 string
 </td>
@@ -4374,7 +4341,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--existingSecret--name"><a href="./values.yaml#L559">core.s3.existingSecret.name</a></td>
+			<td id="core--s3--existingSecret--name"><a href="./values.yaml#L550">core.s3.existingSecret.name</a></td>
 			<td>
 string
 </td>
@@ -4388,7 +4355,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--existingSecret--secretKeyKey"><a href="./values.yaml#L561">core.s3.existingSecret.secretKeyKey</a></td>
+			<td id="core--s3--existingSecret--secretKeyKey"><a href="./values.yaml#L552">core.s3.existingSecret.secretKeyKey</a></td>
 			<td>
 string
 </td>
@@ -4402,7 +4369,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--port"><a href="./values.yaml#L563">core.s3.port</a></td>
+			<td id="core--s3--port"><a href="./values.yaml#L554">core.s3.port</a></td>
 			<td>
 string
 </td>
@@ -4416,7 +4383,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--protocol"><a href="./values.yaml#L565">core.s3.protocol</a></td>
+			<td id="core--s3--protocol"><a href="./values.yaml#L556">core.s3.protocol</a></td>
 			<td>
 string
 </td>
@@ -4430,7 +4397,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--publicUrl"><a href="./values.yaml#L567">core.s3.publicUrl</a></td>
+			<td id="core--s3--publicUrl"><a href="./values.yaml#L558">core.s3.publicUrl</a></td>
 			<td>
 string
 </td>
@@ -4444,7 +4411,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--region"><a href="./values.yaml#L569">core.s3.region</a></td>
+			<td id="core--s3--region"><a href="./values.yaml#L560">core.s3.region</a></td>
 			<td>
 string
 </td>
@@ -4458,7 +4425,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--s3--secretKey"><a href="./values.yaml#L572">core.s3.secretKey</a></td>
+			<td id="core--s3--secretKey"><a href="./values.yaml#L563">core.s3.secretKey</a></td>
 			<td>
 string
 </td>
@@ -4472,7 +4439,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--service"><a href="./values.yaml#L574">core.service</a></td>
+			<td id="core--service"><a href="./values.yaml#L565">core.service</a></td>
 			<td>
 object
 </td>
@@ -4492,7 +4459,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--service--httpNodePort"><a href="./values.yaml#L576">core.service.httpNodePort</a></td>
+			<td id="core--service--httpNodePort"><a href="./values.yaml#L567">core.service.httpNodePort</a></td>
 			<td>
 string
 </td>
@@ -4506,7 +4473,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--service--type"><a href="./values.yaml#L578">core.service.type</a></td>
+			<td id="core--service--type"><a href="./values.yaml#L569">core.service.type</a></td>
 			<td>
 string
 </td>
@@ -4520,7 +4487,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr"><a href="./values.yaml#L580">core.solr</a></td>
+			<td id="core--solr"><a href="./values.yaml#L571">core.solr</a></td>
 			<td>
 object
 </td>
@@ -4560,7 +4527,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--enabled"><a href="./values.yaml#L582">core.solr.enabled</a></td>
+			<td id="core--solr--enabled"><a href="./values.yaml#L573">core.solr.enabled</a></td>
 			<td>
 bool
 </td>
@@ -4574,7 +4541,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--collection"><a href="./values.yaml#L584">core.solr.collection</a></td>
+			<td id="core--solr--collection"><a href="./values.yaml#L575">core.solr.collection</a></td>
 			<td>
 object
 </td>
@@ -4598,7 +4565,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--collection--initialize"><a href="./values.yaml#L586">core.solr.collection.initialize</a></td>
+			<td id="core--solr--collection--initialize"><a href="./values.yaml#L577">core.solr.collection.initialize</a></td>
 			<td>
 object
 </td>
@@ -4619,7 +4586,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--collection--initialize--enabled"><a href="./values.yaml#L588">core.solr.collection.initialize.enabled</a></td>
+			<td id="core--solr--collection--initialize--enabled"><a href="./values.yaml#L579">core.solr.collection.initialize.enabled</a></td>
 			<td>
 bool
 </td>
@@ -4633,7 +4600,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--collection--initialize--image"><a href="./values.yaml#L590">core.solr.collection.initialize.image</a></td>
+			<td id="core--solr--collection--initialize--image"><a href="./values.yaml#L581">core.solr.collection.initialize.image</a></td>
 			<td>
 string
 </td>
@@ -4647,7 +4614,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--collection--initialize--securityJsonSecret"><a href="./values.yaml#L594">core.solr.collection.initialize.securityJsonSecret</a></td>
+			<td id="core--solr--collection--initialize--securityJsonSecret"><a href="./values.yaml#L585">core.solr.collection.initialize.securityJsonSecret</a></td>
 			<td>
 string
 </td>
@@ -4661,7 +4628,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--collection--name"><a href="./values.yaml#L596">core.solr.collection.name</a></td>
+			<td id="core--solr--collection--name"><a href="./values.yaml#L587">core.solr.collection.name</a></td>
 			<td>
 string
 </td>
@@ -4675,7 +4642,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--credentials"><a href="./values.yaml#L598">core.solr.credentials</a></td>
+			<td id="core--solr--credentials"><a href="./values.yaml#L589">core.solr.credentials</a></td>
 			<td>
 object
 </td>
@@ -4702,7 +4669,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--credentials--existingCollectionSecret"><a href="./values.yaml#L602">core.solr.credentials.existingCollectionSecret</a></td>
+			<td id="core--solr--credentials--existingCollectionSecret"><a href="./values.yaml#L593">core.solr.credentials.existingCollectionSecret</a></td>
 			<td>
 object
 </td>
@@ -4722,7 +4689,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--credentials--existingCollectionSecret--passwordKey"><a href="./values.yaml#L604">core.solr.credentials.existingCollectionSecret.passwordKey</a></td>
+			<td id="core--solr--credentials--existingCollectionSecret--passwordKey"><a href="./values.yaml#L595">core.solr.credentials.existingCollectionSecret.passwordKey</a></td>
 			<td>
 string
 </td>
@@ -4736,7 +4703,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--credentials--existingCollectionSecret--secretName"><a href="./values.yaml#L606">core.solr.credentials.existingCollectionSecret.secretName</a></td>
+			<td id="core--solr--credentials--existingCollectionSecret--secretName"><a href="./values.yaml#L597">core.solr.credentials.existingCollectionSecret.secretName</a></td>
 			<td>
 string
 </td>
@@ -4750,7 +4717,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--credentials--existingSecurityJsonSecret"><a href="./values.yaml#L608">core.solr.credentials.existingSecurityJsonSecret</a></td>
+			<td id="core--solr--credentials--existingSecurityJsonSecret"><a href="./values.yaml#L599">core.solr.credentials.existingSecurityJsonSecret</a></td>
 			<td>
 object
 </td>
@@ -4770,7 +4737,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--credentials--existingSecurityJsonSecret--adminKey"><a href="./values.yaml#L610">core.solr.credentials.existingSecurityJsonSecret.adminKey</a></td>
+			<td id="core--solr--credentials--existingSecurityJsonSecret--adminKey"><a href="./values.yaml#L601">core.solr.credentials.existingSecurityJsonSecret.adminKey</a></td>
 			<td>
 string
 </td>
@@ -4784,7 +4751,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--credentials--existingSecurityJsonSecret--secretName"><a href="./values.yaml#L612">core.solr.credentials.existingSecurityJsonSecret.secretName</a></td>
+			<td id="core--solr--credentials--existingSecurityJsonSecret--secretName"><a href="./values.yaml#L603">core.solr.credentials.existingSecurityJsonSecret.secretName</a></td>
 			<td>
 string
 </td>
@@ -4798,7 +4765,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--credentials--user"><a href="./values.yaml#L614">core.solr.credentials.user</a></td>
+			<td id="core--solr--credentials--user"><a href="./values.yaml#L605">core.solr.credentials.user</a></td>
 			<td>
 string
 </td>
@@ -4812,7 +4779,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--fullNameOverride"><a href="./values.yaml#L616">core.solr.fullNameOverride</a></td>
+			<td id="core--solr--fullNameOverride"><a href="./values.yaml#L607">core.solr.fullNameOverride</a></td>
 			<td>
 string
 </td>
@@ -4826,7 +4793,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--solr--url"><a href="./values.yaml#L618">core.solr.url</a></td>
+			<td id="core--solr--url"><a href="./values.yaml#L609">core.solr.url</a></td>
 			<td>
 string
 </td>
@@ -4840,7 +4807,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts"><a href="./values.yaml#L620">core.sts</a></td>
+			<td id="core--sts"><a href="./values.yaml#L611">core.sts</a></td>
 			<td>
 object
 </td>
@@ -4896,7 +4863,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--enabled"><a href="./values.yaml#L622">core.sts.enabled</a></td>
+			<td id="core--sts--enabled"><a href="./values.yaml#L613">core.sts.enabled</a></td>
 			<td>
 bool
 </td>
@@ -4910,7 +4877,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--client"><a href="./values.yaml#L624">core.sts.client</a></td>
+			<td id="core--sts--client"><a href="./values.yaml#L615">core.sts.client</a></td>
 			<td>
 object
 </td>
@@ -4930,7 +4897,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--client--clientId"><a href="./values.yaml#L626">core.sts.client.clientId</a></td>
+			<td id="core--sts--client--clientId"><a href="./values.yaml#L617">core.sts.client.clientId</a></td>
 			<td>
 string
 </td>
@@ -4944,7 +4911,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--client--clientSecret"><a href="./values.yaml#L628">core.sts.client.clientSecret</a></td>
+			<td id="core--sts--client--clientSecret"><a href="./values.yaml#L619">core.sts.client.clientSecret</a></td>
 			<td>
 string
 </td>
@@ -4958,7 +4925,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--credentials"><a href="./values.yaml#L630">core.sts.credentials</a></td>
+			<td id="core--sts--credentials"><a href="./values.yaml#L621">core.sts.credentials</a></td>
 			<td>
 object
 </td>
@@ -4977,7 +4944,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--credentials--roles"><a href="./values.yaml#L633">core.sts.credentials.roles</a></td>
+			<td id="core--sts--credentials--roles"><a href="./values.yaml#L624">core.sts.credentials.roles</a></td>
 			<td>
 string
 </td>
@@ -4991,7 +4958,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--databaseProvider"><a href="./values.yaml#L635">core.sts.databaseProvider</a></td>
+			<td id="core--sts--databaseProvider"><a href="./values.yaml#L626">core.sts.databaseProvider</a></td>
 			<td>
 object
 </td>
@@ -5019,7 +4986,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--databaseProvider--enabled"><a href="./values.yaml#L637">core.sts.databaseProvider.enabled</a></td>
+			<td id="core--sts--databaseProvider--enabled"><a href="./values.yaml#L628">core.sts.databaseProvider.enabled</a></td>
 			<td>
 bool
 </td>
@@ -5033,7 +5000,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--databaseProvider--credentials"><a href="./values.yaml#L639">core.sts.databaseProvider.credentials</a></td>
+			<td id="core--sts--databaseProvider--credentials"><a href="./values.yaml#L630">core.sts.databaseProvider.credentials</a></td>
 			<td>
 object
 </td>
@@ -5058,7 +5025,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--databaseProvider--credentials--existingSecret"><a href="./values.yaml#L642">core.sts.databaseProvider.credentials.existingSecret</a></td>
+			<td id="core--sts--databaseProvider--credentials--existingSecret"><a href="./values.yaml#L633">core.sts.databaseProvider.credentials.existingSecret</a></td>
 			<td>
 object
 </td>
@@ -5079,7 +5046,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--databaseProvider--credentials--existingSecret--name"><a href="./values.yaml#L644">core.sts.databaseProvider.credentials.existingSecret.name</a></td>
+			<td id="core--sts--databaseProvider--credentials--existingSecret--name"><a href="./values.yaml#L635">core.sts.databaseProvider.credentials.existingSecret.name</a></td>
 			<td>
 string
 </td>
@@ -5093,7 +5060,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--databaseProvider--credentials--existingSecret--passwordKey"><a href="./values.yaml#L646">core.sts.databaseProvider.credentials.existingSecret.passwordKey</a></td>
+			<td id="core--sts--databaseProvider--credentials--existingSecret--passwordKey"><a href="./values.yaml#L637">core.sts.databaseProvider.credentials.existingSecret.passwordKey</a></td>
 			<td>
 string
 </td>
@@ -5107,7 +5074,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--databaseProvider--credentials--existingSecret--usernameKey"><a href="./values.yaml#L648">core.sts.databaseProvider.credentials.existingSecret.usernameKey</a></td>
+			<td id="core--sts--databaseProvider--credentials--existingSecret--usernameKey"><a href="./values.yaml#L639">core.sts.databaseProvider.credentials.existingSecret.usernameKey</a></td>
 			<td>
 string
 </td>
@@ -5121,7 +5088,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--databaseProvider--credentials--password"><a href="./values.yaml#L651">core.sts.databaseProvider.credentials.password</a></td>
+			<td id="core--sts--databaseProvider--credentials--password"><a href="./values.yaml#L642">core.sts.databaseProvider.credentials.password</a></td>
 			<td>
 string
 </td>
@@ -5135,7 +5102,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--databaseProvider--credentials--username"><a href="./values.yaml#L654">core.sts.databaseProvider.credentials.username</a></td>
+			<td id="core--sts--databaseProvider--credentials--username"><a href="./values.yaml#L645">core.sts.databaseProvider.credentials.username</a></td>
 			<td>
 string
 </td>
@@ -5149,7 +5116,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--jwt"><a href="./values.yaml#L656">core.sts.jwt</a></td>
+			<td id="core--sts--jwt"><a href="./values.yaml#L647">core.sts.jwt</a></td>
 			<td>
 object
 </td>
@@ -5168,7 +5135,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--jwt--issuerUri"><a href="./values.yaml#L658">core.sts.jwt.issuerUri</a></td>
+			<td id="core--sts--jwt--issuerUri"><a href="./values.yaml#L649">core.sts.jwt.issuerUri</a></td>
 			<td>
 string
 </td>
@@ -5182,7 +5149,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--stsDb"><a href="./values.yaml#L660">core.sts.stsDb</a></td>
+			<td id="core--sts--stsDb"><a href="./values.yaml#L651">core.sts.stsDb</a></td>
 			<td>
 object
 </td>
@@ -5213,7 +5180,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--stsDb--credentials"><a href="./values.yaml#L662">core.sts.stsDb.credentials</a></td>
+			<td id="core--sts--stsDb--credentials"><a href="./values.yaml#L653">core.sts.stsDb.credentials</a></td>
 			<td>
 object
 </td>
@@ -5236,7 +5203,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--stsDb--credentials--existingSecret"><a href="./values.yaml#L665">core.sts.stsDb.credentials.existingSecret</a></td>
+			<td id="core--sts--stsDb--credentials--existingSecret"><a href="./values.yaml#L656">core.sts.stsDb.credentials.existingSecret</a></td>
 			<td>
 object
 </td>
@@ -5257,7 +5224,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--stsDb--credentials--existingSecret--name"><a href="./values.yaml#L667">core.sts.stsDb.credentials.existingSecret.name</a></td>
+			<td id="core--sts--stsDb--credentials--existingSecret--name"><a href="./values.yaml#L658">core.sts.stsDb.credentials.existingSecret.name</a></td>
 			<td>
 string
 </td>
@@ -5271,7 +5238,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--stsDb--credentials--existingSecret--passwordKey"><a href="./values.yaml#L669">core.sts.stsDb.credentials.existingSecret.passwordKey</a></td>
+			<td id="core--sts--stsDb--credentials--existingSecret--passwordKey"><a href="./values.yaml#L660">core.sts.stsDb.credentials.existingSecret.passwordKey</a></td>
 			<td>
 string
 </td>
@@ -5285,7 +5252,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--stsDb--credentials--existingSecret--usernameKey"><a href="./values.yaml#L671">core.sts.stsDb.credentials.existingSecret.usernameKey</a></td>
+			<td id="core--sts--stsDb--credentials--existingSecret--usernameKey"><a href="./values.yaml#L662">core.sts.stsDb.credentials.existingSecret.usernameKey</a></td>
 			<td>
 string
 </td>
@@ -5299,7 +5266,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--stsDb--database"><a href="./values.yaml#L673">core.sts.stsDb.database</a></td>
+			<td id="core--sts--stsDb--database"><a href="./values.yaml#L664">core.sts.stsDb.database</a></td>
 			<td>
 string
 </td>
@@ -5313,7 +5280,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--stsDb--driver"><a href="./values.yaml#L675">core.sts.stsDb.driver</a></td>
+			<td id="core--sts--stsDb--driver"><a href="./values.yaml#L666">core.sts.stsDb.driver</a></td>
 			<td>
 string
 </td>
@@ -5327,7 +5294,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--stsDb--host"><a href="./values.yaml#L677">core.sts.stsDb.host</a></td>
+			<td id="core--sts--stsDb--host"><a href="./values.yaml#L668">core.sts.stsDb.host</a></td>
 			<td>
 string
 </td>
@@ -5341,7 +5308,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--stsDb--platform"><a href="./values.yaml#L679">core.sts.stsDb.platform</a></td>
+			<td id="core--sts--stsDb--platform"><a href="./values.yaml#L670">core.sts.stsDb.platform</a></td>
 			<td>
 string
 </td>
@@ -5355,7 +5322,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--stsDb--port"><a href="./values.yaml#L681">core.sts.stsDb.port</a></td>
+			<td id="core--sts--stsDb--port"><a href="./values.yaml#L672">core.sts.stsDb.port</a></td>
 			<td>
 string
 </td>
@@ -5369,7 +5336,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="core--sts--stsDb--schema"><a href="./values.yaml#L683">core.sts.stsDb.schema</a></td>
+			<td id="core--sts--stsDb--schema"><a href="./values.yaml#L674">core.sts.stsDb.schema</a></td>
 			<td>
 string
 </td>
@@ -5383,7 +5350,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard"><a href="./values.yaml#L686">dashboard</a></td>
+			<td id="dashboard"><a href="./values.yaml#L677">dashboard</a></td>
 			<td>
 object
 </td>
@@ -5527,7 +5494,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--additional-components"><a href="./values.yaml#L688">dashboard.additional-components</a></td>
+			<td id="dashboard--additional-components"><a href="./values.yaml#L679">dashboard.additional-components</a></td>
 			<td>
 object
 </td>
@@ -5571,7 +5538,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--additional-components--enabled"><a href="./values.yaml#L690">dashboard.additional-components.enabled</a></td>
+			<td id="dashboard--additional-components--enabled"><a href="./values.yaml#L681">dashboard.additional-components.enabled</a></td>
 			<td>
 bool
 </td>
@@ -5585,7 +5552,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--additional-components--apps"><a href="./values.yaml#L692">dashboard.additional-components.apps</a></td>
+			<td id="dashboard--additional-components--apps"><a href="./values.yaml#L683">dashboard.additional-components.apps</a></td>
 			<td>
 list
 </td>
@@ -5626,7 +5593,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--affinity"><a href="./values.yaml#L723">dashboard.affinity</a></td>
+			<td id="dashboard--affinity"><a href="./values.yaml#L714">dashboard.affinity</a></td>
 			<td>
 object
 </td>
@@ -5643,7 +5610,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--autoscaling"><a href="./values.yaml#L725">dashboard.autoscaling</a></td>
+			<td id="dashboard--autoscaling"><a href="./values.yaml#L716">dashboard.autoscaling</a></td>
 			<td>
 object
 </td>
@@ -5665,7 +5632,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--autoscaling--enabled"><a href="./values.yaml#L727">dashboard.autoscaling.enabled</a></td>
+			<td id="dashboard--autoscaling--enabled"><a href="./values.yaml#L718">dashboard.autoscaling.enabled</a></td>
 			<td>
 bool
 </td>
@@ -5679,7 +5646,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--autoscaling--maxReplicas"><a href="./values.yaml#L729">dashboard.autoscaling.maxReplicas</a></td>
+			<td id="dashboard--autoscaling--maxReplicas"><a href="./values.yaml#L720">dashboard.autoscaling.maxReplicas</a></td>
 			<td>
 int
 </td>
@@ -5693,7 +5660,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--autoscaling--minReplicas"><a href="./values.yaml#L731">dashboard.autoscaling.minReplicas</a></td>
+			<td id="dashboard--autoscaling--minReplicas"><a href="./values.yaml#L722">dashboard.autoscaling.minReplicas</a></td>
 			<td>
 int
 </td>
@@ -5707,7 +5674,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--autoscaling--targetCPUUtilizationPercentage"><a href="./values.yaml#L733">dashboard.autoscaling.targetCPUUtilizationPercentage</a></td>
+			<td id="dashboard--autoscaling--targetCPUUtilizationPercentage"><a href="./values.yaml#L724">dashboard.autoscaling.targetCPUUtilizationPercentage</a></td>
 			<td>
 int
 </td>
@@ -5721,7 +5688,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--image"><a href="./values.yaml#L735">dashboard.image</a></td>
+			<td id="dashboard--image"><a href="./values.yaml#L726">dashboard.image</a></td>
 			<td>
 object
 </td>
@@ -5742,7 +5709,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--image--pullPolicy"><a href="./values.yaml#L737">dashboard.image.pullPolicy</a></td>
+			<td id="dashboard--image--pullPolicy"><a href="./values.yaml#L728">dashboard.image.pullPolicy</a></td>
 			<td>
 string
 </td>
@@ -5756,7 +5723,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--image--repository"><a href="./values.yaml#L739">dashboard.image.repository</a></td>
+			<td id="dashboard--image--repository"><a href="./values.yaml#L730">dashboard.image.repository</a></td>
 			<td>
 string
 </td>
@@ -5770,7 +5737,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--image--tag"><a href="./values.yaml#L741">dashboard.image.tag</a></td>
+			<td id="dashboard--image--tag"><a href="./values.yaml#L732">dashboard.image.tag</a></td>
 			<td>
 string
 </td>
@@ -5784,7 +5751,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--imagePullSecrets"><a href="./values.yaml#L746">dashboard.imagePullSecrets</a></td>
+			<td id="dashboard--imagePullSecrets"><a href="./values.yaml#L737">dashboard.imagePullSecrets</a></td>
 			<td>
 list
 </td>
@@ -5801,7 +5768,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--ingress"><a href="./values.yaml#L748">dashboard.ingress</a></td>
+			<td id="dashboard--ingress"><a href="./values.yaml#L739">dashboard.ingress</a></td>
 			<td>
 object
 </td>
@@ -5841,7 +5808,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--ingress--enabled"><a href="./values.yaml#L750">dashboard.ingress.enabled</a></td>
+			<td id="dashboard--ingress--enabled"><a href="./values.yaml#L741">dashboard.ingress.enabled</a></td>
 			<td>
 bool
 </td>
@@ -5855,7 +5822,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--ingress--annotations"><a href="./values.yaml#L752">dashboard.ingress.annotations</a></td>
+			<td id="dashboard--ingress--annotations"><a href="./values.yaml#L743">dashboard.ingress.annotations</a></td>
 			<td>
 object
 </td>
@@ -5872,7 +5839,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--ingress--className"><a href="./values.yaml#L754">dashboard.ingress.className</a></td>
+			<td id="dashboard--ingress--className"><a href="./values.yaml#L745">dashboard.ingress.className</a></td>
 			<td>
 string
 </td>
@@ -5886,7 +5853,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--ingress--hosts"><a href="./values.yaml#L756">dashboard.ingress.hosts</a></td>
+			<td id="dashboard--ingress--hosts"><a href="./values.yaml#L747">dashboard.ingress.hosts</a></td>
 			<td>
 list
 </td>
@@ -5913,7 +5880,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--ingress--tls"><a href="./values.yaml#L762">dashboard.ingress.tls</a></td>
+			<td id="dashboard--ingress--tls"><a href="./values.yaml#L753">dashboard.ingress.tls</a></td>
 			<td>
 list
 </td>
@@ -5937,7 +5904,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--nodeSelector"><a href="./values.yaml#L767">dashboard.nodeSelector</a></td>
+			<td id="dashboard--nodeSelector"><a href="./values.yaml#L758">dashboard.nodeSelector</a></td>
 			<td>
 object
 </td>
@@ -5954,7 +5921,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--oidc"><a href="./values.yaml#L769">dashboard.oidc</a></td>
+			<td id="dashboard--oidc"><a href="./values.yaml#L760">dashboard.oidc</a></td>
 			<td>
 object
 </td>
@@ -5983,7 +5950,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--oidc--enabled"><a href="./values.yaml#L771">dashboard.oidc.enabled</a></td>
+			<td id="dashboard--oidc--enabled"><a href="./values.yaml#L762">dashboard.oidc.enabled</a></td>
 			<td>
 bool
 </td>
@@ -5997,7 +5964,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--oidc--audience"><a href="./values.yaml#L773">dashboard.oidc.audience</a></td>
+			<td id="dashboard--oidc--audience"><a href="./values.yaml#L764">dashboard.oidc.audience</a></td>
 			<td>
 object
 </td>
@@ -6020,7 +5987,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--oidc--audience--clientId"><a href="./values.yaml#L776">dashboard.oidc.audience.clientId</a></td>
+			<td id="dashboard--oidc--audience--clientId"><a href="./values.yaml#L767">dashboard.oidc.audience.clientId</a></td>
 			<td>
 string
 </td>
@@ -6034,7 +6001,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--oidc--audience--externalSecret"><a href="./values.yaml#L778">dashboard.oidc.audience.externalSecret</a></td>
+			<td id="dashboard--oidc--audience--externalSecret"><a href="./values.yaml#L769">dashboard.oidc.audience.externalSecret</a></td>
 			<td>
 object
 </td>
@@ -6054,7 +6021,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--oidc--audience--externalSecret--key"><a href="./values.yaml#L780">dashboard.oidc.audience.externalSecret.key</a></td>
+			<td id="dashboard--oidc--audience--externalSecret--key"><a href="./values.yaml#L771">dashboard.oidc.audience.externalSecret.key</a></td>
 			<td>
 string
 </td>
@@ -6068,7 +6035,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--oidc--audience--externalSecret--name"><a href="./values.yaml#L782">dashboard.oidc.audience.externalSecret.name</a></td>
+			<td id="dashboard--oidc--audience--externalSecret--name"><a href="./values.yaml#L773">dashboard.oidc.audience.externalSecret.name</a></td>
 			<td>
 string
 </td>
@@ -6082,7 +6049,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--oidc--config"><a href="./values.yaml#L784">dashboard.oidc.config</a></td>
+			<td id="dashboard--oidc--config"><a href="./values.yaml#L775">dashboard.oidc.config</a></td>
 			<td>
 object
 </td>
@@ -6101,7 +6068,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--oidc--config--issuer"><a href="./values.yaml#L786">dashboard.oidc.config.issuer</a></td>
+			<td id="dashboard--oidc--config--issuer"><a href="./values.yaml#L777">dashboard.oidc.config.issuer</a></td>
 			<td>
 string
 </td>
@@ -6115,7 +6082,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--podAnnotations"><a href="./values.yaml#L788">dashboard.podAnnotations</a></td>
+			<td id="dashboard--podAnnotations"><a href="./values.yaml#L779">dashboard.podAnnotations</a></td>
 			<td>
 object
 </td>
@@ -6132,7 +6099,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--podLabels"><a href="./values.yaml#L790">dashboard.podLabels</a></td>
+			<td id="dashboard--podLabels"><a href="./values.yaml#L781">dashboard.podLabels</a></td>
 			<td>
 object
 </td>
@@ -6149,7 +6116,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--podSecurityContext"><a href="./values.yaml#L792">dashboard.podSecurityContext</a></td>
+			<td id="dashboard--podSecurityContext"><a href="./values.yaml#L783">dashboard.podSecurityContext</a></td>
 			<td>
 object
 </td>
@@ -6173,7 +6140,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--podSecurityContext--fsGroup"><a href="./values.yaml#L794">dashboard.podSecurityContext.fsGroup</a></td>
+			<td id="dashboard--podSecurityContext--fsGroup"><a href="./values.yaml#L785">dashboard.podSecurityContext.fsGroup</a></td>
 			<td>
 int
 </td>
@@ -6187,7 +6154,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--podSecurityContext--runAsNonRoot"><a href="./values.yaml#L796">dashboard.podSecurityContext.runAsNonRoot</a></td>
+			<td id="dashboard--podSecurityContext--runAsNonRoot"><a href="./values.yaml#L787">dashboard.podSecurityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -6201,7 +6168,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--podSecurityContext--runAsUser"><a href="./values.yaml#L798">dashboard.podSecurityContext.runAsUser</a></td>
+			<td id="dashboard--podSecurityContext--runAsUser"><a href="./values.yaml#L789">dashboard.podSecurityContext.runAsUser</a></td>
 			<td>
 int
 </td>
@@ -6215,7 +6182,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--podSecurityContext--seccompProfile"><a href="./values.yaml#L800">dashboard.podSecurityContext.seccompProfile</a></td>
+			<td id="dashboard--podSecurityContext--seccompProfile"><a href="./values.yaml#L791">dashboard.podSecurityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -6234,7 +6201,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--podSecurityContext--seccompProfile--type"><a href="./values.yaml#L802">dashboard.podSecurityContext.seccompProfile.type</a></td>
+			<td id="dashboard--podSecurityContext--seccompProfile--type"><a href="./values.yaml#L793">dashboard.podSecurityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -6248,7 +6215,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--replicaCount"><a href="./values.yaml#L804">dashboard.replicaCount</a></td>
+			<td id="dashboard--replicaCount"><a href="./values.yaml#L795">dashboard.replicaCount</a></td>
 			<td>
 int
 </td>
@@ -6262,7 +6229,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--resources"><a href="./values.yaml#L806">dashboard.resources</a></td>
+			<td id="dashboard--resources"><a href="./values.yaml#L797">dashboard.resources</a></td>
 			<td>
 object
 </td>
@@ -6288,7 +6255,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--resources--limits"><a href="./values.yaml#L808">dashboard.resources.limits</a></td>
+			<td id="dashboard--resources--limits"><a href="./values.yaml#L799">dashboard.resources.limits</a></td>
 			<td>
 object
 </td>
@@ -6308,7 +6275,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--resources--limits--cpu"><a href="./values.yaml#L810">dashboard.resources.limits.cpu</a></td>
+			<td id="dashboard--resources--limits--cpu"><a href="./values.yaml#L801">dashboard.resources.limits.cpu</a></td>
 			<td>
 string
 </td>
@@ -6322,7 +6289,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--resources--limits--memory"><a href="./values.yaml#L812">dashboard.resources.limits.memory</a></td>
+			<td id="dashboard--resources--limits--memory"><a href="./values.yaml#L803">dashboard.resources.limits.memory</a></td>
 			<td>
 string
 </td>
@@ -6336,7 +6303,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--resources--requests"><a href="./values.yaml#L814">dashboard.resources.requests</a></td>
+			<td id="dashboard--resources--requests"><a href="./values.yaml#L805">dashboard.resources.requests</a></td>
 			<td>
 object
 </td>
@@ -6356,7 +6323,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--resources--requests--cpu"><a href="./values.yaml#L816">dashboard.resources.requests.cpu</a></td>
+			<td id="dashboard--resources--requests--cpu"><a href="./values.yaml#L807">dashboard.resources.requests.cpu</a></td>
 			<td>
 string
 </td>
@@ -6370,7 +6337,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--resources--requests--memory"><a href="./values.yaml#L818">dashboard.resources.requests.memory</a></td>
+			<td id="dashboard--resources--requests--memory"><a href="./values.yaml#L809">dashboard.resources.requests.memory</a></td>
 			<td>
 string
 </td>
@@ -6384,7 +6351,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--securityContext"><a href="./values.yaml#L820">dashboard.securityContext</a></td>
+			<td id="dashboard--securityContext"><a href="./values.yaml#L811">dashboard.securityContext</a></td>
 			<td>
 object
 </td>
@@ -6413,7 +6380,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L822">dashboard.securityContext.allowPrivilegeEscalation</a></td>
+			<td id="dashboard--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L813">dashboard.securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -6427,7 +6394,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--securityContext--capabilities"><a href="./values.yaml#L824">dashboard.securityContext.capabilities</a></td>
+			<td id="dashboard--securityContext--capabilities"><a href="./values.yaml#L815">dashboard.securityContext.capabilities</a></td>
 			<td>
 object
 </td>
@@ -6448,7 +6415,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--securityContext--capabilities--drop"><a href="./values.yaml#L826">dashboard.securityContext.capabilities.drop</a></td>
+			<td id="dashboard--securityContext--capabilities--drop"><a href="./values.yaml#L817">dashboard.securityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
@@ -6467,7 +6434,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--securityContext--runAsNonRoot"><a href="./values.yaml#L829">dashboard.securityContext.runAsNonRoot</a></td>
+			<td id="dashboard--securityContext--runAsNonRoot"><a href="./values.yaml#L820">dashboard.securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -6481,7 +6448,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--securityContext--runAsUser"><a href="./values.yaml#L831">dashboard.securityContext.runAsUser</a></td>
+			<td id="dashboard--securityContext--runAsUser"><a href="./values.yaml#L822">dashboard.securityContext.runAsUser</a></td>
 			<td>
 int
 </td>
@@ -6495,7 +6462,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--securityContext--seccompProfile"><a href="./values.yaml#L833">dashboard.securityContext.seccompProfile</a></td>
+			<td id="dashboard--securityContext--seccompProfile"><a href="./values.yaml#L824">dashboard.securityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -6514,7 +6481,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--securityContext--seccompProfile--type"><a href="./values.yaml#L835">dashboard.securityContext.seccompProfile.type</a></td>
+			<td id="dashboard--securityContext--seccompProfile--type"><a href="./values.yaml#L826">dashboard.securityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -6528,7 +6495,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--service"><a href="./values.yaml#L837">dashboard.service</a></td>
+			<td id="dashboard--service"><a href="./values.yaml#L828">dashboard.service</a></td>
 			<td>
 object
 </td>
@@ -6549,7 +6516,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--service--httpNodePort"><a href="./values.yaml#L839">dashboard.service.httpNodePort</a></td>
+			<td id="dashboard--service--httpNodePort"><a href="./values.yaml#L830">dashboard.service.httpNodePort</a></td>
 			<td>
 string
 </td>
@@ -6563,7 +6530,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--service--port"><a href="./values.yaml#L841">dashboard.service.port</a></td>
+			<td id="dashboard--service--port"><a href="./values.yaml#L832">dashboard.service.port</a></td>
 			<td>
 string
 </td>
@@ -6577,7 +6544,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--service--type"><a href="./values.yaml#L843">dashboard.service.type</a></td>
+			<td id="dashboard--service--type"><a href="./values.yaml#L834">dashboard.service.type</a></td>
 			<td>
 string
 </td>
@@ -6591,7 +6558,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--serviceAccount"><a href="./values.yaml#L845">dashboard.serviceAccount</a></td>
+			<td id="dashboard--serviceAccount"><a href="./values.yaml#L836">dashboard.serviceAccount</a></td>
 			<td>
 object
 </td>
@@ -6613,7 +6580,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--serviceAccount--annotations"><a href="./values.yaml#L847">dashboard.serviceAccount.annotations</a></td>
+			<td id="dashboard--serviceAccount--annotations"><a href="./values.yaml#L838">dashboard.serviceAccount.annotations</a></td>
 			<td>
 object
 </td>
@@ -6630,7 +6597,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--serviceAccount--automount"><a href="./values.yaml#L849">dashboard.serviceAccount.automount</a></td>
+			<td id="dashboard--serviceAccount--automount"><a href="./values.yaml#L840">dashboard.serviceAccount.automount</a></td>
 			<td>
 bool
 </td>
@@ -6644,7 +6611,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--serviceAccount--create"><a href="./values.yaml#L851">dashboard.serviceAccount.create</a></td>
+			<td id="dashboard--serviceAccount--create"><a href="./values.yaml#L842">dashboard.serviceAccount.create</a></td>
 			<td>
 bool
 </td>
@@ -6658,7 +6625,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--serviceAccount--name"><a href="./values.yaml#L853">dashboard.serviceAccount.name</a></td>
+			<td id="dashboard--serviceAccount--name"><a href="./values.yaml#L844">dashboard.serviceAccount.name</a></td>
 			<td>
 string
 </td>
@@ -6672,7 +6639,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--tolerations"><a href="./values.yaml#L855">dashboard.tolerations</a></td>
+			<td id="dashboard--tolerations"><a href="./values.yaml#L846">dashboard.tolerations</a></td>
 			<td>
 list
 </td>
@@ -6689,7 +6656,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="dashboard--volumes"><a href="./values.yaml#L857">dashboard.volumes</a></td>
+			<td id="dashboard--volumes"><a href="./values.yaml#L848">dashboard.volumes</a></td>
 			<td>
 string
 </td>
@@ -6703,7 +6670,7 @@ null
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry"><a href="./values.yaml#L860">docker-registry</a></td>
+			<td id="docker-registry"><a href="./values.yaml#L851">docker-registry</a></td>
 			<td>
 object
 </td>
@@ -6769,7 +6736,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--enabled"><a href="./values.yaml#L862">docker-registry.enabled</a></td>
+			<td id="docker-registry--enabled"><a href="./values.yaml#L853">docker-registry.enabled</a></td>
 			<td>
 bool
 </td>
@@ -6783,7 +6750,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--className"><a href="./values.yaml#L864">docker-registry.className</a></td>
+			<td id="docker-registry--className"><a href="./values.yaml#L855">docker-registry.className</a></td>
 			<td>
 string
 </td>
@@ -6797,7 +6764,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--containerSecurityContext"><a href="./values.yaml#L866">docker-registry.containerSecurityContext</a></td>
+			<td id="docker-registry--containerSecurityContext"><a href="./values.yaml#L857">docker-registry.containerSecurityContext</a></td>
 			<td>
 object
 </td>
@@ -6831,7 +6798,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--fullnameOverride"><a href="./values.yaml#L881">docker-registry.fullnameOverride</a></td>
+			<td id="docker-registry--fullnameOverride"><a href="./values.yaml#L872">docker-registry.fullnameOverride</a></td>
 			<td>
 string
 </td>
@@ -6845,7 +6812,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--ingress"><a href="./values.yaml#L883">docker-registry.ingress</a></td>
+			<td id="docker-registry--ingress"><a href="./values.yaml#L874">docker-registry.ingress</a></td>
 			<td>
 object
 </td>
@@ -6868,7 +6835,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--ingress--enabled"><a href="./values.yaml#L885">docker-registry.ingress.enabled</a></td>
+			<td id="docker-registry--ingress--enabled"><a href="./values.yaml#L876">docker-registry.ingress.enabled</a></td>
 			<td>
 bool
 </td>
@@ -6882,7 +6849,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--ingress--hosts"><a href="./values.yaml#L887">docker-registry.ingress.hosts</a></td>
+			<td id="docker-registry--ingress--hosts"><a href="./values.yaml#L878">docker-registry.ingress.hosts</a></td>
 			<td>
 list
 </td>
@@ -6901,7 +6868,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--ingress--path"><a href="./values.yaml#L890">docker-registry.ingress.path</a></td>
+			<td id="docker-registry--ingress--path"><a href="./values.yaml#L881">docker-registry.ingress.path</a></td>
 			<td>
 string
 </td>
@@ -6915,7 +6882,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--persistence"><a href="./values.yaml#L892">docker-registry.persistence</a></td>
+			<td id="docker-registry--persistence"><a href="./values.yaml#L883">docker-registry.persistence</a></td>
 			<td>
 object
 </td>
@@ -6936,7 +6903,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--persistence--enabled"><a href="./values.yaml#L894">docker-registry.persistence.enabled</a></td>
+			<td id="docker-registry--persistence--enabled"><a href="./values.yaml#L885">docker-registry.persistence.enabled</a></td>
 			<td>
 bool
 </td>
@@ -6950,7 +6917,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--persistence--accessMode"><a href="./values.yaml#L896">docker-registry.persistence.accessMode</a></td>
+			<td id="docker-registry--persistence--accessMode"><a href="./values.yaml#L887">docker-registry.persistence.accessMode</a></td>
 			<td>
 string
 </td>
@@ -6964,7 +6931,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--persistence--size"><a href="./values.yaml#L898">docker-registry.persistence.size</a></td>
+			<td id="docker-registry--persistence--size"><a href="./values.yaml#L889">docker-registry.persistence.size</a></td>
 			<td>
 string
 </td>
@@ -6978,7 +6945,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--securityContext"><a href="./values.yaml#L900">docker-registry.securityContext</a></td>
+			<td id="docker-registry--securityContext"><a href="./values.yaml#L891">docker-registry.securityContext</a></td>
 			<td>
 object
 </td>
@@ -7002,7 +6969,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--service"><a href="./values.yaml#L908">docker-registry.service</a></td>
+			<td id="docker-registry--service"><a href="./values.yaml#L899">docker-registry.service</a></td>
 			<td>
 object
 </td>
@@ -7022,7 +6989,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--service--nodePort"><a href="./values.yaml#L910">docker-registry.service.nodePort</a></td>
+			<td id="docker-registry--service--nodePort"><a href="./values.yaml#L901">docker-registry.service.nodePort</a></td>
 			<td>
 int
 </td>
@@ -7036,7 +7003,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--service--type"><a href="./values.yaml#L912">docker-registry.service.type</a></td>
+			<td id="docker-registry--service--type"><a href="./values.yaml#L903">docker-registry.service.type</a></td>
 			<td>
 string
 </td>
@@ -7050,7 +7017,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--updateStrategy"><a href="./values.yaml#L914">docker-registry.updateStrategy</a></td>
+			<td id="docker-registry--updateStrategy"><a href="./values.yaml#L905">docker-registry.updateStrategy</a></td>
 			<td>
 object
 </td>
@@ -7069,7 +7036,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="docker-registry--updateStrategy--type"><a href="./values.yaml#L916">docker-registry.updateStrategy.type</a></td>
+			<td id="docker-registry--updateStrategy--type"><a href="./values.yaml#L907">docker-registry.updateStrategy.type</a></td>
 			<td>
 string
 </td>
@@ -7083,7 +7050,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="dremio-rest-server-operator"><a href="./values.yaml#L919">dremio-rest-server-operator</a></td>
+			<td id="dremio-rest-server-operator"><a href="./values.yaml#L910">dremio-rest-server-operator</a></td>
 			<td>
 object
 </td>
@@ -7102,7 +7069,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="dremio-rest-server-operator--enabled"><a href="./values.yaml#L921">dremio-rest-server-operator.enabled</a></td>
+			<td id="dremio-rest-server-operator--enabled"><a href="./values.yaml#L912">dremio-rest-server-operator.enabled</a></td>
 			<td>
 bool
 </td>
@@ -7116,7 +7083,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator"><a href="./values.yaml#L924">ext-postgres-operator</a></td>
+			<td id="ext-postgres-operator"><a href="./values.yaml#L915">ext-postgres-operator</a></td>
 			<td>
 object
 </td>
@@ -7167,7 +7134,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--enabled"><a href="./values.yaml#L926">ext-postgres-operator.enabled</a></td>
+			<td id="ext-postgres-operator--enabled"><a href="./values.yaml#L917">ext-postgres-operator.enabled</a></td>
 			<td>
 bool
 </td>
@@ -7181,7 +7148,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--image"><a href="./values.yaml#L928">ext-postgres-operator.image</a></td>
+			<td id="ext-postgres-operator--image"><a href="./values.yaml#L919">ext-postgres-operator.image</a></td>
 			<td>
 object
 </td>
@@ -7200,7 +7167,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--image--tag"><a href="./values.yaml#L930">ext-postgres-operator.image.tag</a></td>
+			<td id="ext-postgres-operator--image--tag"><a href="./values.yaml#L921">ext-postgres-operator.image.tag</a></td>
 			<td>
 string
 </td>
@@ -7214,7 +7181,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--podSecurityContext"><a href="./values.yaml#L932">ext-postgres-operator.podSecurityContext</a></td>
+			<td id="ext-postgres-operator--podSecurityContext"><a href="./values.yaml#L923">ext-postgres-operator.podSecurityContext</a></td>
 			<td>
 object
 </td>
@@ -7236,7 +7203,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--podSecurityContext--runAsNonRoot"><a href="./values.yaml#L934">ext-postgres-operator.podSecurityContext.runAsNonRoot</a></td>
+			<td id="ext-postgres-operator--podSecurityContext--runAsNonRoot"><a href="./values.yaml#L925">ext-postgres-operator.podSecurityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -7250,7 +7217,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--podSecurityContext--seccompProfile"><a href="./values.yaml#L936">ext-postgres-operator.podSecurityContext.seccompProfile</a></td>
+			<td id="ext-postgres-operator--podSecurityContext--seccompProfile"><a href="./values.yaml#L927">ext-postgres-operator.podSecurityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -7269,7 +7236,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--podSecurityContext--seccompProfile--type"><a href="./values.yaml#L938">ext-postgres-operator.podSecurityContext.seccompProfile.type</a></td>
+			<td id="ext-postgres-operator--podSecurityContext--seccompProfile--type"><a href="./values.yaml#L929">ext-postgres-operator.podSecurityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -7283,7 +7250,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgres"><a href="./values.yaml#L940">ext-postgres-operator.postgres</a></td>
+			<td id="ext-postgres-operator--postgres"><a href="./values.yaml#L931">ext-postgres-operator.postgres</a></td>
 			<td>
 object
 </td>
@@ -7307,7 +7274,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgres--cloud_provider"><a href="./values.yaml#L942">ext-postgres-operator.postgres.cloud_provider</a></td>
+			<td id="ext-postgres-operator--postgres--cloud_provider"><a href="./values.yaml#L933">ext-postgres-operator.postgres.cloud_provider</a></td>
 			<td>
 string
 </td>
@@ -7321,7 +7288,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgres--default_database"><a href="./values.yaml#L944">ext-postgres-operator.postgres.default_database</a></td>
+			<td id="ext-postgres-operator--postgres--default_database"><a href="./values.yaml#L935">ext-postgres-operator.postgres.default_database</a></td>
 			<td>
 string
 </td>
@@ -7335,7 +7302,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgres--host"><a href="./values.yaml#L946">ext-postgres-operator.postgres.host</a></td>
+			<td id="ext-postgres-operator--postgres--host"><a href="./values.yaml#L937">ext-postgres-operator.postgres.host</a></td>
 			<td>
 string
 </td>
@@ -7349,7 +7316,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgres--password"><a href="./values.yaml#L949">ext-postgres-operator.postgres.password</a></td>
+			<td id="ext-postgres-operator--postgres--password"><a href="./values.yaml#L940">ext-postgres-operator.postgres.password</a></td>
 			<td>
 string
 </td>
@@ -7363,7 +7330,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgres--uri_args"><a href="./values.yaml#L951">ext-postgres-operator.postgres.uri_args</a></td>
+			<td id="ext-postgres-operator--postgres--uri_args"><a href="./values.yaml#L942">ext-postgres-operator.postgres.uri_args</a></td>
 			<td>
 string
 </td>
@@ -7377,7 +7344,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgres--user"><a href="./values.yaml#L954">ext-postgres-operator.postgres.user</a></td>
+			<td id="ext-postgres-operator--postgres--user"><a href="./values.yaml#L945">ext-postgres-operator.postgres.user</a></td>
 			<td>
 string
 </td>
@@ -7391,7 +7358,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgresCredsExistingSecrets"><a href="./values.yaml#L957">ext-postgres-operator.postgresCredsExistingSecrets</a></td>
+			<td id="ext-postgres-operator--postgresCredsExistingSecrets"><a href="./values.yaml#L948">ext-postgres-operator.postgresCredsExistingSecrets</a></td>
 			<td>
 object
 </td>
@@ -7417,7 +7384,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgresCredsExistingSecrets--password"><a href="./values.yaml#L959">ext-postgres-operator.postgresCredsExistingSecrets.password</a></td>
+			<td id="ext-postgres-operator--postgresCredsExistingSecrets--password"><a href="./values.yaml#L950">ext-postgres-operator.postgresCredsExistingSecrets.password</a></td>
 			<td>
 object
 </td>
@@ -7437,7 +7404,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgresCredsExistingSecrets--password--secretKey"><a href="./values.yaml#L961">ext-postgres-operator.postgresCredsExistingSecrets.password.secretKey</a></td>
+			<td id="ext-postgres-operator--postgresCredsExistingSecrets--password--secretKey"><a href="./values.yaml#L952">ext-postgres-operator.postgresCredsExistingSecrets.password.secretKey</a></td>
 			<td>
 string
 </td>
@@ -7451,7 +7418,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgresCredsExistingSecrets--password--secretName"><a href="./values.yaml#L963">ext-postgres-operator.postgresCredsExistingSecrets.password.secretName</a></td>
+			<td id="ext-postgres-operator--postgresCredsExistingSecrets--password--secretName"><a href="./values.yaml#L954">ext-postgres-operator.postgresCredsExistingSecrets.password.secretName</a></td>
 			<td>
 string
 </td>
@@ -7465,7 +7432,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgresCredsExistingSecrets--username"><a href="./values.yaml#L965">ext-postgres-operator.postgresCredsExistingSecrets.username</a></td>
+			<td id="ext-postgres-operator--postgresCredsExistingSecrets--username"><a href="./values.yaml#L956">ext-postgres-operator.postgresCredsExistingSecrets.username</a></td>
 			<td>
 object
 </td>
@@ -7485,7 +7452,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgresCredsExistingSecrets--username--secretKey"><a href="./values.yaml#L967">ext-postgres-operator.postgresCredsExistingSecrets.username.secretKey</a></td>
+			<td id="ext-postgres-operator--postgresCredsExistingSecrets--username--secretKey"><a href="./values.yaml#L958">ext-postgres-operator.postgresCredsExistingSecrets.username.secretKey</a></td>
 			<td>
 string
 </td>
@@ -7499,7 +7466,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--postgresCredsExistingSecrets--username--secretName"><a href="./values.yaml#L969">ext-postgres-operator.postgresCredsExistingSecrets.username.secretName</a></td>
+			<td id="ext-postgres-operator--postgresCredsExistingSecrets--username--secretName"><a href="./values.yaml#L960">ext-postgres-operator.postgresCredsExistingSecrets.username.secretName</a></td>
 			<td>
 string
 </td>
@@ -7513,7 +7480,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--securityContext"><a href="./values.yaml#L971">ext-postgres-operator.securityContext</a></td>
+			<td id="ext-postgres-operator--securityContext"><a href="./values.yaml#L962">ext-postgres-operator.securityContext</a></td>
 			<td>
 object
 </td>
@@ -7534,7 +7501,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--securityContext--seccompProfile"><a href="./values.yaml#L973">ext-postgres-operator.securityContext.seccompProfile</a></td>
+			<td id="ext-postgres-operator--securityContext--seccompProfile"><a href="./values.yaml#L964">ext-postgres-operator.securityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -7553,7 +7520,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ext-postgres-operator--securityContext--seccompProfile--type"><a href="./values.yaml#L975">ext-postgres-operator.securityContext.seccompProfile.type</a></td>
+			<td id="ext-postgres-operator--securityContext--seccompProfile--type"><a href="./values.yaml#L966">ext-postgres-operator.securityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -7567,7 +7534,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="jobs"><a href="./values.yaml#L978">jobs</a></td>
+			<td id="jobs"><a href="./values.yaml#L969">jobs</a></td>
 			<td>
 object
 </td>
@@ -7590,7 +7557,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="jobs--delete"><a href="./values.yaml#L980">jobs.delete</a></td>
+			<td id="jobs--delete"><a href="./values.yaml#L971">jobs.delete</a></td>
 			<td>
 object
 </td>
@@ -7611,7 +7578,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="jobs--delete--securityContext"><a href="./values.yaml#L982">jobs.delete.securityContext</a></td>
+			<td id="jobs--delete--securityContext"><a href="./values.yaml#L973">jobs.delete.securityContext</a></td>
 			<td>
 object
 </td>
@@ -7630,7 +7597,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="jobs--delete--securityContext--readOnlyRootFilesystem"><a href="./values.yaml#L984">jobs.delete.securityContext.readOnlyRootFilesystem</a></td>
+			<td id="jobs--delete--securityContext--readOnlyRootFilesystem"><a href="./values.yaml#L975">jobs.delete.securityContext.readOnlyRootFilesystem</a></td>
 			<td>
 bool
 </td>
@@ -7644,7 +7611,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="kubeai"><a href="./values.yaml#L988">kubeai</a></td>
+			<td id="kubeai"><a href="./values.yaml#L979">kubeai</a></td>
 			<td>
 object
 </td>
@@ -7669,7 +7636,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="kubeai--enabled"><a href="./values.yaml#L990">kubeai.enabled</a></td>
+			<td id="kubeai--enabled"><a href="./values.yaml#L981">kubeai.enabled</a></td>
 			<td>
 bool
 </td>
@@ -7683,7 +7650,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="kubeai--crds"><a href="./values.yaml#L992">kubeai.crds</a></td>
+			<td id="kubeai--crds"><a href="./values.yaml#L983">kubeai.crds</a></td>
 			<td>
 object
 </td>
@@ -7702,7 +7669,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="kubeai--crds--enabled"><a href="./values.yaml#L994">kubeai.crds.enabled</a></td>
+			<td id="kubeai--crds--enabled"><a href="./values.yaml#L985">kubeai.crds.enabled</a></td>
 			<td>
 bool
 </td>
@@ -7716,7 +7683,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="kubeai--open-webui"><a href="./values.yaml#L996">kubeai.open-webui</a></td>
+			<td id="kubeai--open-webui"><a href="./values.yaml#L987">kubeai.open-webui</a></td>
 			<td>
 object
 </td>
@@ -7735,7 +7702,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="kubeai--open-webui--enabled"><a href="./values.yaml#L999">kubeai.open-webui.enabled</a></td>
+			<td id="kubeai--open-webui--enabled"><a href="./values.yaml#L990">kubeai.open-webui.enabled</a></td>
 			<td>
 bool
 </td>
@@ -7749,7 +7716,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="kubernetes-resource-manager"><a href="./values.yaml#L1002">kubernetes-resource-manager</a></td>
+			<td id="kubernetes-resource-manager"><a href="./values.yaml#L993">kubernetes-resource-manager</a></td>
 			<td>
 object
 </td>
@@ -7777,7 +7744,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="kubernetes-resource-manager--enabled"><a href="./values.yaml#L1004">kubernetes-resource-manager.enabled</a></td>
+			<td id="kubernetes-resource-manager--enabled"><a href="./values.yaml#L995">kubernetes-resource-manager.enabled</a></td>
 			<td>
 bool
 </td>
@@ -7791,7 +7758,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="kubernetes-resource-manager--resourceSelectors"><a href="./values.yaml#L1006">kubernetes-resource-manager.resourceSelectors</a></td>
+			<td id="kubernetes-resource-manager--resourceSelectors"><a href="./values.yaml#L997">kubernetes-resource-manager.resourceSelectors</a></td>
 			<td>
 object
 </td>
@@ -7812,7 +7779,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="kubernetes-resource-manager--resourceSelectors--secrets"><a href="./values.yaml#L1008">kubernetes-resource-manager.resourceSelectors.secrets</a></td>
+			<td id="kubernetes-resource-manager--resourceSelectors--secrets"><a href="./values.yaml#L999">kubernetes-resource-manager.resourceSelectors.secrets</a></td>
 			<td>
 object
 </td>
@@ -7831,7 +7798,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="kubernetes-resource-manager--resourceSelectors--secrets--names"><a href="./values.yaml#L1010">kubernetes-resource-manager.resourceSelectors.secrets.names</a></td>
+			<td id="kubernetes-resource-manager--resourceSelectors--secrets--names"><a href="./values.yaml#L1001">kubernetes-resource-manager.resourceSelectors.secrets.names</a></td>
 			<td>
 string
 </td>
@@ -7845,7 +7812,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="kubernetes-resource-manager--service"><a href="./values.yaml#L1012">kubernetes-resource-manager.service</a></td>
+			<td id="kubernetes-resource-manager--service"><a href="./values.yaml#L1003">kubernetes-resource-manager.service</a></td>
 			<td>
 object
 </td>
@@ -7865,7 +7832,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="kubernetes-resource-manager--service--nodePort"><a href="./values.yaml#L1014">kubernetes-resource-manager.service.nodePort</a></td>
+			<td id="kubernetes-resource-manager--service--nodePort"><a href="./values.yaml#L1005">kubernetes-resource-manager.service.nodePort</a></td>
 			<td>
 string
 </td>
@@ -7879,7 +7846,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="kubernetes-resource-manager--service--type"><a href="./values.yaml#L1016">kubernetes-resource-manager.service.type</a></td>
+			<td id="kubernetes-resource-manager--service--type"><a href="./values.yaml#L1007">kubernetes-resource-manager.service.type</a></td>
 			<td>
 string
 </td>
@@ -7893,7 +7860,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="open-webui"><a href="./values.yaml#L1020">open-webui</a></td>
+			<td id="open-webui"><a href="./values.yaml#L1011">open-webui</a></td>
 			<td>
 object
 </td>
@@ -7988,7 +7955,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="open-webui--enabled"><a href="./values.yaml#L1022">open-webui.enabled</a></td>
+			<td id="open-webui--enabled"><a href="./values.yaml#L1013">open-webui.enabled</a></td>
 			<td>
 bool
 </td>
@@ -8002,7 +7969,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="open-webui--extraEnvFrom"><a href="./values.yaml#L1038">open-webui.extraEnvFrom</a></td>
+			<td id="open-webui--extraEnvFrom"><a href="./values.yaml#L1029">open-webui.extraEnvFrom</a></td>
 			<td>
 list
 </td>
@@ -8019,7 +7986,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="open-webui--extraEnvVars"><a href="./values.yaml#L1040">open-webui.extraEnvVars</a></td>
+			<td id="open-webui--extraEnvVars"><a href="./values.yaml#L1031">open-webui.extraEnvVars</a></td>
 			<td>
 list
 </td>
@@ -8077,7 +8044,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="open-webui--ollama"><a href="./values.yaml#L1065">open-webui.ollama</a></td>
+			<td id="open-webui--ollama"><a href="./values.yaml#L1056">open-webui.ollama</a></td>
 			<td>
 object
 </td>
@@ -8096,7 +8063,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="open-webui--ollama--enabled"><a href="./values.yaml#L1067">open-webui.ollama.enabled</a></td>
+			<td id="open-webui--ollama--enabled"><a href="./values.yaml#L1058">open-webui.ollama.enabled</a></td>
 			<td>
 bool
 </td>
@@ -8110,7 +8077,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="open-webui--openaiBaseApiUrl"><a href="./values.yaml#L1070">open-webui.openaiBaseApiUrl</a></td>
+			<td id="open-webui--openaiBaseApiUrl"><a href="./values.yaml#L1061">open-webui.openaiBaseApiUrl</a></td>
 			<td>
 string
 </td>
@@ -8124,7 +8091,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="open-webui--pipelines"><a href="./values.yaml#L1072">open-webui.pipelines</a></td>
+			<td id="open-webui--pipelines"><a href="./values.yaml#L1063">open-webui.pipelines</a></td>
 			<td>
 object
 </td>
@@ -8143,7 +8110,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="open-webui--pipelines--enabled"><a href="./values.yaml#L1074">open-webui.pipelines.enabled</a></td>
+			<td id="open-webui--pipelines--enabled"><a href="./values.yaml#L1065">open-webui.pipelines.enabled</a></td>
 			<td>
 bool
 </td>
@@ -8157,7 +8124,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="open-webui--service"><a href="./values.yaml#L1081">open-webui.service</a></td>
+			<td id="open-webui--service"><a href="./values.yaml#L1072">open-webui.service</a></td>
 			<td>
 object
 </td>
@@ -8177,7 +8144,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="open-webui--service--nodePort"><a href="./values.yaml#L1083">open-webui.service.nodePort</a></td>
+			<td id="open-webui--service--nodePort"><a href="./values.yaml#L1074">open-webui.service.nodePort</a></td>
 			<td>
 string
 </td>
@@ -8191,7 +8158,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="open-webui--service--type"><a href="./values.yaml#L1085">open-webui.service.type</a></td>
+			<td id="open-webui--service--type"><a href="./values.yaml#L1076">open-webui.service.type</a></td>
 			<td>
 string
 </td>
@@ -8205,7 +8172,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="platformPackages"><a href="./values.yaml#L1091">platformPackages</a></td>
+			<td id="platformPackages"><a href="./values.yaml#L1082">platformPackages</a></td>
 			<td>
 object
 </td>
@@ -8257,7 +8224,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="platformPackages--deleteOnCompletion"><a href="./values.yaml#L1093">platformPackages.deleteOnCompletion</a></td>
+			<td id="platformPackages--deleteOnCompletion"><a href="./values.yaml#L1084">platformPackages.deleteOnCompletion</a></td>
 			<td>
 bool
 </td>
@@ -8271,7 +8238,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="platformPackages--image"><a href="./values.yaml#L1095">platformPackages.image</a></td>
+			<td id="platformPackages--image"><a href="./values.yaml#L1086">platformPackages.image</a></td>
 			<td>
 string
 </td>
@@ -8285,7 +8252,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="platformPackages--packages"><a href="./values.yaml#L1099">platformPackages.packages</a></td>
+			<td id="platformPackages--packages"><a href="./values.yaml#L1090">platformPackages.packages</a></td>
 			<td>
 list
 </td>
@@ -8331,7 +8298,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="platformPackages--preRelease"><a href="./values.yaml#L1117">platformPackages.preRelease</a></td>
+			<td id="platformPackages--preRelease"><a href="./values.yaml#L1108">platformPackages.preRelease</a></td>
 			<td>
 bool
 </td>
@@ -8345,7 +8312,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="platformPackages--tag"><a href="./values.yaml#L1119">platformPackages.tag</a></td>
+			<td id="platformPackages--tag"><a href="./values.yaml#L1110">platformPackages.tag</a></td>
 			<td>
 string
 </td>
@@ -8359,7 +8326,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator"><a href="./values.yaml#L1122">postgres-operator</a></td>
+			<td id="postgres-operator"><a href="./values.yaml#L1113">postgres-operator</a></td>
 			<td>
 object
 </td>
@@ -8440,7 +8407,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--enabled"><a href="./values.yaml#L1124">postgres-operator.enabled</a></td>
+			<td id="postgres-operator--enabled"><a href="./values.yaml#L1115">postgres-operator.enabled</a></td>
 			<td>
 bool
 </td>
@@ -8454,7 +8421,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases"><a href="./values.yaml#L1126">postgres-operator.databases</a></td>
+			<td id="postgres-operator--databases"><a href="./values.yaml#L1117">postgres-operator.databases</a></td>
 			<td>
 object
 </td>
@@ -8520,7 +8487,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder"><a href="./values.yaml#L1128">postgres-operator.databases.coder</a></td>
+			<td id="postgres-operator--databases--coder"><a href="./values.yaml#L1119">postgres-operator.databases.coder</a></td>
 			<td>
 object
 </td>
@@ -8552,7 +8519,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--enabled"><a href="./values.yaml#L1130">postgres-operator.databases.coder.enabled</a></td>
+			<td id="postgres-operator--databases--coder--enabled"><a href="./values.yaml#L1121">postgres-operator.databases.coder.enabled</a></td>
 			<td>
 bool
 </td>
@@ -8566,7 +8533,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources"><a href="./values.yaml#L1132">postgres-operator.databases.coder.resources</a></td>
+			<td id="postgres-operator--databases--coder--resources"><a href="./values.yaml#L1123">postgres-operator.databases.coder.resources</a></td>
 			<td>
 object
 </td>
@@ -8592,7 +8559,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources--limits"><a href="./values.yaml#L1134">postgres-operator.databases.coder.resources.limits</a></td>
+			<td id="postgres-operator--databases--coder--resources--limits"><a href="./values.yaml#L1125">postgres-operator.databases.coder.resources.limits</a></td>
 			<td>
 object
 </td>
@@ -8612,7 +8579,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources--limits--cpu"><a href="./values.yaml#L1136">postgres-operator.databases.coder.resources.limits.cpu</a></td>
+			<td id="postgres-operator--databases--coder--resources--limits--cpu"><a href="./values.yaml#L1127">postgres-operator.databases.coder.resources.limits.cpu</a></td>
 			<td>
 string
 </td>
@@ -8626,7 +8593,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources--limits--memory"><a href="./values.yaml#L1138">postgres-operator.databases.coder.resources.limits.memory</a></td>
+			<td id="postgres-operator--databases--coder--resources--limits--memory"><a href="./values.yaml#L1129">postgres-operator.databases.coder.resources.limits.memory</a></td>
 			<td>
 string
 </td>
@@ -8640,7 +8607,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources--requests"><a href="./values.yaml#L1140">postgres-operator.databases.coder.resources.requests</a></td>
+			<td id="postgres-operator--databases--coder--resources--requests"><a href="./values.yaml#L1131">postgres-operator.databases.coder.resources.requests</a></td>
 			<td>
 object
 </td>
@@ -8660,7 +8627,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources--requests--cpu"><a href="./values.yaml#L1142">postgres-operator.databases.coder.resources.requests.cpu</a></td>
+			<td id="postgres-operator--databases--coder--resources--requests--cpu"><a href="./values.yaml#L1133">postgres-operator.databases.coder.resources.requests.cpu</a></td>
 			<td>
 string
 </td>
@@ -8674,7 +8641,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources--requests--memory"><a href="./values.yaml#L1144">postgres-operator.databases.coder.resources.requests.memory</a></td>
+			<td id="postgres-operator--databases--coder--resources--requests--memory"><a href="./values.yaml#L1135">postgres-operator.databases.coder.resources.requests.memory</a></td>
 			<td>
 string
 </td>
@@ -8688,7 +8655,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--volume"><a href="./values.yaml#L1146">postgres-operator.databases.coder.volume</a></td>
+			<td id="postgres-operator--databases--coder--volume"><a href="./values.yaml#L1137">postgres-operator.databases.coder.volume</a></td>
 			<td>
 object
 </td>
@@ -8707,7 +8674,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--volume--size"><a href="./values.yaml#L1148">postgres-operator.databases.coder.volume.size</a></td>
+			<td id="postgres-operator--databases--coder--volume--size"><a href="./values.yaml#L1139">postgres-operator.databases.coder.volume.size</a></td>
 			<td>
 string
 </td>
@@ -8721,7 +8688,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core"><a href="./values.yaml#L1150">postgres-operator.databases.core</a></td>
+			<td id="postgres-operator--databases--core"><a href="./values.yaml#L1141">postgres-operator.databases.core</a></td>
 			<td>
 object
 </td>
@@ -8753,7 +8720,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--enabled"><a href="./values.yaml#L1152">postgres-operator.databases.core.enabled</a></td>
+			<td id="postgres-operator--databases--core--enabled"><a href="./values.yaml#L1143">postgres-operator.databases.core.enabled</a></td>
 			<td>
 bool
 </td>
@@ -8767,7 +8734,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources"><a href="./values.yaml#L1154">postgres-operator.databases.core.resources</a></td>
+			<td id="postgres-operator--databases--core--resources"><a href="./values.yaml#L1145">postgres-operator.databases.core.resources</a></td>
 			<td>
 object
 </td>
@@ -8793,7 +8760,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources--limits"><a href="./values.yaml#L1156">postgres-operator.databases.core.resources.limits</a></td>
+			<td id="postgres-operator--databases--core--resources--limits"><a href="./values.yaml#L1147">postgres-operator.databases.core.resources.limits</a></td>
 			<td>
 object
 </td>
@@ -8813,7 +8780,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources--limits--cpu"><a href="./values.yaml#L1158">postgres-operator.databases.core.resources.limits.cpu</a></td>
+			<td id="postgres-operator--databases--core--resources--limits--cpu"><a href="./values.yaml#L1149">postgres-operator.databases.core.resources.limits.cpu</a></td>
 			<td>
 string
 </td>
@@ -8827,7 +8794,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources--limits--memory"><a href="./values.yaml#L1160">postgres-operator.databases.core.resources.limits.memory</a></td>
+			<td id="postgres-operator--databases--core--resources--limits--memory"><a href="./values.yaml#L1151">postgres-operator.databases.core.resources.limits.memory</a></td>
 			<td>
 string
 </td>
@@ -8841,7 +8808,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources--requests"><a href="./values.yaml#L1162">postgres-operator.databases.core.resources.requests</a></td>
+			<td id="postgres-operator--databases--core--resources--requests"><a href="./values.yaml#L1153">postgres-operator.databases.core.resources.requests</a></td>
 			<td>
 object
 </td>
@@ -8861,7 +8828,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources--requests--cpu"><a href="./values.yaml#L1164">postgres-operator.databases.core.resources.requests.cpu</a></td>
+			<td id="postgres-operator--databases--core--resources--requests--cpu"><a href="./values.yaml#L1155">postgres-operator.databases.core.resources.requests.cpu</a></td>
 			<td>
 string
 </td>
@@ -8875,7 +8842,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources--requests--memory"><a href="./values.yaml#L1166">postgres-operator.databases.core.resources.requests.memory</a></td>
+			<td id="postgres-operator--databases--core--resources--requests--memory"><a href="./values.yaml#L1157">postgres-operator.databases.core.resources.requests.memory</a></td>
 			<td>
 string
 </td>
@@ -8889,7 +8856,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--volume"><a href="./values.yaml#L1168">postgres-operator.databases.core.volume</a></td>
+			<td id="postgres-operator--databases--core--volume"><a href="./values.yaml#L1159">postgres-operator.databases.core.volume</a></td>
 			<td>
 object
 </td>
@@ -8908,7 +8875,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--volume--size"><a href="./values.yaml#L1170">postgres-operator.databases.core.volume.size</a></td>
+			<td id="postgres-operator--databases--core--volume--size"><a href="./values.yaml#L1161">postgres-operator.databases.core.volume.size</a></td>
 			<td>
 string
 </td>
@@ -8922,7 +8889,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub"><a href="./values.yaml#L1172">postgres-operator.databases.digitalhub</a></td>
+			<td id="postgres-operator--databases--digitalhub"><a href="./values.yaml#L1163">postgres-operator.databases.digitalhub</a></td>
 			<td>
 object
 </td>
@@ -8954,7 +8921,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--enabled"><a href="./values.yaml#L1174">postgres-operator.databases.digitalhub.enabled</a></td>
+			<td id="postgres-operator--databases--digitalhub--enabled"><a href="./values.yaml#L1165">postgres-operator.databases.digitalhub.enabled</a></td>
 			<td>
 bool
 </td>
@@ -8968,7 +8935,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources"><a href="./values.yaml#L1176">postgres-operator.databases.digitalhub.resources</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources"><a href="./values.yaml#L1167">postgres-operator.databases.digitalhub.resources</a></td>
 			<td>
 object
 </td>
@@ -8994,7 +8961,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources--limits"><a href="./values.yaml#L1178">postgres-operator.databases.digitalhub.resources.limits</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources--limits"><a href="./values.yaml#L1169">postgres-operator.databases.digitalhub.resources.limits</a></td>
 			<td>
 object
 </td>
@@ -9014,7 +8981,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources--limits--cpu"><a href="./values.yaml#L1180">postgres-operator.databases.digitalhub.resources.limits.cpu</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources--limits--cpu"><a href="./values.yaml#L1171">postgres-operator.databases.digitalhub.resources.limits.cpu</a></td>
 			<td>
 string
 </td>
@@ -9028,7 +8995,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources--limits--memory"><a href="./values.yaml#L1182">postgres-operator.databases.digitalhub.resources.limits.memory</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources--limits--memory"><a href="./values.yaml#L1173">postgres-operator.databases.digitalhub.resources.limits.memory</a></td>
 			<td>
 string
 </td>
@@ -9042,7 +9009,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources--requests"><a href="./values.yaml#L1184">postgres-operator.databases.digitalhub.resources.requests</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources--requests"><a href="./values.yaml#L1175">postgres-operator.databases.digitalhub.resources.requests</a></td>
 			<td>
 object
 </td>
@@ -9062,7 +9029,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources--requests--cpu"><a href="./values.yaml#L1186">postgres-operator.databases.digitalhub.resources.requests.cpu</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources--requests--cpu"><a href="./values.yaml#L1177">postgres-operator.databases.digitalhub.resources.requests.cpu</a></td>
 			<td>
 string
 </td>
@@ -9076,7 +9043,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources--requests--memory"><a href="./values.yaml#L1188">postgres-operator.databases.digitalhub.resources.requests.memory</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources--requests--memory"><a href="./values.yaml#L1179">postgres-operator.databases.digitalhub.resources.requests.memory</a></td>
 			<td>
 string
 </td>
@@ -9090,7 +9057,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--volume"><a href="./values.yaml#L1190">postgres-operator.databases.digitalhub.volume</a></td>
+			<td id="postgres-operator--databases--digitalhub--volume"><a href="./values.yaml#L1181">postgres-operator.databases.digitalhub.volume</a></td>
 			<td>
 object
 </td>
@@ -9109,7 +9076,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--volume--size"><a href="./values.yaml#L1192">postgres-operator.databases.digitalhub.volume.size</a></td>
+			<td id="postgres-operator--databases--digitalhub--volume--size"><a href="./values.yaml#L1183">postgres-operator.databases.digitalhub.volume.size</a></td>
 			<td>
 string
 </td>
@@ -9123,7 +9090,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext"><a href="./values.yaml#L1194">postgres-operator.securityContext</a></td>
+			<td id="postgres-operator--securityContext"><a href="./values.yaml#L1185">postgres-operator.securityContext</a></td>
 			<td>
 object
 </td>
@@ -9151,7 +9118,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L1196">postgres-operator.securityContext.allowPrivilegeEscalation</a></td>
+			<td id="postgres-operator--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L1187">postgres-operator.securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -9165,7 +9132,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext--capabilities"><a href="./values.yaml#L1198">postgres-operator.securityContext.capabilities</a></td>
+			<td id="postgres-operator--securityContext--capabilities"><a href="./values.yaml#L1189">postgres-operator.securityContext.capabilities</a></td>
 			<td>
 object
 </td>
@@ -9186,7 +9153,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext--capabilities--drop"><a href="./values.yaml#L1200">postgres-operator.securityContext.capabilities.drop</a></td>
+			<td id="postgres-operator--securityContext--capabilities--drop"><a href="./values.yaml#L1191">postgres-operator.securityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
@@ -9205,7 +9172,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext--runAsNonRoot"><a href="./values.yaml#L1203">postgres-operator.securityContext.runAsNonRoot</a></td>
+			<td id="postgres-operator--securityContext--runAsNonRoot"><a href="./values.yaml#L1194">postgres-operator.securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -9219,7 +9186,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext--seccompProfile"><a href="./values.yaml#L1205">postgres-operator.securityContext.seccompProfile</a></td>
+			<td id="postgres-operator--securityContext--seccompProfile"><a href="./values.yaml#L1196">postgres-operator.securityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -9238,7 +9205,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext--seccompProfile--type"><a href="./values.yaml#L1207">postgres-operator.securityContext.seccompProfile.type</a></td>
+			<td id="postgres-operator--securityContext--seccompProfile--type"><a href="./values.yaml#L1198">postgres-operator.securityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -9252,7 +9219,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator"><a href="./values.yaml#L1211">postgrest-operator</a></td>
+			<td id="postgrest-operator"><a href="./values.yaml#L1202">postgrest-operator</a></td>
 			<td>
 object
 </td>
@@ -9288,7 +9255,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--enabled"><a href="./values.yaml#L1213">postgrest-operator.enabled</a></td>
+			<td id="postgrest-operator--enabled"><a href="./values.yaml#L1204">postgrest-operator.enabled</a></td>
 			<td>
 bool
 </td>
@@ -9302,7 +9269,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgres"><a href="./values.yaml#L1215">postgrest-operator.postgres</a></td>
+			<td id="postgrest-operator--postgres"><a href="./values.yaml#L1206">postgrest-operator.postgres</a></td>
 			<td>
 object
 </td>
@@ -9325,7 +9292,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgres--default_database"><a href="./values.yaml#L1217">postgrest-operator.postgres.default_database</a></td>
+			<td id="postgrest-operator--postgres--default_database"><a href="./values.yaml#L1208">postgrest-operator.postgres.default_database</a></td>
 			<td>
 string
 </td>
@@ -9339,7 +9306,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgres--host"><a href="./values.yaml#L1219">postgrest-operator.postgres.host</a></td>
+			<td id="postgrest-operator--postgres--host"><a href="./values.yaml#L1210">postgrest-operator.postgres.host</a></td>
 			<td>
 string
 </td>
@@ -9353,7 +9320,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgres--port"><a href="./values.yaml#L1221">postgrest-operator.postgres.port</a></td>
+			<td id="postgrest-operator--postgres--port"><a href="./values.yaml#L1212">postgrest-operator.postgres.port</a></td>
 			<td>
 int
 </td>
@@ -9367,7 +9334,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgres--postgrest_service_type"><a href="./values.yaml#L1223">postgrest-operator.postgres.postgrest_service_type</a></td>
+			<td id="postgrest-operator--postgres--postgrest_service_type"><a href="./values.yaml#L1214">postgrest-operator.postgres.postgrest_service_type</a></td>
 			<td>
 string
 </td>
@@ -9381,7 +9348,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgres--uri_args"><a href="./values.yaml#L1225">postgrest-operator.postgres.uri_args</a></td>
+			<td id="postgrest-operator--postgres--uri_args"><a href="./values.yaml#L1216">postgrest-operator.postgres.uri_args</a></td>
 			<td>
 string
 </td>
@@ -9395,7 +9362,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets"><a href="./values.yaml#L1227">postgrest-operator.postgresCredsExistingSecrets</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets"><a href="./values.yaml#L1218">postgrest-operator.postgresCredsExistingSecrets</a></td>
 			<td>
 object
 </td>
@@ -9421,7 +9388,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets--password"><a href="./values.yaml#L1229">postgrest-operator.postgresCredsExistingSecrets.password</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets--password"><a href="./values.yaml#L1220">postgrest-operator.postgresCredsExistingSecrets.password</a></td>
 			<td>
 object
 </td>
@@ -9441,7 +9408,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets--password--secretKey"><a href="./values.yaml#L1231">postgrest-operator.postgresCredsExistingSecrets.password.secretKey</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets--password--secretKey"><a href="./values.yaml#L1222">postgrest-operator.postgresCredsExistingSecrets.password.secretKey</a></td>
 			<td>
 string
 </td>
@@ -9455,7 +9422,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets--password--secretName"><a href="./values.yaml#L1233">postgrest-operator.postgresCredsExistingSecrets.password.secretName</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets--password--secretName"><a href="./values.yaml#L1224">postgrest-operator.postgresCredsExistingSecrets.password.secretName</a></td>
 			<td>
 string
 </td>
@@ -9469,7 +9436,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets--username"><a href="./values.yaml#L1235">postgrest-operator.postgresCredsExistingSecrets.username</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets--username"><a href="./values.yaml#L1226">postgrest-operator.postgresCredsExistingSecrets.username</a></td>
 			<td>
 object
 </td>
@@ -9489,7 +9456,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets--username--secretKey"><a href="./values.yaml#L1237">postgrest-operator.postgresCredsExistingSecrets.username.secretKey</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets--username--secretKey"><a href="./values.yaml#L1228">postgrest-operator.postgresCredsExistingSecrets.username.secretKey</a></td>
 			<td>
 string
 </td>
@@ -9503,7 +9470,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets--username--secretName"><a href="./values.yaml#L1239">postgrest-operator.postgresCredsExistingSecrets.username.secretName</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets--username--secretName"><a href="./values.yaml#L1230">postgrest-operator.postgresCredsExistingSecrets.username.secretName</a></td>
 			<td>
 string
 </td>
@@ -9517,7 +9484,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="seaweedfs"><a href="./values.yaml#L1242">seaweedfs</a></td>
+			<td id="seaweedfs"><a href="./values.yaml#L1233">seaweedfs</a></td>
 			<td>
 object
 </td>
@@ -9536,7 +9503,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="seaweedfs--enabled"><a href="./values.yaml#L1244">seaweedfs.enabled</a></td>
+			<td id="seaweedfs--enabled"><a href="./values.yaml#L1235">seaweedfs.enabled</a></td>
 			<td>
 bool
 </td>
@@ -9550,7 +9517,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="solr"><a href="./values.yaml#L1248">solr</a></td>
+			<td id="solr"><a href="./values.yaml#L1239">solr</a></td>
 			<td>
 object
 </td>
@@ -9635,7 +9602,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--enabled"><a href="./values.yaml#L1250">solr.enabled</a></td>
+			<td id="solr--enabled"><a href="./values.yaml#L1241">solr.enabled</a></td>
 			<td>
 bool
 </td>
@@ -9649,7 +9616,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--creds"><a href="./values.yaml#L1252">solr.creds</a></td>
+			<td id="solr--creds"><a href="./values.yaml#L1243">solr.creds</a></td>
 			<td>
 object
 </td>
@@ -9683,7 +9650,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--creds--admin"><a href="./values.yaml#L1254">solr.creds.admin</a></td>
+			<td id="solr--creds--admin"><a href="./values.yaml#L1245">solr.creds.admin</a></td>
 			<td>
 object
 </td>
@@ -9703,7 +9670,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--creds--admin--password"><a href="./values.yaml#L1256">solr.creds.admin.password</a></td>
+			<td id="solr--creds--admin--password"><a href="./values.yaml#L1247">solr.creds.admin.password</a></td>
 			<td>
 string
 </td>
@@ -9717,7 +9684,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--creds--admin--passwordSha"><a href="./values.yaml#L1258">solr.creds.admin.passwordSha</a></td>
+			<td id="solr--creds--admin--passwordSha"><a href="./values.yaml#L1249">solr.creds.admin.passwordSha</a></td>
 			<td>
 string
 </td>
@@ -9731,7 +9698,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--creds--k8sOper"><a href="./values.yaml#L1260">solr.creds.k8sOper</a></td>
+			<td id="solr--creds--k8sOper"><a href="./values.yaml#L1251">solr.creds.k8sOper</a></td>
 			<td>
 object
 </td>
@@ -9751,7 +9718,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--creds--k8sOper--password"><a href="./values.yaml#L1262">solr.creds.k8sOper.password</a></td>
+			<td id="solr--creds--k8sOper--password"><a href="./values.yaml#L1253">solr.creds.k8sOper.password</a></td>
 			<td>
 string
 </td>
@@ -9765,7 +9732,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--creds--k8sOper--passwordSha"><a href="./values.yaml#L1264">solr.creds.k8sOper.passwordSha</a></td>
+			<td id="solr--creds--k8sOper--passwordSha"><a href="./values.yaml#L1255">solr.creds.k8sOper.passwordSha</a></td>
 			<td>
 string
 </td>
@@ -9779,7 +9746,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--creds--solr"><a href="./values.yaml#L1266">solr.creds.solr</a></td>
+			<td id="solr--creds--solr"><a href="./values.yaml#L1257">solr.creds.solr</a></td>
 			<td>
 object
 </td>
@@ -9799,7 +9766,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--creds--solr--password"><a href="./values.yaml#L1268">solr.creds.solr.password</a></td>
+			<td id="solr--creds--solr--password"><a href="./values.yaml#L1259">solr.creds.solr.password</a></td>
 			<td>
 string
 </td>
@@ -9813,7 +9780,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--creds--solr--passwordSha"><a href="./values.yaml#L1270">solr.creds.solr.passwordSha</a></td>
+			<td id="solr--creds--solr--passwordSha"><a href="./values.yaml#L1261">solr.creds.solr.passwordSha</a></td>
 			<td>
 string
 </td>
@@ -9827,7 +9794,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--creds--user"><a href="./values.yaml#L1272">solr.creds.user</a></td>
+			<td id="solr--creds--user"><a href="./values.yaml#L1263">solr.creds.user</a></td>
 			<td>
 object
 </td>
@@ -9847,7 +9814,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--creds--user--password"><a href="./values.yaml#L1274">solr.creds.user.password</a></td>
+			<td id="solr--creds--user--password"><a href="./values.yaml#L1265">solr.creds.user.password</a></td>
 			<td>
 string
 </td>
@@ -9861,7 +9828,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--creds--user--passwordSha"><a href="./values.yaml#L1276">solr.creds.user.passwordSha</a></td>
+			<td id="solr--creds--user--passwordSha"><a href="./values.yaml#L1267">solr.creds.user.passwordSha</a></td>
 			<td>
 string
 </td>
@@ -9875,7 +9842,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--dataStorage"><a href="./values.yaml#L1278">solr.dataStorage</a></td>
+			<td id="solr--dataStorage"><a href="./values.yaml#L1269">solr.dataStorage</a></td>
 			<td>
 object
 </td>
@@ -9904,7 +9871,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--dataStorage--capacity"><a href="./values.yaml#L1280">solr.dataStorage.capacity</a></td>
+			<td id="solr--dataStorage--capacity"><a href="./values.yaml#L1271">solr.dataStorage.capacity</a></td>
 			<td>
 string
 </td>
@@ -9918,7 +9885,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--dataStorage--persistent"><a href="./values.yaml#L1282">solr.dataStorage.persistent</a></td>
+			<td id="solr--dataStorage--persistent"><a href="./values.yaml#L1273">solr.dataStorage.persistent</a></td>
 			<td>
 object
 </td>
@@ -9943,7 +9910,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--dataStorage--persistent--pvc"><a href="./values.yaml#L1284">solr.dataStorage.persistent.pvc</a></td>
+			<td id="solr--dataStorage--persistent--pvc"><a href="./values.yaml#L1275">solr.dataStorage.persistent.pvc</a></td>
 			<td>
 object
 </td>
@@ -9965,7 +9932,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--dataStorage--persistent--pvc--annotations"><a href="./values.yaml#L1286">solr.dataStorage.persistent.pvc.annotations</a></td>
+			<td id="solr--dataStorage--persistent--pvc--annotations"><a href="./values.yaml#L1277">solr.dataStorage.persistent.pvc.annotations</a></td>
 			<td>
 object
 </td>
@@ -9982,7 +9949,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--dataStorage--persistent--pvc--labels"><a href="./values.yaml#L1288">solr.dataStorage.persistent.pvc.labels</a></td>
+			<td id="solr--dataStorage--persistent--pvc--labels"><a href="./values.yaml#L1279">solr.dataStorage.persistent.pvc.labels</a></td>
 			<td>
 object
 </td>
@@ -9999,7 +9966,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--dataStorage--persistent--pvc--name"><a href="./values.yaml#L1290">solr.dataStorage.persistent.pvc.name</a></td>
+			<td id="solr--dataStorage--persistent--pvc--name"><a href="./values.yaml#L1281">solr.dataStorage.persistent.pvc.name</a></td>
 			<td>
 string
 </td>
@@ -10013,7 +9980,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--dataStorage--persistent--pvc--storageClassName"><a href="./values.yaml#L1292">solr.dataStorage.persistent.pvc.storageClassName</a></td>
+			<td id="solr--dataStorage--persistent--pvc--storageClassName"><a href="./values.yaml#L1283">solr.dataStorage.persistent.pvc.storageClassName</a></td>
 			<td>
 string
 </td>
@@ -10027,7 +9994,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--dataStorage--persistent--reclaimPolicy"><a href="./values.yaml#L1294">solr.dataStorage.persistent.reclaimPolicy</a></td>
+			<td id="solr--dataStorage--persistent--reclaimPolicy"><a href="./values.yaml#L1285">solr.dataStorage.persistent.reclaimPolicy</a></td>
 			<td>
 string
 </td>
@@ -10041,7 +10008,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--dataStorage--type"><a href="./values.yaml#L1296">solr.dataStorage.type</a></td>
+			<td id="solr--dataStorage--type"><a href="./values.yaml#L1287">solr.dataStorage.type</a></td>
 			<td>
 string
 </td>
@@ -10055,7 +10022,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--fullnameOverride"><a href="./values.yaml#L1298">solr.fullnameOverride</a></td>
+			<td id="solr--fullnameOverride"><a href="./values.yaml#L1289">solr.fullnameOverride</a></td>
 			<td>
 string
 </td>
@@ -10069,7 +10036,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--image"><a href="./values.yaml#L1300">solr.image</a></td>
+			<td id="solr--image"><a href="./values.yaml#L1291">solr.image</a></td>
 			<td>
 object
 </td>
@@ -10089,7 +10056,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--image--repository"><a href="./values.yaml#L1302">solr.image.repository</a></td>
+			<td id="solr--image--repository"><a href="./values.yaml#L1293">solr.image.repository</a></td>
 			<td>
 string
 </td>
@@ -10103,7 +10070,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--image--tag"><a href="./values.yaml#L1304">solr.image.tag</a></td>
+			<td id="solr--image--tag"><a href="./values.yaml#L1295">solr.image.tag</a></td>
 			<td>
 string
 </td>
@@ -10117,7 +10084,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--podOptions"><a href="./values.yaml#L1306">solr.podOptions</a></td>
+			<td id="solr--podOptions"><a href="./values.yaml#L1297">solr.podOptions</a></td>
 			<td>
 object
 </td>
@@ -10151,7 +10118,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--podOptions--containerSecurityContext"><a href="./values.yaml#L1308">solr.podOptions.containerSecurityContext</a></td>
+			<td id="solr--podOptions--containerSecurityContext"><a href="./values.yaml#L1299">solr.podOptions.containerSecurityContext</a></td>
 			<td>
 object
 </td>
@@ -10178,7 +10145,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--podOptions--containerSecurityContext--allowPrivilegeEscalation"><a href="./values.yaml#L1310">solr.podOptions.containerSecurityContext.allowPrivilegeEscalation</a></td>
+			<td id="solr--podOptions--containerSecurityContext--allowPrivilegeEscalation"><a href="./values.yaml#L1301">solr.podOptions.containerSecurityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -10192,7 +10159,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--podOptions--containerSecurityContext--capabilities"><a href="./values.yaml#L1312">solr.podOptions.containerSecurityContext.capabilities</a></td>
+			<td id="solr--podOptions--containerSecurityContext--capabilities"><a href="./values.yaml#L1303">solr.podOptions.containerSecurityContext.capabilities</a></td>
 			<td>
 object
 </td>
@@ -10213,7 +10180,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--podOptions--containerSecurityContext--capabilities--drop"><a href="./values.yaml#L1314">solr.podOptions.containerSecurityContext.capabilities.drop</a></td>
+			<td id="solr--podOptions--containerSecurityContext--capabilities--drop"><a href="./values.yaml#L1305">solr.podOptions.containerSecurityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
@@ -10232,7 +10199,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--podOptions--containerSecurityContext--seccompProfile"><a href="./values.yaml#L1317">solr.podOptions.containerSecurityContext.seccompProfile</a></td>
+			<td id="solr--podOptions--containerSecurityContext--seccompProfile"><a href="./values.yaml#L1308">solr.podOptions.containerSecurityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -10251,7 +10218,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--podOptions--containerSecurityContext--seccompProfile--type"><a href="./values.yaml#L1319">solr.podOptions.containerSecurityContext.seccompProfile.type</a></td>
+			<td id="solr--podOptions--containerSecurityContext--seccompProfile--type"><a href="./values.yaml#L1310">solr.podOptions.containerSecurityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -10265,7 +10232,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--podOptions--podSecurityContext"><a href="./values.yaml#L1321">solr.podOptions.podSecurityContext</a></td>
+			<td id="solr--podOptions--podSecurityContext"><a href="./values.yaml#L1312">solr.podOptions.podSecurityContext</a></td>
 			<td>
 object
 </td>
@@ -10286,7 +10253,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--podOptions--podSecurityContext--seccompProfile"><a href="./values.yaml#L1323">solr.podOptions.podSecurityContext.seccompProfile</a></td>
+			<td id="solr--podOptions--podSecurityContext--seccompProfile"><a href="./values.yaml#L1314">solr.podOptions.podSecurityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -10305,7 +10272,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--podOptions--podSecurityContext--seccompProfile--type"><a href="./values.yaml#L1325">solr.podOptions.podSecurityContext.seccompProfile.type</a></td>
+			<td id="solr--podOptions--podSecurityContext--seccompProfile--type"><a href="./values.yaml#L1316">solr.podOptions.podSecurityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -10319,7 +10286,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--replicas"><a href="./values.yaml#L1327">solr.replicas</a></td>
+			<td id="solr--replicas"><a href="./values.yaml#L1318">solr.replicas</a></td>
 			<td>
 int
 </td>
@@ -10333,7 +10300,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--solrOptions"><a href="./values.yaml#L1329">solr.solrOptions</a></td>
+			<td id="solr--solrOptions"><a href="./values.yaml#L1320">solr.solrOptions</a></td>
 			<td>
 object
 </td>
@@ -10360,7 +10327,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--solrOptions--security"><a href="./values.yaml#L1333">solr.solrOptions.security</a></td>
+			<td id="solr--solrOptions--security"><a href="./values.yaml#L1324">solr.solrOptions.security</a></td>
 			<td>
 object
 </td>
@@ -10385,7 +10352,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--solrOptions--security--authenticationType"><a href="./values.yaml#L1335">solr.solrOptions.security.authenticationType</a></td>
+			<td id="solr--solrOptions--security--authenticationType"><a href="./values.yaml#L1326">solr.solrOptions.security.authenticationType</a></td>
 			<td>
 string
 </td>
@@ -10399,7 +10366,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--solrOptions--security--basicAuthSecret"><a href="./values.yaml#L1337">solr.solrOptions.security.basicAuthSecret</a></td>
+			<td id="solr--solrOptions--security--basicAuthSecret"><a href="./values.yaml#L1328">solr.solrOptions.security.basicAuthSecret</a></td>
 			<td>
 string
 </td>
@@ -10413,7 +10380,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--solrOptions--security--bootstrapSecurityJson"><a href="./values.yaml#L1339">solr.solrOptions.security.bootstrapSecurityJson</a></td>
+			<td id="solr--solrOptions--security--bootstrapSecurityJson"><a href="./values.yaml#L1330">solr.solrOptions.security.bootstrapSecurityJson</a></td>
 			<td>
 object
 </td>
@@ -10433,7 +10400,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--solrOptions--security--bootstrapSecurityJson--key"><a href="./values.yaml#L1341">solr.solrOptions.security.bootstrapSecurityJson.key</a></td>
+			<td id="solr--solrOptions--security--bootstrapSecurityJson--key"><a href="./values.yaml#L1332">solr.solrOptions.security.bootstrapSecurityJson.key</a></td>
 			<td>
 string
 </td>
@@ -10447,7 +10414,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--solrOptions--security--bootstrapSecurityJson--name"><a href="./values.yaml#L1343">solr.solrOptions.security.bootstrapSecurityJson.name</a></td>
+			<td id="solr--solrOptions--security--bootstrapSecurityJson--name"><a href="./values.yaml#L1334">solr.solrOptions.security.bootstrapSecurityJson.name</a></td>
 			<td>
 string
 </td>
@@ -10461,7 +10428,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr--solrOptions--security--probesRequireAuth"><a href="./values.yaml#L1345">solr.solrOptions.security.probesRequireAuth</a></td>
+			<td id="solr--solrOptions--security--probesRequireAuth"><a href="./values.yaml#L1336">solr.solrOptions.security.probesRequireAuth</a></td>
 			<td>
 bool
 </td>
@@ -10475,7 +10442,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="solr-operator"><a href="./values.yaml#L1349">solr-operator</a></td>
+			<td id="solr-operator"><a href="./values.yaml#L1340">solr-operator</a></td>
 			<td>
 object
 </td>
@@ -10511,7 +10478,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr-operator--enabled"><a href="./values.yaml#L1351">solr-operator.enabled</a></td>
+			<td id="solr-operator--enabled"><a href="./values.yaml#L1342">solr-operator.enabled</a></td>
 			<td>
 bool
 </td>
@@ -10525,7 +10492,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="solr-operator--securityContext"><a href="./values.yaml#L1353">solr-operator.securityContext</a></td>
+			<td id="solr-operator--securityContext"><a href="./values.yaml#L1344">solr-operator.securityContext</a></td>
 			<td>
 object
 </td>
@@ -10553,7 +10520,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr-operator--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L1355">solr-operator.securityContext.allowPrivilegeEscalation</a></td>
+			<td id="solr-operator--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L1346">solr-operator.securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -10567,7 +10534,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="solr-operator--securityContext--capabilities"><a href="./values.yaml#L1357">solr-operator.securityContext.capabilities</a></td>
+			<td id="solr-operator--securityContext--capabilities"><a href="./values.yaml#L1348">solr-operator.securityContext.capabilities</a></td>
 			<td>
 object
 </td>
@@ -10588,7 +10555,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr-operator--securityContext--capabilities--drop"><a href="./values.yaml#L1359">solr-operator.securityContext.capabilities.drop</a></td>
+			<td id="solr-operator--securityContext--capabilities--drop"><a href="./values.yaml#L1350">solr-operator.securityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
@@ -10607,7 +10574,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="solr-operator--securityContext--runAsNonRoot"><a href="./values.yaml#L1362">solr-operator.securityContext.runAsNonRoot</a></td>
+			<td id="solr-operator--securityContext--runAsNonRoot"><a href="./values.yaml#L1353">solr-operator.securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -10621,7 +10588,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="solr-operator--securityContext--seccompProfile"><a href="./values.yaml#L1364">solr-operator.securityContext.seccompProfile</a></td>
+			<td id="solr-operator--securityContext--seccompProfile"><a href="./values.yaml#L1355">solr-operator.securityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -10640,7 +10607,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr-operator--securityContext--seccompProfile--type"><a href="./values.yaml#L1366">solr-operator.securityContext.seccompProfile.type</a></td>
+			<td id="solr-operator--securityContext--seccompProfile--type"><a href="./values.yaml#L1357">solr-operator.securityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -10654,7 +10621,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="solr-operator--zookeeper-operator"><a href="./values.yaml#L1368">solr-operator.zookeeper-operator</a></td>
+			<td id="solr-operator--zookeeper-operator"><a href="./values.yaml#L1359">solr-operator.zookeeper-operator</a></td>
 			<td>
 object
 </td>
@@ -10675,7 +10642,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr-operator--zookeeper-operator--crd"><a href="./values.yaml#L1370">solr-operator.zookeeper-operator.crd</a></td>
+			<td id="solr-operator--zookeeper-operator--crd"><a href="./values.yaml#L1361">solr-operator.zookeeper-operator.crd</a></td>
 			<td>
 object
 </td>
@@ -10694,7 +10661,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="solr-operator--zookeeper-operator--crd--create"><a href="./values.yaml#L1372">solr-operator.zookeeper-operator.crd.create</a></td>
+			<td id="solr-operator--zookeeper-operator--crd--create"><a href="./values.yaml#L1363">solr-operator.zookeeper-operator.crd.create</a></td>
 			<td>
 bool
 </td>
@@ -10708,7 +10675,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller"><a href="./values.yaml#L1376">template-controller</a></td>
+			<td id="template-controller"><a href="./values.yaml#L1367">template-controller</a></td>
 			<td>
 object
 </td>
@@ -10748,7 +10715,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--enabled"><a href="./values.yaml#L1378">template-controller.enabled</a></td>
+			<td id="template-controller--enabled"><a href="./values.yaml#L1369">template-controller.enabled</a></td>
 			<td>
 bool
 </td>
@@ -10762,7 +10729,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--objectTemplate"><a href="./values.yaml#L1381">template-controller.objectTemplate</a></td>
+			<td id="template-controller--objectTemplate"><a href="./values.yaml#L1372">template-controller.objectTemplate</a></td>
 			<td>
 object
 </td>
@@ -10781,7 +10748,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--objectTemplate--enabled"><a href="./values.yaml#L1383">template-controller.objectTemplate.enabled</a></td>
+			<td id="template-controller--objectTemplate--enabled"><a href="./values.yaml#L1374">template-controller.objectTemplate.enabled</a></td>
 			<td>
 bool
 </td>
@@ -10795,7 +10762,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--podSecurityContext"><a href="./values.yaml#L1385">template-controller.podSecurityContext</a></td>
+			<td id="template-controller--podSecurityContext"><a href="./values.yaml#L1376">template-controller.podSecurityContext</a></td>
 			<td>
 object
 </td>
@@ -10817,7 +10784,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--podSecurityContext--runAsNonRoot"><a href="./values.yaml#L1387">template-controller.podSecurityContext.runAsNonRoot</a></td>
+			<td id="template-controller--podSecurityContext--runAsNonRoot"><a href="./values.yaml#L1378">template-controller.podSecurityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -10831,7 +10798,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--podSecurityContext--seccompProfile"><a href="./values.yaml#L1389">template-controller.podSecurityContext.seccompProfile</a></td>
+			<td id="template-controller--podSecurityContext--seccompProfile"><a href="./values.yaml#L1380">template-controller.podSecurityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -10850,7 +10817,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--podSecurityContext--seccompProfile--type"><a href="./values.yaml#L1391">template-controller.podSecurityContext.seccompProfile.type</a></td>
+			<td id="template-controller--podSecurityContext--seccompProfile--type"><a href="./values.yaml#L1382">template-controller.podSecurityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -10864,7 +10831,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext"><a href="./values.yaml#L1393">template-controller.securityContext</a></td>
+			<td id="template-controller--securityContext"><a href="./values.yaml#L1384">template-controller.securityContext</a></td>
 			<td>
 object
 </td>
@@ -10892,7 +10859,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L1395">template-controller.securityContext.allowPrivilegeEscalation</a></td>
+			<td id="template-controller--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L1386">template-controller.securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -10906,7 +10873,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext--capabilities"><a href="./values.yaml#L1397">template-controller.securityContext.capabilities</a></td>
+			<td id="template-controller--securityContext--capabilities"><a href="./values.yaml#L1388">template-controller.securityContext.capabilities</a></td>
 			<td>
 object
 </td>
@@ -10927,7 +10894,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext--capabilities--drop"><a href="./values.yaml#L1399">template-controller.securityContext.capabilities.drop</a></td>
+			<td id="template-controller--securityContext--capabilities--drop"><a href="./values.yaml#L1390">template-controller.securityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
@@ -10946,7 +10913,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext--runAsNonRoot"><a href="./values.yaml#L1402">template-controller.securityContext.runAsNonRoot</a></td>
+			<td id="template-controller--securityContext--runAsNonRoot"><a href="./values.yaml#L1393">template-controller.securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -10960,7 +10927,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext--seccompProfile"><a href="./values.yaml#L1404">template-controller.securityContext.seccompProfile</a></td>
+			<td id="template-controller--securityContext--seccompProfile"><a href="./values.yaml#L1395">template-controller.securityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -10979,7 +10946,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext--seccompProfile--type"><a href="./values.yaml#L1406">template-controller.securityContext.seccompProfile.type</a></td>
+			<td id="template-controller--securityContext--seccompProfile--type"><a href="./values.yaml#L1397">template-controller.securityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>

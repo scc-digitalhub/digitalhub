@@ -341,7 +341,7 @@ coder:
         stopAfter: 0h
       - extraVars: []
         iconUrl: https://cdn-icons-png.flaticon.com/512/7301/7301969.png
-        name: code-toolbox-experimental
+        name: code-toolbox
         nodePort: "30050"
         privileged: false
         stopAfter: 8h
@@ -386,9 +386,9 @@ coder:
         stopAfter: 8h
       - extraVars: []
         iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-        image: ghcr.io/scc-digitalhub/jupyter-3-10:0.13.0b3
-        image311: ghcr.io/scc-digitalhub/jupyter-3-11:0.13.0b3
-        image39: ghcr.io/scc-digitalhub/jupyter-3-9:0.13.0b3
+        image: ghcr.io/scc-digitalhub/jupyter-3-10:0.13.0
+        image311: ghcr.io/scc-digitalhub/jupyter-3-11:0.13.0
+        image39: ghcr.io/scc-digitalhub/jupyter-3-9:0.13.0
         name: jupyter
         nodePort: "30040"
         privileged: false

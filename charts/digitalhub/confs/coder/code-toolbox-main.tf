@@ -769,7 +769,7 @@ resource "kubernetes_deployment" "code-toolbox" {
             for_each = var.extra_vars ? [1] : []
             content {
               config_map_ref {
-                name = "code-toolbox-experimental-additional-env"
+                name = "code-toolbox-additional-env"
               }
             }
           }
