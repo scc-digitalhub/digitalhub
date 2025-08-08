@@ -74,7 +74,7 @@ spec:
           env:
           {{- if .Values.sts.enabled }}
             - name: DB_CREDENTIALS_USER
-              {{- if and .Values.sts.client.existingSecret.name .Values.sts.client.existingSecret.usernameKey }}
+              {{- if and .Values.sts.client.existingSecret.name .Values.sts.client.existingSecret.clientIdKey }}
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.sts.client.existingSecret.name }}
@@ -83,7 +83,7 @@ spec:
               value: {{ .Values.sts.client.clientId }}
               {{- end }}
             - name: DB_CREDENTIALS_PASSWORD
-              {{- if and .Values.sts.client.existingSecret.name .Values.sts.client.existingSecret.passwordKey }}
+              {{- if and .Values.sts.client.existingSecret.name .Values.sts.client.existingSecret.clientSecretKey }}
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.sts.client.existingSecret.name }}
