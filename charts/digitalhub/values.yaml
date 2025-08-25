@@ -488,10 +488,6 @@ core:
     ownerSecret: ""
     #  core.databaseProvider.port -- Port of the main database of the platform
     port: "5432"
-  #  core.image -- Core image configuration
-  image:
-    #  core.image.tag -- Image tag
-    tag: "0.13.0"
   #  core.kanikoArgs --
   kanikoArgs: ""
   #  core.kubeai --
