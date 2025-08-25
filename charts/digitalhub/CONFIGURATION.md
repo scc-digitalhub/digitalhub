@@ -3149,7 +3149,7 @@ object
   },
   "enabled": true,
   "image": {
-    "tag": "0.13.0-beta12"
+    "tag": "0.13.0"
   },
   "kanikoArgs": "",
   "kubeai": {
@@ -3894,7 +3894,7 @@ object
 <summary>+Expand</summary>
 <pre lang="json">
 {
-  "tag": "0.13.0-beta12"
+  "tag": "0.13.0"
 }
 </pre>
 </details>
@@ -3910,7 +3910,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"0.13.0-beta12"
+"0.13.0"
 </pre>
 </div>
 			</td>

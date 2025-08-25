@@ -491,7 +491,7 @@ core:
   #  core.image -- Core image configuration
   image:
     #  core.image.tag -- Image tag
-    tag: "0.13.0-beta12"
+    tag: "0.13.0"
   #  core.kanikoArgs --
   kanikoArgs: ""
   #  core.kubeai --
