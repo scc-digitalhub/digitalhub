@@ -27,6 +27,7 @@ provider "http" {
 
 locals {
   jupyter_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}jupyter--jupyter--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  decoded_labels = var.extra_labels != "" ? jsondecode(base64decode(var.extra_labels)) : {}
 }
 
 variable "use_kubeconfig" {
@@ -118,6 +119,12 @@ variable "dhcore_issuer" {
 variable "extra_vars" {
   type    = bool
   default = false
+}
+
+variable "extra_labels" {
+  type    = string
+  description = "Extra labels that will be used by the workspace deployment. The labels must be in json format and encoded in Base64."
+  default = ""
 }
 
 data "coder_parameter" "cpu" {
@@ -429,7 +436,8 @@ resource "kubernetes_deployment" "jupyter" {
   metadata {
     name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
-    labels = {
+    labels = merge(
+    {
       "app.kubernetes.io/name"     = "jupyter-workspace"
       "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
@@ -440,7 +448,8 @@ resource "kubernetes_deployment" "jupyter" {
       "com.coder.workspace.name" = data.coder_workspace.me.name
       "com.coder.user.id"        = data.coder_workspace_owner.me.id
       "com.coder.user.username"  = data.coder_workspace_owner.me.name
-    }
+    },
+    local.decoded_labels)
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
     }

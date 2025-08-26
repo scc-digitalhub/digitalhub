@@ -145,6 +145,11 @@ Variables used in the creation and upgrade of Coder templates
 {{- if $template.extraVars -}}
 {{- $variables = append $variables (printf "extra_vars=true" ) }}
 {{- end }}
+{{- if $template.extraLabels -}}
+{{- $labels := list }}
+{{- $labels = (toJson $template.extraLabels | b64enc )}}
+{{- $variables = append $variables (printf "extra_labels=\"%s\"" $labels ) }}
+{{- end }}
 {{- $variables = append $variables (printf "node_port=%s" $template.nodePort ) }}
 {{- $variables = append $variables (printf "s3_endpoint=%s:%s" $root.Values.global.s3.endpoint $root.Values.global.s3.endpointPort ) }}
 {{- $variables = append $variables (printf "s3_bucket=%s" $root.Values.global.s3.platform.bucket ) }}
