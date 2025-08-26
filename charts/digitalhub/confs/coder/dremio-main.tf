@@ -20,6 +20,7 @@ provider "coder" {
 
 locals {
   dremio_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}dremio--dremio--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  decoded_labels = var.extra_labels != "" ? jsondecode(base64decode(var.extra_labels)) : {}
 }
 
 variable "use_kubeconfig" {
@@ -131,6 +132,12 @@ variable "s3_secret_key_key" {
 variable "extra_vars" {
   type    = bool
   default = false
+}
+
+variable "extra_labels" {
+  type    = string
+  description = "Extra labels that will be used by the workspace deployment. The labels must be in json format and encoded in Base64."
+  default = ""
 }
 
 provider "kubernetes" {
@@ -319,7 +326,8 @@ resource "kubernetes_job" "source-init" {
   metadata {
     name      = "dremio-source-init-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
-    labels = {
+    labels = merge(
+    {
       "app.kubernetes.io/name"     = "dremio-source-init"
       "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
@@ -330,7 +338,8 @@ resource "kubernetes_job" "source-init" {
       "com.coder.workspace.name" = data.coder_workspace.me.name
       "com.coder.user.id"        = data.coder_workspace_owner.me.id
       "com.coder.user.username"  = data.coder_workspace_owner.me.name
-    }
+    },
+    local.decoded_labels)
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
     }
@@ -522,7 +531,8 @@ resource "kubernetes_deployment" "dremio" {
   metadata {
     name      = "dremio-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
-    labels = {
+    labels = merge(
+      {
       "app.kubernetes.io/name"     = "dremio-workspace"
       "app.kubernetes.io/instance" = "dremio-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
       "app.kubernetes.io/part-of"  = "coder"
@@ -533,7 +543,8 @@ resource "kubernetes_deployment" "dremio" {
       "com.coder.workspace.name" = data.coder_workspace.me.name
       "com.coder.user.id"        = data.coder_workspace_owner.me.id
       "com.coder.user.username"  = data.coder_workspace_owner.me.name
-    }
+    },
+    local.decoded_labels)
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
     }
