@@ -329,7 +329,8 @@ coder:
     #  For Code-Toolbox, you can also pass the Tolerations in order to use the GPU resources.
     #  Use the stopAfter value to stop every workspace after a certain amount of time.
     customTemplates:
-      - extraVars:
+      - extraLabels: {}
+        extraVars:
           - name: GF_ANALYTICS_CHECK_FOR_UPDATES
             value: false
           - name: GF_ANALYTICS_REPORTING_ENABLED
@@ -341,14 +342,16 @@ coder:
         name: grafana
         nodePort: "30130"
         stopAfter: 0h
-      - extraVars: []
+      - extraLabels: {}
+        extraVars: []
         iconUrl: https://cdn-icons-png.flaticon.com/512/7301/7301969.png
         name: code-toolbox
         nodePort: "30050"
         privileged: false
         stopAfter: 8h
         tolerations: []
-      - extraVars: []
+      - extraLabels: {}
+        extraVars: []
         iconUrl: https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png
         image: dremio/dremio-oss:24.1.0
         name: dremio
@@ -367,7 +370,8 @@ coder:
             #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Username key
             usernameKey: ""
         stopAfter: 0h
-      - extraVars: []
+      - extraLabels: {}
+        extraVars: []
         iconUrl: https://i.ibb.co/TrBDsZM/sqlpad.png
         image: smartcommunitylab/sqlpad:nonroot
         name: sqlpad
