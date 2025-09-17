@@ -3149,7 +3149,7 @@ object
   },
   "enabled": true,
   "image": {
-    "tag": "0.13.0-beta12"
+    "tag": "0.13.0"
   },
   "kanikoArgs": "",
   "kubeai": {
@@ -3894,7 +3894,7 @@ object
 <summary>+Expand</summary>
 <pre lang="json">
 {
-  "tag": "0.13.0-beta12"
+  "tag": "0.13.0"
 }
 </pre>
 </details>
@@ -3910,7 +3910,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"0.13.0-beta12"
+"0.13.0"
 </pre>
 </div>
 			</td>
@@ -8196,11 +8196,11 @@ object
     },
     {
       "name": "digitalhub-runtime-hera",
-      "tag": "0.13.0"
+      "tag": "0.13.1"
     },
     {
       "name": "digitalhub-runtime-kfp",
-      "tag": "0.13.0"
+      "tag": "0.13.1"
     },
     {
       "name": "digitalhub-runtime-modelserve",
@@ -8212,7 +8212,7 @@ object
     },
     {
       "name": "digitalhub[full]",
-      "tag": "0.13.0"
+      "tag": "0.13.1"
     }
   ],
   "preRelease": false,
@@ -8273,11 +8273,11 @@ list
   },
   {
     "name": "digitalhub-runtime-hera",
-    "tag": "0.13.0"
+    "tag": "0.13.1"
   },
   {
     "name": "digitalhub-runtime-kfp",
-    "tag": "0.13.0"
+    "tag": "0.13.1"
   },
   {
     "name": "digitalhub-runtime-modelserve",
@@ -8289,7 +8289,7 @@ list
   },
   {
     "name": "digitalhub[full]",
-    "tag": "0.13.0"
+    "tag": "0.13.1"
   }
 ]
 </pre>
