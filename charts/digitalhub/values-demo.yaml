@@ -386,9 +386,9 @@ coder:
         stopAfter: 8h
       - extraVars: []
         iconUrl: https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png
-        image: ghcr.io/scc-digitalhub/jupyter-3-10:0.13.0
-        image311: ghcr.io/scc-digitalhub/jupyter-3-11:0.13.0
-        image39: ghcr.io/scc-digitalhub/jupyter-3-9:0.13.0
+        image: ghcr.io/scc-digitalhub/jupyter-3-10:0.13.1
+        image311: ghcr.io/scc-digitalhub/jupyter-3-11:0.13.1
+        image39: ghcr.io/scc-digitalhub/jupyter-3-9:0.13.1
         name: jupyter
         nodePort: "30040"
         privileged: false
@@ -498,7 +498,7 @@ core:
   #  core.image -- Core image configuration
   image:
     #  core.image.tag -- Image tag
-    tag: "0.13.0-beta12"
+    tag: "0.13.0"
   #  core.kanikoArgs --
   kanikoArgs: ""
   #  core.kubeai --
@@ -1100,15 +1100,15 @@ platformPackages:
     - name: digitalhub-runtime-dbt
       tag: "0.13.0"
     - name: digitalhub-runtime-hera
-      tag: "0.13.0"
+      tag: "0.13.1"
     - name: digitalhub-runtime-kfp
-      tag: "0.13.0"
+      tag: "0.13.1"
     - name: digitalhub-runtime-modelserve
       tag: "0.13.0"
     - name: digitalhub-runtime-python
       tag: "0.13.0"
     - name: digitalhub[full]
-      tag: "0.13.0"
+      tag: "0.13.1"
   #  platformPackages.preRelease -- If set to true, the latest version of the packages will be used (even beta ones).
   #  WARNING:
   #  For the most stable experience, this value should NOT be modified.
