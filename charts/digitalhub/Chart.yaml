@@ -24,7 +24,7 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: apigw-operator.enabled
 - name: coder
-  version: "2.24.2"
+  version: "2.26.1"
   repository: https://helm.coder.com/v2
   condition: coder.enabled
 - name: core
