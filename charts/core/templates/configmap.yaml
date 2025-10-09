@@ -27,9 +27,6 @@ data:
 {{- if .Values.solr.enabled }}
   SOLR_URL: {{ .Values.solr.url }}
   SOLR_COLLECTION: {{ .Values.solr.collection.name }}
-  {{- if or .Values.solr.collection.initialize.securityJsonSecret .Values.solr.credentials.existingSecurityJsonSecret.secretName .Values.solr.credentials.existingCollectionSecret.secretName }}
-  SOLR_USER: {{ .Values.solr.credentials.user }}
-  {{- end }}
 {{- end }}
 {{- if .Values.authentication.basic.enabled }}
   DH_AUTH_BASIC_USER: {{ .Values.authentication.basic.username }}
