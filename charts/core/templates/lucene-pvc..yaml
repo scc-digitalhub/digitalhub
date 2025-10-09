@@ -1,0 +1,21 @@
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: Apache-2.0
+
+{{- if and .Values.lucene.persistence.enabled .Values.lucene.indexPath (not .Values.solr.enabled) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "core.fullname" . }}-lucene
+  labels:
+    {{- include "core.labels" . | nindent 8 }}
+spec:
+  accessModes:
+    - {{ .Values.lucene.persistence.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.lucene.persistence.size }}
+  {{- if .Values.lucene.persistence.storageClass }}
+  storageClassName: {{ .Values.lucene.persistence.storageClass | quote }}
+  {{- end }}
+{{- end }}

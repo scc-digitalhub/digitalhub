@@ -270,12 +270,22 @@ kubeai:
   #  kubeai.serviceName -- Kubei service name
   serviceName: ""
 
-#  lucene --
+#  lucene -- Values for Lucene configuration
 lucene:
   #  lucene.indexPath -- Set the path for Lucene and enables it
-  indexPath: "/tmp/lucene/"
+  indexPath: "/lucene/"
+  #  lucene.persistence -- Lucene persistence configuration
+  persistence:
+    #  lucene.persistence.enabled -- Enable persistence for Lucene
+    enabled: true
+    #  lucene.persistence.accessMode -- Access mode for the Lucene persistent volume claim
+    accessMode: ReadWriteOnce
+    #  lucene.persistence.size -- Size for the Lucene persistent volume claim
+    size: 10Gi
+    #  lucene.persistence.storageClass -- Storage class for the Lucene persistent volume claim
+    storageClass: ""
   #  lucene.reindex -- Reindex of Lucene
-  reindex: never
+  reindex: always
 
 #  nameOverride -- String to partially override `core.fullname` template (will maintain the release name)
 nameOverride: ""
@@ -460,43 +470,43 @@ serviceAccount:
 
 #  solr -- Solr configuration
 solr:
-  #  solr.enabled -- Set this value to true if you want to use Core with Solr
+  #  solr.enabled -- Set this value to true if you want to use Core with an existing Solr instance
   enabled: false
+  #  solr.basicAuth -- Basic Auth configuration of Solr
+  basicAuth:
+    #  solr.basicAuth.enabled -- Set this value to true if you use BasicAuth in your Solr instance
+    enabled: false
+    #  solr.credentials -- Solr credentials configuration
+    credentials:
+      # solr.basicAuth.credentials.existingSecrets -- Existing secrets for Solr Basic Auth configuration
+      existingSecrets:
+        # solr.basicAuth.credentials.existingSecrets.admin -- Existing secret for Solr Basic Auth admin user
+        admin:
+          #  solr.basicAuth.credentials.existingSecrets.admin.passwordKey -- Password key
+          passwordKey: ""
+          #  solr.basicAuth.credentials.existingSecrets.admin.secretName -- Secret name
+          secretName: ""
+          #  solr.basicAuth.credentials.existingSecrets.admin.usernameKey -- Username key
+          usernameKey: ""
+        #  solr.basicAuth.credentials.existingSecrets.user -- Existing secret for Solr Basic Auth user
+        user:
+          #  solr.basicAuth.credentials.existingSecrets.user.passwordKey -- Password key
+          passwordKey: ""
+          #  solr.basicAuth.credentials.existingSecrets.user.secretName -- Secret name
+          secretName: ""
+          #  solr.basicAuth.credentials.existingSecrets.user.usernameKey -- Username key
+          usernameKey: ""
   #  solr.collection -- Solr collection configuration
   collection:
-    #  solr.collection.initialize --
+    #  solr.collection.initialize -- Solr collection initialization
     initialize:
-      #  solr.collection.initialize.enabled -- Enable/Disable Solr collection initialization by script, use it if you want the collection to be initialized by Core
+      #  solr.collection.initialize.enabled -- Enable/Disable Solr collection initialization by Core
       enabled: true
       #  solr.collection.initialize.image -- Initialization image
       image: curlimages/curl:8.15.0
-      #  solr.collection.initialize.securityJsonSecret -- Name of the secret containing the Solr security.json.
-      #  Specify the name of your secret here if you want the Platform installation to create a compatible secret for you.
-      #  WARNING: In production, choose either solr.credentials.existingCollectionSecret or solr.credentials.existingSecurityJsonSecret, depending on your use case, instead of this value.
-      securityJsonSecret: ""
     #  solr.collection.name -- Name of the Solr collection
     name: ""
-  #  solr.credentials -- Credentials configuration
-  credentials:
-    #  solr.credentials.existingCollectionSecret -- Collection credentials secret configuration
-    #  WARNING: this feature is intended ONLY for instances in which you don't have access to the security.json secret.
-    #  Uses a secret that contains a user with access to a specific collection. (The user MUST be also present in the security.json secret)
-    existingCollectionSecret:
-      #  solr.credentials.existingCollectionSecret.passwordKey -- Password key
-      passwordKey: ""
-      #  solr.credentials.existingCollectionSecret.secretName -- Secret name
-      secretName: ""
-    #  solr.credentials.existingSecurityJsonSecret -- Configuration for an existing security json secret for Solr
-    existingSecurityJsonSecret:
-      #  solr.credentials.existingSecurityJsonSecret.adminKey -- Key of the admin user
-      adminKey: ""
-      #  solr.credentials.existingSecurityJsonSecret.secretName -- Name of the secret
-      secretName: ""
-    #  solr.credentials.user -- Specify the solr user
-    user: ""
-  #  solr.fullNameOverride --
-  fullNameOverride: ""
-  #  solr.url --
+  #  solr.url -- URL of your Solr instance
   url: ""
 
 #  sts --
