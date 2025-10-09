@@ -125,10 +125,6 @@ global:
   service:
     #  global.service.type -- Service type used by the Platform's applications
     type: &serviceType "NodePort"
-  #  global.solr --
-  solr:
-    #  global.solr.fullNameOverride --
-    fullNameOverride: digitalhub
 
 #  apigw-operator -- [API Gateway Operator](https://github.com/scc-digitalhub/apigw-operator) configuration.
 apigw-operator:
@@ -510,6 +506,22 @@ core:
     port: "80"
     #  core.kubeai.serviceName -- Kubei service name
     serviceName: kubeai
+  #  core.lucene -- Values for Lucene configuration
+  lucene:
+    #  core.lucene.indexPath -- Set the path for Lucene and enables it
+    indexPath: "/lucene/"
+    #  core.lucene.persistence -- Lucene persistence configuration
+    persistence:
+      #  core.lucene.persistence.enabled -- Enable persistence for Lucene
+      enabled: true
+      #  core.lucene.persistence.accessMode -- Access mode for the Lucene persistent volume claim
+      accessMode: ReadWriteOnce
+      #  core.lucene.persistence.size -- Size for the Lucene persistent volume claim
+      size: 10Gi
+      #  core.lucene.persistence.storageClass -- Storage class for the Lucene persistent volume claim
+      storageClass: ""
+    #  core.lucene.reindex -- Reindex of Lucene
+    reindex: always
   #  core.postgres --
   postgres:
     #  core.postgres.credentials --
@@ -577,43 +589,43 @@ core:
     type: *serviceType
   #  core.solr -- Solr configuration
   solr:
-    #  core.solr.enabled -- Set this value to true if you want to use Core with Solr
-    enabled: true
+    #  core.solr.enabled -- Set this value to true if you want to use Core with an existing Solr instance
+    enabled: false
+    #  core.solr.basicAuth -- Basic Auth configuration of Solr
+    basicAuth:
+      #  core.solr.basicAuth.enabled -- Set this value to true if you use BasicAuth in your Solr instance
+      enabled: false
+      #  core.solr.credentials -- Solr credentials configuration
+      credentials:
+        # core.solr.basicAuth.credentials.existingSecrets -- Existing secrets for Solr Basic Auth configuration
+        existingSecrets:
+          # core.solr.basicAuth.credentials.existingSecrets.admin -- Existing secret for Solr Basic Auth admin user
+          admin:
+            # core.solr.basicAuth.credentials.existingSecrets.admin.passwordKey -- Password key
+            passwordKey: ""
+            # core.solr.basicAuth.credentials.existingSecrets.admin.secretName -- Secret name
+            secretName: ""
+            # core.solr.basicAuth.credentials.existingSecrets.admin.usernameKey -- Username key
+            usernameKey: ""
+          # core.solr.basicAuth.credentials.existingSecrets.user -- Existing secret for Solr Basic Auth user
+          user:
+            # core.solr.basicAuth.credentials.existingSecrets.user.passwordKey -- Password key
+            passwordKey: ""
+            # core.solr.basicAuth.credentials.existingSecrets.user.secretName -- Secret name
+            secretName: ""
+            # core.solr.basicAuth.credentials.existingSecrets.user.usernameKey -- Username key
+            usernameKey: ""
     #  core.solr.collection -- Solr collection configuration
     collection:
-      #  core.solr.collection.initialize --
+      #  core.solr.collection.initialize -- Solr collection initialization
       initialize:
-        #  core.solr.collection.initialize.enabled -- Enable/Disable Solr collection initialization by script, use it if you have set Basic Auth for Solr
-        enabled: true
+        #  core.solr.collection.initialize.enabled -- Enable/Disable Solr collection initialization by Core
+        enabled: false
         #  core.solr.collection.initialize.image -- Initialization image
         image: curlimages/curl:8.15.0
-        #  core.solr.collection.initialize.securityJsonSecret -- Name of the secret containing the Solr security.json.
-        #  Specify the name of your secret here if you want the Platform installation to create a compatible secret for you.
-        #  WARNING: In production, choose either core.solr.credentials.existingCollectionSecret or core.solr.credentials.existingSecurityJsonSecret, depending on your use case, instead of this value.
-        securityJsonSecret: digitalhub-solrcloud-security-bootstrap
       #  core.solr.collection.name -- Name of the Solr collection
       name: dhcore
-    #  core.solr.credentials -- Credentials configuration
-    credentials:
-      #  core.solr.credentials.existingCollectionSecret -- Collection credentials secret configuration
-      #  WARNING: this feature is intended ONLY for instances in which you don't have access to the security.json secret.
-      #  Uses a secret that contains a user with access to a specific collection. (The user MUST be also present in the security.json secret)
-      existingCollectionSecret:
-        #  core.solr.credentials.existingCollectionSecret.passwordKey -- Password key
-        passwordKey: ""
-        #  core.solr.credentials.existingCollectionSecret.secretName -- Secret name
-        secretName: ""
-      #  core.solr.credentials.existingSecurityJsonSecret -- Configuration for an existing security json secret for Solr
-      existingSecurityJsonSecret:
-        #  core.solr.credentials.existingSecurityJsonSecret.adminKey -- Key of the admin user
-        adminKey: ""
-        #  core.solr.credentials.existingSecurityJsonSecret.secretName -- Name of the secret
-        secretName: ""
-      #  core.solr.credentials.user -- Specify the solr user
-      user: user
-    #  core.solr.fullNameOverride --
-    fullNameOverride: digitalhub
-    #  core.solr.url --
+    #  core.solr.url -- URL of your Solr instance
     url: http://digitalhub-solrcloud-common/solr
   #  core.sts --
   sts:
@@ -1255,134 +1267,6 @@ seaweedfs:
     enabled: true
     enableAuth: true
     existingConfigSecret: seaweed-s3-secret
-
-#  solr -- Solr configuration
-#  For a complete list of all the Values, as well as the specific documentation, please check the [Solr Helm Chart repository](https://github.com/apache/solr-operator/tree/main/helm/solr)
-solr:
-  #  solr.enabled -- Enable/Disable Solr
-  enabled: true
-  #  solr.creds -- Solr credentials, used to build the security.json
-  creds:
-    #  solr.creds.admin -- Admin credentials
-    admin:
-      #  solr.creds.admin.password -- Admin password (Base64)
-      password: thi4iegheeX7euthe7di
-      #  solr.creds.admin.passwordSha -- Admin password (sha256(sha256(salt || password)))
-      passwordSha: C8QrTZf6jpu+cPKTsLtyEhv1XVXAYZGmStTKXzB80sg= MW5pNXZlaGIyaWhkdW5w
-    #  solr.creds.k8sOper -- K8S Operator credentials
-    k8sOper:
-      #  solr.creds.k8sOper.password -- Operator password (Base64)
-      password: imPBf@tU(asx9%TZ
-      #  solr.creds.k8sOper.passwordSha -- Operator password (sha256(sha256(salt || password)))
-      passwordSha: 3iPc1JWet22a05UZXCFfo/qRUqwg2iVULyv5RBEqPdM= LSpnG/l2j8AA9vrryMGkkFLO+bYeN7ZUvrU270WAfyA=
-    #  solr.creds.solr -- Solr user credentials
-    solr:
-      #  solr.creds.solr.password -- Solr user password (Base64)
-      password: aed0ohBie3hai6jo7sho
-      #  solr.creds.solr.passwordSha -- Solr user password (sha256(sha256(salt || password)))
-      passwordSha: i61TpZKyvff3CHnyZ0kMTzkNezkxkilCre93wLkz7jQ= NzlyN3k1cm0xZGt3eWR1MA==
-    #  solr.creds.user -- Unprivileged user credentials
-    user:
-      #  solr.creds.user.password -- Unprivileged user password (Base64)
-      password: soogh8aiy6vah6Aecai6
-      #  solr.creds.user.passwordSha -- Unprivileged user password (sha256(sha256(salt || password)))
-      passwordSha: ps9jK0qKXJqZawtFS+SxhB2CdCu90Qgz4riZ0XwzYd4= YWxxZXV3enB1YmE2c2gwdg==
-  #  solr.dataStorage -- Solr storage configuration
-  dataStorage:
-    #  solr.dataStorage.capacity -- Storage size
-    capacity: 10Gi
-    #  solr.dataStorage.persistent -- Persistent storage configuration
-    persistent:
-      #  solr.dataStorage.persistent.pvc -- Solr PVC configuration
-      pvc:
-        #  solr.dataStorage.persistent.pvc.annotations -- PVC additional annotations
-        annotations: {}
-        #  solr.dataStorage.persistent.pvc.labels -- PVC additional labels
-        labels: {}
-        #  solr.dataStorage.persistent.pvc.name -- PVC name
-        name: ""
-        #  solr.dataStorage.persistent.pvc.storageClassName -- PVC storage class
-        storageClassName: ""
-      #  solr.dataStorage.persistent.reclaimPolicy -- Reclaim policy
-      reclaimPolicy: Delete
-    #  solr.dataStorage.type -- Type of storage (ephemeral/persistent)
-    type: ephemeral
-  #  solr.fullnameOverride --
-  fullnameOverride: digitalhub
-  #  solr.image --
-  image:
-    #  solr.image.repository -- Solr image
-    repository: solr
-    #  solr.image.tag -- Solr image tag (Do not change it, this value must be aligned with the code of Core)
-    tag: "9.7"
-  #  solr.podOptions -- Pod options
-  podOptions:
-    #  solr.podOptions.containerSecurityContext -- [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
-    containerSecurityContext:
-      #  solr.podOptions.containerSecurityContext.allowPrivilegeEscalation -- Pod allow privilege escalation.
-      allowPrivilegeEscalation: false
-      #  solr.podOptions.containerSecurityContext.capabilities -- Pod configure capabilities.
-      capabilities:
-        #  solr.podOptions.containerSecurityContext.capabilities.drop -- Pod drop capabilities.
-        drop:
-          - ALL
-      #  solr.podOptions.containerSecurityContext.seccompProfile -- Pod configure seccompProfile.
-      seccompProfile:
-        #  solr.podOptions.containerSecurityContext.seccompProfile.type -- Pod configure seccompProfile type.
-        type: RuntimeDefault
-    #  solr.podOptions.podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
-    podSecurityContext:
-      #  solr.podOptions.podSecurityContext.seccompProfile -- Pod configure seccompProfile.
-      seccompProfile:
-        #  solr.podOptions.podSecurityContext.seccompProfile.type -- Pod configure seccompProfile type.
-        type: RuntimeDefault
-  #  solr.replicas -- Desired number of pods.
-  replicas: 1
-  #  solr.solrOptions -- Options for Solr
-  solrOptions:
-    #  solr.solrOptions.security -- Enable authentication for Solr
-    #  If you want to use these options, be sure to also set core.solr.collection.initialize to true in this values file.
-    #  More information can be found at https://apache.github.io/solr-operator/docs/solr-cloud/solr-cloud-crd.html#authentication-and-authorization
-    security:
-      #  solr.solrOptions.security.authenticationType -- Authentication type
-      authenticationType: Basic
-      #  solr.solrOptions.security.basicAuthSecret -- Specify the required basicAuth secret
-      basicAuthSecret: digitalhub-solrcloud-basic-auth
-      #  solr.solrOptions.security.bootstrapSecurityJson --
-      bootstrapSecurityJson:
-        #  solr.solrOptions.security.bootstrapSecurityJson.key -- Key in the secret corresponding to the security.json
-        key: security.json
-        #  solr.solrOptions.security.bootstrapSecurityJson.name -- Name of the secret with the configured security.json
-        name: digitalhub-solrcloud-security-bootstrap
-      #  solr.solrOptions.security.probesRequireAuth --
-      probesRequireAuth: true
-
-#  solr-operator -- Solr Operator configuration
-#  For a complete list of all the Values, as well as the specific documentation, please check the [Solr Operator Helm Chart repository](https://github.com/apache/solr-operator/tree/main/helm/solr-operator)
-solr-operator:
-  #  solr-operator.enabled -- Enable/Disable Solr Operator
-  enabled: true
-  #  solr-operator.securityContext -- Solr Operator [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
-  securityContext:
-    #  solr-operator.securityContext.allowPrivilegeEscalation -- Solr Operator container allow privilege escalation.
-    allowPrivilegeEscalation: false
-    #  solr-operator.securityContext.capabilities -- Solr Operator container configure capabilities.
-    capabilities:
-      #  solr-operator.securityContext.capabilities.drop -- Solr Operator container drop capabilities.
-      drop:
-        - ALL
-    #  solr-operator.securityContext.runAsNonRoot -- Solr Operator container allow run as root.
-    runAsNonRoot: true
-    #  solr-operator.securityContext.seccompProfile -- Solr Operator container configure seccompProfile.
-    seccompProfile:
-      #  solr-operator.securityContext.seccompProfile.type -- Solr Operator container configure seccompProfile type.
-      type: RuntimeDefault
-  #  solr-operator.zookeeper-operator -- ZooKeeper Operator configuration
-  zookeeper-operator:
-    #  solr-operator.zookeeper-operator.crd --
-    crd:
-      #  solr-operator.zookeeper-operator.crd.create -- Install Solr CRDs
-      create: *globalCrd
 
 #  template-controller -- Template Controller configuration
 #  For a complete list of all the Values, as well as the specific documentation, please check the [Template Controller Helm Chart repository](https://github.com/kluctl/template-controller/tree/main/deploy/charts/template-controller)

@@ -28,7 +28,7 @@ dependencies:
   repository: https://helm.coder.com/v2
   condition: coder.enabled
 - name: core
-  version: "0.3.30"
+  version: "0.3.33"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: kubernetes-resource-manager
@@ -67,16 +67,6 @@ dependencies:
   condition: template-controller.enabled
   tags:
     - operator
-- name: solr-operator
-  version: "0.9.0"
-  repository: https://solr.apache.org/charts
-  condition: solr-operator.enabled
-  tags:
-    - operator
-- name: solr
-  version: "0.9.0"
-  repository: https://solr.apache.org/charts
-  condition: solr.enabled
 - name: kubeai
   version: "0.21.8"
   repository: https://ffais.github.io/kubeai/
