@@ -36,35 +36,6 @@ spec:
       serviceAccountName: {{ include "core.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- if and .Values.solr.enabled .Values.solr.collection.initialize.enabled }}
-      initContainers:
-        - name: wait-solr
-          image: {{ .Values.solr.collection.initialize.image }}
-          command: ["/bin/sh", "-c"]
-          args:
-          {{- if and .Values.solr.credentials.existingSecurityJsonSecret.secretName .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}
-            - until [ "$(curl --user {{ .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}:$SOLR_ADMIN_PWD -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
-          env:
-            - name: "SOLR_ADMIN_PWD"
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.solr.credentials.existingSecurityJsonSecret.secretName }}
-                  key: {{ .Values.solr.credentials.existingSecurityJsonSecret.adminKey }}
-          {{- else if .Values.solr.collection.initialize.securityJsonSecret }}
-            - until [ "$(curl --user admin:$SOLR_ADMIN_PWD -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
-          env:
-            - name: "SOLR_ADMIN_PWD"
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.solr.collection.initialize.securityJsonSecret }}
-                  key: admin
-          {{- else }}
-            - until [ "$(curl -s -w '%{http_code}' -o /dev/null "{{ .Values.solr.url }}/admin/info/health")" -eq 200 ]; do echo "waiting for solr to be ready"; sleep 5; done
-          {{- end }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-            runAsUser: 1000
-      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -184,20 +155,29 @@ spec:
                   name: core-auth-creds
                   key: clientSecret
               {{- end }}
-            {{- if or .Values.solr.collection.initialize.securityJsonSecret .Values.solr.credentials.existingSecurityJsonSecret.secretName .Values.solr.credentials.existingCollectionSecret.secretName }}
+            {{- if and .Values.solr.enabled .Values.solr.basicAuth.enabled }}
+            {{- if .Values.solr.basicAuth.credentials.existingSecrets.admin.secretName }}
+            - name: SOLR_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.solr.basicAuth.credentials.existingSecrets.admin.secretName }}
+                  key: {{ .Values.solr.basicAuth.credentials.existingSecrets.admin.usernameKey }}
+            - name: SOLR_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.solr.basicAuth.credentials.existingSecrets.admin.secretName }}
+                  key: {{ .Values.solr.basicAuth.credentials.existingSecrets.admin.passwordKey }}
+            - name: SOLR_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ if .Values.solr.basicAuth.credentials.existingSecrets.user.secretName }}{{ .Values.solr.basicAuth.credentials.existingSecrets.user.secretName }}{{ else }}{{ .Values.solr.basicAuth.credentials.existingSecrets.admin.secretName }}{{ end }}
+                  key: {{ if .Values.solr.basicAuth.credentials.existingSecrets.user.secretName }}{{ .Values.solr.basicAuth.credentials.existingSecrets.user.usernameKey }}{{ else }}{{ .Values.solr.basicAuth.credentials.existingSecrets.admin.usernameKey }}{{ end }}
             - name: SOLR_PASSWORD
               valueFrom:
                 secretKeyRef:
-              {{- if and .Values.solr.credentials.existingSecurityJsonSecret.secretName .Values.solr.credentials.existingSecurityJsonSecret.adminKey  }}
-                  name: {{ .Values.solr.credentials.existingSecurityJsonSecret.secretName }}
-                  key: {{ .Values.solr.credentials.user }}
-              {{- else if and .Values.solr.credentials.existingCollectionSecret.secretName .Values.solr.credentials.existingCollectionSecret.passwordKey }}
-                  name: {{ .Values.solr.credentials.existingCollectionSecret.secretName }}
-                  key: {{ .Values.solr.credentials.existingCollectionSecret.passwordKey }}
-              {{- else }}
-                  name: {{ .Values.solr.collection.initialize.securityJsonSecret }}
-                  key: {{ .Values.solr.credentials.user }}
-              {{- end }}
+                  name: {{ if .Values.solr.basicAuth.credentials.existingSecrets.user.secretName }}{{ .Values.solr.basicAuth.credentials.existingSecrets.user.secretName }}{{ else }}{{ .Values.solr.basicAuth.credentials.existingSecrets.admin.secretName }}{{ end }}
+                  key: {{ if .Values.solr.basicAuth.credentials.existingSecrets.user.secretName }}{{ .Values.solr.basicAuth.credentials.existingSecrets.user.usernameKey }}{{ else }}{{ .Values.solr.basicAuth.credentials.existingSecrets.admin.passwordKey }}{{ end }}
+            {{- end }}
             {{- end }}
           envFrom:
           - configMapRef:
@@ -214,6 +194,10 @@ spec:
               mountPath: "{{ .Values.keystore.keystorePath }}/{{ .Values.keystore.existingSecret.keyName }}"
               subPath: {{ .Values.keystore.existingSecret.keyName }}
           {{- end }}
+          {{- if and .Values.lucene.indexPath .Values.lucene.persistence.enabled (not .Values.solr.enabled) }}
+            - name: lucene
+              mountPath: {{ .Values.lucene.indexPath }}
+          {{- end }}
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -222,6 +206,11 @@ spec:
         - name: keystore
           secret:
             secretName: {{ .Values.keystore.existingSecret.secretName }}
+      {{- end }}
+      {{- if and .Values.lucene.indexPath .Values.lucene.persistence.enabled (not .Values.solr.enabled) }}
+        - name: lucene
+          persistentVolumeClaim:
+            claimName: {{ include "core.fullname" . }}-lucene
       {{- end }}
       {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
