@@ -6,11 +6,11 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 2.4.2"
+      version = "~> 2.11.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.36.0"
+      version = "~> 2.38.0"
     }
     http = {
       source  = "hashicorp/http"
@@ -119,24 +119,15 @@ data "coder_parameter" "cpu" {
   name         = "cpu"
   display_name = "CPU"
   description  = "The number of CPU cores"
-  default      = "2"
   icon         = "/emojis/1f680.png"
   mutable      = true
-  option {
-    name  = "2 Cores"
-    value = "2"
-  }
-  option {
-    name  = "4 Cores"
-    value = "4"
-  }
-  option {
-    name  = "6 Cores"
-    value = "6"
-  }
-  option {
-    name  = "8 Cores"
-    value = "8"
+  type         = "number"
+  form_type    = "slider"
+  default      = 2
+  order        = 1
+  validation {
+    min = 1
+    max = 8
   }
 }
 
@@ -146,46 +137,24 @@ data "coder_parameter" "gpu" {
   description  = "Enable GPU usage for this workspace?"
   default      = false
   mutable      = true
-  option {
-    name  = "Yes"
-    value = true
-  }
-  option {
-    name  = "No"
-    value = false
-  }
+  type         = "bool"
+  form_type    = "checkbox"
+  order        = 4
 }
 
 data "coder_parameter" "memory" {
   name         = "memory"
   display_name = "Memory"
   description  = "The amount of memory in GB"
-  default      = "4"
+  default      = 4
   icon         = "/icon/memory.svg"
   mutable      = true
-  option {
-    name  = "4 GB"
-    value = "4"
-  }
-  option {
-    name  = "6 GB"
-    value = "6"
-  }
-  option {
-    name  = "8 GB"
-    value = "8"
-  }
-  option {
-    name  = "16 GB"
-    value = "16"
-  }
-  option {
-    name  = "32 GB"
-    value = "32"
-  }
-  option {
-    name  = "64 GB"
-    value = "64"
+  order        = 2
+  type = "number"
+  form_type    = "slider"
+  validation {
+    min = 4
+    max = 64
   }
 }
 
@@ -197,6 +166,7 @@ data "coder_parameter" "home_disk_size" {
   type         = "number"
   icon         = "/emojis/1f4be.png"
   mutable      = false
+  order        = 3
   validation {
     min = 1
     max = 99999
@@ -207,10 +177,11 @@ data "coder_parameter" "image" {
   name         = "image"
   display_name = "Image"
   description  = "Select the image for this workspace (JupyterLab included for all options)"
-  icon         = "https://cdn-icons-png.flaticon.com/512/438/438524.png"
+  icon         = "/icon/container.svg"
   mutable      = true
   default      = "python"
-
+  form_type = "dropdown"
+  order        = 6
   option {
     name  = "Python3"
     value = "python"
@@ -219,12 +190,12 @@ data "coder_parameter" "image" {
   option {
     name  = "PyTorch"
     value = "nvcr.io/nvidia/pytorch"
-    icon  = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/PyTorch_logo_icon.svg/250px-PyTorch_logo_icon.svg.png"
+    icon  = "/icon/pytorch.svg"
   }
   option {
     name  = "TensorFlow"
     value = "nvcr.io/nvidia/tensorflow"
-    icon  = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Tensorflow_logo.svg/115px-Tensorflow_logo.svg.png"
+    icon  = "/icon/tensorflow.svg"
   }
 }
 
@@ -235,14 +206,39 @@ data "coder_parameter" "python_version" {
   default      = "3.10"
   icon         = "/icon/python.svg"
   mutable      = true
+  form_type = "dropdown"
+  order        = 5
   option {
     name  = "3.10"
     value = "3.10"
+    icon  = "/icon/python.svg"
   }
   option {
     name  = "3.12"
     value = "3.12"
+    icon  = "/icon/python.svg"
   }
+}
+
+data "coder_parameter" "jetbrains_gateway" {
+  name         = "ide"
+  display_name = "Jetbrains Gateway"
+  description  = "Use a Jetbrains IDE for this workspace with Jetbrains Gateway?"
+  default      = false
+  mutable      = true
+  type         = "bool"
+  form_type    = "checkbox"
+  icon         = "/icon/jetbrains-toolbox.svg"
+}
+
+data "coder_parameter" "git_repo" {
+  name         = "git_repo"
+  display_name = "Git repository URL"
+  description  = "Initialize the workspace with a project from GitHub"
+  default      = ""
+  order        = 7
+  mutable      = true
+  icon         = "/icon/git.svg"
 }
 
 data "http" "exchange_token" {
@@ -303,14 +299,24 @@ module "personalize" {
 }
 
 module "jetbrains_gateway" {
+  count          = data.coder_parameter.jetbrains_gateway.value ? 1 : 0
   source         = "registry.coder.com/modules/jetbrains-gateway/coder"
-  version        = "1.0.28"
+  version        = "1.2.2"
   agent_id       = coder_agent.code-toolbox.id
   agent_name     = "code_toolbox"
   folder         = "/home/${data.coder_workspace_owner.me.name}"
   jetbrains_ides = ["CL", "GO", "IU", "PY", "WS"]
   default        = "PY"
   latest         = true
+}
+
+module "git-clone" {
+  count    = data.coder_parameter.git_repo.value != "" ? 1 : 0
+  source   = "registry.coder.com/coder/git-clone/coder"
+  version  = "1.1.1"
+  agent_id = coder_agent.code-toolbox.id
+  url      = data.coder_parameter.git_repo.value
+  base_dir = "/home/${data.coder_workspace_owner.me.name}"
 }
 
 resource "coder_agent" "code-toolbox" {
