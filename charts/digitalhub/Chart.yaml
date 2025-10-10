@@ -68,8 +68,8 @@ dependencies:
   tags:
     - operator
 - name: kubeai
-  version: "0.21.8"
-  repository: https://ffais.github.io/kubeai/
+  version: "0.22.0"
+  repository: https://www.kubeai.org
   condition: kubeai.enabled
 - name: open-webui
   condition: open-webui.enabled
