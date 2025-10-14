@@ -19,8 +19,8 @@ spec:
     spec:
       initContainers:
         - name: clone-repo
-          image: bitnami/git:latest
-          command: ["/bin/sh", "-c", "cd home/git/ && git clone https://github.com/scc-digitalhub/digitalhub-tutorials.git"]
+          image: chainguard/git:latest
+          command: ["/bin/sh", "-c", "git clone https://github.com/scc-digitalhub/digitalhub-tutorials.git"]
           volumeMounts:
             - name: git-volume
               mountPath: /home/git
