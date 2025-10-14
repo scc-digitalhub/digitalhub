@@ -15,6 +15,10 @@ spec:
   selector:
     matchLabels:
       {{- include "core.selectorLabels" . | nindent 6 }}
+  {{- if and (not .Values.solr.enabled) .Values.lucene.persistence.enabled (or (eq .Values.lucene.persistence.accessMode "ReadWriteOnce") (eq .Values.lucene.persistence.accessMode "ReadWriteOncePod")) }}
+  strategy:
+    type: Recreate
+  {{- end }}
   template:
     metadata:
       annotations:
