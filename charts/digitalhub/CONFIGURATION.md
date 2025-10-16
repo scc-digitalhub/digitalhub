@@ -3080,7 +3080,7 @@ object
       "cpuReq": "100m",
       "gpuKey": "nvidia.com/gpu",
       "memLim": "",
-      "memReq": "64m",
+      "memReq": "256Mi",
       "pvcLim": "",
       "pvcReq": "2Gi"
     },
@@ -3287,7 +3287,7 @@ object
     "cpuReq": "100m",
     "gpuKey": "nvidia.com/gpu",
     "memLim": "",
-    "memReq": "64m",
+    "memReq": "256Mi",
     "pvcLim": "",
     "pvcReq": "2Gi"
   },
@@ -3364,7 +3364,7 @@ object
   "cpuReq": "100m",
   "gpuKey": "nvidia.com/gpu",
   "memLim": "",
-  "memReq": "64m",
+  "memReq": "256Mi",
   "pvcLim": "",
   "pvcReq": "2Gi"
 }
@@ -3438,7 +3438,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"64m"
+"256Mi"
 </pre>
 </div>
 			</td>
