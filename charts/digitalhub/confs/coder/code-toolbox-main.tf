@@ -27,7 +27,7 @@ provider "http" {
 
 locals {
   code_toolbox_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}code-toolbox--code-toolbox--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
-  decoded_labels = var.extra_labels != "" ? jsondecode(base64decode(var.extra_labels)) : {}
+  decoded_labels   = var.extra_labels != "" ? jsondecode(base64decode(var.extra_labels)) : {}
 }
 
 variable "use_kubeconfig" {
@@ -110,9 +110,9 @@ variable "extra_vars" {
 }
 
 variable "extra_labels" {
-  type    = string
+  type        = string
   description = "Extra labels that will be used by the workspace deployment. The labels must be in json format and encoded in Base64."
-  default = ""
+  default     = ""
 }
 
 data "coder_parameter" "cpu" {
@@ -150,7 +150,7 @@ data "coder_parameter" "memory" {
   icon         = "/icon/memory.svg"
   mutable      = true
   order        = 2
-  type = "number"
+  type         = "number"
   form_type    = "slider"
   validation {
     min = 4
@@ -180,7 +180,7 @@ data "coder_parameter" "image" {
   icon         = "/icon/container.svg"
   mutable      = true
   default      = "python"
-  form_type = "dropdown"
+  form_type    = "dropdown"
   order        = 6
   option {
     name  = "Python3"
@@ -206,7 +206,7 @@ data "coder_parameter" "python_version" {
   default      = "3.10"
   icon         = "/icon/python.svg"
   mutable      = true
-  form_type = "dropdown"
+  form_type    = "dropdown"
   order        = 5
   option {
     name  = "3.10"
@@ -282,11 +282,12 @@ data "kubernetes_secret" "auth" {
 module "vscode-web" {
   count          = data.coder_workspace.me.start_count
   source         = "registry.coder.com/modules/vscode-web/coder"
-  version        = "1.0.30"
+  version        = "1.4.1"
   agent_id       = coder_agent.code-toolbox.id
   accept_license = true
   folder         = "/home/${data.coder_workspace_owner.me.name}"
   install_prefix = "/home/${data.coder_workspace_owner.me.name}/vscode-web"
+  extensions     = ["github.copilot", "ms-python.python", "ms-toolsai.jupyter"]
 }
 
 module "personalize" {
@@ -674,18 +675,18 @@ resource "kubernetes_deployment" "code-toolbox" {
     name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = merge(
-    {
-      "app.kubernetes.io/name"     = "code-toolbox-workspace"
-      "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "workspace"
-      // Coder specific labels.
-      "com.coder.resource"       = "true"
-      "com.coder.workspace.id"   = data.coder_workspace.me.id
-      "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace_owner.me.id
-      "com.coder.user.username"  = data.coder_workspace_owner.me.name
-    },
+      {
+        "app.kubernetes.io/name"     = "code-toolbox-workspace"
+        "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+        "app.kubernetes.io/part-of"  = "coder"
+        "app.kubernetes.io/type"     = "workspace"
+        // Coder specific labels.
+        "com.coder.resource"       = "true"
+        "com.coder.workspace.id"   = data.coder_workspace.me.id
+        "com.coder.workspace.name" = data.coder_workspace.me.name
+        "com.coder.user.id"        = data.coder_workspace_owner.me.id
+        "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      },
     local.decoded_labels)
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -740,7 +741,7 @@ resource "kubernetes_deployment" "code-toolbox" {
           security_context {
             run_as_user                = "10000"
             allow_privilege_escalation = var.privileged
-            run_as_non_root = true
+            run_as_non_root            = true
             capabilities {
               drop = [
                 "ALL"
