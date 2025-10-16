@@ -419,7 +419,7 @@ core:
       #  core.additionalConfig.resources.memLim -- Memory limit
       memLim: ""
       #  core.additionalConfig.resources.memReq -- Memory request
-      memReq: 64m
+      memReq: 256Mi
       #  core.additionalConfig.resources.pvcLim -- PVC storage limit
       pvcLim: ""
       #  core.additionalConfig.resources.pvcReq -- PVC storage request
