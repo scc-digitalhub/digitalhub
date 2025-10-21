@@ -333,6 +333,9 @@ postgres:
   #  postgres.schema -- Schema of the Core database
   schema: ""
 
+# priorityClassName -- Name of the priority class, leave empty to not set any.
+priorityClassName: ""
+
 #  registry --
 registry:
   #  registry.kaniko --
@@ -604,6 +607,8 @@ sts:
     seccompProfile:
       #  sts.podSecurityContext.seccompProfile.type -- Pod configure seccompProfile type.
       type: RuntimeDefault
+  #  sts.priorityClassName -- Name of the priority class, leave empty to not set any.
+  priorityClassName: ""
   #  sts.replicaCount -- Desired number of pods.
   replicaCount: 1
   #  sts.resources -- STS container resource requests and limits.
