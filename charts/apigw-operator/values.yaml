@@ -2,6 +2,17 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+#  global -- Global values
+global:
+  #  global.priority -- Priority class configuration
+  priority:
+    #  global.priority.enabled -- Enable/Disable priority classes
+    enabled: false
+    #  global.priority.lowPriority -- Low priority class configuration
+    lowPriority:
+      # global.priority.lowPriority.className -- Name of the low priority class
+      className: ""
+
 #  affinity -- Affinity for pod assignment.
 ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity:
