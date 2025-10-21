@@ -58,6 +58,26 @@ global:
     seccompProfile:
       #  global.podSecurityContext.seccompProfile.type -- Pod configure seccompProfile type.
       type: RuntimeDefault
+  #  global.priority -- Priority class configuration
+  priority:
+    #  global.priority.enabled -- Enable/Disable priority classes
+    enabled: true
+    #  global.priority.highPriority -- High priority class configuration
+    highPriority:
+      #  global.priority.highPriority.className -- Name of the high priority class
+      className: &highPriority "high-priority"
+      #  global.priority.highPriority.existingClass -- Set this to true if you have an existing priority class with the name specified in className
+      existingClass: false
+      #  global.priority.highPriority.value -- Value of the high priority class created by the chart
+      value: 1000
+    #  global.priority.lowPriority -- Low priority class configuration
+    lowPriority:
+      #  global.priority.lowPriority.className -- Name of the low priority class
+      className: &lowPriority "low-priority"
+      #  global.priority.lowPriority.existingClass -- Set this to true if you have an existing priority class with the name specified in className
+      existingClass: false
+      #  global.priority.lowPriority.value -- Value of the low priority class created by the chart
+      value: 100
   #  global.s3 -- S3 configuration
   s3:
     # global.s3.argo -- S3 configuration for Argo
@@ -132,6 +152,8 @@ global:
 apigw-operator:
   #  apigw-operator.enabled -- Enable/Disable API Gateway Operator
   enabled: true
+  #  apigw-operator.priorityClassName -- Name of the priority class to use for the apigw-operator pod. If not set, no priority class will be used.
+  priorityClassName: *lowPriority
 
 #  argo-workflows -- Argo Workflows configuration.
 #  For a complete list of all the Values, as well as the specific documentation, please check the [Argo Workflows Helm Chart repository](https://github.com/argoproj/argo-helm/tree/main/charts/argo-workflows)
@@ -184,6 +206,8 @@ argo-workflows:
       seccompProfile:
         #  argo-workflows.controller.podSecurityContext.seccompProfile.type -- Pod configure seccompProfile type.
         type: RuntimeDefault
+    #  argo-workflows.controller.priorityClassName -- Name of the priority class to use for the controller pod. If not set, no priority class will be used.
+    priorityClassName: *highPriority
     #  argo-workflows.controller.securityContext -- Controller [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
     securityContext:
       #  argo-workflows.controller.securityContext.allowPrivilegeEscalation -- Controller container allow privilege escalation
@@ -210,12 +234,44 @@ argo-workflows:
       spec:
         #  argo-workflows.controller.workflowDefaults.spec.serviceAccountName -- Name of the service account that will be applied to all Workflows
         serviceAccountName: argo-workflow
+        #  argo-workflows.controller.workflowDefaults.spec.templateDefaults -- Default values that will apply to all templates in Workflows from this controller
+        templateDefaults:
+          #  argo-workflows.controller.workflowDefaults.spec.templateDefaults.container -- Default container configuration
+          container:
+            #  argo-workflows.controller.workflowDefaults.spec.templateDefaults.container. -- Resources configuration
+            resources:
+              #  argo-workflows.controller.workflowDefaults.spec.templateDefaults.container.resources.limits -- Resources limits
+              limits:
+                #  argo-workflows.controller.workflowDefaults.spec.templateDefaults.container.resources.limits.cpu -- CPU limit
+                cpu: "500m"
+                #  argo-workflows.controller.workflowDefaults.spec.templateDefaults.container.resources.limits.memory -- Memory limit
+                memory: "256Mi"
+              #  argo-workflows.controller.workflowDefaults.spec.templateDefaults.container.resources.requests -- Resources requests
+              requests:
+                #  argo-workflows.controller.workflowDefaults.spec.templateDefaults.container.resources.requests.cpu -- CPU request
+                cpu: "100m"
+                #  argo-workflows.controller.workflowDefaults.spec.templateDefaults.container.resources.requests.memory -- Memory request
+                memory: "128Mi"
   #  argo-workflows.crds --
   crds:
     #  argo-workflows.crds.install -- Enable/Disable crds installation
     install: true
   #  argo-workflows.executor -- Executor configuration
   executor:
+    #  argo-workflows.executor.resources -- Resources configuration
+    resources:
+      #  argo-workflows.executor.resources.limits -- Resources limits
+      limits:
+        #  argo-workflows.executor.resources.limits.cpu -- CPU limit
+        cpu: "500m"
+        #  argo-workflows.executor.resources.limits.memory -- Memory limit
+        memory: "256Mi"
+      #  argo-workflows.executor.resources.requests -- Resources requests
+      requests:
+        #  argo-workflows.executor.resources.requests.cpu -- CPU request
+        cpu: "100m"
+        #  argo-workflows.executor.resources.requests.memory -- Memory request
+        memory: "128Mi"
     # argo-workflows.executor.securityContext -- sets security context for the wait and init containers created by the executor
     securityContext:
       #  argo-workflows.executor.securityContext.allowPrivilegeEscalation -- Executor containers allow privilege escalation
@@ -538,6 +594,8 @@ core:
     port: "5432"
     #  core.postgres.schema -- Schema of the Core database
     schema: public
+  #  core.priorityClassName -- Name of the priority class to use for the core pods. If not set, no priority class will be used.
+  priorityClassName: *highPriority
   #  core.s3 --
   s3:
     # s3.enabled -- Enable this option if you have an S3 deployment that you want to use with Core
@@ -659,6 +717,8 @@ core:
     jwt:
       #  core.sts.jwt.issuerUri -- URL of the JWT issuer, set this to your Core endpoint.
       issuerUri: http://digitalhub-core:8080
+    #  core.sts.priorityClassName -- Name of the priority class to use for the STS pod. If not set, no priority class will be used.
+    priorityClassName: *highPriority
     #  core.sts.stsDb -- Values of the STS database
     stsDb:
       #  core.sts.stsDb.credentials -- Credentials of the STS database
@@ -803,6 +863,8 @@ dashboard:
     seccompProfile:
       #  dashboard.podSecurityContext.seccompProfile.type -- Pod configure seccompProfile type.
       type: RuntimeDefault
+  #  dashboard.priorityClassName -- Name of the priority class to use for the dashboard pods. If not set, no priority class will be used.
+  priorityClassName: *lowPriority
   #  dashboard.replicaCount -- Desired number of pods.
   replicaCount: 1
   #  dashboard.resources -- Dashboard container resource requests and limits.
@@ -899,7 +961,9 @@ docker-registry:
     accessMode: ReadWriteOnce
     #  docker-registry.persistence.size -- PVC size
     size: 128Gi
-  # docker-registry.securityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+  #  docker-registry.priorityClassName -- Name of the priority class to use for the docker-registry pods. If not set, no priority class will be used.
+  priorityClassName: *highPriority
+  #  docker-registry.securityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
   securityContext:
     enabled: true
     fsGroup: 1000
@@ -922,6 +986,8 @@ docker-registry:
 dremio-rest-server-operator:
   #  dremio-rest-server-operator.enabled -- Enable/Disable Dremio rest server operator
   enabled: true
+  #  dremio-rest-server-operator.priorityClassName -- Name of the priority class to use for the dremio-rest-server-operator pods. If not set, no priority class will be used.
+  priorityClassName: *lowPriority
 
 #  ext-postgres-operator -- External Postgres Operator configuration.
 ext-postgres-operator:
@@ -970,6 +1036,8 @@ ext-postgres-operator:
       secretKey: ""
       #  ext-postgres-operator.postgresCredsExistingSecrets.username.secretName -- Secret name
       secretName: ""
+  #  ext-postgres-operator.priorityClassName -- Name of the priority class to use for the ext-postgres-operator pods. If not set, no priority class will be used.
+  priorityClassName: *lowPriority
   #  ext-postgres-operator.securityContext -- [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
   securityContext:
     #  ext-postgres-operator.securityContext.seccompProfile -- Container configure seccompProfile.
@@ -1005,6 +1073,8 @@ kubeai:
 kubernetes-resource-manager:
   #  kubernetes-resource-manager.enabled -- Enable/Disable KRM
   enabled: true
+  #  kubernetes-resource-manager.priorityClassName -- Name of the priority class to use for the KRM pods. If not set, no priority class will be used.
+  priorityClassName: *lowPriority
   #  kubernetes-resource-manager.resourceSelectors -- Configure the resources that you want to see in your KRM instance
   resourceSelectors:
     #  kubernetes-resource-manager.resourceSelectors.secrets -- Secrets configuration
@@ -1080,6 +1150,8 @@ open-webui:
     fsGroupChangePolicy: Always
     supplementalGroups: []
     sysctls: []
+  # open-webui.priorityClassName -- Name of the priority class to use for the open-webui pods. If not set, no priority class will be used.
+  priorityClassName: *lowPriority
   #  open-webui.service -- Service configuration
   service:
     #  open-webui.service.nodePort -- Service nodePort
@@ -1240,6 +1312,8 @@ postgrest-operator:
       secretKey: ""
       #  postgrest-operator.postgresCredsExistingSecrets.username.secretName -- Username secret name
       secretName: ""
+  #  postgrest-operator.priorityClassName -- Name of the priority class to use for the postgrest-operator pods. If not set, no priority class will be used.
+  priorityClassName: *lowPriority
 
 #  seaweedfs -- SeaweedFS configuration
 seaweedfs:
