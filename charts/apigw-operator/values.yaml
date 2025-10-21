@@ -189,6 +189,9 @@ podSecurityContext:
     #  podSecurityContext.seccompProfile.type -- Pod configure seccompProfile type.
     type: RuntimeDefault
 
+#  priorityClassName -- Name of the priority class, leave empty to not set any.
+priorityClassName: ""
+
 #  replicaCount -- Desired number of pods.
 replicaCount: 1
 
