@@ -24141,6 +24141,24 @@ entries:
   dremio-rest-server-operator:
   - apiVersion: v2
     appVersion: 1.0.3
+    created: "2025-10-21T15:41:18.515419128Z"
+    description: A Kubernetes operator to start instances of Dremio REST server.
+    digest: 96bc3f5937a340f5dd2e60205e2c0afa6cf94720ee00fdc68562ae35fbad063e
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/dremio-rest-server-operator
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: dremio-rest-server-operator
+    sources:
+    - https://github.com/scc-digitalhub/dremio-rest-server-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/dremio-rest-server-operator-0.1.9/dremio-rest-server-operator-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
+    appVersion: 1.0.3
     created: "2025-07-14T12:48:19.692961841Z"
     description: A Kubernetes operator to start instances of Dremio REST server.
     digest: 5c20b702d126b4ade31e5a5689dd57e354f67937cc77af114f8ab3edfe808591
@@ -26963,4 +26981,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-21T15:18:24.62967242Z"
+generated: "2025-10-21T15:41:18.516763886Z"
