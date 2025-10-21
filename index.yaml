@@ -24281,6 +24281,20 @@ entries:
   ext-postgres-operator:
   - apiVersion: v2
     appVersion: 1.2.3
+    created: "2025-10-21T15:42:47.209073213Z"
+    description: 'A Helm chart for the External Postgres operator  helm repo add ext-postgres-operator
+      https://movetokube.github.io/postgres-operator/ helm upgrade --install -n operators
+      ext-postgres-operator  ext-postgres-operator/ext-postgres-operator --version
+      1.2.3 '
+    digest: be7243e6a599561f8ddc0e904550fd23cd6f8753033ed02b930aca68179850e1
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/dremio-rest-server-operator
+    name: ext-postgres-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/ext-postgres-operator-1.2.8/ext-postgres-operator-1.2.8.tgz
+    version: 1.2.8
+  - apiVersion: v2
+    appVersion: 1.2.3
     created: "2025-06-24T08:58:31.477720145Z"
     description: 'A Helm chart for the External Postgres operator  helm repo add ext-postgres-operator
       https://movetokube.github.io/postgres-operator/ helm upgrade --install -n operators
@@ -27021,4 +27035,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-21T15:42:19.014856175Z"
+generated: "2025-10-21T15:42:47.20993044Z"
