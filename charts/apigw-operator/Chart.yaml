@@ -7,7 +7,7 @@ name: apigw-operator
 description: A Kubernetes operator to launch ingresses for services.
 home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/apigw-operator"
 type: application
-version: 0.1.21
+version: 0.1.22
 appVersion: "1.1.2"
 maintainers:
   - name: ffais
