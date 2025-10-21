@@ -7,7 +7,7 @@ name: postgrest-operator
 description: A Kubernetes operator to start instances of PostgREST.
 home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/postgrest-operator"
 type: application
-version: 0.1.10
+version: 0.1.11
 appVersion: "2.0.5"
 maintainers:
   - name: ffais
