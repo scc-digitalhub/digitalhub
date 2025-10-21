@@ -209,6 +209,9 @@ postgrestString:
   #  postgrestString.existingSecret -- URI secret name
   existingSecret: ""
 
+#  priorityClassName -- Name of the priority class, leave empty to not set any.
+priorityClassName: ""
+
 #  service --
 service:
   #  service.port -- Service port.
