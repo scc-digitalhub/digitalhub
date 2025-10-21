@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # postgrest-operator
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/postgrest-operator/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=postgrest-operator*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.10](https://img.shields.io/badge/Version-0.1.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.5](https://img.shields.io/badge/AppVersion-2.0.5-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.11](https://img.shields.io/badge/Version-0.1.11-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.5](https://img.shields.io/badge/AppVersion-2.0.5-informational?style=flat-square)
 
 A Kubernetes operator to start instances of PostgREST.
 
@@ -1607,7 +1607,21 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="service"><a href="./values.yaml#L213">service</a></td>
+			<td id="priorityClassName"><a href="./values.yaml#L213">priorityClassName</a></td>
+			<td>
+string
+</td>
+			<td>Name of the priority class, leave empty to not set any.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="service"><a href="./values.yaml#L216">service</a></td>
 			<td>
 object
 </td>
@@ -1626,7 +1640,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="service--port"><a href="./values.yaml#L215">service.port</a></td>
+			<td id="service--port"><a href="./values.yaml#L218">service.port</a></td>
 			<td>
 int
 </td>
@@ -1640,7 +1654,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount"><a href="./values.yaml#L218">serviceAccount</a></td>
+			<td id="serviceAccount"><a href="./values.yaml#L221">serviceAccount</a></td>
 			<td>
 object
 </td>
@@ -1662,7 +1676,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--annotations"><a href="./values.yaml#L220">serviceAccount.annotations</a></td>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L223">serviceAccount.annotations</a></td>
 			<td>
 object
 </td>
@@ -1679,7 +1693,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--automount"><a href="./values.yaml#L222">serviceAccount.automount</a></td>
+			<td id="serviceAccount--automount"><a href="./values.yaml#L225">serviceAccount.automount</a></td>
 			<td>
 bool
 </td>
@@ -1693,7 +1707,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--create"><a href="./values.yaml#L224">serviceAccount.create</a></td>
+			<td id="serviceAccount--create"><a href="./values.yaml#L227">serviceAccount.create</a></td>
 			<td>
 bool
 </td>
@@ -1707,7 +1721,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--name"><a href="./values.yaml#L226">serviceAccount.name</a></td>
+			<td id="serviceAccount--name"><a href="./values.yaml#L229">serviceAccount.name</a></td>
 			<td>
 string
 </td>
@@ -1721,7 +1735,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="tolerations"><a href="./values.yaml#L229">tolerations</a></td>
+			<td id="tolerations"><a href="./values.yaml#L232">tolerations</a></td>
 			<td>
 list
 </td>
@@ -1738,7 +1752,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="volumeMounts"><a href="./values.yaml#L232">volumeMounts</a></td>
+			<td id="volumeMounts"><a href="./values.yaml#L235">volumeMounts</a></td>
 			<td>
 list
 </td>
@@ -1755,7 +1769,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="volumes"><a href="./values.yaml#L235">volumes</a></td>
+			<td id="volumes"><a href="./values.yaml#L238">volumes</a></td>
 			<td>
 list
 </td>
