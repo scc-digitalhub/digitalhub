@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+{{ if and .Values.global.priority.enabled (not .Values.global.priority.lowPriority.existingClass ) -}}
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: {{ .Values.global.priority.lowPriority.className | default "low-priority" }}
+value: {{ .Values.global.priority.lowPriority.value | default 100 }}
+globalDefault: false
+description: "Priority class for the less critical components of the platform."
+{{- end }}

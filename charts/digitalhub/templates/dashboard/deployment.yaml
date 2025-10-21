@@ -36,6 +36,9 @@ spec:
       serviceAccountName: {{ include "digitalhub.fullname" . }}-dashboard
       securityContext:
         {{- toYaml .Values.dashboard.podSecurityContext | nindent 8 }}
+      {{- if .Values.dashboard.priorityClassName }}
+      priorityClassName: {{ .Values.dashboard.priorityClassName }}
+      {{- end }}
       containers:
         - name: dashboard
           securityContext:
