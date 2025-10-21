@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # dremio-rest-server-operator
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/dremio-rest-server-operator/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=dremio-rest-server-operator*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.8](https://img.shields.io/badge/Version-0.1.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.3](https://img.shields.io/badge/AppVersion-1.0.3-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.9](https://img.shields.io/badge/Version-0.1.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.3](https://img.shields.io/badge/AppVersion-1.0.3-informational?style=flat-square)
 
 A Kubernetes operator to start instances of Dremio REST server.
 
@@ -1479,7 +1479,21 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="replicaCount"><a href="./values.yaml#L198">replicaCount</a></td>
+			<td id="priorityClassName"><a href="./values.yaml#L198">priorityClassName</a></td>
+			<td>
+string
+</td>
+			<td>Name of the priority class, leave empty to not set any.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="replicaCount"><a href="./values.yaml#L201">replicaCount</a></td>
 			<td>
 int
 </td>
@@ -1493,7 +1507,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="resources"><a href="./values.yaml#L201">resources</a></td>
+			<td id="resources"><a href="./values.yaml#L204">resources</a></td>
 			<td>
 object
 </td>
@@ -1510,7 +1524,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="service"><a href="./values.yaml#L204">service</a></td>
+			<td id="service"><a href="./values.yaml#L207">service</a></td>
 			<td>
 object
 </td>
@@ -1530,7 +1544,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="service--port"><a href="./values.yaml#L206">service.port</a></td>
+			<td id="service--port"><a href="./values.yaml#L209">service.port</a></td>
 			<td>
 int
 </td>
@@ -1544,7 +1558,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="service--type"><a href="./values.yaml#L208">service.type</a></td>
+			<td id="service--type"><a href="./values.yaml#L211">service.type</a></td>
 			<td>
 string
 </td>
@@ -1558,7 +1572,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount"><a href="./values.yaml#L211">serviceAccount</a></td>
+			<td id="serviceAccount"><a href="./values.yaml#L214">serviceAccount</a></td>
 			<td>
 object
 </td>
@@ -1580,7 +1594,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--annotations"><a href="./values.yaml#L213">serviceAccount.annotations</a></td>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L216">serviceAccount.annotations</a></td>
 			<td>
 object
 </td>
@@ -1597,7 +1611,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--automount"><a href="./values.yaml#L215">serviceAccount.automount</a></td>
+			<td id="serviceAccount--automount"><a href="./values.yaml#L218">serviceAccount.automount</a></td>
 			<td>
 bool
 </td>
@@ -1611,7 +1625,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--create"><a href="./values.yaml#L217">serviceAccount.create</a></td>
+			<td id="serviceAccount--create"><a href="./values.yaml#L220">serviceAccount.create</a></td>
 			<td>
 bool
 </td>
@@ -1625,7 +1639,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--name"><a href="./values.yaml#L219">serviceAccount.name</a></td>
+			<td id="serviceAccount--name"><a href="./values.yaml#L222">serviceAccount.name</a></td>
 			<td>
 string
 </td>
@@ -1639,7 +1653,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="tolerations"><a href="./values.yaml#L222">tolerations</a></td>
+			<td id="tolerations"><a href="./values.yaml#L225">tolerations</a></td>
 			<td>
 list
 </td>
@@ -1656,7 +1670,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="volumeMounts"><a href="./values.yaml#L225">volumeMounts</a></td>
+			<td id="volumeMounts"><a href="./values.yaml#L228">volumeMounts</a></td>
 			<td>
 list
 </td>
@@ -1673,7 +1687,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="volumes"><a href="./values.yaml#L228">volumes</a></td>
+			<td id="volumes"><a href="./values.yaml#L231">volumes</a></td>
 			<td>
 list
 </td>

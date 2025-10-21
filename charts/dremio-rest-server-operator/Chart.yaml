@@ -7,7 +7,7 @@ name: dremio-rest-server-operator
 description: A Kubernetes operator to start instances of Dremio REST server.
 home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/dremio-rest-server-operator"
 type: application
-version: 0.1.8
+version: 0.1.9
 appVersion: "1.0.3"
 maintainers:
   - name: ffais
