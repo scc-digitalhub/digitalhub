@@ -6,7 +6,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 # minio-operator
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-AGPL%20V3-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/minio-operator/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=minio-operator*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.9](https://img.shields.io/badge/Version-0.1.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.1](https://img.shields.io/badge/AppVersion-1.0.1-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.10](https://img.shields.io/badge/Version-0.1.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.1](https://img.shields.io/badge/AppVersion-1.0.1-informational?style=flat-square)
 
 A Kubernetes operator to handle instances of buckets, users and policies on MinIO.
 
@@ -1637,7 +1637,21 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="replicaCount"><a href="./values.yaml#L215">replicaCount</a></td>
+			<td id="priorityClassName"><a href="./values.yaml#L215">priorityClassName</a></td>
+			<td>
+string
+</td>
+			<td>Name of the priority class, leave empty to not set any.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="replicaCount"><a href="./values.yaml#L218">replicaCount</a></td>
 			<td>
 int
 </td>
@@ -1651,7 +1665,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="service"><a href="./values.yaml#L218">service</a></td>
+			<td id="service"><a href="./values.yaml#L221">service</a></td>
 			<td>
 object
 </td>
@@ -1671,7 +1685,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="service--port"><a href="./values.yaml#L220">service.port</a></td>
+			<td id="service--port"><a href="./values.yaml#L223">service.port</a></td>
 			<td>
 int
 </td>
@@ -1685,7 +1699,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="service--type"><a href="./values.yaml#L222">service.type</a></td>
+			<td id="service--type"><a href="./values.yaml#L225">service.type</a></td>
 			<td>
 string
 </td>
@@ -1699,7 +1713,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount"><a href="./values.yaml#L225">serviceAccount</a></td>
+			<td id="serviceAccount"><a href="./values.yaml#L228">serviceAccount</a></td>
 			<td>
 object
 </td>
@@ -1721,7 +1735,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--annotations"><a href="./values.yaml#L227">serviceAccount.annotations</a></td>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L230">serviceAccount.annotations</a></td>
 			<td>
 object
 </td>
@@ -1738,7 +1752,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--automount"><a href="./values.yaml#L229">serviceAccount.automount</a></td>
+			<td id="serviceAccount--automount"><a href="./values.yaml#L232">serviceAccount.automount</a></td>
 			<td>
 bool
 </td>
@@ -1752,7 +1766,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--create"><a href="./values.yaml#L231">serviceAccount.create</a></td>
+			<td id="serviceAccount--create"><a href="./values.yaml#L234">serviceAccount.create</a></td>
 			<td>
 bool
 </td>
@@ -1766,7 +1780,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--name"><a href="./values.yaml#L233">serviceAccount.name</a></td>
+			<td id="serviceAccount--name"><a href="./values.yaml#L236">serviceAccount.name</a></td>
 			<td>
 string
 </td>
@@ -1780,7 +1794,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="tolerations"><a href="./values.yaml#L236">tolerations</a></td>
+			<td id="tolerations"><a href="./values.yaml#L239">tolerations</a></td>
 			<td>
 list
 </td>
@@ -1797,7 +1811,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="volumeMounts"><a href="./values.yaml#L239">volumeMounts</a></td>
+			<td id="volumeMounts"><a href="./values.yaml#L242">volumeMounts</a></td>
 			<td>
 list
 </td>
@@ -1814,7 +1828,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="volumes"><a href="./values.yaml#L242">volumes</a></td>
+			<td id="volumes"><a href="./values.yaml#L245">volumes</a></td>
 			<td>
 list
 </td>
