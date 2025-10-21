@@ -60,6 +60,9 @@ postgres:
 #  postgresCredsExistingSecrets -- Use existing secret for postgres server credentials
 postgresCredsExistingSecrets: {}
 
+#  priorityClassName -- Name of the priority class, leave empty to not set any.
+priorityClassName: ""
+
 #  replicaCount -- Desired number of pods.
 replicaCount: 1
 
