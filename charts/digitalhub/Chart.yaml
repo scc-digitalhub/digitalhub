@@ -20,7 +20,7 @@ dependencies:
   repository: https://argoproj.github.io/argo-helm
   condition: argo-workflows.enabled
 - name: apigw-operator
-  version: "0.1.21"
+  version: "0.1.22"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: apigw-operator.enabled
 - name: coder
@@ -28,15 +28,15 @@ dependencies:
   repository: https://helm.coder.com/v2
   condition: coder.enabled
 - name: core
-  version: "0.3.33"
+  version: "0.3.34"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: core.enabled
 - name: kubernetes-resource-manager
-  version: "0.2.13"
+  version: "0.2.15"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: kubernetes-resource-manager.enabled
 - name: dremio-rest-server-operator
-  version: "0.1.8"
+  version: "0.1.9"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: dremio-rest-server-operator.enabled
 - name: docker-registry
@@ -44,7 +44,7 @@ dependencies:
   repository: "https://helm.twun.io"
   condition: docker-registry.enabled
 - name: ext-postgres-operator
-  version: "1.2.7"
+  version: "1.2.8"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: ext-postgres-operator.enabled
 - name: seaweedfs
@@ -58,7 +58,7 @@ dependencies:
   tags:
     - operator
 - name: postgrest-operator
-  version: "0.1.10"
+  version: "0.1.11"
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: postgrest-operator.enabled
 - name: template-controller
