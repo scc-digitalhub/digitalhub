@@ -26871,6 +26871,24 @@ entries:
   postgrest-operator:
   - apiVersion: v2
     appVersion: 2.0.5
+    created: "2025-10-21T15:48:21.198144963Z"
+    description: A Kubernetes operator to start instances of PostgREST.
+    digest: 521761260e1b86ca94529966cb33bab345cbfcfa5f55817ce33cc92c69d94987
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/postgrest-operator
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: postgrest-operator
+    sources:
+    - https://github.com/scc-digitalhub/postgrest-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.11/postgrest-operator-0.1.11.tgz
+    version: 0.1.11
+  - apiVersion: v2
+    appVersion: 2.0.5
     created: "2025-07-14T12:48:20.44005319Z"
     description: A Kubernetes operator to start instances of PostgREST.
     digest: 7e2184411c3309e27724927aab19336f131a6f297528a924dbdacdb54fa6da5e
@@ -27035,4 +27053,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-21T15:42:47.20993044Z"
+generated: "2025-10-21T15:48:21.199555726Z"
