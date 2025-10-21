@@ -330,6 +330,24 @@ entries:
   apigw-operator:
   - apiVersion: v2
     appVersion: 1.1.2
+    created: "2025-10-21T15:17:56.587329471Z"
+    description: A Kubernetes operator to launch ingresses for services.
+    digest: 97dcafb36d93ee73d5f0fbd3c5fb72310cacd5045cb1b3d757d18b9d396234bf
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/apigw-operator
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: apigw-operator
+    sources:
+    - https://github.com/scc-digitalhub/apigw-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/apigw-operator-0.1.22/apigw-operator-0.1.22.tgz
+    version: 0.1.22
+  - apiVersion: v2
+    appVersion: 1.1.2
     created: "2025-07-14T12:48:19.029327364Z"
     description: A Kubernetes operator to launch ingresses for services.
     digest: bcc458fc992cdc352c7dc3b43fd815e1b475babf2d3905627c763c3bcb8a7ad2
@@ -26926,4 +26944,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-09T12:22:02.968168616Z"
+generated: "2025-10-21T15:17:57.006893089Z"
