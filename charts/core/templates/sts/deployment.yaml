@@ -36,6 +36,9 @@ spec:
       serviceAccountName: {{ include "core.serviceAccountName" . }}-sts
       securityContext:
         {{- toYaml .Values.sts.podSecurityContext | nindent 8 }}
+      {{- if .Values.sts.priorityClassName }}
+      priorityClassName: {{ .Values.sts.priorityClassName }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}-sts
           securityContext:
