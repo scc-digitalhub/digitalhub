@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # ext-postgres-operator
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/dremio-rest-server-operator/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=ext-postgres-operator*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 1.2.7](https://img.shields.io/badge/Version-1.2.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.3](https://img.shields.io/badge/AppVersion-1.2.3-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 1.2.8](https://img.shields.io/badge/Version-1.2.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.3](https://img.shields.io/badge/AppVersion-1.2.3-informational?style=flat-square)
 
 A Helm chart for the External Postgres operator
 
@@ -418,7 +418,21 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="replicaCount"><a href="./values.yaml#L64">replicaCount</a></td>
+			<td id="priorityClassName"><a href="./values.yaml#L64">priorityClassName</a></td>
+			<td>
+string
+</td>
+			<td>Name of the priority class, leave empty to not set any.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="replicaCount"><a href="./values.yaml#L67">replicaCount</a></td>
 			<td>
 int
 </td>
@@ -432,7 +446,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="resources"><a href="./values.yaml#L67">resources</a></td>
+			<td id="resources"><a href="./values.yaml#L70">resources</a></td>
 			<td>
 object
 </td>
@@ -449,7 +463,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext"><a href="./values.yaml#L70">securityContext</a></td>
+			<td id="securityContext"><a href="./values.yaml#L73">securityContext</a></td>
 			<td>
 object
 </td>
@@ -475,7 +489,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L72">securityContext.allowPrivilegeEscalation</a></td>
+			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L75">securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -489,7 +503,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--capabilities"><a href="./values.yaml#L74">securityContext.capabilities</a></td>
+			<td id="securityContext--capabilities"><a href="./values.yaml#L77">securityContext.capabilities</a></td>
 			<td>
 object
 </td>
@@ -510,7 +524,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--capabilities--drop"><a href="./values.yaml#L76">securityContext.capabilities.drop</a></td>
+			<td id="securityContext--capabilities--drop"><a href="./values.yaml#L79">securityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
@@ -529,7 +543,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--readOnlyRootFilesystem"><a href="./values.yaml#L79">securityContext.readOnlyRootFilesystem</a></td>
+			<td id="securityContext--readOnlyRootFilesystem"><a href="./values.yaml#L82">securityContext.readOnlyRootFilesystem</a></td>
 			<td>
 bool
 </td>
@@ -543,7 +557,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L81">securityContext.runAsNonRoot</a></td>
+			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L84">securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -557,7 +571,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount"><a href="./values.yaml#L84">serviceAccount</a></td>
+			<td id="serviceAccount"><a href="./values.yaml#L87">serviceAccount</a></td>
 			<td>
 object
 </td>
@@ -577,7 +591,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--annotations"><a href="./values.yaml#L86">serviceAccount.annotations</a></td>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L89">serviceAccount.annotations</a></td>
 			<td>
 object
 </td>
@@ -594,7 +608,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--name"><a href="./values.yaml#L88">serviceAccount.name</a></td>
+			<td id="serviceAccount--name"><a href="./values.yaml#L91">serviceAccount.name</a></td>
 			<td>
 string
 </td>
@@ -608,7 +622,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="tolerations"><a href="./values.yaml#L91">tolerations</a></td>
+			<td id="tolerations"><a href="./values.yaml#L94">tolerations</a></td>
 			<td>
 list
 </td>
@@ -625,7 +639,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="volumeMounts"><a href="./values.yaml#L94">volumeMounts</a></td>
+			<td id="volumeMounts"><a href="./values.yaml#L97">volumeMounts</a></td>
 			<td>
 list
 </td>
@@ -642,7 +656,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="volumes"><a href="./values.yaml#L97">volumes</a></td>
+			<td id="volumes"><a href="./values.yaml#L100">volumes</a></td>
 			<td>
 list
 </td>
@@ -659,7 +673,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="watchNamespace"><a href="./values.yaml#L100">watchNamespace</a></td>
+			<td id="watchNamespace"><a href="./values.yaml#L103">watchNamespace</a></td>
 			<td>
 string
 </td>
