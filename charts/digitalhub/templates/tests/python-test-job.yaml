@@ -85,21 +85,16 @@ spec:
                   name: "core-auth-creds"
                   key: "clientSecret"
               {{- end }}
-            {{- if $.Values.core.ingress.enabled }}
-            {{- with (index $.Values.core.ingress.hosts 0) }}
             - name: "DHCORE_ENDPOINT"
-              value: https://{{ .host }}
+              value: http://{{ $.Release.Name }}-core:{{ $.Values.core.service.port }}
             - name: "DHCORE_ISSUER"
-              value: https://{{ .host }}
-            {{- end }}
-            {{- end }}
-            {{- else }}
-            - name: "DHCORE_ENDPOINT"
-              value: http://{{ $.Release.Name }}-core:8080
+              value: http://{{ $.Release.Name }}-core:{{ $.Values.core.service.port }}
+            {{- if $.Values.core.authentication.basic.enabled }}
             - name: "DHCORE_USER"
               value: {{ $.Values.core.authentication.basic.username }}
             - name: "DHCORE_PASSWORD"
               value: {{ $.Values.core.authentication.basic.password }}
+            {{- end }}
             {{- end }}
           envFrom:
           - configMapRef:

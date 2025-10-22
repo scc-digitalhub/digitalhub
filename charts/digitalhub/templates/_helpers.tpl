@@ -191,15 +191,8 @@ Variables used in the creation and upgrade of Coder templates
   {{- $variables = append $variables (printf "client_id_key=%v" $root.Values.core.coreAuthCreds.existingSecret.clientIdKey ) }}
   {{- $variables = append $variables (printf "client_secret_key=%v" $root.Values.core.coreAuthCreds.existingSecret.clientSecretKey ) }}
 {{- end }}
-  {{- if $root.Values.core.ingress.enabled }}
-    {{- with (index $root.Values.core.ingress.hosts 0) }}
-      {{- $variables = append $variables (printf "dhcore_endpoint=https://%s" .host ) }}
-      {{- $variables = append $variables (printf "dhcore_issuer=https://%s" .host ) }}
-    {{- end }}
-  {{- else }}
-    {{- $variables = append $variables (printf "dhcore_endpoint=\"\"" ) }}
-    {{- $variables = append $variables (printf "dhcore_issuer=\"\"" ) }}
-  {{- end }}
+    {{- $variables = append $variables (printf "dhcore_endpoint=http://%s-core:%s" $root.Release.Name $root.Values.core.service.port ) }}
+    {{- $variables = append $variables (printf "dhcore_issuer=http://%s-core:%s" $root.Release.Name $root.Values.core.service.port ) }}
 {{- end }}
 {{- join "," $variables -}}
 {{- end -}}
