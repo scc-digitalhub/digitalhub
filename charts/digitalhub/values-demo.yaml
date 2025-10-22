@@ -65,7 +65,7 @@ global:
     #  global.priority.highPriority -- High priority class configuration
     highPriority:
       #  global.priority.highPriority.className -- Name of the high priority class
-      className: &highPriority "high-priority"
+      className: &highPriority ""
       #  global.priority.highPriority.existingClass -- Set this to true if you have an existing priority class with the name specified in className
       existingClass: false
       #  global.priority.highPriority.value -- Value of the high priority class created by the chart
@@ -73,7 +73,7 @@ global:
     #  global.priority.lowPriority -- Low priority class configuration
     lowPriority:
       #  global.priority.lowPriority.className -- Name of the low priority class
-      className: &lowPriority "low-priority"
+      className: &lowPriority ""
       #  global.priority.lowPriority.existingClass -- Set this to true if you have an existing priority class with the name specified in className
       existingClass: false
       #  global.priority.lowPriority.value -- Value of the low priority class created by the chart
@@ -403,7 +403,7 @@ coder:
       - extraLabels: {}
         extraVars: []
         iconUrl: https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png
-        image: dremio/dremio-oss:24.1.0
+        image: dremio/dremio-oss:24.2
         name: dremio
         nodePort: "30120"
         postgres:
@@ -641,6 +641,8 @@ core:
     secretKey: *platformSecretKey
   #  core.service -- Service configurations.
   service:
+    #  core.service.port -- Service port.
+    port: "8080"
     #  core.service.httpNodePort -- Service NodePort.
     httpNodePort: "30180"
     #  core.service.type -- Service type.
@@ -1181,23 +1183,25 @@ platformPackages:
   #  For the most stable experience, these values should NOT be modified.
   packages:
     - name: digitalhub-runtime-container
-      tag: "0.13.0"
+      tag: ""
     - name: digitalhub-runtime-dbt
-      tag: "0.13.0"
+      tag: ""
+    - name: digitalhub-runtime-flower
+      tag: ""
     - name: digitalhub-runtime-hera
-      tag: "0.13.0"
+      tag: ""
     - name: digitalhub-runtime-kfp
-      tag: "0.13.0"
+      tag: ""
     - name: digitalhub-runtime-modelserve
-      tag: "0.13.0"
+      tag: ""
     - name: digitalhub-runtime-python
-      tag: "0.13.0"
+      tag: ""
     - name: digitalhub[full]
-      tag: "0.13.0"
+      tag: ""
   #  platformPackages.preRelease -- If set to true, the latest version of the packages will be used (even beta ones).
   #  WARNING:
   #  For the most stable experience, this value should NOT be modified.
-  preRelease: false
+  preRelease: true
   #  platformPackages.tag --
   tag: ""
 
