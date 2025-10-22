@@ -23,6 +23,7 @@ data:
   RUNTIME_PYTHON_IMAGE_3_9: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_9 }}
   RUNTIME_PYTHON_IMAGE_3_10: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_10 }}
   RUNTIME_PYTHON_IMAGE_3_11: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_11 }}
+  RUNTIME_PYTHON_IMAGE_3_12: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_12 }}
   RUNTIME_HUGGINGFACE_SERVE_IMAGE: {{ .Values.runtime.huggingFace.image }}:{{ .Values.runtime.huggingFace.tag }}
 {{- if .Values.solr.enabled }}
   SOLR_URL: {{ .Values.solr.url }}

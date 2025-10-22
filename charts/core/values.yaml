@@ -394,6 +394,8 @@ runtime:
     tag3_10: 3.10-0.13.0
     #  runtime.python.tag3_11 -- Python runtime 3.11 tag
     tag3_11: 3.11-0.13.0
+    #  runtime.python.tag3_12 -- Python runtime 3.12 tag
+    tag3_12: 3.12-0.13.0
     #  runtime.python.tag3_9 -- Python runtime 3.9 tag
     tag3_9: 3.9-0.13.0
 
