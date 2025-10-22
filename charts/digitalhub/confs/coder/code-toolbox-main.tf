@@ -712,6 +712,12 @@ resource "kubernetes_deployment" "code-toolbox" {
           "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
           "app.kubernetes.io/part-of"  = "coder"
           "app.kubernetes.io/type"     = "workspace"
+          // Coder specific labels.
+          "com.coder.resource"       = "true"
+          "com.coder.workspace.id"   = data.coder_workspace.me.id
+          "com.coder.workspace.name" = data.coder_workspace.me.name
+          "com.coder.user.id"        = data.coder_workspace_owner.me.id
+          "com.coder.user.username"  = data.coder_workspace_owner.me.name
         }
       }
       spec {

@@ -19,7 +19,7 @@ provider "coder" {
 }
 
 locals {
-  sqlpad_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}sqlpad--sqlpad--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  sqlpad_url     = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}sqlpad--sqlpad--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
   decoded_labels = var.extra_labels != "" ? jsondecode(base64decode(var.extra_labels)) : {}
 }
 
@@ -86,9 +86,9 @@ variable "extra_vars" {
 }
 
 variable "extra_labels" {
-  type    = string
+  type        = string
   description = "Extra labels that will be used by the workspace deployment. The labels must be in json format and encoded in Base64."
-  default = ""
+  default     = ""
 }
 
 provider "kubernetes" {
@@ -239,18 +239,18 @@ resource "kubernetes_deployment" "sqlpad" {
     name      = "sqlpad-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = merge(
-    {
-      "app.kubernetes.io/name"     = "sqlpad-workspace"
-      "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "workspace"
-      // Coder specific labels.
-      "com.coder.resource"       = "true"
-      "com.coder.workspace.id"   = data.coder_workspace.me.id
-      "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace_owner.me.id
-      "com.coder.user.username"  = data.coder_workspace_owner.me.name
-    },
+      {
+        "app.kubernetes.io/name"     = "sqlpad-workspace"
+        "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+        "app.kubernetes.io/part-of"  = "coder"
+        "app.kubernetes.io/type"     = "workspace"
+        // Coder specific labels.
+        "com.coder.resource"       = "true"
+        "com.coder.workspace.id"   = data.coder_workspace.me.id
+        "com.coder.workspace.name" = data.coder_workspace.me.name
+        "com.coder.user.id"        = data.coder_workspace_owner.me.id
+        "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      },
     local.decoded_labels)
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -276,12 +276,18 @@ resource "kubernetes_deployment" "sqlpad" {
           "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
           "app.kubernetes.io/part-of"  = "coder"
           "app.kubernetes.io/type"     = "workspace"
+          // Coder specific labels.
+          "com.coder.resource"       = "true"
+          "com.coder.workspace.id"   = data.coder_workspace.me.id
+          "com.coder.workspace.name" = data.coder_workspace.me.name
+          "com.coder.user.id"        = data.coder_workspace_owner.me.id
+          "com.coder.user.username"  = data.coder_workspace_owner.me.name
         }
       }
       spec {
         security_context {
-          run_as_user = "1000"
-          fs_group    = "1000"
+          run_as_user     = "1000"
+          fs_group        = "1000"
           run_as_non_root = true
           seccomp_profile {
             type = "RuntimeDefault"
