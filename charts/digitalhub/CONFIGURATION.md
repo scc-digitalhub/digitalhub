@@ -2821,7 +2821,7 @@ object
         "extraLabels": {},
         "extraVars": [],
         "iconUrl": "https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png",
-        "image": "dremio/dremio-oss:24.1.0",
+        "image": "dremio/dremio-oss:24.2",
         "name": "dremio",
         "nodePort": "30120",
         "postgres": {
@@ -3432,7 +3432,7 @@ object
       "extraLabels": {},
       "extraVars": [],
       "iconUrl": "https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png",
-      "image": "dremio/dremio-oss:24.1.0",
+      "image": "dremio/dremio-oss:24.2",
       "name": "dremio",
       "nodePort": "30120",
       "postgres": {
@@ -3523,7 +3523,7 @@ list
     "extraLabels": {},
     "extraVars": [],
     "iconUrl": "https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png",
-    "image": "dremio/dremio-oss:24.1.0",
+    "image": "dremio/dremio-oss:24.2",
     "name": "dremio",
     "nodePort": "30120",
     "postgres": {
