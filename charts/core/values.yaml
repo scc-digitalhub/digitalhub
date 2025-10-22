@@ -301,6 +301,8 @@ podLabels: {}
 
 #  podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 podSecurityContext:
+  #  podSecurityContext.fsGroup -- Configure group id used to mount volumes
+  fsGroup: 65532
   #  podSecurityContext.runAsNonRoot -- Pod allow run as root.
   runAsNonRoot: true
   #  podSecurityContext.seccompProfile -- Pod configure seccompProfile.
