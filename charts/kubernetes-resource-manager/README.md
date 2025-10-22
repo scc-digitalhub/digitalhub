@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # kubernetes-resource-manager
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/kubernetes-resource-manager/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=kubernetes-resource-manager*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.2.15](https://img.shields.io/badge/Version-0.2.15-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.3](https://img.shields.io/badge/AppVersion-1.2.3-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.2.16](https://img.shields.io/badge/Version-0.2.16-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.3](https://img.shields.io/badge/AppVersion-1.2.3-informational?style=flat-square)
 
 A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources.
 
@@ -1488,14 +1488,23 @@ object
 <details>
 <summary>+Expand</summary>
 <pre lang="json">
-{}
+{
+  "limits": {
+    "cpu": "2000m",
+    "memory": "4Gi"
+  },
+  "requests": {
+    "cpu": "1000m",
+    "memory": "1Gi"
+  }
+}
 </pre>
 </details>
 </div>
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext"><a href="./values.yaml#L271">securityContext</a></td>
+			<td id="securityContext"><a href="./values.yaml#L277">securityContext</a></td>
 			<td>
 object
 </td>
@@ -1523,7 +1532,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L273">securityContext.allowPrivilegeEscalation</a></td>
+			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L279">securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -1537,7 +1546,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--capabilities"><a href="./values.yaml#L275">securityContext.capabilities</a></td>
+			<td id="securityContext--capabilities"><a href="./values.yaml#L281">securityContext.capabilities</a></td>
 			<td>
 object
 </td>
@@ -1558,7 +1567,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--capabilities--drop"><a href="./values.yaml#L277">securityContext.capabilities.drop</a></td>
+			<td id="securityContext--capabilities--drop"><a href="./values.yaml#L283">securityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
@@ -1577,7 +1586,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L280">securityContext.runAsNonRoot</a></td>
+			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L286">securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -1591,7 +1600,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--seccompProfile"><a href="./values.yaml#L282">securityContext.seccompProfile</a></td>
+			<td id="securityContext--seccompProfile"><a href="./values.yaml#L288">securityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -1610,7 +1619,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--seccompProfile--type"><a href="./values.yaml#L284">securityContext.seccompProfile.type</a></td>
+			<td id="securityContext--seccompProfile--type"><a href="./values.yaml#L290">securityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -1624,7 +1633,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="service"><a href="./values.yaml#L287">service</a></td>
+			<td id="service"><a href="./values.yaml#L293">service</a></td>
 			<td>
 object
 </td>
@@ -1645,7 +1654,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="service--nodePort"><a href="./values.yaml#L289">service.nodePort</a></td>
+			<td id="service--nodePort"><a href="./values.yaml#L295">service.nodePort</a></td>
 			<td>
 string
 </td>
@@ -1659,7 +1668,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="service--port"><a href="./values.yaml#L291">service.port</a></td>
+			<td id="service--port"><a href="./values.yaml#L297">service.port</a></td>
 			<td>
 int
 </td>
@@ -1673,7 +1682,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="service--type"><a href="./values.yaml#L293">service.type</a></td>
+			<td id="service--type"><a href="./values.yaml#L299">service.type</a></td>
 			<td>
 string
 </td>
@@ -1687,7 +1696,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount"><a href="./values.yaml#L296">serviceAccount</a></td>
+			<td id="serviceAccount"><a href="./values.yaml#L302">serviceAccount</a></td>
 			<td>
 object
 </td>
@@ -1708,7 +1717,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--annotations"><a href="./values.yaml#L298">serviceAccount.annotations</a></td>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L304">serviceAccount.annotations</a></td>
 			<td>
 object
 </td>
@@ -1725,7 +1734,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--create"><a href="./values.yaml#L300">serviceAccount.create</a></td>
+			<td id="serviceAccount--create"><a href="./values.yaml#L306">serviceAccount.create</a></td>
 			<td>
 bool
 </td>
@@ -1739,7 +1748,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--name"><a href="./values.yaml#L302">serviceAccount.name</a></td>
+			<td id="serviceAccount--name"><a href="./values.yaml#L308">serviceAccount.name</a></td>
 			<td>
 string
 </td>
@@ -1753,7 +1762,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="storageClasses"><a href="./values.yaml#L305">storageClasses</a></td>
+			<td id="storageClasses"><a href="./values.yaml#L311">storageClasses</a></td>
 			<td>
 string
 </td>
@@ -1767,7 +1776,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="tolerations"><a href="./values.yaml#L308">tolerations</a></td>
+			<td id="tolerations"><a href="./values.yaml#L314">tolerations</a></td>
 			<td>
 list
 </td>
