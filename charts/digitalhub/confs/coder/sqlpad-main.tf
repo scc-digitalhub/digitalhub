@@ -286,8 +286,8 @@ resource "kubernetes_deployment" "sqlpad" {
       }
       spec {
         security_context {
-          run_as_user     = "1000"
-          fs_group        = "1000"
+          run_as_user     = "1001"
+          fs_group        = "1001"
           run_as_non_root = true
           seccomp_profile {
             type = "RuntimeDefault"
@@ -299,7 +299,7 @@ resource "kubernetes_deployment" "sqlpad" {
           image_pull_policy = "IfNotPresent"
           command           = ["sh", "-c", coder_agent.sqlpad.init_script]
           security_context {
-            run_as_user                = "1000"
+            run_as_user                = "1001"
             allow_privilege_escalation = false
             capabilities {
               drop = [

@@ -2839,7 +2839,7 @@ object
         "extraLabels": {},
         "extraVars": [],
         "iconUrl": "https://i.ibb.co/TrBDsZM/sqlpad.png",
-        "image": "smartcommunitylab/sqlpad:nonroot",
+        "image": "ghcr.io/scc-digitalhub/digitalhub/images/sqlpad:7.5.3",
         "name": "sqlpad",
         "nodePort": "30140",
         "postgres": {
@@ -3450,7 +3450,7 @@ object
       "extraLabels": {},
       "extraVars": [],
       "iconUrl": "https://i.ibb.co/TrBDsZM/sqlpad.png",
-      "image": "smartcommunitylab/sqlpad:nonroot",
+      "image": "ghcr.io/scc-digitalhub/digitalhub/images/sqlpad:7.5.3",
       "name": "sqlpad",
       "nodePort": "30140",
       "postgres": {
@@ -3541,7 +3541,7 @@ list
     "extraLabels": {},
     "extraVars": [],
     "iconUrl": "https://i.ibb.co/TrBDsZM/sqlpad.png",
-    "image": "smartcommunitylab/sqlpad:nonroot",
+    "image": "ghcr.io/scc-digitalhub/digitalhub/images/sqlpad:7.5.3",
     "name": "sqlpad",
     "nodePort": "30140",
     "postgres": {
