@@ -505,12 +505,6 @@ solr:
           usernameKey: ""
   #  solr.collection -- Solr collection configuration
   collection:
-    #  solr.collection.initialize -- Solr collection initialization
-    initialize:
-      #  solr.collection.initialize.enabled -- Enable/Disable Solr collection initialization by Core
-      enabled: true
-      #  solr.collection.initialize.image -- Initialization image
-      image: curlimages/curl:8.15.0
     #  solr.collection.name -- Name of the Solr collection
     name: ""
   #  solr.url -- URL of your Solr instance
