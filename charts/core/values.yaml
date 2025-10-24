@@ -75,6 +75,14 @@ additionalConfig:
   service:
     #  additionalConfig.service.type -- Service type for pods created by Core
     type: NodePort
+  #  additionalConfig.workflowVolume -- Workflow configuration
+  workflow:
+    #  additionalConfig.workflow.volume -- Workflow volume configuration
+    volume:
+      #  additionalConfig.workflow.volume.accessMode -- Access mode for the workflow volume
+      accessMode: ReadWriteMany
+      # additionalConfig.workflowVolume.storageClassName -- Specify the storage class for the workflow volume
+      storageClassName: ""
 
 #  affinity -- Affinity for pod assignment.
 affinity: {}
@@ -246,7 +254,7 @@ initImage:
     #  initImage.builderTool.image -- Cpre builder repository
     image: ghcr.io/scc-digitalhub/digitalhub-core-builder-tool
     #  initImage.builderTool.tag -- Core builder tag
-    tag: b95c095f
+    tag: eff0a84f
 
 #  keystore --
 keystore:
