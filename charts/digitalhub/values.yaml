@@ -669,12 +669,6 @@ core:
             usernameKey: ""
     #  core.solr.collection -- Solr collection configuration
     collection:
-      #  core.solr.collection.initialize -- Solr collection initialization
-      initialize:
-        #  core.solr.collection.initialize.enabled -- Enable/Disable Solr collection initialization by Core
-        enabled: false
-        #  core.solr.collection.initialize.image -- Initialization image
-        image: curlimages/curl:8.15.0
       #  core.solr.collection.name -- Name of the Solr collection
       name: dhcore
     #  core.solr.url -- URL of your Solr instance
@@ -1175,25 +1169,25 @@ platformPackages:
   #  For the most stable experience, these values should NOT be modified.
   packages:
     - name: digitalhub-runtime-container
-      tag: ""
+      tag: "0.14.0"
     - name: digitalhub-runtime-dbt
-      tag: ""
+      tag: "0.14.0"
     - name: digitalhub-runtime-flower
-      tag: ""
+      tag: "0.14.0"
     - name: digitalhub-runtime-hera
-      tag: ""
+      tag: "0.14.0"
     - name: digitalhub-runtime-kfp
-      tag: ""
+      tag: "0.14.0"
     - name: digitalhub-runtime-modelserve
-      tag: ""
+      tag: "0.14.0"
     - name: digitalhub-runtime-python
-      tag: ""
+      tag: "0.14.0"
     - name: digitalhub[full]
-      tag: ""
+      tag: "0.14.0"
   #  platformPackages.preRelease -- If set to true, the latest version of the packages will be used (even beta ones).
   #  WARNING:
   #  For the most stable experience, this value should NOT be modified.
-  preRelease: true
+  preRelease: false
   #  platformPackages.tag --
   tag: ""
 
