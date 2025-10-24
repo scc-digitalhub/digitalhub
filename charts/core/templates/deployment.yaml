@@ -183,7 +183,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ if .Values.solr.basicAuth.credentials.existingSecrets.user.secretName }}{{ .Values.solr.basicAuth.credentials.existingSecrets.user.secretName }}{{ else }}{{ .Values.solr.basicAuth.credentials.existingSecrets.admin.secretName }}{{ end }}
-                  key: {{ if .Values.solr.basicAuth.credentials.existingSecrets.user.secretName }}{{ .Values.solr.basicAuth.credentials.existingSecrets.user.usernameKey }}{{ else }}{{ .Values.solr.basicAuth.credentials.existingSecrets.admin.passwordKey }}{{ end }}
+                  key: {{ if .Values.solr.basicAuth.credentials.existingSecrets.user.secretName }}{{ .Values.solr.basicAuth.credentials.existingSecrets.user.passwordKey }}{{ else }}{{ .Values.solr.basicAuth.credentials.existingSecrets.admin.passwordKey }}{{ end }}
             {{- end }}
             {{- end }}
           envFrom:
