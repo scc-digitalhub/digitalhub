@@ -26,7 +26,7 @@ WORKDIR /home/loader
 
 # Hugging Face ("hf://")
 RUN pipx install huggingface_hub
-RUN huggingface-cli version
+RUN hf version
 
 # AWS S3 ("s3://")
 RUN pipx install awscli
