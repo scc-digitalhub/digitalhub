@@ -66,7 +66,7 @@ jobs:
 
       - name: Add dependency chart repos
         run: |
-          helm repo add docker-registry https://helm.twun.io
+          helm repo add docker-registry https://twuni.github.io/docker-registry.helm
           helm repo add postgres-operator https://opensource.zalando.com/postgres-operator/charts/postgres-operator
           helm repo add digitalhub https://scc-digitalhub.github.io/digitalhub/
           helm repo add coder-v2 https://helm.coder.com/v2
