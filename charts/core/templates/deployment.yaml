@@ -193,6 +193,11 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+            {{- if .Values.healthcheck.enabled }}
+            - name: {{ .Values.healthcheck.service.portName }}
+              containerPort: {{ .Values.healthcheck.service.port }}
+              protocol: {{ .Values.healthcheck.service.protocol }}
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
@@ -207,6 +212,24 @@ spec:
           {{- end }}
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.healthcheck.enabled }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.healthcheck.livenessProbe.path }}
+              port: {{ .Values.healthcheck.service.portName }}
+            periodSeconds: {{ .Values.healthcheck.livenessProbe.periodSeconds }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.healthcheck.readinessProbe.path }}
+              port: {{ .Values.healthcheck.service.portName }}
+            periodSeconds: {{ .Values.healthcheck.readinessProbe.periodSeconds }}
+          startupProbe:
+            httpGet:
+              path: {{ .Values.healthcheck.startupProbe.path }}
+              port: {{ .Values.healthcheck.service.portName }}
+            failureThreshold: {{ .Values.healthcheck.startupProbe.failureThreshold }}
+            periodSeconds: {{ .Values.healthcheck.startupProbe.periodSeconds }}
           {{- end }}
       volumes:
       {{- if and .Values.keystore.existingSecret.secretName .Values.keystore.keystorePath }}
