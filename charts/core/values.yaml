@@ -218,6 +218,39 @@ defaultStorageClass: ""
 #  fullnameOverride -- String to fully override `core.fullname` template.
 fullnameOverride: ""
 
+#  healthcheck -- Core healthcheck configuration
+healthcheck:
+  #  healthcheck.enabled -- Enable/Disable healthcheck for Core
+  enabled: true
+  #  healthcheck.livenessProbe -- Liveness probe for Core
+  livenessProbe:
+    #  healthcheck.livenessProbe.path -- Handler path for liveness probe
+    path: /health
+    #  healthcheck.livenessProbe.periodSeconds -- Period seconds for liveness probe
+    periodSeconds: 60
+  #  healthcheck.livenessProbe -- Liveness probe for Core
+  readinessProbe:
+    #  healthcheck.readinessProbe.path -- Handler path for readiness probe
+    path: /health
+    #  healthcheck.readinessProbe.periodSeconds -- Period seconds for readiness probe
+    periodSeconds: 60
+  #  healthcheck.service -- Service configuration for healthcheck.
+  service:
+    #  healthcheck.service.port -- Port used by healthcheck service
+    port: 8081
+    #  healthcheck.service.portName -- Port name used by healthcheck service
+    portName: management
+    #  healthcheck.service.protocol -- Protocol used by healthcheck service
+    protocol: TCP
+  #  healthcheck.startupProbe -- Startup probe for Core
+  startupProbe:
+    #  healthcheck.startupProbe.failureThreshold -- Failure threshold for startup probe
+    failureThreshold: 12
+    #  healthcheck.startupProbe.path -- Handler path for startup probe
+    path: /health
+    #  healthcheck.startupProbe.periodSeconds -- Period seconds for startup probe
+    periodSeconds: 10
+
 #  image --
 image:
   #  image.pullPolicy -- Image pull policy
@@ -254,7 +287,7 @@ initImage:
     #  initImage.builderTool.image -- Cpre builder repository
     image: ghcr.io/scc-digitalhub/digitalhub-core-builder-tool
     #  initImage.builderTool.tag -- Core builder tag
-    tag: eff0a84f
+    tag: 5b6f4347
 
 #  keystore --
 keystore:
@@ -361,9 +394,9 @@ resources:
   #  resources.limits --
   limits:
     #  resources.limits.cpu -- Max cpu request
-    cpu: 1000m
+    cpu: 2000m
     #  resources.limits.memory -- Max memory request
-    memory: 1024Mi
+    memory: 2048Mi
   #  resources.requests --
   requests:
     #  resources.requests.cpu -- Min cpu request
@@ -378,12 +411,12 @@ runtime:
     #  runtime.dbt.image -- DBT wrapper repository
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt
     #  runtime.dbt.tag -- DBT wrapper tag
-    tag: 0.14.0
+    tag: 0.14.2
   hera:
     #  runtime.hera.image -- hera wrapper repository
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-hera/wrapper-hera
     #  runtime.hera.tag -- hera wrapper tag
-    tag: 0.14.0
+    tag: 0.14.2
   #  runtime.huggingFace --
   huggingFace:
     #  runtime.huggingFace.image -- HuggingFaceServer repository
@@ -395,19 +428,19 @@ runtime:
     #  runtime.kfp.image -- KFP wrapper repository
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp
     #  runtime.kfp.tag -- KFP wrapper tag
-    tag: 0.14.0
+    tag: 0.14.2
   #  runtime.python --
   python:
     #  runtime.python.image -- Python runtime repository
     image: ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime
     #  runtime.python.tag3_10 -- Python runtime 3.10  tag
-    tag3_10: 3.10-0.14.0
+    tag3_10: 3.10-0.14.2
     #  runtime.python.tag3_11 -- Python runtime 3.11 tag
-    tag3_11: 3.11-0.14.0
+    tag3_11: 3.11-0.14.2
     #  runtime.python.tag3_12 -- Python runtime 3.12 tag
-    tag3_12: 3.12-0.14.0
+    tag3_12: 3.12-0.14.2
     #  runtime.python.tag3_9 -- Python runtime 3.9 tag
-    tag3_9: 3.9-0.14.0
+    tag3_9: 3.9-0.14.2
 
 #  s3 --
 s3:

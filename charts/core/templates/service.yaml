@@ -16,5 +16,11 @@ spec:
       protocol: TCP
       name: http
       {{ if eq .Values.service.type "NodePort" }}nodePort: {{ .Values.service.httpNodePort }}{{ end }}
+    {{- if .Values.healthcheck.enabled }}
+    - port: {{ .Values.healthcheck.service.port }}
+      targetPort: {{ .Values.healthcheck.service.portName }}
+      protocol: {{ .Values.healthcheck.service.protocol }}
+      name: {{ .Values.healthcheck.service.portName }}
+    {{- end }}
   selector:
     {{- include "core.selectorLabels" . | nindent 4 }}
