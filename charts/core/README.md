@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # core
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/core/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=core*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.3.40](https://img.shields.io/badge/Version-0.3.40-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.14.3](https://img.shields.io/badge/AppVersion-0.14.3-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.3.41](https://img.shields.io/badge/Version-0.3.41-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.14.3](https://img.shields.io/badge/AppVersion-0.14.3-informational?style=flat-square)
 
 DigitalHub Core is part of the DigitalHub platform, and depends on external components to support the complete set of functionalities.
 
@@ -2032,7 +2032,7 @@ object
 {
   "builderTool": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-core-builder-tool",
-    "tag": "5b6f4347"
+    "tag": "38f928d9"
   }
 }
 </pre>
@@ -2053,7 +2053,7 @@ object
 <pre lang="json">
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-core-builder-tool",
-  "tag": "5b6f4347"
+  "tag": "38f928d9"
 }
 </pre>
 </details>
@@ -2083,7 +2083,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"5b6f4347"
+"38f928d9"
 </pre>
 </div>
 			</td>
