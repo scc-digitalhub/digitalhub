@@ -8982,7 +8982,7 @@ object
     },
     {
       "name": "digitalhub[full]",
-      "tag": "0.14.9"
+      "tag": "0.14.13"
     }
   ],
   "preRelease": false,
@@ -9063,7 +9063,7 @@ list
   },
   {
     "name": "digitalhub[full]",
-    "tag": "0.14.9"
+    "tag": "0.14.13"
   }
 ]
 </pre>

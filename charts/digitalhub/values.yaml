@@ -1183,7 +1183,7 @@ platformPackages:
     - name: digitalhub-runtime-python
       tag: ""
     - name: digitalhub[full]
-      tag: "0.14.9"
+      tag: "0.14.13"
   #  platformPackages.preRelease -- If set to true, the latest version of the packages will be used (even beta ones).
   #  WARNING:
   #  For the most stable experience, this value should NOT be modified.
