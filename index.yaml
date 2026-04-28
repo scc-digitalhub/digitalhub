@@ -523,6 +523,25 @@ entries:
   core:
   - apiVersion: v2
     appVersion: 0.14.3
+    created: "2026-04-28T11:33:46.129128222Z"
+    description: DigitalHub Core is part of the DigitalHub platform, and depends on
+      external components to support the complete set of functionalities.
+    digest: 300386e532e3134bdb318c9e481a724112d4e93f718776842f15d24c45ee2f86
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/core
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: core
+    sources:
+    - https://github.com/scc-digitalhub/digitalhub-core
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.3.42/core-0.3.42.tgz
+    version: 0.3.42
+  - apiVersion: v2
+    appVersion: 0.14.3
     created: "2026-04-01T08:53:43.907117534Z"
     description: DigitalHub Core is part of the DigitalHub platform, and depends on
       external components to support the complete set of functionalities.
@@ -24998,6 +25017,27 @@ entries:
     version: 0.1.0
   kubernetes-resource-manager:
   - apiVersion: v2
+    appVersion: 1.4.0
+    created: "2026-04-28T11:33:46.507032923Z"
+    description: A manager for resources in Kubernetes. The tool allows for monitoring
+      and managing some of the standard Kubernetes resources (PersistentVolumeClaim,
+      Services, Deployments, Jobs, and Secrets) as well as for managing a selection
+      of Custom Resources.
+    digest: 38e3bf7002ad1cf50348cb3908061870b1041f8606de74b1955136ffa66d78b8
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/kubernetes-resource-manager
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: kubernetes-resource-manager
+    sources:
+    - https://github.com/scc-digitalhub/dremio-rest-server-operator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/kubernetes-resource-manager-0.2.18/kubernetes-resource-manager-0.2.18.tgz
+    version: 0.2.18
+  - apiVersion: v2
     appVersion: 1.3.1
     created: "2025-12-02T10:25:47.163665251Z"
     description: A manager for resources in Kubernetes. The tool allows for monitoring
@@ -27702,4 +27742,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2026-04-01T11:13:50.354055615Z"
+generated: "2026-04-28T11:33:46.50816131Z"
