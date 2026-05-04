@@ -4,6 +4,7 @@
 
 global:
   externalHostAddress: ""
+  externalTls: false
 
 adminCreds:
   password: "admin"
@@ -140,6 +141,48 @@ resources:
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+
+route:
+  #  route.enabled-- Enables or disables the route
+  enabled: false
+  #  route.additionalRules -- Additional custom rules that can be added to the route
+  additionalRules: []
+  #  route.annotations -- Annotations to add to the route
+  annotations: {}
+  #  route.apiVersion -- Set the route apiVersion, e.g. gateway.networking.k8s.io/v1 or gateway.networking.k8s.io/v1alpha2
+  apiVersion: gateway.networking.k8s.io/v1
+  extraLabels: {}
+  #  route.filters -- Filters define the filters that are applied to requests that match this rule.
+  filters: []
+  #  route.hostnames -- Hostnames to match for the route
+  hostnames: []
+  # - "open-webui.example.com"
+
+  #  route.httpsRedirect -- Enables HTTPS redirect for the route
+  httpsRedirect: false
+  #  route.kind -- Set the route kind
+  #  Valid options are GRPCRoute, HTTPRoute, TCPRoute, TLSRoute, UDPRoute
+  kind: HTTPRoute
+  #  route.labels -- Labels to add to the route
+  labels: {}
+  #  route.matches -- Match conditions for the route
+  matches:
+    - path:
+        #  route.matches.path.type -- Path match type.
+        type: PathPrefix
+        #  route.matches.path.value -- Path match value
+        value: /
+  #  route.parentRefs -- References to the parent resources (e.g. Gateway)
+  parentRefs: []
+  # - name: my-gateway
+
+  #  route.redirect -- Configuration for the HTTP-to-HTTPS redirect route (only used when httpsRedirect is true)
+  #  If route.redirect.parentRefs is set, it will be used as-is for the redirect route's parentRefs.
+  #  Otherwise, the main route's parentRefs are used with sectionName defaulting to "http".
+  redirect: {}
+  # parentRefs:
+  #   - name: my-gateway
+  #     sectionName: http
 
 secrets:
   annotations: {}
