@@ -25,6 +25,7 @@ data:
   RUNTIME_PYTHON_IMAGE_3_12: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_12 }}
   RUNTIME_PYTHON_IMAGE_3_13: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_13 }}
   RUNTIME_HUGGINGFACE_SERVE_IMAGE: {{ .Values.runtime.huggingFace.image }}:{{ .Values.runtime.huggingFace.tag }}
+  RUNTIME_VLLM_SERVE_IMAGE: {{ .Values.runtime.vllm.image }}:{{ .Values.runtime.vllm.tag }}
 {{- if .Values.solr.enabled }}
   SOLR_URL: {{ .Values.solr.url }}
   SOLR_COLLECTION: {{ .Values.solr.collection.name }}
