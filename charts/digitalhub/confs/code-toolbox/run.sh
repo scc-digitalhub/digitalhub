@@ -35,7 +35,7 @@ fi
 
 if ! grep -Fxq "source python${PYTHON_VERSION}/bin/activate" .bashrc
 then
-  echo "source python${PYTHON_VERSION}/bin/activate" >> .bashrc
+  echo "source $HOME/python${PYTHON_VERSION}/bin/activate" >> .bashrc
   echo "alias pip='uv pip'" >> .bashrc
 fi
 
