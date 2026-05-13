@@ -437,6 +437,7 @@ runtime:
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt
     #  runtime.dbt.tag -- DBT wrapper tag
     tag: 0.14.3
+  #  runtime.hera --
   hera:
     #  runtime.hera.image -- hera wrapper repository
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-hera/wrapper-hera
@@ -460,12 +461,20 @@ runtime:
     tag3_12: 3.12-0.14.3
     #  runtime.python.tag3_13 -- Python runtime 3.13 tag
     tag3_13: 3.13-latest
-  #  runtime.vllm --
+  #  runtime.vllm -- VLLM Server configuration
   vllm:
-    #  runtime.vllm.image -- VLLM Server repository
-    image: vllm/vllm-openai
-    #  runtime.vllm.tag -- VLLM Server tag
-    tag: v0.19.1-ubuntu2404
+    #  runtime.vllm.cpu -- VLLM Server CPU configuration
+    cpu:
+      #  runtime.vllm.cpu.image -- VLLM Server CPU repository
+      image: vllm/vllm-openai-cpu
+      #  runtime.vllm.cpu.tag -- VLLM Server CPU tag
+      tag: v0.19.1
+    #  runtime.vllm.default -- VLLM Server default configuration
+    default:
+      #  runtime.vllm.default.image -- VLLM Server repository
+      image: vllm/vllm-openai
+      #  runtime.vllm.default.tag -- VLLM Server tag
+      tag: v0.19.1
 
 #  s3 --
 s3:
