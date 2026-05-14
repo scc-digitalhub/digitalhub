@@ -101,9 +101,9 @@ spec:
           {{- if $.Values.core.authentication.openId.enabled }}
           volumeMounts:
             - name: test-script-volume
-              mountPath: /scripts/test-script.py
+              mountPath: /scripts/init-python-script.py
               readOnly: false
-              subPath: "test-script.py"
+              subPath: "init-python-script.py"
           {{- end }}
       securityContext:
         runAsNonRoot: true
