@@ -10,7 +10,14 @@ if command -v uv > /dev/null 2>&1
 then
   echo "uv is already installed"
 else
-  wget -qO- https://astral.sh/uv/install.sh | sh
+  if [[ -v NODE_EXTRA_CA_CERTS ]]
+  then
+    wget -qO- --ca-certificate="${NODE_EXTRA_CA_CERTS}" https://astral.sh/uv/install.sh | sh
+    echo "uv has been installed with custom CA certificate"
+  else
+    wget -qO- https://astral.sh/uv/install.sh | sh
+    echo "uv has been installed without custom CA certificate"
+  fi
   echo "uv has been installed"
 fi
 source $HOME/.local/bin/env
@@ -26,7 +33,7 @@ else
   printf "%s\n\n" "🥳 jupyterlab is already installed"
 fi
 
-uv {{ include "digitalhub.packages" . }} jupyterlab-git ipywidgets
+uv {{ include "digitalhub.packages" . }} jupyterlab-git ipykernel ipywidgets
 
 if ! jupyter kernelspec list | grep -q "local/share/jupyter/kernels/python${PYTHON_VERSION}"
 then

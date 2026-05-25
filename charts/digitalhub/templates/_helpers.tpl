@@ -144,6 +144,8 @@ Variables used in the creation and upgrade of Coder templates
 {{- $template := index . 1  -}}
 {{- if $template.extraVars -}}
 {{- $variables = append $variables (printf "extra_vars=true" ) }}
+{{- else -}}
+{{- $variables = append $variables (printf "extra_vars=false" ) }}
 {{- end }}
 {{- if $template.extraLabels -}}
 {{- $labels := list }}
