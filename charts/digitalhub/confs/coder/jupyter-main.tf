@@ -318,16 +318,17 @@ resource "kubernetes_persistent_volume_claim" "home" {
     name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}-home"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "jupyter-pvc"
-      "app.kubernetes.io/instance" = "jupyter-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "pvc"
+      "app.kubernetes.io/name"       = "jupyter-pvc"
+      "app.kubernetes.io/instance"   = "jupyter-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"    = "coder"
+      "app.kubernetes.io/managed-by" = "coder"
+      "app.kubernetes.io/type"       = "pvc"
       // Coder specific labels.
-      "com.coder.resource"       = "true"
-      "com.coder.workspace.id"   = data.coder_workspace.me.id
-      "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace_owner.me.id
-      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      "com.coder.resource"           = "true"
+      "com.coder.workspace.id"       = data.coder_workspace.me.id
+      "com.coder.workspace.name"     = data.coder_workspace.me.name
+      "com.coder.user.id"            = data.coder_workspace_owner.me.id
+      "com.coder.user.username"      = data.coder_workspace_owner.me.name
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -349,16 +350,17 @@ resource "kubernetes_service" "jupyter-service" {
     name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "jupyter-workspace"
-      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "service"
+      "app.kubernetes.io/name"       = "jupyter-workspace"
+      "app.kubernetes.io/instance"   = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"    = "coder"
+      "app.kubernetes.io/managed-by" = "coder"
+      "app.kubernetes.io/type"       = "service"
       // Coder specific labels.
-      "com.coder.resource"       = "true"
-      "com.coder.workspace.id"   = data.coder_workspace.me.id
-      "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace_owner.me.id
-      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      "com.coder.resource"           = "true"
+      "com.coder.workspace.id"       = data.coder_workspace.me.id
+      "com.coder.workspace.name"     = data.coder_workspace.me.name
+      "com.coder.user.id"            = data.coder_workspace_owner.me.id
+      "com.coder.user.username"      = data.coder_workspace_owner.me.name
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -366,10 +368,11 @@ resource "kubernetes_service" "jupyter-service" {
   }
   spec {
     selector = {
-      "app.kubernetes.io/name"     = "jupyter-workspace"
-      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "workspace"
+      "app.kubernetes.io/name"       = "jupyter-workspace"
+      "app.kubernetes.io/instance"   = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"    = "coder"
+      "app.kubernetes.io/managed-by" = "coder"
+      "app.kubernetes.io/type"       = "workspace"
     }
     port {
       port        = 8888
@@ -396,16 +399,17 @@ resource "kubernetes_secret" "jupyter-secret" {
     name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "jupyter-workspace"
-      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "secret"
+      "app.kubernetes.io/name"       = "jupyter-workspace"
+      "app.kubernetes.io/instance"   = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"    = "coder"
+      "app.kubernetes.io/managed-by" = "coder"
+      "app.kubernetes.io/type"       = "secret"
       // Coder specific labels.
-      "com.coder.resource"       = "true"
-      "com.coder.workspace.id"   = data.coder_workspace.me.id
-      "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace_owner.me.id
-      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      "com.coder.resource"           = "true"
+      "com.coder.workspace.id"       = data.coder_workspace.me.id
+      "com.coder.workspace.name"     = data.coder_workspace.me.name
+      "com.coder.user.id"            = data.coder_workspace_owner.me.id
+      "com.coder.user.username"      = data.coder_workspace_owner.me.name
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -438,16 +442,17 @@ resource "kubernetes_deployment" "jupyter" {
     namespace = var.namespace
     labels = merge(
     {
-      "app.kubernetes.io/name"     = "jupyter-workspace"
-      "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "workspace"
+      "app.kubernetes.io/name"       = "jupyter-workspace"
+      "app.kubernetes.io/instance"   = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"    = "coder"
+      "app.kubernetes.io/managed-by" = "coder"
+      "app.kubernetes.io/type"       = "workspace"
       // Coder specific labels.
-      "com.coder.resource"       = "true"
-      "com.coder.workspace.id"   = data.coder_workspace.me.id
-      "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace_owner.me.id
-      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      "com.coder.resource"           = "true"
+      "com.coder.workspace.id"       = data.coder_workspace.me.id
+      "com.coder.workspace.name"     = data.coder_workspace.me.name
+      "com.coder.user.id"            = data.coder_workspace_owner.me.id
+      "com.coder.user.username"      = data.coder_workspace_owner.me.name
     },
     local.decoded_labels)
     annotations = {
@@ -461,19 +466,21 @@ resource "kubernetes_deployment" "jupyter" {
     }
     selector {
       match_labels = {
-        "app.kubernetes.io/name"     = "jupyter-workspace"
-        "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-        "app.kubernetes.io/part-of"  = "coder"
-        "app.kubernetes.io/type"     = "workspace"
+        "app.kubernetes.io/name"       = "jupyter-workspace"
+        "app.kubernetes.io/instance"   = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+        "app.kubernetes.io/part-of"    = "coder"
+        "app.kubernetes.io/managed-by" = "coder"
+        "app.kubernetes.io/type"       = "workspace"
       }
     }
     template {
       metadata {
         labels = {
-          "app.kubernetes.io/name"     = "jupyter-workspace"
-          "app.kubernetes.io/instance" = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-          "app.kubernetes.io/part-of"  = "coder"
-          "app.kubernetes.io/type"     = "workspace"
+          "app.kubernetes.io/name"       = "jupyter-workspace"
+          "app.kubernetes.io/instance"   = "jupyter-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+          "app.kubernetes.io/part-of"    = "coder"
+          "app.kubernetes.io/managed-by" = "coder"
+          "app.kubernetes.io/type"       = "workspace"
         }
       }
       spec {

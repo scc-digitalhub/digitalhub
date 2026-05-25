@@ -176,47 +176,21 @@ data "coder_parameter" "home_disk_size" {
 data "coder_parameter" "image" {
   name         = "image"
   display_name = "Image"
-  description  = "Select the image for this workspace (JupyterLab included for all options)"
+  description  = "Select the image for this workspace (JupyterLab included for all options). All images use Python 3.12"
   icon         = "/icon/container.svg"
   mutable      = true
-  default      = "python"
+  default      = "python:3"
   form_type    = "dropdown"
   order        = 6
   option {
     name  = "Python3"
-    value = "python"
+    value = "python:3"
     icon  = "/icon/python.svg"
   }
   option {
     name  = "PyTorch"
-    value = "nvcr.io/nvidia/pytorch"
+    value = "nvcr.io/nvidia/pytorch:26.04-py3"
     icon  = "/icon/pytorch.svg"
-  }
-  option {
-    name  = "TensorFlow"
-    value = "nvcr.io/nvidia/tensorflow"
-    icon  = "/icon/tensorflow.svg"
-  }
-}
-
-data "coder_parameter" "python_version" {
-  name         = "python_version"
-  display_name = "Python Version"
-  description  = "Select the Python version for this workspace"
-  default      = "3.10"
-  icon         = "/icon/python.svg"
-  mutable      = true
-  form_type    = "dropdown"
-  order        = 5
-  option {
-    name  = "3.10"
-    value = "3.10"
-    icon  = "/icon/python.svg"
-  }
-  option {
-    name  = "3.12"
-    value = "3.12"
-    icon  = "/icon/python.svg"
   }
 }
 
@@ -256,10 +230,6 @@ data "http" "exchange_token" {
 }
 
 locals {
-  # Image selection
-  pytorch_tag    = "%{if data.coder_parameter.python_version.value == "3.10"}24.10-py3%{else}%{if data.coder_parameter.python_version.value == "3.12"}25.02-py3%{endif}%{endif}"
-  tensorflow_tag = "%{if data.coder_parameter.python_version.value == "3.10"}24.10-tf2-py3%{else}%{if data.coder_parameter.python_version.value == "3.12"}25.02-tf2-py3%{endif}%{endif}"
-  final_image    = "${data.coder_parameter.image.value}:%{if data.coder_parameter.image.value == "python"}3%{else}%{if data.coder_parameter.image.value == "nvcr.io/nvidia/pytorch"}${local.pytorch_tag}%{else}%{if data.coder_parameter.image.value == "nvcr.io/nvidia/tensorflow"}${local.tensorflow_tag}%{endif}%{endif}%{endif}"
   tolerations    = jsondecode(data.kubernetes_config_map.workspace_config.data["tolerations.json"])
 }
 
@@ -287,7 +257,7 @@ module "vscode-web" {
   accept_license = true
   folder         = "/home/${data.coder_workspace_owner.me.name}"
   install_prefix = "/home/${data.coder_workspace_owner.me.name}/vscode-web"
-  extensions     = ["github.copilot", "ms-python.python", "ms-toolsai.jupyter"]
+  extensions     = ["ms-python.python", "ms-toolsai.jupyter"]
 }
 
 module "personalize" {
@@ -399,16 +369,17 @@ resource "kubernetes_persistent_volume_claim" "home" {
     name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}-home"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "code-toolbox-pvc"
-      "app.kubernetes.io/instance" = "code-toolbox-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "pvc"
+      "app.kubernetes.io/name"       = "code-toolbox-pvc"
+      "app.kubernetes.io/instance"   = "code-toolbox-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"    = "coder"
+      "app.kubernetes.io/managed-by" = "coder"
+      "app.kubernetes.io/type"       = "pvc"
       // Coder specific labels.
-      "com.coder.resource"       = "true"
-      "com.coder.workspace.id"   = data.coder_workspace.me.id
-      "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace_owner.me.id
-      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      "com.coder.resource"           = "true"
+      "com.coder.workspace.id"       = data.coder_workspace.me.id
+      "com.coder.workspace.name"     = data.coder_workspace.me.name
+      "com.coder.user.id"            = data.coder_workspace_owner.me.id
+      "com.coder.user.username"      = data.coder_workspace_owner.me.name
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -430,16 +401,17 @@ resource "kubernetes_service" "code-toolbox-service" {
     name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "code-toolbox-workspace"
-      "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "service"
+      "app.kubernetes.io/name"       = "code-toolbox-workspace"
+      "app.kubernetes.io/instance"   = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"    = "coder"
+      "app.kubernetes.io/managed-by" = "coder"
+      "app.kubernetes.io/type"       = "service"
       // Coder specific labels.
-      "com.coder.resource"       = "true"
-      "com.coder.workspace.id"   = data.coder_workspace.me.id
-      "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace_owner.me.id
-      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      "com.coder.resource"           = "true"
+      "com.coder.workspace.id"       = data.coder_workspace.me.id
+      "com.coder.workspace.name"     = data.coder_workspace.me.name
+      "com.coder.user.id"            = data.coder_workspace_owner.me.id
+      "com.coder.user.username"      = data.coder_workspace_owner.me.name
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -447,10 +419,11 @@ resource "kubernetes_service" "code-toolbox-service" {
   }
   spec {
     selector = {
-      "app.kubernetes.io/name"     = "code-toolbox-workspace"
-      "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "workspace"
+      "app.kubernetes.io/name"       = "code-toolbox-workspace"
+      "app.kubernetes.io/instance"   = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"    = "coder"
+      "app.kubernetes.io/managed-by" = "coder"
+      "app.kubernetes.io/type"       = "workspace"
     }
     port {
       port        = 8888
@@ -477,16 +450,17 @@ resource "kubernetes_secret" "code-toolbox-secret" {
     name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "code-toolbox-workspace"
-      "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "secret"
+      "app.kubernetes.io/name"       = "code-toolbox-workspace"
+      "app.kubernetes.io/instance"   = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"    = "coder"
+      "app.kubernetes.io/managed-by" = "coder"
+      "app.kubernetes.io/type"       = "secret"
       // Coder specific labels.
-      "com.coder.resource"       = "true"
-      "com.coder.workspace.id"   = data.coder_workspace.me.id
-      "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace_owner.me.id
-      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      "com.coder.resource"           = "true"
+      "com.coder.workspace.id"       = data.coder_workspace.me.id
+      "com.coder.workspace.name"     = data.coder_workspace.me.name
+      "com.coder.user.id"            = data.coder_workspace_owner.me.id
+      "com.coder.user.username"      = data.coder_workspace_owner.me.name
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -513,16 +487,17 @@ resource "kubernetes_config_map" "code-toolbox-configmap" {
     name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "code-toolbox-workspace"
-      "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "configmap"
+      "app.kubernetes.io/name"       = "code-toolbox-workspace"
+      "app.kubernetes.io/instance"   = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"    = "coder"
+      "app.kubernetes.io/managed-by" = "coder"
+      "app.kubernetes.io/type"       = "configmap"
       // Coder specific labels.
-      "com.coder.resource"       = "true"
-      "com.coder.workspace.id"   = data.coder_workspace.me.id
-      "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace_owner.me.id
-      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      "com.coder.resource"           = "true"
+      "com.coder.workspace.id"       = data.coder_workspace.me.id
+      "com.coder.workspace.name"     = data.coder_workspace.me.name
+      "com.coder.user.id"            = data.coder_workspace_owner.me.id
+      "com.coder.user.username"      = data.coder_workspace_owner.me.name
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -676,16 +651,17 @@ resource "kubernetes_deployment" "code-toolbox" {
     namespace = var.namespace
     labels = merge(
       {
-        "app.kubernetes.io/name"     = "code-toolbox-workspace"
-        "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-        "app.kubernetes.io/part-of"  = "coder"
-        "app.kubernetes.io/type"     = "workspace"
+        "app.kubernetes.io/name"       = "code-toolbox-workspace"
+        "app.kubernetes.io/instance"   = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+        "app.kubernetes.io/part-of"    = "coder"
+        "app.kubernetes.io/managed-by" = "coder"
+        "app.kubernetes.io/type"       = "workspace"
         // Coder specific labels.
-        "com.coder.resource"       = "true"
-        "com.coder.workspace.id"   = data.coder_workspace.me.id
-        "com.coder.workspace.name" = data.coder_workspace.me.name
-        "com.coder.user.id"        = data.coder_workspace_owner.me.id
-        "com.coder.user.username"  = data.coder_workspace_owner.me.name
+        "com.coder.resource"           = "true"
+        "com.coder.workspace.id"       = data.coder_workspace.me.id
+        "com.coder.workspace.name"     = data.coder_workspace.me.name
+        "com.coder.user.id"            = data.coder_workspace_owner.me.id
+        "com.coder.user.username"      = data.coder_workspace_owner.me.name
       },
     local.decoded_labels)
     annotations = {
@@ -699,25 +675,27 @@ resource "kubernetes_deployment" "code-toolbox" {
     }
     selector {
       match_labels = {
-        "app.kubernetes.io/name"     = "code-toolbox-workspace"
-        "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-        "app.kubernetes.io/part-of"  = "coder"
-        "app.kubernetes.io/type"     = "workspace"
+        "app.kubernetes.io/name"       = "code-toolbox-workspace"
+        "app.kubernetes.io/instance"   = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+        "app.kubernetes.io/part-of"    = "coder"
+        "app.kubernetes.io/managed-by" = "coder"
+        "app.kubernetes.io/type"       = "workspace"
       }
     }
     template {
       metadata {
         labels = {
-          "app.kubernetes.io/name"     = "code-toolbox-workspace"
-          "app.kubernetes.io/instance" = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-          "app.kubernetes.io/part-of"  = "coder"
-          "app.kubernetes.io/type"     = "workspace"
+          "app.kubernetes.io/name"       = "code-toolbox-workspace"
+          "app.kubernetes.io/instance"   = "code-toolbox-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+          "app.kubernetes.io/part-of"    = "coder"
+          "app.kubernetes.io/managed-by" = "coder"
+          "app.kubernetes.io/type"       = "workspace"
           // Coder specific labels.
-          "com.coder.resource"       = "true"
-          "com.coder.workspace.id"   = data.coder_workspace.me.id
-          "com.coder.workspace.name" = data.coder_workspace.me.name
-          "com.coder.user.id"        = data.coder_workspace_owner.me.id
-          "com.coder.user.username"  = data.coder_workspace_owner.me.name
+          "com.coder.resource"           = "true"
+          "com.coder.workspace.id"       = data.coder_workspace.me.id
+          "com.coder.workspace.name"     = data.coder_workspace.me.name
+          "com.coder.user.id"            = data.coder_workspace_owner.me.id
+          "com.coder.user.username"      = data.coder_workspace_owner.me.name
         }
       }
       spec {
@@ -741,7 +719,7 @@ resource "kubernetes_deployment" "code-toolbox" {
         }
         container {
           name        = "code-toolbox"
-          image       = local.final_image
+          image       = data.coder_parameter.image.value
           command     = ["sh", "-c", coder_agent.code-toolbox.init_script]
           working_dir = "/home/${data.coder_workspace_owner.me.name}"
           security_context {
@@ -764,7 +742,7 @@ resource "kubernetes_deployment" "code-toolbox" {
           }
           env {
             name  = "PYTHON_VERSION"
-            value = data.coder_parameter.python_version.value
+            value = "3.12"
           }
           env {
             name  = "JUPYTER_PORT"

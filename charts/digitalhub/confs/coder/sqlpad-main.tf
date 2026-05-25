@@ -170,16 +170,17 @@ resource "kubernetes_persistent_volume_claim" "database" {
     name      = "sqlpad-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}-database"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "sqlpad-pvc"
-      "app.kubernetes.io/instance" = "sqlpad-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "pvc"
+      "app.kubernetes.io/name"       = "sqlpad-pvc"
+      "app.kubernetes.io/instance"   = "sqlpad-pvc-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"    = "coder"
+      "app.kubernetes.io/managed-by" = "coder"
+      "app.kubernetes.io/type"       = "pvc"
       // Coder specific labels.
-      "com.coder.resource"       = "true"
-      "com.coder.workspace.id"   = data.coder_workspace.me.id
-      "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace_owner.me.id
-      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      "com.coder.resource"           = "true"
+      "com.coder.workspace.id"       = data.coder_workspace.me.id
+      "com.coder.workspace.name"     = data.coder_workspace.me.name
+      "com.coder.user.id"            = data.coder_workspace_owner.me.id
+      "com.coder.user.username"      = data.coder_workspace_owner.me.name
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -201,16 +202,17 @@ resource "kubernetes_service" "sqlpad-service" {
     name      = "sqlpad-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
     labels = {
-      "app.kubernetes.io/name"     = "sqlpad-workspace"
-      "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "service"
+      "app.kubernetes.io/name"       = "sqlpad-workspace"
+      "app.kubernetes.io/instance"   = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"    = "coder"
+      "app.kubernetes.io/managed-by" = "coder"
+      "app.kubernetes.io/type"       = "service"
       // Coder specific labels.
-      "com.coder.resource"       = "true"
-      "com.coder.workspace.id"   = data.coder_workspace.me.id
-      "com.coder.workspace.name" = data.coder_workspace.me.name
-      "com.coder.user.id"        = data.coder_workspace_owner.me.id
-      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      "com.coder.resource"           = "true"
+      "com.coder.workspace.id"       = data.coder_workspace.me.id
+      "com.coder.workspace.name"     = data.coder_workspace.me.name
+      "com.coder.user.id"            = data.coder_workspace_owner.me.id
+      "com.coder.user.username"      = data.coder_workspace_owner.me.name
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -218,10 +220,11 @@ resource "kubernetes_service" "sqlpad-service" {
   }
   spec {
     selector = {
-      "app.kubernetes.io/name"     = "sqlpad-workspace"
-      "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-      "app.kubernetes.io/part-of"  = "coder"
-      "app.kubernetes.io/type"     = "workspace"
+      "app.kubernetes.io/name"       = "sqlpad-workspace"
+      "app.kubernetes.io/instance"   = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+      "app.kubernetes.io/part-of"    = "coder"
+      "app.kubernetes.io/managed-by" = "coder"
+      "app.kubernetes.io/type"       = "workspace"
     }
     port {
       port        = 3000
@@ -240,16 +243,17 @@ resource "kubernetes_deployment" "sqlpad" {
     namespace = var.namespace
     labels = merge(
       {
-        "app.kubernetes.io/name"     = "sqlpad-workspace"
-        "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-        "app.kubernetes.io/part-of"  = "coder"
-        "app.kubernetes.io/type"     = "workspace"
+        "app.kubernetes.io/name"       = "sqlpad-workspace"
+        "app.kubernetes.io/instance"   = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+        "app.kubernetes.io/part-of"    = "coder"
+        "app.kubernetes.io/managed-by" = "coder"
+        "app.kubernetes.io/type"       = "workspace"
         // Coder specific labels.
-        "com.coder.resource"       = "true"
-        "com.coder.workspace.id"   = data.coder_workspace.me.id
-        "com.coder.workspace.name" = data.coder_workspace.me.name
-        "com.coder.user.id"        = data.coder_workspace_owner.me.id
-        "com.coder.user.username"  = data.coder_workspace_owner.me.name
+        "com.coder.resource"           = "true"
+        "com.coder.workspace.id"       = data.coder_workspace.me.id
+        "com.coder.workspace.name"     = data.coder_workspace.me.name
+        "com.coder.user.id"            = data.coder_workspace_owner.me.id
+        "com.coder.user.username"      = data.coder_workspace_owner.me.name
       },
     local.decoded_labels)
     annotations = {
@@ -263,25 +267,27 @@ resource "kubernetes_deployment" "sqlpad" {
     }
     selector {
       match_labels = {
-        "app.kubernetes.io/name"     = "sqlpad-workspace"
-        "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-        "app.kubernetes.io/part-of"  = "coder"
-        "app.kubernetes.io/type"     = "workspace"
+        "app.kubernetes.io/name"       = "sqlpad-workspace"
+        "app.kubernetes.io/instance"   = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+        "app.kubernetes.io/part-of"    = "coder"
+        "app.kubernetes.io/managed-by" = "coder"
+        "app.kubernetes.io/type"       = "workspace"
       }
     }
     template {
       metadata {
         labels = {
-          "app.kubernetes.io/name"     = "sqlpad-workspace"
-          "app.kubernetes.io/instance" = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
-          "app.kubernetes.io/part-of"  = "coder"
-          "app.kubernetes.io/type"     = "workspace"
+          "app.kubernetes.io/name"       = "sqlpad-workspace"
+          "app.kubernetes.io/instance"   = "sqlpad-workspace-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
+          "app.kubernetes.io/part-of"    = "coder"
+          "app.kubernetes.io/managed-by" = "coder"
+          "app.kubernetes.io/type"       = "workspace"
           // Coder specific labels.
-          "com.coder.resource"       = "true"
-          "com.coder.workspace.id"   = data.coder_workspace.me.id
-          "com.coder.workspace.name" = data.coder_workspace.me.name
-          "com.coder.user.id"        = data.coder_workspace_owner.me.id
-          "com.coder.user.username"  = data.coder_workspace_owner.me.name
+          "com.coder.resource"           = "true"
+          "com.coder.workspace.id"       = data.coder_workspace.me.id
+          "com.coder.workspace.name"     = data.coder_workspace.me.name
+          "com.coder.user.id"            = data.coder_workspace_owner.me.id
+          "com.coder.user.username"      = data.coder_workspace_owner.me.name
         }
       }
       spec {
