@@ -12,7 +12,7 @@ data:
   DB_HOST: {{ .Values.databaseProvider.host }}
   DB_PORT: {{ .Values.databaseProvider.port | quote }}
   DB_DATABASE: {{ .Values.databaseProvider.database }}
-  DHCORE_ENDPOINT: http://{{ include "core.fullname" . }}:{{ .Values.service.port }}
-  DHCORE_ISSUER: http://{{ include "core.fullname" . }}:{{ .Values.service.port }}
+  DHCORE_ENDPOINT: http://{{ include "core.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}
+  DHCORE_ISSUER: http://{{ include "core.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}
   DHCORE_DEFAULT_FILES_STORE: s3://{{ .Values.s3.bucket }}
   AWS_REGION: {{ .Values.s3.region }}

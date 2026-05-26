@@ -10,7 +10,7 @@ metadata:
 data:
   CONNECTION_URL: {{ printf "%s%s:%s/%s" "jdbc:postgresql://" .Values.databaseProvider.host .Values.databaseProvider.port .Values.databaseProvider.database | quote }}
   POSTGRES_DATABASE: {{ .Values.databaseProvider.database }}
-  STS_ENDPOINT: http://{{ include "core.fullname" . }}-sts:{{ .Values.service.port }}
+  STS_ENDPOINT: http://{{ include "core.fullname" . }}-sts.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}
   STS_CREDENTIALS_ROLES: {{ .Values.sts.credentials.roles }}
   STS_JWT_AUDIENCE: {{ .Values.sts.jwt.audience }}
   STS_JWT_CLAIM: {{ .Values.sts.jwt.claim }}

@@ -27,6 +27,7 @@ data:
   RUNTIME_HUGGINGFACE_SERVE_IMAGE: {{ .Values.runtime.huggingFace.image }}:{{ .Values.runtime.huggingFace.tag }}
   RUNTIME_VLLM_SERVE_IMAGE: {{ .Values.runtime.vllm.default.image }}:{{ .Values.runtime.vllm.default.tag }}
   RUNTIME_VLLM_SERVE_CPU_IMAGE: {{ .Values.runtime.vllm.cpu.image }}:{{ .Values.runtime.vllm.cpu.tag }}
+  RUNTIME_PYTHON_INSTALL_DEPENDENCIES: {{ .Values.runtime.python.installDependencies | quote }}
 {{- if .Values.solr.enabled }}
   SOLR_URL: {{ .Values.solr.url }}
   SOLR_COLLECTION: {{ .Values.solr.collection.name }}
@@ -113,7 +114,7 @@ data:
   K8S_RESOURCE_WORKFLOW_ACCESS_MODE: {{ .Values.additionalConfig.workflow.volume.accessMode | quote }}
   K8S_CUSTOM_API_GROUPS: {{ .Values.additionalConfig.customApiGroups }}{{ if .Values.envoyGateway.genericGateway.enabled }},gateway.envoyproxy.io/v1alpha1,gateway.networking.k8s.io/v1{{ end }}{{ if .Values.envoyGateway.aiGateway.enabled }},aigateway.envoyproxy.io/v1alpha1{{ end }}
 {{- if .Values.kubeai.enabled }}
-  RUNTIME_KUBEAI_ENDPOINT: {{ printf "%s%s:%s" "http://" .Values.kubeai.serviceName .Values.kubeai.port | quote }}
+  RUNTIME_KUBEAI_ENDPOINT: {{ printf "%s%s.%s.svc.cluster.local:%s" "http://" .Values.kubeai.serviceName .Release.Namespace .Values.kubeai.port | quote }}
 {{- end }}
   ARGOWORKFLOWS_ARTIFACTS_CONFIGMAP: {{ .Values.argoWorkflow.configmap }}
   ARGOWORKFLOWS_ARTIFACTS_KEY: {{ .Values.argoWorkflow.key }}
@@ -126,7 +127,7 @@ data:
   {{- if .Values.sts.databaseProvider.enabled }}
   DB_CREDENTIALS_PROVIDER: {{ .Values.sts.databaseProvider.enabled | quote }}
   DB_CREDENTIALS_DATABASE: {{ .Values.databaseProvider.database }}
-  DB_CREDENTIALS_ENDPOINT:  http://{{ .Release.Name }}-core-sts:8080
+  DB_CREDENTIALS_ENDPOINT:  http://{{ .Release.Name }}-core-sts.{{ .Release.Namespace }}.svc.cluster.local:8080
   DB_CREDENTIALS_CLAIM: {{ .Values.sts.jwt.claim }}
   DB_CREDENTIALS_ROLE: {{ .Values.sts.credentials.roles }}
   {{- end }}
