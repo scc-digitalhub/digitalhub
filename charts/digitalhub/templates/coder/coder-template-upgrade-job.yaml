@@ -24,7 +24,7 @@ spec:
             {{- end }}
             {{- include "digitalhub.coderAccUrl" . | nindent 12 -}}
             - name: CODER_URL
-              value: "http://coder"
+              value: "http://coder.{{ .Release.Namespace }}.svc.cluster.local"
             - name: CODER_SESSION_TOKEN
               value: {{ .Values.coder.template.upgrade.token }}
           volumeMounts:

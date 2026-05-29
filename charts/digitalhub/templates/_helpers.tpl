@@ -193,8 +193,8 @@ Variables used in the creation and upgrade of Coder templates
   {{- $variables = append $variables (printf "client_id_key=%v" $root.Values.core.coreAuthCreds.existingSecret.clientIdKey ) }}
   {{- $variables = append $variables (printf "client_secret_key=%v" $root.Values.core.coreAuthCreds.existingSecret.clientSecretKey ) }}
 {{- end }}
-    {{- $variables = append $variables (printf "dhcore_endpoint=http://%s-core:%s" $root.Release.Name $root.Values.core.service.port ) }}
-    {{- $variables = append $variables (printf "dhcore_issuer=http://%s-core:%s" $root.Release.Name $root.Values.core.service.port ) }}
+    {{- $variables = append $variables (printf "dhcore_endpoint=http://%s-core.%s.svc.cluster.local:%s" $root.Release.Name $root.Release.Namespace $root.Values.core.service.port ) }}
+    {{- $variables = append $variables (printf "dhcore_issuer=http://%s-core.%s.svc.cluster.local:%s" $root.Release.Name $root.Release.Namespace $root.Values.core.service.port ) }}
 {{- end }}
 {{- join "," $variables -}}
 {{- end -}}

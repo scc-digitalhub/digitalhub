@@ -6,15 +6,15 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 2.11.0"
+      version = "2.18.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.38.0"
+      version = "3.1.0"
     }
     http = {
       source  = "hashicorp/http"
-      version = "3.5.0"
+      version = "3.6.0"
     }
   }
 }
@@ -223,14 +223,14 @@ data "http" "exchange_token" {
   # Optional request headers
   request_headers = {
     Content-Type  = "application/x-www-form-urlencoded"
-    Authorization = "Basic ${base64encode("${data.kubernetes_secret.auth.data[var.client_id_key]}:${data.kubernetes_secret.auth.data[var.client_secret_key]}")}"
+    Authorization = "Basic ${base64encode("${data.kubernetes_secret_v1.auth.data[var.client_id_key]}:${data.kubernetes_secret_v1.auth.data[var.client_secret_key]}")}"
   }
 
   request_body = "grant_type=urn:ietf:params:oauth:grant-type:token-exchange&scope=openid%20offline_access%20credentials&subject_token_type=urn:ietf:params:oauth:token-type:access_token&subject_token=${data.coder_workspace_owner.me.oidc_access_token}"
 }
 
 locals {
-  tolerations    = jsondecode(data.kubernetes_config_map.workspace_config.data["tolerations.json"])
+  tolerations    = jsondecode(data.kubernetes_config_map_v1.workspace_config.data["tolerations.json"])
 }
 
 provider "kubernetes" {
@@ -242,7 +242,7 @@ data "coder_workspace" "me" {}
 
 data "coder_workspace_owner" "me" {}
 
-data "kubernetes_secret" "auth" {
+data "kubernetes_secret_v1" "auth" {
   metadata {
     name      = var.core_auth_creds_secret
     namespace = var.namespace
@@ -251,8 +251,8 @@ data "kubernetes_secret" "auth" {
 
 module "vscode-web" {
   count          = data.coder_workspace.me.start_count
-  source         = "registry.coder.com/modules/vscode-web/coder"
-  version        = "1.4.1"
+  source         = "registry.coder.com/coder/vscode-web/coder"
+  version        = "1.5.0"
   agent_id       = coder_agent.code-toolbox.id
   accept_license = true
   folder         = "/home/${data.coder_workspace_owner.me.name}"
@@ -263,7 +263,7 @@ module "vscode-web" {
 module "personalize" {
   count    = data.coder_workspace.me.start_count
   source   = "registry.coder.com/modules/personalize/coder"
-  version  = "1.0.2"
+  version  = "1.0.32"
   agent_id = coder_agent.code-toolbox.id
   path     = "/scripts/run.sh"
   log_path = "/tmp/personalize.log"
@@ -335,7 +335,7 @@ resource "coder_agent" "code-toolbox" {
 
 resource "coder_metadata" "code_toolbox" {
   count       = data.coder_workspace.me.start_count
-  resource_id = kubernetes_deployment.code-toolbox[0].id
+  resource_id = kubernetes_deployment_v1.code-toolbox[0].id
   item {
     key   = "URL"
     value = local.code_toolbox_url
@@ -357,14 +357,14 @@ resource "coder_app" "jupyter" {
   }
 }
 
-data "kubernetes_config_map" "workspace_config" {
+data "kubernetes_config_map_v1" "workspace_config" {
   metadata {
     name      = "code-toolbox-init"
     namespace = var.namespace
   }
 }
 
-resource "kubernetes_persistent_volume_claim" "home" {
+resource "kubernetes_persistent_volume_claim_v1" "home" {
   metadata {
     name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}-home"
     namespace = var.namespace
@@ -396,7 +396,7 @@ resource "kubernetes_persistent_volume_claim" "home" {
   }
 }
 
-resource "kubernetes_service" "code-toolbox-service" {
+resource "kubernetes_service_v1" "code-toolbox-service" {
   metadata {
     name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
@@ -444,7 +444,7 @@ resource "random_uuid" "check-token-exchange" {
   }
 }
 
-resource "kubernetes_secret" "code-toolbox-secret" {
+resource "kubernetes_secret_v1" "code-toolbox-secret" {
   count = (var.stsenabled && data.coder_workspace.me.start_count == 1) ? 1 : 0
   metadata {
     name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
@@ -481,7 +481,7 @@ resource "kubernetes_secret" "code-toolbox-secret" {
   }
 }
 
-resource "kubernetes_config_map" "code-toolbox-configmap" {
+resource "kubernetes_config_map_v1" "code-toolbox-configmap" {
   count = data.coder_workspace.me.start_count
   metadata {
     name      = "code-toolbox-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
@@ -640,10 +640,10 @@ resource "kubernetes_config_map" "code-toolbox-configmap" {
   }
 }
 
-resource "kubernetes_deployment" "code-toolbox" {
+resource "kubernetes_deployment_v1" "code-toolbox" {
   count = data.coder_workspace.me.start_count
   depends_on = [
-    kubernetes_persistent_volume_claim.home
+    kubernetes_persistent_volume_claim_v1.home
   ]
   wait_for_rollout = false
   metadata {
@@ -860,7 +860,7 @@ resource "kubernetes_deployment" "code-toolbox" {
         volume {
           name = "home"
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim.home.metadata.0.name
+            claim_name = kubernetes_persistent_volume_claim_v1.home.metadata.0.name
             read_only  = false
           }
         }

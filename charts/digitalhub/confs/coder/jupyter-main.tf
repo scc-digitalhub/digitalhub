@@ -6,15 +6,15 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 2.11.0"
+      version = "2.18.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.38.0"
+      version = "3.1.0"
     }
     http = {
       source  = "hashicorp/http"
-      version = "3.5.0"
+      version = "3.6.0"
     }
   }
 }
@@ -220,7 +220,7 @@ data "http" "exchange_token" {
   # Optional request headers
   request_headers = {
     Content-Type  = "application/x-www-form-urlencoded"
-    Authorization = "Basic ${base64encode("${data.kubernetes_secret.auth.data[var.client_id_key]}:${data.kubernetes_secret.auth.data[var.client_secret_key]}")}"
+    Authorization = "Basic ${base64encode("${data.kubernetes_secret_v1.auth.data[var.client_id_key]}:${data.kubernetes_secret_v1.auth.data[var.client_secret_key]}")}"
   }
 
   request_body = "grant_type=urn:ietf:params:oauth:grant-type:token-exchange&scope=openid%20offline_access%20credentials&subject_token_type=urn:ietf:params:oauth:token-type:access_token&subject_token=${data.coder_workspace_owner.me.oidc_access_token}"
@@ -235,7 +235,7 @@ data "coder_workspace" "me" {}
 
 data "coder_workspace_owner" "me" {}
 
-data "kubernetes_secret" "auth" {
+data "kubernetes_secret_v1" "auth" {
   metadata {
     name      = var.core_auth_creds_secret
     namespace = var.namespace
@@ -306,14 +306,14 @@ resource "coder_app" "jupyter" {
 
 resource "coder_metadata" "jupyter" {
   count       = data.coder_workspace.me.start_count
-  resource_id = kubernetes_deployment.jupyter[0].id
+  resource_id = kubernetes_deployment_v1.jupyter[0].id
   item {
     key   = "URL"
     value = local.jupyter_url
   }
 }
 
-resource "kubernetes_persistent_volume_claim" "home" {
+resource "kubernetes_persistent_volume_claim_v1" "home" {
   metadata {
     name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}-home"
     namespace = var.namespace
@@ -345,7 +345,7 @@ resource "kubernetes_persistent_volume_claim" "home" {
   }
 }
 
-resource "kubernetes_service" "jupyter-service" {
+resource "kubernetes_service_v1" "jupyter-service" {
   metadata {
     name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
@@ -393,7 +393,7 @@ resource "random_uuid" "check-token-exchange" {
   }
 }
 
-resource "kubernetes_secret" "jupyter-secret" {
+resource "kubernetes_secret_v1" "jupyter-secret" {
   count = (var.stsenabled && data.coder_workspace.me.start_count == 1 ) ? 1 : 0
   metadata {
     name      = "jupyter-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
@@ -431,10 +431,10 @@ resource "kubernetes_secret" "jupyter-secret" {
 }
 
 
-resource "kubernetes_deployment" "jupyter" {
+resource "kubernetes_deployment_v1" "jupyter" {
   count = data.coder_workspace.me.start_count
   depends_on = [
-    kubernetes_persistent_volume_claim.home
+    kubernetes_persistent_volume_claim_v1.home
   ]
   wait_for_rollout = false
   metadata {
@@ -648,7 +648,7 @@ resource "kubernetes_deployment" "jupyter" {
         volume {
           name = "home"
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim.home.metadata.0.name
+            claim_name = kubernetes_persistent_volume_claim_v1.home.metadata.0.name
             read_only  = false
           }
         }

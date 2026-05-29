@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: © 2025 DSLab - Fondazione Bruno Kessler
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+{{- if .Values.coder.cache.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: coder-cache-pvc
+spec:
+  accessModes:
+    - {{ .Values.coder.cache.pvc.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.coder.cache.pvc.size }}
+  {{- if .Values.coder.cache.pvc.storageClass }}
+  storageClassName: {{ .Values.coder.cache.pvc.storageClass | quote }}
+  {{- end }}
+{{- end }}

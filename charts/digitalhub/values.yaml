@@ -307,10 +307,24 @@ argo-workflows:
 coder:
   #  coder.enabled -- Enable/Disable Coder
   enabled: true
+  #  coder.cache -- Coder cache configuration
+  cache:
+    #  coder.cache.enabled -- Enable/Disable Coder caching for the providers used by the workspaces. Enabling the cache will create a PVC to store the cache.
+    enabled: false
+    #  coder.cache.pvc -- Coder cache PVC configuration
+    pvc:
+      #  coder.cache.pvc.accessMode -- PVC access mode
+      accessMode: ReadWriteOnce
+      #  coder.cache.pvc.size -- PVC size
+      size: 4Gi
+      #  coder.cache.pvc.storageClass -- PVC storage class. If not set, the default storage class will be used.
+      storageClass: ""
   #  coder.coder --
   coder:
     #  coder.coder.env -- Additional environment variables for Coder
     env:
+      - name: CODER_CACHE_DIRECTORY
+        value: /var/cache/coder
       - name: CODER_OAUTH2_GITHUB_DEFAULT_PROVIDER_ENABLE
         value: "false"
       - name: CODER_PG_CONNECTION_URL
@@ -327,11 +341,15 @@ coder:
     #  coder.coder.image --
     image:
       #  coder.coder.image.tag -- Coder image tag
-      tag: v2.31.6
+      tag: v2.32.4
     #  coder.coder.ingress -- Coder ingress configuration
     ingress:
       #  coder.coder.ingress.enable -- Enable/Disable Coder ingress
       enable: false
+    #  coder.coder.podSecurityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+    podSecurityContext:
+      #  coder.coder.podSecurityContext.fsGroup --
+      fsGroup: 1000
     #  coder.coder.securityContext -- Coder [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
     securityContext:
       #  coder.coder.securityContext.allowPrivilegeEscalation -- Coder container allow privilege escalation
@@ -353,6 +371,16 @@ coder:
       httpNodePort: "30170"
       #  coder.coder.service.type -- Service type
       type: *serviceType
+    #  coder.coder.volumeMounts -- Volume mounts for Coder deployment
+    #  The mountPath for the cache volume must be the same as the value of the environment variable CODER_CACHE_DIRECTORY specified in coder.coder.env.
+    volumeMounts:
+      - mountPath: /var/cache/coder
+        name: coder-cache
+    #  coder.coder.volumes -- Volumes for Coder deployment
+    volumes:
+      - name: coder-cache
+        persistentVolumeClaim:
+          claimName: coder-cache-pvc
   #  coder.email -- Coder admin email
   email: ""
   #  coder.existingSecrets -- Coder existing secrets configuration
@@ -1202,7 +1230,7 @@ platformTests:
     - s4-mlflow
     - s5-custom-ml-model
     - s6-container
-  tag: "0.15.17"
+  tag: "0.15.22"
 
 #  postgres-operator -- Postgres operator configuration
 postgres-operator:

@@ -7,11 +7,9 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: coder-deploy-template
-  annotations:
-    "helm.sh/hook": post-install
-    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   backoffLimit: 1
+  ttlSecondsAfterFinished: 30
   template:
     spec:
       containers:
@@ -24,7 +22,7 @@ spec:
             {{- end }}
             {{- include "digitalhub.coderAccUrl" . | nindent 12 -}}
             - name: CODER_URL
-              value: "http://coder"
+              value: "http://coder.{{ .Release.Namespace }}.svc.cluster.local"
             - name: CODER_FIRST_USER_USERNAME
               {{- if and .Values.coder.existingSecrets.adminUserExistingSecret.secretName .Values.coder.existingSecrets.adminUserExistingSecret.usernameKey }}
               valueFrom:
