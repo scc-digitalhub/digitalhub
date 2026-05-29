@@ -26,7 +26,14 @@ spec:
             - name: CODER_URL
               value: "http://coder.{{ .Release.Namespace }}.svc.cluster.local"
             - name: CODER_SESSION_TOKEN
+              {{- if and .Values.coder.existingSecrets.adminSessionTokenExistingSecret.secretName .Values.coder.existingSecrets.adminSessionTokenExistingSecret.tokenKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.coder.existingSecrets.adminSessionTokenExistingSecret.secretName }}
+                  key: {{ .Values.coder.existingSecrets.adminSessionTokenExistingSecret.tokenKey }}
+              {{- else }}
               value: {{ .Values.coder.template.upgrade.token }}
+              {{- end }}
           volumeMounts:
           - name: init-files
             mountPath: "/home/coder/init-files"
