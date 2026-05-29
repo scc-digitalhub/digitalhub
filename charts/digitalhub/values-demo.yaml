@@ -569,8 +569,6 @@ core:
     ownerSecret: digitalhub-owner-user.database-postgres-cluster.credentials.postgresql.acid.zalan.do
     #  core.databaseProvider.port -- Port of the main database of the platform
     port: "5432"
-  image:
-    tag: latest
   #  core.kanikoArgs --
   kanikoArgs: ""
   #  core.kubeai --
@@ -625,14 +623,14 @@ core:
   priorityClassName: *highPriority
   runtime:
     dbt:
-      tag: latest
+      tag: 0.15.0
     hera:
-      tag: latest
+      tag: 0.15.0
     python:
-      tag3_10: 3.10-latest
-      tag3_11: 3.11-latest
-      tag3_12: 3.12-latest
-      tag3_13: 3.13-latest
+      tag3_10: 3.10-0.15.0
+      tag3_11: 3.11-0.15.0
+      tag3_12: 3.12-0.15.0
+      tag3_13: 3.13-0.15.0
   #  core.s3 --
   s3:
     # s3.enabled -- Enable this option if you have an S3 deployment that you want to use with Core
@@ -1203,25 +1201,23 @@ platformPackages:
   #  For the most stable experience, these values should NOT be modified.
   packages:
     - name: digitalhub[full]
-      tag: ""
+      tag: "0.15.0"
     - name: digitalhub-runtime-container
-      tag: ""
+      tag: "0.15.0"
     - name: digitalhub-runtime-dbt
-      tag: ""
+      tag: "0.15.0"
     - name: digitalhub-runtime-flower
-      tag: ""
+      tag: "0.15.0"
     - name: digitalhub-runtime-hera
-      tag: ""
-    - name: digitalhub-runtime-kfp
-      tag: ""
+      tag: "0.15.0"
     - name: digitalhub-runtime-modelserve
-      tag: ""
+      tag: "0.15.0"
     - name: digitalhub-runtime-python
-      tag: ""
+      tag: "0.15.0"
   #  platformPackages.preRelease -- If set to true, the latest version of the packages will be used (even beta ones).
   #  WARNING:
   #  For the most stable experience, this value should NOT be modified.
-  preRelease: true
+  preRelease: false
   #  platformPackages.tag --
   tag: ""
 
