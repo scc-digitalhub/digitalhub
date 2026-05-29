@@ -18,7 +18,6 @@ else
     wget -qO- https://astral.sh/uv/install.sh | sh
     echo "uv has been installed without custom CA certificate"
   fi
-  echo "uv has been installed"
 fi
 source $HOME/.local/bin/env
 

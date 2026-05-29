@@ -6,11 +6,11 @@ terraform {
   required_providers {
     coder = {
       source  = "coder/coder"
-      version = "~> 2.11.0"
+      version = "2.18.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.38.0"
+      version = "3.1.0"
     }
   }
 }
@@ -214,14 +214,14 @@ resource "coder_app" "dremio" {
 
 resource "coder_metadata" "dremio" {
   count       = data.coder_workspace.me.start_count
-  resource_id = kubernetes_deployment.dremio[0].id
+  resource_id = kubernetes_deployment_v1.dremio[0].id
   item {
     key   = "Internal Endpoint"
-    value = "http://dremio-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}:${kubernetes_service.dremio-service.spec[0].port[0].port}"
+    value = "http://dremio-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}:${kubernetes_service_v1.dremio-service.spec[0].port[0].port}"
   }
   item {
     key   = "Arrow Flight Endpoint"
-    value = "dremio-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}:${kubernetes_service.dremio-service.spec[0].port[1].port}"
+    value = "dremio-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}:${kubernetes_service_v1.dremio-service.spec[0].port[1].port}"
   }
   item {
     key   = "URL"
@@ -239,7 +239,7 @@ resource "coder_metadata" "dremio" {
   }
 }
 
-resource "kubernetes_persistent_volume_claim" "dremio-data" {
+resource "kubernetes_persistent_volume_claim_v1" "dremio-data" {
   metadata {
     name      = "dremio-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}-data"
     namespace = var.namespace
@@ -270,7 +270,7 @@ resource "kubernetes_persistent_volume_claim" "dremio-data" {
   }
 }
 
-resource "kubernetes_service" "dremio-service" {
+resource "kubernetes_service_v1" "dremio-service" {
   metadata {
     name      = "dremio-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
     namespace = var.namespace
@@ -321,10 +321,10 @@ resource "kubernetes_service" "dremio-service" {
   }
 }
 
-resource "kubernetes_job" "source-init" {
+resource "kubernetes_job_v1" "source-init" {
   depends_on = [
-    kubernetes_deployment.dremio,
-    kubernetes_service.dremio-service
+    kubernetes_deployment_v1.dremio,
+    kubernetes_service_v1.dremio-service
   ]
   metadata {
     name      = "dremio-source-init-${lower(data.coder_workspace_owner.me.name)}-${lower(data.coder_workspace.me.name)}"
@@ -355,7 +355,7 @@ resource "kubernetes_job" "source-init" {
         init_container {
           name    = "wait-for-dremio"
           image   = "curlimages/curl:8.15.0"
-          command = ["/bin/sh", "-c", "until [ \"$(curl -s -w '%%{http_code}' -o /dev/null \"http://${kubernetes_service.dremio-service.metadata.0.name}:9047/api/v2/buildinfo\")\" -eq 200 ]; do echo \"waiting for dremio to be ready\"; sleep 5; done"]
+          command = ["/bin/sh", "-c", "until [ \"$(curl -s -w '%%{http_code}' -o /dev/null \"http://${kubernetes_service_v1.dremio-service.metadata.0.name}:9047/api/v2/buildinfo\")\" -eq 200 ]; do echo \"waiting for dremio to be ready\"; sleep 5; done"]
           security_context {
             run_as_user                = "1000"
             allow_privilege_escalation = false
@@ -385,7 +385,7 @@ resource "kubernetes_job" "source-init" {
           }
           env {
             name  = "DREMIO_URL"
-            value = kubernetes_service.dremio-service.metadata.0.name
+            value = kubernetes_service_v1.dremio-service.metadata.0.name
           }
           volume_mount {
             mount_path = "/tmp/init/"
@@ -416,7 +416,7 @@ resource "kubernetes_job" "source-init" {
           }
           env {
             name  = "DREMIO_URL"
-            value = kubernetes_service.dremio-service.metadata.0.name
+            value = kubernetes_service_v1.dremio-service.metadata.0.name
           }
           env {
             name  = "S3_ENDPOINT"
@@ -526,10 +526,10 @@ resource "kubernetes_job" "source-init" {
   wait_for_completion = false
 }
 
-resource "kubernetes_deployment" "dremio" {
+resource "kubernetes_deployment_v1" "dremio" {
   count = data.coder_workspace.me.start_count
   depends_on = [
-    kubernetes_persistent_volume_claim.dremio-data
+    kubernetes_persistent_volume_claim_v1.dremio-data
   ]
   wait_for_rollout = false
   metadata {
@@ -649,7 +649,7 @@ resource "kubernetes_deployment" "dremio" {
         volume {
           name = "dremio-data"
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim.dremio-data.metadata.0.name
+            claim_name = kubernetes_persistent_volume_claim_v1.dremio-data.metadata.0.name
             read_only  = false
           }
         }

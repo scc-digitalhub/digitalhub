@@ -305,10 +305,18 @@ argo-workflows:
 coder:
   #  coder.enabled -- Enable/Disable Coder
   enabled: true
+  cache:
+    enabled: true
+    pvc:
+      accessMode: ReadWriteOnce
+      size: 4Gi
+      storageClass: ""
   #  coder.coder --
   coder:
     #  coder.coder.env -- Additional environment variables for Coder
     env:
+      - name: CODER_CACHE_DIRECTORY
+        value: /var/cache/coder
       - name: CODER_OAUTH2_GITHUB_DEFAULT_PROVIDER_ENABLE
         value: "false"
       - name: CODER_PG_CONNECTION_URL
@@ -325,7 +333,7 @@ coder:
     #  coder.coder.image --
     image:
       #  coder.coder.image.tag -- Coder image tag
-      tag: v2.26.1
+      tag: v2.32.4
     #  coder.coder.ingress -- Coder ingress configuration
     ingress:
       #  coder.coder.ingress.enable -- Enable/Disable Coder ingress
@@ -351,6 +359,15 @@ coder:
       httpNodePort: "30170"
       #  coder.coder.service.type -- Service type
       type: *serviceType
+    #  coder.coder.volumeMounts -- Volume mounts for Coder deployment
+    volumeMounts:
+    - name: coder-cache
+      mountPath: /var/cache/coder
+    #  coder.coder.volumes -- Volumes for Coder deployment
+    volumes:
+    - name: coder-cache
+      persistentVolumeClaim:
+        claimName: coder-cache-pvc
   #  coder.email -- Coder admin email
   email: test@digitalhub.test
   #  coder.existingSecrets -- Coder existing secrets configuration

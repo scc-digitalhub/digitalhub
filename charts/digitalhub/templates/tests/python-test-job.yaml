@@ -57,9 +57,9 @@ spec:
                   key: "clientSecret"
               {{- end }}
             - name: "DHCORE_ENDPOINT"
-              value: http://{{ $.Release.Name }}-core:{{ $.Values.core.service.port }}
+              value: http://{{ $.Release.Name }}-core.{{ $.Release.Namespace}}.svc.cluster.local:{{ $.Values.core.service.port }}
             - name: "DHCORE_ISSUER"
-              value: http://{{ $.Release.Name }}-core:{{ $.Values.core.service.port }}
+              value: http://{{ $.Release.Name }}-core.{{ $.Release.Namespace}}.svc.cluster.local:{{ $.Values.core.service.port }}
             {{- end }}
             {{- if $.Values.core.authentication.basic.enabled }}
             - name: "DHCORE_USER"
