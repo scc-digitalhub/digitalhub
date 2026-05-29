@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # core
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/core/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=core*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.3.44](https://img.shields.io/badge/Version-0.3.44-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.14.3](https://img.shields.io/badge/AppVersion-0.14.3-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.3.45](https://img.shields.io/badge/Version-0.3.45-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.15.0](https://img.shields.io/badge/AppVersion-0.15.0-informational?style=flat-square)
 
 DigitalHub Core is part of the DigitalHub platform, and depends on external components to support the complete set of functionalities.
 
@@ -2216,7 +2216,7 @@ object
 {
   "builderTool": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-core-builder-tool",
-    "tag": "5b6f4347"
+    "tag": "38f928d9"
   }
 }
 </pre>
@@ -2237,7 +2237,7 @@ object
 <pre lang="json">
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-core-builder-tool",
-  "tag": "5b6f4347"
+  "tag": "38f928d9"
 }
 </pre>
 </details>
@@ -2267,7 +2267,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"5b6f4347"
+"38f928d9"
 </pre>
 </div>
 			</td>
@@ -3137,11 +3137,11 @@ object
 {
   "dbt": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt",
-    "tag": "0.14.3"
+    "tag": "0.15.0"
   },
   "hera": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-hera/wrapper-hera",
-    "tag": "0.14.3"
+    "tag": "0.15.0"
   },
   "huggingFace": {
     "image": "kserve/huggingfaceserver",
@@ -3150,10 +3150,10 @@ object
   "python": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime",
     "installDependencies": true,
-    "tag3_10": "3.10-0.14.3",
-    "tag3_11": "3.11-0.14.3",
-    "tag3_12": "3.12-0.14.3",
-    "tag3_13": "3.13-latest"
+    "tag3_10": "3.10-0.15.0",
+    "tag3_11": "3.11-0.15.0",
+    "tag3_12": "3.12-0.15.0",
+    "tag3_13": "3.13-0.15.0"
   },
   "vllm": {
     "cpu": {
@@ -3184,7 +3184,7 @@ object
 <pre lang="json">
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt",
-  "tag": "0.14.3"
+  "tag": "0.15.0"
 }
 </pre>
 </details>
@@ -3214,7 +3214,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"0.14.3"
+"0.15.0"
 </pre>
 </div>
 			</td>
@@ -3232,7 +3232,7 @@ object
 <pre lang="json">
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-hera/wrapper-hera",
-  "tag": "0.14.3"
+  "tag": "0.15.0"
 }
 </pre>
 </details>
@@ -3262,7 +3262,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"0.14.3"
+"0.15.0"
 </pre>
 </div>
 			</td>
@@ -3329,10 +3329,10 @@ object
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime",
   "installDependencies": true,
-  "tag3_10": "3.10-0.14.3",
-  "tag3_11": "3.11-0.14.3",
-  "tag3_12": "3.12-0.14.3",
-  "tag3_13": "3.13-latest"
+  "tag3_10": "3.10-0.15.0",
+  "tag3_11": "3.11-0.15.0",
+  "tag3_12": "3.12-0.15.0",
+  "tag3_13": "3.13-0.15.0"
 }
 </pre>
 </details>
@@ -3376,7 +3376,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.10-0.14.3"
+"3.10-0.15.0"
 </pre>
 </div>
 			</td>
@@ -3390,7 +3390,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.11-0.14.3"
+"3.11-0.15.0"
 </pre>
 </div>
 			</td>
@@ -3404,7 +3404,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.12-0.14.3"
+"3.12-0.15.0"
 </pre>
 </div>
 			</td>
@@ -3418,7 +3418,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.13-latest"
+"3.13-0.15.0"
 </pre>
 </div>
 			</td>
