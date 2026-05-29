@@ -312,7 +312,7 @@ initImage:
     #  initImage.builderTool.image -- Cpre builder repository
     image: ghcr.io/scc-digitalhub/digitalhub-core-builder-tool
     #  initImage.builderTool.tag -- Core builder tag
-    tag: 5b6f4347
+    tag: 38f928d9
 
 #  keystore --
 keystore:
@@ -436,13 +436,13 @@ runtime:
     #  runtime.dbt.image -- DBT wrapper repository
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt
     #  runtime.dbt.tag -- DBT wrapper tag
-    tag: 0.14.3
+    tag: 0.15.0
   #  runtime.hera --
   hera:
     #  runtime.hera.image -- hera wrapper repository
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-hera/wrapper-hera
     #  runtime.hera.tag -- hera wrapper tag
-    tag: 0.14.3
+    tag: 0.15.0
   #  runtime.huggingFace --
   huggingFace:
     #  runtime.huggingFace.image -- HuggingFaceServer repository
@@ -456,13 +456,13 @@ runtime:
     #  runtime.python.installDependencies -- Whether the Python runtime should install the dependencies at runtime.
     installDependencies: true
     #  runtime.python.tag3_10 -- Python runtime 3.10  tag
-    tag3_10: 3.10-0.14.3
+    tag3_10: 3.10-0.15.0
     #  runtime.python.tag3_11 -- Python runtime 3.11 tag
-    tag3_11: 3.11-0.14.3
+    tag3_11: 3.11-0.15.0
     #  runtime.python.tag3_12 -- Python runtime 3.12 tag
-    tag3_12: 3.12-0.14.3
+    tag3_12: 3.12-0.15.0
     #  runtime.python.tag3_13 -- Python runtime 3.13 tag
-    tag3_13: 3.13-latest
+    tag3_13: 3.13-0.15.0
   #  runtime.vllm -- VLLM Server configuration
   vllm:
     #  runtime.vllm.cpu -- VLLM Server CPU configuration
