@@ -9189,35 +9189,31 @@ object
   "packages": [
     {
       "name": "digitalhub-runtime-container",
-      "tag": ""
+      "tag": "0.15.0"
     },
     {
       "name": "digitalhub-runtime-dbt",
-      "tag": ""
+      "tag": "0.15.0"
     },
     {
       "name": "digitalhub-runtime-flower",
-      "tag": ""
+      "tag": "0.15.0"
     },
     {
       "name": "digitalhub-runtime-hera",
-      "tag": ""
-    },
-    {
-      "name": "digitalhub-runtime-kfp",
-      "tag": ""
+      "tag": "0.15.0"
     },
     {
       "name": "digitalhub-runtime-modelserve",
-      "tag": ""
+      "tag": "0.15.0"
     },
     {
       "name": "digitalhub-runtime-python",
-      "tag": ""
+      "tag": "0.15.0"
     },
     {
       "name": "digitalhub[full]",
-      "tag": "0.14.9"
+      "tag": "0.15.0"
     }
   ],
   "preRelease": false,
@@ -9270,35 +9266,31 @@ list
 [
   {
     "name": "digitalhub-runtime-container",
-    "tag": ""
+    "tag": "0.15.0"
   },
   {
     "name": "digitalhub-runtime-dbt",
-    "tag": ""
+    "tag": "0.15.0"
   },
   {
     "name": "digitalhub-runtime-flower",
-    "tag": ""
+    "tag": "0.15.0"
   },
   {
     "name": "digitalhub-runtime-hera",
-    "tag": ""
-  },
-  {
-    "name": "digitalhub-runtime-kfp",
-    "tag": ""
+    "tag": "0.15.0"
   },
   {
     "name": "digitalhub-runtime-modelserve",
-    "tag": ""
+    "tag": "0.15.0"
   },
   {
     "name": "digitalhub-runtime-python",
-    "tag": ""
+    "tag": "0.15.0"
   },
   {
     "name": "digitalhub[full]",
-    "tag": "0.14.9"
+    "tag": "0.15.0"
   }
 ]
 </pre>
@@ -9307,7 +9299,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="platformPackages--preRelease"><a href="./values.yaml#L1219">platformPackages.preRelease</a></td>
+			<td id="platformPackages--preRelease"><a href="./values.yaml#L1217">platformPackages.preRelease</a></td>
 			<td>
 bool
 </td>
@@ -9321,7 +9313,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="platformPackages--tag"><a href="./values.yaml#L1221">platformPackages.tag</a></td>
+			<td id="platformPackages--tag"><a href="./values.yaml#L1219">platformPackages.tag</a></td>
 			<td>
 string
 </td>
@@ -9335,7 +9327,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="platformTests--image"><a href="./values.yaml#L1224">platformTests.image</a></td>
+			<td id="platformTests--image"><a href="./values.yaml#L1222">platformTests.image</a></td>
 			<td>
 string
 </td>
@@ -9349,7 +9341,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="platformTests--scenarios[0]"><a href="./values.yaml#L1226">platformTests.scenarios[0]</a></td>
+			<td id="platformTests--scenarios[0]"><a href="./values.yaml#L1224">platformTests.scenarios[0]</a></td>
 			<td>
 string
 </td>
@@ -9363,7 +9355,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="platformTests--scenarios[1]"><a href="./values.yaml#L1227">platformTests.scenarios[1]</a></td>
+			<td id="platformTests--scenarios[1]"><a href="./values.yaml#L1225">platformTests.scenarios[1]</a></td>
 			<td>
 string
 </td>
@@ -9377,7 +9369,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="platformTests--scenarios[2]"><a href="./values.yaml#L1228">platformTests.scenarios[2]</a></td>
+			<td id="platformTests--scenarios[2]"><a href="./values.yaml#L1226">platformTests.scenarios[2]</a></td>
 			<td>
 string
 </td>
@@ -9391,7 +9383,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="platformTests--scenarios[3]"><a href="./values.yaml#L1229">platformTests.scenarios[3]</a></td>
+			<td id="platformTests--scenarios[3]"><a href="./values.yaml#L1227">platformTests.scenarios[3]</a></td>
 			<td>
 string
 </td>
@@ -9405,7 +9397,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="platformTests--scenarios[4]"><a href="./values.yaml#L1230">platformTests.scenarios[4]</a></td>
+			<td id="platformTests--scenarios[4]"><a href="./values.yaml#L1228">platformTests.scenarios[4]</a></td>
 			<td>
 string
 </td>
@@ -9419,7 +9411,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="platformTests--scenarios[5]"><a href="./values.yaml#L1231">platformTests.scenarios[5]</a></td>
+			<td id="platformTests--scenarios[5]"><a href="./values.yaml#L1229">platformTests.scenarios[5]</a></td>
 			<td>
 string
 </td>
@@ -9433,7 +9425,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="platformTests--scenarios[6]"><a href="./values.yaml#L1232">platformTests.scenarios[6]</a></td>
+			<td id="platformTests--scenarios[6]"><a href="./values.yaml#L1230">platformTests.scenarios[6]</a></td>
 			<td>
 string
 </td>
@@ -9447,7 +9439,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="platformTests--tag"><a href="./values.yaml#L1233">platformTests.tag</a></td>
+			<td id="platformTests--tag"><a href="./values.yaml#L1231">platformTests.tag</a></td>
 			<td>
 string
 </td>
@@ -9461,7 +9453,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator"><a href="./values.yaml#L1236">postgres-operator</a></td>
+			<td id="postgres-operator"><a href="./values.yaml#L1234">postgres-operator</a></td>
 			<td>
 object
 </td>
@@ -9542,7 +9534,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--enabled"><a href="./values.yaml#L1238">postgres-operator.enabled</a></td>
+			<td id="postgres-operator--enabled"><a href="./values.yaml#L1236">postgres-operator.enabled</a></td>
 			<td>
 bool
 </td>
@@ -9556,7 +9548,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases"><a href="./values.yaml#L1240">postgres-operator.databases</a></td>
+			<td id="postgres-operator--databases"><a href="./values.yaml#L1238">postgres-operator.databases</a></td>
 			<td>
 object
 </td>
@@ -9622,7 +9614,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder"><a href="./values.yaml#L1242">postgres-operator.databases.coder</a></td>
+			<td id="postgres-operator--databases--coder"><a href="./values.yaml#L1240">postgres-operator.databases.coder</a></td>
 			<td>
 object
 </td>
@@ -9654,7 +9646,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--enabled"><a href="./values.yaml#L1244">postgres-operator.databases.coder.enabled</a></td>
+			<td id="postgres-operator--databases--coder--enabled"><a href="./values.yaml#L1242">postgres-operator.databases.coder.enabled</a></td>
 			<td>
 bool
 </td>
@@ -9668,7 +9660,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources"><a href="./values.yaml#L1246">postgres-operator.databases.coder.resources</a></td>
+			<td id="postgres-operator--databases--coder--resources"><a href="./values.yaml#L1244">postgres-operator.databases.coder.resources</a></td>
 			<td>
 object
 </td>
@@ -9694,7 +9686,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources--limits"><a href="./values.yaml#L1248">postgres-operator.databases.coder.resources.limits</a></td>
+			<td id="postgres-operator--databases--coder--resources--limits"><a href="./values.yaml#L1246">postgres-operator.databases.coder.resources.limits</a></td>
 			<td>
 object
 </td>
@@ -9714,7 +9706,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources--limits--cpu"><a href="./values.yaml#L1250">postgres-operator.databases.coder.resources.limits.cpu</a></td>
+			<td id="postgres-operator--databases--coder--resources--limits--cpu"><a href="./values.yaml#L1248">postgres-operator.databases.coder.resources.limits.cpu</a></td>
 			<td>
 string
 </td>
@@ -9728,7 +9720,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources--limits--memory"><a href="./values.yaml#L1252">postgres-operator.databases.coder.resources.limits.memory</a></td>
+			<td id="postgres-operator--databases--coder--resources--limits--memory"><a href="./values.yaml#L1250">postgres-operator.databases.coder.resources.limits.memory</a></td>
 			<td>
 string
 </td>
@@ -9742,7 +9734,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources--requests"><a href="./values.yaml#L1254">postgres-operator.databases.coder.resources.requests</a></td>
+			<td id="postgres-operator--databases--coder--resources--requests"><a href="./values.yaml#L1252">postgres-operator.databases.coder.resources.requests</a></td>
 			<td>
 object
 </td>
@@ -9762,7 +9754,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources--requests--cpu"><a href="./values.yaml#L1256">postgres-operator.databases.coder.resources.requests.cpu</a></td>
+			<td id="postgres-operator--databases--coder--resources--requests--cpu"><a href="./values.yaml#L1254">postgres-operator.databases.coder.resources.requests.cpu</a></td>
 			<td>
 string
 </td>
@@ -9776,7 +9768,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--resources--requests--memory"><a href="./values.yaml#L1258">postgres-operator.databases.coder.resources.requests.memory</a></td>
+			<td id="postgres-operator--databases--coder--resources--requests--memory"><a href="./values.yaml#L1256">postgres-operator.databases.coder.resources.requests.memory</a></td>
 			<td>
 string
 </td>
@@ -9790,7 +9782,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--volume"><a href="./values.yaml#L1260">postgres-operator.databases.coder.volume</a></td>
+			<td id="postgres-operator--databases--coder--volume"><a href="./values.yaml#L1258">postgres-operator.databases.coder.volume</a></td>
 			<td>
 object
 </td>
@@ -9809,7 +9801,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--coder--volume--size"><a href="./values.yaml#L1262">postgres-operator.databases.coder.volume.size</a></td>
+			<td id="postgres-operator--databases--coder--volume--size"><a href="./values.yaml#L1260">postgres-operator.databases.coder.volume.size</a></td>
 			<td>
 string
 </td>
@@ -9823,7 +9815,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core"><a href="./values.yaml#L1264">postgres-operator.databases.core</a></td>
+			<td id="postgres-operator--databases--core"><a href="./values.yaml#L1262">postgres-operator.databases.core</a></td>
 			<td>
 object
 </td>
@@ -9855,7 +9847,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--enabled"><a href="./values.yaml#L1266">postgres-operator.databases.core.enabled</a></td>
+			<td id="postgres-operator--databases--core--enabled"><a href="./values.yaml#L1264">postgres-operator.databases.core.enabled</a></td>
 			<td>
 bool
 </td>
@@ -9869,7 +9861,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources"><a href="./values.yaml#L1268">postgres-operator.databases.core.resources</a></td>
+			<td id="postgres-operator--databases--core--resources"><a href="./values.yaml#L1266">postgres-operator.databases.core.resources</a></td>
 			<td>
 object
 </td>
@@ -9895,7 +9887,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources--limits"><a href="./values.yaml#L1270">postgres-operator.databases.core.resources.limits</a></td>
+			<td id="postgres-operator--databases--core--resources--limits"><a href="./values.yaml#L1268">postgres-operator.databases.core.resources.limits</a></td>
 			<td>
 object
 </td>
@@ -9915,7 +9907,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources--limits--cpu"><a href="./values.yaml#L1272">postgres-operator.databases.core.resources.limits.cpu</a></td>
+			<td id="postgres-operator--databases--core--resources--limits--cpu"><a href="./values.yaml#L1270">postgres-operator.databases.core.resources.limits.cpu</a></td>
 			<td>
 string
 </td>
@@ -9929,7 +9921,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources--limits--memory"><a href="./values.yaml#L1274">postgres-operator.databases.core.resources.limits.memory</a></td>
+			<td id="postgres-operator--databases--core--resources--limits--memory"><a href="./values.yaml#L1272">postgres-operator.databases.core.resources.limits.memory</a></td>
 			<td>
 string
 </td>
@@ -9943,7 +9935,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources--requests"><a href="./values.yaml#L1276">postgres-operator.databases.core.resources.requests</a></td>
+			<td id="postgres-operator--databases--core--resources--requests"><a href="./values.yaml#L1274">postgres-operator.databases.core.resources.requests</a></td>
 			<td>
 object
 </td>
@@ -9963,7 +9955,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources--requests--cpu"><a href="./values.yaml#L1278">postgres-operator.databases.core.resources.requests.cpu</a></td>
+			<td id="postgres-operator--databases--core--resources--requests--cpu"><a href="./values.yaml#L1276">postgres-operator.databases.core.resources.requests.cpu</a></td>
 			<td>
 string
 </td>
@@ -9977,7 +9969,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--resources--requests--memory"><a href="./values.yaml#L1280">postgres-operator.databases.core.resources.requests.memory</a></td>
+			<td id="postgres-operator--databases--core--resources--requests--memory"><a href="./values.yaml#L1278">postgres-operator.databases.core.resources.requests.memory</a></td>
 			<td>
 string
 </td>
@@ -9991,7 +9983,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--volume"><a href="./values.yaml#L1282">postgres-operator.databases.core.volume</a></td>
+			<td id="postgres-operator--databases--core--volume"><a href="./values.yaml#L1280">postgres-operator.databases.core.volume</a></td>
 			<td>
 object
 </td>
@@ -10010,7 +10002,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--core--volume--size"><a href="./values.yaml#L1284">postgres-operator.databases.core.volume.size</a></td>
+			<td id="postgres-operator--databases--core--volume--size"><a href="./values.yaml#L1282">postgres-operator.databases.core.volume.size</a></td>
 			<td>
 string
 </td>
@@ -10024,7 +10016,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub"><a href="./values.yaml#L1286">postgres-operator.databases.digitalhub</a></td>
+			<td id="postgres-operator--databases--digitalhub"><a href="./values.yaml#L1284">postgres-operator.databases.digitalhub</a></td>
 			<td>
 object
 </td>
@@ -10056,7 +10048,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--enabled"><a href="./values.yaml#L1288">postgres-operator.databases.digitalhub.enabled</a></td>
+			<td id="postgres-operator--databases--digitalhub--enabled"><a href="./values.yaml#L1286">postgres-operator.databases.digitalhub.enabled</a></td>
 			<td>
 bool
 </td>
@@ -10070,7 +10062,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources"><a href="./values.yaml#L1290">postgres-operator.databases.digitalhub.resources</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources"><a href="./values.yaml#L1288">postgres-operator.databases.digitalhub.resources</a></td>
 			<td>
 object
 </td>
@@ -10096,7 +10088,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources--limits"><a href="./values.yaml#L1292">postgres-operator.databases.digitalhub.resources.limits</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources--limits"><a href="./values.yaml#L1290">postgres-operator.databases.digitalhub.resources.limits</a></td>
 			<td>
 object
 </td>
@@ -10116,7 +10108,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources--limits--cpu"><a href="./values.yaml#L1294">postgres-operator.databases.digitalhub.resources.limits.cpu</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources--limits--cpu"><a href="./values.yaml#L1292">postgres-operator.databases.digitalhub.resources.limits.cpu</a></td>
 			<td>
 string
 </td>
@@ -10130,7 +10122,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources--limits--memory"><a href="./values.yaml#L1296">postgres-operator.databases.digitalhub.resources.limits.memory</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources--limits--memory"><a href="./values.yaml#L1294">postgres-operator.databases.digitalhub.resources.limits.memory</a></td>
 			<td>
 string
 </td>
@@ -10144,7 +10136,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources--requests"><a href="./values.yaml#L1298">postgres-operator.databases.digitalhub.resources.requests</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources--requests"><a href="./values.yaml#L1296">postgres-operator.databases.digitalhub.resources.requests</a></td>
 			<td>
 object
 </td>
@@ -10164,7 +10156,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources--requests--cpu"><a href="./values.yaml#L1300">postgres-operator.databases.digitalhub.resources.requests.cpu</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources--requests--cpu"><a href="./values.yaml#L1298">postgres-operator.databases.digitalhub.resources.requests.cpu</a></td>
 			<td>
 string
 </td>
@@ -10178,7 +10170,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--resources--requests--memory"><a href="./values.yaml#L1302">postgres-operator.databases.digitalhub.resources.requests.memory</a></td>
+			<td id="postgres-operator--databases--digitalhub--resources--requests--memory"><a href="./values.yaml#L1300">postgres-operator.databases.digitalhub.resources.requests.memory</a></td>
 			<td>
 string
 </td>
@@ -10192,7 +10184,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--volume"><a href="./values.yaml#L1304">postgres-operator.databases.digitalhub.volume</a></td>
+			<td id="postgres-operator--databases--digitalhub--volume"><a href="./values.yaml#L1302">postgres-operator.databases.digitalhub.volume</a></td>
 			<td>
 object
 </td>
@@ -10211,7 +10203,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--databases--digitalhub--volume--size"><a href="./values.yaml#L1306">postgres-operator.databases.digitalhub.volume.size</a></td>
+			<td id="postgres-operator--databases--digitalhub--volume--size"><a href="./values.yaml#L1304">postgres-operator.databases.digitalhub.volume.size</a></td>
 			<td>
 string
 </td>
@@ -10225,7 +10217,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext"><a href="./values.yaml#L1308">postgres-operator.securityContext</a></td>
+			<td id="postgres-operator--securityContext"><a href="./values.yaml#L1306">postgres-operator.securityContext</a></td>
 			<td>
 object
 </td>
@@ -10253,7 +10245,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L1310">postgres-operator.securityContext.allowPrivilegeEscalation</a></td>
+			<td id="postgres-operator--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L1308">postgres-operator.securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -10267,7 +10259,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext--capabilities"><a href="./values.yaml#L1312">postgres-operator.securityContext.capabilities</a></td>
+			<td id="postgres-operator--securityContext--capabilities"><a href="./values.yaml#L1310">postgres-operator.securityContext.capabilities</a></td>
 			<td>
 object
 </td>
@@ -10288,7 +10280,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext--capabilities--drop"><a href="./values.yaml#L1314">postgres-operator.securityContext.capabilities.drop</a></td>
+			<td id="postgres-operator--securityContext--capabilities--drop"><a href="./values.yaml#L1312">postgres-operator.securityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
@@ -10307,7 +10299,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext--runAsNonRoot"><a href="./values.yaml#L1317">postgres-operator.securityContext.runAsNonRoot</a></td>
+			<td id="postgres-operator--securityContext--runAsNonRoot"><a href="./values.yaml#L1315">postgres-operator.securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -10321,7 +10313,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext--seccompProfile"><a href="./values.yaml#L1319">postgres-operator.securityContext.seccompProfile</a></td>
+			<td id="postgres-operator--securityContext--seccompProfile"><a href="./values.yaml#L1317">postgres-operator.securityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -10340,7 +10332,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgres-operator--securityContext--seccompProfile--type"><a href="./values.yaml#L1321">postgres-operator.securityContext.seccompProfile.type</a></td>
+			<td id="postgres-operator--securityContext--seccompProfile--type"><a href="./values.yaml#L1319">postgres-operator.securityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -10354,7 +10346,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator"><a href="./values.yaml#L1325">postgrest-operator</a></td>
+			<td id="postgrest-operator"><a href="./values.yaml#L1323">postgrest-operator</a></td>
 			<td>
 object
 </td>
@@ -10391,7 +10383,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--enabled"><a href="./values.yaml#L1327">postgrest-operator.enabled</a></td>
+			<td id="postgrest-operator--enabled"><a href="./values.yaml#L1325">postgrest-operator.enabled</a></td>
 			<td>
 bool
 </td>
@@ -10405,7 +10397,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgres"><a href="./values.yaml#L1329">postgrest-operator.postgres</a></td>
+			<td id="postgrest-operator--postgres"><a href="./values.yaml#L1327">postgrest-operator.postgres</a></td>
 			<td>
 object
 </td>
@@ -10428,7 +10420,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgres--default_database"><a href="./values.yaml#L1331">postgrest-operator.postgres.default_database</a></td>
+			<td id="postgrest-operator--postgres--default_database"><a href="./values.yaml#L1329">postgrest-operator.postgres.default_database</a></td>
 			<td>
 string
 </td>
@@ -10442,7 +10434,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgres--host"><a href="./values.yaml#L1333">postgrest-operator.postgres.host</a></td>
+			<td id="postgrest-operator--postgres--host"><a href="./values.yaml#L1331">postgrest-operator.postgres.host</a></td>
 			<td>
 string
 </td>
@@ -10456,7 +10448,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgres--port"><a href="./values.yaml#L1335">postgrest-operator.postgres.port</a></td>
+			<td id="postgrest-operator--postgres--port"><a href="./values.yaml#L1333">postgrest-operator.postgres.port</a></td>
 			<td>
 int
 </td>
@@ -10470,7 +10462,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgres--postgrest_service_type"><a href="./values.yaml#L1337">postgrest-operator.postgres.postgrest_service_type</a></td>
+			<td id="postgrest-operator--postgres--postgrest_service_type"><a href="./values.yaml#L1335">postgrest-operator.postgres.postgrest_service_type</a></td>
 			<td>
 string
 </td>
@@ -10484,7 +10476,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgres--uri_args"><a href="./values.yaml#L1339">postgrest-operator.postgres.uri_args</a></td>
+			<td id="postgrest-operator--postgres--uri_args"><a href="./values.yaml#L1337">postgrest-operator.postgres.uri_args</a></td>
 			<td>
 string
 </td>
@@ -10498,7 +10490,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets"><a href="./values.yaml#L1341">postgrest-operator.postgresCredsExistingSecrets</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets"><a href="./values.yaml#L1339">postgrest-operator.postgresCredsExistingSecrets</a></td>
 			<td>
 object
 </td>
@@ -10524,7 +10516,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets--password"><a href="./values.yaml#L1343">postgrest-operator.postgresCredsExistingSecrets.password</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets--password"><a href="./values.yaml#L1341">postgrest-operator.postgresCredsExistingSecrets.password</a></td>
 			<td>
 object
 </td>
@@ -10544,7 +10536,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets--password--secretKey"><a href="./values.yaml#L1345">postgrest-operator.postgresCredsExistingSecrets.password.secretKey</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets--password--secretKey"><a href="./values.yaml#L1343">postgrest-operator.postgresCredsExistingSecrets.password.secretKey</a></td>
 			<td>
 string
 </td>
@@ -10558,7 +10550,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets--password--secretName"><a href="./values.yaml#L1347">postgrest-operator.postgresCredsExistingSecrets.password.secretName</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets--password--secretName"><a href="./values.yaml#L1345">postgrest-operator.postgresCredsExistingSecrets.password.secretName</a></td>
 			<td>
 string
 </td>
@@ -10572,7 +10564,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets--username"><a href="./values.yaml#L1349">postgrest-operator.postgresCredsExistingSecrets.username</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets--username"><a href="./values.yaml#L1347">postgrest-operator.postgresCredsExistingSecrets.username</a></td>
 			<td>
 object
 </td>
@@ -10592,7 +10584,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets--username--secretKey"><a href="./values.yaml#L1351">postgrest-operator.postgresCredsExistingSecrets.username.secretKey</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets--username--secretKey"><a href="./values.yaml#L1349">postgrest-operator.postgresCredsExistingSecrets.username.secretKey</a></td>
 			<td>
 string
 </td>
@@ -10606,7 +10598,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--postgresCredsExistingSecrets--username--secretName"><a href="./values.yaml#L1353">postgrest-operator.postgresCredsExistingSecrets.username.secretName</a></td>
+			<td id="postgrest-operator--postgresCredsExistingSecrets--username--secretName"><a href="./values.yaml#L1351">postgrest-operator.postgresCredsExistingSecrets.username.secretName</a></td>
 			<td>
 string
 </td>
@@ -10620,7 +10612,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgrest-operator--priorityClassName"><a href="./values.yaml#L1355">postgrest-operator.priorityClassName</a></td>
+			<td id="postgrest-operator--priorityClassName"><a href="./values.yaml#L1353">postgrest-operator.priorityClassName</a></td>
 			<td>
 string
 </td>
@@ -10634,7 +10626,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="seaweedfs"><a href="./values.yaml#L1358">seaweedfs</a></td>
+			<td id="seaweedfs"><a href="./values.yaml#L1356">seaweedfs</a></td>
 			<td>
 object
 </td>
@@ -10653,7 +10645,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="seaweedfs--enabled"><a href="./values.yaml#L1360">seaweedfs.enabled</a></td>
+			<td id="seaweedfs--enabled"><a href="./values.yaml#L1358">seaweedfs.enabled</a></td>
 			<td>
 bool
 </td>
@@ -10667,7 +10659,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller"><a href="./values.yaml#L1364">template-controller</a></td>
+			<td id="template-controller"><a href="./values.yaml#L1362">template-controller</a></td>
 			<td>
 object
 </td>
@@ -10707,7 +10699,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--enabled"><a href="./values.yaml#L1366">template-controller.enabled</a></td>
+			<td id="template-controller--enabled"><a href="./values.yaml#L1364">template-controller.enabled</a></td>
 			<td>
 bool
 </td>
@@ -10721,7 +10713,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--objectTemplate"><a href="./values.yaml#L1369">template-controller.objectTemplate</a></td>
+			<td id="template-controller--objectTemplate"><a href="./values.yaml#L1367">template-controller.objectTemplate</a></td>
 			<td>
 object
 </td>
@@ -10740,7 +10732,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--objectTemplate--enabled"><a href="./values.yaml#L1371">template-controller.objectTemplate.enabled</a></td>
+			<td id="template-controller--objectTemplate--enabled"><a href="./values.yaml#L1369">template-controller.objectTemplate.enabled</a></td>
 			<td>
 bool
 </td>
@@ -10754,7 +10746,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--podSecurityContext"><a href="./values.yaml#L1373">template-controller.podSecurityContext</a></td>
+			<td id="template-controller--podSecurityContext"><a href="./values.yaml#L1371">template-controller.podSecurityContext</a></td>
 			<td>
 object
 </td>
@@ -10776,7 +10768,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--podSecurityContext--runAsNonRoot"><a href="./values.yaml#L1375">template-controller.podSecurityContext.runAsNonRoot</a></td>
+			<td id="template-controller--podSecurityContext--runAsNonRoot"><a href="./values.yaml#L1373">template-controller.podSecurityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -10790,7 +10782,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--podSecurityContext--seccompProfile"><a href="./values.yaml#L1377">template-controller.podSecurityContext.seccompProfile</a></td>
+			<td id="template-controller--podSecurityContext--seccompProfile"><a href="./values.yaml#L1375">template-controller.podSecurityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -10809,7 +10801,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--podSecurityContext--seccompProfile--type"><a href="./values.yaml#L1379">template-controller.podSecurityContext.seccompProfile.type</a></td>
+			<td id="template-controller--podSecurityContext--seccompProfile--type"><a href="./values.yaml#L1377">template-controller.podSecurityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -10823,7 +10815,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext"><a href="./values.yaml#L1381">template-controller.securityContext</a></td>
+			<td id="template-controller--securityContext"><a href="./values.yaml#L1379">template-controller.securityContext</a></td>
 			<td>
 object
 </td>
@@ -10851,7 +10843,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L1383">template-controller.securityContext.allowPrivilegeEscalation</a></td>
+			<td id="template-controller--securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L1381">template-controller.securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -10865,7 +10857,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext--capabilities"><a href="./values.yaml#L1385">template-controller.securityContext.capabilities</a></td>
+			<td id="template-controller--securityContext--capabilities"><a href="./values.yaml#L1383">template-controller.securityContext.capabilities</a></td>
 			<td>
 object
 </td>
@@ -10886,7 +10878,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext--capabilities--drop"><a href="./values.yaml#L1387">template-controller.securityContext.capabilities.drop</a></td>
+			<td id="template-controller--securityContext--capabilities--drop"><a href="./values.yaml#L1385">template-controller.securityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
@@ -10905,7 +10897,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext--runAsNonRoot"><a href="./values.yaml#L1390">template-controller.securityContext.runAsNonRoot</a></td>
+			<td id="template-controller--securityContext--runAsNonRoot"><a href="./values.yaml#L1388">template-controller.securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -10919,7 +10911,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext--seccompProfile"><a href="./values.yaml#L1392">template-controller.securityContext.seccompProfile</a></td>
+			<td id="template-controller--securityContext--seccompProfile"><a href="./values.yaml#L1390">template-controller.securityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -10938,7 +10930,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="template-controller--securityContext--seccompProfile--type"><a href="./values.yaml#L1394">template-controller.securityContext.seccompProfile.type</a></td>
+			<td id="template-controller--securityContext--seccompProfile--type"><a href="./values.yaml#L1392">template-controller.securityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
