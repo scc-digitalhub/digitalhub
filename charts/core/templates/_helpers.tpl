@@ -90,19 +90,15 @@ Calculate Core endpoint
 */}}
 {{- define "core.endpoint" -}}
 {{- $protocol := "http://" -}}
+{{- if or .Values.ingress.tls .Values.route.main.enabled }}{{ $protocol = "https://" }}{{ end }}
 {{- if .Values.ingress.enabled }}
-{{- if or .Values.ingress.tls .Values.global.externalTls }}
-{{- $protocol = "https://" -}}
-{{- end }}
-{{- with (index .Values.ingress.hosts 0) }}
-{{- $protocol }}{{ .host }}
-{{- end }}
-{{- else }}
-{{- if eq .Values.service.type "NodePort"}}
+{{- with (index .Values.ingress.hosts 0) }}{{ $protocol }}{{ .host }}{{ end }}
+{{- else if .Values.route.main.enabled }}
+{{- with (index .Values.route.main.hostnames 0) }}{{ $protocol }}{{ . }}{{ end }}
+{{- else if eq .Values.service.type "NodePort" }}
 {{- $protocol }}{{ .Values.global.externalHostAddress }}:{{ .Values.service.httpNodePort }}
 {{- else }}
-{{- $protocol }}{{ .Values.global.externalHostAddress }}:{{ .Values.service.port }}
-{{- end }}
+{{- $protocol }}{{ include "core.fullname" . }}:{{ .Values.service.port }}
 {{- end }}
 {{- end }}
 

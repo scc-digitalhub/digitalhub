@@ -1,0 +1,2 @@
+1. Application address:
+{{- include "core.endpoint" . }}
