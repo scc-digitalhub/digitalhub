@@ -74,30 +74,18 @@ false
 {{- end }}
 {{- end }}
 
-{{/*
-Create default access URL
-*/}}
-{{- define "kubernetes-resource-manager.defaultAccessURL" }}
-  {{- $proto := "" -}}
-  {{- $port := "" -}}
-  {{- if eq (include "kubernetes-resource-manager.tlsEnabled" .) "true" -}}
-    {{- $proto = "https" -}}
-      {{- if eq .Values.service.type "NodePort" -}}
-        {{- $port = .Values.service.nodePort -}}
-      {{- end -}}
-  {{- else -}}
-  {{- $proto = "http" -}}
-    {{- if eq .Values.service.type "NodePort" -}}
-      {{- $port = .Values.service.nodePort -}}
-    {{- end -}}
-  {{- end -}}
-  {{- if .Values.global.externalHostAddress -}}
-    {{ printf "%s://%s:%s" $proto .Values.global.externalHostAddress $port }}
-  {{- else if .Values.ingress.hosts -}}
-    {{ printf "%s://%s" $proto (index .Values.ingress.hosts 0 ).host }}
-  {{- else -}}
-    {{ $proto }}://{{ include "kubernetes-resource-manager.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
-  {{- end }}
+{{- define "kubernetes-resource-manager.endpoint" -}}
+{{- $protocol := "http://" -}}
+{{- if or .Values.ingress.tls .Values.global.externalTls .Values.route.main.enabled }}{{ $protocol = "https://" }}{{ end }}
+{{- if .Values.ingress.enabled }}
+{{- with (index .Values.ingress.hosts 0) }}{{ $protocol }}{{ .host }}{{ end }}
+{{- else if .Values.route.main.enabled }}
+{{- with (index .Values.route.main.hostnames 0) }}{{ $protocol }}{{ . }}{{ end }}
+{{- else if eq .Values.service.type "NodePort" }}
+{{- $protocol }}{{ .Values.global.externalHostAddress }}:{{ .Values.service.nodePort }}
+{{- else }}
+{{- $protocol }}{{ include "kubernetes-resource-manager.fullname" . }}:{{ .Values.service.port }}
+{{- end }}
 {{- end }}
 
 {{- define "kubernetes-resource-manager.allowedCrd" -}}

@@ -15,7 +15,7 @@ data:
   K8S_PVC_STORAGE_CLASSES: {{ .Values.storageClasses }}
   K8S_NAMESPACE: {{ include "kubernetes-resource-manager.namespaceCheck" . | quote }}
   K8S_CRD_ALLOWED: {{ include "kubernetes-resource-manager.allowedCrd" . }}{{ if .Values.envoyGateway.enabled }}securitypolicies.gateway.envoyproxy.io,httproutes.gateway.networking.k8s.io,{{ end }}
-  APPLICATION_URL: {{ include "kubernetes-resource-manager.defaultAccessURL" . }}
+  APPLICATION_URL: {{ include "kubernetes-resource-manager.endpoint" . }}
   K8S_SELECTOR_OWNERS: {{ .Values.resourceSelectors.secrets.owners | quote }}
   K8S_SELECTOR_LABELS: {{ .Values.resourceSelectors.secrets.labels | quote }}
   K8S_SELECTOR_NAMES: {{ .Values.resourceSelectors.secrets.names | quote }}
