@@ -7,7 +7,7 @@ name: kubernetes-resource-manager
 description: A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources.
 home: "https://github.com/scc-digitalhub/digitalhub/tree/main/charts/kubernetes-resource-manager"
 type: application
-version: 0.2.18
+version: 0.2.19
 appVersion: "1.4.0"
 maintainers:
   - name: ffais

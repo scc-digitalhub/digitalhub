@@ -290,6 +290,41 @@ resources:
     cpu: 1000m
     memory: 1Gi
 
+#  route -- HTTPRoute configuration.
+route:
+  #  route.main -- Main HTTPRoute configuration.
+  main:
+    #  route.main.enabled -- If set to true, the chart will be configured for HTTPRoute utilization.
+    enabled: false
+    #  route.main.additionalRules -- Additional rules for the HTTPRoute resource.
+    additionalRules: []
+    #  route.main.annotations -- Annotations to add to the HTTPRoute resource.
+    annotations: {}
+    #  route.main.apiVersion -- API version to use in the HTTPRoute resource.
+    apiVersion: gateway.networking.k8s.io/v1
+    #  filters -- List of filters for the HTTPRoute resource.
+    filters: []
+    #  route.main.hostnames -- List of hostnames for the HTTPRoute resource.
+    hostnames: []
+    #  route.main.httpsRedirect -- If set to true, the HTTPRoute will be configured to redirect HTTP traffic to HTTPS.
+    httpsRedirect: false
+    #  route.main.kind -- Kind to use in the HTTPRoute resource.
+    kind: HTTPRoute
+    #  route.main.labels -- Labels to add to the HTTPRoute resource.
+    labels: {}
+    #  route.main.matches -- List of matches for the HTTPRoute resource.
+    matches:
+      #  route.main.matches.path -- Path match for the HTTPRoute resource.
+      - path:
+          #  route.main.matches.path.type -- Type of path match for the HTTPRoute resource.
+          type: PathPrefix
+          #  route.main.matches.path.value -- Value of the path match for the HTTPRoute resource.
+          value: /
+    #  route.main.parentRefs -- ParentRefs to use in the HTTPRoute resource.
+    parentRefs: []
+    #  route.main.timeouts -- Timeouts for the HTTPRoute resource.
+    timeouts: {}
+
 #  securityContext -- [Security context for pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 securityContext:
   #  securityContext.allowPrivilegeEscalation -- Container allow privilege escalation.

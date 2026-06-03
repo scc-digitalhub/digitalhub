@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # kubernetes-resource-manager
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/kubernetes-resource-manager/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=kubernetes-resource-manager*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.2.18](https://img.shields.io/badge/Version-0.2.18-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.0](https://img.shields.io/badge/AppVersion-1.4.0-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.2.19](https://img.shields.io/badge/Version-0.2.19-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.0](https://img.shields.io/badge/AppVersion-1.4.0-informational?style=flat-square)
 
 A manager for resources in Kubernetes. The tool allows for monitoring and managing some of the standard Kubernetes resources (PersistentVolumeClaim, Services, Deployments, Jobs, and Secrets) as well as for managing a selection of Custom Resources.
 
@@ -1629,7 +1629,265 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext"><a href="./values.yaml#L294">securityContext</a></td>
+			<td id="route"><a href="./values.yaml#L294">route</a></td>
+			<td>
+object
+</td>
+			<td>HTTPRoute configuration.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{
+  "main": {
+    "additionalRules": [],
+    "annotations": {},
+    "apiVersion": "gateway.networking.k8s.io/v1",
+    "enabled": false,
+    "filters": [],
+    "hostnames": [],
+    "httpsRedirect": false,
+    "kind": "HTTPRoute",
+    "labels": {},
+    "matches": [
+      {
+        "path": {
+          "type": "PathPrefix",
+          "value": "/"
+        }
+      }
+    ],
+    "parentRefs": [],
+    "timeouts": {}
+  }
+}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="route--main"><a href="./values.yaml#L296">route.main</a></td>
+			<td>
+object
+</td>
+			<td>Main HTTPRoute configuration.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{
+  "additionalRules": [],
+  "annotations": {},
+  "apiVersion": "gateway.networking.k8s.io/v1",
+  "enabled": false,
+  "filters": [],
+  "hostnames": [],
+  "httpsRedirect": false,
+  "kind": "HTTPRoute",
+  "labels": {},
+  "matches": [
+    {
+      "path": {
+        "type": "PathPrefix",
+        "value": "/"
+      }
+    }
+  ],
+  "parentRefs": [],
+  "timeouts": {}
+}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="route--main--enabled"><a href="./values.yaml#L298">route.main.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>If set to true, the chart will be configured for HTTPRoute utilization.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="route--main--additionalRules"><a href="./values.yaml#L300">route.main.additionalRules</a></td>
+			<td>
+list
+</td>
+			<td>Additional rules for the HTTPRoute resource.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+[]
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="route--main--annotations"><a href="./values.yaml#L302">route.main.annotations</a></td>
+			<td>
+object
+</td>
+			<td>Annotations to add to the HTTPRoute resource.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="route--main--apiVersion"><a href="./values.yaml#L304">route.main.apiVersion</a></td>
+			<td>
+string
+</td>
+			<td>API version to use in the HTTPRoute resource.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"gateway.networking.k8s.io/v1"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="route--main--hostnames"><a href="./values.yaml#L308">route.main.hostnames</a></td>
+			<td>
+list
+</td>
+			<td>List of hostnames for the HTTPRoute resource.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+[]
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="route--main--httpsRedirect"><a href="./values.yaml#L310">route.main.httpsRedirect</a></td>
+			<td>
+bool
+</td>
+			<td>If set to true, the HTTPRoute will be configured to redirect HTTP traffic to HTTPS.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="route--main--kind"><a href="./values.yaml#L312">route.main.kind</a></td>
+			<td>
+string
+</td>
+			<td>Kind to use in the HTTPRoute resource.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"HTTPRoute"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="route--main--labels"><a href="./values.yaml#L314">route.main.labels</a></td>
+			<td>
+object
+</td>
+			<td>Labels to add to the HTTPRoute resource.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="route--main--matches"><a href="./values.yaml#L316">route.main.matches</a></td>
+			<td>
+list
+</td>
+			<td>List of matches for the HTTPRoute resource.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+[
+  {
+    "path": {
+      "type": "PathPrefix",
+      "value": "/"
+    }
+  }
+]
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="route--main--parentRefs"><a href="./values.yaml#L324">route.main.parentRefs</a></td>
+			<td>
+list
+</td>
+			<td>ParentRefs to use in the HTTPRoute resource.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+[]
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="route--main--timeouts"><a href="./values.yaml#L326">route.main.timeouts</a></td>
+			<td>
+object
+</td>
+			<td>Timeouts for the HTTPRoute resource.</td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{}
+</pre>
+</details>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="securityContext"><a href="./values.yaml#L329">securityContext</a></td>
 			<td>
 object
 </td>
@@ -1657,7 +1915,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L296">securityContext.allowPrivilegeEscalation</a></td>
+			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L331">securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -1671,7 +1929,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--capabilities"><a href="./values.yaml#L298">securityContext.capabilities</a></td>
+			<td id="securityContext--capabilities"><a href="./values.yaml#L333">securityContext.capabilities</a></td>
 			<td>
 object
 </td>
@@ -1692,7 +1950,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--capabilities--drop"><a href="./values.yaml#L300">securityContext.capabilities.drop</a></td>
+			<td id="securityContext--capabilities--drop"><a href="./values.yaml#L335">securityContext.capabilities.drop</a></td>
 			<td>
 list
 </td>
@@ -1711,7 +1969,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L303">securityContext.runAsNonRoot</a></td>
+			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L338">securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -1725,7 +1983,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--seccompProfile"><a href="./values.yaml#L305">securityContext.seccompProfile</a></td>
+			<td id="securityContext--seccompProfile"><a href="./values.yaml#L340">securityContext.seccompProfile</a></td>
 			<td>
 object
 </td>
@@ -1744,7 +2002,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--seccompProfile--type"><a href="./values.yaml#L307">securityContext.seccompProfile.type</a></td>
+			<td id="securityContext--seccompProfile--type"><a href="./values.yaml#L342">securityContext.seccompProfile.type</a></td>
 			<td>
 string
 </td>
@@ -1758,7 +2016,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="service"><a href="./values.yaml#L310">service</a></td>
+			<td id="service"><a href="./values.yaml#L345">service</a></td>
 			<td>
 object
 </td>
@@ -1779,7 +2037,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="service--nodePort"><a href="./values.yaml#L312">service.nodePort</a></td>
+			<td id="service--nodePort"><a href="./values.yaml#L347">service.nodePort</a></td>
 			<td>
 string
 </td>
@@ -1793,7 +2051,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="service--port"><a href="./values.yaml#L314">service.port</a></td>
+			<td id="service--port"><a href="./values.yaml#L349">service.port</a></td>
 			<td>
 int
 </td>
@@ -1807,7 +2065,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="service--type"><a href="./values.yaml#L316">service.type</a></td>
+			<td id="service--type"><a href="./values.yaml#L351">service.type</a></td>
 			<td>
 string
 </td>
@@ -1821,7 +2079,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount"><a href="./values.yaml#L319">serviceAccount</a></td>
+			<td id="serviceAccount"><a href="./values.yaml#L354">serviceAccount</a></td>
 			<td>
 object
 </td>
@@ -1842,7 +2100,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--annotations"><a href="./values.yaml#L321">serviceAccount.annotations</a></td>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L356">serviceAccount.annotations</a></td>
 			<td>
 object
 </td>
@@ -1859,7 +2117,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--create"><a href="./values.yaml#L323">serviceAccount.create</a></td>
+			<td id="serviceAccount--create"><a href="./values.yaml#L358">serviceAccount.create</a></td>
 			<td>
 bool
 </td>
@@ -1873,7 +2131,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--name"><a href="./values.yaml#L325">serviceAccount.name</a></td>
+			<td id="serviceAccount--name"><a href="./values.yaml#L360">serviceAccount.name</a></td>
 			<td>
 string
 </td>
@@ -1887,7 +2145,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="storageClasses"><a href="./values.yaml#L328">storageClasses</a></td>
+			<td id="storageClasses"><a href="./values.yaml#L363">storageClasses</a></td>
 			<td>
 string
 </td>
@@ -1901,7 +2159,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="tolerations"><a href="./values.yaml#L331">tolerations</a></td>
+			<td id="tolerations"><a href="./values.yaml#L366">tolerations</a></td>
 			<td>
 list
 </td>
