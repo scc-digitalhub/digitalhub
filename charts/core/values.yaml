@@ -288,21 +288,17 @@ image:
 #  imagePullSecrets --
 imagePullSecrets: []
 
-#  ingress -- Ingress configurations.
+#  ingress -- Ingress configuration.
 ingress:
-  #  ingress.enabled -- Enables Ingress.
+  #  ingress.enabled -- If set to true, the chart will be configured for Ingress utilization.
   enabled: false
-  #  ingress.annotations -- Ingress annotations (values are templated).
+  #  ingress.annotations -- Annotations to add to the Ingress resource.
   annotations: {}
-  #  ingress.className -- Ingress Class Name. MAY be required for Kubernetes versions >= 1.18-
+  #  ingress.className -- Ingress class name to use in the Ingress resource.
   className: ""
-  #  ingress.hosts -- Ingress accepted hostnames.
-  hosts:
-    - host: core.home
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  #  ingress.tls -- Ingress TLS configuration.
+  #  ingress.hosts -- List of hostnames in the Ingress rules.
+  hosts: []
+  #  ingress.tls -- TLS configuration for the Ingress resource.
   tls: []
 
 #  initImage --
@@ -428,6 +424,41 @@ resources:
     cpu: 200m
     #  resources.requests.memory -- Max cpu request
     memory: 512Mi
+
+#  route -- HTTPRoute configuration.
+route:
+  #  route.main -- Main HTTPRoute configuration.
+  main:
+    #  route.main.enabled -- If set to true, the chart will be configured for HTTPRoute utilization.
+    enabled: false
+    #  route.main.additionalRules -- Additional rules for the HTTPRoute resource.
+    additionalRules: []
+    #  route.main.annotations -- Annotations to add to the HTTPRoute resource.
+    annotations: {}
+    #  route.main.apiVersion -- API version to use in the HTTPRoute resource.
+    apiVersion: gateway.networking.k8s.io/v1
+    #  route.main.filters -- List of filters for the HTTPRoute resource.
+    filters: []
+    #  route.main.hostnames -- List of hostnames for the HTTPRoute resource.
+    hostnames: []
+    #  route.main.httpsRedirect -- If set to true, the HTTPRoute will be configured to redirect HTTP traffic to HTTPS.
+    httpsRedirect: false
+    #  route.main.kind -- Kind to use in the HTTPRoute resource.
+    kind: HTTPRoute
+    #  route.main.labels -- Labels to add to the HTTPRoute resource.
+    labels: {}
+    #  route.main.matches -- List of matches for the HTTPRoute resource.
+    matches:
+      #  route.main.matches.path -- Path match for the HTTPRoute resource.
+      - path:
+          #  route.main.matches.path.type -- Type of path match for the HTTPRoute resource.
+          type: PathPrefix
+          #  route.main.matches.path.value -- Value of the path match for the HTTPRoute resource.
+          value: /
+    #  route.main.parentRefs -- ParentRefs to use in the HTTPRoute resource.
+    parentRefs: []
+    #  route.main.timeouts -- Timeouts for the HTTPRoute resource.
+    timeouts: {}
 
 #  runtime --
 runtime:
