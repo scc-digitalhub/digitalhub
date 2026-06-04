@@ -414,7 +414,7 @@ coder:
       #  coder.existingSecrets.adminSessionTokenExistingSecret.secretName -- Name of the secret containing the admin session token to use for the Coder template upgrade job
       secretName: ""
       #  coder.existingSecrets.adminSessionTokenExistingSecret.tokenKey -- Key of the secret containing the admin session token to use for the Coder template upgrade job
-      tokenKey: ""
+      tokenKey: "admin-session-token"
     #  coder.existingSecrets.adminUserExistingSecret -- Existing secret containing Coder's admin username, password and email
     adminUserExistingSecret:
       #  coder.existingSecrets.adminUserExistingSecret.emailKey -- Email key

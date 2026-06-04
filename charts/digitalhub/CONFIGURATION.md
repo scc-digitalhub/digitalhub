@@ -2810,7 +2810,7 @@ object
   "existingSecrets": {
     "adminSessionTokenExistingSecret": {
       "secretName": "",
-      "tokenKey": ""
+      "tokenKey": "admin-session-token"
     },
     "adminUserExistingSecret": {
       "emailKey": "",
@@ -3596,7 +3596,7 @@ object
 {
   "adminSessionTokenExistingSecret": {
     "secretName": "",
-    "tokenKey": ""
+    "tokenKey": "admin-session-token"
   },
   "adminUserExistingSecret": {
     "emailKey": "",
@@ -3626,7 +3626,7 @@ object
 <pre lang="json">
 {
   "secretName": "",
-  "tokenKey": ""
+  "tokenKey": "admin-session-token"
 }
 </pre>
 </details>
@@ -3656,7 +3656,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-""
+"admin-session-token"
 </pre>
 </div>
 			</td>

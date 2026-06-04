@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-{{ if and .Values.coder.enabled .Values.coder.template.upgrade.enabled .Values.coder.template.upgrade.token -}}
+{{ if and .Values.coder.enabled .Values.coder.template.upgrade.enabled (or .Values.coder.template.upgrade.token .Values.coder.existingSecrets.adminSessionTokenExistingSecret.secretName) -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -26,7 +26,7 @@ spec:
             - name: CODER_URL
               value: "http://coder.{{ .Release.Namespace }}.svc.cluster.local"
             - name: CODER_SESSION_TOKEN
-              {{- if and .Values.coder.existingSecrets.adminSessionTokenExistingSecret.secretName .Values.coder.existingSecrets.adminSessionTokenExistingSecret.tokenKey }}
+              {{- if .Values.coder.existingSecrets.adminSessionTokenExistingSecret.secretName }}
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.coder.existingSecrets.adminSessionTokenExistingSecret.secretName }}
