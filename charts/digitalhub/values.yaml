@@ -338,6 +338,30 @@ coder:
             name: ""
       - name: CODER_TELEMETRY_ENABLE
         value: "false"
+    # coder.coder.httproute -- The HTTPRoute object to expose for Coder.
+    httproute:
+      # coder.coder.httproute.annotations -- The HTTPRoute annotations.
+      annotations: {}
+      # coder.coder.httproute.enable -- Whether to create the HTTPRoute object. If using a
+      # Gateway, we recommend not specifying coder.tls.secretNames as the Gateway
+      # will handle TLS termination.
+      enable: false
+      # coder.coder.httproute.host -- The hostname to match on.
+      # Be sure to also set CODER_ACCESS_URL within coder.env[]
+      host: ""
+      # coder.coder.httproute.parentRefs -- the parentRefs to bind the route to
+      # - name: my-gw
+      #   namespace: gateway-namespace
+      #   # sectionName is optional to fix to a specific listener
+      #   sectionName: listener-name
+      parentRefs: []
+      # coder.coder.httproute.wildcardHost -- The wildcard hostname to match on. Should be
+      # in the form "*.example.com" or "*-suffix.example.com". If you are using a
+      # suffix after the wildcard, the suffix will be stripped from the created
+      # ingress to ensure that it is a legal ingress host. Optional if not using
+      # applications over subdomains.
+      # Be sure to also set CODER_WILDCARD_ACCESS_URL within coder.env[]
+      wildcardHost: ""
     #  coder.coder.image --
     image:
       #  coder.coder.image.tag -- Coder image tag
@@ -630,6 +654,40 @@ core:
     schema: public
   #  core.priorityClassName -- Name of the priority class to use for the core pods. If not set, no priority class will be used.
   priorityClassName: *highPriority
+  #  core.route -- HTTPRoute configuration.
+  route:
+    #  core.route.main -- Main HTTPRoute configuration.
+    main:
+      #  core.route.main.enabled -- If set to true, the chart will be configured for HTTPRoute utilization.
+      enabled: false
+      #  core.route.main.additionalRules -- Additional rules for the HTTPRoute resource.
+      additionalRules: []
+      #  core.route.main.annotations -- Annotations to add to the HTTPRoute resource.
+      annotations: {}
+      #  core.route.main.apiVersion -- API version to use in the HTTPRoute resource.
+      apiVersion: gateway.networking.k8s.io/v1
+      #  core.route.main.filters -- List of filters for the HTTPRoute resource.
+      filters: []
+      #  core.route.main.hostnames -- List of hostnames for the HTTPRoute resource.
+      hostnames: []
+      #  core.route.main.httpsRedirect -- If set to true, the HTTPRoute will be configured to redirect HTTP traffic to HTTPS.
+      httpsRedirect: false
+      #  core.route.main.kind -- Kind to use in the HTTPRoute resource.
+      kind: HTTPRoute
+      #  core.route.main.labels -- Labels to add to the HTTPRoute resource.
+      labels: {}
+      #  core.route.main.matches -- List of matches for the HTTPRoute resource.
+      matches:
+        #  core.route.main.matches.path -- Path match for the HTTPRoute resource.
+        - path:
+            #  core.route.main.matches.path.type -- Type of path match for the HTTPRoute resource.
+            type: PathPrefix
+            #  core.route.main.matches.path.value -- Value of the path match for the HTTPRoute resource.
+            value: /
+      #  core.route.main.parentRefs -- ParentRefs to use in the HTTPRoute resource.
+      parentRefs: []
+      #  core.route.main.timeouts -- Timeouts for the HTTPRoute resource.
+      timeouts: {}
   #  core.s3 --
   s3:
     # s3.enabled -- Enable this option if you have an S3 deployment that you want to use with Core
@@ -908,6 +966,42 @@ dashboard:
       cpu: 250m
       #  dashboard.resources.requests.memory -- Memory request
       memory: 256Mi
+  #  dashboard.route -- HTTPRoute configuration.
+  route:
+    #  dashboard.route.main -- Main HTTPRoute configuration.
+    main:
+      #  dashboard.route.main.enabled -- If set to true, the chart will be configured for HTTPRoute utilization.
+      enabled: false
+      #  dashboard.route.main.additionalRules -- Additional rules for the HTTPRoute resource.
+      additionalRules: []
+      #  dashboard.route.main.annotations -- Annotations to add to the HTTPRoute resource.
+      annotations: {}
+      #  dashboard.route.main.apiVersion -- API version to use in the HTTPRoute resource.
+      apiVersion: gateway.networking.k8s.io/v1
+      #  dashboard.route.main.filters -- List of filters for the HTTPRoute resource.
+      filters: []
+      #  dashboard.route.main.hostnames -- List of hostnames for the HTTPRoute resource.
+      hostnames: []
+      #  dashboard.route.main.httpsRedirect -- If set to true, the HTTPRoute will be configured to redirect HTTP traffic to HTTPS.
+      httpsRedirect: false
+      #  dashboard.route.main.kind -- Kind to use in the HTTPRoute resource.
+      kind: HTTPRoute
+      #  dashboard.route.main.labels -- Labels to add to the HTTPRoute resource.
+      labels: {}
+      #  dashboard.route.main.managed -- If set to true, the chart will create and manage an HTTPRoute resource.
+      managed: false
+      #  dashboard.route.main.matches -- List of matches for the HTTPRoute resource.
+      matches:
+        #  dashboard.route.main.matches.path -- Path match for the HTTPRoute resource.
+        - path:
+            #  dashboard.route.main.matches.path.type -- Type of path match for the HTTPRoute resource.
+            type: PathPrefix
+            #  dashboard.route.main.matches.path.value -- Value of the path match for the HTTPRoute resource.
+            value: /
+      #  dashboard.route.main.parentRefs -- ParentRefs to use in the HTTPRoute resource.
+      parentRefs: []
+      #  dashboard.route.main.timeouts -- Timeouts for the HTTPRoute resource.
+    timeouts: {}
   #  dashboard.securityContext -- Dashboard [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
   securityContext:
     #  dashboard.securityContext.allowPrivilegeEscalation -- Dashboard allow privilege escalation
@@ -1108,6 +1202,40 @@ kubernetes-resource-manager:
     secrets:
       #  kubernetes-resource-manager.resourceSelectors.secrets.names -- A filter for the secrets that you want to see based on their name pattern
       names: ""
+  #  kubernetes-resource-manager.route -- HTTPRoute configuration.
+  route:
+    #  kubernetes-resource-manager.route.main -- Main HTTPRoute configuration.
+    main:
+      #  kubernetes-resource-manager.route.main.enabled -- If set to true, the chart will be configured for HTTPRoute utilization.
+      enabled: false
+      #  kubernetes-resource-manager.route.main.additionalRules -- Additional rules for the HTTPRoute resource.
+      additionalRules: []
+      #  kubernetes-resource-manager.route.main.annotations -- Annotations to add to the HTTPRoute resource.
+      annotations: {}
+      #  kubernetes-resource-manager.route.main.apiVersion -- API version to use in the HTTPRoute resource.
+      apiVersion: gateway.networking.k8s.io/v1
+      #  kubernetes-resource-manager.route.main.filters -- List of filters for the HTTPRoute resource.
+      filters: []
+      #  kubernetes-resource-manager.route.main.hostnames -- List of hostnames for the HTTPRoute resource.
+      hostnames: []
+      #  kubernetes-resource-manager.route.main.httpsRedirect -- If set to true, the HTTPRoute will be configured to redirect HTTP traffic to HTTPS.
+      httpsRedirect: false
+      #  kubernetes-resource-manager.route.main.kind -- Kind to use in the HTTPRoute resource.
+      kind: HTTPRoute
+      #  kubernetes-resource-manager.route.main.labels -- Labels to add to the HTTPRoute resource.
+      labels: {}
+      #  kubernetes-resource-manager.route.main.matches -- List of matches for the HTTPRoute resource.
+      matches:
+        #  kubernetes-resource-manager.route.main.matches.path -- Path match for the HTTPRoute resource.
+        - path:
+            #  kubernetes-resource-manager.route.main.matches.path.type -- Type of path match for the HTTPRoute resource.
+            type: PathPrefix
+            #  kubernetes-resource-manager.route.main.matches.path.value -- Value of the path match for the HTTPRoute resource.
+            value: /
+      #  kubernetes-resource-manager.route.main.parentRefs -- ParentRefs to use in the HTTPRoute resource.
+      parentRefs: []
+      #  kubernetes-resource-manager.route.main.timeouts -- Timeouts for the HTTPRoute resource.
+      timeouts: {}
   #  kubernetes-resource-manager.service -- KRM service configuration.
   service:
     #  kubernetes-resource-manager.service.nodePort -- Service nodePort
@@ -1177,8 +1305,57 @@ open-webui:
     fsGroupChangePolicy: Always
     supplementalGroups: []
     sysctls: []
-  # open-webui.priorityClassName -- Name of the priority class to use for the open-webui pods. If not set, no priority class will be used.
+  #  open-webui.priorityClassName -- Name of the priority class to use for the open-webui pods. If not set, no priority class will be used.
   priorityClassName: *lowPriority
+  #  open-webui.route -- HTTP route configuration
+  route:
+    # open-webui.route.enabled -- Enables or disables the route
+    enabled: false
+    #  open-webui.route.additionalRules -- Additional custom rules that can be added to the route
+    additionalRules: []
+    #  open-webui.route.annotations -- Annotations to add to the route
+    annotations: {}
+    # open-webui.route.apiVersion -- Set the route apiVersion, e.g. gateway.networking.k8s.io/v1 or gateway.networking.k8s.io/v1alpha2
+    apiVersion: gateway.networking.k8s.io/v1
+    #  open-webui.route.backendRef -- Backend reference for the route's default rule.
+    backendRef:
+      #  open-webui.route.backendRef.group -- API group of the backend reference. Use "" for the core API group
+      # (which contains `Service`), or "multicluster.x-k8s.io" for `ServiceImport`.
+      group: ""
+      #  open-webui.route.backendRef.kind -- Kind of the backend reference, e.g. `Service` or `ServiceImport`.
+      kind: Service
+      #  open-webui.route.backendRef.weight -- Weight assigned to the backend reference for traffic distribution
+      # when multiple backendRefs are present. Must be in the range 0-1,000,000.
+      weight: 1
+    #  open-webui.route.filters -- Filters define the filters that are applied to requests that match this rule.
+    filters: []
+    #  open-webui.route.hostnames -- Hostnames to match for the route
+    hostnames: []
+    # - "open-webui.example.com"
+    #  open-webui.route.httpsRedirect -- Enables HTTPS redirect for the route
+    httpsRedirect: false
+    #  open-webui.route.kind -- Set the route kind
+    # Valid options are GRPCRoute, HTTPRoute, TCPRoute, TLSRoute, UDPRoute
+    kind: HTTPRoute
+    #  open-webui.route.labels -- Labels to add to the route
+    labels: {}
+    #  open-webui.route.matches -- List of matches to use in the route specification. The default is a single match with a PathPrefix of "/".
+    matches:
+      - path:
+          #  open-webui.route.matches.path.type -- Path match type. Note that custom path prefix is not supported in Open WebUI, so any non-default value will break. See https://github.com/open-webui/open-webui/discussions/3431
+          type: PathPrefix
+          #  open-webui.route.matches.path.value -- Path match value
+          value: /
+    #  open-webui.route.parentRefs -- References to the parent resources (e.g. Gateway)
+    parentRefs: []
+    # - name: open-webui-gw
+    #  open-webui.route.redirect -- Configuration for the HTTP-to-HTTPS redirect route (only used when httpsRedirect is true)
+    # If redirect.parentRefs is set, it will be used as-is for the redirect route's parentRefs.
+    # Otherwise, the main route's parentRefs are used with sectionName defaulting to "http".
+    redirect: {}
+    # parentRefs:
+    #   - name: my-gateway
+    #     sectionName: http
   #  open-webui.service -- Service configuration
   service:
     #  open-webui.service.nodePort -- Service nodePort

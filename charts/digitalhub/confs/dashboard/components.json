@@ -11,6 +11,10 @@
     {{- with (index .Values "open-webui" "ingress" "host") }}
     "link": "https://{{ . }}"
     {{- end }}
+    {{- else if (index .Values "open-webui" "route" "enabled") }}
+    {{- with (index .Values "open-webui" "route" "hostnames" 0) }}
+    "link": "https://{{ . }}"
+    {{- end }}
     {{- else }}
     "link": "http://{{ $externalUrl }}:{{ index .Values "open-webui" "service" "nodePort" }}"
     {{- end }}
@@ -24,6 +28,8 @@
     "port": "",
     {{- if .Values.coder.coder.ingress.enable }}
     "link": "https://{{ .Values.coder.coder.ingress.host }}"
+    {{- else if .Values.coder.coder.httproute.enable }}
+    "link": "https://{{ .Values.coder.coder.httproute.host }}"
     {{- else }}
     "link": "http://{{ $externalUrl }}:{{ .Values.coder.coder.service.httpNodePort }}"
     {{- end }}
@@ -37,6 +43,10 @@
     {{- if (index .Values "kubernetes-resource-manager" "ingress" "enabled") }}
     {{- with (index .Values "kubernetes-resource-manager" "ingress" "hosts" 0) }}
     "link": "https://{{ .host }}"
+    {{- end }}
+    {{- else if (index .Values "kubernetes-resource-manager" "route" "main" "enabled") }}
+    {{- with (index .Values "kubernetes-resource-manager" "route" "main" "hostnames" 0) }}
+    "link": "https://{{ . }}"
     {{- end }}
     {{- else }}
     "link": "http://{{ $externalUrl }}:{{ index .Values "kubernetes-resource-manager" "service" "nodePort"}}"
@@ -68,6 +78,10 @@
     {{- if .Values.core.ingress.enabled }}
     {{- with (index .Values.core.ingress.hosts 0) }}
     "link": "https://{{ .host }}"
+    {{- end }}
+    {{- else if .Values.core.route.main.enabled }}
+    {{- with (index .Values.core.route.main.hostnames 0) }}
+    "link": "https://{{ . }}"
     {{- end }}
     {{- else }}
     "link": "http://{{ $externalUrl }}:{{ .Values.core.service.httpNodePort }}"

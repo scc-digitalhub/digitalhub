@@ -78,6 +78,8 @@ Calculate dashboard oidc configuration endpoint
 {{- with (index .Values.dashboard.ingress.hosts 0) }}
 {{- .host -}}
 {{- end }}
+{{- else if .Values.dashboard.route.main.enabled }}
+{{- with (index .Values.dashboard.route.main.hostnames 0) }}{{ . }}{{ end }}
 {{- else }}
 {{- if eq .Values.global.service.type "NodePort"}}
 {{ .Values.global.externalHostAddress }}:{{ .Values.dashboard.service.httpNodePort }}
@@ -107,7 +109,7 @@ Calculate coder access url
 Coder ingress TLS enabled check.
 */}}
 {{- define "digitalhub.coderIngressTlsEnabled" -}}
-{{- if or .Values.coder.coder.ingress.tls.enable .Values.global.externalTls -}}
+{{- if or .Values.coder.coder.ingress.tls.enable .Values.global.externalTls .Values.coder.coder.httproute.enable -}}
 true
 {{- else -}}
 false
