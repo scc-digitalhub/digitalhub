@@ -230,7 +230,7 @@ data "http" "exchange_token" {
 }
 
 locals {
-  tolerations    = jsondecode(data.kubernetes_config_map_v1.workspace_config.data["tolerations.json"])
+  tolerations = jsondecode(data.kubernetes_config_map_v1.workspace_config.data["tolerations.json"])
 }
 
 provider "kubernetes" {
@@ -375,11 +375,11 @@ resource "kubernetes_persistent_volume_claim_v1" "home" {
       "app.kubernetes.io/managed-by" = "coder"
       "app.kubernetes.io/type"       = "pvc"
       // Coder specific labels.
-      "com.coder.resource"           = "true"
-      "com.coder.workspace.id"       = data.coder_workspace.me.id
-      "com.coder.workspace.name"     = data.coder_workspace.me.name
-      "com.coder.user.id"            = data.coder_workspace_owner.me.id
-      "com.coder.user.username"      = data.coder_workspace_owner.me.name
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -407,11 +407,11 @@ resource "kubernetes_service_v1" "code-toolbox-service" {
       "app.kubernetes.io/managed-by" = "coder"
       "app.kubernetes.io/type"       = "service"
       // Coder specific labels.
-      "com.coder.resource"           = "true"
-      "com.coder.workspace.id"       = data.coder_workspace.me.id
-      "com.coder.workspace.name"     = data.coder_workspace.me.name
-      "com.coder.user.id"            = data.coder_workspace_owner.me.id
-      "com.coder.user.username"      = data.coder_workspace_owner.me.name
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -456,11 +456,11 @@ resource "kubernetes_secret_v1" "code-toolbox-secret" {
       "app.kubernetes.io/managed-by" = "coder"
       "app.kubernetes.io/type"       = "secret"
       // Coder specific labels.
-      "com.coder.resource"           = "true"
-      "com.coder.workspace.id"       = data.coder_workspace.me.id
-      "com.coder.workspace.name"     = data.coder_workspace.me.name
-      "com.coder.user.id"            = data.coder_workspace_owner.me.id
-      "com.coder.user.username"      = data.coder_workspace_owner.me.name
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -493,11 +493,11 @@ resource "kubernetes_config_map_v1" "code-toolbox-configmap" {
       "app.kubernetes.io/managed-by" = "coder"
       "app.kubernetes.io/type"       = "configmap"
       // Coder specific labels.
-      "com.coder.resource"           = "true"
-      "com.coder.workspace.id"       = data.coder_workspace.me.id
-      "com.coder.workspace.name"     = data.coder_workspace.me.name
-      "com.coder.user.id"            = data.coder_workspace_owner.me.id
-      "com.coder.user.username"      = data.coder_workspace_owner.me.name
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -657,11 +657,11 @@ resource "kubernetes_deployment_v1" "code-toolbox" {
         "app.kubernetes.io/managed-by" = "coder"
         "app.kubernetes.io/type"       = "workspace"
         // Coder specific labels.
-        "com.coder.resource"           = "true"
-        "com.coder.workspace.id"       = data.coder_workspace.me.id
-        "com.coder.workspace.name"     = data.coder_workspace.me.name
-        "com.coder.user.id"            = data.coder_workspace_owner.me.id
-        "com.coder.user.username"      = data.coder_workspace_owner.me.name
+        "com.coder.resource"       = "true"
+        "com.coder.workspace.id"   = data.coder_workspace.me.id
+        "com.coder.workspace.name" = data.coder_workspace.me.name
+        "com.coder.user.id"        = data.coder_workspace_owner.me.id
+        "com.coder.user.username"  = data.coder_workspace_owner.me.name
       },
     local.decoded_labels)
     annotations = {
@@ -691,11 +691,11 @@ resource "kubernetes_deployment_v1" "code-toolbox" {
           "app.kubernetes.io/managed-by" = "coder"
           "app.kubernetes.io/type"       = "workspace"
           // Coder specific labels.
-          "com.coder.resource"           = "true"
-          "com.coder.workspace.id"       = data.coder_workspace.me.id
-          "com.coder.workspace.name"     = data.coder_workspace.me.name
-          "com.coder.user.id"            = data.coder_workspace_owner.me.id
-          "com.coder.user.username"      = data.coder_workspace_owner.me.name
+          "com.coder.resource"       = "true"
+          "com.coder.workspace.id"   = data.coder_workspace.me.id
+          "com.coder.workspace.name" = data.coder_workspace.me.name
+          "com.coder.user.id"        = data.coder_workspace_owner.me.id
+          "com.coder.user.username"  = data.coder_workspace_owner.me.name
         }
       }
       spec {
@@ -747,10 +747,6 @@ resource "kubernetes_deployment_v1" "code-toolbox" {
           env {
             name  = "JUPYTER_PORT"
             value = 8888
-          }
-          env {
-            name  = "GRANT_SUDO"
-            value = var.privileged ? 1 : 0
           }
           env {
             name  = "JUPYTER_LOG_PATH"
