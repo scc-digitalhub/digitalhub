@@ -336,15 +336,34 @@ kubeai:
 loki:
   #  loki.enabled -- Enable/Disable Loki integration
   enabled: false
+  #  loki.credentials -- Credentials for the Loki instance. It can be specified either by using an existing secret or by providing the username and password directly.
+  credentials:
+    #  loki.credentials.existingSecret -- Reference to the secret containing the credentials for the Loki instance
+    existingSecret:
+      #  loki.credentials.existingSecret.name -- Name of the secret containing the credentials for the Loki instance
+      name: ""
+      #  loki.credentials.existingSecret.passwordKey -- Key corresponding to the password in the secret
+      passwordKey: ""
+      #  loki.credentials.existingSecret.usernameKey -- Key corresponding to the username in the secret
+      usernameKey: ""
+    #  loki.credentials.password -- Password for the Loki instance
+    password: ""
+    #  loki.credentials.username -- Username for the Loki instance
+    username: ""
   #  loki.endpoint -- Endpoint of the Loki instance
   endpoint: ""
   #  loki.labels -- Labels that will have to match the ones set in Loki for filtering Core resources
   labels:
+    applicationName: ""
     project: dhcore_project
     run: dhcore_run
     user: dhcore_user
+  #  loki.mapWithPrefix -- Whether to map labels with a prefix or not. If set to true, the labels will be mapped with the name of the tenant name as a prefix. If set to false, the labels will be mapped without any prefix.
+  mapWithPrefix: true
   #  loki.namespace -- Namespace of the Loki instance
   namespace: ""
+  #  loki.organizationId -- Organization ID of the Loki instance.
+  organizationId: ""
 
 #  lucene -- Values for Lucene configuration
 lucene:
