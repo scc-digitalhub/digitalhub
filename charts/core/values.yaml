@@ -332,6 +332,20 @@ kubeai:
   #  kubeai.serviceName -- Kubei service name
   serviceName: ""
 
+#  loki -- Configure Core with an existing Loki instance. It is used to filter the logs of Core resources in Loki.
+loki:
+  #  loki.enabled -- Enable/Disable Loki integration
+  enabled: false
+  #  loki.endpoint -- Endpoint of the Loki instance
+  endpoint: ""
+  #  loki.labels -- Labels that will have to match the ones set in Loki for filtering Core resources
+  labels:
+    project: dhcore_project
+    run: dhcore_run
+    user: dhcore_user
+  #  loki.namespace -- Namespace of the Loki instance
+  namespace: ""
+
 #  lucene -- Values for Lucene configuration
 lucene:
   #  lucene.indexPath -- Set the path for Lucene and enables it

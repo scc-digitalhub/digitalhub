@@ -144,3 +144,10 @@ data:
   AI_GATEWAY_NAME: {{ .Values.envoyGateway.aiGateway.name | quote }}
   {{- end }}
 {{- end }}
+{{- if .Values.loki.enabled }}
+  LOKI_URL: {{ .Values.loki.endpoint | quote }}
+  LOKI_MAPPING_NAMESPACE: {{ .Values.loki.namespace | quote }}
+  LOKI_MAPPING_RUN: {{ .Values.loki.labels.run | quote }}
+  LOKI_MAPPING_PROJECT: {{ .Values.loki.labels.project | quote }}
+  LOKI_MAPPING_USER: {{ .Values.loki.labels.user | quote }}
+{{- end }}
