@@ -144,3 +144,13 @@ data:
   AI_GATEWAY_NAME: {{ .Values.envoyGateway.aiGateway.name | quote }}
   {{- end }}
 {{- end }}
+{{- if .Values.loki.enabled }}
+  LOKI_URL: {{ .Values.loki.endpoint | quote }}
+  LOKI_MAPPING_NAMESPACE: {{ .Values.loki.namespace | quote }}
+  LOKI_MAPPING_RUN: {{ .Values.loki.labels.run | quote }}
+  LOKI_MAPPING_PROJECT: {{ .Values.loki.labels.project | quote }}
+  {{ if .Values.loki.labels.user }}LOKI_MAPPING_USER: {{ .Values.loki.labels.user | quote }}{{ end }}
+  {{ if .Values.loki.labels.applicationName }}LOKI_MAPPING_APPLICATION_NAME: {{ .Values.loki.labels.applicationName | quote }}{{ end }}
+  {{ if .Values.loki.organizationId }}LOKI_ORG_ID: {{ .Values.loki.organizationId | quote }}{{ end }}
+  LOKI_MAP_WITH_PREFIX: {{ .Values.loki.mapWithPrefix | quote }}
+{{- end }}
