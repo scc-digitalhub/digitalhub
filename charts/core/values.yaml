@@ -360,8 +360,6 @@ loki:
     user: dhcore_user
   #  loki.mapWithPrefix -- Whether to map labels with a prefix or not. If set to true, the labels will be mapped with the name of the tenant name as a prefix. If set to false, the labels will be mapped without any prefix.
   mapWithPrefix: true
-  #  loki.namespace -- Namespace of the Loki instance
-  namespace: ""
   #  loki.organizationId -- Organization ID of the Loki instance.
   organizationId: ""
 
