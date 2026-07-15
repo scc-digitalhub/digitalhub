@@ -431,6 +431,10 @@ postgres:
 # priorityClassName -- Name of the priority class, leave empty to not set any.
 priorityClassName: ""
 
+prometheus:
+  #  prometheus.enabled -- Enable/Disable Prometheus integration
+  enabled: false
+
 #  registry --
 registry:
   #  registry.kaniko --
