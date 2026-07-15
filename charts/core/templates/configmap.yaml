@@ -92,7 +92,7 @@ data:
   K8S_TEMPLATES: {{ include "core.templates" . | quote }}
 {{- end }}
   K8S_INIT_IMAGE: "{{ .Values.initImage.builderTool.image }}:{{ .Values.initImage.builderTool.tag }}"
-  K8S_ENABLE_METRICS: {{ if not .Values.loki.enabled }}{{ .Values.additionalConfig.debug.enableMetrics | quote }}{{ else }}"false"{{ end }}
+  K8S_ENABLE_METRICS: {{ if not .Values.prometheus.enabled }}{{ .Values.additionalConfig.debug.enableMetrics | quote }}{{ else }}"false"{{ end }}
   K8S_ENABLE_LOGS: {{ if not .Values.loki.enabled }}{{ .Values.additionalConfig.debug.enableLogs | quote }}{{ else }}"false"{{ end }}
   K8S_SEC_DISABLE_ROOT: {{ .Values.additionalConfig.security.disableRoot | quote }}
   K8S_RESOURCE_CPU_DEFAULT: {{ .Values.additionalConfig.resources.cpuReq | quote }}
