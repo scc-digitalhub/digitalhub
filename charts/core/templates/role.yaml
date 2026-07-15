@@ -37,10 +37,13 @@ rules:
   - ""
   resources:
   - pods
+  {{- if not .Values.loki.enabled }}
   - pods/log
+  {{- end }}
   verbs:
   - get
   - list
+{{- if not .Values.loki.enabled }}
 - apiGroups:
   - "metrics.k8s.io"
   resources:
@@ -49,6 +52,7 @@ rules:
   verbs:
   - get
   - list
+{{- end }}
 - apiGroups:
   - ""
   resources:
