@@ -1,0 +1,34 @@
+#  configmapName -- Name of the generated ConfigMap containing all computed profile templates.
+configmapName: resources-profile-templates
+
+#  profiles -- List of profile families used to generate template-<n>x<profile>.yaml entries.
+profiles: []
+# - name: V100
+#   gpu:
+#     #  profiles[].gpu.name -- GPU model value used in node toleration (nvidia.com/gpu.model).
+#     name: v100
+#     #  profiles[].gpu.number -- Maximum number of GPUs for this profile family; templates from 1..number are generated.
+#     number: "8"
+#     #  profiles[].gpu.computeCapability -- Optional text appended to description.
+#     computeCapability: "7.0"
+#     #  profiles[].gpu.displayName -- Optional human-readable GPU name shown in description.
+#     # displayName: NVIDIA V100
+#     #  profiles[].gpu.vRAM -- Available video RAM per single GPU.
+#     vRAM: 32Gi
+#   cpu:
+#     #  profiles[].cpu.count -- Maximum CPU available at max GPU variant.
+#     count: "79"
+#   memory:
+#     #  profiles[].memory.size -- Maximum memory available at max GPU variant (Mi or plain integer interpreted as Mi).
+#     size: 498416Mi
+
+
+#  queueName -- Value used for kueue.x-k8s.io/queue-name label in every generated template.
+queueName: ""
+
+#  requests -- Configure the percentage used to compute requests from limits.
+requests:
+  #  requests.cpuPercent -- CPU request percentage derived from computed CPU limit for non-max variants.
+  cpuPercent: 67
+  #  requests.memoryPercent -- Memory request percentage derived from computed memory limit for non-max variants.
+  memoryPercent: 67

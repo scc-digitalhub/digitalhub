@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "resources-profile.fullname" . }}
+  labels:
+    {{- include "resources-profile.labels" . | nindent 4 }}
+data:
+  template-default.yaml: |
+    id: default
+    name: default
+    description: Default profile
+    labels:
+      - name: kueue.x-k8s.io/queue-name
+        value: {{ .Values.queueName }}
+
+  template-cpu.yaml: |
+    id: cpu
+    name: cpu
+    description: Generic CPU profile
+    labels:
+      - name: kueue.x-k8s.io/queue-name
+        value: {{ .Values.queueName }}
+
+  {{- $cpuReqPercent := int (default 67 .Values.requests.cpuPercent) }}
+  {{- $memReqPercent := int (default 67 .Values.requests.memoryPercent) }}
+  {{- range $profile := .Values.profiles }}
+  {{- $profileName := toString $profile.name }}
+  {{- $gpuModel := toString $profile.gpu.name }}
+  {{- $gpuMax := int $profile.gpu.number }}
+  {{- $totalCpu := int $profile.cpu.count }}
+  {{- $totalMemMi := include "resources-profile.memoryMi" $profile.memory.size | int }}
+  {{- $totalMemGi := include "resources-profile.ceilDiv" (dict "num" $totalMemMi "den" 1024) | int }}
+  {{- $descriptionGpuName := default $gpuModel $profile.gpu.displayName }}
+  {{- range $gpuCount := untilStep (int 1) (int (add $gpuMax 1)) (int 1) }}
+  {{- $limitCpu := include "resources-profile.ceilDiv" (dict "num" (mul $totalCpu $gpuCount) "den" $gpuMax) | int }}
+  {{- $requestCpuRaw := div (mul $limitCpu $cpuReqPercent) 100 | int }}
+  {{- $requestCpu := max (int 1) (int $requestCpuRaw) }}
+  {{- if eq $gpuCount $gpuMax }}
+  {{- $requestCpu = $limitCpu }}
+  {{- end }}
+  {{- $limitMemGi := include "resources-profile.ceilDiv" (dict "num" (mul $totalMemGi $gpuCount) "den" $gpuMax) | int }}
+  {{- $requestMemRaw := div (mul $limitMemGi $memReqPercent) 100 | int }}
+  {{- $requestMemGi := max (int 1) (int $requestMemRaw) }}
+  {{- if eq $gpuCount $gpuMax }}
+  {{- $requestMemGi = $limitMemGi }}
+  {{- end }}
+  template-{{ $gpuCount }}x{{ $profileName }}.yaml: |
+    id: {{ $gpuCount }}x{{ $profileName }}
+    name: {{ $gpuCount }}x{{ $profileName }}
+    description: "{{ $gpuCount }} GPU Nvidia {{ $descriptionGpuName }}{{ if $profile.gpu.computeCapability }}. Compute capability version {{ $profile.gpu.computeCapability }}{{ end }}{{ if $profile.gpu.vRAM }}. Available VRAM per single GPU={{ $profile.gpu.vRAM }}{{ end }}. Maximum available resources: cpu={{ $limitCpu }}, RAM={{ $limitMemGi }}Gi,ephemeral-storage={{ $limitMemGi }}Gi"
+    tolerations:
+    - key: nvidia.com/gpu.model
+      operator: Equal
+      value: {{ $gpuModel }}
+      effect: NoSchedule
+    - key: nvidia.com/gpu.present
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+    labels:
+      - name: kueue.x-k8s.io/queue-name
+        value: {{ $.Values.queueName }}
+    resources:
+      requests:
+        cpu: "{{ $requestCpu }}"
+        memory: "{{ $requestMemGi }}Gi"
+        nvidia.com/gpu: "{{ $gpuCount }}"
+        ephemeral-storage: "{{ $limitMemGi }}Gi"
+      limits:
+        cpu: "{{ $limitCpu }}"
+        memory: "{{ $limitMemGi }}Gi"
+        nvidia.com/gpu: "{{ $gpuCount }}"
+        ephemeral-storage: "{{ $limitMemGi }}Gi"
+    volumes:
+      - name: shm
+        mount_path: /dev/shm
+        spec:
+          medium: Memory
+          size_limit: {{ $limitMemGi }}Gi
+        volume_type: empty_dir
+
+  {{- end }}
+  {{- end }}

@@ -8,3 +8,4 @@ tmp/
 */**/charts/*
 **/tmpcharts
 .cr-release-packages/
+**/example-template*
