@@ -28287,4 +28287,20 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/postgrest-operator-0.1.0/postgrest-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2026-07-15T07:57:25.458668138Z"
+  resources-profile-generator:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-07-16T12:23:50.793072743Z"
+    description: Helm chart to generate resource profile templates in a ConfigMap
+    digest: c8eba1244edec0ff95361d0e8a11fed3683a4b9a911a8655180d42e56c7d456a
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: resources-profile-generator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/resources-profile-generator-0.1.0/resources-profile-generator-0.1.0.tgz
+    version: 0.1.0
+generated: "2026-07-16T12:23:50.793912003Z"
