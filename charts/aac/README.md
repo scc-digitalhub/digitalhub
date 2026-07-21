@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # aac
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=aac*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.20](https://img.shields.io/badge/Version-0.1.20-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.21](https://img.shields.io/badge/Version-0.1.21-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -1622,7 +1622,7 @@ int
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-5
+1
 </pre>
 </div>
 			</td>
@@ -1642,21 +1642,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="upgradeJob--ttlSecondsAfterFinished"><a href="./values.yaml#L234">upgradeJob.ttlSecondsAfterFinished</a></td>
-			<td>
-int
-</td>
-			<td></td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-10
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="volumeMounts[0]--mountPath"><a href="./values.yaml#L238">volumeMounts[0].mountPath</a></td>
+			<td id="volumeMounts[0]--mountPath"><a href="./values.yaml#L237">volumeMounts[0].mountPath</a></td>
 			<td>
 string
 </td>
@@ -1670,7 +1656,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="volumeMounts[0]--name"><a href="./values.yaml#L239">volumeMounts[0].name</a></td>
+			<td id="volumeMounts[0]--name"><a href="./values.yaml#L238">volumeMounts[0].name</a></td>
 			<td>
 string
 </td>
@@ -1684,7 +1670,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="volumeMounts[0]--subPath"><a href="./values.yaml#L240">volumeMounts[0].subPath</a></td>
+			<td id="volumeMounts[0]--subPath"><a href="./values.yaml#L239">volumeMounts[0].subPath</a></td>
 			<td>
 string
 </td>
@@ -1698,7 +1684,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="volumes[0]--name"><a href="./values.yaml#L244">volumes[0].name</a></td>
+			<td id="volumes[0]--name"><a href="./values.yaml#L243">volumes[0].name</a></td>
 			<td>
 string
 </td>
@@ -1712,7 +1698,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="volumes[0]--secret--secretName"><a href="./values.yaml#L246">volumes[0].secret.secretName</a></td>
+			<td id="volumes[0]--secret--secretName"><a href="./values.yaml#L245">volumes[0].secret.secretName</a></td>
 			<td>
 string
 </td>

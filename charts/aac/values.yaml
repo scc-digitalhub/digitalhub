@@ -229,9 +229,8 @@ upgradeJob:
     - "-jar"
     - "java"
     - "target/aac.jar"
-  backoffLimit: 5
+  backoffLimit: 1
   restartPolicy: Never
-  ttlSecondsAfterFinished: 10
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
