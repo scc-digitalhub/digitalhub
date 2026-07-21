@@ -1,7 +1,7 @@
-{{ if .Values.bootstrap -}}
+{{ if .Values.realms -}}
 realms:
 {{- $root := . -}}
-{{- range $realm := .Values.bootstrap }}
+{{- range $realm := .Values.realms }}
   - name: {{ $realm.name }}
     slug: {{ $realm.slug }}
     public: {{ $realm.public }}
