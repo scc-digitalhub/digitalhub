@@ -7,20 +7,20 @@ kind: ConfigMap
 metadata:
   name: {{ include "aac.fullname" . }}
 data:
-  JDBC_DIALECT: {{ .Values.config.jdbcDialect }}
-  JDBC_DRIVER: {{ .Values.config.jdbcDriver }}
-  JDBC_URL: {{ .Values.config.jdbcUrl }}
-  MAIL_HOST: {{ .Values.config.mailHost }}
-  MAIL_PORT: {{ .Values.config.mailPort | quote }}
-  MAIL_PROTOCOL: {{ .Values.config.mailProtocol }}
-  MAIL_TLS: {{ .Values.config.mailTls | quote }}
-  MAIL_SENDER: {{ .Values.config.mailSender }}
-  MAIL_DEBUG: {{ .Values.config.mailDebug | quote }}
-  BOOTSTRAP_APPLY: {{ .Values.config.bootstrapApply | quote }}
-  BOOTSTRAP: {{ .Values.config.bootstrap }}
-  LOG_LEVEL: {{ .Values.config.logLevel }}
-  APPLICATION_EXT_URL: {{ .Values.config.applicationExtUrl }}
-  APPLICATION_EMAIL: {{ .Values.config.mailSender }}
+  {{ if .Values.config.jdbcDialect }}JDBC_DIALECT: {{ .Values.config.jdbcDialect }}{{ end }}
+  {{ if .Values.config.jdbcDriver }}JDBC_DRIVER: {{ .Values.config.jdbcDriver }}{{ end }}
+  {{ if .Values.config.jdbcUrl }}JDBC_URL: {{ .Values.config.jdbcUrl }}{{ end }}
+  {{ if .Values.config.mailHost }}MAIL_HOST: {{ .Values.config.mailHost }}{{ end }}
+  {{ if .Values.config.mailPort }}MAIL_PORT: {{ .Values.config.mailPort | quote }}{{ end }}
+  {{ if .Values.config.mailProtocol }}MAIL_PROTOCOL: {{ .Values.config.mailProtocol }}{{ end }}
+  {{ if .Values.config.mailTls }}MAIL_TLS: {{ .Values.config.mailTls | quote }}{{ end }}
+  {{ if .Values.config.mailSender }}MAIL_SENDER: {{ .Values.config.mailSender }}{{ end }}
+  {{ if .Values.config.mailDebug }}MAIL_DEBUG: {{ .Values.config.mailDebug | quote }}{{ end }}
+  {{ if .Values.config.bootstrapApply }}BOOTSTRAP_APPLY: {{ .Values.config.bootstrapApply | quote }}{{ end }}
+  {{ if .Values.config.bootstrap }}BOOTSTRAP: {{ .Values.config.bootstrap }}{{ end }}
+  {{ if .Values.config.logLevel }}LOG_LEVEL: {{ .Values.config.logLevel }}{{ end }}
+  {{ if .Values.config.applicationExtUrl }}APPLICATION_EXT_URL: {{ .Values.config.applicationExtUrl }}{{ end }}
+  {{ if .Values.config.mailSender }}APPLICATION_EMAIL: {{ .Values.config.mailSender }}{{ end }}
   {{ if and .Values.keystore.secretName .Values.config.keystorePath -}}
   JWK_KEYSTORE: "file://{{ .Values.config.keystorePath }}/{{ .Values.keystore.keyName }}"
   SECURITY_CACHE_JWKS: {{ .Values.config.cacheJwks }}

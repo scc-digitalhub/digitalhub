@@ -51,13 +51,14 @@ config:
 fullnameOverride: ""
 
 image:
-  aacCommand1: "java"
-  aacCommand2: "org.springframework.boot.loader.JarLauncher"
-  aacCommand3: "-Dspring-boot.run.arguments=--logging.level.ROOT=DEBUG"
+  args:
+    - "-Dspring-boot.run.arguments=--logging.level.ROOT=DEBUG"
+    - "java"
+    - "org.springframework.boot.loader.JarLauncher"
   pullPolicy: IfNotPresent
   repository: ghcr.io/scc-digitalhub/aac
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 5.3.0-beta1
+  tag: 5.3.0-beta3
 
 imagePullSecrets: []
 
@@ -220,6 +221,17 @@ serviceAccount:
   name: aac
 
 tolerations: []
+
+upgradeJob:
+  enabled: true
+  args:
+    - "--spring.profiles.active=bootstrap"
+    - "-jar"
+    - "java"
+    - "target/aac.jar"
+  backoffLimit: 5
+  restartPolicy: Never
+  ttlSecondsAfterFinished: 10
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:

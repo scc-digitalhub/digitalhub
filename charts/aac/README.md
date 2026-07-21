@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # aac
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=aac*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.19](https://img.shields.io/badge/Version-0.1.19-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.20](https://img.shields.io/badge/Version-0.1.20-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -475,35 +475,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="image--aacCommand1"><a href="./values.yaml#L54">image.aacCommand1</a></td>
-			<td>
-string
-</td>
-			<td></td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-"java"
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="image--aacCommand2"><a href="./values.yaml#L55">image.aacCommand2</a></td>
-			<td>
-string
-</td>
-			<td></td>
-      <td>
-				<div style="max-width: 300px;">
-<pre lang="json">
-"org.springframework.boot.loader.JarLauncher"
-</pre>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="image--aacCommand3"><a href="./values.yaml#L56">image.aacCommand3</a></td>
+			<td id="image--args[0]"><a href="./values.yaml#L55">image.args[0]</a></td>
 			<td>
 string
 </td>
@@ -517,7 +489,35 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="image--pullPolicy"><a href="./values.yaml#L57">image.pullPolicy</a></td>
+			<td id="image--args[1]"><a href="./values.yaml#L56">image.args[1]</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"java"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image--args[2]"><a href="./values.yaml#L57">image.args[2]</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"org.springframework.boot.loader.JarLauncher"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="image--pullPolicy"><a href="./values.yaml#L58">image.pullPolicy</a></td>
 			<td>
 string
 </td>
@@ -531,7 +531,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="image--repository"><a href="./values.yaml#L58">image.repository</a></td>
+			<td id="image--repository"><a href="./values.yaml#L59">image.repository</a></td>
 			<td>
 string
 </td>
@@ -545,7 +545,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="image--tag"><a href="./values.yaml#L60">image.tag</a></td>
+			<td id="image--tag"><a href="./values.yaml#L61">image.tag</a></td>
 			<td>
 string
 </td>
@@ -553,13 +553,13 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"5.3.0-beta1"
+"5.3.0-beta3"
 </pre>
 </div>
 			</td>
 		</tr>
 		<tr>
-			<td id="imagePullSecrets"><a href="./values.yaml#L62">imagePullSecrets</a></td>
+			<td id="imagePullSecrets"><a href="./values.yaml#L63">imagePullSecrets</a></td>
 			<td>
 list
 </td>
@@ -576,7 +576,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--enabled"><a href="./values.yaml#L65">ingress.enabled</a></td>
+			<td id="ingress--enabled"><a href="./values.yaml#L66">ingress.enabled</a></td>
 			<td>
 bool
 </td>
@@ -590,7 +590,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--annotations"><a href="./values.yaml#L66">ingress.annotations</a></td>
+			<td id="ingress--annotations"><a href="./values.yaml#L67">ingress.annotations</a></td>
 			<td>
 object
 </td>
@@ -607,7 +607,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--className"><a href="./values.yaml#L67">ingress.className</a></td>
+			<td id="ingress--className"><a href="./values.yaml#L68">ingress.className</a></td>
 			<td>
 string
 </td>
@@ -621,7 +621,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--hosts[0]--host"><a href="./values.yaml#L69">ingress.hosts[0].host</a></td>
+			<td id="ingress--hosts[0]--host"><a href="./values.yaml#L70">ingress.hosts[0].host</a></td>
 			<td>
 string
 </td>
@@ -635,7 +635,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--hosts[0]--paths[0]--path"><a href="./values.yaml#L71">ingress.hosts[0].paths[0].path</a></td>
+			<td id="ingress--hosts[0]--paths[0]--path"><a href="./values.yaml#L72">ingress.hosts[0].paths[0].path</a></td>
 			<td>
 string
 </td>
@@ -649,7 +649,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--hosts[0]--paths[0]--pathType"><a href="./values.yaml#L72">ingress.hosts[0].paths[0].pathType</a></td>
+			<td id="ingress--hosts[0]--paths[0]--pathType"><a href="./values.yaml#L73">ingress.hosts[0].paths[0].pathType</a></td>
 			<td>
 string
 </td>
@@ -663,7 +663,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--tls[0]--hosts[0]"><a href="./values.yaml#L75">ingress.tls[0].hosts[0]</a></td>
+			<td id="ingress--tls[0]--hosts[0]"><a href="./values.yaml#L76">ingress.tls[0].hosts[0]</a></td>
 			<td>
 string
 </td>
@@ -677,7 +677,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--tls[0]--secretName"><a href="./values.yaml#L76">ingress.tls[0].secretName</a></td>
+			<td id="ingress--tls[0]--secretName"><a href="./values.yaml#L77">ingress.tls[0].secretName</a></td>
 			<td>
 string
 </td>
@@ -691,7 +691,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="jdbcExistingCreds--existingSecret"><a href="./values.yaml#L79">jdbcExistingCreds.existingSecret</a></td>
+			<td id="jdbcExistingCreds--existingSecret"><a href="./values.yaml#L80">jdbcExistingCreds.existingSecret</a></td>
 			<td>
 string
 </td>
@@ -705,7 +705,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="jdbcExistingCreds--passwordKey"><a href="./values.yaml#L80">jdbcExistingCreds.passwordKey</a></td>
+			<td id="jdbcExistingCreds--passwordKey"><a href="./values.yaml#L81">jdbcExistingCreds.passwordKey</a></td>
 			<td>
 string
 </td>
@@ -719,7 +719,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="jdbcExistingCreds--userKey"><a href="./values.yaml#L81">jdbcExistingCreds.userKey</a></td>
+			<td id="jdbcExistingCreds--userKey"><a href="./values.yaml#L82">jdbcExistingCreds.userKey</a></td>
 			<td>
 string
 </td>
@@ -733,7 +733,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="jdbcH2creds--password"><a href="./values.yaml#L87">jdbcH2creds.password</a></td>
+			<td id="jdbcH2creds--password"><a href="./values.yaml#L88">jdbcH2creds.password</a></td>
 			<td>
 string
 </td>
@@ -747,7 +747,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="jdbcH2creds--user"><a href="./values.yaml#L88">jdbcH2creds.user</a></td>
+			<td id="jdbcH2creds--user"><a href="./values.yaml#L89">jdbcH2creds.user</a></td>
 			<td>
 string
 </td>
@@ -761,7 +761,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="keystore--keyName"><a href="./values.yaml#L91">keystore.keyName</a></td>
+			<td id="keystore--keyName"><a href="./values.yaml#L92">keystore.keyName</a></td>
 			<td>
 string
 </td>
@@ -775,7 +775,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="keystore--secretName"><a href="./values.yaml#L92">keystore.secretName</a></td>
+			<td id="keystore--secretName"><a href="./values.yaml#L93">keystore.secretName</a></td>
 			<td>
 string
 </td>
@@ -789,7 +789,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="mailCreds--existingSecret"><a href="./values.yaml#L95">mailCreds.existingSecret</a></td>
+			<td id="mailCreds--existingSecret"><a href="./values.yaml#L96">mailCreds.existingSecret</a></td>
 			<td>
 string
 </td>
@@ -803,7 +803,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="mailCreds--passwordKey"><a href="./values.yaml#L96">mailCreds.passwordKey</a></td>
+			<td id="mailCreds--passwordKey"><a href="./values.yaml#L97">mailCreds.passwordKey</a></td>
 			<td>
 string
 </td>
@@ -817,7 +817,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="mailCreds--usernameKey"><a href="./values.yaml#L97">mailCreds.usernameKey</a></td>
+			<td id="mailCreds--usernameKey"><a href="./values.yaml#L98">mailCreds.usernameKey</a></td>
 			<td>
 string
 </td>
@@ -831,7 +831,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="mailSecret--password"><a href="./values.yaml#L100">mailSecret.password</a></td>
+			<td id="mailSecret--password"><a href="./values.yaml#L101">mailSecret.password</a></td>
 			<td>
 string
 </td>
@@ -845,7 +845,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="mailSecret--user"><a href="./values.yaml#L101">mailSecret.user</a></td>
+			<td id="mailSecret--user"><a href="./values.yaml#L102">mailSecret.user</a></td>
 			<td>
 string
 </td>
@@ -859,7 +859,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="nameOverride"><a href="./values.yaml#L103">nameOverride</a></td>
+			<td id="nameOverride"><a href="./values.yaml#L104">nameOverride</a></td>
 			<td>
 string
 </td>
@@ -873,7 +873,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="nodeSelector"><a href="./values.yaml#L105">nodeSelector</a></td>
+			<td id="nodeSelector"><a href="./values.yaml#L106">nodeSelector</a></td>
 			<td>
 object
 </td>
@@ -890,7 +890,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podAnnotations"><a href="./values.yaml#L107">podAnnotations</a></td>
+			<td id="podAnnotations"><a href="./values.yaml#L108">podAnnotations</a></td>
 			<td>
 object
 </td>
@@ -907,7 +907,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podLabels"><a href="./values.yaml#L109">podLabels</a></td>
+			<td id="podLabels"><a href="./values.yaml#L110">podLabels</a></td>
 			<td>
 object
 </td>
@@ -924,7 +924,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--fsGroup"><a href="./values.yaml#L112">podSecurityContext.fsGroup</a></td>
+			<td id="podSecurityContext--fsGroup"><a href="./values.yaml#L113">podSecurityContext.fsGroup</a></td>
 			<td>
 int
 </td>
@@ -938,7 +938,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--runAsGroup"><a href="./values.yaml#L113">podSecurityContext.runAsGroup</a></td>
+			<td id="podSecurityContext--runAsGroup"><a href="./values.yaml#L114">podSecurityContext.runAsGroup</a></td>
 			<td>
 int
 </td>
@@ -952,7 +952,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--runAsUser"><a href="./values.yaml#L114">podSecurityContext.runAsUser</a></td>
+			<td id="podSecurityContext--runAsUser"><a href="./values.yaml#L115">podSecurityContext.runAsUser</a></td>
 			<td>
 int
 </td>
@@ -966,7 +966,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="postgresOperator--adminUser"><a href="./values.yaml#L117">postgresOperator.adminUser</a></td>
+			<td id="postgresOperator--adminUser"><a href="./values.yaml#L118">postgresOperator.adminUser</a></td>
 			<td>
 string
 </td>
@@ -980,7 +980,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgresOperator--database"><a href="./values.yaml#L118">postgresOperator.database</a></td>
+			<td id="postgresOperator--database"><a href="./values.yaml#L119">postgresOperator.database</a></td>
 			<td>
 string
 </td>
@@ -994,7 +994,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgresOperator--installed"><a href="./values.yaml#L119">postgresOperator.installed</a></td>
+			<td id="postgresOperator--installed"><a href="./values.yaml#L120">postgresOperator.installed</a></td>
 			<td>
 bool
 </td>
@@ -1008,7 +1008,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgresOperator--psqlClusterName"><a href="./values.yaml#L120">postgresOperator.psqlClusterName</a></td>
+			<td id="postgresOperator--psqlClusterName"><a href="./values.yaml#L121">postgresOperator.psqlClusterName</a></td>
 			<td>
 string
 </td>
@@ -1022,7 +1022,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgresOperator--user"><a href="./values.yaml#L121">postgresOperator.user</a></td>
+			<td id="postgresOperator--user"><a href="./values.yaml#L122">postgresOperator.user</a></td>
 			<td>
 string
 </td>
@@ -1036,7 +1036,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="realms"><a href="./values.yaml#L123">realms</a></td>
+			<td id="realms"><a href="./values.yaml#L124">realms</a></td>
 			<td>
 object
 </td>
@@ -1053,7 +1053,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="replicaCount"><a href="./values.yaml#L125">replicaCount</a></td>
+			<td id="replicaCount"><a href="./values.yaml#L126">replicaCount</a></td>
 			<td>
 int
 </td>
@@ -1067,7 +1067,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="resources--limits--cpu"><a href="./values.yaml#L129">resources.limits.cpu</a></td>
+			<td id="resources--limits--cpu"><a href="./values.yaml#L130">resources.limits.cpu</a></td>
 			<td>
 string
 </td>
@@ -1081,7 +1081,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resources--limits--memory"><a href="./values.yaml#L130">resources.limits.memory</a></td>
+			<td id="resources--limits--memory"><a href="./values.yaml#L131">resources.limits.memory</a></td>
 			<td>
 string
 </td>
@@ -1095,7 +1095,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resources--requests--cpu"><a href="./values.yaml#L132">resources.requests.cpu</a></td>
+			<td id="resources--requests--cpu"><a href="./values.yaml#L133">resources.requests.cpu</a></td>
 			<td>
 string
 </td>
@@ -1109,7 +1109,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="resources--requests--memory"><a href="./values.yaml#L133">resources.requests.memory</a></td>
+			<td id="resources--requests--memory"><a href="./values.yaml#L134">resources.requests.memory</a></td>
 			<td>
 string
 </td>
@@ -1123,7 +1123,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="route--enabled"><a href="./values.yaml#L147">route.enabled</a></td>
+			<td id="route--enabled"><a href="./values.yaml#L148">route.enabled</a></td>
 			<td>
 bool
 </td>
@@ -1137,7 +1137,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="route--additionalRules"><a href="./values.yaml#L149">route.additionalRules</a></td>
+			<td id="route--additionalRules"><a href="./values.yaml#L150">route.additionalRules</a></td>
 			<td>
 list
 </td>
@@ -1154,7 +1154,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="route--annotations"><a href="./values.yaml#L151">route.annotations</a></td>
+			<td id="route--annotations"><a href="./values.yaml#L152">route.annotations</a></td>
 			<td>
 object
 </td>
@@ -1171,7 +1171,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="route--apiVersion"><a href="./values.yaml#L153">route.apiVersion</a></td>
+			<td id="route--apiVersion"><a href="./values.yaml#L154">route.apiVersion</a></td>
 			<td>
 string
 </td>
@@ -1185,7 +1185,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="route--extraLabels"><a href="./values.yaml#L154">route.extraLabels</a></td>
+			<td id="route--extraLabels"><a href="./values.yaml#L155">route.extraLabels</a></td>
 			<td>
 object
 </td>
@@ -1202,7 +1202,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="route--filters"><a href="./values.yaml#L156">route.filters</a></td>
+			<td id="route--filters"><a href="./values.yaml#L157">route.filters</a></td>
 			<td>
 list
 </td>
@@ -1219,7 +1219,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="route--hostnames"><a href="./values.yaml#L158">route.hostnames</a></td>
+			<td id="route--hostnames"><a href="./values.yaml#L159">route.hostnames</a></td>
 			<td>
 list
 </td>
@@ -1236,7 +1236,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="route--httpsRedirect"><a href="./values.yaml#L162">route.httpsRedirect</a></td>
+			<td id="route--httpsRedirect"><a href="./values.yaml#L163">route.httpsRedirect</a></td>
 			<td>
 bool
 </td>
@@ -1250,7 +1250,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="route--kind"><a href="./values.yaml#L165">route.kind</a></td>
+			<td id="route--kind"><a href="./values.yaml#L166">route.kind</a></td>
 			<td>
 string
 </td>
@@ -1264,7 +1264,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="route--labels"><a href="./values.yaml#L167">route.labels</a></td>
+			<td id="route--labels"><a href="./values.yaml#L168">route.labels</a></td>
 			<td>
 object
 </td>
@@ -1281,7 +1281,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="route--matches"><a href="./values.yaml#L169">route.matches</a></td>
+			<td id="route--matches"><a href="./values.yaml#L170">route.matches</a></td>
 			<td>
 list
 </td>
@@ -1305,7 +1305,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="route--parentRefs"><a href="./values.yaml#L176">route.parentRefs</a></td>
+			<td id="route--parentRefs"><a href="./values.yaml#L177">route.parentRefs</a></td>
 			<td>
 list
 </td>
@@ -1322,7 +1322,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="route--redirect"><a href="./values.yaml#L182">route.redirect</a></td>
+			<td id="route--redirect"><a href="./values.yaml#L183">route.redirect</a></td>
 			<td>
 object
 </td>
@@ -1339,7 +1339,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="secrets--annotations"><a href="./values.yaml#L188">secrets.annotations</a></td>
+			<td id="secrets--annotations"><a href="./values.yaml#L189">secrets.annotations</a></td>
 			<td>
 object
 </td>
@@ -1356,7 +1356,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="secrets--reflector--enabled"><a href="./values.yaml#L196">secrets.reflector.enabled</a></td>
+			<td id="secrets--reflector--enabled"><a href="./values.yaml#L197">secrets.reflector.enabled</a></td>
 			<td>
 bool
 </td>
@@ -1370,7 +1370,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L199">securityContext.allowPrivilegeEscalation</a></td>
+			<td id="securityContext--allowPrivilegeEscalation"><a href="./values.yaml#L200">securityContext.allowPrivilegeEscalation</a></td>
 			<td>
 bool
 </td>
@@ -1384,7 +1384,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--capabilities--drop[0]"><a href="./values.yaml#L202">securityContext.capabilities.drop[0]</a></td>
+			<td id="securityContext--capabilities--drop[0]"><a href="./values.yaml#L203">securityContext.capabilities.drop[0]</a></td>
 			<td>
 string
 </td>
@@ -1398,7 +1398,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L203">securityContext.runAsNonRoot</a></td>
+			<td id="securityContext--runAsNonRoot"><a href="./values.yaml#L204">securityContext.runAsNonRoot</a></td>
 			<td>
 bool
 </td>
@@ -1412,7 +1412,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="securityContext--runAsUser"><a href="./values.yaml#L204">securityContext.runAsUser</a></td>
+			<td id="securityContext--runAsUser"><a href="./values.yaml#L205">securityContext.runAsUser</a></td>
 			<td>
 int
 </td>
@@ -1426,7 +1426,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="service--httpNodePort"><a href="./values.yaml#L207">service.httpNodePort</a></td>
+			<td id="service--httpNodePort"><a href="./values.yaml#L208">service.httpNodePort</a></td>
 			<td>
 string
 </td>
@@ -1440,7 +1440,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="service--port"><a href="./values.yaml#L208">service.port</a></td>
+			<td id="service--port"><a href="./values.yaml#L209">service.port</a></td>
 			<td>
 string
 </td>
@@ -1454,7 +1454,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="service--type"><a href="./values.yaml#L209">service.type</a></td>
+			<td id="service--type"><a href="./values.yaml#L210">service.type</a></td>
 			<td>
 string
 </td>
@@ -1468,7 +1468,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--annotations"><a href="./values.yaml#L213">serviceAccount.annotations</a></td>
+			<td id="serviceAccount--annotations"><a href="./values.yaml#L214">serviceAccount.annotations</a></td>
 			<td>
 object
 </td>
@@ -1485,7 +1485,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--automount"><a href="./values.yaml#L215">serviceAccount.automount</a></td>
+			<td id="serviceAccount--automount"><a href="./values.yaml#L216">serviceAccount.automount</a></td>
 			<td>
 bool
 </td>
@@ -1499,7 +1499,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--create"><a href="./values.yaml#L217">serviceAccount.create</a></td>
+			<td id="serviceAccount--create"><a href="./values.yaml#L218">serviceAccount.create</a></td>
 			<td>
 bool
 </td>
@@ -1513,7 +1513,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="serviceAccount--name"><a href="./values.yaml#L220">serviceAccount.name</a></td>
+			<td id="serviceAccount--name"><a href="./values.yaml#L221">serviceAccount.name</a></td>
 			<td>
 string
 </td>
@@ -1527,7 +1527,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="tolerations"><a href="./values.yaml#L222">tolerations</a></td>
+			<td id="tolerations"><a href="./values.yaml#L223">tolerations</a></td>
 			<td>
 list
 </td>
@@ -1544,7 +1544,119 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="volumeMounts[0]--mountPath"><a href="./values.yaml#L226">volumeMounts[0].mountPath</a></td>
+			<td id="upgradeJob--enabled"><a href="./values.yaml#L226">upgradeJob.enabled</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="upgradeJob--args[0]"><a href="./values.yaml#L228">upgradeJob.args[0]</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"--spring.profiles.active=bootstrap"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="upgradeJob--args[1]"><a href="./values.yaml#L229">upgradeJob.args[1]</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"-jar"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="upgradeJob--args[2]"><a href="./values.yaml#L230">upgradeJob.args[2]</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"java"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="upgradeJob--args[3]"><a href="./values.yaml#L231">upgradeJob.args[3]</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"target/aac.jar"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="upgradeJob--backoffLimit"><a href="./values.yaml#L232">upgradeJob.backoffLimit</a></td>
+			<td>
+int
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+5
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="upgradeJob--restartPolicy"><a href="./values.yaml#L233">upgradeJob.restartPolicy</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+"Never"
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="upgradeJob--ttlSecondsAfterFinished"><a href="./values.yaml#L234">upgradeJob.ttlSecondsAfterFinished</a></td>
+			<td>
+int
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+10
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="volumeMounts[0]--mountPath"><a href="./values.yaml#L238">volumeMounts[0].mountPath</a></td>
 			<td>
 string
 </td>
@@ -1558,7 +1670,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="volumeMounts[0]--name"><a href="./values.yaml#L227">volumeMounts[0].name</a></td>
+			<td id="volumeMounts[0]--name"><a href="./values.yaml#L239">volumeMounts[0].name</a></td>
 			<td>
 string
 </td>
@@ -1572,7 +1684,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="volumeMounts[0]--subPath"><a href="./values.yaml#L228">volumeMounts[0].subPath</a></td>
+			<td id="volumeMounts[0]--subPath"><a href="./values.yaml#L240">volumeMounts[0].subPath</a></td>
 			<td>
 string
 </td>
@@ -1586,7 +1698,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="volumes[0]--name"><a href="./values.yaml#L232">volumes[0].name</a></td>
+			<td id="volumes[0]--name"><a href="./values.yaml#L244">volumes[0].name</a></td>
 			<td>
 string
 </td>
@@ -1600,7 +1712,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="volumes[0]--secret--secretName"><a href="./values.yaml#L234">volumes[0].secret.secretName</a></td>
+			<td id="volumes[0]--secret--secretName"><a href="./values.yaml#L246">volumes[0].secret.secretName</a></td>
 			<td>
 string
 </td>
