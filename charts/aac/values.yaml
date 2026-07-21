@@ -27,8 +27,6 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-bootstrap: []
-
 bootstrapCreds:
   existingSecret: ""
 
@@ -121,6 +119,8 @@ postgresOperator:
   installed: false
   psqlClusterName: ""
   user: ""
+
+realms: {}
 
 replicaCount: 1
 

@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # aac
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=aac*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.18](https://img.shields.io/badge/Version-0.1.18-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.19](https://img.shields.io/badge/Version-0.1.19-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -237,24 +237,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="bootstrap"><a href="./values.yaml#L30">bootstrap</a></td>
-			<td>
-list
-</td>
-			<td></td>
-      <td>
-				<div style="max-width: 300px;">
-<details>
-<summary>+Expand</summary>
-<pre lang="json">
-[]
-</pre>
-</details>
-</div>
-			</td>
-		</tr>
-		<tr>
-			<td id="bootstrapCreds--existingSecret"><a href="./values.yaml#L33">bootstrapCreds.existingSecret</a></td>
+			<td id="bootstrapCreds--existingSecret"><a href="./values.yaml#L31">bootstrapCreds.existingSecret</a></td>
 			<td>
 string
 </td>
@@ -268,7 +251,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--applicationExtUrl"><a href="./values.yaml#L37">config.applicationExtUrl</a></td>
+			<td id="config--applicationExtUrl"><a href="./values.yaml#L35">config.applicationExtUrl</a></td>
 			<td>
 string
 </td>
@@ -282,7 +265,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--bootstrap"><a href="./values.yaml#L38">config.bootstrap</a></td>
+			<td id="config--bootstrap"><a href="./values.yaml#L36">config.bootstrap</a></td>
 			<td>
 string
 </td>
@@ -296,7 +279,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--bootstrapApply"><a href="./values.yaml#L39">config.bootstrapApply</a></td>
+			<td id="config--bootstrapApply"><a href="./values.yaml#L37">config.bootstrapApply</a></td>
 			<td>
 string
 </td>
@@ -310,7 +293,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--cacheJwks"><a href="./values.yaml#L40">config.cacheJwks</a></td>
+			<td id="config--cacheJwks"><a href="./values.yaml#L38">config.cacheJwks</a></td>
 			<td>
 string
 </td>
@@ -324,7 +307,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--jdbcDialect"><a href="./values.yaml#L41">config.jdbcDialect</a></td>
+			<td id="config--jdbcDialect"><a href="./values.yaml#L39">config.jdbcDialect</a></td>
 			<td>
 string
 </td>
@@ -338,7 +321,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--jdbcDriver"><a href="./values.yaml#L42">config.jdbcDriver</a></td>
+			<td id="config--jdbcDriver"><a href="./values.yaml#L40">config.jdbcDriver</a></td>
 			<td>
 string
 </td>
@@ -352,7 +335,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--jdbcUrl"><a href="./values.yaml#L43">config.jdbcUrl</a></td>
+			<td id="config--jdbcUrl"><a href="./values.yaml#L41">config.jdbcUrl</a></td>
 			<td>
 string
 </td>
@@ -366,7 +349,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--keystorePath"><a href="./values.yaml#L44">config.keystorePath</a></td>
+			<td id="config--keystorePath"><a href="./values.yaml#L42">config.keystorePath</a></td>
 			<td>
 string
 </td>
@@ -380,7 +363,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--logLevel"><a href="./values.yaml#L45">config.logLevel</a></td>
+			<td id="config--logLevel"><a href="./values.yaml#L43">config.logLevel</a></td>
 			<td>
 string
 </td>
@@ -394,7 +377,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--mailDebug"><a href="./values.yaml#L46">config.mailDebug</a></td>
+			<td id="config--mailDebug"><a href="./values.yaml#L44">config.mailDebug</a></td>
 			<td>
 string
 </td>
@@ -408,7 +391,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--mailHost"><a href="./values.yaml#L47">config.mailHost</a></td>
+			<td id="config--mailHost"><a href="./values.yaml#L45">config.mailHost</a></td>
 			<td>
 string
 </td>
@@ -422,7 +405,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--mailPort"><a href="./values.yaml#L48">config.mailPort</a></td>
+			<td id="config--mailPort"><a href="./values.yaml#L46">config.mailPort</a></td>
 			<td>
 int
 </td>
@@ -436,7 +419,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="config--mailProtocol"><a href="./values.yaml#L49">config.mailProtocol</a></td>
+			<td id="config--mailProtocol"><a href="./values.yaml#L47">config.mailProtocol</a></td>
 			<td>
 string
 </td>
@@ -450,7 +433,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--mailSender"><a href="./values.yaml#L50">config.mailSender</a></td>
+			<td id="config--mailSender"><a href="./values.yaml#L48">config.mailSender</a></td>
 			<td>
 string
 </td>
@@ -464,7 +447,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="config--mailTls"><a href="./values.yaml#L51">config.mailTls</a></td>
+			<td id="config--mailTls"><a href="./values.yaml#L49">config.mailTls</a></td>
 			<td>
 string
 </td>
@@ -478,7 +461,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="fullnameOverride"><a href="./values.yaml#L53">fullnameOverride</a></td>
+			<td id="fullnameOverride"><a href="./values.yaml#L51">fullnameOverride</a></td>
 			<td>
 string
 </td>
@@ -492,7 +475,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="image--aacCommand1"><a href="./values.yaml#L56">image.aacCommand1</a></td>
+			<td id="image--aacCommand1"><a href="./values.yaml#L54">image.aacCommand1</a></td>
 			<td>
 string
 </td>
@@ -506,7 +489,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="image--aacCommand2"><a href="./values.yaml#L57">image.aacCommand2</a></td>
+			<td id="image--aacCommand2"><a href="./values.yaml#L55">image.aacCommand2</a></td>
 			<td>
 string
 </td>
@@ -520,7 +503,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="image--aacCommand3"><a href="./values.yaml#L58">image.aacCommand3</a></td>
+			<td id="image--aacCommand3"><a href="./values.yaml#L56">image.aacCommand3</a></td>
 			<td>
 string
 </td>
@@ -534,7 +517,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="image--pullPolicy"><a href="./values.yaml#L59">image.pullPolicy</a></td>
+			<td id="image--pullPolicy"><a href="./values.yaml#L57">image.pullPolicy</a></td>
 			<td>
 string
 </td>
@@ -548,7 +531,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="image--repository"><a href="./values.yaml#L60">image.repository</a></td>
+			<td id="image--repository"><a href="./values.yaml#L58">image.repository</a></td>
 			<td>
 string
 </td>
@@ -562,7 +545,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="image--tag"><a href="./values.yaml#L62">image.tag</a></td>
+			<td id="image--tag"><a href="./values.yaml#L60">image.tag</a></td>
 			<td>
 string
 </td>
@@ -576,7 +559,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="imagePullSecrets"><a href="./values.yaml#L64">imagePullSecrets</a></td>
+			<td id="imagePullSecrets"><a href="./values.yaml#L62">imagePullSecrets</a></td>
 			<td>
 list
 </td>
@@ -593,7 +576,7 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--enabled"><a href="./values.yaml#L67">ingress.enabled</a></td>
+			<td id="ingress--enabled"><a href="./values.yaml#L65">ingress.enabled</a></td>
 			<td>
 bool
 </td>
@@ -607,7 +590,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--annotations"><a href="./values.yaml#L68">ingress.annotations</a></td>
+			<td id="ingress--annotations"><a href="./values.yaml#L66">ingress.annotations</a></td>
 			<td>
 object
 </td>
@@ -624,7 +607,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--className"><a href="./values.yaml#L69">ingress.className</a></td>
+			<td id="ingress--className"><a href="./values.yaml#L67">ingress.className</a></td>
 			<td>
 string
 </td>
@@ -638,7 +621,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--hosts[0]--host"><a href="./values.yaml#L71">ingress.hosts[0].host</a></td>
+			<td id="ingress--hosts[0]--host"><a href="./values.yaml#L69">ingress.hosts[0].host</a></td>
 			<td>
 string
 </td>
@@ -652,7 +635,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--hosts[0]--paths[0]--path"><a href="./values.yaml#L73">ingress.hosts[0].paths[0].path</a></td>
+			<td id="ingress--hosts[0]--paths[0]--path"><a href="./values.yaml#L71">ingress.hosts[0].paths[0].path</a></td>
 			<td>
 string
 </td>
@@ -666,7 +649,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--hosts[0]--paths[0]--pathType"><a href="./values.yaml#L74">ingress.hosts[0].paths[0].pathType</a></td>
+			<td id="ingress--hosts[0]--paths[0]--pathType"><a href="./values.yaml#L72">ingress.hosts[0].paths[0].pathType</a></td>
 			<td>
 string
 </td>
@@ -680,7 +663,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--tls[0]--hosts[0]"><a href="./values.yaml#L77">ingress.tls[0].hosts[0]</a></td>
+			<td id="ingress--tls[0]--hosts[0]"><a href="./values.yaml#L75">ingress.tls[0].hosts[0]</a></td>
 			<td>
 string
 </td>
@@ -694,7 +677,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="ingress--tls[0]--secretName"><a href="./values.yaml#L78">ingress.tls[0].secretName</a></td>
+			<td id="ingress--tls[0]--secretName"><a href="./values.yaml#L76">ingress.tls[0].secretName</a></td>
 			<td>
 string
 </td>
@@ -708,7 +691,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="jdbcExistingCreds--existingSecret"><a href="./values.yaml#L81">jdbcExistingCreds.existingSecret</a></td>
+			<td id="jdbcExistingCreds--existingSecret"><a href="./values.yaml#L79">jdbcExistingCreds.existingSecret</a></td>
 			<td>
 string
 </td>
@@ -722,7 +705,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="jdbcExistingCreds--passwordKey"><a href="./values.yaml#L82">jdbcExistingCreds.passwordKey</a></td>
+			<td id="jdbcExistingCreds--passwordKey"><a href="./values.yaml#L80">jdbcExistingCreds.passwordKey</a></td>
 			<td>
 string
 </td>
@@ -736,7 +719,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="jdbcExistingCreds--userKey"><a href="./values.yaml#L83">jdbcExistingCreds.userKey</a></td>
+			<td id="jdbcExistingCreds--userKey"><a href="./values.yaml#L81">jdbcExistingCreds.userKey</a></td>
 			<td>
 string
 </td>
@@ -750,7 +733,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="jdbcH2creds--password"><a href="./values.yaml#L89">jdbcH2creds.password</a></td>
+			<td id="jdbcH2creds--password"><a href="./values.yaml#L87">jdbcH2creds.password</a></td>
 			<td>
 string
 </td>
@@ -764,7 +747,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="jdbcH2creds--user"><a href="./values.yaml#L90">jdbcH2creds.user</a></td>
+			<td id="jdbcH2creds--user"><a href="./values.yaml#L88">jdbcH2creds.user</a></td>
 			<td>
 string
 </td>
@@ -778,7 +761,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="keystore--keyName"><a href="./values.yaml#L93">keystore.keyName</a></td>
+			<td id="keystore--keyName"><a href="./values.yaml#L91">keystore.keyName</a></td>
 			<td>
 string
 </td>
@@ -792,7 +775,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="keystore--secretName"><a href="./values.yaml#L94">keystore.secretName</a></td>
+			<td id="keystore--secretName"><a href="./values.yaml#L92">keystore.secretName</a></td>
 			<td>
 string
 </td>
@@ -806,7 +789,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="mailCreds--existingSecret"><a href="./values.yaml#L97">mailCreds.existingSecret</a></td>
+			<td id="mailCreds--existingSecret"><a href="./values.yaml#L95">mailCreds.existingSecret</a></td>
 			<td>
 string
 </td>
@@ -820,7 +803,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="mailCreds--passwordKey"><a href="./values.yaml#L98">mailCreds.passwordKey</a></td>
+			<td id="mailCreds--passwordKey"><a href="./values.yaml#L96">mailCreds.passwordKey</a></td>
 			<td>
 string
 </td>
@@ -834,7 +817,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="mailCreds--usernameKey"><a href="./values.yaml#L99">mailCreds.usernameKey</a></td>
+			<td id="mailCreds--usernameKey"><a href="./values.yaml#L97">mailCreds.usernameKey</a></td>
 			<td>
 string
 </td>
@@ -848,7 +831,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="mailSecret--password"><a href="./values.yaml#L102">mailSecret.password</a></td>
+			<td id="mailSecret--password"><a href="./values.yaml#L100">mailSecret.password</a></td>
 			<td>
 string
 </td>
@@ -862,7 +845,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="mailSecret--user"><a href="./values.yaml#L103">mailSecret.user</a></td>
+			<td id="mailSecret--user"><a href="./values.yaml#L101">mailSecret.user</a></td>
 			<td>
 string
 </td>
@@ -876,7 +859,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="nameOverride"><a href="./values.yaml#L105">nameOverride</a></td>
+			<td id="nameOverride"><a href="./values.yaml#L103">nameOverride</a></td>
 			<td>
 string
 </td>
@@ -890,7 +873,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="nodeSelector"><a href="./values.yaml#L107">nodeSelector</a></td>
+			<td id="nodeSelector"><a href="./values.yaml#L105">nodeSelector</a></td>
 			<td>
 object
 </td>
@@ -907,7 +890,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podAnnotations"><a href="./values.yaml#L109">podAnnotations</a></td>
+			<td id="podAnnotations"><a href="./values.yaml#L107">podAnnotations</a></td>
 			<td>
 object
 </td>
@@ -924,7 +907,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podLabels"><a href="./values.yaml#L111">podLabels</a></td>
+			<td id="podLabels"><a href="./values.yaml#L109">podLabels</a></td>
 			<td>
 object
 </td>
@@ -941,7 +924,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--fsGroup"><a href="./values.yaml#L114">podSecurityContext.fsGroup</a></td>
+			<td id="podSecurityContext--fsGroup"><a href="./values.yaml#L112">podSecurityContext.fsGroup</a></td>
 			<td>
 int
 </td>
@@ -955,7 +938,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--runAsGroup"><a href="./values.yaml#L115">podSecurityContext.runAsGroup</a></td>
+			<td id="podSecurityContext--runAsGroup"><a href="./values.yaml#L113">podSecurityContext.runAsGroup</a></td>
 			<td>
 int
 </td>
@@ -969,7 +952,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="podSecurityContext--runAsUser"><a href="./values.yaml#L116">podSecurityContext.runAsUser</a></td>
+			<td id="podSecurityContext--runAsUser"><a href="./values.yaml#L114">podSecurityContext.runAsUser</a></td>
 			<td>
 int
 </td>
@@ -983,7 +966,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="postgresOperator--adminUser"><a href="./values.yaml#L119">postgresOperator.adminUser</a></td>
+			<td id="postgresOperator--adminUser"><a href="./values.yaml#L117">postgresOperator.adminUser</a></td>
 			<td>
 string
 </td>
@@ -997,7 +980,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgresOperator--database"><a href="./values.yaml#L120">postgresOperator.database</a></td>
+			<td id="postgresOperator--database"><a href="./values.yaml#L118">postgresOperator.database</a></td>
 			<td>
 string
 </td>
@@ -1011,7 +994,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgresOperator--installed"><a href="./values.yaml#L121">postgresOperator.installed</a></td>
+			<td id="postgresOperator--installed"><a href="./values.yaml#L119">postgresOperator.installed</a></td>
 			<td>
 bool
 </td>
@@ -1025,7 +1008,7 @@ false
 			</td>
 		</tr>
 		<tr>
-			<td id="postgresOperator--psqlClusterName"><a href="./values.yaml#L122">postgresOperator.psqlClusterName</a></td>
+			<td id="postgresOperator--psqlClusterName"><a href="./values.yaml#L120">postgresOperator.psqlClusterName</a></td>
 			<td>
 string
 </td>
@@ -1039,7 +1022,7 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="postgresOperator--user"><a href="./values.yaml#L123">postgresOperator.user</a></td>
+			<td id="postgresOperator--user"><a href="./values.yaml#L121">postgresOperator.user</a></td>
 			<td>
 string
 </td>
@@ -1049,6 +1032,23 @@ string
 <pre lang="json">
 ""
 </pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="realms"><a href="./values.yaml#L123">realms</a></td>
+			<td>
+object
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<details>
+<summary>+Expand</summary>
+<pre lang="json">
+{}
+</pre>
+</details>
 </div>
 			</td>
 		</tr>
