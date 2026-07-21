@@ -9,9 +9,11 @@ metadata:
   name: {{ include "aac.fullname" . }}-upgrade
   labels:
     {{- include "aac.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
-  backoffLimit: {{ .Values.upgradeJob.backoffLimit | default 6 }}
-  ttlSecondsAfterFinished: {{ .Values.upgradeJob.ttlSecondsAfterFinished | default 10 }}
+  backoffLimit: {{ .Values.upgradeJob.backoffLimit | default 1 }}
   template:
     metadata:
       annotations:
