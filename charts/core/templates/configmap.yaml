@@ -8,9 +8,10 @@ metadata:
   name: {{ include "core.fullname" . }}
   labels:
     {{- include "core.labels" . | nindent 4 }}
-  {{- with .Values.annotations.configmap }}
+  {{- $annotations := include "core.annotations" (dict "root" $ "resource" .Values.annotations.configmap) }}
+  {{- if $annotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
+    {{- $annotations | nindent 4 }}
   {{- end }}
 data:
   DH_NAME: {{ .Release.Name }}

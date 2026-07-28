@@ -117,7 +117,10 @@ Build core profile variable
 Common annotations - merges global and resource-specific annotations
 */}}
 {{- define "core.annotations" -}}
-{{- $globalAnnotations := .Values.annotations.global | default dict }}
-{{- $resourceAnnotations := . | default dict }}
-{{- merge $resourceAnnotations $globalAnnotations | toYaml }}
+{{- $globalAnnotations := .root.Values.annotations.global | default dict }}
+{{- $resourceAnnotations := .resource | default dict }}
+{{- $mergedAnnotations := mergeOverwrite (deepCopy $globalAnnotations) $resourceAnnotations }}
+{{- if gt (len $mergedAnnotations) 0 }}
+{{- toYaml $mergedAnnotations }}
+{{- end }}
 {{- end }}

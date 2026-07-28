@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 build_chart () {
-  array=('aac' 'digitalhub' 'digitalhub-crds' 'mlrun' 'nakamasato-mysql-operator' 'mlrun-ce' 'minio-operator')
+  array=('aac' 'digitalhub' 'digitalhub-crds' 'mlrun' 'nakamasato-mysql-operator' 'mlrun-ce' 'minio-operator' 'resources-profile-generator')
   for f in charts/*
   do
   IFS='/'
