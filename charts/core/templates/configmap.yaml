@@ -6,6 +6,12 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "core.fullname" . }}
+  labels:
+    {{- include "core.labels" . | nindent 4 }}
+  {{- with .Values.annotations.configmap }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 data:
   DH_NAME: {{ .Release.Name }}
   DH_ENDPOINT: "{{ include "core.endpoint" . }}"
@@ -17,7 +23,7 @@ data:
   DH_CONFIG_COMMON_SECRETS: {{ .Values.commonCredsSecret.secretName }}
 {{- end }}
   DH_CONFIG_COMMON_MAPS: digitalhub-common-env
-  LOG_LEVEL: INFO
+  LOG_LEVEL: {{ .Values.global.logLevel }}
   RUNTIME_DBT_IMAGE: {{ .Values.runtime.dbt.image }}:{{ .Values.runtime.dbt.tag }}
   RUNTIME_HERA_IMAGE: {{ .Values.runtime.hera.image }}:{{ .Values.runtime.hera.tag }}
   RUNTIME_PYTHON_IMAGE_3_10: {{ .Values.runtime.python.image }}:{{ .Values.runtime.python.tag3_10 }}

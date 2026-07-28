@@ -112,3 +112,12 @@ Build core profile variable
 {{- end }}
 {{- join "," $templates }}
 {{- end }}
+
+{{/*
+Common annotations - merges global and resource-specific annotations
+*/}}
+{{- define "core.annotations" -}}
+{{- $globalAnnotations := .Values.annotations.global | default dict }}
+{{- $resourceAnnotations := . | default dict }}
+{{- merge $resourceAnnotations $globalAnnotations | toYaml }}
+{{- end }}

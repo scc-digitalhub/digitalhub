@@ -8,6 +8,10 @@ metadata:
   name: {{ include "core.fullname" . }}
   labels:
     {{- include "core.labels" . | nindent 4 }}
+  {{- with .Values.annotations.service }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:

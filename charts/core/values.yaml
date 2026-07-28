@@ -8,6 +8,7 @@ global:
   externalHostAddress: ""
   #  global.externalTls --
   externalTls: false
+  logLevel: INFO
   #  global.ociRegistry -- Values of your registry
   ociRegistry:
     #  global.ociRegistry.email -- Registry email
@@ -88,6 +89,19 @@ additionalConfig:
 
 #  affinity -- Affinity for pod assignment.
 affinity: {}
+
+# annotations -- Annotations to add to all resources.
+annotations:
+  # annotations.global -- Annotations to add to all resources.
+  global: {}
+  # annotations.configmap -- Annotations for configmaps
+  configmap: {}
+  # annotations.deployment -- Annotations for deployments
+  deployment: {}
+  # annotations.secret -- Annotations for secrets
+  secret: {}
+  # annotations.service -- Annotations for services
+  service: {}
 
 #  argoWorkflow -- Argoworkflow configuration
 argoWorkflow:
