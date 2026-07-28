@@ -434,6 +434,141 @@ priorityClassName: ""
 prometheus:
   #  prometheus.enabled -- Enable/Disable Prometheus integration
   enabled: false
+  # prometheus.credentials -- Credentials for the Prometheus instance
+  credentials:
+    #  prometheus.credentials.existingSecret -- Reference to the secret containing the credentials for the Prometheus instance
+    existingSecret:
+      #  prometheus.credentials.existingSecret.name -- Name of the secret containing the credentials for the Prometheus instance
+      name: ""
+      #  prometheus.credentials.existingSecret.passwordKey -- Key corresponding to the password in the secret
+      passwordKey: ""
+      #  prometheus.credentials.existingSecret.usernameKey -- Key corresponding to the username in the secret
+      usernameKey: ""
+    #  prometheus.credentials.password -- Password for the Prometheus instance
+    password: ""
+    #  prometheus.credentials.username -- Username for the Prometheus instance
+    username: ""
+  #  prometheus.endpoint -- Endpoint of the Prometheus instance
+  #  prometheus.endpoint -- Endpoint of the Prometheus instance
+  endpoint: ""
+  #  prometheus.labels -- Labels that will have to match the ones set in Prometheus for filtering Core resources
+  labels:
+    # prometheus.labels.instance -- Instance label used to filter Core resources in Prometheus
+    instance: ""
+    #  prometheus.labels.namespace -- Namespace label used to filter Core resources in Prometheus
+    namespace: namespace
+    #  prometheus.labels.project -- Project label used to filter Core resources in Prometheus
+    project: dhcore_project
+    #  prometheus.labels.run -- Run label used to filter Core resources in Prometheus
+    run: dhcore_run
+    #  prometheus.labels.user -- User label used to filter Core resources in Prometheus
+    user: dhcore_user
+  #  prometheus.lazyFilter -- Whether to enable lazy filtering on Prometheus queries
+  lazyFilter: true
+  #  prometheus.metrics -- Metrics configuration used for Prometheus queries
+  metrics:
+    #  prometheus.metrics.cpu -- CPU metric configuration
+    cpu:
+      #  prometheus.metrics.cpu.groupBy -- Dimension used to group metric values
+      groupBy: container
+      #  prometheus.metrics.cpu.label -- Label name used for metric exposure
+      label: cpu
+      #  prometheus.metrics.cpu.name -- Prometheus metric name
+      name: container_cpu_usage_seconds_total
+      #  prometheus.metrics.cpu.operation -- Prometheus operation applied to the metric
+      operation: rate
+      #  prometheus.metrics.cpu.unit -- Metric unit
+      unit: seconds
+      #  prometheus.metrics.cpu.window -- Time window used by the metric operation
+      window: 2m
+    #  prometheus.metrics.disk -- Disk metric configuration
+    disk:
+      #  prometheus.metrics.disk.groupBy -- Dimension used to group metric values
+      groupBy: container
+      #  prometheus.metrics.disk.label -- Label name used for metric exposure
+      label: disk-{device}
+      #  prometheus.metrics.disk.name -- Prometheus metric name
+      name: container_fs_writes_bytes_total
+      #  prometheus.metrics.disk.operation -- Prometheus operation applied to the metric
+      operation: ""
+      #  prometheus.metrics.disk.unit -- Metric unit
+      unit: bytes
+      #  prometheus.metrics.disk.window -- Time window used by the metric operation
+      window: ""
+    #  prometheus.metrics.gpu -- GPU metric configuration
+    gpu:
+      #  prometheus.metrics.gpu.groupBy -- Dimension used to group metric values
+      groupBy: ""
+      #  prometheus.metrics.gpu.label -- Label name used for metric exposure
+      label: gpu-utilization
+      #  prometheus.metrics.gpu.name -- Prometheus metric name
+      name: ""
+      #  prometheus.metrics.gpu.operation -- Prometheus operation applied to the metric
+      operation: ""
+      #  prometheus.metrics.gpu.unit -- Metric unit
+      unit: ""
+      #  prometheus.metrics.gpu.window -- Time window used by the metric operation
+      window: ""
+    #  prometheus.metrics.gpuMemory -- GPU memory metric configuration
+    gpuMemory:
+      #  prometheus.metrics.gpuMemory.groupBy -- Dimension used to group metric values
+      groupBy: ""
+      #  prometheus.metrics.gpuMemory.label -- Label name used for metric exposure
+      label: gpu-memory
+      #  prometheus.metrics.gpuMemory.name -- Prometheus metric name
+      name: ""
+      #  prometheus.metrics.gpuMemory.operation -- Prometheus operation applied to the metric
+      operation: ""
+      #  prometheus.metrics.gpuMemory.unit -- Metric unit
+      unit: bytes
+      #  prometheus.metrics.gpuMemory.window -- Time window used by the metric operation
+      window: ""
+    #  prometheus.metrics.memory -- Memory metric configuration
+    memory:
+      #  prometheus.metrics.memory.groupBy -- Dimension used to group metric values
+      groupBy: container
+      #  prometheus.metrics.memory.label -- Label name used for metric exposure
+      label: memory
+      #  prometheus.metrics.memory.name -- Prometheus metric name
+      name: container_memory_working_set_bytes
+      #  prometheus.metrics.memory.operation -- Prometheus operation applied to the metric
+      operation: ""
+      #  prometheus.metrics.memory.unit -- Metric unit
+      unit: bytes
+      #  prometheus.metrics.memory.window -- Time window used by the metric operation
+      window: ""
+    #  prometheus.metrics.networkReceive -- Network receive metric configuration
+    networkReceive:
+      #  prometheus.metrics.networkReceive.groupBy -- Dimension used to group metric values
+      groupBy: pod
+      #  prometheus.metrics.networkReceive.label -- Label name used for metric exposure
+      label: "{interface}-receive"
+      #  prometheus.metrics.networkReceive.name -- Prometheus metric name
+      name: container_network_receive_bytes_total
+      #  prometheus.metrics.networkReceive.operation -- Prometheus operation applied to the metric
+      operation: rate
+      #  prometheus.metrics.networkReceive.unit -- Metric unit
+      unit: bytes
+      #  prometheus.metrics.networkReceive.window -- Time window used by the metric operation
+      window: 2m
+    #  prometheus.metrics.networkSend -- Network send metric configuration
+    networkSend:
+      #  prometheus.metrics.networkSend.groupBy -- Dimension used to group metric values
+      groupBy: pod
+      #  prometheus.metrics.networkSend.label -- Label name used for metric exposure
+      label: "{interface}-send"
+      #  prometheus.metrics.networkSend.name -- Prometheus metric name
+      name: container_network_transmit_bytes_total
+      #  prometheus.metrics.networkSend.operation -- Prometheus operation applied to the metric
+      operation: rate
+      #  prometheus.metrics.networkSend.unit -- Metric unit
+      unit: bytes
+      #  prometheus.metrics.networkSend.window -- Time window used by the metric operation
+      window: 2m
+  #  prometheus.namespace -- Namespace used for Prometheus queries
+  namespace: ""
+  #  prometheus.rateInterval -- Rate interval in seconds used in Prometheus rate operations
+  rateInterval: 120
 
 #  registry --
 registry:

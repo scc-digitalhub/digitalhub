@@ -90,6 +90,26 @@ spec:
             value: {{ .Values.loki.credentials.password }}
             {{- end }}
           {{- end }}
+          {{- if or .Values.prometheus.credentials.username .Values.prometheus.credentials.existingSecret.name }}
+          - name: PROMETHEUS_USERNAME
+            {{- if and .Values.prometheus.credentials.existingSecret.name .Values.prometheus.credentials.existingSecret.usernameKey }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.prometheus.credentials.existingSecret.name }}
+                key: {{ .Values.prometheus.credentials.existingSecret.usernameKey }}
+            {{- else }}
+            value: {{ .Values.prometheus.credentials.username }}
+            {{- end }}
+          - name: PROMETHEUS_PASSWORD
+            {{- if and .Values.prometheus.credentials.existingSecret.name .Values.prometheus.credentials.existingSecret.passwordKey }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.prometheus.credentials.existingSecret.name }}
+                key: {{ .Values.prometheus.credentials.existingSecret.passwordKey }}
+            {{- else }}
+            value: {{ .Values.prometheus.credentials.password }}
+            {{- end }}
+          {{- end }}
           {{- if .Values.s3.enabled }}
             - name: AWS_ACCESS_KEY
             {{- if and .Values.s3.credentials.existingSecret.name .Values.s3.credentials.existingSecret.accessKeyKey }}

@@ -154,3 +154,58 @@ data:
   {{ if .Values.loki.organizationId }}LOKI_ORG_ID: {{ .Values.loki.organizationId | quote }}{{ end }}
   LOKI_MAP_WITH_PREFIX: {{ .Values.loki.mapWithPrefix | quote }}
 {{- end }}
+{{- if .Values.prometheus.enabled }}
+  PROMETHEUS_URL: {{ .Values.prometheus.endpoint | quote }}
+  PROMETHEUS_NAMESPACE: {{ .Values.prometheus.namespace | quote }}
+  PROMETHEUS_LAZY_FILTER: {{ .Values.prometheus.lazyFilter | quote }}
+  PROMETHEUS_RATE_INTERVAL_SECONDS: {{ .Values.prometheus.rateInterval | quote }}
+  PROMETHEUS_METRICS_CPU: {{ .Values.prometheus.metrics.cpu.name | quote }}
+  PROMETHEUS_METRICS_CPU_UNIT: {{ .Values.prometheus.metrics.cpu.unit | quote }}
+  PROMETHEUS_METRICS_CPU_LABEL: {{ .Values.prometheus.metrics.cpu.label | quote }}
+  PROMETHEUS_METRICS_CPU_GROUP_BY: {{ .Values.prometheus.metrics.cpu.groupBy | quote }}
+  PROMETHEUS_METRICS_CPU_OPERATION: {{ .Values.prometheus.metrics.cpu.operation | quote }}
+  PROMETHEUS_METRICS_CPU_WINDOW: {{ .Values.prometheus.metrics.cpu.window | quote }}
+  PROMETHEUS_METRICS_MEMORY: {{ .Values.prometheus.metrics.memory.name | quote }}
+  PROMETHEUS_METRICS_MEMORY_UNIT: {{ .Values.prometheus.metrics.memory.unit | quote }}
+  PROMETHEUS_METRICS_MEMORY_LABEL: {{ .Values.prometheus.metrics.memory.label | quote }}
+  PROMETHEUS_METRICS_MEMORY_GROUP_BY: {{ .Values.prometheus.metrics.memory.groupBy | quote }}
+  PROMETHEUS_METRICS_MEMORY_OPERATION: {{ .Values.prometheus.metrics.memory.operation | quote }}
+  PROMETHEUS_METRICS_MEMORY_WINDOW: {{ .Values.prometheus.metrics.memory.window | quote }}
+  PROMETHEUS_METRICS_DISK: {{ .Values.prometheus.metrics.disk.name | quote }}
+  PROMETHEUS_METRICS_DISK_UNIT: {{ .Values.prometheus.metrics.disk.unit | quote }}
+  PROMETHEUS_METRICS_DISK_LABEL: {{ .Values.prometheus.metrics.disk.label | quote }}
+  PROMETHEUS_METRICS_DISK_GROUP_BY: {{ .Values.prometheus.metrics.disk.groupBy | quote }}
+  PROMETHEUS_METRICS_DISK_OPERATION: {{ .Values.prometheus.metrics.disk.operation | quote }}
+  PROMETHEUS_METRICS_DISK_WINDOW: {{ .Values.prometheus.metrics.disk.window | quote }}
+  PROMETHEUS_METRICS_GPU: {{ .Values.prometheus.metrics.gpu.name | quote }}
+  PROMETHEUS_METRICS_GPU_UNIT: {{ .Values.prometheus.metrics.gpu.unit | quote }}
+  PROMETHEUS_METRICS_GPU_LABEL: {{ .Values.prometheus.metrics.gpu.label | quote }}
+  PROMETHEUS_METRICS_GPU_GROUP_BY: {{ .Values.prometheus.metrics.gpu.groupBy | quote }}
+  PROMETHEUS_METRICS_GPU_OPERATION: {{ .Values.prometheus.metrics.gpu.operation | quote }}
+  PROMETHEUS_METRICS_GPU_WINDOW: {{ .Values.prometheus.metrics.gpu.window | quote }}
+  PROMETHEUS_METRICS_GPU_MEMORY: {{ .Values.prometheus.metrics.gpuMemory.name | quote }}
+  PROMETHEUS_METRICS_GPU_MEMORY_UNIT: {{ .Values.prometheus.metrics.gpuMemory.unit | quote }}
+  PROMETHEUS_METRICS_GPU_MEMORY_LABEL: {{ .Values.prometheus.metrics.gpuMemory.label | quote }}
+  PROMETHEUS_METRICS_GPU_MEMORY_GROUP_BY: {{ .Values.prometheus.metrics.gpuMemory.groupBy | quote }}
+  PROMETHEUS_METRICS_GPU_MEMORY_OPERATION: {{ .Values.prometheus.metrics.gpuMemory.operation | quote }}
+  PROMETHEUS_METRICS_GPU_MEMORY_WINDOW: {{ .Values.prometheus.metrics.gpuMemory.window | quote }}
+  PROMETHEUS_METRICS_NETWORK_SEND: {{ .Values.prometheus.metrics.networkSend.name | quote }}
+  PROMETHEUS_METRICS_NETWORK_SEND_UNIT: {{ .Values.prometheus.metrics.networkSend.unit | quote }}
+  PROMETHEUS_METRICS_NETWORK_SEND_LABEL: {{ .Values.prometheus.metrics.networkSend.label | quote }}
+  PROMETHEUS_METRICS_NETWORK_SEND_GROUP_BY: {{ .Values.prometheus.metrics.networkSend.groupBy | quote }}
+  PROMETHEUS_METRICS_NETWORK_SEND_OPERATION: {{ .Values.prometheus.metrics.networkSend.operation | quote }}
+  PROMETHEUS_METRICS_NETWORK_SEND_WINDOW: {{ .Values.prometheus.metrics.networkSend.window | quote }}
+  PROMETHEUS_METRICS_NETWORK_RECEIVE: {{ .Values.prometheus.metrics.networkReceive.name | quote }}
+  PROMETHEUS_METRICS_NETWORK_RECEIVE_UNIT: {{ .Values.prometheus.metrics.networkReceive.unit | quote }}
+  PROMETHEUS_METRICS_NETWORK_RECEIVE_LABEL: {{ .Values.prometheus.metrics.networkReceive.label | quote }}
+  PROMETHEUS_METRICS_NETWORK_RECEIVE_GROUP_BY: {{ .Values.prometheus.metrics.networkReceive.groupBy | quote }}
+  PROMETHEUS_METRICS_NETWORK_RECEIVE_OPERATION: {{ .Values.prometheus.metrics.networkReceive.operation | quote }}
+  PROMETHEUS_METRICS_NETWORK_RECEIVE_WINDOW: {{ .Values.prometheus.metrics.networkReceive.window | quote }}
+  PROMETHEUS_MAPPING_RUN: {{ .Values.prometheus.labels.run | quote }}
+  PROMETHEUS_MAPPING_PROJECT: {{ .Values.prometheus.labels.project | quote }}
+  PROMETHEUS_MAPPING_USER: {{ .Values.prometheus.labels.user | quote }}
+  {{- if .Values.prometheus.labels.instance }}
+  PROMETHEUS_MAPPING_INSTANCE: {{ .Values.prometheus.labels.instance | quote }}
+  {{- end }}
+  PROMETHEUS_MAPPING_NAMESPACE: {{ .Values.prometheus.labels.namespace | quote }}
+{{- end }}
