@@ -582,6 +582,25 @@ entries:
     version: 0.1.0
   core:
   - apiVersion: v2
+    appVersion: 0.15.1
+    created: "2026-08-03T14:56:17.889776292Z"
+    description: DigitalHub Core is part of the DigitalHub platform, and depends on
+      external components to support the complete set of functionalities.
+    digest: 5aa214c4b6f5d9e110e9892c94299320deca5376c2a2c02be0bbd8347055244c
+    home: https://github.com/scc-digitalhub/digitalhub/tree/main/charts/core
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: core
+    sources:
+    - https://github.com/scc-digitalhub/digitalhub-core
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/core-0.3.52/core-0.3.52.tgz
+    version: 0.3.52
+  - apiVersion: v2
     appVersion: 0.15.0
     created: "2026-07-28T13:02:40.768473786Z"
     description: DigitalHub Core is part of the DigitalHub platform, and depends on
@@ -28800,4 +28819,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/resources-profile-generator-0.1.0/resources-profile-generator-0.1.0.tgz
     version: 0.1.0
-generated: "2026-07-28T13:05:14.393960297Z"
+generated: "2026-08-03T14:56:17.892907098Z"
