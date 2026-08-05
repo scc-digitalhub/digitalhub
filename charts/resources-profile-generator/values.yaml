@@ -28,6 +28,8 @@ queueName: ""
 
 #  requests -- Configure the percentage used to compute requests from limits.
 requests:
+  # requests.enabled -- Enable/disable the requests percentage feature. If disabled, requests will empty and the user must provide them in the job spec.
+  enabled: true
   #  requests.cpuPercent -- CPU request percentage derived from computed CPU limit for non-max variants.
   cpuPercent: 67
   #  requests.memoryPercent -- Memory request percentage derived from computed memory limit for non-max variants.

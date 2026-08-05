@@ -61,11 +61,13 @@ data:
       - name: kueue.x-k8s.io/queue-name
         value: {{ $.Values.queueName }}
     resources:
+      {{- if $.Values.requests.enabled }}
       requests:
         cpu: "{{ $requestCpu }}"
         memory: "{{ $requestMemGi }}Gi"
         nvidia.com/gpu: "{{ $gpuCount }}"
         ephemeral-storage: "{{ $limitMemGi }}Gi"
+      {{- end }}
       limits:
         cpu: "{{ $limitCpu }}"
         memory: "{{ $limitMemGi }}Gi"

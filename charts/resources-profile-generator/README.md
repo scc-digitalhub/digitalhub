@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # resources-profile-generator
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=resources-profile-generator*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 Helm chart to generate resource profile templates in a ConfigMap
 
@@ -81,6 +81,7 @@ object
 <pre lang="json">
 {
   "cpuPercent": 67,
+  "enabled": true,
   "memoryPercent": 67
 }
 </pre>
@@ -89,7 +90,21 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="requests--cpuPercent"><a href="./values.yaml#L32">requests.cpuPercent</a></td>
+			<td id="requests--enabled"><a href="./values.yaml#L32">requests.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/disable the requests percentage feature. If disabled, requests will empty and the user must provide them in the job spec.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+true
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="requests--cpuPercent"><a href="./values.yaml#L34">requests.cpuPercent</a></td>
 			<td>
 int
 </td>
@@ -103,7 +118,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="requests--memoryPercent"><a href="./values.yaml#L34">requests.memoryPercent</a></td>
+			<td id="requests--memoryPercent"><a href="./values.yaml#L36">requests.memoryPercent</a></td>
 			<td>
 int
 </td>
