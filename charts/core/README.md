@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # core
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/core/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=core*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.3.52](https://img.shields.io/badge/Version-0.3.52-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.15.1](https://img.shields.io/badge/AppVersion-0.15.1-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.15.1](https://img.shields.io/badge/AppVersion-0.15.1-informational?style=flat-square)
 
 DigitalHub Core is part of the DigitalHub platform, and depends on external components to support the complete set of functionalities.
 
@@ -5715,11 +5715,11 @@ object
 {
   "dbt": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt",
-    "tag": "0.15.0"
+    "tag": "0.15.1"
   },
   "hera": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-hera/wrapper-hera",
-    "tag": "0.15.0"
+    "tag": "0.15.1"
   },
   "huggingFace": {
     "image": "kserve/huggingfaceserver",
@@ -5728,10 +5728,10 @@ object
   "python": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime",
     "installDependencies": true,
-    "tag3_10": "3.10-0.15.0",
-    "tag3_11": "3.11-0.15.0",
-    "tag3_12": "3.12-0.15.0",
-    "tag3_13": "3.13-0.15.0"
+    "tag3_10": "3.10-0.15.1",
+    "tag3_11": "3.11-0.15.1",
+    "tag3_12": "3.12-0.15.1",
+    "tag3_13": "3.13-0.15.1"
   },
   "vllm": {
     "cpu": {
@@ -5762,7 +5762,7 @@ object
 <pre lang="json">
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt",
-  "tag": "0.15.0"
+  "tag": "0.15.1"
 }
 </pre>
 </details>
@@ -5792,7 +5792,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"0.15.0"
+"0.15.1"
 </pre>
 </div>
 			</td>
@@ -5810,7 +5810,7 @@ object
 <pre lang="json">
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-hera/wrapper-hera",
-  "tag": "0.15.0"
+  "tag": "0.15.1"
 }
 </pre>
 </details>
@@ -5840,7 +5840,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"0.15.0"
+"0.15.1"
 </pre>
 </div>
 			</td>
@@ -5907,10 +5907,10 @@ object
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime",
   "installDependencies": true,
-  "tag3_10": "3.10-0.15.0",
-  "tag3_11": "3.11-0.15.0",
-  "tag3_12": "3.12-0.15.0",
-  "tag3_13": "3.13-0.15.0"
+  "tag3_10": "3.10-0.15.1",
+  "tag3_11": "3.11-0.15.1",
+  "tag3_12": "3.12-0.15.1",
+  "tag3_13": "3.13-0.15.1"
 }
 </pre>
 </details>
@@ -5954,7 +5954,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.10-0.15.0"
+"3.10-0.15.1"
 </pre>
 </div>
 			</td>
@@ -5968,7 +5968,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.11-0.15.0"
+"3.11-0.15.1"
 </pre>
 </div>
 			</td>
@@ -5982,7 +5982,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.12-0.15.0"
+"3.12-0.15.1"
 </pre>
 </div>
 			</td>
@@ -5996,7 +5996,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.13-0.15.0"
+"3.13-0.15.1"
 </pre>
 </div>
 			</td>
