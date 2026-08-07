@@ -12,7 +12,7 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.15.6"
+version: "0.15.7"
 appVersion: "0.15.1"
 dependencies:
 - name: argo-workflows
@@ -68,7 +68,7 @@ dependencies:
   tags:
     - operator
 - name: kubeai
-  version: "0.23.2"
+  version: "0.23.4"
   repository: https://www.kubeai.org
   condition: kubeai.enabled
 - name: open-webui
