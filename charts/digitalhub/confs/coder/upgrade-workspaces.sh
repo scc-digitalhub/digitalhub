@@ -31,7 +31,7 @@ failed=0
 for workspace_state in "${workspace_states[@]}"; do
     IFS=$'\t' read -r workspace initial_status <<< "${workspace_state}"
     echo "Upgrading ${workspace} workspace"
-    if ! coder --use-parameter-defaults update "${workspace}"; then
+    if ! coder update --use-parameter-defaults "${workspace}"; then
         echo "Failed to upgrade ${workspace} workspace" >&2
         failed=1
     fi
