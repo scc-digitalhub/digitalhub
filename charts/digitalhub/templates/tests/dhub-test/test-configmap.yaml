@@ -7,6 +7,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "digitalhub.fullname" . }}-test-script
+  labels:
+    {{- include "digitalhub.labels" . | nindent 4 }}
 data:
   init-python-script.py: {{ tpl ( .Files.Get "confs/tests/test-script.py") $ | quote }}
 {{- end }}

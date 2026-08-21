@@ -7,6 +7,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: coder-cache-pvc
+  labels:
+    {{- include "digitalhub.labels" . | nindent 4 }}
 spec:
   accessModes:
     - {{ .Values.coder.cache.pvc.accessMode }}

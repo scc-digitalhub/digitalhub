@@ -9,4 +9,6 @@ data:
 kind: Secret
 metadata:
   name: {{ .Values.global.basicAuth.secretName }}
+  labels:
+    {{- include "digitalhub.labels" . | nindent 4 }}
 {{- end }}

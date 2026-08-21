@@ -2,11 +2,11 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-{{ if and .Values.coder.enabled .Values.coder.template.upgrade.enabled (not .Values.coder.workspace.upgrade.enabled) (or .Values.coder.template.upgrade.token .Values.coder.existingSecrets.adminSessionTokenExistingSecret.secretName) -}}
+{{ if and .Values.coder.enabled .Values.coder.workspace.upgrade.enabled (or .Values.coder.template.upgrade.token .Values.coder.existingSecrets.adminSessionTokenExistingSecret.secretName) -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: coder-template-upgrade
+  name: coder-workspace-upgrade
   labels:
     {{- include "digitalhub.labels" . | nindent 4 }}
   annotations:
@@ -16,10 +16,39 @@ spec:
   backoffLimit: 1
   template:
     spec:
-      containers:
+      initContainers:
         - name: coder-template-upgrade
           image: {{ .Subcharts.coder.Values.coder.image.repo }}:{{ .Subcharts.coder.Values.coder.image.tag }}
           command: ["/bin/bash", "/home/coder/init-files/upgrade-templates.sh"]
+          env:
+            {{- with .Subcharts.coder.Values.coder.env -}}
+            {{ toYaml . | nindent 12 }}
+            {{- end }}
+            {{- include "digitalhub.coderAccUrl" . | nindent 12 -}}
+            - name: CODER_URL
+              value: "http://coder.{{ .Release.Namespace }}.svc.cluster.local"
+            - name: CODER_SESSION_TOKEN
+              {{- if .Values.coder.existingSecrets.adminSessionTokenExistingSecret.secretName }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.coder.existingSecrets.adminSessionTokenExistingSecret.secretName }}
+                  key: {{ .Values.coder.existingSecrets.adminSessionTokenExistingSecret.tokenKey }}
+              {{- else }}
+              value: {{ .Values.coder.template.upgrade.token }}
+              {{- end }}
+          volumeMounts:
+          - name: init-files
+            mountPath: "/home/coder/init-files"
+            readOnly: true
+          - name: custom-template
+            mountPath: "/home/coder/custom-template"
+            readOnly: true
+          securityContext:
+            {{- toYaml .Values.global.securityContext | nindent 12 }}
+      containers:
+        - name: coder-workspace-upgrade
+          image: {{ .Subcharts.coder.Values.coder.image.repo }}:{{ .Subcharts.coder.Values.coder.image.tag }}
+          command: ["/bin/bash", "/home/coder/init-files/upgrade-workspaces.sh"]
           env:
             {{- with .Subcharts.coder.Values.coder.env -}}
             {{ toYaml . | nindent 12 }}

@@ -12,7 +12,7 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.15.8"
+version: "0.15.9"
 appVersion: "0.15.1"
 dependencies:
 - name: argo-workflows
@@ -24,7 +24,7 @@ dependencies:
   repository: https://scc-digitalhub.github.io/digitalhub/
   condition: apigw-operator.enabled
 - name: coder
-  version: "2.32.4"
+  version: "2.35.4"
   repository: https://helm.coder.com/v2
   condition: coder.enabled
 - name: core

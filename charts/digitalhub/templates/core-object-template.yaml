@@ -8,6 +8,8 @@ apiVersion: templates.kluctl.io/v1alpha1
 kind: ObjectTemplate
 metadata:
   name: {{ include "digitalhub.fullname" . }}-common-creds-transformer
+  labels:
+    {{- include "digitalhub.labels" . | nindent 4 }}
 spec:
   serviceAccountName: secret-transformer
   prune: true

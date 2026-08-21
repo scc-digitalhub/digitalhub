@@ -489,6 +489,14 @@ coder:
       token: ""
   #  coder.username -- Username of the Coder admin user
   username: ""
+  # coder.workspace -- Coder workspace configuration
+  workspace:
+    upgrade:
+      #  coder.workspace.upgrade.enabled -- Enable/Disable the upgrade job for the Coder workspaces
+      enabled: false
+      #  coder.workspace.upgrade.token -- A token that will grant you permission to edit the workspaces of your instance.
+      #  Must be generated in Coder with the admin account.
+      token: ""
 
 #  core -- Core configuration
 core:

@@ -7,6 +7,8 @@ apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
   name: coder-postgres-cluster
+  labels:
+    {{- include "digitalhub.labels" . | nindent 4 }}
 spec:
   teamId: "coder"
   volume:
