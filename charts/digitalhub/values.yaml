@@ -480,26 +480,6 @@ coder:
             #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Username key
             usernameKey: ""
         stopAfter: 0h
-      - extraLabels: {}
-        extraVars: []
-        iconUrl: https://i.ibb.co/TrBDsZM/sqlpad.png
-        image: ghcr.io/scc-digitalhub/digitalhub/images/sqlpad:7.5.3
-        name: sqlpad
-        nodePort: "30140"
-        postgres:
-          #  coder.template.customTemplates.postgres.database -- Name of the Platform's main database
-          database: digitalhub
-          #  coder.template.customTemplates.postgres.hostname -- Host of the Platform's main database
-          hostname: ""
-          #  coder.template.customTemplates.postgres.ownerCredsSecret -- Set the keys that you use in your Platform's main database secret
-          ownerCredsSecret:
-            #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Password key
-            passwordKey: ""
-            #  coder.template.customTemplates.postgres.ownerCredsSecret.secretName -- Name of the Platform's main database secret containing the owner user username and password
-            secretName: ""
-            #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Username key
-            usernameKey: ""
-        stopAfter: 8h
     #  coder.template.upgrade -- Coder templates upgrade process configuration
     upgrade:
       #  coder.template.upgrade.enabled -- Enable/Disable the upgrade job for the Coder templates

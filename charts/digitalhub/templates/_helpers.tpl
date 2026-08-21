@@ -183,11 +183,7 @@ Variables used in the creation and upgrade of Coder templates
   {{- $variables = append $variables (printf "postgresql_password_key=%s" $template.postgres.ownerCredsSecret.passwordKey ) }}
 {{- end }}
 {{- end }}
-{{- if eq $template.name "jupyter"}}
-  {{- $variables = append $variables (printf "image_3_9=%s" $template.image39 ) }}
-  {{- $variables = append $variables (printf "image_3_11=%s" $template.image311 ) }}
-{{- end }}
-{{- if or (eq $template.name "jupyter") (eq $template.name "code-toolbox")}}
+{{- if (eq $template.name "code-toolbox")}}
   {{- $variables = append $variables (printf "privileged=%v" $template.privileged ) }}
   {{- $variables = append $variables (printf "stsenabled=%v" $root.Values.core.sts.enabled ) }}
 {{- if and $root.Values.core.coreAuthCreds.existingSecret.secretName $root.Values.core.coreAuthCreds.existingSecret.clientIdKey $root.Values.core.coreAuthCreds.existingSecret.clientSecretKey }}

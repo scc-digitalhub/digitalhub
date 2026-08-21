@@ -19,8 +19,9 @@ provider "coder" {
 }
 
 locals {
-  dremio_url     = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}dremio--dremio--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
-  decoded_labels = var.extra_labels != "" ? jsondecode(base64decode(var.extra_labels)) : {}
+  dremio_url      = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}dremio--dremio--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
+  decoded_labels  = var.extra_labels != "" ? jsondecode(base64decode(var.extra_labels)) : {}
+  sanitized_email = replace(replace(data.coder_workspace_owner.me.email, "@", ""), ".", "")
 }
 
 variable "use_kubeconfig" {
@@ -249,11 +250,12 @@ resource "kubernetes_persistent_volume_claim_v1" "dremio-data" {
       "app.kubernetes.io/part-of"    = "coder"
       "app.kubernetes.io/managed-by" = "coder"
       // Coder specific labels.
-      "com.coder.resource"           = "true"
-      "com.coder.workspace.id"       = data.coder_workspace.me.id
-      "com.coder.workspace.name"     = data.coder_workspace.me.name
-      "com.coder.user.id"            = data.coder_workspace_owner.me.id
-      "com.coder.user.username"      = data.coder_workspace_owner.me.name
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      "dhcore/user"              = local.sanitized_email
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -281,11 +283,12 @@ resource "kubernetes_service_v1" "dremio-service" {
       "app.kubernetes.io/managed-by" = "coder"
       "app.kubernetes.io/type"       = "service"
       // Coder specific labels.
-      "com.coder.resource"           = "true"
-      "com.coder.workspace.id"       = data.coder_workspace.me.id
-      "com.coder.workspace.name"     = data.coder_workspace.me.name
-      "com.coder.user.id"            = data.coder_workspace_owner.me.id
-      "com.coder.user.username"      = data.coder_workspace_owner.me.name
+      "com.coder.resource"       = "true"
+      "com.coder.workspace.id"   = data.coder_workspace.me.id
+      "com.coder.workspace.name" = data.coder_workspace.me.name
+      "com.coder.user.id"        = data.coder_workspace_owner.me.id
+      "com.coder.user.username"  = data.coder_workspace_owner.me.name
+      "dhcore/user"              = local.sanitized_email
     }
     annotations = {
       "com.coder.user.email" = data.coder_workspace_owner.me.email
@@ -337,11 +340,12 @@ resource "kubernetes_job_v1" "source-init" {
         "app.kubernetes.io/managed-by" = "coder"
         "app.kubernetes.io/type"       = "job"
         // Coder specific labels.
-        "com.coder.resource"           = "true"
-        "com.coder.workspace.id"       = data.coder_workspace.me.id
-        "com.coder.workspace.name"     = data.coder_workspace.me.name
-        "com.coder.user.id"            = data.coder_workspace_owner.me.id
-        "com.coder.user.username"      = data.coder_workspace_owner.me.name
+        "com.coder.resource"       = "true"
+        "com.coder.workspace.id"   = data.coder_workspace.me.id
+        "com.coder.workspace.name" = data.coder_workspace.me.name
+        "com.coder.user.id"        = data.coder_workspace_owner.me.id
+        "com.coder.user.username"  = data.coder_workspace_owner.me.name
+        "dhcore/user"              = local.sanitized_email
       },
     local.decoded_labels)
     annotations = {
@@ -543,11 +547,12 @@ resource "kubernetes_deployment_v1" "dremio" {
         "app.kubernetes.io/managed-by" = "coder"
         "app.kubernetes.io/type"       = "workspace"
         // Coder specific labels.
-        "com.coder.resource"           = "true"
-        "com.coder.workspace.id"       = data.coder_workspace.me.id
-        "com.coder.workspace.name"     = data.coder_workspace.me.name
-        "com.coder.user.id"            = data.coder_workspace_owner.me.id
-        "com.coder.user.username"      = data.coder_workspace_owner.me.name
+        "com.coder.resource"       = "true"
+        "com.coder.workspace.id"   = data.coder_workspace.me.id
+        "com.coder.workspace.name" = data.coder_workspace.me.name
+        "com.coder.user.id"        = data.coder_workspace_owner.me.id
+        "com.coder.user.username"  = data.coder_workspace_owner.me.name
+        "dhcore/user"              = local.sanitized_email
       },
     local.decoded_labels)
     annotations = {
@@ -577,11 +582,11 @@ resource "kubernetes_deployment_v1" "dremio" {
           "app.kubernetes.io/managed-by" = "coder"
           "app.kubernetes.io/type"       = "workspace"
           // Coder specific labels.
-          "com.coder.resource"           = "true"
-          "com.coder.workspace.id"       = data.coder_workspace.me.id
-          "com.coder.workspace.name"     = data.coder_workspace.me.name
-          "com.coder.user.id"            = data.coder_workspace_owner.me.id
-          "com.coder.user.username"      = data.coder_workspace_owner.me.name
+          "com.coder.resource"       = "true"
+          "com.coder.workspace.id"   = data.coder_workspace.me.id
+          "com.coder.workspace.name" = data.coder_workspace.me.name
+          "com.coder.user.id"        = data.coder_workspace_owner.me.id
+          "com.coder.user.username"  = data.coder_workspace_owner.me.name
         }
       }
       spec {
