@@ -12,7 +12,7 @@ maintainers:
     url: https://github.com/ffais
   - name: calcagiara
     url: https://github.com/Calcagiara
-version: "0.15.9"
+version: "0.15.10"
 appVersion: "0.15.1"
 dependencies:
 - name: argo-workflows

@@ -2766,7 +2766,7 @@ object
       "wildcardHost": ""
     },
     "image": {
-      "tag": "v2.32.4"
+      "tag": "v2.35.4"
     },
     "ingress": {
       "enable": false
@@ -3052,7 +3052,7 @@ object
     "wildcardHost": ""
   },
   "image": {
-    "tag": "v2.32.4"
+    "tag": "v2.35.4"
   },
   "ingress": {
     "enable": false
@@ -3246,7 +3246,7 @@ object
 <summary>+Expand</summary>
 <pre lang="json">
 {
-  "tag": "v2.32.4"
+  "tag": "v2.35.4"
 }
 </pre>
 </details>
@@ -3262,7 +3262,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"v2.32.4"
+"v2.35.4"
 </pre>
 </div>
 			</td>
