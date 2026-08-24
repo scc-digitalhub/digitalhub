@@ -167,7 +167,7 @@ data:
 {{- end }}
 {{- if .Values.prometheus.enabled }}
   PROMETHEUS_URL: {{ .Values.prometheus.endpoint | quote }}
-  PROMETHEUS_NAMESPACE: {{ .Values.prometheus.namespace | quote }}
+  PROMETHEUS_NAMESPACE: {{ .Release.Namespace }}
   PROMETHEUS_LAZY_FILTER: {{ .Values.prometheus.lazyFilter | quote }}
   PROMETHEUS_RATE_INTERVAL_SECONDS: {{ .Values.prometheus.rateInterval | quote }}
   PROMETHEUS_METRICS_CPU: {{ .Values.prometheus.metrics.cpu.name | quote }}

@@ -686,8 +686,6 @@ prometheus:
       unit: ""
       #  prometheus.metrics.volumesCount.window -- Time window used by the metric operation
       window: ""
-  #  prometheus.namespace -- Namespace used for Prometheus queries
-  namespace: ""
   #  prometheus.rateInterval -- Rate interval in seconds used in Prometheus rate operations
   rateInterval: 120
 
