@@ -1551,8 +1551,6 @@ open-webui:
       value: not-used
     - name: SAFE_MODE
       value: "True"
-    - name: SPACE_ID
-      value: test
   #  open-webui.ollama --
   ollama:
     #  open-webui.ollama.enabled -- Enable/Disable ollama for OpenWebUI
