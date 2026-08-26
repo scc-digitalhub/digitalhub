@@ -29653,6 +29653,21 @@ entries:
   resources-profile-generator:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2026-08-26T13:44:53.89973522Z"
+    description: Helm chart to generate resource profile templates in a ConfigMap
+    digest: 556c10714e99fa53a3b2820e78b3cf19dfe1b4ff69b7d1e65960d7631750c04d
+    maintainers:
+    - name: ffais
+      url: https://github.com/ffais
+    - name: calcagiara
+      url: https://github.com/Calcagiara
+    name: resources-profile-generator
+    type: application
+    urls:
+    - https://github.com/scc-digitalhub/digitalhub/releases/download/resources-profile-generator-0.3.0/resources-profile-generator-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2026-08-05T11:15:32.546676033Z"
     description: Helm chart to generate resource profile templates in a ConfigMap
     digest: b31fd8ddaebbee138c0f35f1a8c027381320e9cf75a1000a13a7f187eb0eaa44
@@ -29681,4 +29696,4 @@ entries:
     urls:
     - https://github.com/scc-digitalhub/digitalhub/releases/download/resources-profile-generator-0.1.0/resources-profile-generator-0.1.0.tgz
     version: 0.1.0
-generated: "2026-08-24T10:44:59.68870434Z"
+generated: "2026-08-26T13:44:53.900791217Z"
