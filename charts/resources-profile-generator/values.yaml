@@ -23,8 +23,13 @@ profiles: []
 #     size: 498416Mi
 
 
-#  queueName -- Value used for kueue.x-k8s.io/queue-name label in every generated template.
-queueName: ""
+queue:
+  # queue.enabled -- Enable/disable the queue feature. If enabled, the generated templates will include a kueue.x-k8s.io/queue-name label with the value of queue.name.
+  enabled: false
+  #  queue.name -- Name of the Kueue Queue to be used in the generated templates kueue.x-k8s.io/queue-name.
+  name: ""
+  # queue.workloadPriorityClassName -- Optional name of the WorkloadPriorityClass to be used in the generated templates kueue.x-k8s.io/priority-class.
+  workloadPriorityClassName: ""
 
 #  requests -- Configure the percentage used to compute requests from limits.
 requests:
@@ -34,3 +39,11 @@ requests:
   cpuPercent: 67
   #  requests.memoryPercent -- Memory request percentage derived from computed memory limit for non-max variants.
   memoryPercent: 67
+
+shareQueue:
+  #  queue.shareQueue.enabled -- Enable/disable the shareQueue feature. If enabled, the generated additional templates will include a shareQueue label with the value of shareQueue.name.
+  enabled: false
+  #  queue.shareQueue.name -- Name of the Kueue ShareQueue to be used in the generated templates shareQueue label.
+  name: ""
+  # queue.shareQueue.workloadPriorityClassName -- Optional name of the WorkloadPriorityClass to be used in the generated templates shareQueue label.
+  workloadPriorityClassName: ""

@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # resources-profile-generator
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=resources-profile-generator*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 Helm chart to generate resource profile templates in a ConfigMap
 
@@ -55,11 +55,25 @@ list
 			</td>
 		</tr>
 		<tr>
-			<td id="queueName"><a href="./values.yaml#L27">queueName</a></td>
+			<td id="queue--enabled"><a href="./values.yaml#L28">queue.enabled</a></td>
+			<td>
+bool
+</td>
+			<td>Enable/disable the queue feature. If enabled, the generated templates will include a kueue.x-k8s.io/queue-name label with the value of queue.name.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="queue--name"><a href="./values.yaml#L30">queue.name</a></td>
 			<td>
 string
 </td>
-			<td>Value used for kueue.x-k8s.io/queue-name label in every generated template.</td>
+			<td>Name of the Kueue Queue to be used in the generated templates kueue.x-k8s.io/queue-name.</td>
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
@@ -69,7 +83,21 @@ string
 			</td>
 		</tr>
 		<tr>
-			<td id="requests"><a href="./values.yaml#L30">requests</a></td>
+			<td id="queue--workloadPriorityClassName"><a href="./values.yaml#L32">queue.workloadPriorityClassName</a></td>
+			<td>
+string
+</td>
+			<td>Optional name of the WorkloadPriorityClass to be used in the generated templates kueue.x-k8s.io/priority-class.</td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="requests"><a href="./values.yaml#L35">requests</a></td>
 			<td>
 object
 </td>
@@ -90,7 +118,7 @@ object
 			</td>
 		</tr>
 		<tr>
-			<td id="requests--enabled"><a href="./values.yaml#L32">requests.enabled</a></td>
+			<td id="requests--enabled"><a href="./values.yaml#L37">requests.enabled</a></td>
 			<td>
 bool
 </td>
@@ -104,7 +132,7 @@ true
 			</td>
 		</tr>
 		<tr>
-			<td id="requests--cpuPercent"><a href="./values.yaml#L34">requests.cpuPercent</a></td>
+			<td id="requests--cpuPercent"><a href="./values.yaml#L39">requests.cpuPercent</a></td>
 			<td>
 int
 </td>
@@ -118,7 +146,7 @@ int
 			</td>
 		</tr>
 		<tr>
-			<td id="requests--memoryPercent"><a href="./values.yaml#L36">requests.memoryPercent</a></td>
+			<td id="requests--memoryPercent"><a href="./values.yaml#L41">requests.memoryPercent</a></td>
 			<td>
 int
 </td>
@@ -127,6 +155,48 @@ int
 				<div style="max-width: 300px;">
 <pre lang="json">
 67
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="shareQueue--enabled"><a href="./values.yaml#L45">shareQueue.enabled</a></td>
+			<td>
+bool
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+false
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="shareQueue--name"><a href="./values.yaml#L47">shareQueue.name</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
+</pre>
+</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="shareQueue--workloadPriorityClassName"><a href="./values.yaml#L49">shareQueue.workloadPriorityClassName</a></td>
+			<td>
+string
+</td>
+			<td></td>
+      <td>
+				<div style="max-width: 300px;">
+<pre lang="json">
+""
 </pre>
 </div>
 			</td>

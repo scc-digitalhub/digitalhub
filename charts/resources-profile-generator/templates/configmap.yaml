@@ -10,17 +10,34 @@ data:
     name: default
     description: Default profile
     labels:
+      {{- if .Values.queue.enabled }}
       - name: kueue.x-k8s.io/queue-name
-        value: {{ .Values.queueName }}
-
+        value: {{ .Values.queue.name }}
+      - name: kueue.x-k8s.io/priority-class
+        value: {{ .Values.queue.workloadPriorityClassName }}
+      {{- end }}
   template-cpu.yaml: |
     id: cpu
     name: cpu
     description: Generic CPU profile
     labels:
+      {{- if .Values.queue.enabled }}
       - name: kueue.x-k8s.io/queue-name
-        value: {{ .Values.queueName }}
-
+        value: {{ .Values.queue.name }}
+      - name: kueue.x-k8s.io/priority-class
+        value: {{ .Values.queue.workloadPriorityClassName }}
+      {{- end }}
+  {{- if .Values.shareQueue.enabled }}
+  template-cpu-shared.yaml: |
+    id: cpu-shared
+    name: cpu-shared
+    description: Generic CPU profile
+    labels:
+      - name: kueue.x-k8s.io/queue-name
+        value: {{ .Values.shareQueue.name }}
+      - name: kueue.x-k8s.io/priority-class
+        value: {{ .Values.shareQueue.workloadPriorityClassName }}
+  {{- end }}
   {{- $cpuReqPercent := int (default 67 .Values.requests.cpuPercent) }}
   {{- $memReqPercent := int (default 67 .Values.requests.memoryPercent) }}
   {{- range $profile := .Values.profiles }}
@@ -58,8 +75,12 @@ data:
       value: "true"
       effect: NoSchedule
     labels:
+      {{- if $.Values.queue.enabled }}
       - name: kueue.x-k8s.io/queue-name
-        value: {{ $.Values.queueName }}
+        value: {{ $.Values.queue.name }}
+      - name: kueue.x-k8s.io/priority-class
+        value: {{ $.Values.queue.workloadPriorityClassName }}
+      {{- end }}
     resources:
       {{- if $.Values.requests.enabled }}
       requests:
@@ -80,6 +101,45 @@ data:
           medium: Memory
           size_limit: {{ $limitMemGi }}Gi
         volume_type: empty_dir
-
+  {{- if $.Values.shareQueue.enabled }}
+  template-{{ $gpuCount }}x{{ $profileName }}-shared.yaml: |
+    id: {{ $gpuCount }}x{{ $profileName }}-shared
+    name: {{ $gpuCount }}x{{ $profileName }}-shared
+    description: "All the workload scheduled with this profile can be preempted at any time. {{ $gpuCount }} GPU Nvidia {{ $descriptionGpuName }}{{ if $profile.gpu.computeCapability }}. Compute capability version {{ $profile.gpu.computeCapability }}{{ end }}{{ if $profile.gpu.vRAM }}. Available VRAM per single GPU={{ $profile.gpu.vRAM }}{{ end }}. Maximum available resources: cpu={{ $limitCpu }}, RAM={{ $limitMemGi }}Gi,ephemeral-storage={{ $limitMemGi }}Gi"
+    tolerations:
+    - key: nvidia.com/gpu.model
+      operator: Equal
+      value: {{ $gpuModel }}
+      effect: NoSchedule
+    - key: nvidia.com/gpu.present
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+    labels:
+      - name: kueue.x-k8s.io/queue-name
+        value: {{ $.Values.shareQueue.name }}
+      - name: kueue.x-k8s.io/priority-class
+        value: {{ $.Values.shareQueue.workloadPriorityClassName }}
+    resources:
+      {{- if $.Values.requests.enabled }}
+      requests:
+        cpu: "{{ $requestCpu }}"
+        memory: "{{ $requestMemGi }}Gi"
+        nvidia.com/gpu: "{{ $gpuCount }}"
+        ephemeral-storage: "{{ $limitMemGi }}Gi"
+      {{- end }}
+      limits:
+        cpu: "{{ $limitCpu }}"
+        memory: "{{ $limitMemGi }}Gi"
+        nvidia.com/gpu: "{{ $gpuCount }}"
+        ephemeral-storage: "{{ $limitMemGi }}Gi"
+    volumes:
+      - name: shm
+        mount_path: /dev/shm
+        spec:
+          medium: Memory
+          size_limit: {{ $limitMemGi }}Gi
+        volume_type: empty_dir
+  {{- end }}
   {{- end }}
   {{- end }}
