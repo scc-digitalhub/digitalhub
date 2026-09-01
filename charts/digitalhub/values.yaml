@@ -459,6 +459,27 @@ coder:
         nodePort: "30050"
         privileged: false
         stopAfter: 8h
+        #  coder.template.customTemplates.code-toolbox.tolerations -- Tolerations for the code-toolbox template, used to schedule the pod on nodes with GPU resources.
+        #  Example:
+        #  tolerations:
+        #   - gpu1: (Name of the GPU that will show up on Coder)
+        #     - effect: "NoSchedule"
+        #       key: ""
+        #       operator: "Equal"
+        #       value: ""
+        #     - effect: "NoSchedule"
+        #       key: ""
+        #       operator: "Equal"
+        #       value: "true"
+        #   - gpu2: (Name of the GPU that will show up on Coder)
+        #     - effect: "NoSchedule"
+        #       key: ""
+        #       operator: "Equal"
+        #       value: ""
+        #     - effect: "NoSchedule"
+        #       key: ""
+        #       operator: "Equal"
+        #       value: "true"
         tolerations: []
       - extraLabels: {}
         extraVars: []
@@ -1657,7 +1678,7 @@ platformPackages:
     - name: digitalhub-runtime-servicegraph
       tag: "0.15.1"
     - name: digitalhub[full]
-      tag: "0.15.6"
+      tag: "0.15.7"
   #  platformPackages.preRelease -- If set to true, the latest version of the packages will be used (even beta ones).
   #  WARNING:
   #  For the most stable experience, this value should NOT be modified.
