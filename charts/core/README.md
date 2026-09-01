@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 # core
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/scc-digitalhub/digitalhub/release.yaml?event=push) [![license](https://img.shields.io/badge/license-Apache%202.0-blue)](https://github.com/scc-digitalhub/digitalhub/tree/main/charts/core/LICENSE) ![GitHub Release](https://img.shields.io/github/v/release/scc-digitalhub/digitalhub?filter=core*)
-![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.15.1](https://img.shields.io/badge/AppVersion-0.15.1-informational?style=flat-square)
+![Status](https://img.shields.io/badge/status-stable-gold) ![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.15.1](https://img.shields.io/badge/AppVersion-0.15.1-informational?style=flat-square)
 
 DigitalHub Core is part of the DigitalHub platform, and depends on external components to support the complete set of functionalities.
 
@@ -5714,10 +5714,10 @@ object
   "python": {
     "image": "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime",
     "installDependencies": true,
-    "tag3_10": "3.10-0.15.1",
-    "tag3_11": "3.11-0.15.1",
-    "tag3_12": "3.12-0.15.1",
-    "tag3_13": "3.13-0.15.1"
+    "tag3_10": "3.10-0.15.2",
+    "tag3_11": "3.11-0.15.2",
+    "tag3_12": "3.12-0.15.2",
+    "tag3_13": "3.13-0.15.2"
   },
   "vllm": {
     "cpu": {
@@ -5893,10 +5893,10 @@ object
 {
   "image": "ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime",
   "installDependencies": true,
-  "tag3_10": "3.10-0.15.1",
-  "tag3_11": "3.11-0.15.1",
-  "tag3_12": "3.12-0.15.1",
-  "tag3_13": "3.13-0.15.1"
+  "tag3_10": "3.10-0.15.2",
+  "tag3_11": "3.11-0.15.2",
+  "tag3_12": "3.12-0.15.2",
+  "tag3_13": "3.13-0.15.2"
 }
 </pre>
 </details>
@@ -5940,7 +5940,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.10-0.15.1"
+"3.10-0.15.2"
 </pre>
 </div>
 			</td>
@@ -5954,7 +5954,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.11-0.15.1"
+"3.11-0.15.2"
 </pre>
 </div>
 			</td>
@@ -5968,7 +5968,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.12-0.15.1"
+"3.12-0.15.2"
 </pre>
 </div>
 			</td>
@@ -5982,7 +5982,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"3.13-0.15.1"
+"3.13-0.15.2"
 </pre>
 </div>
 			</td>
