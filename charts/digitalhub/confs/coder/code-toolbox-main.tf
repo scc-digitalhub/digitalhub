@@ -819,8 +819,8 @@ resource "kubernetes_deployment_v1" "code-toolbox" {
           resources {
             requests = merge(
               {
-                "cpu"    = "250m"
-                "memory" = "512Mi"
+                "cpu"    = "${data.coder_parameter.cpu.value}"
+                "memory" = "${data.coder_parameter.memory.value}Gi"
               },
               try(
                 {
