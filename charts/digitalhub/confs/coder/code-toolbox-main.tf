@@ -132,17 +132,6 @@ data "coder_parameter" "cpu" {
   }
 }
 
-data "coder_parameter" "gpu" {
-  name         = "gpu"
-  display_name = "GPU"
-  description  = "Enable GPU usage for this workspace?"
-  default      = false
-  mutable      = true
-  type         = "bool"
-  form_type    = "checkbox"
-  order        = 4
-}
-
 data "coder_parameter" "memory" {
   name         = "memory"
   display_name = "Memory"
@@ -171,6 +160,33 @@ data "coder_parameter" "home_disk_size" {
   validation {
     min = 1
     max = 99999
+  }
+}
+
+data "coder_parameter" "gpu" {
+  name         = "gpu"
+  display_name = "GPU"
+  description  = "Select the GPU fot this workspace"
+  icon         = "/icon/auggie.svg"
+  default      = "false"
+  mutable      = true
+  form_type    = "dropdown"
+  order        = 4
+
+  option {
+    name  = "None"
+    value = "false"
+  }
+
+  dynamic "option" {
+    for_each = flatten([
+      for toleration in local.tolerations : keys(toleration)
+    ])
+
+    content {
+      name  = option.value
+      value = option.value
+    }
   }
 }
 
@@ -707,7 +723,10 @@ resource "kubernetes_deployment_v1" "code-toolbox" {
       }
       spec {
         dynamic "toleration" {
-          for_each = data.coder_parameter.gpu.value != "false" ? local.tolerations : []
+          for_each = data.coder_parameter.gpu.value != "false" ? flatten([
+            for gpu in local.tolerations : gpu[data.coder_parameter.gpu.value]
+            if contains(keys(gpu), data.coder_parameter.gpu.value)
+          ]) : []
           content {
             key      = toleration.value["key"]
             operator = toleration.value["operator"]
@@ -798,16 +817,37 @@ resource "kubernetes_deployment_v1" "code-toolbox" {
             protocol       = "TCP"
           }
           resources {
-            requests = {
-              "cpu"            = "250m"
-              "memory"         = "512Mi"
-              "nvidia.com/gpu" = data.coder_parameter.gpu.value ? 1 : null
-            }
-            limits = {
-              "cpu"            = "${data.coder_parameter.cpu.value}"
-              "memory"         = "${data.coder_parameter.memory.value}Gi"
-              "nvidia.com/gpu" = data.coder_parameter.gpu.value ? 1 : null
-            }
+            requests = merge(
+              {
+                "cpu"    = "250m"
+                "memory" = "512Mi"
+              },
+              try(
+                {
+                  (flatten([
+                    for gpu in local.tolerations :
+                    lookup(gpu, data.coder_parameter.gpu.value, [])
+                  ])[0].gpuResourceKey) = 1
+                },
+                {}
+              )
+            )
+
+            limits = merge(
+              {
+                "cpu"    = "${data.coder_parameter.cpu.value}"
+                "memory" = "${data.coder_parameter.memory.value}Gi"
+              },
+              try(
+                {
+                  (flatten([
+                    for gpu in local.tolerations :
+                    lookup(gpu, data.coder_parameter.gpu.value, [])
+                  ])[0].gpuResourceKey) = 1
+                },
+                {}
+              )
+            )
           }
           volume_mount {
             mount_path = "/home/${data.coder_workspace_owner.me.name}"
@@ -846,7 +886,7 @@ resource "kubernetes_deployment_v1" "code-toolbox" {
             read_only  = true
           }
           dynamic "volume_mount" {
-            for_each = data.coder_parameter.gpu.value ? [1] : []
+            for_each = data.coder_parameter.gpu.value !="false" ? [1] : []
             content {
               mount_path = "/dev/shm"
               name       = "shm"
@@ -890,7 +930,7 @@ resource "kubernetes_deployment_v1" "code-toolbox" {
           }
         }
         dynamic "volume" {
-          for_each = data.coder_parameter.gpu.value ? [1] : []
+          for_each = data.coder_parameter.gpu.value != "false" ? [1] : []
           content {
             name = "shm"
             empty_dir {
