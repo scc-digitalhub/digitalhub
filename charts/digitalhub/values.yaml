@@ -459,27 +459,34 @@ coder:
         nodePort: "30050"
         privileged: false
         stopAfter: 8h
-        #  coder.template.customTemplates.code-toolbox.tolerations -- Tolerations for the code-toolbox template, used to schedule the pod on nodes with GPU resources.
-        #  Example:
-        #  tolerations:
-        #   - gpu1: (Name of the GPU that will show up on Coder)
-        #     - effect: "NoSchedule"
-        #       key: ""
-        #       operator: "Equal"
-        #       value: ""
-        #     - effect: "NoSchedule"
-        #       key: ""
-        #       operator: "Equal"
-        #       value: "true"
-        #   - gpu2: (Name of the GPU that will show up on Coder)
-        #     - effect: "NoSchedule"
-        #       key: ""
-        #       operator: "Equal"
-        #       value: ""
-        #     - effect: "NoSchedule"
-        #       key: ""
-        #       operator: "Equal"
-        #       value: "true"
+        #  coder.template.customTemplates.code-toolbox.gpuTemplates -- gpuTemplates for the code-toolbox template, used to schedule the pod on nodes with GPU resources.
+        # gpuTemplates:
+        #   - name: gpu1
+        #     resources:
+        #       key: "nvidia.com/gpu"
+        #       value: 1
+        #     tolerations:
+        #       - effect: "NoSchedule"
+        #         key: "nvidia.com/gpu"
+        #         operator: "Equal"
+        #         value: "v100"
+        #       - effect: "NoSchedule"
+        #         key: "nvidia.com/gpu"
+        #         operator: "Equal"
+        #         value: "true"
+        #   - name: gpu2
+        #     resources:
+        #       key: "nvidia.com/gpu"
+        #       value: 1
+        #     tolerations:
+        #       - effect: "NoSchedule"
+        #         key: "nvidia.com/gpu"
+        #         operator: "Equal"
+        #         value: "h100"
+        #       - effect: "NoSchedule"
+        #         key: "nvidia.com/gpu"
+        #         operator: "Equal"
+        #         value: "true"
         tolerations: []
       - extraLabels: {}
         extraVars: []

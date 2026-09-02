@@ -29,6 +29,7 @@ locals {
   code_toolbox_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}code-toolbox--code-toolbox--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
   decoded_labels   = var.extra_labels != "" ? jsondecode(base64decode(var.extra_labels)) : {}
   sanitized_email  = replace(replace(data.coder_workspace_owner.me.email, "@", ""), ".", "")
+  templates        = jsondecode(data.kubernetes_config_map_v1.gpu-templates.data["templates.json"])
 }
 
 variable "use_kubeconfig" {
@@ -180,7 +181,7 @@ data "coder_parameter" "gpu" {
 
   dynamic "option" {
     for_each = flatten([
-      for toleration in local.tolerations : keys(toleration)
+      for template in local.templates : template.name
     ])
 
     content {
@@ -244,10 +245,6 @@ data "http" "exchange_token" {
   }
 
   request_body = "grant_type=urn:ietf:params:oauth:grant-type:token-exchange&scope=openid%20offline_access%20credentials&subject_token_type=urn:ietf:params:oauth:token-type:access_token&subject_token=${data.coder_workspace_owner.me.oidc_access_token}"
-}
-
-locals {
-  tolerations = jsondecode(data.kubernetes_config_map_v1.workspace_config.data["tolerations.json"])
 }
 
 provider "kubernetes" {
@@ -724,8 +721,7 @@ resource "kubernetes_deployment_v1" "code-toolbox" {
       spec {
         dynamic "toleration" {
           for_each = data.coder_parameter.gpu.value != "false" ? flatten([
-            for gpu in local.tolerations : gpu[data.coder_parameter.gpu.value]
-            if contains(keys(gpu), data.coder_parameter.gpu.value)
+            for template in local.templates : template.tolerations if template.name == data.coder_parameter.gpu.value
           ]) : []
           content {
             key      = toleration.value["key"]
@@ -823,12 +819,7 @@ resource "kubernetes_deployment_v1" "code-toolbox" {
                 "memory" = "${data.coder_parameter.memory.value}Gi"
               },
               try(
-                {
-                  (flatten([
-                    for gpu in local.tolerations :
-                    lookup(gpu, data.coder_parameter.gpu.value, [])
-                  ])[0].gpuResourceKey) = 1
-                },
+                { for template in local.templates : template.resources.key => template.resources.value if template.name == data.coder_parameter.gpu.value },
                 {}
               )
             )
@@ -839,12 +830,7 @@ resource "kubernetes_deployment_v1" "code-toolbox" {
                 "memory" = "${data.coder_parameter.memory.value}Gi"
               },
               try(
-                {
-                  (flatten([
-                    for gpu in local.tolerations :
-                    lookup(gpu, data.coder_parameter.gpu.value, [])
-                  ])[0].gpuResourceKey) = 1
-                },
+                { for template in local.templates : template.resources.key => template.resources.value if template.name == data.coder_parameter.gpu.value },
                 {}
               )
             )
@@ -886,7 +872,7 @@ resource "kubernetes_deployment_v1" "code-toolbox" {
             read_only  = true
           }
           dynamic "volume_mount" {
-            for_each = data.coder_parameter.gpu.value !="false" ? [1] : []
+            for_each = data.coder_parameter.gpu.value != "false" ? [1] : []
             content {
               mount_path = "/dev/shm"
               name       = "shm"

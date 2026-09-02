@@ -14,9 +14,9 @@ repos:
     rev: v0.2.0
     hooks:
       - id: yaml-sort
-        files: (values\.yaml)$
+        pass_filenames: false
+        always_run: true
         args:
-          - sort
           - --input-file=values.yaml
           - --search-dir=charts/
           - --space-top-key=true

@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-{{ if and .Values.coder.enabled .Values.coder.template.upgrade.enabled (not .Values.coder.workspace.upgrade.enabled) (or .Values.coder.template.upgrade.token .Values.coder.existingSecrets.adminSessionTokenExistingSecret.secretName) -}}
+{{ if and .Values.coder.enabled .Values.coder.template.upgrade.enabled (not .Values.coder.workspace.upgrade.enabled) (or .Values.coder.template.upgrade.token .Values.coder.existingSecrets.adminSessionTokenExistingSecret.secretName) (eq (include "digitalhub.coderTemplatesUpgradeRequired" .) "true") -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -11,6 +11,7 @@ metadata:
     {{- include "digitalhub.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": post-upgrade
+    "helm.sh/hook-weight": "0"
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   backoffLimit: 1

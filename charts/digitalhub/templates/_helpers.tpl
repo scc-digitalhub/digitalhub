@@ -138,6 +138,24 @@ Set packages versions for code-toolbox and tests
 
 
 {{/*
+Checksum and successful upgrade state for Coder templates
+*/}}
+{{- define "digitalhub.coderTemplatesChecksum" -}}
+{{- printf "%s\n%s" ((.Files.Glob "confs/coder/*main.tf").AsConfig) (tpl (.Files.Get "confs/coder/upgrade-templates.sh") .) | sha256sum -}}
+{{- end }}
+
+{{- define "digitalhub.coderTemplatesUpgradeRequired" -}}
+{{- $desiredChecksum := include "digitalhub.coderTemplatesChecksum" . -}}
+{{- $upgradeState := lookup "v1" "ConfigMap" .Release.Namespace "coder-template-upgrade-state" -}}
+{{- $appliedChecksum := "" -}}
+{{- if $upgradeState -}}
+{{- $appliedChecksum = dig "metadata" "annotations" "checksum/coder-templates" "" $upgradeState -}}
+{{- end -}}
+{{- if ne $desiredChecksum $appliedChecksum -}}true{{- end -}}
+{{- end }}
+
+
+{{/*
 Variables used in the creation and upgrade of Coder templates
 */}}
 {{- define "digitalhub.coderTemplateVariables" -}}
