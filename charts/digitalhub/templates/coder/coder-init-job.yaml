@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: coder-deploy-template
-          image: {{ .Subcharts.coder.Values.coder.image.repo }}:{{ .Subcharts.coder.Values.coder.image.tag }}
+          image: {{ include "coder.image" .Subcharts.coder }}
           command: ["/bin/bash", "/home/coder/init-files/init.sh"]
           env:
             {{- with .Subcharts.coder.Values.coder.env -}}

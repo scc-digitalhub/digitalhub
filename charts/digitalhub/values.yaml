@@ -362,10 +362,6 @@ coder:
       # applications over subdomains.
       # Be sure to also set CODER_WILDCARD_ACCESS_URL within coder.env[]
       wildcardHost: ""
-    #  coder.coder.image --
-    image:
-      #  coder.coder.image.tag -- Coder image tag
-      tag: v2.35.4
     #  coder.coder.ingress -- Coder ingress configuration
     ingress:
       #  coder.coder.ingress.enable -- Enable/Disable Coder ingress

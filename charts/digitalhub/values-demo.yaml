@@ -330,10 +330,6 @@ coder:
             name: coder-db-url
       - name: CODER_TELEMETRY_ENABLE
         value: "false"
-    #  coder.coder.image --
-    image:
-      #  coder.coder.image.tag -- Coder image tag
-      tag: v2.32.4
     #  coder.coder.ingress -- Coder ingress configuration
     ingress:
       #  coder.coder.ingress.enable -- Enable/Disable Coder ingress
