@@ -115,6 +115,26 @@ spec:
             value: {{ .Values.prometheus.credentials.password }}
             {{- end }}
           {{- end }}
+          {{- if or .Values.console.containerImagesRegistry.username .Values.console.containerImagesRegistry.existingSecret.name }}
+            - name: CONTAINER_IMAGES_USERNAME
+              {{- if and .Values.console.containerImagesRegistry.existingSecret.name .Values.console.containerImagesRegistry.existingSecret.usernameKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.console.containerImagesRegistry.existingSecret.name }}
+                  key: {{ .Values.console.containerImagesRegistry.existingSecret.usernameKey }}
+              {{- else }}
+              value: {{ .Values.console.containerImagesRegistry.username }}
+              {{- end }}
+            - name: CONTAINER_IMAGES_PASSWORD
+              {{- if and .Values.console.containerImagesRegistry.existingSecret.name .Values.console.containerImagesRegistry.existingSecret.passwordKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.console.containerImagesRegistry.existingSecret.name }}
+                  key: {{ .Values.console.containerImagesRegistry.existingSecret.passwordKey }}
+              {{- else }}
+              value: {{ .Values.console.containerImagesRegistry.password }}
+              {{- end }}
+          {{- end }}
           {{- if .Values.s3.enabled }}
             - name: AWS_ACCESS_KEY
             {{- if and .Values.s3.credentials.existingSecret.name .Values.s3.credentials.existingSecret.accessKeyKey }}

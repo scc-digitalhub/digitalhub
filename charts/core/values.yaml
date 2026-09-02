@@ -194,17 +194,32 @@ commonCredsSecret:
 #  configmapAdditionalEnv -- Additional environment variables for the Core configmap, MUST be specified in key/value format
 configmapAdditionalEnv: {}
 
-# console -- Console configuration used to display metrics in the console.
+# console -- Console configuration
 console:
-  # console.metrics -- Metrics configuration used for the console
+  #  console.containerImagesRegistry -- Registry configuration used by the console
+  containerImagesRegistry:
+    existingSecret:
+      #  console.containerImagesRegistry.existingSecret.name -- Name of the secret containing the credentials for the registry used by the console.
+      name: ""
+      #  console.containerImagesRegistry.existingSecret.passwordKey -- Password key of the secret containing the credentials for the registry used by the console.
+      passwordKey: ""
+      #  console.containerImagesRegistry.existingSecret.usernameKey -- Username key of the secret containing the credentials for the registry used by the console.
+      usernameKey: ""
+    #  console.containerImagesRegistry.password -- Password for the registry used by the console.
+    password: ""
+    #  console.containerImagesRegistry.registryUrl -- Registry url used by the console.
+    registryUrl: ""
+    #  console.containerImagesRegistry.username -- Username for the registry used by the console.
+    username: ""
+  #  console.metrics -- Metrics configuration used for the console
   metrics:
-    # console.metrics.instance -- Metrics configuration used for display metrics in the console aggregated for instances
+    #  console.metrics.instance -- Metrics configuration used for display metrics in the console aggregated for instances
     instance:
-    # console.metrics.project -- Metrics configuration used for display metrics in the console aggregated for projects
+    #  console.metrics.project -- Metrics configuration used for display metrics in the console aggregated for projects
     project:
-    # console.metrics.run -- Metrics configuration used for display metrics in the console aggregated for runs
+    #  console.metrics.run -- Metrics configuration used for display metrics in the console aggregated for runs
     run:
-    # console.metrics.user -- Metrics configuration used for display metrics in the console aggregated for users
+    #  console.metrics.user -- Metrics configuration used for display metrics in the console aggregated for users
     user:
 
 #  coreAuthCreds --
