@@ -29,7 +29,7 @@ locals {
   code_toolbox_url = "%{if var.https == true}https://%{else}http://%{endif}%{if var.service_type == "ClusterIP"}code-toolbox--code-toolbox--${data.coder_workspace.me.name}--${data.coder_workspace_owner.me.name}.${var.external_url}%{else}${var.external_url}:${var.node_port}%{endif}"
   decoded_labels   = var.extra_labels != "" ? jsondecode(base64decode(var.extra_labels)) : {}
   sanitized_email  = replace(replace(data.coder_workspace_owner.me.email, "@", ""), ".", "")
-  templates        = jsondecode(data.kubernetes_config_map_v1.gpu-templates.data["templates.json"])
+  templates        = jsondecode(data.kubernetes_config_map_v1.workspace_config.data["templates.json"])
 }
 
 variable "use_kubeconfig" {
