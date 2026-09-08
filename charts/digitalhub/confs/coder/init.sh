@@ -21,11 +21,13 @@ fi
 echo "Installing {{ .name }} template"
 mkdir /home/coder/{{ .name }}/
 cp /home/coder/custom-template/{{ .name }}-main.tf /home/coder/{{ .name }}/main.tf
+template_variables={{ include "digitalhub.coderTemplateVariables" (list $ . ) }}
+printf '%s\n' "$template_variables" | sha256sum > /home/coder/{{ .name }}/digitalhub-variables.sha256 || exit 1
 {{- if $.Values.coder.cache.enabled}}
 cd /home/coder/{{ .name }}/
 terraform init
 cd /home/coder/
 {{- end }}
-coder templates create --default-ttl {{ .stopAfter }} -d /home/coder/{{ .name }} {{ .name }} --variable {{ include "digitalhub.coderTemplateVariables" (list $ . ) }} -y
+coder templates create --default-ttl {{ .stopAfter }} -d /home/coder/{{ .name }} {{ .name }} --variable "$template_variables" -y
 coder template edit --default-ttl {{ .stopAfter }} --icon "{{ .iconUrl }}" {{ .name }}
 {{- end }}
