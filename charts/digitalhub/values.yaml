@@ -436,19 +436,6 @@ coder:
     #  Use the stopAfter value to stop every workspace after a certain amount of time.
     customTemplates:
       - extraLabels: {}
-        extraVars:
-          - name: GF_ANALYTICS_CHECK_FOR_UPDATES
-            value: false
-          - name: GF_ANALYTICS_REPORTING_ENABLED
-            value: false
-          - name: GF_PLUGINS_CHECK_FOR_PLUGIN_UPDATES
-            value: false
-        iconUrl: https://cdn.iconscout.com/icon/free/png-256/free-grafana-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030088.png?f=webp
-        image: smartcommunitylab/grafana
-        name: grafana
-        nodePort: "30130"
-        stopAfter: 0h
-      - extraLabels: {}
         extraVars: []
         iconUrl: https://cdn-icons-png.flaticon.com/512/7301/7301969.png
         name: code-toolbox
@@ -484,26 +471,6 @@ coder:
         #         operator: "Equal"
         #         value: "true"
         tolerations: []
-      - extraLabels: {}
-        extraVars: []
-        iconUrl: https://cdn-images-1.medium.com/max/1200/1*2nGovT9tEnQva8NWfHLZxg.png
-        image: dremio/dremio-oss:24.2
-        name: dremio
-        nodePort: "30120"
-        postgres:
-          #  coder.template.customTemplates.postgres.database -- Name of the Platform's main database
-          database: digitalhub
-          #  coder.template.customTemplates.postgres.hostname -- Host of the Platform's main database
-          hostname: ""
-          #  coder.template.customTemplates.postgres.ownerCredsSecret -- Set the keys that you use in your Platform's main database secret
-          ownerCredsSecret:
-            #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Password key
-            passwordKey: ""
-            #  coder.template.customTemplates.postgres.ownerCredsSecret.secretName -- Name of the Platform's main database secret containing the owner user username and password
-            secretName: ""
-            #  coder.template.customTemplates.postgres.ownerCredsSecret.passwordKey -- Username key
-            usernameKey: ""
-        stopAfter: 0h
     #  coder.template.upgrade -- Coder templates upgrade process configuration
     upgrade:
       #  coder.template.upgrade.enabled -- Enable/Disable the upgrade job for the Coder templates
