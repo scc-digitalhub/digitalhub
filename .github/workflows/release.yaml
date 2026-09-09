@@ -18,6 +18,7 @@ on:
       - 0.13.x
       - 0.14.x
       - 0.15.x
+      - 0.16.x
 jobs:
   release:
     permissions:
@@ -28,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Fetch history
         run: git fetch --prune --unshallow
@@ -39,9 +40,10 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 'latest'
+          package-manager-cache: false
 
       - name: Install conventional-changelog
         run: npm install -g conventional-changelog-cli
@@ -61,9 +63,9 @@ jobs:
           done
 
       - name: Set up Helm
-        uses: Azure/setup-helm@v4
+        uses: Azure/setup-helm@v5
         with:
-          version: v3.17.0
+          version: v4.0.5
 
       - name: Add dependency chart repos
         run: |
