@@ -263,3 +263,14 @@ data:
   {{- end }}
   PROMETHEUS_MAPPING_NAMESPACE: {{ .Values.prometheus.labels.namespace | quote }}
 {{- end }}
+{{- if .Values.ray.enabled }}
+  RAY_HEAD_SERVICE_TYPE: {{ .Values.ray.headServiceType | quote }}
+  RAY_JOB_ACTIVE_DEADLINE_SECONDS: {{ .Values.ray.job.activeDeadlineSeconds | quote }}
+  RAY_JOB_SUSPEND: {{ .Values.ray.job.suspend | quote }}
+  RAY_JOB_RESOURCES_CPU_REQUESTS: {{ .Values.ray.job.resources.cpu.requests | quote }}
+  RAY_JOB_RESOURCES_CPU_LIMIT: {{ .Values.ray.job.resources.cpu.limits | quote }}
+  RAY_JOB_RESOURCES_MEM_REQUESTS: {{ .Values.ray.job.resources.memory.requests | quote }}
+  RAY_JOB_RESOURCES_MEM_LIMIT: {{ .Values.ray.job.resources.memory.limits | quote }}
+  RAY_JOB_RESOURCES_EPHEMERAL_REQUESTS: {{ .Values.ray.job.resources.ephemeralStorage.requests | quote }}
+  RAY_JOB_RESOURCES_EPHEMERAL_LIMIT: {{ .Values.ray.job.resources.ephemeralStorage.limits | quote }}
+{{- end }}

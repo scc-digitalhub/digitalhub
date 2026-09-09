@@ -247,6 +247,9 @@ coreTokens:
 #  corsOrigin --
 corsOrigin: ""
 
+#  customRoles -- Custom roles that can be used to grant access to Core resources.
+customRoles: []
+
 #  databaseProvider --
 databaseProvider:
   #  databaseProvider.database -- Name of the main database of the platform
@@ -703,6 +706,39 @@ prometheus:
       window: ""
   #  prometheus.rateInterval -- Rate interval in seconds used in Prometheus rate operations
   rateInterval: 120
+
+#  ray -- Ray configuration
+ray:
+  #  ray.enabled -- Enable/Disable Ray integration for Core with an existing Ray instance.
+  enabled: false
+  #  ray.headServiceType -- Service type for the Ray head service
+  headServiceType: ClusterIP
+  #  ray.job -- Job configuration for Ray
+  job:
+    #  ray.job.activeDeadlineSeconds -- Active deadline seconds for the Ray job
+    activeDeadlineSeconds: 259200
+    #  ray.job.resources -- Resource requests and limits for the Ray job
+    resources:
+      #  ray.job.resources.cpu -- CPU requests and limits for the Ray job
+      cpu:
+        #  ray.job.resources.cpu.limits -- CPU limits for the Ray job
+        limits: 2
+        #  ray.job.resources.cpu.requests -- CPU requests for the Ray job
+        requests: 1
+      #  ray.job.resources.ephemeralStorage -- Ephemeral storage requests and limits for the Ray job
+      ephemeralStorage:
+        #  ray.job.resources.ephemeralStorage.limits -- Ephemeral storage limits for the Ray job
+        limits: 4Gi
+        #  ray.job.resources.ephemeralStorage.requests -- Ephemeral storage requests for the Ray job
+        requests: 2Gi
+      #  ray.job.resources.memory -- Memory requests and limits for the Ray job
+      memory:
+        #  ray.job.resources.memory.limits -- Memory limits for the Ray job
+        limits: 2Gi
+        #  ray.job.resources.memory.requests -- Memory requests for the Ray job
+        requests: 2Gi
+    #  ray.job.suspend -- Suspend the Ray job
+    suspend: false
 
 #  registry --
 registry:
