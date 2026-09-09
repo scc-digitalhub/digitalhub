@@ -128,3 +128,20 @@ rules:
   - delete
 {{- end }}
 {{- end }}
+{{- if .Values.ray.enabled }}
+- apiGroups:
+  - ray.io
+  resources:
+  - rayjobs
+  - rayclusters
+  verbs:
+  - get
+  - list
+  - create
+  - update
+  - delete
+  - patch
+{{- end }}
+{{- if .Values.customRoles }}
+{{- toYaml .Values.customRoles }}
+{{- end }}
