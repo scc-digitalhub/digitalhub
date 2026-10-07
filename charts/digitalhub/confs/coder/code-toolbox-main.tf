@@ -266,18 +266,18 @@ data "kubernetes_secret_v1" "auth" {
 module "vscode-web" {
   count          = data.coder_workspace.me.start_count
   source         = "registry.coder.com/coder/vscode-web/coder"
-  version        = "1.5.0"
+  version        = "1.6.2"
   agent_id       = coder_agent.code-toolbox.id
   accept_license = true
   folder         = "/home/${data.coder_workspace_owner.me.name}"
   install_prefix = "/home/${data.coder_workspace_owner.me.name}/vscode-web"
-  extensions     = ["ms-python.python", "ms-toolsai.jupyter"]
+  extensions     = ["github.copilot", "ms-python.python", "ms-toolsai.jupyter"]
 }
 
 module "personalize" {
   count    = data.coder_workspace.me.start_count
   source   = "registry.coder.com/modules/personalize/coder"
-  version  = "1.0.32"
+  version  = "1.0.33"
   agent_id = coder_agent.code-toolbox.id
   path     = "/scripts/run.sh"
   log_path = "/tmp/personalize.log"
@@ -286,7 +286,7 @@ module "personalize" {
 module "jetbrains_gateway" {
   count          = data.coder_parameter.jetbrains_gateway.value ? 1 : 0
   source         = "registry.coder.com/modules/jetbrains-gateway/coder"
-  version        = "1.2.2"
+  version        = "1.2.6"
   agent_id       = coder_agent.code-toolbox.id
   agent_name     = "code_toolbox"
   folder         = "/home/${data.coder_workspace_owner.me.name}"
@@ -298,7 +298,7 @@ module "jetbrains_gateway" {
 module "git-clone" {
   count    = data.coder_parameter.git_repo.value != "" ? 1 : 0
   source   = "registry.coder.com/coder/git-clone/coder"
-  version  = "1.1.1"
+  version  = "2.0.5"
   agent_id = coder_agent.code-toolbox.id
   url      = data.coder_parameter.git_repo.value
   base_dir = "/home/${data.coder_workspace_owner.me.name}"
