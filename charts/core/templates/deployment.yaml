@@ -76,44 +76,44 @@ spec:
               {{- end }}
           {{- end }}
           {{- if or .Values.loki.credentials.username .Values.loki.credentials.existingSecret.name }}
-          - name: LOKI_USERNAME
-            {{- if and .Values.loki.credentials.existingSecret.name .Values.loki.credentials.existingSecret.usernameKey }}
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.loki.credentials.existingSecret.name }}
-                key: {{ .Values.loki.credentials.existingSecret.usernameKey }}
-            {{- else }}
-            value: {{ .Values.loki.credentials.username }}
-            {{- end }}
-          - name: LOKI_PASSWORD
-            {{- if and .Values.loki.credentials.existingSecret.name .Values.loki.credentials.existingSecret.passwordKey }}
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.loki.credentials.existingSecret.name }}
-                key: {{ .Values.loki.credentials.existingSecret.passwordKey }}
-            {{- else }}
-            value: {{ .Values.loki.credentials.password }}
-            {{- end }}
+            - name: LOKI_USERNAME
+              {{- if and .Values.loki.credentials.existingSecret.name .Values.loki.credentials.existingSecret.usernameKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.loki.credentials.existingSecret.name }}
+                  key: {{ .Values.loki.credentials.existingSecret.usernameKey }}
+              {{- else }}
+              value: {{ .Values.loki.credentials.username }}
+              {{- end }}
+            - name: LOKI_PASSWORD
+              {{- if and .Values.loki.credentials.existingSecret.name .Values.loki.credentials.existingSecret.passwordKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.loki.credentials.existingSecret.name }}
+                  key: {{ .Values.loki.credentials.existingSecret.passwordKey }}
+              {{- else }}
+              value: {{ .Values.loki.credentials.password }}
+              {{- end }}
           {{- end }}
           {{- if or .Values.prometheus.credentials.username .Values.prometheus.credentials.existingSecret.name }}
-          - name: PROMETHEUS_USERNAME
-            {{- if and .Values.prometheus.credentials.existingSecret.name .Values.prometheus.credentials.existingSecret.usernameKey }}
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.prometheus.credentials.existingSecret.name }}
-                key: {{ .Values.prometheus.credentials.existingSecret.usernameKey }}
-            {{- else }}
-            value: {{ .Values.prometheus.credentials.username }}
-            {{- end }}
-          - name: PROMETHEUS_PASSWORD
-            {{- if and .Values.prometheus.credentials.existingSecret.name .Values.prometheus.credentials.existingSecret.passwordKey }}
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.prometheus.credentials.existingSecret.name }}
-                key: {{ .Values.prometheus.credentials.existingSecret.passwordKey }}
-            {{- else }}
-            value: {{ .Values.prometheus.credentials.password }}
-            {{- end }}
+            - name: PROMETHEUS_USERNAME
+              {{- if and .Values.prometheus.credentials.existingSecret.name .Values.prometheus.credentials.existingSecret.usernameKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.prometheus.credentials.existingSecret.name }}
+                  key: {{ .Values.prometheus.credentials.existingSecret.usernameKey }}
+              {{- else }}
+              value: {{ .Values.prometheus.credentials.username }}
+              {{- end }}
+            - name: PROMETHEUS_PASSWORD
+              {{- if and .Values.prometheus.credentials.existingSecret.name .Values.prometheus.credentials.existingSecret.passwordKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.prometheus.credentials.existingSecret.name }}
+                  key: {{ .Values.prometheus.credentials.existingSecret.passwordKey }}
+              {{- else }}
+              value: {{ .Values.prometheus.credentials.password }}
+              {{- end }}
           {{- end }}
           {{- if or .Values.console.containerImagesRegistry.username .Values.console.containerImagesRegistry.existingSecret.name }}
             - name: CONTAINER_IMAGES_USERNAME

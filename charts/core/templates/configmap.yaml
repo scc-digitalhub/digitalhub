@@ -39,6 +39,99 @@ data:
   RUNTIME_VLLM_SERVE_IMAGE: {{ .Values.runtime.vllm.default.image }}:{{ .Values.runtime.vllm.default.tag }}
   RUNTIME_VLLM_SERVE_CPU_IMAGE: {{ .Values.runtime.vllm.cpu.image }}:{{ .Values.runtime.vllm.cpu.tag }}
   RUNTIME_PYTHON_INSTALL_DEPENDENCIES: {{ .Values.runtime.python.installDependencies | quote }}
+  LLM_OTEL_ENDPOINT: {{ .Values.runtime.llmOtelEndpoint | quote }}
+  RUNTIME_FLOWER_CLIENT: {{ printf "%s:%s" .Values.runtime.flower.client.image .Values.runtime.flower.client.tag | quote }}
+  RUNTIME_FLOWER_GROUP_ID: {{ .Values.runtime.flower.groupId | quote }}
+  RUNTIME_FLOWER_RUNNER: {{ printf "%s:%s" .Values.runtime.flower.runner.image .Values.runtime.flower.runner.tag | quote }}
+  RUNTIME_FLOWER_SERVER: {{ printf "%s:%s" .Values.runtime.flower.server.image .Values.runtime.flower.server.tag | quote }}
+  RUNTIME_FLOWER_TLS_CA_CERT: {{ .Values.runtime.flower.tls.caCert | quote }}
+  RUNTIME_FLOWER_TLS_CA_KEY: {{ .Values.runtime.flower.tls.caKey | quote }}
+  RUNTIME_FLOWER_TLS_CONF: {{ .Values.runtime.flower.tls.conf | quote }}
+  RUNTIME_FLOWER_TLS_EXT_DOMAIN: {{ .Values.runtime.flower.tls.externalDomain | quote }}
+  RUNTIME_FLOWER_TLS_INT_DOMAIN: {{ .Values.runtime.flower.tls.internalDomain | default .Release.Namespace | quote }}
+  RUNTIME_FLOWER_USER_ID: {{ .Values.runtime.flower.userId | quote }}
+  RUNTIME_HERA_DURATION: {{ .Values.runtime.hera.duration | toString | default .Values.coreTokens.refreshTokenDuration | quote }}
+  RUNTIME_KFP_DURATION: {{ .Values.runtime.kfp.duration | toString | default .Values.coreTokens.refreshTokenDuration | quote }}
+  RUNTIME_KFP_IMAGE: {{ printf "%s:%s" .Values.runtime.kfp.image .Values.runtime.kfp.tag | quote }}
+  RUNTIME_HUGGINGFACE_GROUP_ID: {{ .Values.runtime.huggingFace.groupId | toString | default (.Values.additionalConfig.security.group | toString) | quote }}
+  RUNTIME_HUGGINGFACE_USER_ID: {{ .Values.runtime.huggingFace.userId | toString | default (.Values.additionalConfig.security.user | toString) | quote }}
+  RUNTIME_HUGGINGFACE_VOLUME_SIZE: {{ .Values.runtime.huggingFace.volumeSize | quote }}
+  RUNTIME_MLFLOW_SERVE_GROUP_ID: {{ .Values.runtime.mlflow.groupId | toString | default (.Values.additionalConfig.security.group | toString) | quote }}
+  RUNTIME_MLFLOW_SERVE_IMAGE: {{ printf "%s:%s" .Values.runtime.mlflow.image .Values.runtime.mlflow.tag | quote }}
+  RUNTIME_MLFLOW_SERVE_USER_ID: {{ .Values.runtime.mlflow.userId | toString | default (.Values.additionalConfig.security.user | toString) | quote }}
+  RUNTIME_MLFLOW_VOLUME_SIZE: {{ .Values.runtime.mlflow.volumeSize | quote }}
+  RUNTIME_SKLEARN_SERVE_GROUP_ID: {{ .Values.runtime.sklearn.groupId | toString | default (.Values.additionalConfig.security.group | toString) | quote }}
+  RUNTIME_SKLEARN_SERVE_IMAGE: {{ printf "%s:%s" .Values.runtime.sklearn.image .Values.runtime.sklearn.tag | quote }}
+  RUNTIME_SKLEARN_SERVE_USER_ID: {{ .Values.runtime.sklearn.userId | toString | default (.Values.additionalConfig.security.user | toString) | quote }}
+  RUNTIME_SKLEARN_VOLUME_SIZE: {{ .Values.runtime.sklearn.volumeSize | quote }}
+  RUNTIME_VLLM_GROUP_ID: {{ .Values.runtime.vllm.groupId | toString | default (.Values.additionalConfig.security.group | toString) | quote }}
+  RUNTIME_VLLM_HOME_DIR: {{ .Values.runtime.vllm.homeDir | quote }}
+  RUNTIME_VLLM_MEM_SIZE: {{ .Values.runtime.vllm.memSize | quote }}
+  RUNTIME_VLLM_SERVE_CPU_IMAGE_AUDIO: {{ printf "%s:%s" (.Values.runtime.vllm.cpu.audioImage | default .Values.runtime.vllm.cpu.image) (.Values.runtime.vllm.cpu.audioTag | default .Values.runtime.vllm.cpu.tag) | quote }}
+  RUNTIME_VLLM_SERVE_IMAGE_AUDIO: {{ printf "%s:%s" (.Values.runtime.vllm.default.audioImage | default .Values.runtime.vllm.default.image) (.Values.runtime.vllm.default.audioTag | default .Values.runtime.vllm.default.tag) | quote }}
+  RUNTIME_VLLM_USER_ID: {{ .Values.runtime.vllm.userId | toString | default (.Values.additionalConfig.security.user | toString) | quote }}
+  RUNTIME_VLLM_VOLUME_SIZE: {{ .Values.runtime.vllm.volumeSize | quote }}
+  RUNTIME_PYTHON_BASE_IMAGE_3_10: {{ printf "%s:%s" .Values.runtime.python.baseImage.image .Values.runtime.python.baseImage.tag3_10 | quote }}
+  RUNTIME_PYTHON_BASE_IMAGE_3_11: {{ printf "%s:%s" .Values.runtime.python.baseImage.image .Values.runtime.python.baseImage.tag3_11 | quote }}
+  RUNTIME_PYTHON_BASE_IMAGE_3_12: {{ printf "%s:%s" .Values.runtime.python.baseImage.image .Values.runtime.python.baseImage.tag3_12 | quote }}
+  RUNTIME_PYTHON_BASE_IMAGE_3_13: {{ printf "%s:%s" .Values.runtime.python.baseImage.image .Values.runtime.python.baseImage.tag3_13 | quote }}
+  RUNTIME_PYTHON_COMMAND: {{ .Values.runtime.python.command | quote }}
+  RUNTIME_PYTHON_DEPENDENCIES: {{ .Values.runtime.python.dependencies | quote }}
+  RUNTIME_PYTHON_GROUP_ID: {{ .Values.runtime.python.groupId | toString | default (.Values.additionalConfig.security.group | toString) | quote }}
+  RUNTIME_PYTHON_HOME_DIR: {{ .Values.runtime.python.homeDir | quote }}
+  RUNTIME_PYTHON_IMAGE_3_9: {{ printf "%s:%s" .Values.runtime.python.image .Values.runtime.python.tag3_9 | quote }}
+  RUNTIME_PYTHON_SERVERLESS_IMAGE_3_10: {{ printf "%s:%s" .Values.runtime.python.serverless.image .Values.runtime.python.serverless.tag3_10 | quote }}
+  RUNTIME_PYTHON_SERVERLESS_IMAGE_3_11: {{ printf "%s:%s" .Values.runtime.python.serverless.image .Values.runtime.python.serverless.tag3_11 | quote }}
+  RUNTIME_PYTHON_SERVERLESS_IMAGE_3_12: {{ printf "%s:%s" .Values.runtime.python.serverless.image .Values.runtime.python.serverless.tag3_12 | quote }}
+  RUNTIME_PYTHON_SERVERLESS_IMAGE_3_13: {{ printf "%s:%s" .Values.runtime.python.serverless.image .Values.runtime.python.serverless.tag3_13 | quote }}
+  RUNTIME_PYTHON_USER_ID: {{ .Values.runtime.python.userId | toString | default (.Values.additionalConfig.security.user | toString) | quote }}
+  RUNTIME_PYTHON_USE_BETA_DEPENDENCIES: {{ .Values.runtime.python.useBetaDependencies | quote }}
+  RUNTIME_PYTHON_VOLUME_SIZE: {{ .Values.runtime.python.volumeSize | quote }}
+  RUNTIME_GUARDRAIL_BASE_IMAGE_3_10: {{ printf "%s:%s" (.Values.runtime.guardrail.baseImage.image | default .Values.runtime.python.baseImage.image) (.Values.runtime.guardrail.baseImage.tag3_10 | default .Values.runtime.python.baseImage.tag3_10) | quote }}
+  RUNTIME_GUARDRAIL_BASE_IMAGE_3_11: {{ printf "%s:%s" (.Values.runtime.guardrail.baseImage.image | default .Values.runtime.python.baseImage.image) (.Values.runtime.guardrail.baseImage.tag3_11 | default .Values.runtime.python.baseImage.tag3_11) | quote }}
+  RUNTIME_GUARDRAIL_BASE_IMAGE_3_12: {{ printf "%s:%s" (.Values.runtime.guardrail.baseImage.image | default .Values.runtime.python.baseImage.image) (.Values.runtime.guardrail.baseImage.tag3_12 | default .Values.runtime.python.baseImage.tag3_12) | quote }}
+  RUNTIME_GUARDRAIL_BASE_IMAGE_3_13: {{ printf "%s:%s" (.Values.runtime.guardrail.baseImage.image | default .Values.runtime.python.baseImage.image) (.Values.runtime.guardrail.baseImage.tag3_13 | default .Values.runtime.python.baseImage.tag3_13) | quote }}
+  RUNTIME_GUARDRAIL_COMMAND: {{ .Values.runtime.guardrail.command | default .Values.runtime.python.command | quote }}
+  RUNTIME_GUARDRAIL_DEPENDENCIES: {{ .Values.runtime.guardrail.dependencies | quote }}
+  RUNTIME_GUARDRAIL_GROUP_ID: {{ .Values.runtime.guardrail.groupId | toString | default (.Values.runtime.python.groupId | toString) | default (.Values.additionalConfig.security.group | toString) | quote }}
+  RUNTIME_GUARDRAIL_HOME_DIR: {{ .Values.runtime.guardrail.homeDir | default .Values.runtime.python.homeDir | quote }}
+  RUNTIME_GUARDRAIL_IMAGE_3_10: {{ printf "%s:%s" (.Values.runtime.guardrail.image | default .Values.runtime.python.image) (.Values.runtime.guardrail.tag3_10 | default .Values.runtime.python.tag3_10) | quote }}
+  RUNTIME_GUARDRAIL_IMAGE_3_11: {{ printf "%s:%s" (.Values.runtime.guardrail.image | default .Values.runtime.python.image) (.Values.runtime.guardrail.tag3_11 | default .Values.runtime.python.tag3_11) | quote }}
+  RUNTIME_GUARDRAIL_IMAGE_3_12: {{ printf "%s:%s" (.Values.runtime.guardrail.image | default .Values.runtime.python.image) (.Values.runtime.guardrail.tag3_12 | default .Values.runtime.python.tag3_12) | quote }}
+  RUNTIME_GUARDRAIL_IMAGE_3_13: {{ printf "%s:%s" (.Values.runtime.guardrail.image | default .Values.runtime.python.image) (.Values.runtime.guardrail.tag3_13 | default .Values.runtime.python.tag3_13) | quote }}
+  RUNTIME_GUARDRAIL_INSTALL_DEPENDENCIES: {{ ternary .Values.runtime.python.installDependencies .Values.runtime.guardrail.installDependencies (kindIs "invalid" .Values.runtime.guardrail.installDependencies) | quote }}
+  RUNTIME_GUARDRAIL_SERVERLESS_IMAGE_3_10: {{ printf "%s:%s" (.Values.runtime.guardrail.serverless.image | default .Values.runtime.python.serverless.image) (.Values.runtime.guardrail.serverless.tag3_10 | default .Values.runtime.python.serverless.tag3_10) | quote }}
+  RUNTIME_GUARDRAIL_SERVERLESS_IMAGE_3_11: {{ printf "%s:%s" (.Values.runtime.guardrail.serverless.image | default .Values.runtime.python.serverless.image) (.Values.runtime.guardrail.serverless.tag3_11 | default .Values.runtime.python.serverless.tag3_11) | quote }}
+  RUNTIME_GUARDRAIL_SERVERLESS_IMAGE_3_12: {{ printf "%s:%s" (.Values.runtime.guardrail.serverless.image | default .Values.runtime.python.serverless.image) (.Values.runtime.guardrail.serverless.tag3_12 | default .Values.runtime.python.serverless.tag3_12) | quote }}
+  RUNTIME_GUARDRAIL_SERVERLESS_IMAGE_3_13: {{ printf "%s:%s" (.Values.runtime.guardrail.serverless.image | default .Values.runtime.python.serverless.image) (.Values.runtime.guardrail.serverless.tag3_13 | default .Values.runtime.python.serverless.tag3_13) | quote }}
+  RUNTIME_GUARDRAIL_USER_ID: {{ .Values.runtime.guardrail.userId | toString | default (.Values.runtime.python.userId | toString) | default (.Values.additionalConfig.security.user | toString) | quote }}
+  RUNTIME_GUARDRAIL_USE_BETA_DEPENDENCIES: {{ ternary .Values.runtime.python.useBetaDependencies .Values.runtime.guardrail.useBetaDependencies (kindIs "invalid" .Values.runtime.guardrail.useBetaDependencies) | quote }}
+  RUNTIME_GUARDRAIL_VOLUME_SIZE: {{ .Values.runtime.guardrail.volumeSize | default .Values.runtime.python.volumeSize | quote }}
+  RUNTIME_OPENINFERENCE_BASE_IMAGE_3_10: {{ printf "%s:%s" (.Values.runtime.openInference.baseImage.image | default .Values.runtime.python.baseImage.image) (.Values.runtime.openInference.baseImage.tag3_10 | default .Values.runtime.python.baseImage.tag3_10) | quote }}
+  RUNTIME_OPENINFERENCE_BASE_IMAGE_3_11: {{ printf "%s:%s" (.Values.runtime.openInference.baseImage.image | default .Values.runtime.python.baseImage.image) (.Values.runtime.openInference.baseImage.tag3_11 | default .Values.runtime.python.baseImage.tag3_11) | quote }}
+  RUNTIME_OPENINFERENCE_BASE_IMAGE_3_12: {{ printf "%s:%s" (.Values.runtime.openInference.baseImage.image | default .Values.runtime.python.baseImage.image) (.Values.runtime.openInference.baseImage.tag3_12 | default .Values.runtime.python.baseImage.tag3_12) | quote }}
+  RUNTIME_OPENINFERENCE_BASE_IMAGE_3_13: {{ printf "%s:%s" (.Values.runtime.openInference.baseImage.image | default .Values.runtime.python.baseImage.image) (.Values.runtime.openInference.baseImage.tag3_13 | default .Values.runtime.python.baseImage.tag3_13) | quote }}
+  RUNTIME_OPENINFERENCE_COMMAND: {{ .Values.runtime.openInference.command | default .Values.runtime.python.command | quote }}
+  RUNTIME_OPENINFERENCE_DEPENDENCIES: {{ .Values.runtime.openInference.dependencies | quote }}
+  RUNTIME_OPENINFERENCE_GROUP_ID: {{ .Values.runtime.openInference.groupId | toString | default (.Values.runtime.python.groupId | toString) | default (.Values.additionalConfig.security.group | toString) | quote }}
+  RUNTIME_OPENINFERENCE_HOME_DIR: {{ .Values.runtime.openInference.homeDir | default .Values.runtime.python.homeDir | quote }}
+  RUNTIME_OPENINFERENCE_IMAGE_3_10: {{ printf "%s:%s" (.Values.runtime.openInference.image | default .Values.runtime.python.image) (.Values.runtime.openInference.tag3_10 | default .Values.runtime.python.tag3_10) | quote }}
+  RUNTIME_OPENINFERENCE_IMAGE_3_11: {{ printf "%s:%s" (.Values.runtime.openInference.image | default .Values.runtime.python.image) (.Values.runtime.openInference.tag3_11 | default .Values.runtime.python.tag3_11) | quote }}
+  RUNTIME_OPENINFERENCE_IMAGE_3_12: {{ printf "%s:%s" (.Values.runtime.openInference.image | default .Values.runtime.python.image) (.Values.runtime.openInference.tag3_12 | default .Values.runtime.python.tag3_12) | quote }}
+  RUNTIME_OPENINFERENCE_IMAGE_3_13: {{ printf "%s:%s" (.Values.runtime.openInference.image | default .Values.runtime.python.image) (.Values.runtime.openInference.tag3_13 | default .Values.runtime.python.tag3_13) | quote }}
+  RUNTIME_OPENINFERENCE_INSTALL_DEPENDENCIES: {{ ternary .Values.runtime.python.installDependencies .Values.runtime.openInference.installDependencies (kindIs "invalid" .Values.runtime.openInference.installDependencies) | quote }}
+  RUNTIME_OPENINFERENCE_SERVERLESS_IMAGE_3_10: {{ printf "%s:%s" (.Values.runtime.openInference.serverless.image | default .Values.runtime.python.serverless.image) (.Values.runtime.openInference.serverless.tag3_10 | default .Values.runtime.python.serverless.tag3_10) | quote }}
+  RUNTIME_OPENINFERENCE_SERVERLESS_IMAGE_3_11: {{ printf "%s:%s" (.Values.runtime.openInference.serverless.image | default .Values.runtime.python.serverless.image) (.Values.runtime.openInference.serverless.tag3_11 | default .Values.runtime.python.serverless.tag3_11) | quote }}
+  RUNTIME_OPENINFERENCE_SERVERLESS_IMAGE_3_12: {{ printf "%s:%s" (.Values.runtime.openInference.serverless.image | default .Values.runtime.python.serverless.image) (.Values.runtime.openInference.serverless.tag3_12 | default .Values.runtime.python.serverless.tag3_12) | quote }}
+  RUNTIME_OPENINFERENCE_SERVERLESS_IMAGE_3_13: {{ printf "%s:%s" (.Values.runtime.openInference.serverless.image | default .Values.runtime.python.serverless.image) (.Values.runtime.openInference.serverless.tag3_13 | default .Values.runtime.python.serverless.tag3_13) | quote }}
+  RUNTIME_OPENINFERENCE_USER_ID: {{ .Values.runtime.openInference.userId | toString | default (.Values.runtime.python.userId | toString) | default (.Values.additionalConfig.security.user | toString) | quote }}
+  RUNTIME_OPENINFERENCE_USE_BETA_DEPENDENCIES: {{ ternary .Values.runtime.python.useBetaDependencies .Values.runtime.openInference.useBetaDependencies (kindIs "invalid" .Values.runtime.openInference.useBetaDependencies) | quote }}
+  RUNTIME_OPENINFERENCE_VOLUME_SIZE: {{ .Values.runtime.openInference.volumeSize | default .Values.runtime.python.volumeSize | quote }}
+  RUNTIME_SERVICEGRAPH_COMMAND: {{ .Values.runtime.servicegraph.command | quote }}
+  RUNTIME_SERVICEGRAPH_GROUP_ID: {{ .Values.runtime.servicegraph.groupId | toString | default (.Values.additionalConfig.security.group | toString) | quote }}
+  RUNTIME_SERVICEGRAPH_IMAGE: {{ printf "%s:%s" .Values.runtime.servicegraph.image .Values.runtime.servicegraph.tag | quote }}
+  RUNTIME_SERVICEGRAPH_USER_ID: {{ .Values.runtime.servicegraph.userId | toString | default (.Values.additionalConfig.security.user | toString) | quote }}
+  RUNTIME_SERVICEGRAPH_VOLUME_SIZE: {{ .Values.runtime.servicegraph.volumeSize | quote }}
 {{- if .Values.solr.enabled }}
   SOLR_URL: {{ .Values.solr.url }}
   SOLR_COLLECTION: {{ .Values.solr.collection.name }}
@@ -132,6 +225,94 @@ data:
   ARGOWORKFLOWS_ARTIFACTS_KEY: {{ .Values.argoWorkflow.key }}
   ARGOWORKFLOWS_SERVICE_ACCOUNT: {{ .Values.argoWorkflow.serviceAccount }}
   ARGOWORKFLOWS_USER: {{ .Values.argoWorkflow.user | quote }}
+  CACHE_CAFFEINE_SPEC: {{ .Values.cache.caffeineSpec | quote }}
+  DH_API_LEVEL: {{ .Values.application.apiLevel | quote }}
+  DH_CONTACTS_EMAIL: {{ .Values.application.contacts.email | quote }}
+  DH_CONTACTS_LINK: {{ .Values.application.contacts.link | quote }}
+  DH_CONTACTS_NAME: {{ .Values.application.contacts.name | quote }}
+  H2_CONSOLE: {{ .Values.postgres.h2Console | quote }}
+{{- if .Values.postgres.dialect }}
+  JDBC_DIALECT: {{ .Values.postgres.dialect | quote }}
+{{- end }}
+  JWKS_CACHE_CONTROL: {{ .Values.coreTokens.jwksCacheControl | quote }}
+  JWT_REDIRECT_URIS: {{ .Values.coreTokens.redirectUris | default (printf "http://localhost:*,%s/console/auth-callback" (include "core.endpoint" .)) | quote }}
+  LOGS_MAX_LENGTH: {{ .Values.logs.maxLength | quote }}
+  LOG_LEVEL_K8S: {{ .Values.logs.kubernetesLevel | quote }}
+  MANAGEMENT_PORT: {{ .Values.server.managementPort | quote }}
+  SERVER_CONTEXT: {{ .Values.server.context | quote }}
+  SERVER_HOST: {{ .Values.server.host | quote }}
+  SERVER_PORT: {{ .Values.server.port | quote }}
+  SERVER_TOMCAT_PROTOCOL_HEADER: {{ .Values.server.tomcat.protocolHeader | quote }}
+  SERVER_TOMCAT_REMOTE_IP_HEADER: {{ .Values.server.tomcat.remoteIpHeader | quote }}
+  TEMPLATES_PATH: {{ .Values.templatesPath | quote }}
+  EXTENSIONS_PATH: {{ .Values.extensions.path | quote }}
+  FILES_MAX_COLUMN_SIZE: {{ .Values.files.maxColumnSize | quote }}
+  FRONTEND_CLARITY_KEY: {{ .Values.console.clarityKey | quote }}
+  K8S_EMPTY_DIR_MEDIUM: {{ .Values.additionalConfig.emptyDir.medium | quote }}
+  K8S_EMPTY_DIR_SIZE: {{ .Values.additionalConfig.emptyDir.size | quote }}
+  K8S_ENABLE_RESULTS: {{ .Values.additionalConfig.debug.enableResults | quote }}
+  K8S_REGISTRY_SECRET: {{ .Values.additionalConfig.registrySecret | default .Values.global.ociRegistry.secretName | quote }}
+  K8S_RESOURCE_MEM_TOLERATION: {{ .Values.additionalConfig.resources.memToleration | quote }}
+  K8S_SEC_GROUP: {{ .Values.additionalConfig.security.group | quote }}
+  K8S_SEC_SECCOMP_PROFILE: {{ .Values.additionalConfig.security.seccompProfile | quote }}
+  K8S_SEC_USER: {{ .Values.additionalConfig.security.user | quote }}
+  MONITORS_DELAY: {{ .Values.additionalConfig.monitorsDelay | quote }}
+  PROXY_URL: {{ .Values.proxy.url | quote }}
+  RABBITMQ_ENABLE: {{ .Values.rabbitmq.enabled | quote }}
+  RABBITMQ_HOST: {{ .Values.rabbitmq.host | quote }}
+  RABBITMQ_PASSWORD: {{ .Values.rabbitmq.password | quote }}
+  RABBITMQ_PORT: {{ .Values.rabbitmq.port | quote }}
+  RABBITMQ_QUEUE: {{ .Values.rabbitmq.queue | quote }}
+  RABBITMQ_ROUTING_KEY: {{ .Values.rabbitmq.routingKey | quote }}
+  RABBITMQ_TOPIC: {{ .Values.rabbitmq.topic | quote }}
+  RABBITMQ_USER: {{ .Values.rabbitmq.username | quote }}
+  RABBITMQ_VHOST: {{ .Values.rabbitmq.vhost | quote }}
+  TRINODB_PROVIDER: {{ .Values.trinodb.enabled | quote }}
+  TRINODB_CATALOG: {{ .Values.trinodb.catalog | quote }}
+  TRINODB_HOST: {{ .Values.trinodb.host | quote }}
+  TRINODB_PASSWORD: {{ .Values.trinodb.password | quote }}
+  TRINODB_PORT: {{ .Values.trinodb.port | quote }}
+  TRINODB_SCHEME: {{ .Values.trinodb.scheme | quote }}
+  TRINODB_URL: {{ .Values.trinodb.url | quote }}
+  TRINODB_USER: {{ .Values.trinodb.username | quote }}
+  TRINODB_USE_CORE_CREDENTIALS: {{ .Values.trinodb.useCoreCredentials | quote }}
+{{- if not (kindIs "invalid" .Values.trinodb.useJwtToken) }}
+  TRINODB_USE_JWT_TOKEN: {{ .Values.trinodb.useJwtToken | quote }}
+{{- end }}
+{{- if .Values.authentication.openId.enabled }}
+  DH_AUTH_OIDC_CLAIM: {{ .Values.authentication.openId.claim | default (.Values.authentication.openId.jwtClaim | default "roles") | quote }}
+  DH_AUTH_OIDC_CLIENT_NAME: {{ .Values.authentication.openId.clientName | default .Release.Name | quote }}
+  DH_AUTH_OIDC_CLIENT_SECRET: {{ .Values.authentication.openId.clientSecret | quote }}
+  DH_AUTH_OIDC_USERNAME: {{ .Values.authentication.openId.username | quote }}
+{{- end }}
+{{- if .Values.envoyGateway.enabled }}
+  PAYLOAD_LOGGER_HOST: {{ .Values.envoyGateway.payloadLogger.host | quote }}
+  PAYLOAD_LOGGER_PORT: {{ .Values.envoyGateway.payloadLogger.port | quote }}
+{{- end }}
+{{- if .Values.global.ociRegistry.url }}
+  BUILDKIT_IMAGE_PREFIX: {{ .Values.builder.buildkit.imagePrefix | default (index .Values.builder.framework "image-prefix") | quote }}
+  BUILDKIT_IMAGE_REGISTRY: {{ .Values.builder.buildkit.imageRegistry | default .Values.global.ociRegistry.url | quote }}
+  BUILDKIT_REGISTRY_INSECURE: {{ .Values.builder.buildkit.registryInsecure | quote }}
+  KANIKO_IMAGE_PREFIX: {{ .Values.builder.kaniko.imagePrefix | default (index .Values.builder.framework "image-prefix") | quote }}
+  KANIKO_IMAGE_REGISTRY: {{ .Values.builder.kaniko.imageRegistry | default .Values.global.ociRegistry.url | quote }}
+{{- end }}
+{{- if and .Values.sts.enabled .Values.sts.databaseProvider.enabled }}
+  DB_CREDENTIALS_HOST: {{ .Values.databaseProvider.host | quote }}
+  DB_CREDENTIALS_PLATFORM: {{ .Values.databaseProvider.platform | quote }}
+  DB_CREDENTIALS_PORT: {{ .Values.databaseProvider.port | quote }}
+{{- end }}
+{{- if .Values.s3.enabled }}
+  S3_CREDENTIALS_POLICY_TEMPLATE: {{ .Values.s3.credentials.policyTemplate | quote }}
+{{- end }}
+{{- if .Values.solr.enabled }}
+  SOLR_COLLECTION_REPLICATION: {{ .Values.solr.collection.replication | quote }}
+  SOLR_COLLECTION_SHARDS_NUM: {{ .Values.solr.collection.shards | quote }}
+  SOLR_REINDEX: {{ .Values.solr.reindex | quote }}
+  SOLR_TIMEOUT: {{ .Values.solr.timeout | quote }}
+{{- end }}
+{{- if .Values.loki.enabled }}
+  LOKI_MAPPING_NAMESPACE: {{ .Values.loki.labels.namespace | quote }}
+{{- end }}
 {{- with .Values.configmapAdditionalEnv }}
   {{- toYaml . | nindent 2 }}
 {{- end }}

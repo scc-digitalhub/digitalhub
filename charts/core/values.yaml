@@ -32,6 +32,14 @@ additionalConfig:
     enableLogs: true
     #  additionalConfig.debug.enableMetrics -- Enable/disable metrics
     enableMetrics: false
+    # additionalConfig.debug.enableResults -- Result collection mode.
+    enableResults: default
+  # additionalConfig.emptyDir -- Empty directory volume configuration.
+  emptyDir:
+    # additionalConfig.emptyDir.medium -- Storage medium for empty directory volumes.
+    medium: ""
+    # additionalConfig.emptyDir.size -- Maximum empty directory size.
+    size: 128Mi
   #  additionalConfig.ephemeralVolume -- Ephemeral Volumes configurations
   ephemeralVolume:
     # additionalConfig.ephemeral.limits -- Configure max size for the ephemeral storage volumes
@@ -50,6 +58,8 @@ additionalConfig:
     deadline: "604800"
     #  additionalConfig.job.jobSuspend -- Suspend jobs
     jobSuspend: false
+  # additionalConfig.monitorsDelay -- Monitor polling delay in seconds.
+  monitorsDelay: 10
   #  additionalConfig.persistenVolumeClaim -- Persisten Volume Claim configurations
   persistenVolumeClaim:
     # additionalConfig.persistenVolumeClaim.limits -- Configure max size for the Persisten Volume Claim volumes
@@ -58,6 +68,8 @@ additionalConfig:
     requests: ""
     # additionalConfig.persistenVolumeClaim.storageClass -- Specify the storage class for Persisten Volume Claim
     storageClass: ""
+  # additionalConfig.registrySecret -- Image registry secret; empty inherits the global registry secret.
+  registrySecret: ""
   #  additionalConfig.resources -- Resources for the pods created by Core
   resources:
     #  additionalConfig.resources.cpuLim -- CPU limit
@@ -70,10 +82,18 @@ additionalConfig:
     memLim: ""
     #  additionalConfig.resources.memReq -- Memory request
     memReq: ""
+    # additionalConfig.resources.memToleration -- Memory resource tolerance multiplier.
+    memToleration: 1.1
   #  additionalConfig.security --
   security:
     #  additionalConfig.security.disableRoot -- Disable root for pods created by Core
     disableRoot: true
+    # additionalConfig.security.group -- Group ID for workload containers.
+    group: ""
+    # additionalConfig.security.seccompProfile -- Seccomp profile for workload containers.
+    seccompProfile: RuntimeDefault
+    # additionalConfig.security.user -- User ID for workload containers.
+    user: ""
   #  additionalConfig.service --
   service:
     #  additionalConfig.service.type -- Service type for pods created by Core
@@ -103,6 +123,19 @@ annotations:
   # annotations.service -- Annotations for services
   service: {}
 
+# application -- Core application metadata.
+application:
+  # application.apiLevel -- API level.
+  apiLevel: ""
+  # application.contacts -- Application contact information.
+  contacts:
+    # application.contacts.email -- Contact email address.
+    email: ""
+    # application.contacts.link -- Contact URL.
+    link: https://github.com/scc-digitalhub/digitalhub-core
+    # application.contacts.name -- Contact name.
+    name: "@project.name@"
+
 #  argoWorkflow -- Argoworkflow configuration
 argoWorkflow:
   #  argoWorkflow.configmap -- Name of the configmap containing the artifact repositories that the Argo Workflows should use
@@ -128,6 +161,12 @@ authentication:
   openId:
     #  authentication.openId.enabled -- Enable/disable openId authentication
     enabled: false
+    # authentication.openId.claim -- OIDC claim; empty inherits the JWT claim.
+    claim: ""
+    # authentication.openId.clientName -- OIDC client name; empty uses the release name.
+    clientName: ""
+    # authentication.openId.clientSecret -- OIDC client secret, stored in the ConfigMap when configured.
+    clientSecret: ""
     #  authentication.openId.externalSecret -- Reference to the Core OpenID Secret
     externalSecret:
       #  authentication.openId.externalSecret.key -- Key of the openId clientId
@@ -146,6 +185,8 @@ authentication:
     oidcClientId: ""
     #  authentication.openId.scope -- OpenId JWT Scopes
     scope: ""
+    # authentication.openId.username -- OIDC username attribute.
+    username: preferred_username
 
 #  autoscaling -- Adjusts the number of replicas in a workload to match observed resource utilization such as CPU or memory usage.
 autoscaling:
@@ -160,6 +201,14 @@ autoscaling:
 
 #  builder -- Configure OCI image builder
 builder:
+  # builder.buildkit -- BuildKit image registry configuration.
+  buildkit:
+    # builder.buildkit.imagePrefix -- Image prefix; empty inherits the framework image prefix.
+    imagePrefix: ""
+    # builder.buildkit.imageRegistry -- Registry; empty inherits the global registry URL.
+    imageRegistry: ""
+    # builder.buildkit.registryInsecure -- Allow an insecure registry.
+    registryInsecure: false
   framework:
     #  builder.framework.args -- Override/append arguments defined in the builder image
     args: ""
@@ -179,6 +228,17 @@ builder:
     name: kaniko
     #  builder.framework.secret -- Specify the name of the secret that contains the registry credentials
     secret: ""
+  # builder.kaniko -- Kaniko image registry configuration.
+  kaniko:
+    # builder.kaniko.imagePrefix -- Image prefix; empty inherits the framework image prefix.
+    imagePrefix: ""
+    # builder.kaniko.imageRegistry -- Registry; empty inherits the global registry URL.
+    imageRegistry: ""
+
+# cache -- Cache configuration.
+cache:
+  # cache.caffeineSpec -- Caffeine cache specification.
+  caffeineSpec: maximumSize=10000,expireAfterWrite=600s
 
 #  commonCredsSecret -- A secret that should be used when not using STS. It should contain the following populated keys:
 #  DB_USERNAME: Username of the Postgres main db owner
@@ -196,6 +256,8 @@ configmapAdditionalEnv: {}
 
 # console -- Console configuration
 console:
+  # console.clarityKey -- Frontend Clarity integration key.
+  clarityKey: ""
   #  console.containerImagesRegistry -- Registry configuration used by the console
   containerImagesRegistry:
     existingSecret:
@@ -241,6 +303,10 @@ coreAuthCreds:
 coreTokens:
   #  coreTokens.accessTokenDuration -- Duration of the access token generated by Core in seconds
   accessTokenDuration: "43200"
+  # coreTokens.jwksCacheControl -- JWKS response cache-control header.
+  jwksCacheControl: public, max-age=900, must-revalidate, no-transform
+  # coreTokens.redirectUris -- Allowed redirect URIs; empty uses localhost and the Core callback endpoint.
+  redirectUris: ""
   #  coreTokens.refreshTokenDuration -- Duration of the refresh token generated by Core in seconds
   refreshTokenDuration: "86400"
 
@@ -256,6 +322,8 @@ databaseProvider:
   database: ""
   #  databaseProvider.host -- Host of the main database of the platform
   host: ""
+  # databaseProvider.platform -- Platform database engine.
+  platform: postgresql
   #  databaseProvider.port -- Port of the main database of the platform
   port: ""
 
@@ -284,6 +352,22 @@ envoyGateway:
     endpoint: ""
     #  envoyGateway.genericGateway.name -- Name of the generic Envoy Gateway
     name: ""
+  # envoyGateway.payloadLogger -- Payload logger configuration.
+  payloadLogger:
+    # envoyGateway.payloadLogger.host -- Payload logger host.
+    host: ""
+    # envoyGateway.payloadLogger.port -- Payload logger port.
+    port: ""
+
+# extensions -- Core extensions configuration.
+extensions:
+  # extensions.path -- Extension discovery path.
+  path: classpath:/extensions/
+
+# files -- File processing configuration.
+files:
+  # files.maxColumnSize -- Maximum file column size in bytes.
+  maxColumnSize: 2097152
 
 #  fullnameOverride -- String to fully override `core.fullname` template.
 fullnameOverride: ""
@@ -377,6 +461,13 @@ kubeai:
   #  kubeai.serviceName -- Kubei service name
   serviceName: ""
 
+# logs -- Core logging configuration.
+logs:
+  # logs.kubernetesLevel -- Kubernetes framework log level.
+  kubernetesLevel: INFO
+  # logs.maxLength -- Maximum log length in bytes.
+  maxLength: 2097152
+
 #  loki -- Configure Core with an existing Loki instance. It is used to filter the logs of Core resources in Loki.
 loki:
   #  loki.enabled -- Enable/Disable Loki integration
@@ -400,6 +491,8 @@ loki:
   #  loki.labels -- Labels that will have to match the ones set in Loki for filtering Core resources
   labels:
     applicationName: ""
+    # loki.labels.namespace -- Namespace label used to filter logs.
+    namespace: namespace
     project: dhcore_project
     run: dhcore_run
     user: dhcore_user
@@ -466,6 +559,10 @@ postgres:
     username: ""
   #  postgres.database -- Name of the Core database
   database: ""
+  # postgres.dialect -- Optional Hibernate dialect override; empty preserves dialect detection for PostgreSQL.
+  dialect: ""
+  # postgres.h2Console -- Enable the H2 console.
+  h2Console: false
   #  postgres.host -- Host of the Core database
   host: ""
   #  postgres.port -- Port of the Core database
@@ -707,6 +804,32 @@ prometheus:
   #  prometheus.rateInterval -- Rate interval in seconds used in Prometheus rate operations
   rateInterval: 120
 
+# proxy -- Core proxy configuration.
+proxy:
+  # proxy.url -- Proxy URL.
+  url: ""
+
+# rabbitmq -- RabbitMQ event publishing configuration.
+rabbitmq:
+  # rabbitmq.enabled -- Enable RabbitMQ publishing.
+  enabled: false
+  # rabbitmq.host -- RabbitMQ host.
+  host: ""
+  # rabbitmq.password -- RabbitMQ password, stored in the ConfigMap.
+  password: ""
+  # rabbitmq.port -- RabbitMQ port.
+  port: ""
+  # rabbitmq.queue -- RabbitMQ queue.
+  queue: ""
+  # rabbitmq.routingKey -- Event routing key.
+  routingKey: entityRoutingKey
+  # rabbitmq.topic -- Event topic.
+  topic: entityTopic
+  # rabbitmq.username -- RabbitMQ username.
+  username: ""
+  # rabbitmq.vhost -- RabbitMQ virtual host.
+  vhost: /
+
 #  ray -- Ray configuration
 ray:
   #  ray.enabled -- Enable/Disable Ray integration for Core with an existing Ray instance.
@@ -808,24 +931,226 @@ runtime:
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-dbt/wrapper-dbt
     #  runtime.dbt.tag -- DBT wrapper tag
     tag: 0.15.1
+  # runtime.flower -- Flower federated learning runtime.
+  flower:
+    # runtime.flower.client -- Flower client image.
+    client:
+      # runtime.flower.client.image -- Flower client repository.
+      image: flwr/supernode
+      # runtime.flower.client.tag -- Flower client tag.
+      tag: 1.20.0-py3.12-ubuntu24.04
+    # runtime.flower.groupId -- Container group ID.
+    groupId: ""
+    # runtime.flower.runner -- Flower runner image.
+    runner:
+      # runtime.flower.runner.image -- Flower runner repository.
+      image: flwr/clientapp
+      # runtime.flower.runner.tag -- Flower runner tag.
+      tag: 1.20.0-py3.12-ubuntu24.04
+    # runtime.flower.server -- Flower server image.
+    server:
+      # runtime.flower.server.image -- Flower server repository.
+      image: flwr/superlink
+      # runtime.flower.server.tag -- Flower server tag.
+      tag: 1.20.0-py3.12-ubuntu24.04
+    # runtime.flower.tls -- Flower TLS configuration.
+    tls:
+      # runtime.flower.tls.caCert -- CA certificate.
+      caCert: ""
+      # runtime.flower.tls.caKey -- CA private key, stored in the ConfigMap.
+      caKey: ""
+      # runtime.flower.tls.conf -- Certificate configuration path.
+      conf: classpath:/runtime-flower/docker/certificate.conf
+      # runtime.flower.tls.externalDomain -- External TLS domain.
+      externalDomain: ""
+      # runtime.flower.tls.internalDomain -- Internal TLS domain; empty uses the release namespace.
+      internalDomain: ""
+    # runtime.flower.userId -- Container user ID.
+    userId: ""
+  # runtime.guardrail -- Guardrail runtime; empty image fields inherit Python settings.
+  guardrail:
+    # runtime.guardrail.baseImage -- Base image overrides.
+    baseImage:
+      # runtime.guardrail.baseImage.image -- Base repository; empty inherits Python.
+      image: ""
+      # runtime.guardrail.baseImage.tag3_10 -- Python 3.10 base tag override.
+      tag3_10: ""
+      # runtime.guardrail.baseImage.tag3_11 -- Python 3.11 base tag override.
+      tag3_11: ""
+      # runtime.guardrail.baseImage.tag3_12 -- Python 3.12 base tag override.
+      tag3_12: ""
+      # runtime.guardrail.baseImage.tag3_13 -- Python 3.13 base tag override.
+      tag3_13: ""
+    # runtime.guardrail.command -- Command; empty inherits Python.
+    command: ""
+    # runtime.guardrail.dependencies -- Runtime dependencies.
+    dependencies: digitalhub[full],digitalhub-runtime-python
+    # runtime.guardrail.groupId -- Group ID; empty inherits Python.
+    groupId: ""
+    # runtime.guardrail.homeDir -- Home directory; empty inherits Python.
+    homeDir: ""
+    # runtime.guardrail.image -- Runtime repository; empty inherits Python.
+    image: ""
+    # runtime.guardrail.installDependencies -- Install dependencies; null inherits Python.
+    installDependencies: null
+    # runtime.guardrail.serverless -- Serverless image overrides.
+    serverless:
+      # runtime.guardrail.serverless.image -- Serverless repository; empty inherits Python.
+      image: ""
+      # runtime.guardrail.serverless.tag3_10 -- Python 3.10 serverless tag override.
+      tag3_10: ""
+      # runtime.guardrail.serverless.tag3_11 -- Python 3.11 serverless tag override.
+      tag3_11: ""
+      # runtime.guardrail.serverless.tag3_12 -- Python 3.12 serverless tag override.
+      tag3_12: ""
+      # runtime.guardrail.serverless.tag3_13 -- Python 3.13 serverless tag override.
+      tag3_13: ""
+    # runtime.guardrail.tag3_10 -- Python 3.10 runtime tag override.
+    tag3_10: ""
+    # runtime.guardrail.tag3_11 -- Python 3.11 runtime tag override.
+    tag3_11: ""
+    # runtime.guardrail.tag3_12 -- Python 3.12 runtime tag override.
+    tag3_12: ""
+    # runtime.guardrail.tag3_13 -- Python 3.13 runtime tag override.
+    tag3_13: ""
+    # runtime.guardrail.useBetaDependencies -- Use beta dependencies; null inherits Python.
+    useBetaDependencies: null
+    # runtime.guardrail.userId -- User ID; empty inherits Python.
+    userId: ""
+    # runtime.guardrail.volumeSize -- Volume size; empty inherits Python.
+    volumeSize: ""
   #  runtime.hera --
   hera:
+    # runtime.hera.duration -- Credential duration; empty inherits the refresh-token duration.
+    duration: ""
     #  runtime.hera.image -- hera wrapper repository
     image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-hera/wrapper-hera
     #  runtime.hera.tag -- hera wrapper tag
     tag: 0.15.1
   #  runtime.huggingFace --
   huggingFace:
+    # runtime.huggingFace.groupId -- Group ID; empty inherits workload security settings.
+    groupId: ""
     #  runtime.huggingFace.image -- HuggingFaceServer repository
     image: kserve/huggingfaceserver
     #  runtime.huggingFace.tag -- HuggingFaceServer tag
     tag: v0.14.0
+    # runtime.huggingFace.userId -- User ID; empty inherits workload security settings.
+    userId: ""
+    # runtime.huggingFace.volumeSize -- Model volume size.
+    volumeSize: 10Gi
+  # runtime.kfp -- Kubeflow Pipelines runtime.
+  kfp:
+    # runtime.kfp.duration -- Credential duration; empty inherits the refresh-token duration.
+    duration: ""
+    # runtime.kfp.image -- KFP wrapper repository.
+    image: ghcr.io/scc-digitalhub/digitalhub-sdk-wrapper-kfp/wrapper-kfp
+    # runtime.kfp.tag -- KFP wrapper tag.
+    tag: latest
+  # runtime.llmOtelEndpoint -- OpenTelemetry endpoint for model serving.
+  llmOtelEndpoint: ""
+  # runtime.mlflow -- MLflow model serving runtime.
+  mlflow:
+    # runtime.mlflow.groupId -- Group ID; empty inherits workload security settings.
+    groupId: ""
+    # runtime.mlflow.image -- MLflow serving repository.
+    image: seldonio/mlserver
+    # runtime.mlflow.tag -- MLflow serving tag.
+    tag: 1.6.0-mlflow
+    # runtime.mlflow.userId -- User ID; empty inherits workload security settings.
+    userId: ""
+    # runtime.mlflow.volumeSize -- Model volume size.
+    volumeSize: 2Gi
+  # runtime.openInference -- OpenInference runtime; empty image fields inherit Python settings.
+  openInference:
+    # runtime.openInference.baseImage -- Base image overrides.
+    baseImage:
+      # runtime.openInference.baseImage.image -- Base repository; empty inherits Python.
+      image: ""
+      # runtime.openInference.baseImage.tag3_10 -- Python 3.10 base tag override.
+      tag3_10: ""
+      # runtime.openInference.baseImage.tag3_11 -- Python 3.11 base tag override.
+      tag3_11: ""
+      # runtime.openInference.baseImage.tag3_12 -- Python 3.12 base tag override.
+      tag3_12: ""
+      # runtime.openInference.baseImage.tag3_13 -- Python 3.13 base tag override.
+      tag3_13: ""
+    # runtime.openInference.command -- Command; empty inherits Python.
+    command: ""
+    # runtime.openInference.dependencies -- Runtime dependencies.
+    dependencies: digitalhub[full],digitalhub-runtime-python
+    # runtime.openInference.groupId -- Group ID; empty inherits Python.
+    groupId: ""
+    # runtime.openInference.homeDir -- Home directory; empty inherits Python.
+    homeDir: ""
+    # runtime.openInference.image -- Runtime repository; empty inherits Python.
+    image: ""
+    # runtime.openInference.installDependencies -- Install dependencies; null inherits Python.
+    installDependencies: null
+    # runtime.openInference.serverless -- Serverless image overrides.
+    serverless:
+      # runtime.openInference.serverless.image -- Serverless repository; empty inherits Python.
+      image: ""
+      # runtime.openInference.serverless.tag3_10 -- Python 3.10 serverless tag override.
+      tag3_10: ""
+      # runtime.openInference.serverless.tag3_11 -- Python 3.11 serverless tag override.
+      tag3_11: ""
+      # runtime.openInference.serverless.tag3_12 -- Python 3.12 serverless tag override.
+      tag3_12: ""
+      # runtime.openInference.serverless.tag3_13 -- Python 3.13 serverless tag override.
+      tag3_13: ""
+    # runtime.openInference.tag3_10 -- Python 3.10 runtime tag override.
+    tag3_10: ""
+    # runtime.openInference.tag3_11 -- Python 3.11 runtime tag override.
+    tag3_11: ""
+    # runtime.openInference.tag3_12 -- Python 3.12 runtime tag override.
+    tag3_12: ""
+    # runtime.openInference.tag3_13 -- Python 3.13 runtime tag override.
+    tag3_13: ""
+    # runtime.openInference.useBetaDependencies -- Use beta dependencies; null inherits Python.
+    useBetaDependencies: null
+    # runtime.openInference.userId -- User ID; empty inherits Python.
+    userId: ""
+    # runtime.openInference.volumeSize -- Volume size; empty inherits Python.
+    volumeSize: ""
   #  runtime.python --
   python:
+    # runtime.python.baseImage -- Python base images.
+    baseImage:
+      # runtime.python.baseImage.image -- Python base repository.
+      image: python
+      # runtime.python.baseImage.tag3_10 -- Python 3.10 base tag.
+      tag3_10: 3.10-slim
+      # runtime.python.baseImage.tag3_11 -- Python 3.11 base tag.
+      tag3_11: 3.11-slim
+      # runtime.python.baseImage.tag3_12 -- Python 3.12 base tag.
+      tag3_12: 3.12-slim
+      # runtime.python.baseImage.tag3_13 -- Python 3.13 base tag.
+      tag3_13: 3.13-slim
+    # runtime.python.command -- Python runtime command.
+    command: /opt/nuclio/processor
+    # runtime.python.dependencies -- Python runtime dependencies.
+    dependencies: digitalhub[full],digitalhub-runtime-python
+    # runtime.python.groupId -- Group ID; empty inherits workload security settings.
+    groupId: ""
+    # runtime.python.homeDir -- Runtime home directory.
+    homeDir: /shared
     #  runtime.python.image -- Python runtime repository
     image: ghcr.io/scc-digitalhub/digitalhub-serverless/python-runtime
     #  runtime.python.installDependencies -- Whether the Python runtime should install the dependencies at runtime.
     installDependencies: true
+    # runtime.python.serverless -- Python serverless images.
+    serverless:
+      # runtime.python.serverless.image -- Serverless repository.
+      image: ghcr.io/scc-digitalhub/digitalhub-serverless/digitalhub-serverless
+      # runtime.python.serverless.tag3_10 -- Python 3.10 serverless tag.
+      tag3_10: 3.10-latest
+      # runtime.python.serverless.tag3_11 -- Python 3.11 serverless tag.
+      tag3_11: 3.11-latest
+      # runtime.python.serverless.tag3_12 -- Python 3.12 serverless tag.
+      tag3_12: 3.12-latest
+      # runtime.python.serverless.tag3_13 -- Python 3.13 serverless tag.
+      tag3_13: 3.13-latest
     #  runtime.python.tag3_10 -- Python runtime 3.10  tag
     tag3_10: 3.10-0.15.2
     #  runtime.python.tag3_11 -- Python runtime 3.11 tag
@@ -834,20 +1159,72 @@ runtime:
     tag3_12: 3.12-0.15.2
     #  runtime.python.tag3_13 -- Python runtime 3.13 tag
     tag3_13: 3.13-0.15.2
+    # runtime.python.tag3_9 -- Python 3.9 runtime tag.
+    tag3_9: 3.9-latest
+    # runtime.python.useBetaDependencies -- Allow beta dependencies.
+    useBetaDependencies: false
+    # runtime.python.userId -- User ID; empty inherits workload security settings.
+    userId: ""
+    # runtime.python.volumeSize -- Runtime volume size.
+    volumeSize: 1Gi
+  # runtime.servicegraph -- ServiceGraph runtime.
+  servicegraph:
+    # runtime.servicegraph.command -- ServiceGraph command.
+    command: /app/servicegraph
+    # runtime.servicegraph.groupId -- Group ID; empty inherits workload security settings.
+    groupId: ""
+    # runtime.servicegraph.image -- ServiceGraph repository.
+    image: ghcr.io/scc-digitalhub/digitalhub-servicegraph
+    # runtime.servicegraph.tag -- ServiceGraph tag.
+    tag: latest
+    # runtime.servicegraph.userId -- User ID; empty inherits workload security settings.
+    userId: ""
+    # runtime.servicegraph.volumeSize -- Runtime volume size.
+    volumeSize: 1Gi
+  # runtime.sklearn -- Scikit-learn model serving runtime.
+  sklearn:
+    # runtime.sklearn.groupId -- Group ID; empty inherits workload security settings.
+    groupId: ""
+    # runtime.sklearn.image -- Scikit-learn serving repository.
+    image: seldonio/mlserver
+    # runtime.sklearn.tag -- Scikit-learn serving tag.
+    tag: 1.6.0-sklearn
+    # runtime.sklearn.userId -- User ID; empty inherits workload security settings.
+    userId: ""
+    # runtime.sklearn.volumeSize -- Model volume size.
+    volumeSize: 1Gi
   #  runtime.vllm -- VLLM Server configuration
   vllm:
     #  runtime.vllm.cpu -- VLLM Server CPU configuration
     cpu:
+      # runtime.vllm.cpu.audioImage -- Audio repository; empty inherits the CPU repository.
+      audioImage: ""
+      # runtime.vllm.cpu.audioTag -- Audio tag; empty inherits the CPU tag.
+      audioTag: ""
       #  runtime.vllm.cpu.image -- VLLM Server CPU repository
       image: vllm/vllm-openai-cpu
       #  runtime.vllm.cpu.tag -- VLLM Server CPU tag
       tag: v0.19.1
     #  runtime.vllm.default -- VLLM Server default configuration
     default:
+      # runtime.vllm.default.audioImage -- Audio repository; empty inherits the default repository.
+      audioImage: ""
+      # runtime.vllm.default.audioTag -- Audio tag; empty inherits the default tag.
+      audioTag: ""
       #  runtime.vllm.default.image -- VLLM Server repository
       image: vllm/vllm-openai
       #  runtime.vllm.default.tag -- VLLM Server tag
       tag: v0.19.1
+    # runtime.vllm.groupId -- Group ID; empty inherits workload security settings.
+    groupId: ""
+    # runtime.vllm.homeDir -- Runtime home directory.
+    homeDir: /shared
+    # runtime.vllm.memSize -- Runtime shared memory size.
+    memSize: 16Gi
+    # runtime.vllm.userId -- User ID; empty inherits workload security settings.
+    userId: ""
+    # runtime.vllm.volumeSize -- Model volume size.
+    volumeSize: 10Gi
 
 #  s3 --
 s3:
@@ -876,6 +1253,8 @@ s3:
     #  s3.credentials.policy -- Policy that the credentials for S3 operations will have.
     #  It should be a JSON string in-line.
     policy: ""
+    # s3.credentials.policyTemplate -- Template used to generate credential policies.
+    policyTemplate: ""
     #  s3.credentials.roleArn -- Role ARN to assume to get access to the S3 instance.
     roleArn: ""
     #  s3.credentials.secretKey -- Explicit declaration of the Secret key of your S3 instance.
@@ -912,6 +1291,23 @@ securityContext:
   seccompProfile:
     #  securityContext.seccompProfile.type -- Core container configure seccompProfile type.
     type: RuntimeDefault
+
+# server -- Core HTTP server configuration.
+server:
+  # server.context -- Servlet context path.
+  context: /
+  # server.host -- Server host.
+  host: localhost
+  # server.managementPort -- Management endpoint port.
+  managementPort: 8081
+  # server.port -- HTTP server port.
+  port: 8080
+  # server.tomcat -- Forwarded request header configuration.
+  tomcat:
+    # server.tomcat.protocolHeader -- Forwarded protocol header.
+    protocolHeader: x-forwarded-proto
+    # server.tomcat.remoteIpHeader -- Forwarded remote IP header.
+    remoteIpHeader: x-forwarded-for
 
 #  service -- Service configurations.
 service:
@@ -965,6 +1361,14 @@ solr:
   collection:
     #  solr.collection.name -- Name of the Solr collection
     name: ""
+    # solr.collection.replication -- Collection replication factor.
+    replication: 1
+    # solr.collection.shards -- Number of collection shards.
+    shards: 1
+  # solr.reindex -- Reindex policy.
+  reindex: never
+  # solr.timeout -- Request timeout in milliseconds.
+  timeout: 5000
   #  solr.url -- URL of your Solr instance
   url: ""
 
@@ -1154,8 +1558,34 @@ sts:
 #  Every template should correspond to a key in a configmap dedicated to the templates.
 templates: []
 
+# templatesPath -- Template discovery path.
+templatesPath: classpath:/templates
+
 #  tolerations -- List of node taints to tolerate (requires Kubernetes >= 1.6).
 tolerations: []
+
+# trinodb -- Trino database provider configuration.
+trinodb:
+  # trinodb.enabled -- Enable the Trino provider.
+  enabled: false
+  # trinodb.catalog -- Trino catalog.
+  catalog: ""
+  # trinodb.host -- Trino host.
+  host: ""
+  # trinodb.password -- Trino password, stored in the ConfigMap.
+  password: ""
+  # trinodb.port -- Trino port.
+  port: ""
+  # trinodb.scheme -- Trino connection scheme.
+  scheme: ""
+  # trinodb.url -- Trino connection URL.
+  url: ""
+  # trinodb.useCoreCredentials -- Use Core credentials for Trino.
+  useCoreCredentials: false
+  # trinodb.useJwtToken -- Use a JWT token; null inherits useCoreCredentials.
+  useJwtToken: null
+  # trinodb.username -- Trino username.
+  username: ""
 
 #  volumeMounts -- Additional volumes.
 volumeMounts: []

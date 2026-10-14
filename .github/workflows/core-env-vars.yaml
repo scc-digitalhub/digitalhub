@@ -1,0 +1,96 @@
+name: Check Core Environment Variables
+
+on:
+  pull_request:
+    paths:
+      - charts/core/**
+      - .github/workflows/core-env-vars.yaml
+  push:
+    paths:
+      - charts/core/**
+      - .github/workflows/core-env-vars.yaml
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-env-vars:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      - name: Check upstream variables against core ConfigMaps and Deployment Secrets
+        shell: bash
+        env:
+          CONFIGURATION_URL: https://raw.githubusercontent.com/scc-digitalhub/digitalhub-core/main/CONFIGURATION.md
+        run: |
+          set -euo pipefail
+          export LC_ALL=C
+
+          curl --fail --silent --show-error --location \
+            --connect-timeout 10 --max-time 60 --retry 3 \
+            "$CONFIGURATION_URL" --output "$RUNNER_TEMP/core-configuration.md"
+
+          sed -nE 's/^[[:space:]]*\|[^|]*\|[[:space:]]*`([A-Z][A-Z0-9_]*)`[[:space:]]*\|.*/\1/p' \
+            "$RUNNER_TEMP/core-configuration.md" \
+            | sort -u > "$RUNNER_TEMP/core-env-vars-required.txt"
+
+          if [[ ! -s "$RUNNER_TEMP/core-env-vars-required.txt" ]] || \
+            grep -qEv '^[A-Z][A-Z0-9_]*$' "$RUNNER_TEMP/core-env-vars-required.txt"; then
+            echo "::error::The upstream configuration document contains no valid environment variables."
+            exit 1
+          fi
+
+          {
+            sed -nE 's/\{\{[^}]*\}\}//g; s/^[[:space:]]*([A-Z][A-Z0-9_]*)[[:space:]]*:.*/\1/p' \
+              charts/core/templates/configmap.yaml \
+              charts/core/templates/configmap-digitalhub.yaml
+
+            sed -E 's/\{\{[^}]*\}\}//g' charts/core/templates/deployment.yaml \
+              | awk '
+                  BEGIN {
+                    aliases["AWS_ACCESS_KEY"] = "AWS_ACCESS_KEY_ID"
+                    aliases["AWS_SECRET_KEY"] = "AWS_SECRET_ACCESS_KEY"
+                    aliases["CONTAINER_IMAGES_USERNAME"] = "CONTAINER_REGISTRY_USERNAME"
+                    aliases["CONTAINER_IMAGES_PASSWORD"] = "CONTAINER_REGISTRY_PASSWORD"
+                    aliases["JDBC_USER"] = "DB_USERNAME"
+                    aliases["JDBC_PASS"] = "DB_PASSWORD"
+                    aliases["JWT_CLIENT_ID"] = "DHCORE_CLIENT_ID"
+                  }
+                  /^[[:space:]]*-[[:space:]]*name:/ {
+                    variable = $3
+                    if (variable !~ /^[A-Z][A-Z0-9_]*$/) variable = ""
+                  }
+                  /^[[:space:]]*secretKeyRef:/ && variable != "" {
+                    print variable
+                    if (variable in aliases) print aliases[variable]
+                  }
+                '
+          } | sort -u > "$RUNNER_TEMP/core-env-vars-present.txt"
+
+          comm -23 "$RUNNER_TEMP/core-env-vars-required.txt" \
+            "$RUNNER_TEMP/core-env-vars-present.txt" \
+            > "$RUNNER_TEMP/core-env-vars-missing.txt"
+
+          if [[ -s "$RUNNER_TEMP/core-env-vars-missing.txt" ]]; then
+            while IFS= read -r variable; do
+              echo "::error::Environment variable missing from core ConfigMaps and Deployment Secret references: $variable"
+            done < "$RUNNER_TEMP/core-env-vars-missing.txt"
+            {
+              echo '## Missing Core Environment Variables'
+              echo
+              printf 'Source: %s\n\n' "$CONFIGURATION_URL"
+              while IFS= read -r variable; do
+                printf -- '- `%s`\n' "$variable"
+              done < "$RUNNER_TEMP/core-env-vars-missing.txt"
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+          echo 'All upstream environment variables are defined in core ConfigMaps or Deployment Secret references.' \
+            | tee -a "$GITHUB_STEP_SUMMARY"
