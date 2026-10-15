@@ -37,6 +37,12 @@ Please note that new contributors may be asked to sign a Contributor License Agr
 
 We appreciate contributions and help in improving the project!
 
+### Chart release checks
+
+The Release Charts workflow runs Check Core Environment Variables before publishing
+charts. If the check fails or is cancelled, the release job is skipped and no charts
+are published by that workflow run.
+
 ## Authors
 
 This project is developed and maintained by **DSLab – Fondazione Bruno Kessler**, with contributions from the open source community. A complete list of contributors is available in the project’s commit history and pull requests.

@@ -20,7 +20,13 @@ on:
       - 0.15.x
       - 0.16.x
 jobs:
+  check-core-env-vars:
+    permissions:
+      contents: read
+    uses: ./.github/workflows/core-env-vars.yaml
+
   release:
+    needs: check-core-env-vars
     permissions:
       contents: write # to push chart release and create a release (helm/chart-releaser-action)
       packages: write # needed for ghcr access
