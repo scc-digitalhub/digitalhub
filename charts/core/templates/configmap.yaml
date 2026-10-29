@@ -132,6 +132,8 @@ data:
   RUNTIME_SERVICEGRAPH_IMAGE: {{ printf "%s:%s" .Values.runtime.servicegraph.image .Values.runtime.servicegraph.tag | quote }}
   RUNTIME_SERVICEGRAPH_USER_ID: {{ .Values.runtime.servicegraph.userId | toString | default (.Values.additionalConfig.security.user | toString) | quote }}
   RUNTIME_SERVICEGRAPH_VOLUME_SIZE: {{ .Values.runtime.servicegraph.volumeSize | quote }}
+  RUNTIME_HYDRA_DEPENDENCIES: {{ .Values.runtime.hydra.dependencies | quote }}
+  RUNTIME_RAY_DEPENDENCIES: {{ .Values.runtime.ray.dependencies | quote }}
 {{- if .Values.solr.enabled }}
   SOLR_URL: {{ .Values.solr.url }}
   SOLR_COLLECTION: {{ .Values.solr.collection.name }}
