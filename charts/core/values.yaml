@@ -1039,6 +1039,10 @@ runtime:
     userId: ""
     # runtime.huggingFace.volumeSize -- Model volume size.
     volumeSize: 10Gi
+  #  runtime.hydra -- Hydra runtime settings
+  hydra:
+    #  runtime.hydra.dependencies -- Hydra runtime dependencies
+    dependencies: digitalhub-runtime-hydra==0.16.1b1
   # runtime.kfp -- Kubeflow Pipelines runtime.
   kfp:
     # runtime.kfp.duration -- Credential duration; empty inherits the refresh-token duration.
@@ -1167,6 +1171,10 @@ runtime:
     userId: ""
     # runtime.python.volumeSize -- Runtime volume size.
     volumeSize: 1Gi
+  #  runtime.ray -- Ray runtime settings
+  ray:
+    # runtime.ray.dependencies -- Ray runtime dependencies
+    dependencies: digitalhub-runtime-python==0.16.0b9,digitalhub-runtime-ray==0.16.0b10
   # runtime.servicegraph -- ServiceGraph runtime.
   servicegraph:
     # runtime.servicegraph.command -- ServiceGraph command.
