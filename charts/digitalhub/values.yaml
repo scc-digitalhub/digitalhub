@@ -557,17 +557,49 @@ core:
     secretName: ""
     #  core.commonCredsSecret.useExistingCommonCredsSecret -- Set this to true if you are using an existing secret.
     useExistingCommonCredsSecret: false
-  # console -- Console configuration used to display metrics in the console.
+  # core.console -- Console configuration used to display metrics in the console.
   console:
-    # console.metrics -- Metrics configuration used for the console
+    #  core.console.containerImagesRegistry -- Registry configuration used by the console
+    containerImagesRegistry:
+      #  core.console.containerImagesRegistry.admin -- Registry admin configuration
+      admin:
+        #  core.console.containerImagesRegistry.admin.existingSecret -- Existing secret containing the admin credentials for the registry used by the console.
+        existingSecret:
+          #  core.console.containerImagesRegistry.admin.existingSecret.name -- Name of the secret containing the admin credentials for the registry used by the console.
+          name: ""
+          #  core.console.containerImagesRegistry.admin.existingSecret.passwordKey -- Password key of the secret containing the admin credentials for the registry used by the console.
+          passwordKey: ""
+          #  core.console.containerImagesRegistry.admin.existingSecret.usernameKey -- Username key of the secret containing the admin credentials for the registry used by the console.
+          usernameKey: ""
+        #  core.console.containerImagesRegistry.admin.password -- Password for the registry admin used by the console.
+        password: ""
+        #  core.console.containerImagesRegistry.admin.username -- Username for the registry admin used by the console.
+        username: ""
+      #  core.console.containerImagesRegistry.registryUrl -- Registry url used by the console.
+      registryUrl: ""
+      #  core.console.containerImagesRegistry.user -- Registry user configuration
+      user:
+        #  core.console.containerImagesRegistry.user.existingSecret -- Existing secret containing the user credentials for the registry used by the console.
+        existingSecret:
+          #  core.console.containerImagesRegistry.user.existingSecret.name -- Name of the secret containing the user credentials for the registry used by the console.
+          name: ""
+          #  core.console.containerImagesRegistry.user.existingSecret.passwordKey -- Password key of the secret containing the user credentials for the registry used by the console.
+          passwordKey: ""
+          #  core.console.containerImagesRegistry.user.existingSecret.usernameKey -- Username key of the secret containing the user credentials for the registry used by the console.
+          usernameKey: ""
+        #  core.console.containerImagesRegistry.user.password -- Password for the registry user used by the console.
+        password: ""
+        #  core.console.containerImagesRegistry.user.username -- Username for the registry user used by the console.
+        username: ""
+    #  core.console.metrics -- Metrics configuration used for the console
     metrics:
-      # console.metrics.instance -- Metrics configuration used for display metrics in the console aggregated for instances
+      #  core.console.metrics.instance -- Metrics configuration used for display metrics in the console aggregated for instances
       instance:
-      # console.metrics.project -- Metrics configuration used for display metrics in the console aggregated for projects
+      #  core.console.metrics.project -- Metrics configuration used for display metrics in the console aggregated for projects
       project:
-      # console.metrics.run -- Metrics configuration used for display metrics in the console aggregated for runs
+      #  core.console.metrics.run -- Metrics configuration used for display metrics in the console aggregated for runs
       run:
-      # console.metrics.user -- Metrics configuration used for display metrics in the console aggregated for users
+      #  core.console.metrics.user -- Metrics configuration used for display metrics in the console aggregated for users
       user:
   #  core.coreAuthCreds --
   coreAuthCreds:
