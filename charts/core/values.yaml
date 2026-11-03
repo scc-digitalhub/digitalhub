@@ -260,19 +260,36 @@ console:
   clarityKey: ""
   #  console.containerImagesRegistry -- Registry configuration used by the console
   containerImagesRegistry:
-    existingSecret:
-      #  console.containerImagesRegistry.existingSecret.name -- Name of the secret containing the credentials for the registry used by the console.
-      name: ""
-      #  console.containerImagesRegistry.existingSecret.passwordKey -- Password key of the secret containing the credentials for the registry used by the console.
-      passwordKey: ""
-      #  console.containerImagesRegistry.existingSecret.usernameKey -- Username key of the secret containing the credentials for the registry used by the console.
-      usernameKey: ""
-    #  console.containerImagesRegistry.password -- Password for the registry used by the console.
-    password: ""
+    #  console.containerImagesRegistry.admin -- Registry admin configuration
+    admin:
+      #  console.containerImagesRegistry.admin.existingSecret -- Existing secret containing the admin credentials for the registry used by the console.
+      existingSecret:
+        #  console.containerImagesRegistry.admin.existingSecret.name -- Name of the secret containing the admin credentials for the registry used by the console.
+        name: ""
+        #  console.containerImagesRegistry.admin.existingSecret.passwordKey -- Password key of the secret containing the admin credentials for the registry used by the console.
+        passwordKey: ""
+        #  console.containerImagesRegistry.admin.existingSecret.usernameKey -- Username key of the secret containing the admin credentials for the registry used by the console.
+        usernameKey: ""
+      #  console.containerImagesRegistry.admin.password -- Password for the registry admin used by the console.
+      password: ""
+      #  console.containerImagesRegistry.admin.username -- Username for the registry admin used by the console.
+      username: ""
     #  console.containerImagesRegistry.registryUrl -- Registry url used by the console.
     registryUrl: ""
-    #  console.containerImagesRegistry.username -- Username for the registry used by the console.
-    username: ""
+    #  console.containerImagesRegistry.user -- Registry user configuration
+    user:
+      #  console.containerImagesRegistry.user.existingSecret -- Existing secret containing the user credentials for the registry used by the console.
+      existingSecret:
+        #  console.containerImagesRegistry.user.existingSecret.name -- Name of the secret containing the user credentials for the registry used by the console.
+        name: ""
+        #  console.containerImagesRegistry.user.existingSecret.passwordKey -- Password key of the secret containing the user credentials for the registry used by the console.
+        passwordKey: ""
+        #  console.containerImagesRegistry.user.existingSecret.usernameKey -- Username key of the secret containing the user credentials for the registry used by the console.
+        usernameKey: ""
+      #  console.containerImagesRegistry.user.password -- Password for the registry user used by the console.
+      password: ""
+      #  console.containerImagesRegistry.user.username -- Username for the registry user used by the console.
+      username: ""
   #  console.metrics -- Metrics configuration used for the console
   metrics:
     #  console.metrics.instance -- Metrics configuration used for display metrics in the console aggregated for instances

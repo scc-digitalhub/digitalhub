@@ -115,24 +115,44 @@ spec:
               value: {{ .Values.prometheus.credentials.password }}
               {{- end }}
           {{- end }}
-          {{- if or .Values.console.containerImagesRegistry.username .Values.console.containerImagesRegistry.existingSecret.name }}
+          {{- if or .Values.console.containerImagesRegistry.user.username .Values.console.containerImagesRegistry.user.existingSecret.name }}
             - name: CONTAINER_IMAGES_USERNAME
-              {{- if and .Values.console.containerImagesRegistry.existingSecret.name .Values.console.containerImagesRegistry.existingSecret.usernameKey }}
+              {{- if and .Values.console.containerImagesRegistry.user.existingSecret.name .Values.console.containerImagesRegistry.user.existingSecret.usernameKey }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.console.containerImagesRegistry.existingSecret.name }}
-                  key: {{ .Values.console.containerImagesRegistry.existingSecret.usernameKey }}
+                  name: {{ .Values.console.containerImagesRegistry.user.existingSecret.name }}
+                  key: {{ .Values.console.containerImagesRegistry.user.existingSecret.usernameKey }}
               {{- else }}
-              value: {{ .Values.console.containerImagesRegistry.username }}
+              value: {{ .Values.console.containerImagesRegistry.user.username }}
               {{- end }}
             - name: CONTAINER_IMAGES_PASSWORD
-              {{- if and .Values.console.containerImagesRegistry.existingSecret.name .Values.console.containerImagesRegistry.existingSecret.passwordKey }}
+              {{- if and .Values.console.containerImagesRegistry.user.existingSecret.name .Values.console.containerImagesRegistry.user.existingSecret.passwordKey }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.console.containerImagesRegistry.existingSecret.name }}
-                  key: {{ .Values.console.containerImagesRegistry.existingSecret.passwordKey }}
+                  name: {{ .Values.console.containerImagesRegistry.user.existingSecret.name }}
+                  key: {{ .Values.console.containerImagesRegistry.user.existingSecret.passwordKey }}
               {{- else }}
-              value: {{ .Values.console.containerImagesRegistry.password }}
+              value: {{ .Values.console.containerImagesRegistry.user.password }}
+              {{- end }}
+          {{- end }}
+          {{- if or .Values.console.containerImagesRegistry.admin.username .Values.console.containerImagesRegistry.admin.existingSecret.name }}
+            - name: CONTAINER_IMAGES_ADMIN_USERNAME
+              {{- if and .Values.console.containerImagesRegistry.admin.existingSecret.name .Values.console.containerImagesRegistry.admin.existingSecret.usernameKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.console.containerImagesRegistry.admin.existingSecret.name }}
+                  key: {{ .Values.console.containerImagesRegistry.admin.existingSecret.usernameKey }}
+              {{- else }}
+              value: {{ .Values.console.containerImagesRegistry.admin.username }}
+              {{- end }}
+            - name: CONTAINER_IMAGES_ADMIN_PASSWORD
+              {{- if and .Values.console.containerImagesRegistry.admin.existingSecret.name .Values.console.containerImagesRegistry.admin.existingSecret.passwordKey }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.console.containerImagesRegistry.admin.existingSecret.name }}
+                  key: {{ .Values.console.containerImagesRegistry.admin.existingSecret.passwordKey }}
+              {{- else }}
+              value: {{ .Values.console.containerImagesRegistry.admin.password }}
               {{- end }}
           {{- end }}
           {{- if .Values.s3.enabled }}
