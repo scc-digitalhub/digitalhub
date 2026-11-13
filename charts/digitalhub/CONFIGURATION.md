@@ -11594,47 +11594,47 @@ object
   "packages": [
     {
       "name": "digitalhub[full]",
-      "tag": "0.15.7"
+      "tag": "0.16.0"
     },
     {
       "name": "digitalhub-runtime-container",
-      "tag": "0.15.3"
+      "tag": "0.16.0"
     },
     {
       "name": "digitalhub-runtime-dbt",
-      "tag": "0.15.2"
+      "tag": "0.16.0"
     },
     {
       "name": "digitalhub-runtime-flower",
-      "tag": "0.15.1"
+      "tag": "0.16.0"
     },
     {
       "name": "digitalhub-runtime-hera",
-      "tag": "0.15.1"
+      "tag": "0.16.0"
     },
     {
       "name": "digitalhub-runtime-hydra",
-      "tag": ""
+      "tag": "0.16.0"
     },
     {
       "name": "digitalhub-runtime-modelserve",
-      "tag": "0.15.0"
+      "tag": "0.16.0"
     },
     {
       "name": "digitalhub-runtime-python",
-      "tag": "0.15.2"
+      "tag": "0.16.0"
     },
     {
       "name": "digitalhub-runtime-ray",
-      "tag": ""
+      "tag": "0.16.0"
     },
     {
       "name": "digitalhub-runtime-servicegraph",
-      "tag": "0.15.1"
+      "tag": "0.16.0"
     },
     {
       "name": "digitalhub-runtime-tvm",
-      "tag": ""
+      "tag": "0.16.0"
     }
   ],
   "preRelease": false,
@@ -11687,47 +11687,47 @@ list
 [
   {
     "name": "digitalhub[full]",
-    "tag": "0.15.7"
+    "tag": "0.16.0"
   },
   {
     "name": "digitalhub-runtime-container",
-    "tag": "0.15.3"
+    "tag": "0.16.0"
   },
   {
     "name": "digitalhub-runtime-dbt",
-    "tag": "0.15.2"
+    "tag": "0.16.0"
   },
   {
     "name": "digitalhub-runtime-flower",
-    "tag": "0.15.1"
+    "tag": "0.16.0"
   },
   {
     "name": "digitalhub-runtime-hera",
-    "tag": "0.15.1"
+    "tag": "0.16.0"
   },
   {
     "name": "digitalhub-runtime-hydra",
-    "tag": ""
+    "tag": "0.16.0"
   },
   {
     "name": "digitalhub-runtime-modelserve",
-    "tag": "0.15.0"
+    "tag": "0.16.0"
   },
   {
     "name": "digitalhub-runtime-python",
-    "tag": "0.15.2"
+    "tag": "0.16.0"
   },
   {
     "name": "digitalhub-runtime-ray",
-    "tag": ""
+    "tag": "0.16.0"
   },
   {
     "name": "digitalhub-runtime-servicegraph",
-    "tag": "0.15.1"
+    "tag": "0.16.0"
   },
   {
     "name": "digitalhub-runtime-tvm",
-    "tag": ""
+    "tag": "0.16.0"
   }
 ]
 </pre>
@@ -11884,7 +11884,7 @@ string
       <td>
 				<div style="max-width: 300px;">
 <pre lang="json">
-"0.15.22"
+"0.16.17"
 </pre>
 </div>
 			</td>
