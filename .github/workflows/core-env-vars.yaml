@@ -3,11 +3,11 @@ name: Check Core Environment Variables
 on:
   pull_request:
     paths:
-      - charts/core/**
+      - charts/**
       - .github/workflows/core-env-vars.yaml
   push:
     paths:
-      - charts/core/**
+      - charts/**
       - .github/workflows/core-env-vars.yaml
   schedule:
     - cron: '0 6 * * *'
