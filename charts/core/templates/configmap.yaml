@@ -458,3 +458,77 @@ data:
   RAY_JOB_RESOURCES_EPHEMERAL_REQUESTS: {{ .Values.ray.job.resources.ephemeralStorage.requests | quote }}
   RAY_JOB_RESOURCES_EPHEMERAL_LIMIT: {{ .Values.ray.job.resources.ephemeralStorage.limits | quote }}
 {{- end }}
+  DB_BASELINE: {{ .Values.dbBaseline | quote }}
+  HUGGINGFACE_API_URL: {{ .Values.huggingface.apiUrl | quote }}
+  HUGGINGFACE_METADATA: {{ .Values.huggingface.metadata | quote }}
+  JWT_WEB_IDENTITY_TOKEN_DURATION: {{ .Values.coreTokens.webIdentityTokenDuration | quote }}
+  K8S_RESOURCE_SHARED_ACCESS_MODE: {{ .Values.additionalConfig.sharedVolume.accessMode | default .Values.additionalConfig.workflow.volume.accessMode | quote }}
+  K8S_RESOURCE_SHARED_STORAGE_CLASS: {{ .Values.additionalConfig.sharedVolume.storageClass | default .Values.additionalConfig.workflow.volume.storageClassName | quote }}
+  LOKI_LIMIT: {{ .Values.loki.limit | quote }}
+  LUCENE_BUFFER_SIZE_MB: {{ .Values.lucene.bufferSizeMb | quote }}
+  LUCENE_COMMIT_INTERVAL_S: {{ .Values.lucene.commitIntervalS | quote }}
+  PROMETHEUS_METRICS_CPU_AGGREGATION: {{ .Values.prometheus.metrics.cpu.aggregation | quote }}
+  PROMETHEUS_METRICS_CPU_REQUESTED_AGGREGATION: {{ .Values.prometheus.metrics.cpuRequested.aggregation | quote }}
+  PROMETHEUS_METRICS_DISK_AGGREGATION: {{ .Values.prometheus.metrics.disk.aggregation | quote }}
+  PROMETHEUS_METRICS_GPU_AGGREGATION: {{ .Values.prometheus.metrics.gpu.aggregation | quote }}
+  PROMETHEUS_METRICS_GPU_COUNT_AGGREGATION: {{ .Values.prometheus.metrics.gpuCount.aggregation | quote }}
+  PROMETHEUS_METRICS_GPU_MEMORY_AGGREGATION: {{ .Values.prometheus.metrics.gpuMemory.aggregation | quote }}
+  PROMETHEUS_METRICS_MEMORY_AGGREGATION: {{ .Values.prometheus.metrics.memory.aggregation | quote }}
+  PROMETHEUS_METRICS_MEMORY_REQUESTED_AGGREGATION: {{ .Values.prometheus.metrics.memoryRequested.aggregation | quote }}
+  PROMETHEUS_METRICS_NETWORK_RECEIVE_AGGREGATION: {{ .Values.prometheus.metrics.networkReceive.aggregation | quote }}
+  PROMETHEUS_METRICS_NETWORK_SEND_AGGREGATION: {{ .Values.prometheus.metrics.networkSend.aggregation | quote }}
+  PROMETHEUS_METRICS_VOLUMES_AGGREGATION: {{ .Values.prometheus.metrics.volumes.aggregation | quote }}
+  PROMETHEUS_METRICS_VOLUMES_COUNT_AGGREGATION: {{ .Values.prometheus.metrics.volumesCount.aggregation | quote }}
+  RAY_API_GROUP: {{ .Values.ray.apiGroup | quote }}
+  RAY_API_VERSION: {{ .Values.ray.apiVersion | quote }}
+  RAY_JOB_RESOURCES_MEM_TOLERATION: {{ .Values.ray.job.resources.memory.toleration | quote }}
+  RAY_SERVICE_ACCOUNT: {{ .Values.ray.serviceAccount | quote }}
+  RUNTIME_HYDRA_BASE_IMAGE_3_10: {{ printf "%s:%s" (.Values.runtime.hydra.base.image | default .Values.runtime.python.baseImage.image) (.Values.runtime.hydra.base.tag3_10 | default .Values.runtime.python.baseImage.tag3_10) | quote }}
+  RUNTIME_HYDRA_BASE_IMAGE_3_11: {{ printf "%s:%s" (.Values.runtime.hydra.base.image | default .Values.runtime.python.baseImage.image) (.Values.runtime.hydra.base.tag3_11 | default .Values.runtime.python.baseImage.tag3_11) | quote }}
+  RUNTIME_HYDRA_BASE_IMAGE_3_12: {{ printf "%s:%s" (.Values.runtime.hydra.base.image | default .Values.runtime.python.baseImage.image) (.Values.runtime.hydra.base.tag3_12 | default .Values.runtime.python.baseImage.tag3_12) | quote }}
+  RUNTIME_HYDRA_BASE_IMAGE_3_13: {{ printf "%s:%s" (.Values.runtime.hydra.base.image | default .Values.runtime.python.baseImage.image) (.Values.runtime.hydra.base.tag3_13 | default .Values.runtime.python.baseImage.tag3_13) | quote }}
+  RUNTIME_HYDRA_COMMAND: {{ .Values.runtime.hydra.command | default .Values.runtime.python.command | quote }}
+  RUNTIME_HYDRA_GROUP_ID: {{ .Values.runtime.hydra.groupId | default .Values.runtime.python.groupId | quote }}
+  RUNTIME_HYDRA_HOME_DIR: {{ .Values.runtime.hydra.homeDir | default .Values.runtime.python.homeDir | quote }}
+  RUNTIME_HYDRA_IMAGE_3_10: {{ printf "%s:%s" (.Values.runtime.hydra.image | default .Values.runtime.python.image) (.Values.runtime.hydra.tag3_10 | default .Values.runtime.python.tag3_10) | quote }}
+  RUNTIME_HYDRA_IMAGE_3_11: {{ printf "%s:%s" (.Values.runtime.hydra.image | default .Values.runtime.python.image) (.Values.runtime.hydra.tag3_11 | default .Values.runtime.python.tag3_11) | quote }}
+  RUNTIME_HYDRA_IMAGE_3_12: {{ printf "%s:%s" (.Values.runtime.hydra.image | default .Values.runtime.python.image) (.Values.runtime.hydra.tag3_12 | default .Values.runtime.python.tag3_12) | quote }}
+  RUNTIME_HYDRA_IMAGE_3_13: {{ printf "%s:%s" (.Values.runtime.hydra.image | default .Values.runtime.python.image) (.Values.runtime.hydra.tag3_13 | default .Values.runtime.python.tag3_13) | quote }}
+  RUNTIME_HYDRA_INSTALL_DEPENDENCIES: {{ .Values.runtime.hydra.installDependencies | default .Values.runtime.python.installDependencies | quote }}
+  RUNTIME_HYDRA_SERVERLESS_IMAGE_3_10: {{ printf "%s:%s" (.Values.runtime.hydra.serverless.image | default .Values.runtime.python.serverless.image) (.Values.runtime.hydra.serverless.tag3_10 | default .Values.runtime.python.serverless.tag3_10) | quote }}
+  RUNTIME_HYDRA_SERVERLESS_IMAGE_3_11: {{ printf "%s:%s" (.Values.runtime.hydra.serverless.image | default .Values.runtime.python.serverless.image) (.Values.runtime.hydra.serverless.tag3_11 | default .Values.runtime.python.serverless.tag3_11) | quote }}
+  RUNTIME_HYDRA_SERVERLESS_IMAGE_3_12: {{ printf "%s:%s" (.Values.runtime.hydra.serverless.image | default .Values.runtime.python.serverless.image) (.Values.runtime.hydra.serverless.tag3_12 | default .Values.runtime.python.serverless.tag3_12) | quote }}
+  RUNTIME_HYDRA_SERVERLESS_IMAGE_3_13: {{ printf "%s:%s" (.Values.runtime.hydra.serverless.image | default .Values.runtime.python.serverless.image) (.Values.runtime.hydra.serverless.tag3_13 | default .Values.runtime.python.serverless.tag3_13) | quote }}
+  RUNTIME_HYDRA_USER_ID: {{ .Values.runtime.hydra.userId | default .Values.runtime.python.userId | quote }}
+  RUNTIME_HYDRA_USE_BETA_DEPENDENCIES: {{ .Values.runtime.hydra.useBetaDependencies | default .Values.runtime.python.useBetaDependencies | quote }}
+  RUNTIME_HYDRA_VOLUME_SIZE: {{ .Values.runtime.hydra.volumeSize | default .Values.runtime.python.volumeSize | quote }}
+  RUNTIME_PYTHON_BASE_IMAGE_3_14: {{ printf "%s:%s" (.Values.runtime.python.baseImage.image ) (.Values.runtime.python.baseImage.tag3_14) | quote }}
+  RUNTIME_PYTHON_IMAGE_3_14: {{ printf "%s:%s" (.Values.runtime.python.image) (.Values.runtime.python.tag3_14) | quote }}
+  RUNTIME_PYTHON_SERVERLESS_IMAGE_3_14: {{ printf "%s:%s" (.Values.runtime.python.serverless.image) (.Values.runtime.python.serverless.tag3_14) | quote }}
+  RUNTIME_RAY_BACKOFF_LIMIT: {{ .Values.runtime.ray.backoffLimit | quote }}
+  RUNTIME_RAY_DEPENDENCY_FORMAT: {{ .Values.runtime.ray.dependencyFormat | quote }}
+  RUNTIME_RAY_DURATION: {{ .Values.runtime.ray.duration | default .Values.coreTokens.refreshTokenDuration | quote }}
+  RUNTIME_RAY_GROUP_ID: {{ .Values.runtime.ray.groupId | quote }}
+  RUNTIME_RAY_HEAD_CPU: {{ .Values.runtime.ray.head.cpu | quote }}
+  RUNTIME_RAY_HEAD_DISK_SIZE: {{ .Values.runtime.ray.head.diskSize | quote }}
+  RUNTIME_RAY_HEAD_MEMORY: {{ .Values.runtime.ray.head.memory | quote }}
+  RUNTIME_RAY_HEAD_PROFILE: {{ .Values.runtime.ray.head.profile | quote }}
+  RUNTIME_RAY_HOME_DIR: {{ .Values.runtime.ray.homeDir | quote }}
+  RUNTIME_RAY_IMAGE: {{ printf "%s:%s" (.Values.runtime.ray.image) (.Values.runtime.ray.tag) | quote }}
+  RUNTIME_RAY_PRE_RUNNING_DEADLINE_SECONDS: {{ .Values.runtime.ray.preRunningDeadlineSeconds | quote }}
+  RUNTIME_RAY_SHUTDOWN_AFTER_JOB_FINISHES: {{ .Values.runtime.ray.shutdownAfterJobFinishes | quote }}
+  RUNTIME_RAY_TTL_SECONDS_AFTER_FINISHED: {{ .Values.runtime.ray.ttlSecondsAfterFinished | quote }}
+  RUNTIME_RAY_USER_ID: {{ .Values.runtime.ray.userId | quote }}
+  RUNTIME_RAY_VERSION: {{ .Values.runtime.ray.version | quote }}
+  RUNTIME_RAY_WORKER_GROUP_NAME: {{ .Values.runtime.ray.workerGroupName | quote }}
+  RUNTIME_RAY_WORKER_IMAGE: {{ printf "%s:%s" (.Values.runtime.ray.workerImage) (.Values.runtime.ray.workerTag) | quote }}
+  RUNTIME_RAY_WORKER_PROFILE: {{ .Values.runtime.ray.workerProfile | quote }}
+  RUNTIME_TVM_BUILDER_ONNX: {{ printf "%s:%s" (.Values.runtime.tvm.builder.onnx.image) (.Values.runtime.tvm.builder.onnx.tag) | quote }}
+  RUNTIME_TVM_BUILDER_TFLITE: {{ printf "%s:%s" (.Values.runtime.tvm.builder.tflite.image) (.Values.runtime.tvm.builder.tflite.tag) | quote }}
+  RUNTIME_TVM_COMPILER: {{ printf "%s:%s" (.Values.runtime.tvm.compiler.image) (.Values.runtime.tvm.compiler.tag) | quote }}
+  RUNTIME_TVM_GROUP_ID: {{ .Values.runtime.tvm.groupId | default .Values.additionalConfig.security.group | quote }}
+  RUNTIME_TVM_HOME_DIR: {{ .Values.runtime.tvm.homeDir | quote }}
+  RUNTIME_TVM_SERVE: {{ printf "%s:%s" (.Values.runtime.tvm.serve.image) (.Values.runtime.tvm.serve.tag) | quote }}
+  RUNTIME_TVM_USER_ID: {{ .Values.runtime.tvm.userId | default .Values.additionalConfig.security.user | quote }}
+  RUNTIME_TVM_VOLUME_SIZE: {{ .Values.runtime.tvm.volumeSize | quote }}
+  TRIVY_IMAGE: {{ printf "%s:%s" (.Values.trivy.image) (.Values.trivy.tag) | quote }}
