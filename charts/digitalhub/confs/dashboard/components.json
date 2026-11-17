@@ -34,6 +34,7 @@
     "link": "http://{{ $externalUrl }}:{{ .Values.coder.coder.service.httpNodePort }}"
     {{- end }}
   },
+  {{- if (index .Values "kubernetes-resource-manager" "enabled") }}
   {
     "slug": "krm",
     "name": "Kubernetes Resource Manager",
@@ -52,6 +53,7 @@
     "link": "http://{{ $externalUrl }}:{{ index .Values "kubernetes-resource-manager" "service" "nodePort"}}"
     {{- end }}
   },
+  {{- end }}
 {{- if (index .Values.dashboard "additional-components" "enabled") }}
 {{- range (index .Values.dashboard "additional-components" "apps") }}
   {
